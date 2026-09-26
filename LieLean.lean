@@ -1,2 +1,9 @@
 import LieLean.Basic
+import LieLean.Algebra.Lie.Free
+import LieLean.Algebra.Lie.KacMoody.Auxiliary
+import LieLean.Algebra.Lie.KacMoody.RootSpace
+import LieLean.Algebra.Lie.KacMoody.TensorRep
+import LieLean.Algebra.Lie.Quotient
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
+import LieLean.Algebra.Lie.Weights.OfMap
+import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
