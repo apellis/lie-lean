@@ -5,5 +5,6 @@ import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.TensorRep
 import LieLean.Algebra.Lie.Quotient
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
+import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
