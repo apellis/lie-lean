@@ -44,6 +44,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Basic
+import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
