@@ -49,6 +49,9 @@ import LieLean.Basic
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
+import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone
+import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Convex
+import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Coroots
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
