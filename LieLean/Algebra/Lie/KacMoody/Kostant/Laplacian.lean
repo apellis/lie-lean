@@ -221,6 +221,12 @@ lemma lieAction_wedge_one_tmul (y a : L) (m : M) :
       wedge R L M ⁅y, a⁆ (1 ⊗ₜ m) + wedge R L M a (1 ⊗ₜ ⁅y, m⁆) := by
   rw [lieAction_wedge, lieAction_one_tmul]
 
+lemma wedge_one_tmul_sub_lieAction (y a : L) (m m' : M) :
+    wedge R L M a (1 ⊗ₜ m') - lieAction R L M y (wedge R L M a (1 ⊗ₜ m)) =
+      wedge R L M a (1 ⊗ₜ (m' - ⁅y, m⁆)) - wedge R L M ⁅y, a⁆ (1 ⊗ₜ m) := by
+  rw [lieAction_wedge_one_tmul, tmul_sub, map_sub]
+  abel
+
 lemma lieAction_wedge_wedge (y a b : L) (c : E) :
     lieAction R L M y (wedge R L M a (wedge R L M b c)) =
       wedge R L M ⁅y, a⁆ (wedge R L M b c) + wedge R L M a (wedge R L M ⁅y, b⁆ c) +

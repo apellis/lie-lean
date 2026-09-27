@@ -178,6 +178,28 @@ lemma smul_finsum_mem_of_field [Module K M] (c : K) (s : Set (Dual K H)) (F : Du
   exact finsum_congr fun α ↦ by simp only [Set.indicator_apply]; split_ifs <;> simp
 
 omit [Fintype ι] [DecidableEq ι] [CharZero K] in
+lemma finsum_mem_sub_distrib' {s : Set (Dual K H)} {F G : Dual K H → M}
+    (hF : (s ∩ Function.support F).Finite) (hG : (s ∩ Function.support G).Finite) :
+    ∑ᶠ α ∈ s, (F α - G α) = ∑ᶠ α ∈ s, F α - ∑ᶠ α ∈ s, G α := by
+  simp only [sub_eq_add_neg]
+  rw [finsum_mem_add_distrib' hF (by simpa only [Function.support_fun_neg] using hG),
+    finsum_mem_neg]
+
+omit [Fintype ι] [DecidableEq ι] [CharZero K] in
+lemma finsum_mem_neg_add_sub {s : Set (Dual K H)} {F G I : Dual K H → M}
+    (hF : (s ∩ Function.support F).Finite) (hG : (s ∩ Function.support G).Finite)
+    (hI : (s ∩ Function.support I).Finite) :
+    ∑ᶠ α ∈ s, (-F α + G α - I α) = -∑ᶠ α ∈ s, F α + ∑ᶠ α ∈ s, G α - ∑ᶠ α ∈ s, I α := by
+  have hFG : (s ∩ Function.support fun α ↦ -F α + G α).Finite :=
+    (hF.union hG).subset fun α ⟨hα, hne⟩ ↦ by
+      by_cases h : F α = 0
+      · exact Or.inr ⟨hα, by simpa [h] using hne⟩
+      · exact Or.inl ⟨hα, h⟩
+  have hnF : (s ∩ Function.support fun α ↦ -F α).Finite := by
+    simpa only [Function.support_fun_neg] using hF
+  rw [finsum_mem_sub_distrib' hFG hI, finsum_mem_add_distrib' hnF hG, finsum_mem_neg]
+
+omit [Fintype ι] [DecidableEq ι] [CharZero K] in
 lemma smul_finsum_mem_of_finite {N : Type*} [AddCommMonoid N] [Module K N] (c : K)
     {s : Set (Dual K H)} {F : Dual K H → N} (h : (s ∩ Function.support F).Finite) :
     c • ∑ᶠ α ∈ s, F α = ∑ᶠ α ∈ s, c • F α :=

@@ -53,6 +53,7 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.Euler
 import LieLean.Algebra.Lie.KacMoody.Kostant.GarlandLepowsky
 import LieLean.Algebra.Lie.KacMoody.Kostant.Identity
 import LieLean.Algebra.Lie.KacMoody.Kostant.Laplacian
+import LieLean.Algebra.Lie.KacMoody.Kostant.LaplacianIdentity
 import LieLean.Algebra.Lie.KacMoody.Kostant.RhoShift
 import LieLean.Algebra.Lie.KacMoody.Kostant.RootSums
 import LieLean.Algebra.Lie.KacMoody.Kostant.Weights
