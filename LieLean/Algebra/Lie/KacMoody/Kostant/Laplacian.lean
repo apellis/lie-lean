@@ -83,6 +83,20 @@ lemma coDiffStep_apply (y : L) (p : ExteriorAlgebra R L × (M →ₗ[R] E)) (m :
     coDiffStep G y p m = -G y (p.1 ⊗ₜ m) - wedge R L M y (p.2 m) := rfl
 
 omit G in
+/-- Left multiplications by elements of `L` anticommute on `⋀L ⊗ M`. -/
+lemma wedge_wedge_comm (a b : L) (c : E) :
+    wedge R L M a (wedge R L M b c) = -wedge R L M b (wedge R L M a c) := by
+  have h := wedge_wedge (R := R) (M := M) (a + b) c
+  simp only [map_add, LinearMap.add_apply, wedge_wedge, zero_add, add_zero] at h
+  exact eq_neg_of_add_eq_zero_left (by rw [add_comm]; exact h)
+
+omit G in
+lemma wedge_wedge_wedge_comm (a b z : L) (c : E) :
+    wedge R L M a (wedge R L M b (wedge R L M z c)) =
+      wedge R L M z (wedge R L M a (wedge R L M b c)) := by
+  rw [wedge_wedge_comm b z, map_neg, wedge_wedge_comm a z, neg_neg]
+
+omit G in
 lemma ι_tmul_mem_chainsIn_one (y : L) (m : M) :
     (ι R y : ExteriorAlgebra R L) ⊗ₜ m ∈ chainsIn R L M 1 := by
   have := wedge_mem_chainsIn (M := M) y (one_tmul_mem_chainsIn (R := R) (L := L) m)
@@ -166,6 +180,11 @@ lemma laplacianComm_apply (y : L) (c : E) :
     laplacian δ₀ G hG (1 ⊗ₜ m) = diff R L M (δ₀ m) := by
   simp [laplacian_apply]
 
+lemma laplacianComm_one_tmul (y : L) (m : M) :
+    laplacianComm δ₀ G hG y (1 ⊗ₜ m) =
+      lieAction R L M y (δ₀ m) - δ₀ ⁅y, m⁆ - diff R L M (G y (1 ⊗ₜ m)) := by
+  simp [laplacianComm_apply]
+
 /-- `□ ε(y) = ε(y) □ + R(y)`. -/
 theorem laplacian_wedge (y : L) (c : E) :
     laplacian δ₀ G hG (wedge R L M y c) =
@@ -189,6 +208,37 @@ theorem laplacianComm_wedge (hGε : ∀ y z, G y ∘ₗ wedge R L M z = wedge R 
   abel
 
 end CoDiff
+
+section Formulas
+
+variable {R L M : Type*} [CommRing R] [LieRing L] [LieAlgebra R L]
+  [AddCommGroup M] [Module R M] [LieRingModule L M] [LieModule R L M]
+
+local notation "E" => ExteriorAlgebra R L ⊗[R] M
+
+lemma lieAction_wedge_one_tmul (y a : L) (m : M) :
+    lieAction R L M y (wedge R L M a (1 ⊗ₜ m)) =
+      wedge R L M ⁅y, a⁆ (1 ⊗ₜ m) + wedge R L M a (1 ⊗ₜ ⁅y, m⁆) := by
+  rw [lieAction_wedge, lieAction_one_tmul]
+
+lemma lieAction_wedge_wedge (y a b : L) (c : E) :
+    lieAction R L M y (wedge R L M a (wedge R L M b c)) =
+      wedge R L M ⁅y, a⁆ (wedge R L M b c) + wedge R L M a (wedge R L M ⁅y, b⁆ c) +
+        wedge R L M a (wedge R L M b (lieAction R L M y c)) := by
+  rw [lieAction_wedge, lieAction_wedge, map_add, add_assoc]
+
+lemma diff_wedge_one_tmul (a : L) (m : M) :
+    diff R L M (wedge R L M a (1 ⊗ₜ m)) = -(1 ⊗ₜ ⁅a, m⁆) := by
+  rw [wedge_tmul, mul_one, diff_ι_tmul]
+
+lemma diff_wedge_wedge_one_tmul (a b : L) (m : M) :
+    diff R L M (wedge R L M a (wedge R L M b (1 ⊗ₜ m))) =
+      -wedge R L M b (1 ⊗ₜ ⁅a, m⁆) + wedge R L M a (1 ⊗ₜ ⁅b, m⁆) -
+        wedge R L M ⁅a, b⁆ (1 ⊗ₜ m) := by
+  simp only [wedge_tmul, mul_one]
+  exact diff_ι_mul_ι_tmul a b m
+
+end Formulas
 
 /-! ### Cycles on which the Laplacian is invertible -/
 
