@@ -25,6 +25,10 @@ rank two hypothesis, so it applies verbatim to the Weyl group of a Kac–Moody a
 the cone `C` is pointed and `αᵢ ≠ 0`, one deduces that `ℓ(w sᵢ) < ℓ(w) ↔ -w αᵢ ∈ C` and that an
 element of `W` fixing all `αᵢ` is trivial; in particular, the action is faithful.
 
+## Main definitions
+
+* `CoxeterSystem.IsDihedrallyPositive`: the rank two positivity hypothesis.
+
 ## Main results
 
 * `CoxeterSystem.smul_mem_closure_of_not_isRightDescent`: if `ℓ(w sᵢ) > ℓ(w)` then `w αᵢ ∈ C`.
