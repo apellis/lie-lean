@@ -15,6 +15,11 @@ For `α ∈ Q₊ \ {0}`, the root space `𝔤̃_α` is spanned by the iterated b
 `[e_{i₁}, [e_{i₂}, ⋯ [e_{iₖ}, e_j] ⋯]]` with `α_{i₁} + ⋯ + α_{iₖ} + α_j = α` ([Kac] Thm. 1.2 (b),
 (d) and its proof).
 
+## Main definitions
+
+* `Matrix.Realization.AuxLieAlgebra.posSpan`: the span of the iterated brackets
+  `[e_{i₁}, [⋯ [e_{iₖ}, e_j] ⋯]]` of weight `μ`.
+
 ## Main results
 
 * `Matrix.Realization.AuxLieAlgebra.rootSpace_le_posSpan`: `𝔤̃_α` is spanned by iterated brackets

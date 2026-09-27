@@ -32,6 +32,10 @@ morphism `L' → U(L)/J`, which extends to an algebra morphism `ψ : U(L') → U
 `ψ ∘ U(f)` is the quotient map (both agree on `ι(L)`), so `ker U(f) ⊆ J`. This is the standard
 argument (see e.g. Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.3 (check)); it is written
 out here in full.
+
+## References
+
+* N. Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.3 (check).
 -/
 
 open Function

@@ -29,6 +29,10 @@ many such `β^∨` (`Matrix.Realization.finite_inversionSet_coweylGroup`). Conve
 `⟨λ, αᵢ^∨⟩ < 0`; since `rᵢ^∨` permutes the positive real coroots other than `αᵢ^∨`,
 `N(rᵢ λ) = rᵢ^∨ (N(λ) \ {αᵢ^∨})` is smaller, and we conclude by induction.
 
+## Main definitions
+
+* `Matrix.Realization.titsPointedCone`: the Tits cone as a `PointedCone`.
+
 ## Main results
 
 * `Matrix.Realization.mem_titsCone_iff`: the description of `X` above.
