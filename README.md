@@ -23,7 +23,26 @@ already provides. Contributor and agent conventions are in [`AGENTS.md`](AGENTS.
 
 ## Status
 
-Nothing is formalized yet beyond the package skeleton.
+All milestones of [`ROADMAP.md`](ROADMAP.md) are formalized, with no `sorry` and no axioms beyond
+`propext`, `Classical.choice` and `Quot.sound`. For a symmetrizable generalized Cartan matrix `A`
+over a field of characteristic zero:
+
+1. **Gabber–Kac** (`Matrix.Realization.AuxLieAlgebra.maxIdeal_eq_serreIdeal`): `𝔤(A)` is presented
+   by the Chevalley generators and the Serre relations.
+2. **Presentation of `L(Λ)`** (`…KacMoodyAlgebra.FPowQuotient.equivIrreducibleModule`):
+   `L(Λ) ≅ M(Λ) / Σᵢ U(𝔤) fᵢ^{⟨Λ,αᵢ^∨⟩+1} v_Λ` for `Λ` dominant integral.
+3. **Complete reducibility** (`…KacMoodyAlgebra.IsCategoryO.exists_isInternal_irreducibleModule`):
+   integrable modules in category `𝒪` are direct sums of `L(Λ)`s.
+4. **Weyl–Kac character formula**
+   (`…KacMoodyAlgebra.IrreducibleModule.exp_rho_mul_denominator_mul_character`).
+
+Along the way: the PBW theorem (including the graded form `Sym(L) ≃ gr U(L)`), realizations,
+`𝔤̃(A)` and `𝔤(A)` with their triangular and root space decompositions, the Weyl group as a
+Coxeter group and the Tits cone, the invariant form and generalized Casimir operator, Verma
+modules, the Shapovalov form, category `𝒪` with local composition series and formal characters,
+comparisons with Mathlib's `Matrix.ToLieAlgebra` and Geck construction, and, in finite type,
+finite-dimensionality, semisimplicity and Weyl's complete reducibility. See `ROADMAP.md` for the
+declaration names and the list of upstreaming candidates.
 
 ## Building
 
