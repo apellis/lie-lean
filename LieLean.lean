@@ -25,6 +25,8 @@ import LieLean.Algebra.Lie.KacMoody.Serre
 import LieLean.Algebra.Lie.KacMoody.SerrePresented
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.Homology
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.LowestWeight
+import LieLean.Algebra.Lie.KacMoody.SerrePresented.Syzygy
+import LieLean.Algebra.Lie.KacMoody.SerrePresented.SyzygyEnveloping
 import LieLean.Algebra.Lie.KacMoody.TensorRep
 import LieLean.Algebra.Lie.KacMoody.Triangular
 import LieLean.Algebra.Lie.KacMoody.Verma
@@ -35,6 +37,7 @@ import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
 import LieLean.Algebra.Lie.Subalgebra
+import LieLean.Algebra.Lie.UniversalEnveloping.Kernel
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
