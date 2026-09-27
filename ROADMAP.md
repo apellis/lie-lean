@@ -77,8 +77,13 @@ Done: `UniversalEnvelopingAlgebra.pbwBasis`, `pbwBasis_apply`, `pbwEquiv` (U(L) 
 commutative ring for `L` with an ordered basis); `UniversalEnvelopingAlgebra.map`,
 `tensorEquivOfIsCompl` (`U(L₁) ⊗ U(L₂) ≃ₗ U(L)` for complementary free subalgebras),
 `map_incl_injective_of_isCompl` (`.../TensorDecomposition.lean`);
-`FreeLieAlgebra.toFreeAlgebra_injective` (`LieLean/Algebra/Lie/Free.lean`). Not done: the graded
-statement `Sym(L) ≅ gr U(L)` (not needed downstream).
+`FreeLieAlgebra.toFreeAlgebra_injective` (`LieLean/Algebra/Lie/Free.lean`). PBW filtration
+(`.../Filtration.lean`): `filtration`, `commutator_mem_filtration`, `filtrationBasis` (ordered
+monomials of length ≤ n); graded PBW (`.../Graded.lean`, `gr U(L)` modelled as Rees algebra mod
+`t`): `AssociatedGraded` (commutative, `isInternal_range_toGr`), `symmetricAlgebraEquivAssociatedGraded :
+Sym(L) ≃ₐ gr U(L)` for `L` free over any commutative ring; freeness (`.../Free.lean`):
+`pbwBasisOfIsCompl`, `free_of_isCompl` (`U(L)` free over `U(L')` for a complemented free `L'`),
+`instFreeLieSubalgebra`, `map_incl_injective` (over a field, any subalgebra).
 
 
 For a Lie algebra `L` over a commutative ring `R` that is free as an `R`-module (at least: over a
@@ -317,7 +322,8 @@ the general Kac–Moody results give.
 
 (List self-contained, Mathlib-ready results here as they land.)
 
-- PBW: `LieLean/Algebra/Lie/UniversalEnveloping/PBW.lean` and `TensorDecomposition.lean`
+- PBW: `LieLean/Algebra/Lie/UniversalEnveloping/PBW.lean`, `TensorDecomposition.lean`,
+  `Filtration.lean`, `Graded.lean`, `Free.lean`
   (`UniversalEnvelopingAlgebra.map` is also missing from Mathlib).
 - `FreeLieAlgebra.toFreeAlgebra_injective`, `FreeLieAlgebra.induction_on`
   (`LieLean/Algebra/Lie/Free.lean`).
