@@ -18,5 +18,6 @@ import LieLean.Basic
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupExchange
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupTits
