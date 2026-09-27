@@ -53,6 +53,7 @@ import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Generic
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Gram
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Hyperplane
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Leading
+import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Multiplicity
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Polynomial
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Words
 import LieLean.Algebra.Lie.KacMoody.Kostant.Chains
