@@ -48,6 +48,9 @@ All in the namespace `Matrix.Realization.KacMoodyAlgebra.IrreducibleModule`:
 * `coeffAt_exp_rho_mul_denominator_mul_character_apply`,
   `coeffAt_exp_rho_mul_denominator_mul_character_eq_zero`: the coefficient of `e^{w(Λ + ρ)}` is
   `(-1)^{ℓ(w)}`, and the coefficients of `e^μ`, `μ ∉ W(Λ + ρ)`, vanish.
+* `character_zero`: `L(0)` is the trivial module, `ch L(0) = 1`.
+* `exp_rho_mul_denominator`: the denominator identity
+  `e^ρ ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α} = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w ρ}` ([Kac] (10.4.4) (check)).
 
 ## References
 
@@ -138,6 +141,77 @@ lemma isDominantIntegral_add_rho {Λ : Dual K H} (hΛ : P.IsDominantIntegral Λ)
   obtain ⟨n, hn⟩ := hΛ i
   exact ⟨n + 1, by rw [LinearMap.add_apply, hn, rho_coroot]; push_cast; rfl⟩
 
+omit [DecidableEq ι] [CharZero K] in
+/-- `0` is dominant integral. -/
+lemma isDominantIntegral_zero : P.IsDominantIntegral 0 := fun _ ↦ ⟨0, by simp⟩
+
+omit [DecidableEq ι] [CharZero K] in
+/-- `ρ` is dominant integral: `⟨ρ, αᵢ^∨⟩ = 1`. -/
+lemma isDominantIntegral_rho : P.IsDominantIntegral P.rho := fun i ↦ ⟨1, by simp⟩
+
+/-! ### The trivial module `L(0)` -/
+
+section Trivial
+
+variable (hA : A.IsGeneralizedCartan)
+include hA
+
+/-- `𝔤` kills the highest-weight vector of `L(0)`: the `eᵢ` and `𝔥` kill it, and so do the `fᵢ`
+since `fᵢ v_0` is a singular vector of `M(0)` ([Kac] §10.1 (check)). -/
+lemma lie_hwv_zero (x : P.KacMoodyAlgebra) : ⁅x, hwv P (0 : Dual K H)⁆ = 0 := by
+  refine induction_on P x (fun i ↦ ?_) (fun i ↦ ?_) (fun a ↦ ?_) (zero_lie _)
+    (fun y z hy hz ↦ by rw [add_lie, hy, hz, add_zero])
+    (fun c y hy ↦ by rw [smul_lie, hy, smul_zero])
+    (fun y z hy hz ↦ by rw [lie_lie, hy, hz, lie_zero, lie_zero, sub_zero])
+  · rw [hwv, ← LieModuleHom.map_lie, VermaModule.lie_e_hwv, map_zero]
+  · rw [hwv, ← LieModuleHom.map_lie]
+    have hmem := VermaModule.fPowHwv_mem_maxSubmodule P (0 : Dual K H) hA
+      (i := i) (n := 0) (by simp)
+    rw [VermaModule.fPowHwv, zero_add, pow_one, toEnd_apply_apply] at hmem
+    exact LieSubmodule.Quotient.mk_eq_zero'.mpr hmem
+  · rw [hwv, ← LieModuleHom.map_lie, VermaModule.lie_h_hwv, LinearMap.zero_apply, zero_smul,
+      map_zero]
+
+/-- `𝔤` acts trivially on `L(0)`. -/
+theorem lie_eq_zero_of_zero (x : P.KacMoodyAlgebra) (m : IrreducibleModule P (0 : Dual K H)) :
+    ⁅x, m⁆ = 0 := by
+  have htop := VermaModule.lieSpan_map_hwv_eq_top
+    (LieSubmodule.Quotient.mk' (VermaModule.maxSubmodule P (0 : Dual K H)))
+    (LieSubmodule.Quotient.surjective_mk' _)
+  have hle : LieSubmodule.lieSpan K P.KacMoodyAlgebra
+      {LieSubmodule.Quotient.mk' (VermaModule.maxSubmodule P (0 : Dual K H))
+        (VermaModule.hwv P 0)} ≤
+      maxTrivSubmodule K P.KacMoodyAlgebra (IrreducibleModule P (0 : Dual K H)) := by
+    rw [LieSubmodule.lieSpan_le]
+    rintro _ rfl
+    exact fun y ↦ lie_hwv_zero hA y
+  rw [htop] at hle
+  exact hle (LieSubmodule.mem_top m) x
+
+/-- The character of `L(0)` is `1`: `L(0)` is the trivial one-dimensional module. -/
+theorem character_zero : (isCategoryO P (0 : Dual K H)).character = 1 := by
+  ext ν
+  rw [IsCategoryO.coeffAt_character, ← exp_zero (P := P) (R := ℤ), coeff_exp]
+  split_ifs with hν
+  · subst hν
+    exact_mod_cast finrank_weightSpace_self P (0 : Dual K H)
+  · have hbot : weightSpaceOfMap (IrreducibleModule P (0 : Dual K H)) (h P) ν = ⊥ := by
+      rw [eq_bot_iff]
+      intro x hx
+      obtain ⟨a, ha⟩ : ∃ a, ν a ≠ 0 := by
+        by_contra! h0
+        exact hν (LinearMap.ext h0)
+      have hxa : ⁅h P a, x⁆ = ν a • x := hx a
+      rw [lie_eq_zero_of_zero hA] at hxa
+      exact (Submodule.mem_bot K).mpr ((smul_eq_zero.mp hxa.symm).resolve_left ha)
+    rw [hbot, finrank_bot, Nat.cast_zero]
+
+end Trivial
+
+/-! ### The character formula -/
+
+section Formula
+
 variable [FiniteDimensional K H] (hA : A.IsGeneralizedCartan) (hS : A.IsSymmetrizable)
   {Λ : Dual K H} (hΛ : P.IsDominantIntegral Λ)
 include hA hS hΛ
@@ -205,6 +279,23 @@ theorem exp_rho_mul_denominator_mul_character :
       weylAltSum P hA (isDominantIntegral_add_rho hΛ) := by
   ext μ
   rw [coeffAt_weylAltSum, coeffAt_exp_rho_mul_denominator_mul_character hA hS hΛ]
+
+end Formula
+
+variable [FiniteDimensional K H] (hA : A.IsGeneralizedCartan) (hS : A.IsSymmetrizable)
+include hA hS
+
+/-- **The Weyl–Kac denominator identity** ([Kac] (10.4.4) (check)): for a symmetrizable
+generalized Cartan matrix, `e^ρ ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α} = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w ρ}`.
+This is the character formula for the trivial module `L(0)`. -/
+theorem exp_rho_mul_denominator :
+    exp P ℤ P.rho * denominator P = weylAltSum P hA (isDominantIntegral_rho (P := P)) := by
+  have h := exp_rho_mul_denominator_mul_character hA hS (isDominantIntegral_zero (P := P))
+  rw [character_zero hA, mul_one] at h
+  ext μ
+  rw [h]
+  simp only [coeffAt_weylAltSum, zero_add]
+  rfl
 
 end IrreducibleModule
 
