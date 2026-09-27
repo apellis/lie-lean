@@ -41,6 +41,8 @@ are orthogonal, and its radical is the maximal proper submodule `M'(Λ)` of `M(�
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.contravariantForm_lie_left`: contravariance.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.contravariantForm_smul_left`: contravariance
   for the action of `U(𝔤)`.
+* `Matrix.Realization.KacMoodyAlgebra.VermaModule.contravariantForm_smul_hwv`:
+  `B(a v_Λ, b v_Λ)` is the coefficient of `v_Λ` in `σ(a) b v_Λ`.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.existsUnique_contravariantForm`: uniqueness.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.isSymm_contravariantForm`: symmetry.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.contravariantForm_eq_zero_of_ne`: different
@@ -362,6 +364,13 @@ theorem contravariantForm_smul_left (a : 𝓤) (u w : VermaModule P Λ) :
   | mul a b ha hb => rw [mul_smul, ha, hb, unop_envTranspose_mul, mul_smul]
   | add a b ha hb => simp only [add_smul, map_add, MulOpposite.unop_add, LinearMap.add_apply,
       ha, hb]
+
+/-- The Shapovalov form in terms of `U(𝔤)`: `B(a v_Λ, b v_Λ)` is the coefficient of `v_Λ` in
+`σ(a) b v_Λ` ([Kac] §9.4 (check)). -/
+theorem contravariantForm_smul_hwv (a b : 𝓤) :
+    contravariantForm P Λ (a • hwv P Λ) (b • hwv P Λ) =
+      hwCoord P Λ (((envTranspose P a).unop * b) • hwv P Λ) := by
+  rw [contravariantForm_smul_left, contravariantForm_hwv_left, mul_smul]
 
 /-- **Orthogonality of weight spaces**: `B(M(Λ)_μ, M(Λ)_ν) = 0` for `μ ≠ ν`
 ([Kac] §9.4 (check)). -/
