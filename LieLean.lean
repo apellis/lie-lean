@@ -96,9 +96,12 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Form
 import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.QBinomial
+import LieLean.Algebra.QuantumGroup.Sl2
 import LieLean.Algebra.QuantumGroup.Triangular
 import LieLean.Algebra.QuantumGroup.TriangularDecomposition
 import LieLean.Algebra.QuantumGroup.TriangularRep
+import LieLean.Algebra.QuantumGroup.Verma
+import LieLean.Algebra.QuantumGroup.Weight
 import LieLean.Basic
 import LieLean.GroupTheory.Coxeter.Bruhat
 import LieLean.GroupTheory.Coxeter.Deletion
