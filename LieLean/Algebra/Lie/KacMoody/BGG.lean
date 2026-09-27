@@ -32,21 +32,27 @@ follows from the squares lemma and the anticommutativity of the signs
   embeddings `M(w · Λ) ↪ M(Λ)` and `i_{w', w} : M(w' · Λ) ↪ M(w · Λ)` (`0` unless `w ≤ w'`).
 * `Matrix.Realization.KacMoodyAlgebra.BGGTerm`: `C_k = ⊕_{ℓ(w) = k} M(w · Λ)`.
 * `Matrix.Realization.KacMoodyAlgebra.bggDiff`: the differential `C_{k+1} → C_k`.
+* `Matrix.Realization.KacMoodyAlgebra.bggAugmentation`: the augmentation `C₀ ≅ M(Λ) → L(Λ)`.
 
 ## Main results
 
 * `Matrix.Realization.KacMoodyAlgebra.bggMap_comp`: `i_{b, w} ∘ i_{w', b} = i_{w', w}`.
 * `Matrix.Realization.KacMoodyAlgebra.bggDiff_comp_bggDiff`: **`d² = 0`**.
+* `Matrix.Realization.KacMoodyAlgebra.bggAugmentation_surjective`,
+  `Matrix.Realization.KacMoodyAlgebra.ker_bggAugmentation`: `C₁ → C₀ → L(Λ) → 0` is exact
+  (symmetrizable `A`).
 
 ## What is not proved
 
-The exactness of the BGG complex (the BGG theorem, [HumO] Thm. 6.3 (check), [Kum] Thm. 9.1.3
-(check)) is not proved here. Proved: exactness at `C₀` (`range_bggDiffOne` in
-`LieLean.Algebra.Lie.KacMoody.BGG.LowDegree`, for the presentation of `C₁` indexed by simple
-roots), and the Euler characteristic identity `∑_w (-1)^{ℓ(w)} ch M(w · Λ) = ch L(Λ)`
-(`hsum_vermaAltFamily`). The standard proof of exactness uses the relative Chevalley–Eilenberg
-resolution `U(𝔤) ⊗_{U(𝔟)} ⋀ᵏ(𝔤/𝔟) ⊗ L(Λ)` of `L(Λ)`, its filtration by Verma modules, and the
-Casimir operator to split off the block of `Λ`.
+The exactness of the BGG complex in degrees `≥ 1` (the BGG theorem, [HumO] Thm. 6.3 (check),
+[Kum] Thm. 9.1.3 (check)) is not proved here. Proved: `d² = 0`, exactness of
+`C₁ → C₀ → L(Λ) → 0` (`ker_bggAugmentation`, via `range_bggDiffOne` in
+`LieLean.Algebra.Lie.KacMoody.BGG.LowDegree`), and the Euler characteristic identity
+`∑_w (-1)^{ℓ(w)} ch M(w · Λ) = ch L(Λ)` (`hsum_vermaAltFamily`), i.e. exactness "in the
+Grothendieck group". The standard proof of exactness uses the relative Chevalley–Eilenberg
+resolution `U(𝔤) ⊗_{U(𝔟)} ⋀ᵏ(𝔤/𝔟) ⊗ L(Λ)` of `L(Λ)` (finite-dimensional `𝔤`) or the
+`𝔫₋`-homology `H_k(𝔫₋, L(Λ)) = ⊕_{ℓ(w) = k} K_{w · Λ}` ([GL], [Kum] Ch. 3), a filtration by
+Verma modules, and the Casimir operator to split off the block of `Λ`.
 
 ## References
 
@@ -57,6 +63,8 @@ Casimir operator to split off the block of `Λ`.
   GSM 94, AMS 2008, Ch. 6.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
   Math. 204, Birkhäuser 2002, §9.1 (check).
+* [GL] H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent.
+  Math. 34 (1976), 37–76.
 -/
 
 open Module LieModule CoxeterSystem DirectSum
@@ -258,5 +266,176 @@ theorem bggDiff_comp_bggDiff (k : ℕ) :
   rw [← Finset.sum_smul]
   rw [sum_bggSign_mul_bggSign P hA w'' w₀]
   exact zero_smul K _
+
+/-! ### The augmentation and exactness at `C₀` -/
+
+omit [DecidableEq ι] [CharZero K] in
+/-- A nonzero multiple of a morphism of Lie modules has the same image. -/
+lemma _root_.LieModuleHom.range_smul_of_ne_zero {L M N : Type*} [LieRing L] [LieAlgebra K L]
+    [AddCommGroup M] [Module K M] [LieRingModule L M] [LieModule K L M] [AddCommGroup N]
+    [Module K N] [LieRingModule L N] [LieModule K L N] (φ : M →ₗ⁅K,L⁆ N) {c : K} (hc : c ≠ 0) :
+    (c • φ).range = φ.range := by
+  ext n
+  simp only [LieModuleHom.mem_range, _root_.smul_apply]
+  constructor
+  · rintro ⟨m, rfl⟩
+    exact ⟨c • m, map_smul φ c m⟩
+  · rintro ⟨m, rfl⟩
+    refine ⟨c⁻¹ • m, ?_⟩
+    rw [map_smul φ c⁻¹ m, smul_smul, mul_inv_cancel₀ hc, one_smul]
+
+omit [CharZero K] in
+/-- Two nonzero morphisms `M(μ) → M(ν)` and `M(μ') → M(ν)`, `μ = μ'`, have the same image if
+`dim Hom(M(μ), M(ν)) = 1`. -/
+lemma range_eq_of_finrank_hom_eq_one {μ μ' ν : Dual K H} (e : μ = μ')
+    (hd : finrank K (VermaModule P μ →ₗ⁅K,P.KacMoodyAlgebra⁆ VermaModule P ν) = 1)
+    {φ : VermaModule P μ →ₗ⁅K,P.KacMoodyAlgebra⁆ VermaModule P ν}
+    {ψ : VermaModule P μ' →ₗ⁅K,P.KacMoodyAlgebra⁆ VermaModule P ν} (hφ : φ ≠ 0) (hψ : ψ ≠ 0) :
+    φ.range = ψ.range := by
+  subst e
+  obtain ⟨c, hc⟩ := (finrank_eq_one_iff_of_nonzero' _ hφ).mp hd ψ
+  have hc0 : c ≠ 0 := by
+    rintro rfl
+    exact hψ (by rw [← hc, zero_smul])
+  rw [← hc, LieModuleHom.range_smul_of_ne_zero _ hc0]
+
+instance : Subsingleton {w : W // (cs).length w = 0} :=
+  ⟨fun a b ↦ Subtype.ext (by rw [(cs).length_eq_zero_iff.mp a.2, (cs).length_eq_zero_iff.mp b.2])⟩
+
+/-- The unique element `1` of length `0`. -/
+def bggOne : {w : W // (cs).length w = 0} := ⟨1, (cs).length_one⟩
+
+open Classical in
+lemma eq_of_bggOne (x : BGGTerm P hA Λ 0) :
+    x = DirectSum.of (fun w : {w : W // (cs).length w = 0} ↦ VermaModule P (P.weylDot hA w Λ))
+      (bggOne P hA) (x (bggOne P hA)) := by
+  ext j
+  obtain rfl := Subsingleton.elim j (bggOne P hA)
+  rw [DirectSum.of_eq_same]
+
+open Classical in
+/-- The map `C₀ → M(Λ)` given by the chosen embedding `M(1 · Λ) ↪ M(Λ)` (an isomorphism). -/
+def bggEmbZero : BGGTerm P hA Λ 0 →ₗ⁅K,P.KacMoodyAlgebra⁆ VermaModule P Λ :=
+  DirectSum.toLieModule fun w ↦ bggEmb P hA hΛ w
+
+open Classical in
+lemma bggEmbZero_of (w : {w : W // (cs).length w = 0}) (x : VermaModule P (P.weylDot hA w Λ)) :
+    bggEmbZero P hA hΛ (DirectSum.of _ w x) = bggEmb P hA hΛ w x :=
+  DirectSum.toLieModule_of _ _ _
+
+lemma bggEmbZero_injective : Function.Injective (bggEmbZero P hA hΛ) := by
+  intro x y hxy
+  rw [eq_of_bggOne P hA x, eq_of_bggOne P hA y, bggEmbZero_of, bggEmbZero_of] at hxy
+  rw [eq_of_bggOne P hA x, eq_of_bggOne P hA y, bggEmb_injective P hA hΛ _ hxy]
+
+lemma range_bggEmb_bggOne : (bggEmb P hA hΛ (bggOne P hA)).range = ⊤ := by
+  have h1 : P.weylDot hA (bggOne P hA : W) Λ = Λ := weylDot_one P hA Λ
+  refine (range_eq_of_finrank_hom_eq_one P h1 (finrank_hom_weylDot_self hA hΛ _)
+    (φ := bggEmb P hA hΛ (bggOne P hA)) (ψ := LieModuleHom.id) ?_ ?_).trans
+    ((LieModuleHom.range_eq_top _).mpr Function.surjective_id)
+  · exact fun h ↦ hwv_ne_zero P _ (bggEmb_injective P hA hΛ _ (by
+      rw [h, _root_.zero_apply, map_zero]))
+  · exact fun h ↦ hwv_ne_zero P Λ (by
+      rw [← LieModuleHom.id_apply (R := K) (L := P.KacMoodyAlgebra) (hwv P Λ), h,
+        _root_.zero_apply])
+
+open Classical in
+lemma bggEmbZero_surjective : Function.Surjective (bggEmbZero P hA hΛ) := by
+  intro m
+  obtain ⟨x, hx⟩ := (LieModuleHom.mem_range _ m).mp
+    ((range_bggEmb_bggOne P hA hΛ).symm ▸ LieSubmodule.mem_top m)
+  exact ⟨DirectSum.of _ _ x, by rw [bggEmbZero_of, hx]⟩
+
+open Classical in
+/-- The augmentation `C₀ = M(1 · Λ) → M(Λ) → L(Λ)` of the BGG complex. -/
+def bggAugmentation : BGGTerm P hA Λ 0 →ₗ⁅K,P.KacMoodyAlgebra⁆ IrreducibleModule P Λ :=
+  (bggAug P).comp (bggEmbZero P hA hΛ)
+
+theorem bggAugmentation_surjective : Function.Surjective (bggAugmentation P hA hΛ) :=
+  (bggAug_surjective P).comp (bggEmbZero_surjective P hA hΛ)
+
+open Classical in
+lemma bggEmbZero_bggDiff_of (w' : {w : W // (cs).length w = 0 + 1})
+    (x : VermaModule P (P.weylDot hA w' Λ)) :
+    bggEmbZero P hA hΛ (bggDiff P hA hΛ 0 (DirectSum.of _ w' x)) =
+      bggSign P hA (bggOne P hA : W) w' • bggEmb P hA hΛ w' x := by
+  have hb : bggBoundary P hA w' 0 = {bggOne P hA} := by
+    refine Finset.eq_singleton_iff_unique_mem.mpr ⟨?_, fun w _ ↦ Subsingleton.elim _ _⟩
+    rw [mem_bggBoundary, CoxeterSystem.BruhatCovBy]
+    exact ⟨(cs).one_bruhatLE _, by rw [w'.2, bggOne, (cs).length_one]⟩
+  rw [bggDiff_of, hb, Finset.sum_singleton, map_smul, bggEmbZero_of,
+    ← LieModuleHom.comp_apply,
+    bggEmb_comp_bggMap P hA hΛ (w := (bggOne P hA : W)) ((cs).one_bruhatLE _)]
+
+lemma bggSign_ne_zero (w w' : W) : bggSign P hA w w' ≠ 0 :=
+  pow_ne_zero _ (neg_ne_zero.mpr one_ne_zero)
+
+omit hΛ in
+lemma weylDot_simple (i : ι) (μ : Dual K H) :
+    P.weylDot hA ((cs).simple i) μ = P.reflection hA i (μ + P.rho) - P.rho := by
+  have := weylDot_simple_mul P hA i 1 μ
+  rwa [mul_one, weylDot_one] at this
+
+/-- The image of `M(rᵢ · Λ) ↪ M(Λ)` does not depend on the choice of the embedding. -/
+lemma range_bggEmb_simple {w : W} {i : ι} (hi : w = (cs).simple i) :
+    (bggEmb P hA hΛ w).range =
+      (reflectionHom hA (Nat.succ_pos _) (add_rho_coroot_eq P hΛ i)).range :=
+  range_eq_of_finrank_hom_eq_one P (by rw [hi, weylDot_simple])
+    (finrank_hom_weylDot_self hA hΛ w)
+    (fun h ↦ hwv_ne_zero P _ (bggEmb_injective P hA hΛ _ (by
+      rw [h, _root_.zero_apply, map_zero])))
+    (reflectionHom_ne_zero hA (Nat.succ_pos _) (add_rho_coroot_eq P hΛ i))
+
+variable [FiniteDimensional K H] (hS : A.IsSymmetrizable)
+include hS
+
+open Classical in
+/-- The image of `C₁ → C₀ ≅ M(Λ)` is the maximal proper submodule of `M(Λ)`. -/
+lemma range_bggEmbZero_comp_bggDiff :
+    ((bggEmbZero P hA hΛ).comp (bggDiff P hA hΛ 0)).range = maxSubmodule P Λ := by
+  rw [← ker_bggAug, ← range_bggDiffOne P hA hΛ hS, bggDiffOne, DirectSum.range_toLieModule]
+  apply le_antisymm
+  · rintro _ ⟨y, rfl⟩
+    induction y using DirectSum.induction_on with
+    | zero => rw [map_zero]; exact zero_mem _
+    | add y y' hy hy' => rw [map_add]; exact add_mem hy hy'
+    | of w' x =>
+      rw [LieModuleHom.comp_apply, bggEmbZero_bggDiff_of]
+      obtain ⟨i, hi⟩ := (cs).length_eq_one_iff.mp w'.2
+      refine SMulMemClass.smul_mem _ (LieSubmodule.mem_iSup_of_mem i ?_)
+      rw [← range_bggEmb_simple P hA hΛ hi]
+      exact (LieModuleHom.mem_range _ _).mpr ⟨x, rfl⟩
+  · refine iSup_le fun i ↦ ?_
+    let w' : {w : W // (cs).length w = 0 + 1} := ⟨(cs).simple i, (cs).length_simple i⟩
+    rw [← range_bggEmb_simple P hA hΛ (w := w') rfl]
+    rintro _ ⟨x, rfl⟩
+    refine ⟨DirectSum.of _ w' ((bggSign P hA (bggOne P hA : W) w')⁻¹ • x), ?_⟩
+    rw [LieModuleHom.comp_apply, bggEmbZero_bggDiff_of, map_smul, smul_smul,
+      mul_inv_cancel₀ (bggSign_ne_zero P hA _ _), one_smul]
+
+open Classical in
+/-- **Exactness of the BGG complex at `C₀`** ([BGG] (check), [HumO] Thm. 6.3 (check)): for a
+symmetrizable generalized Cartan matrix and `Λ` dominant integral, the kernel of the
+augmentation `C₀ = M(Λ) → L(Λ)` is the image of `d : C₁ → C₀`. The proof uses
+`maxSubmodule_eq_fPowSubmodule` ([Kac] Cor. 10.4). -/
+theorem ker_bggAugmentation : (bggAugmentation P hA hΛ).ker = (bggDiff P hA hΛ 0).range := by
+  ext x
+  rw [LieModuleHom.mem_ker, LieModuleHom.mem_range, bggAugmentation, LieModuleHom.comp_apply,
+    ← LieModuleHom.mem_ker, ker_bggAug, ← range_bggEmbZero_comp_bggDiff P hA hΛ hS,
+    LieModuleHom.mem_range]
+  constructor
+  · rintro ⟨y, hy⟩
+    exact ⟨y, bggEmbZero_injective P hA hΛ hy⟩
+  · rintro ⟨y, rfl⟩
+    exact ⟨y, rfl⟩
+
+open Classical in
+/-- The augmentation composed with `d : C₁ → C₀` vanishes. -/
+theorem bggAugmentation_comp_bggDiff :
+    (bggAugmentation P hA hΛ).comp (bggDiff P hA hΛ 0) = 0 := by
+  ext y
+  rw [LieModuleHom.comp_apply, _root_.zero_apply, ← LieModuleHom.mem_ker,
+    ker_bggAugmentation P hA hΛ hS]
+  exact (LieModuleHom.mem_range _ _).mpr ⟨y, rfl⟩
 
 end Matrix.Realization.KacMoodyAlgebra
