@@ -79,6 +79,7 @@ import LieLean.GroupTheory.Coxeter.Hecke.Specialization
 import LieLean.GroupTheory.Coxeter.Longest
 import LieLean.GroupTheory.Coxeter.Matsumoto
 import LieLean.GroupTheory.Coxeter.Parabolic
+import LieLean.GroupTheory.Coxeter.Parabolic.CoxeterSystem
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
