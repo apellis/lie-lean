@@ -15,24 +15,24 @@ A *Cartan datum* ([Lus] 1.1.1 (check)) is a set `I` together with a symmetric bi
 `i · j` on the basis `I`.
 
 A Cartan datum determines the symmetrizable generalized Cartan matrix `aᵢⱼ = 2 (i·j)/(i·i)`
-(`CartanDatum.cartanMatrix`), with symmetrizer `dᵢ = (i·i)/2`: `dᵢ aᵢⱼ = i · j`. Conversely,
+(`LusztigCartanDatum.cartanMatrix`), with symmetrizer `dᵢ = (i·i)/2`: `dᵢ aᵢⱼ = i · j`. Conversely,
 every symmetrization of a generalized Cartan matrix (`Matrix.Symmetrization`, positive rationals
 `εᵢ` with `εⱼ aᵢⱼ = εᵢ aⱼᵢ`) gives rise to a Cartan datum with the same Cartan matrix, by clearing
-denominators in `dᵢ ∝ 1/εᵢ` (`CartanDatum.ofSymmetrization`).
+denominators in `dᵢ ∝ 1/εᵢ` (`LusztigCartanDatum.ofSymmetrization`).
 
 ## Main definitions
 
-* `CartanDatum`: Lusztig's Cartan datum `(I, ·)`.
-* `CartanDatum.d`: `dᵢ = (i·i)/2`, so that `vᵢ = v^{dᵢ}`.
-* `CartanDatum.cartanMatrix`: the matrix `aᵢⱼ = 2 (i·j)/(i·i)`.
-* `CartanDatum.weightDot`: the form `ν · μ` on weights `ν, μ ∈ ℕ[I]` (`I →₀ ℕ`).
-* `CartanDatum.ofSymmetrization`: the Cartan datum of a symmetrized GCM.
+* `LusztigCartanDatum`: Lusztig's Cartan datum `(I, ·)`.
+* `LusztigCartanDatum.d`: `dᵢ = (i·i)/2`, so that `vᵢ = v^{dᵢ}`.
+* `LusztigCartanDatum.cartanMatrix`: the matrix `aᵢⱼ = 2 (i·j)/(i·i)`.
+* `LusztigCartanDatum.weightDot`: the form `ν · μ` on weights `ν, μ ∈ ℕ[I]` (`I →₀ ℕ`).
+* `LusztigCartanDatum.ofSymmetrization`: the Cartan datum of a symmetrized GCM.
 
 ## Main results
 
-* `CartanDatum.isGeneralizedCartan_cartanMatrix`: `(aᵢⱼ)` is a generalized Cartan matrix.
-* `CartanDatum.d_mul_cartanMatrix`: `dᵢ aᵢⱼ = i · j`.
-* `CartanDatum.cartanMatrix_ofSymmetrization`: the bridge recovers the matrix.
+* `LusztigCartanDatum.isGeneralizedCartan_cartanMatrix`: `(aᵢⱼ)` is a generalized Cartan matrix.
+* `LusztigCartanDatum.d_mul_cartanMatrix`: `dᵢ aᵢⱼ = i · j`.
+* `LusztigCartanDatum.cartanMatrix_ofSymmetrization`: the bridge recovers the matrix.
 
 ## References
 
@@ -44,7 +44,7 @@ open Finset
 /-- A Cartan datum in the sense of Lusztig ([Lus] 1.1.1 (check)): a symmetric `ℤ`-valued
 bilinear form on `ℤ[I]`, given by its values `dot i j = i · j` on the basis, such that
 `i · i` is even and positive, and `2 (i · j)/(i · i)` is a nonpositive integer for `i ≠ j`. -/
-structure CartanDatum (I : Type*) where
+structure LusztigCartanDatum (I : Type*) where
   /-- The values `i · j` of the bilinear form on the basis `I` of `ℤ[I]`. -/
   dot : I → I → ℤ
   dot_comm : ∀ i j, dot i j = dot j i
@@ -53,9 +53,9 @@ structure CartanDatum (I : Type*) where
   dot_nonpos : ∀ i j, i ≠ j → dot i j ≤ 0
   dot_self_dvd : ∀ i j, dot i i ∣ 2 * dot i j
 
-namespace CartanDatum
+namespace LusztigCartanDatum
 
-variable {I : Type*} (D : CartanDatum I)
+variable {I : Type*} (D : LusztigCartanDatum I)
 
 /-- `dᵢ = (i · i)/2`, a positive integer ([Lus] 1.1.1 (check)); `vᵢ = v^{dᵢ}`. -/
 def d (i : I) : ℕ := (D.dot i i / 2).toNat
@@ -187,7 +187,8 @@ lemma symmetrizerOf_mul_comm (S : A.Symmetrization) (i j : I) :
 
 /-- The Cartan datum `i · j = dᵢ aᵢⱼ` of a generalized Cartan matrix `A` with a symmetrization
 `S`, where `dᵢ = symmetrizerOf S i` is the integral symmetrizer proportional to `1/εᵢ`. -/
-def ofSymmetrization (hA : A.IsGeneralizedCartan) (S : A.Symmetrization) : CartanDatum I where
+def ofSymmetrization (hA : A.IsGeneralizedCartan) (S : A.Symmetrization) :
+    LusztigCartanDatum I where
   dot i j := symmetrizerOf S i * A i j
   dot_comm := symmetrizerOf_mul_comm S
   dot_self_pos i := by rw [hA.diag]; exact mul_pos (symmetrizerOf_pos S i) two_pos
@@ -206,4 +207,4 @@ theorem cartanMatrix_ofSymmetrization (hA : A.IsGeneralizedCartan) (S : A.Symmet
 
 end Symmetrization
 
-end CartanDatum
+end LusztigCartanDatum

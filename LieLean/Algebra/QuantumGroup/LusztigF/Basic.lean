@@ -295,7 +295,7 @@ lemma diagTwist_comm (c c' : I → k) (x : LusztigF k I) :
   have : counit.comp (diagTwist (k := k) (I := I) c) = counit := by ext l; simp
   exact congr($this x)
 
-variable (D : CartanDatum I) (v : k)
+variable (D : LusztigCartanDatum I) (v : k)
 
 /-- The twist `σᵢ : 'f → 'f`, `θⱼ ↦ v^{i·j} θⱼ`; on `'f_ν` it is multiplication by
 `v^{i·ν}`. -/

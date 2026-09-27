@@ -56,7 +56,7 @@ open TensorProduct
 
 namespace LusztigF
 
-variable {k I : Type*} [Field k] [DecidableEq I] (D : CartanDatum I) (v : k)
+variable {k I : Type*} [Field k] [DecidableEq I] (D : LusztigCartanDatum I) (v : k)
 
 /-- `(θᵢ, θᵢ) = (1 - vᵢ⁻²)⁻¹`, `vᵢ = v^{dᵢ}` ([Lus] 1.2.3 (a) (check)). -/
 def thetaNorm (i : I) : k := (1 - (v ^ D.d i)⁻¹ ^ 2)⁻¹

@@ -85,7 +85,7 @@ lemma qSerre_tmul_right (ν : k) (M : ℕ) {g h : B} (hgh : Commute g h) (a b : 
 
 end TensorSerre
 
-variable {Y : Type*} [AddCommGroup Y] [DecidableEq I] {D : CartanDatum I}
+variable {Y : Type*} [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
 
 variable {R v}

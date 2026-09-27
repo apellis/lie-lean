@@ -52,7 +52,7 @@ open TensorProduct
 
 namespace LusztigF
 
-variable {k I : Type*} [Field k] (D : CartanDatum I) (v : k)
+variable {k I : Type*} [Field k] (D : LusztigCartanDatum I) (v : k)
 
 /-- The algebra homomorphism `ρ : 'f → End('f ⊗ 'f)`, `θᵢ ↦ σᵢ ⊗ (θᵢ ·)`; for homogeneous `b`,
 `ρ(b)(c ⊗ d) = v^{|b|·|c|} c ⊗ bd`. -/
