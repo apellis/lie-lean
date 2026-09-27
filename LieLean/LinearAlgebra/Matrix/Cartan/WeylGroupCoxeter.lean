@@ -41,6 +41,7 @@ Coxeter group of `(mᵢⱼ)` on `𝔥*`:
 
 ## Main results
 
+* `Matrix.Realization.orderOf_reflection_mul_reflection`: the order of `rᵢ rⱼ` is `mᵢⱼ`.
 * `Matrix.Realization.coxeterGroupHom_injective`: the Coxeter group of `(mᵢⱼ)` embeds in
   `GL(𝔥*)`.
 * `Matrix.Realization.coxeterSystem_simple`: the simple reflections of the Coxeter system `W` are
@@ -155,6 +156,44 @@ lemma S_eval_nonneg_of_lt_coxeterEntry (p : ℕ) (k : ℕ)
     simp only [add_sub_cancel_right] at h2
     split_ifs <;> constructor <;> linarith [h1.1, h1.2, h2.1, h2.2]
 
+/-- With `t = p - 2` and `m = coxeterEntry p`, if `0 < n < m` (or `m = 0`) and
+`S_n(t) + S_{n-1}(t) = 1`, then `S_{n-1}(t) ≠ 0` and `p ≠ 0`. This is what shows that `(rᵢ rⱼ)ⁿ`
+does not fix `αᵢ` for `0 < n < mᵢⱼ`. -/
+lemma S_eval_ne_zero_of_lt_coxeterEntry (p n : ℕ) (hn : 0 < n)
+    (hnm : Matrix.coxeterEntry p = 0 ∨ n < Matrix.coxeterEntry p)
+    (h : (S ℤ n).eval ((p : ℤ) - 2) + (S ℤ ((n : ℤ) - 1)).eval ((p : ℤ) - 2) = 1) :
+    (S ℤ ((n : ℤ) - 1)).eval ((p : ℤ) - 2) ≠ 0 ∧ p ≠ 0 := by
+  rcases Nat.lt_or_ge p 4 with hp | hp
+  · have hn' : n < Matrix.coxeterEntry p := by
+      rcases hnm with hnm | hnm
+      · interval_cases p <;> simp [Matrix.coxeterEntry] at hnm
+      · exact hnm
+    have e3 : S ℤ 3 = X * S ℤ 2 - S ℤ 1 := by simpa using S_add_two ℤ 1
+    have e4 : S ℤ 4 = X * S ℤ 3 - S ℤ 2 := by simpa using S_add_two ℤ 2
+    have e5 : S ℤ 5 = X * S ℤ 4 - S ℤ 3 := by simpa using S_add_two ℤ 3
+    revert h
+    interval_cases p <;> simp only [Matrix.coxeterEntry] at hn' <;> interval_cases n <;>
+      norm_num [S_two, e3, e4, e5]
+  · have ht : (2 : ℤ) ≤ (p : ℤ) - 2 := by omega
+    obtain ⟨n, rfl⟩ := Nat.exists_eq_add_of_le' hn
+    -- `S_n(t) ≥ S_1(t) = t ≥ 2` for `n ≥ 1`
+    have hmono : ∀ k : ℕ,
+        (S ℤ 1).eval ((p : ℤ) - 2) ≤ (S ℤ ((k + 1 : ℕ) : ℤ)).eval ((p : ℤ) - 2) := by
+      intro k
+      induction k with
+      | zero => simp
+      | succ k ih =>
+        have := (S_eval_nonneg_of_two_le ht (k + 2)).2
+        push_cast at this ih ⊢
+        simp only [show (k : ℤ) + 2 - 1 = k + 1 by ring] at this
+        rw [show (k : ℤ) + 1 + 1 = k + 2 by ring]
+        linarith
+    have h1 := hmono n
+    have h2 := (S_eval_nonneg_of_two_le ht (n + 1)).1
+    simp only [S_one, eval_X] at h1
+    push_cast at h1 h2 h
+    omega
+
 variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [AddCommGroup H] [Module K H]
   {A : Matrix ι ι ℤ} (P : Realization A K H) (hA : A.IsGeneralizedCartan)
 
@@ -247,6 +286,71 @@ theorem alternating_apply_root_mem_closure {i j : ι} (hij : i ≠ j) (k : ℕ)
     have := intCast_smul_add_mem_closure (K := K) hS.1 (mul_nonneg hS.2 hji) (P.root i) (P.root j)
     push_cast at this
     simpa using this
+
+/-! ### The order of `rᵢ rⱼ` -/
+
+section Order
+
+variable [CharZero K]
+
+omit [CharZero K] in
+/-- `(rᵢ rⱼ)ⁿ αᵢ = (Sₙ(t) + Sₙ₋₁(t)) αᵢ - Sₙ₋₁(t) aⱼᵢ αⱼ` with `t = aᵢⱼ aⱼᵢ - 2`
+(a special case of `Module.reflection_mul_reflection_pow_apply_self`). -/
+lemma reflection_mul_reflection_pow_apply_root {i j : ι} (hij : i ≠ j) (n : ℕ) :
+    ((P.reflection hA i * P.reflection hA j) ^ n) (P.root i) =
+      P.rootOf ((((S ℤ n).eval ((A i j * A j i).toNat - 2 : ℤ) +
+        (S ℤ ((n : ℤ) - 1)).eval ((A i j * A j i).toNat - 2 : ℤ))) • Pi.single i 1 +
+        ((S ℤ ((n : ℤ) - 1)).eval ((A i j * A j i).toNat - 2 : ℤ) * -A j i) •
+          Pi.single j 1) := by
+  set p := (A i j * A j i).toNat with hp
+  have ht : ((p : ℤ) : K) - 2 = Dual.eval K H (P.coroot i) (P.root j) *
+      Dual.eval K H (P.coroot j) (P.root i) - 2 := by
+    simp only [Dual.eval_apply, P.root_coroot_mul_eq hA i j hij, hp]
+  have hcast : ((p : ℤ) : K) - 2 = (((p : ℤ) - 2 : ℤ) : K) := by push_cast; ring
+  refine (reflection_mul_reflection_pow_apply_self (x := P.root i)
+    (f := Dual.eval K H (P.coroot i)) (y := P.root j) (g := Dual.eval K H (P.coroot j))
+    (P.root_coroot_self hA i) (P.root_coroot_self hA j) _ _ ht).trans ?_
+  rw [hcast, S_eval_intCast, S_eval_intCast, map_add, map_zsmul, map_zsmul, rootOf_single,
+    rootOf_single, ← Int.cast_smul_eq_zsmul K, ← Int.cast_smul_eq_zsmul K]
+  simp only [Dual.eval_apply, P.root_coroot]
+  push_cast
+  ring_nf
+
+/-- **The order of `rᵢ rⱼ` is `mᵢⱼ`** ([Kac] Prop. 3.13 (check)): for `i ≠ j` it is `2, 3, 4, 6`
+or `∞` according as `aᵢⱼ aⱼᵢ = 0, 1, 2, 3` or `≥ 4` (`orderOf = 0` meaning infinite order). -/
+theorem orderOf_reflection_mul_reflection (i j : ι) :
+    orderOf (P.reflection hA i * P.reflection hA j) = A.coxeterMatrix i j := by
+  by_cases hij : i = j
+  · subst hij
+    simp [coxeterMatrix]
+  -- `(rᵢ rⱼ)ⁿ ≠ 1` for `0 < n < mᵢⱼ`
+  have hne : ∀ n, 0 < n → (A.coxeterMatrix i j = 0 ∨ n < A.coxeterMatrix i j) →
+      (P.reflection hA i * P.reflection hA j) ^ n ≠ 1 := by
+    intro n hn hnm h1
+    rw [A.coxeterMatrix_apply_of_ne hij] at hnm
+    have h := P.reflection_mul_reflection_pow_apply_root hA hij n
+    rw [h1] at h
+    change P.root i = _ at h
+    rw [← rootOf_single] at h
+    have h' := P.rootOf_injective h
+    have hi := congr_fun h' i
+    have hj := congr_fun h' j
+    simp only [Pi.add_apply, Pi.smul_apply, Pi.single_eq_same, Pi.single_apply, hij,
+      Ne.symm hij, ↓reduceIte, smul_eq_mul, mul_one, mul_zero, add_zero, zero_add] at hi hj
+    obtain ⟨hs, hp⟩ := S_eval_ne_zero_of_lt_coxeterEntry _ n hn hnm hi.symm
+    have hji : A j i = 0 := by
+      rcases mul_eq_zero.mp hj.symm with h | h
+      · exact absurd h hs
+      · omega
+    exact hp (by simp [hji])
+  rcases Nat.eq_zero_or_pos (A.coxeterMatrix i j) with h0 | hpos
+  · rw [h0, orderOf_eq_zero_iff']
+    exact fun n hn ↦ hne n hn (Or.inl h0)
+  · rw [orderOf_eq_iff hpos]
+    exact ⟨P.reflection_mul_reflection_pow_coxeterMatrix hA i j,
+      fun n hn hn0 ↦ hne n hn0 (Or.inr hn)⟩
+
+end Order
 
 /-! ### The positive cone `Q₊` -/
 
