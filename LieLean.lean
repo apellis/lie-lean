@@ -75,6 +75,10 @@ import LieLean.GroupTheory.Coxeter.Hecke.Bar
 import LieLean.GroupTheory.Coxeter.Hecke.BaseChange
 import LieLean.GroupTheory.Coxeter.Hecke.Basic
 import LieLean.GroupTheory.Coxeter.Hecke.Involutions
+import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig
+import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Inverse
+import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Properties
+import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Triangular
 import LieLean.GroupTheory.Coxeter.Hecke.Parabolic
 import LieLean.GroupTheory.Coxeter.Hecke.Presentation
 import LieLean.GroupTheory.Coxeter.Hecke.RPolynomial
