@@ -415,6 +415,22 @@ theorem natDegree_linePoly_le_and_coeff (Λ₀ δ : Dual K H) {d : ℕ}
       rw [map_add, coeff_add, map_add, map_add, Pi.add_apply, h.2, h'.2]⟩)
     ⟨by simp, by simp⟩ key
 
+/-- A product of powers of affine polynomials restricted to a line transversal to all of the
+hyperplanes through `λ₀` is nonzero. -/
+theorem linePoly_C_mul_prod_ne_zero [Infinite K] {κ : Type*} (s : Finset κ)
+    (a : κ → H) (c : κ → K) (e : κ → ℕ) {c₀ : K} (hc₀ : c₀ ≠ 0) {Λ₀ δ : Dual K H}
+    (hδ : ∀ k ∈ s, Λ₀ (a k) + c k = 0 → δ (a k) ≠ 0) :
+    linePoly K H Λ₀ δ (MvPolynomial.C c₀ * ∏ k ∈ s, affPoly K H (a k) (c k) ^ e k) ≠ 0 := by
+  rw [map_mul, map_prod, linePoly_C]
+  refine mul_ne_zero (C_ne_zero.mpr hc₀) (Finset.prod_ne_zero_iff.mpr fun k hk ↦ ?_)
+  rw [map_pow, linePoly_affPoly]
+  refine pow_ne_zero _ fun h ↦ ?_
+  have h0 := congrArg (coeff · 0) h
+  have h1 := congrArg (coeff · 1) h
+  simp only [coeff_add, coeff_C_mul_X, coeff_C, coeff_zero] at h0 h1
+  simp only [one_ne_zero, zero_ne_one, ↓reduceIte, add_zero, zero_add] at h0 h1
+  exact hδ k hk h0 h1
+
 /-- **Order of vanishing of a product of affine polynomials along a line.** Along a line
 `λ₀ + t δ` that is transversal to every hyperplane `λ(a_k) + c_k = 0` through `λ₀`, the product
 `c₀ ∏_k (λ(a_k) + c_k)^{e_k}` vanishes at `t = 0` to order `∑_{k : λ₀(a_k) + c_k = 0} e_k`. -/
@@ -442,6 +458,46 @@ theorem natTrailingDegree_linePoly_prod [Infinite K] [DecidableEq K] {κ : Type*
   refine Finset.sum_congr rfl fun k hk ↦ ?_
   rw [map_pow, natTrailingDegree_pow_eq_mul, (hfac k hk).2]
   split_ifs <;> simp
+
+/-! ### Leading terms of products of affine polynomials -/
+
+@[simp] lemma affPoly_zero (a : H) : affPoly K H a 0 = linPoly K H a := by
+  simp [affPoly]
+
+lemma homogeneousComponent_one_affPoly (a : H) (c : K) :
+    MvPolynomial.homogeneousComponent 1 (affPoly K H a c) = linPoly K H a := by
+  rw [affPoly, map_add, MvPolynomial.homogeneousComponent_of_mem (isHomogeneous_linPoly a),
+    MvPolynomial.homogeneousComponent_eq_zero _ _ (by simp)]
+  simp
+
+/-- The leading term of `c₀ ∏_k (λ(a_k) + c_k)^{e_k}` is `c₀ ∏_k λ(a_k)^{e_k}`. -/
+theorem hasTop_C_mul_prod_affPoly_pow {κ : Type*} (s : Finset κ) (a : κ → H) (c : κ → K)
+    (e : κ → ℕ) (c₀ : K) :
+    HasTop (∑ k ∈ s, e k) (MvPolynomial.C c₀ * ∏ k ∈ s, linPoly K H (a k) ^ e k)
+      (evalPoly K H (MvPolynomial.C c₀ * ∏ k ∈ s, affPoly K H (a k) (c k) ^ e k)) := by
+  have hpow (k : κ) : (affPoly K H (a k) (c k) ^ e k).totalDegree ≤ e k :=
+    (MvPolynomial.totalDegree_pow _ _).trans
+      (by simpa using Nat.mul_le_mul_left (e k) (totalDegree_affPoly_le (a k) (c k)))
+  have hprod : (∏ k ∈ s, affPoly K H (a k) (c k) ^ e k).totalDegree ≤ ∑ k ∈ s, e k :=
+    (MvPolynomial.totalDegree_finsetProd _ _).trans (Finset.sum_le_sum fun k _ ↦ hpow k)
+  refine ⟨_, ?_, ?_, rfl⟩
+  · refine (MvPolynomial.totalDegree_mul _ _).trans ?_
+    rw [MvPolynomial.totalDegree_C, zero_add]
+    exact hprod
+  · rw [MvPolynomial.homogeneousComponent_C_mul,
+      MvPolynomial.homogeneousComponent_prod_of_totalDegree_le s _ e fun k _ ↦ hpow k]
+    congr 1
+    refine Finset.prod_congr rfl fun k _ ↦ ?_
+    have := MvPolynomial.homogeneousComponent_prod_of_totalDegree_le (Finset.range (e k))
+      (fun _ ↦ affPoly K H (a k) (c k)) (fun _ ↦ 1)
+      fun _ _ ↦ totalDegree_affPoly_le (a k) (c k)
+    simp only [Finset.sum_const, Finset.card_range, smul_eq_mul, mul_one, Finset.prod_const,
+      homogeneousComponent_one_affPoly] at this
+    exact this
+
+lemma affProportional_zero_iff (a a₀ : H) :
+    AffProportional a (0 : K) a₀ 0 ↔ ∃ u : K, a = u • a₀ := by
+  simp [AffProportional]
 
 /-! ### Multiplicities of hyperplanes in products of affine polynomials -/
 
