@@ -255,6 +255,18 @@ theorem qBinomial_symm {n k : ℕ} (hk : k ≤ n) : qBinomial v n (n - k) = qBin
         rw [e1, e2]
         linear_combination -h1
 
+variable (v) in
+/-- The quantum binomial coefficients are invariant under `v ↦ v⁻¹`. -/
+theorem qBinomial_inv (n k : ℕ) : qBinomial v⁻¹ n k = qBinomial v n k := by
+  induction n generalizing k with
+  | zero => cases k <;> simp
+  | succ n ih =>
+    cases k with
+    | zero => simp
+    | succ k =>
+      rw [qBinomial_succ_succ, qBinomial_succ_succ, ih, ih, inv_inv]
+      linear_combination -qBinomial_mul_sub v n k
+
 /-! ### Quantum Serre elements -/
 
 variable {B : Type*} [Ring B] [Algebra k B]
@@ -603,5 +615,34 @@ theorem qSerre_mul_mul {t s : k} (ht : t ≠ 0) {g e h f : B} (hge : g * e = t �
             ring
           · simp only [mul_assoc]
   rw [key, smul_smul, mul_comm ((-1) ^ r * qBinomial v M r)]
+
+lemma qSerre_inv (m : ℕ) (a b : B) : qSerre v⁻¹ m a b = qSerre v m a b := by
+  simp [qSerre, qBinomial_inv]
+
+lemma qSerre_smul_smul (m : ℕ) (a b : B) (c d : k) :
+    qSerre v m (c • a) (d • b) = (c ^ m * d) • qSerre v m a b := by
+  simp only [qSerre, Finset.smul_sum, smul_pow, smul_mul_assoc, mul_smul_comm, smul_smul]
+  refine Finset.sum_congr rfl fun r hr ↦ ?_
+  have hr : r ≤ m := Nat.lt_succ_iff.1 (Finset.mem_range.1 hr)
+  congr 1
+  rw [show c ^ m = c ^ (m - r) * c ^ r by rw [← pow_add, Nat.sub_add_cancel hr]]
+  ring
+
+lemma map_qSerreDiv {B' : Type*} [Ring B'] [Algebra k B'] (f : B →ₐ[k] B') (m : ℕ)
+    (a b : B) : f (qSerreDiv v m a b) = qSerreDiv v m (f a) (f b) := by
+  simp [qSerreDiv, qDivPow, map_sum, map_smul, map_mul, map_pow]
+
+@[simp] lemma qSerreDiv_zero_right (m : ℕ) (a : B) : qSerreDiv v m a 0 = 0 := by
+  simp [qSerreDiv]
+
+lemma qSerreDiv_smul_smul (m : ℕ) (a b : B) (c d : k) :
+    qSerreDiv v m (c • a) (d • b) = (c ^ m * d) • qSerreDiv v m a b := by
+  simp only [qSerreDiv, qDivPow, Finset.smul_sum, smul_pow, smul_mul_assoc, mul_smul_comm,
+    smul_smul]
+  refine Finset.sum_congr rfl fun r hr ↦ ?_
+  have hr : r ≤ m := Nat.lt_succ_iff.1 (Finset.mem_range.1 hr)
+  congr 1
+  rw [show c ^ m = c ^ (m - r) * c ^ r by rw [← pow_add, Nat.sub_add_cancel hr]]
+  ring
 
 end QuantumGroup

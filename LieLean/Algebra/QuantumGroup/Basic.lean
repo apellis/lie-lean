@@ -81,18 +81,35 @@ variable {k Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : CartanDat
 /-- `K̃ᵢ = K_{dᵢ i}`: the element `dᵢ • coroot i ∈ Y`. -/
 def ktilde (i : I) : Y := D.d i • R.coroot i
 
+omit [DecidableEq I] in
+lemma root_ktilde (i j : I) : R.root j (ktilde R i) = D.d i * D.cartanMatrix i j := by
+  simp [ktilde, R.root_coroot]
+
+omit [DecidableEq I] in
+lemma root_ktilde_eq_dot (i j : I) : R.root j (ktilde R i) = D.dot i j := by
+  rw [root_ktilde, D.d_mul_cartanMatrix]
+
+omit [DecidableEq I] in
+lemma root_ktilde_comm (i j : I) : R.root j (ktilde R i) = R.root i (ktilde R j) := by
+  rw [root_ktilde, root_ktilde, D.d_mul_cartanMatrix_comm]
+
 section Relations
 
 variable {A : Type*} [Ring A] [Algebra k A]
 
-/-- The defining relations (b)–(e) of `U` ([Lus] 3.1.1 (check), Serre relations in the binomial
-form of [Jan] 4.3 (check)) for elements `eᵢ, fᵢ` and a family `κ : Y → A` with `κ(μ + ν) =
-κ(μ) κ(ν)`, `κ(0) = 1` (encoded as a monoid homomorphism `Multiplicative Y →* A`). -/
-structure Relations (e f : I → A) (κ : Multiplicative Y →* A) : Prop where
+/-- The defining relations (b)–(d) of `U` ([Lus] 3.1.1 (check)), i.e. all relations except the
+quantum Serre relations, for elements `eᵢ, fᵢ` and a family `κ : Y → A` with
+`κ(μ + ν) = κ(μ) κ(ν)`, `κ(0) = 1` (encoded as a monoid homomorphism `Multiplicative Y →* A`). -/
+structure PreRelations (e f : I → A) (κ : Multiplicative Y →* A) : Prop where
   K_mul_E : ∀ μ i, κ (.ofAdd μ) * e i = v ^ R.root i μ • (e i * κ (.ofAdd μ))
   K_mul_F : ∀ μ i, κ (.ofAdd μ) * f i = v ^ (-R.root i μ) • (f i * κ (.ofAdd μ))
   E_mul_F : ∀ i j, e i * f j - f j * e i = if i = j then
     (v ^ D.d i - (v ^ D.d i)⁻¹)⁻¹ • (κ (.ofAdd (ktilde R i)) - κ (.ofAdd (-ktilde R i))) else 0
+
+/-- The defining relations (b)–(e) of `U` ([Lus] 3.1.1 (check), Serre relations in the binomial
+form of [Jan] 4.3 (check)). -/
+structure Relations (e f : I → A) (κ : Multiplicative Y →* A) : Prop
+    extends PreRelations R v e f κ where
   serre_E : ∀ i j, i ≠ j → qSerre (v ^ D.d i) (1 - D.cartanMatrix i j).toNat (e i) (e j) = 0
   serre_F : ∀ i j, i ≠ j → qSerre (v ^ D.d i) (1 - D.cartanMatrix i j).toNat (f i) (f j) = 0
 

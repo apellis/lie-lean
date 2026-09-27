@@ -268,6 +268,33 @@ instance finiteDimensional_weightSpace (ν : I →₀ ℕ) : FiniteDimensional k
 
 /-! ### Twists and skew derivations -/
 
+/-- The diagonal automorphism `θⱼ ↦ cⱼ θⱼ` of `'f` (an endomorphism for arbitrary `c`). -/
+def diagTwist (c : I → k) : LusztigF k I →ₐ[k] LusztigF k I :=
+  FreeAlgebra.lift k fun j ↦ c j • θ k j
+
+@[simp] lemma diagTwist_θ (c : I → k) (j : I) : diagTwist c (θ k j) = c j • θ k j := by
+  simp [diagTwist]
+
+lemma diagTwist_diagTwist (c c' : I → k) (x : LusztigF k I) :
+    diagTwist c (diagTwist c' x) = diagTwist (c * c') x := by
+  have : (diagTwist c).comp (diagTwist c') = diagTwist (k := k) (c * c') := by
+    ext l
+    simp [smul_smul, mul_comm]
+  exact congr($this x)
+
+lemma diagTwist_comm (c c' : I → k) (x : LusztigF k I) :
+    diagTwist c (diagTwist c' x) = diagTwist c' (diagTwist c x) := by
+  rw [diagTwist_diagTwist, diagTwist_diagTwist, mul_comm]
+
+@[simp] lemma diagTwist_one (x : LusztigF k I) : diagTwist (fun _ ↦ (1 : k)) x = x := by
+  have : diagTwist (k := k) (I := I) (fun _ ↦ 1) = AlgHom.id k _ := by ext l; simp
+  rw [this, AlgHom.id_apply]
+
+@[simp] lemma counit_diagTwist (c : I → k) (x : LusztigF k I) :
+    counit (diagTwist c x) = counit x := by
+  have : counit.comp (diagTwist (k := k) (I := I) c) = counit := by ext l; simp
+  exact congr($this x)
+
 variable (D : CartanDatum I) (v : k)
 
 /-- The twist `σᵢ : 'f → 'f`, `θⱼ ↦ v^{i·j} θⱼ`; on `'f_ν` it is multiplication by
@@ -428,6 +455,37 @@ lemma lDeriv_twist (i j : I) (x : LusztigF k I) :
     split_ifs with h <;> simp [h, D.dot_comm]
   | mul a b ha hb =>
     rw [map_mul, lDeriv_mul, lDeriv_mul, ha, hb, map_add, map_mul, map_mul, twist_comm D v i j]
+    simp only [mul_smul_comm, smul_mul_assoc, smul_add]
+  | add a b ha hb => simp [ha, hb]
+
+omit [DecidableEq I] in
+lemma twist_eq_diagTwist (i : I) : twist D v i = diagTwist fun j ↦ v ^ D.dot i j := rfl
+
+/-- `rᵢ ∘ φ = cᵢ φ ∘ rᵢ` for the diagonal twist `φ : θⱼ ↦ cⱼ θⱼ`. -/
+lemma rDeriv_diagTwist (c : I → k) (i : I) (x : LusztigF k I) :
+    rDeriv D v i (diagTwist c x) = c i • diagTwist c (rDeriv D v i x) := by
+  induction x using FreeAlgebra.induction with
+  | grade0 a => simp
+  | grade1 l =>
+    simp only [diagTwist_θ, map_smul, rDeriv_θ]
+    split_ifs with h <;> simp [h]
+  | mul a b ha hb =>
+    rw [map_mul, rDeriv_mul, rDeriv_mul, ha, hb, map_add, map_mul, map_mul, twist_eq_diagTwist,
+      diagTwist_comm c]
+    simp only [mul_smul_comm, smul_mul_assoc, smul_add]
+  | add a b ha hb => simp [ha, hb]
+
+/-- `ᵢr ∘ φ = cᵢ φ ∘ ᵢr` for the diagonal twist `φ : θⱼ ↦ cⱼ θⱼ`. -/
+lemma lDeriv_diagTwist (c : I → k) (i : I) (x : LusztigF k I) :
+    lDeriv D v i (diagTwist c x) = c i • diagTwist c (lDeriv D v i x) := by
+  induction x using FreeAlgebra.induction with
+  | grade0 a => simp
+  | grade1 l =>
+    simp only [diagTwist_θ, map_smul, lDeriv_θ]
+    split_ifs with h <;> simp [h]
+  | mul a b ha hb =>
+    rw [map_mul, lDeriv_mul, lDeriv_mul, ha, hb, map_add, map_mul, map_mul, twist_eq_diagTwist,
+      diagTwist_comm c]
     simp only [mul_smul_comm, smul_mul_assoc, smul_add]
   | add a b ha hb => simp [ha, hb]
 
