@@ -10,6 +10,7 @@ import LieLean.Algebra.Lie.KacMoody.CategoryOSubmodule
 import LieLean.Algebra.Lie.KacMoody.Character
 import LieLean.Algebra.Lie.KacMoody.CharacterAntiInvariant
 import LieLean.Algebra.Lie.KacMoody.CharacterDenominator
+import LieLean.Algebra.Lie.KacMoody.CharacterFormula
 import LieLean.Algebra.Lie.KacMoody.CharacterFormula.Orbit
 import LieLean.Algebra.Lie.KacMoody.CharacterRing
 import LieLean.Algebra.Lie.KacMoody.CharacterVerma
