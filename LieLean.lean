@@ -41,6 +41,7 @@ import LieLean.Algebra.Lie.KacMoody.InvariantForm
 import LieLean.Algebra.Lie.KacMoody.InvariantFormAux
 import LieLean.Algebra.Lie.KacMoody.Jantzen
 import LieLean.Algebra.Lie.KacMoody.Jantzen.OrderFormula
+import LieLean.Algebra.Lie.KacMoody.Jantzen.SumFormula
 import LieLean.Algebra.Lie.KacMoody.Jantzen.Weight
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Criterion
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Determinant
