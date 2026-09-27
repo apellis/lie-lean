@@ -158,7 +158,15 @@ Done: `Matrix.Realization.reflection`, `coreflection`, `weylGroup`, `realRoots`,
   check what Mathlib's `CoxeterSystem` provides).
 - Real roots, the Tits cone, dominant chamber (only what later milestones use).
 
-### M5. Symmetrizable case: invariant form and Casimir  `[ ]`  ([Kac] Ch. 2)
+### M5. Symmetrizable case: invariant form and Casimir  `[~]`  ([Kac] Ch. 2)
+
+Done: §2.1 (`Matrix.Symmetrization`, `Realization.bilinForm`, `toDual` (ν), `dualBilinForm`,
+`rho`, `rhoCheck`; `LinearAlgebra/Matrix/Cartan/Symmetrizable.lean`); Thm. 2.2
+(`KacMoodyAlgebra.invForm`, `nondegenerate_invForm`, `lieInvariant_invForm`, `invForm_eq_zero`,
+`lie_eq_invForm_smul`, `invForm_e_f`, `rootSpacePairingEquiv`; on 𝔤̃: radical of the form is 𝔯,
+`invFormAux_eq_zero_iff_mem_maxIdeal`; `KacMoody/InvariantForm*.lean`). Thm. 2.2 holds for any
+symmetrizable integer matrix. Remaining: the Casimir operator (in progress).
+
 
 - For symmetrizable `A`: a nondegenerate symmetric invariant bilinear form `(·|·)` on `𝔤(A)`,
   nondegenerate on `𝔥`, pairing `𝔤_α` with `𝔤_{-α}` ([Kac] Thm. 2.2). Use Mathlib's
