@@ -62,6 +62,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Basic
 import LieLean.GroupTheory.Coxeter.Hecke.Bar
+import LieLean.GroupTheory.Coxeter.Hecke.BaseChange
 import LieLean.GroupTheory.Coxeter.Hecke.Basic
 import LieLean.GroupTheory.Coxeter.Hecke.Exchange
 import LieLean.GroupTheory.Coxeter.Hecke.RPolynomial
