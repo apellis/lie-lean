@@ -378,8 +378,13 @@ without Matsumoto) with basis `T w`, `T_simple_mul_T`, `T_mul_T`, quadratic rela
 `rPoly_self`, triangularity via subwords (`exists_sublist_of_rPoly_ne_zero`), polynomiality.
 General Coxeter facts: strong exchange condition `CoxeterSystem.mem_rightInvSeq_iff`,
 `exists_mul_eq_wordProd_eraseIdx` (`LieLean/GroupTheory/Coxeter/Exchange.lean`),
-`induction_mul_simple`. Remaining: presentation/`lift` (needs Matsumoto), KL basis and
-polynomials (needs Bruhat order).
+`induction_mul_simple`. Presentation (`Hecke/Presentation.lean`): `IwahoriHeckeAlgebra.lift`
+(quadratic + braid relations, via Matsumoto), `equivHeckeAlgebra` with the concrete
+`CoxeterMatrix.HeckeAlgebra`; involutions (`Hecke/Involutions.lean`): `ind`, `sgn`,
+`antiInvolution` (`T_w ↦ T_{w⁻¹}`), `signTwist`, `barSignTwist`; parabolic subalgebras
+(`Hecke/Parabolic.lean`): `parabolicHom` (injective), `leftBasis`/`rightBasis` (`𝓗` free over
+`𝓗_J` on minimal coset representatives), `InducedModule`, `inducedBasis`, `ParabolicModule`.
+Remaining: KL basis and polynomials (in progress).
 
 
 The Hecke algebra `𝓗(W)` over `ℤ[v, v⁻¹]` with standard basis `T_w` (constructed without
