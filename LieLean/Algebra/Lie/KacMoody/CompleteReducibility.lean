@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.Lie.KacMoody.CasimirIrreducible
+import LieLean.Algebra.Lie.KacMoody.Character
 
 /-!
 # Complete reducibility of integrable modules in the category `𝒪`
@@ -23,10 +24,9 @@ a vector of weight `λ` killed by all the `eᵢ` by `c(λ) = (λ + 2ρ | λ)`; f
 
 ## Main results
 
-* `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.quotient`,
-  `Matrix.Realization.KacMoodyAlgebra.IsIntegrable.quotient`,
-  `Matrix.Realization.KacMoodyAlgebra.IsIntegrable.lieSubmodule`: quotients of modules in `𝒪` lie
-  in `𝒪`; submodules and quotients of integrable modules in `𝒪` are integrable.
+* `Matrix.Realization.KacMoodyAlgebra.IsIntegrable.quotient`,
+  `Matrix.Realization.KacMoodyAlgebra.IsIntegrable.lieSubmodule`: quotients and submodules of
+  integrable modules in `𝒪` are integrable.
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.map_casimir`: the Casimir operator is
   natural with respect to morphisms of `𝔤(A)`-modules.
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.exists_equiv_irreducibleModule_of_isAtom`: an
@@ -130,50 +130,13 @@ theorem IsIntegrable.lieSubmodule (hI : IsIntegrable P V) (hV : IsCategoryO P V)
 
 section Quotient
 
-variable (N : LieSubmodule K P.KacMoodyAlgebra V)
-
-/-- If `V` is the sum of its weight spaces, the weight spaces of `V ⧸ N` are the images of those
-of `V`. -/
-lemma weightSpace_quotient_eq_map (hV : ⨆ μ, weightSpace P V μ = ⊤) (μ : Dual K H) :
-    weightSpace P (V ⧸ N) μ =
-      (weightSpace P V μ).map (LieSubmodule.Quotient.mk' N : V →ₗ[K] V ⧸ N) := by
-  refine le_antisymm (fun x hx ↦ ?_) ?_
-  · obtain ⟨v, rfl⟩ := LieSubmodule.Quotient.surjective_mk' N x
-    have hv : v ∈ ⨆ ν, weightSpace P V ν := hV ▸ Submodule.mem_top
-    have := Submodule.mem_map_of_mem (f := (LieSubmodule.Quotient.mk' N : V →ₗ[K] V ⧸ N)) hv
-    rw [Submodule.map_iSup] at this
-    refine mem_of_mem_iSup_of_le (h P) _ (fun ν ↦ ?_) hx this
-    rintro _ ⟨y, hy, rfl⟩
-    exact map_mem_weightSpaceOfMap P _ hy
-  · rintro _ ⟨y, hy, rfl⟩
-    exact map_mem_weightSpaceOfMap P _ hy
-
-variable {N}
-
-/-- A quotient of a module in `𝒪` lies in `𝒪`. -/
-theorem IsCategoryO.quotient (hV : IsCategoryO P V) : IsCategoryO P (V ⧸ N) where
-  iSup_weightSpaceOfMap_eq_top := by
-    simp only [weightSpace_quotient_eq_map N hV.iSup_weightSpaceOfMap_eq_top]
-    rw [← Submodule.map_iSup, hV.iSup_weightSpaceOfMap_eq_top, Submodule.map_top,
-      LinearMap.range_eq_top]
-    exact LieSubmodule.Quotient.surjective_mk' N
-  finiteDimensional_weightSpaceOfMap μ := by
-    have := hV.finiteDimensional_weightSpaceOfMap μ
-    change FiniteDimensional K (weightSpace P (V ⧸ N) μ)
-    rw [weightSpace_quotient_eq_map N hV.iSup_weightSpaceOfMap_eq_top]
-    infer_instance
-  exists_finset := by
-    obtain ⟨s, hs⟩ := hV.exists_finset
-    refine ⟨s, fun μ hμ ↦ hs μ fun hbot ↦ hμ ?_⟩
-    change weightSpace P (V ⧸ N) μ = ⊥
-    rw [weightSpace_quotient_eq_map N hV.iSup_weightSpaceOfMap_eq_top,
-      show weightSpace P V μ = ⊥ from hbot, Submodule.map_bot]
+variable {N : LieSubmodule K P.KacMoodyAlgebra V}
 
 /-- A quotient of an integrable module is integrable. -/
 theorem IsIntegrable.quotient (hV : IsIntegrable P V) : IsIntegrable P (V ⧸ N) where
   isHDiagonalizable := by
     have hV' : ⨆ μ, weightSpace P V μ = ⊤ := hV.isHDiagonalizable
-    simp only [IsHDiagonalizable, weightSpace_quotient_eq_map N hV']
+    simp only [IsHDiagonalizable, ← map_weightSpaceOfMap_quotient P N hV']
     rw [← Submodule.map_iSup, hV', Submodule.map_top, LinearMap.range_eq_top]
     exact LieSubmodule.Quotient.surjective_mk' N
   exists_pow_e_eq_zero i x := by
@@ -290,7 +253,7 @@ theorem casimir_sub_smul_mem (hV : IsCategoryO P V) (N : LieSubmodule K P.KacMoo
     {μ : Dual K H} {v : V} (hv : v ∈ weightSpace P V μ) (he : ∀ i, ⁅e P i, v⁆ ∈ N) :
     hB.casimir V hV.isPosFinite v - P.dualBilinForm S (μ + 2 • P.rho) μ • v ∈ N := by
   rw [← LieSubmodule.Quotient.mk_eq_zero, map_sub, map_smul,
-    hB.map_casimir _ hV.isPosFinite (hV.quotient (N := N)).isPosFinite,
+    hB.map_casimir _ hV.isPosFinite (hV.quotient N).isPosFinite,
     hB.casimir_apply_of_lie_e_eq_zero _ (map_mem_weightSpaceOfMap P _ hv) fun i ↦ by
       rw [← LieModuleHom.map_lie, (LieSubmodule.Quotient.mk_eq_zero _).mpr (he i)],
     sub_self]
@@ -376,9 +339,10 @@ theorem lieSpan_primitive_eq_top :
   have : Nontrivial (V ⧸ V') := ⟨⟨LieSubmodule.Quotient.mk' V' x, 0, by
     rwa [Ne, LieSubmodule.Quotient.mk_eq_zero]⟩⟩
   -- a primitive vector `v̄ ≠ 0` of `V / V'`, of dominant integral weight `μ`
-  obtain ⟨μ, v', hv', hv'0, hv'e⟩ := (hV.quotient (N := V')).exists_lie_e_eq_zero
+  obtain ⟨μ, v', hv', hv'0, hv'e⟩ := (hV.quotient V').exists_lie_e_eq_zero
   have hμ := isDominantIntegral_of_isIntegrable hA (hI.quotient (N := V')) hv' hv'e hv'0
-  rw [weightSpace_quotient_eq_map V' hV.iSup_weightSpaceOfMap_eq_top] at hv'
+  change v' ∈ weightSpaceOfMap (V ⧸ V') (h P) μ at hv'
+  rw [← map_weightSpaceOfMap_quotient P V' hV.iSup_weightSpaceOfMap_eq_top] at hv'
   obtain ⟨v, hv, rfl⟩ := hv'
   simp only [LieModuleHom.coe_toLinearMap] at hv'0 hv'e
   have hve : ∀ i, ⁅e P i, v⁆ ∈ V' := fun i ↦ by
