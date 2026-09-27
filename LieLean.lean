@@ -1,3 +1,4 @@
+import LieLean.Algebra.Lie.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.Basic
@@ -10,15 +11,22 @@ import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
 import LieLean.Algebra.Lie.KacMoody.Integrable
 import LieLean.Algebra.Lie.KacMoody.IntegrableRoots
 import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
+import LieLean.Algebra.Lie.KacMoody.InvariantForm
+import LieLean.Algebra.Lie.KacMoody.InvariantFormAux
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
+import LieLean.Algebra.Lie.KacMoody.SerrePresented
+import LieLean.Algebra.Lie.KacMoody.SerrePresented.Homology
+import LieLean.Algebra.Lie.KacMoody.SerrePresented.LowestWeight
 import LieLean.Algebra.Lie.KacMoody.TensorRep
 import LieLean.Algebra.Lie.KacMoody.Triangular
 import LieLean.Algebra.Lie.KacMoody.Verma
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
+import LieLean.Algebra.Lie.KacMoody.WeylLength
+import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
 import LieLean.Algebra.Lie.Subalgebra
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
@@ -28,3 +36,7 @@ import LieLean.Basic
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupExchange
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupTits
