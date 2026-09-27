@@ -8,7 +8,9 @@ import LieLean.Algebra.Lie.KacMoody.CasimirIrreducible
 import LieLean.Algebra.Lie.KacMoody.CategoryO
 import LieLean.Algebra.Lie.KacMoody.CategoryOSubmodule
 import LieLean.Algebra.Lie.KacMoody.Character
+import LieLean.Algebra.Lie.KacMoody.CharacterAntiInvariant
 import LieLean.Algebra.Lie.KacMoody.CharacterDenominator
+import LieLean.Algebra.Lie.KacMoody.CharacterFormula.Orbit
 import LieLean.Algebra.Lie.KacMoody.CharacterRing
 import LieLean.Algebra.Lie.KacMoody.CharacterVerma
 import LieLean.Algebra.Lie.KacMoody.CharacterWeyl
