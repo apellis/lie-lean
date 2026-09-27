@@ -5,6 +5,7 @@ import LieLean.Algebra.Lie.KacMoody.Basic
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
+import LieLean.Algebra.Lie.KacMoody.SerrePresented
 import LieLean.Algebra.Lie.KacMoody.TensorRep
 import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
