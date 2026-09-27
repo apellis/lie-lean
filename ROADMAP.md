@@ -353,7 +353,20 @@ the Bruhat order (via reflections `T` and length), the subword property, chain p
 standard parabolic subgroups `W_J`, minimal coset representatives `W^J` and `w = w^J w_J`;
 the longest element for finite `W`.
 
-### M11. Iwahori–Hecke algebras and Kazhdan–Lusztig theory  `[ ]`  ([HumC] Ch. 7, [KL], [BB] Ch. 5)
+### M11. Iwahori–Hecke algebras and Kazhdan–Lusztig theory  `[~]`  ([HumC] Ch. 7, [KL], [BB] Ch. 5)
+
+Done (`LieLean/GroupTheory/Coxeter/Hecke/`; convention `(T_s - q)(T_s + 1) = 0`, any commutative
+ring `R`, any `q : R`): `IwahoriHeckeAlgebra cs q` (constructed via the regular representation,
+without Matsumoto) with basis `T w`, `T_simple_mul_T`, `T_mul_T`, quadratic relation, `isUnit_T`,
+`algHom_ext`; specialization `equivMonoidAlgebra`, `baseChangeEquivMonoidAlgebra`
+(`𝓗 ⊗ S ≅ S[W]` when `q ↦ 1`), `specializeOne`; bar involution `bar`, `barL` (over `ℤ[v^±]`,
+`q = v²`) with `barL_barL`; `R`-polynomials `rPoly` with recursion `rPoly_mul_simple`,
+`rPoly_self`, triangularity via subwords (`exists_sublist_of_rPoly_ne_zero`), polynomiality.
+General Coxeter facts: strong exchange condition `CoxeterSystem.mem_rightInvSeq_iff`,
+`exists_mul_eq_wordProd_eraseIdx` (`LieLean/GroupTheory/Coxeter/Exchange.lean`),
+`induction_mul_simple`. Remaining: presentation/`lift` (needs Matsumoto), KL basis and
+polynomials (needs Bruhat order).
+
 
 The Hecke algebra `𝓗(W)` over `ℤ[v, v⁻¹]` with standard basis `T_w` (constructed without
 Matsumoto via the regular representation, [HumC] §7.1–7.3), the quadratic relation, the bar
@@ -361,7 +374,19 @@ involution, `R`-polynomials; existence and uniqueness of the Kazhdan–Lusztig b
 ([KL] Thm. 1.1), KL polynomials `P_{y,w}` (degree bound, `P_{w,w} = 1`, `P_{y,w} = 0` unless
 `y ≤ w`), specialization `v = 1` to `ℤ[W]`.
 
-### M12. Deeper category 𝒪  `[ ]`  ([Kac] §9, [HumO], [KK])
+### M12. Deeper category 𝒪  `[~]`  ([Kac] §9, [HumO], [KK])
+
+Done: `UniversalEnvelopingAlgebra.instIsDomain` (`UniversalEnveloping/Domain.lean`, via graded
+PBW); `KacMoody/VermaHom.lean`: `primitiveVectors`, `VermaModule.homEquiv`
+(`Hom(M(μ), V) ≃ primitive vectors of weight μ`), `injective_of_ne_zero`,
+`exists_injective_reflection`, `finrank_hom_reflection` (`M(rᵢ·λ) ↪ M(λ)`, unique up to scalar);
+`KacMoody/Grothendieck.lean`: `sumIrreducibleCharacter(_injective)`,
+`IsCategoryO.character_eq_sumIrreducibleCharacter` (`ch V = Σ [V:L(μ)] ch L(μ)`), `multiplicities`
+(class in the completed Grothendieck group), `character_eq_iff`, `multiplicity_eq_add`,
+`VermaModule.multiplicity_self`. Open: `dim Hom(M(μ), M(λ)) ≤ 1` in general — Humphreys' proof uses
+that `U(𝔫₋)` is Ore, which fails in Kac–Moody generality (`𝔫₋` may contain free Lie algebras);
+needs a literature check. Remaining: Kac–Kazhdan determinant, Jantzen filtration, BGG resolution.
+
 
 For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
 homomorphisms are injective and `dim Hom(M(μ), M(λ)) ≤ 1`; the embeddings `M(rᵢ·λ) ↪ M(λ)`;
@@ -379,14 +404,35 @@ Garland–Lepowsky theorem (Kostant's theorem in finite type): for `Λ` dominant
 `H_k(𝔫₋, L(Λ)) ≅ ⊕_{w ∈ W, ℓ(w) = k} K_{w(Λ+ρ)-ρ}` as `𝔥`-modules; the Euler characteristic
 recovers the Weyl–Kac formula.
 
-### M14. Crystals  `[ ]`  ([Kas], [Lit], [HK])
+### M14. Crystals  `[~]`  ([Kas], [Lit], [HK])
+
+Done (`LieLean/RepresentationTheory/Crystal/`): `CartanDatum`, `Crystal` (Kashiwara's axioms,
+`ε, φ` valued in `WithBot ℤ`), `StrictHom`, `Crystal.Equiv`; tensor product (Kashiwara's
+convention) `Crystal.tensor` with `tensorAssoc`; `IsSeminormal` and `IsSeminormal.tensor`;
+Kashiwara's `Sᵢ` (`reflection`, `reflection_reflection`, `wt_reflection`, `card_wt_reflection`);
+characters (`character_tensor`, `formalCharacter` in `CharacterRing`); subcrystals and closures;
+bridge `Realization.cartanDatum`. Remaining: Littelmann path model (`B(λ)`,
+`ch B(λ) = ch L(λ)`), braid relations for normal crystals.
+
 
 Abstract (Kashiwara) crystals for a Cartan datum: morphisms, the tensor product rule (signature
 rule), seminormal/normal crystals, Kashiwara's action of `W` on normal crystals; Littelmann's
 path model: LS paths, root operators, the crystal `B(λ)` for `λ` dominant integral, and
 `ch B(λ) = ch L(λ)` (via the Weyl–Kac formula of M8).
 
-### M15. Quantum groups  `[ ]`  ([Lus], [Jan], [HK])
+### M15. Quantum groups  `[~]`  ([Lus], [Jan], [HK])
+
+Classical bridge done (`KacMoody/SerreAssociative*.lean`): the associative Serre algebra
+`Matrix.SerreAssocAlgebra K A` (`FreeAlgebra K ι` modulo `Σ (-1)^r C(n,r) θᵢ^r θⱼ θᵢ^s`,
+`n = 1 - aᵢⱼ`; equals `(-1)^n (ad θᵢ)^n θⱼ`) with `lift`/`hom_ext`;
+`SerreAssocAlgebra.equivUniversalEnveloping : 𝒮 ≃ U(𝔫̂)` (any commutative ring);
+`AuxLieAlgebra.fHom_mem_serreIdeal_iff`, `SerrePresentedAlgebra.serreLieAlgebraEquivRangeFHom`
+(the Serre relations are the relations of `𝔫̂₋`, any GCM); for symmetrizable `A` (Gabber–Kac)
+`KacMoodyAlgebra.serreAssocAlgebraEquiv : 𝒮 ≃ U(𝔫₋)` and the associative presentation of
+target 2, `KacMoodyAlgebra.serreAssocQuotientEquiv : 𝒮 ⧸ Σ 𝒮 θᵢ^{nᵢ+1} ≃ L(Λ)`.
+In progress: `U_q`, Lusztig's `'f` and form; next: **quantum Gabber–Kac** ([Lus] §33.1: the
+radical of the form on `'f` is generated by the quantum Serre elements).
+
 
 For symmetrizable `A`: `U_q(𝔤)` over `ℚ(v)` (Drinfeld–Jimbo presentation with the realization's
 `𝔥`, or Lusztig's `K_μ`), Hopf algebra structure, triangular decomposition; Lusztig's algebra
@@ -405,7 +451,7 @@ beyond what the general Kac–Moody results give.
 (List self-contained, Mathlib-ready results here as they land.)
 
 - PBW: `LieLean/Algebra/Lie/UniversalEnveloping/PBW.lean`, `TensorDecomposition.lean`,
-  `Filtration.lean`, `Graded.lean`, `Free.lean`
+  `Filtration.lean`, `Graded.lean`, `Free.lean`, `Domain.lean`
   (`UniversalEnvelopingAlgebra.map` is also missing from Mathlib).
 - `FreeLieAlgebra.toFreeAlgebra_injective`, `FreeLieAlgebra.induction_on`
   (`LieLean/Algebra/Lie/Free.lean`).
@@ -420,9 +466,15 @@ beyond what the general Kac–Moody results give.
 - `Matrix.ToLieAlgebra` API (`lift`, `hom_ext`, generator lemmas),
   `AddMonoidAlgebra.degreeDerivation`,
   `LieAlgebra.ExtendScalars.evalHom` (`KacMoody/ToLieAlgebra*.lean`).
+- `LieAlgebra.ad_neg_pow_apply_eq_sum`, `UniversalEnvelopingAlgebra.mapEquiv`, and the generic part
+  of `KacMoody/SerreAssociative.lean` (associative Serre algebra ≃ `U` of the Serre Lie algebra).
 - `LieModuleEquiv.ofBijective`, `LieSubmodule.Quotient.lift` (`LieLean/Algebra/Lie/Quotient.lean`);
   `LieSubmodule.Subquotient`,
   `LieSubmodule.Quotient.nonempty_lieModuleEquiv_of_surjective` (`KacMoody/CompositionSeries.lean`).
+- Strong exchange condition (`LieLean/GroupTheory/Coxeter/Exchange.lean`, Mathlib lacks it);
+  Iwahori–Hecke algebra and bar involution (`GroupTheory/Coxeter/Hecke/{Basic,Bar}.lean`).
+- Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
+  Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
 - `Matrix.dotProduct_diagonal_mul_mulVec_reflection`
   (`LinearAlgebra/Matrix/Cartan/FiniteType.lean`).

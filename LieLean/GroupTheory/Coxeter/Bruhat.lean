@@ -3,7 +3,7 @@ Copyright (c) 2026 Alex Ellis. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
-import LieLean.GroupTheory.Coxeter.Exchange
+import LieLean.GroupTheory.Coxeter.Deletion
 import Mathlib.Data.List.Induction
 
 /-!
