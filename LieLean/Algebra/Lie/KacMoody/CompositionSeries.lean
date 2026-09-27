@@ -31,23 +31,17 @@ module `LieSubmodule.Subquotient V_{j-1} V_j`.
 * `Matrix.Realization.KacMoodyAlgebra.IsLocalFactor`: the condition on a factor of a local
   composition series.
 * `Matrix.Realization.KacMoodyAlgebra.IsLocalCompositionSeries`: local composition series.
-* `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.multiplicity`: the multiplicity `[V : L(μ)]`.
 
 ## Main results
 
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.exists_isLocalCompositionSeries`: local
   composition series exist ([Kac] Lemma 9.6 (check)).
-* `Matrix.Realization.KacMoodyAlgebra.IsLocalCompositionSeries.count_factorWeights_eq`,
-  `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.count_factorWeights_eq_multiplicity`: the
-  multiplicity of `L(μ)` in a local composition series for `λ ≤ μ` does not depend on the series
-  or on `λ` ([Kac] §9.6 (check)).
-* `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.mem_cone_and_eq_of_lie_e_mem`: if `V` is a
-  quotient of `M(Λ)` and `w ∈ V_μ` is a primitive vector modulo a submodule `N` (i.e. `w ∉ N` and
-  `eᵢ w ∈ N` for all `i`), then `μ ≤ Λ` and `(Λ + 2ρ | Λ) = (μ + 2ρ | μ)`.
-* `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.mem_cone_and_eq_of_mem_factorWeights`,
-  `Matrix.Realization.KacMoodyAlgebra.mem_cone_and_eq_of_mem_factorWeights`: **[Kac] Prop. 9.8
-  (check)**: if `V` is a quotient of `M(Λ)` (`A` symmetrizable) and `L(μ)` occurs in a local
-  composition series of `V`, then `μ ≤ Λ` and `(Λ + ρ | Λ + ρ) = (μ + ρ | μ + ρ)`.
+* `Matrix.Realization.KacMoodyAlgebra.exists_subquotient_equiv_irreducibleModule`: a vector of
+  weight `μ` that is primitive modulo a submodule `N₁` gives a subquotient `M₂ / M₁ ≅ L(μ)` with
+  `N₁ ⊆ M₁`.
+
+The multiplicities `[V : L(μ)]` are in `KacMoody/CompositionSeries/Multiplicity.lean`, and
+[Kac] Prop. 9.8 (check) in `KacMoody/CompositionSeries/Casimir.lean`.
 
 ## Proofs
 
