@@ -25,6 +25,8 @@ weight space `M_μ` is the space of `m ∈ M` with `φ(a) • m = μ(a) m` for a
 * `LieModule.mem_weightSpaceOfMap_of_sum_mem`, `LieModule.inf_iSup_weightSpaceOfMap_le`: a
   subspace stable under `φ(H)` which is contained in a sum of weight spaces is the sum of its
   intersections with the weight spaces.
+* `LieModule.mem_of_mem_iSup_of_le`: if `N ν ⊆ M_ν` for all `ν`, then
+  `M_μ ∩ ⨆ ν, N ν ⊆ N μ`.
 * `LieModule.lie_mem_weightSpaceOfMap`: `L_μ • M_ν ⊆ M_{μ+ν}`.
 -/
 
@@ -141,6 +143,20 @@ theorem iSupIndep_weightSpaceOfMap :
   have := mem_weightSpaceOfMap_of_sum_mem φ ⊥ (by simp) s' x' hx' (hsum ▸ Submodule.zero_mem _)
     μ (Finset.mem_insert_self _ _)
   simpa [x'] using this
+
+/-- If `N ν ≤ M_ν` for all `ν` and a weight vector `x ∈ M_μ` lies in `⨆ ν, N ν`, then `x ∈ N μ`. -/
+theorem mem_of_mem_iSup_of_le (N : Dual K H → Submodule K M)
+    (hN : ∀ ν, N ν ≤ weightSpaceOfMap M φ ν) {μ : Dual K H} {x : M}
+    (hx : x ∈ weightSpaceOfMap M φ μ) (hx' : x ∈ ⨆ ν, N ν) : x ∈ N μ := by
+  rw [iSup_split_single N μ, Submodule.mem_sup] at hx'
+  obtain ⟨a, ha, b, hb, rfl⟩ := hx'
+  have hb' : b ∈ weightSpaceOfMap M φ μ := by
+    have := Submodule.sub_mem _ hx (hN μ ha)
+    rwa [add_sub_cancel_left] at this
+  have hb'' : b ∈ ⨆ (ν) (_ : ν ≠ μ), weightSpaceOfMap M φ ν :=
+    (iSup₂_mono fun ν _ ↦ hN ν) hb
+  have := Submodule.disjoint_def.mp ((iSupIndep_weightSpaceOfMap (M := M) φ) μ) b hb' hb''
+  rwa [this, add_zero]
 
 /-- `L_μ • M_ν ⊆ M_{μ+ν}`. -/
 theorem lie_mem_weightSpaceOfMap {μ ν : Dual K H} {x : L} {m : M}
