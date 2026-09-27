@@ -67,6 +67,7 @@ import LieLean.Algebra.Lie.KacMoody.TensorProduct
 import LieLean.Algebra.Lie.KacMoody.TensorRep
 import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra
 import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra.Injective
+import LieLean.Algebra.Lie.KacMoody.Translation
 import LieLean.Algebra.Lie.KacMoody.Triangular
 import LieLean.Algebra.Lie.KacMoody.Verma
 import LieLean.Algebra.Lie.KacMoody.VermaHom
