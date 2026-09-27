@@ -13,7 +13,14 @@ import Mathlib.Tactic.LinearCombination
 
 Let `H` be a finite-dimensional vector space over an infinite field `K`. For `a ∈ H` nonzero and
 `c ∈ K`, the affine polynomial `λ ↦ λ(a) + c` on `H*` (`Module.Dual.affPoly a c`) cuts out an
-affine hyperplane. We show:
+affine hyperplane.
+
+## Main definitions
+
+* `Module.Dual.affPoly a c`: the polynomial `λ ↦ λ(a) + c`.
+* `Module.Dual.linePoly λ₀ δ`: restriction of polynomial functions to the line `λ₀ + t δ`.
+
+## Main results
 
 * a polynomial vanishing on the hyperplane is divisible by `λ(a) + c`
   (`Module.Dual.affPoly_dvd_of_forall`); hence if it is not divisible, it is nonzero at some point
@@ -28,6 +35,10 @@ affine hyperplane. We show:
 * the multiplicity of a hyperplane in a product of affine polynomials is well defined
   (`Module.Dual.sum_filter_eq_of_C_mul_prod_eq`), and conversely it determines the product up to a
   scalar (`Module.Dual.exists_prod_pow_eq_C_mul_prod_pow`).
+
+## References
+
+Elementary commutative algebra, used for the Kac–Kazhdan determinant formula ([KK] §3 (check)).
 -/
 
 open Polynomial

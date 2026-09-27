@@ -126,9 +126,7 @@ open scoped Classical in
 /-- A basis of weight vectors of an `𝔥`-diagonalizable module, obtained by collecting bases of
 the weight spaces. -/
 def diagWeightBasis (hV : IsHDiagonalizable P V) : Basis (DiagWeightBasisIndex P V) K V :=
-  (DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top
-    (iSupIndep_weightSpaceOfMap (M := V) (h P)) hV).collectedBasis
-    fun μ ↦ Basis.ofVectorSpace K (weightSpace P V μ)
+  hV.isInternal_weightSpace.collectedBasis fun μ ↦ Basis.ofVectorSpace K (weightSpace P V μ)
 
 lemma diagWeightBasis_mem (hV : IsHDiagonalizable P V) (k : DiagWeightBasisIndex P V) :
     diagWeightBasis hV k ∈ weightSpace P V k.1 := by

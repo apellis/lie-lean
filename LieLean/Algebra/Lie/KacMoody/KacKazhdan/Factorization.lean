@@ -14,6 +14,11 @@ polynomial function on `H*` whose zero set is contained in a finite union of aff
 `λ(a_k) + c_k = 0` is, up to a nonzero scalar, a product of powers of the equations
 `λ(a_k) + c_k` (`Module.Dual.exists_eq_C_mul_prod_affPoly_pow`).
 
+## Main results
+
+* `Module.Dual.exists_affPoly_dvd_of_forall`: some `λ(a_k) + c_k` divides a nonconstant such `F`.
+* `Module.Dual.exists_eq_C_mul_prod_affPoly_pow`: the factorization.
+
 ## Proof
 
 It suffices to show that some `λ(a_k) + c_k` divides `F` when `F` is not constant
@@ -26,6 +31,11 @@ hyperplane (these are finitely many nonzero polynomial conditions on `λ₁`). T
 since `K` is algebraically closed. The point `λ₁ + t₀ δ` then lies on some hyperplane, where `F`
 does not vanish by the choice of `λ₁`: a contradiction. (This replaces an appeal to the
 Nullstellensatz.)
+
+## References
+
+The statement is a standard consequence of the Nullstellensatz; the elementary argument above was
+reconstructed by us for the Kac–Kazhdan determinant formula ([KK] §3 (check)).
 -/
 
 open Polynomial

@@ -3,7 +3,6 @@ Copyright (c) 2026 Alex Ellis. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
-import Mathlib.Algebra.Lie.OfAssociative
 import Mathlib.LinearAlgebra.DFinsupp
 import Mathlib.LinearAlgebra.Finsupp.Span
 
@@ -13,8 +12,10 @@ import Mathlib.LinearAlgebra.Finsupp.Span
 Let `T : H →ₗ[K] End K M` be a linear family of endomorphisms of a vector space `M` (for instance
 the action of a Cartan subalgebra `𝔥` on a Chevalley–Eilenberg complex). For `μ ∈ H*`, the weight
 space is `M_μ = {m | T a m = μ(a) m for all a}`. This file contains the basic linear algebra of
-such weight spaces, in the same form as `LieLean.Algebra.Lie.Weights.OfMap` (which treats
-the case of a Lie module; there the family is `a ↦ ⁅φ a, ·⁆`).
+such weight spaces; `LieLean.Algebra.Lie.Weights.OfMap` specializes it to Lie modules (the family
+`a ↦ ⁅φ a, ·⁆`). Unlike for Mathlib's simultaneous generalized eigenspaces
+(`Module.End.independent_iInf_maxGenEigenspace_of_forall_mapsTo`), no commutativity of the
+family is needed.
 
 ## Main definitions
 
@@ -22,13 +23,35 @@ the case of a Lie module; there the family is `a ↦ ⁅φ a, ·⁆`).
 
 ## Main results
 
+* `iSupIndep.mem_of_mem_iSup_of_le`: if `N i ≤ M i` for an independent family `M` and
+  `x ∈ M i ∩ ⨆ j, N j`, then `x ∈ N i`.
 * `Module.End.iSupIndep_weightSpaceOf`: weight spaces for distinct weights are independent.
 * `Module.End.inf_iSup_weightSpaceOf_le`: a subspace stable under the family meets the sum of the
   weight spaces in the sum of its intersections with the weight spaces.
 * `Module.End.mem_of_mem_iSup_of_le`: if `N ν ⊆ M_ν` for all `ν`, then `M_μ ∩ ⨆ ν, N ν ⊆ N μ`.
+
+## References
+
+Elementary linear algebra (the usual argument that eigenvectors for distinct eigenvalues are
+linearly independent); no specific reference.
 -/
 
 open Module
+
+/-- If `N i ≤ M i` for an independent family `M`, and `x ∈ M i` lies in `⨆ j, N j`, then
+`x ∈ N i`. -/
+theorem iSupIndep.mem_of_mem_iSup_of_le {R M ι : Type*} [Ring R] [AddCommGroup M] [Module R M]
+    {F G : ι → Submodule R M} (hG : iSupIndep G) (hFG : ∀ j, F j ≤ G j) {i : ι} {x : M}
+    (hx : x ∈ G i) (hx' : x ∈ ⨆ j, F j) : x ∈ F i := by
+  classical
+  rw [iSup_split_single F i, Submodule.mem_sup] at hx'
+  obtain ⟨a, ha, b, hb, rfl⟩ := hx'
+  have hb' : b ∈ G i := by
+    have := Submodule.sub_mem _ hx (hFG i ha)
+    rwa [add_sub_cancel_left] at this
+  have hb'' : b ∈ ⨆ (j) (_ : j ≠ i), G j := (iSup₂_mono fun j _ ↦ hFG j) hb
+  have := Submodule.disjoint_def.mp (hG i) b hb' hb''
+  rwa [this, add_zero]
 
 namespace Module.End
 
@@ -133,15 +156,7 @@ theorem iSupIndep_weightSpaceOf : iSupIndep fun μ : Dual K H ↦ weightSpaceOf 
 /-- If `N ν ≤ M_ν` for all `ν` and a weight vector `x ∈ M_μ` lies in `⨆ ν, N ν`, then `x ∈ N μ`. -/
 theorem mem_of_mem_iSup_of_le (N : Dual K H → Submodule K M)
     (hN : ∀ ν, N ν ≤ weightSpaceOf T ν) {μ : Dual K H} {x : M}
-    (hx : x ∈ weightSpaceOf T μ) (hx' : x ∈ ⨆ ν, N ν) : x ∈ N μ := by
-  rw [iSup_split_single N μ, Submodule.mem_sup] at hx'
-  obtain ⟨a, ha, b, hb, rfl⟩ := hx'
-  have hb' : b ∈ weightSpaceOf T μ := by
-    have := Submodule.sub_mem _ hx (hN μ ha)
-    rwa [add_sub_cancel_left] at this
-  have hb'' : b ∈ ⨆ (ν) (_ : ν ≠ μ), weightSpaceOf T ν :=
-    (iSup₂_mono fun ν _ ↦ hN ν) hb
-  have := Submodule.disjoint_def.mp ((iSupIndep_weightSpaceOf T) μ) b hb' hb''
-  rwa [this, add_zero]
+    (hx : x ∈ weightSpaceOf T μ) (hx' : x ∈ ⨆ ν, N ν) : x ∈ N μ :=
+  (iSupIndep_weightSpaceOf T).mem_of_mem_iSup_of_le hN hx hx'
 
 end Module.End

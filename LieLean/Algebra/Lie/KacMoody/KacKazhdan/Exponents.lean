@@ -33,6 +33,24 @@ assembled in `KacKazhdan/Formula.lean`:
   (`kkMult`), i.e. `d(γ) = ∑_{n ≥ 1, γ/n ∈ Δ₊} mult(γ/n)`.
 
 These arguments were reconstructed by us (cf. [KK] §3 (check), [Kac] §9 (check)).
+
+## Main definitions
+
+* `Matrix.Realization.KacMoodyAlgebra.kkPairs`, `Matrix.Realization.KacMoodyAlgebra.kkMult`: the
+  pairs `(x, n)` with `n α_x ≤ η`, and their number on a given `γ`.
+* `Matrix.Realization.KacMoodyAlgebra.kkPoly`: `ψ_γ(λ) = 2 (λ + ρ | γ) - (γ | γ)`.
+
+## Main results
+
+* `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_eq_C_mul_prod_kkPoly`,
+  `Matrix.Realization.KacMoodyAlgebra.VermaModule.exponent_eq_mul_of_isotropic_ne_zero`,
+  `Matrix.Realization.KacMoodyAlgebra.VermaModule.sum_exponent_parallel_eq`: the three facts above.
+
+## References
+
+* [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
+  infinite-dimensional Lie algebras*, Adv. Math. **34** (1979), 97–108.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9 (check).
 -/
 
 open Module LieModule Module.Dual Polynomial

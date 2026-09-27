@@ -22,6 +22,7 @@ That `W_J` is itself a Coxeter group with Coxeter matrix `M` restricted to `J` i
 * `CoxeterSystem.parabolicSubgroup`: the standard parabolic subgroup `W_J`.
 * `CoxeterSystem.minCosetReps`: the set `W^J`.
 * `CoxeterSystem.minCosetRep`, `CoxeterSystem.parabolicComponent`: `w^J` and `w_J`.
+* `CoxeterSystem.minCosetRepsProdEquiv`: the parabolic decomposition `W^J × W_J ≃ W`.
 
 ## Main results
 
@@ -303,5 +304,21 @@ theorem exists_mul_eq_of_forall_not_isLeftDescent (J : Set B) (w : W) :
   refine ⟨v⁻¹, Subgroup.inv_mem _ hv, u⁻¹, fun i hi h ↦ hu i hi ?_, ?_⟩
   · rwa [← isRightDescent_inv_iff, inv_inv] at h
   · rw [← mul_inv_rev, he, inv_inv]
+
+variable (cs J) in
+/-- The parabolic decomposition as a bijection `W^J × W_J ≃ W`, `(d, v) ↦ d v`. -/
+noncomputable def minCosetRepsProdEquiv : cs.minCosetReps J × cs.parabolicSubgroup J ≃ W :=
+  Equiv.ofBijective (fun p ↦ (p.1 : W) * p.2)
+    ⟨fun p p' h ↦ by
+      obtain ⟨h1, h2⟩ := eq_and_eq_of_mul_eq_mul p.1.2 p'.1.2 p.2.2 p'.2.2 h
+      exact Prod.ext (Subtype.ext h1) (Subtype.ext h2),
+    fun w ↦ by
+      obtain ⟨u, hu, v, hv, rfl⟩ := cs.exists_mem_minCosetReps_mul_eq J w
+      exact ⟨(⟨u, hu⟩, ⟨v, hv⟩), rfl⟩⟩
+
+variable (cs J) in
+@[simp]
+theorem minCosetRepsProdEquiv_apply (p : cs.minCosetReps J × cs.parabolicSubgroup J) :
+    cs.minCosetRepsProdEquiv J p = (p.1 : W) * p.2 := rfl
 
 end CoxeterSystem

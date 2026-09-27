@@ -36,6 +36,11 @@ a non-isotropic hyperplane `H_γ` in `D_β` as `P(β - γ)` times a constant (cf
 [Jantzen, *Kontravariante Formen auf induzierten Darstellungen halbeinfacher Lie-Algebren*,
 Math. Ann. 226 (1977)] (check); the argument here was reconstructed by us).
 
+## Main results
+
+* `Matrix.Realization.KacMoodyAlgebra.VermaModule.finrank_inf_weightSpace_of_generic`,
+  `Matrix.Realization.KacMoodyAlgebra.VermaModule.natTrailingDegree_eq_mul_of_generic`.
+
 ## Proof
 
 `dim N_ξ = ∑_μ [N : L(μ)] dim L(μ)_ξ` (`IsCategoryO.finrank_weightSpace_eq_finsum`). If

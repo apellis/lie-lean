@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.Lie.Homology.Complex
-import LieLean.Algebra.Lie.Homology.WeightSpace
+import LieLean.LinearAlgebra.Eigenspace.Weight
 
 /-!
 # Weight decomposition of the Chevalley–Eilenberg complex

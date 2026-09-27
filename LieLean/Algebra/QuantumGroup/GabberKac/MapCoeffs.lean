@@ -29,6 +29,11 @@ We also record the subspaces `FreeAlgebra.wordSpan R μ` spanned by the words of
 * `FreeAlgebra.wordBasis_apply`, `FreeAlgebra.ι_mul_wordBasis`.
 * `FreeAlgebra.mapCoeffs_wordBasis`, `FreeAlgebra.wordBasis_repr_mapCoeffs`,
   `FreeAlgebra.algebraMapInv_mapCoeffs`.
+
+## References
+
+Elementary; this is API for Mathlib's `FreeAlgebra` used in the proof of the quantum Gabber–Kac
+theorem.
 -/
 
 noncomputable section

@@ -18,6 +18,8 @@ Lusztig's algebra over a field `k ∋ v` with its classical limit `v = 1` over `
 `ℚ[T, T⁻¹]` of Laurent polynomials, which maps to `k` (`T ↦ v`) and to `ℚ` (`T ↦ 1`). This file
 contains the generic ingredients.
 
+## Main results
+
 * A **specialization lemma** for linear independence
   (`LinearIndependent.of_comp_ratHom`): if vectors with entries in a commutative ring `R` become
   linearly independent over `ℚ` under a ring homomorphism `φ₁ : R → ℚ`, then they are linearly
@@ -25,9 +27,9 @@ contains the generic ingredients.
   uses the Gram determinant `det(Mᵀ M)`, which is nonzero over `ℚ` since `ℚ` is ordered.
 * `LaurentPolynomial.eval₂_injective_of_transcendental`: evaluation of `ℚ[T, T⁻¹]` at a
   transcendental element is injective.
-* Quantum integers, binomial coefficients and Serre elements with respect to a unit `q` of a
-  commutative ring (`QuantumGroup.qIntU`, `QuantumGroup.qBinomialU`, `QuantumGroup.qSerreU`), and
-  their images under ring homomorphisms to fields (`QuantumGroup.map_qBinomialU`, …).
+
+The quantum integers and binomial coefficients with respect to a unit of a commutative ring
+(`QuantumGroup.qIntU`, `QuantumGroup.qBinomialU`) are in `LieLean.Algebra.QuantumGroup.QBinomial`.
 
 ## References
 
@@ -111,76 +113,3 @@ theorem LaurentPolynomial.eval₂_injective_of_transcendental {k : Type*} [Field
     LaurentPolynomial.isUnit_T _
   exact (hu.mul_left_eq_zero).1 h3
 
-namespace QuantumGroup
-
-/-! ### Quantum integers and binomial coefficients with respect to a unit -/
-
-variable {R : Type*} [CommRing R] (q : Rˣ)
-
-/-- The quantum integer `[n]_q = Σ_{s < n} q^{n-1-2s}` for a unit `q` of a commutative ring. -/
-def qNatU (n : ℕ) : R := ∑ s ∈ range n, ((q ^ (n - 1 - s) * q⁻¹ ^ s : Rˣ) : R)
-
-/-- The quantum integer `[n]_q` for `n ∈ ℤ`, with `[-n]_q = -[n]_q`. -/
-def qIntU : ℤ → R
-  | .ofNat n => qNatU q n
-  | .negSucc n => -qNatU q (n + 1)
-
-/-- The quantum binomial coefficient `[n j]_q` for a unit `q` of a commutative ring, by the Pascal
-rule of `QuantumGroup.qBinomial`. -/
-def qBinomialU : ℕ → ℕ → R
-  | _, 0 => 1
-  | 0, _ + 1 => 0
-  | n + 1, j + 1 => ((q⁻¹ ^ (j + 1) : Rˣ) : R) * qBinomialU n (j + 1) +
-      ((q ^ (n - j) : Rˣ) : R) * qBinomialU n j
-
-variable {B : Type*} [Ring B] [Algebra R B]
-
-/-- The quantum Serre element `Σ_{r=0}^{m} (-1)^r [m r]_q a^{m-r} b a^r` for a unit `q`. -/
-def qSerreU (m : ℕ) (a b : B) : B :=
-  ∑ r ∈ range (m + 1), ((-1) ^ r * qBinomialU q m r) • (a ^ (m - r) * b * a ^ r)
-
-variable {k : Type*} [Field k] (φ : R →+* k)
-
-lemma map_units_inv' : φ ((q⁻¹ : Rˣ) : R) = (φ q)⁻¹ := by
-  refine (eq_inv_of_mul_eq_one_right ?_)
-  rw [← map_mul, Units.mul_inv, map_one]
-
-lemma map_units_val_pow_inv (a b : ℕ) :
-    φ ((q ^ a * q⁻¹ ^ b : Rˣ) : R) = φ q ^ a * (φ q)⁻¹ ^ b := by
-  rw [Units.val_mul, map_mul, Units.val_pow_eq_pow_val, Units.val_pow_eq_pow_val, map_pow,
-    map_pow, map_units_inv']
-
-lemma map_qNatU (n : ℕ) : φ (qNatU q n) = qInt (φ q) n := by
-  simp only [qNatU, map_sum, map_units_val_pow_inv, qInt]
-
-lemma map_qBinomialU (n j : ℕ) : φ (qBinomialU q n j) = qBinomial (φ q) n j := by
-  induction n generalizing j with
-  | zero => cases j <;> simp [qBinomialU, qBinomial]
-  | succ n ih =>
-    cases j with
-    | zero => simp [qBinomialU]
-    | succ j =>
-      rw [qBinomialU, qBinomial_succ_succ, map_add, map_mul, map_mul, ih, ih,
-        Units.val_pow_eq_pow_val, Units.val_pow_eq_pow_val, map_pow, map_pow, map_units_inv']
-
-/-- `(q - q⁻¹) [n]_q = qⁿ - q⁻ⁿ` after mapping to a field, for `n ∈ ℤ`. -/
-lemma sub_mul_map_qIntU (n : ℤ) :
-    (φ q - (φ q)⁻¹) * φ (qIntU q n) = φ q ^ n - φ q ^ (-n) := by
-  cases n with
-  | ofNat n =>
-    rw [qIntU, map_qNatU, qInt_mul_sub]
-    simp [zpow_neg]
-  | negSucc n =>
-    rw [qIntU, map_neg, map_qNatU, mul_neg, qInt_mul_sub, Int.neg_negSucc, zpow_natCast,
-      zpow_negSucc, inv_pow]
-    ring
-
-/-- At `q ↦ 1` the quantum integer `[n]_q` becomes `n`. -/
-lemma map_qIntU_of_eq_one (hφ : φ q = 1) (n : ℤ) : φ (qIntU q n) = n := by
-  cases n with
-  | ofNat n => simp [qIntU, map_qNatU, hφ, qInt]
-  | negSucc n =>
-    rw [qIntU, map_neg, map_qNatU, hφ]
-    simp [qInt, Int.negSucc_eq]
-
-end QuantumGroup

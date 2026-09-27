@@ -114,21 +114,6 @@ theorem mem_iSup_maxGenEigenspace_of_prod_apply_eq_zero (f : End K M) (l : List 
 
 end Module.End
 
-/-- If `N i ≤ M i` for an independent family `M`, and `x ∈ M i` lies in `⨆ j, N j`, then
-`x ∈ N i`. -/
-theorem iSupIndep.mem_of_mem_iSup_of_le {K M ι : Type*} [Field K] [AddCommGroup M] [Module K M]
-    {F G : ι → Submodule K M} (hG : iSupIndep G) (hFG : ∀ j, F j ≤ G j) {i : ι} {x : M}
-    (hx : x ∈ G i) (hx' : x ∈ ⨆ j, F j) : x ∈ F i := by
-  classical
-  rw [iSup_split_single F i, Submodule.mem_sup] at hx'
-  obtain ⟨a, ha, b, hb, rfl⟩ := hx'
-  have hb' : b ∈ G i := by
-    have := Submodule.sub_mem _ hx (hFG i ha)
-    rwa [add_sub_cancel_left] at this
-  have hb'' : b ∈ ⨆ (j) (_ : j ≠ i), G j := (iSup₂_mono fun j _ ↦ hFG j) hb
-  have := Submodule.disjoint_def.mp (hG i) b hb' hb''
-  rwa [this, add_zero]
-
 namespace Matrix.Realization.KacMoodyAlgebra
 
 variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K] [AddCommGroup H]
