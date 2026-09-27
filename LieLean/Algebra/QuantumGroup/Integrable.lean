@@ -39,6 +39,7 @@ by us.
 * `QuantumGroup.pow_mul_mem_span_of_qSerre`.
 * `QuantumGroup.IsIntegrable.quotient`: quotients of integrable modules are integrable.
 * `QuantumGroup.FPowQuotient.isIntegrable`, `QuantumGroup.IrreducibleModule.isIntegrable`.
+* `QuantumGroup.FPowQuotient.toIrreducibleModule`: the surjection `L̃_q(Λ) → L_q(Λ)`.
 
 ## References
 
@@ -445,5 +446,16 @@ abbrev FPowQuotient (Λ : Y →+ ℤ) : Type _ :=
 theorem FPowQuotient.isIntegrable [NeZero v] (Λ : Y →+ ℤ) :
     IsIntegrable R v (FPowQuotient R v Λ) :=
   VermaModule.isIntegrable_quotient le_rfl
+
+/-- For dominant `Λ`, `L_q(Λ)` is a quotient of `L̃_q(Λ)` ([Jan] 5.9 (check)). -/
+def FPowQuotient.toIrreducibleModule [NeZero v] (hR : R.IsXRegular)
+    (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) {Λ : Y →+ ℤ} (hΛ : ∀ i, 0 ≤ Λ (R.coroot i)) :
+    FPowQuotient R v Λ →ₗ[QuantumGroup R v] IrreducibleModule R v Λ :=
+  Submodule.factor (VermaModule.fPowSubmodule_le_maxSubmodule hR hv' hΛ)
+
+theorem FPowQuotient.toIrreducibleModule_surjective [NeZero v] (hR : R.IsXRegular)
+    (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) {Λ : Y →+ ℤ} (hΛ : ∀ i, 0 ≤ Λ (R.coroot i)) :
+    Function.Surjective (FPowQuotient.toIrreducibleModule hR hv' hΛ) :=
+  Submodule.factor_surjective (VermaModule.fPowSubmodule_le_maxSubmodule hR hv' hΛ)
 
 end QuantumGroup
