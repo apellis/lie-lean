@@ -4,17 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.Lie.KacMoody.IntegrableRoots
+import LieLean.Algebra.Lie.KacMoody.InvariantForm
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 
 /-!
-# Kac–Moody algebras of finite type are finite-dimensional
+# Kac–Moody algebras of finite type are finite-dimensional and semisimple
 
 Let `A` be a Cartan matrix of finite type (Mathlib's `Matrix.IsFiniteCartan`: `D A` is symmetric
 positive definite for a positive diagonal integer matrix `D`), `K` a field of characteristic
 zero and `(𝔥, Π, Π^∨)` a realization of `A` with `𝔥` finite-dimensional. We prove that every root
 of `𝔤(A)` is real, that there are finitely many roots, each of multiplicity one, and hence that
-`𝔤(A)` is finite-dimensional ([Kac] Prop. 4.9 and Prop. 5.10 (a) (check); Kac states these for
-indecomposable `A`, which is not needed here).
+`𝔤(A)` is finite-dimensional and semisimple ([Kac] Prop. 4.9 and Prop. 5.10 (a) (check); Kac
+states these for indecomposable `A`, which is not needed here).
 
 ## The argument
 
@@ -34,6 +35,15 @@ Since the set of real roots is finite (`Matrix.Realization.finite_realRoots`) an
 multiplicity one (`Matrix.Realization.KacMoodyAlgebra.rank_rootSpace_of_mem_realRoots`), the root
 space decomposition `𝔤(A) = 𝔥 ⊕ ⨁_{α ∈ Δ} 𝔤_α` shows that `𝔤(A)` is finite-dimensional.
 
+For semisimplicity we use Mathlib's criterion
+`LieAlgebra.InvariantForm.isSemisimple_of_nondegenerate` with the nondegenerate invariant form
+of [Kac] Thm. 2.2. It remains to see that `𝔤(A)` has no nonzero abelian ideals. A nonzero ideal
+`J` of `𝔤(A)` contains a nonzero `h ∈ 𝔥` (its preimage in `𝔤̃(A)` cannot meet `𝔥` trivially, by
+maximality of `𝔯`; [Kac] §1.3 (check)). Since `A` is nonsingular, the simple roots span `𝔥*`,
+so `⟨αᵢ, h⟩ ≠ 0` for some `i`, and then `[h, [h, eᵢ]] = ⟨αᵢ, h⟩² eᵢ ≠ 0` with `h, [h, eᵢ] ∈ J`.
+(Kac instead uses [Kac] Prop. 1.7 (check) for indecomposable `A`; this argument was
+reconstructed.)
+
 ## Main results
 
 * `Matrix.Realization.KacMoodyAlgebra.neg_mem_roots`: `Δ = -Δ`.
@@ -42,11 +52,16 @@ space decomposition `𝔤(A) = 𝔥 ⊕ ⨁_{α ∈ Δ} 𝔤_α` shows that `�
 * `Matrix.Realization.KacMoodyAlgebra.finrank_rootSpace_of_mem_roots`: all root spaces are
   one-dimensional.
 * `Matrix.Realization.KacMoodyAlgebra.finiteDimensional`: `𝔤(A)` is finite-dimensional.
+* `Matrix.Realization.KacMoodyAlgebra.exists_h_mem_of_ne_bot`: every nonzero ideal of `𝔤(A)`
+  meets `𝔥` (any `A`).
+* `Matrix.Realization.KacMoodyAlgebra.not_isLieAbelian_of_ne_bot`: for `A` of finite type, `𝔤(A)`
+  has no nonzero abelian ideals.
+* `Matrix.Realization.KacMoodyAlgebra.isSemisimple`: `𝔤(A)` is semisimple.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.7, §4.9, §5.1,
-  Prop. 5.10.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.3, §2.2, §3.7,
+  §4.9, §5.1, Prop. 5.10.
 -/
 
 open Module LieModule LieAlgebra
@@ -57,14 +72,6 @@ namespace Matrix.Realization.KacMoodyAlgebra
 
 variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K] [AddCommGroup H]
   [Module K H] {A : Matrix ι ι ℤ} (P : Realization A K H)
-
-/-- The Chevalley involution maps `𝔤_μ` to `𝔤_{-μ}`. -/
-lemma chevalleyInvolution_mem_rootSpace {μ : Dual K H} {x : P.KacMoodyAlgebra}
-    (hx : x ∈ rootSpace P μ) : chevalleyInvolution P x ∈ rootSpace P (-μ) := by
-  intro a
-  have := congr_arg (chevalleyInvolution P) (hx (-a))
-  simp only [LieHom.map_lie, map_neg, chevalleyInvolution_h, neg_neg, map_smul] at this
-  rw [this, LinearMap.neg_apply, neg_smul]
 
 /-- `Δ = -Δ` ([Kac] §1.3). -/
 theorem neg_mem_roots {μ : Dual K H} (hμ : μ ∈ roots P) : -μ ∈ roots P := by
@@ -169,5 +176,57 @@ theorem finiteDimensional [FiniteDimensional K H] : FiniteDimensional K P.KacMoo
       exact bot_le
     · exact le_iSup₂_of_le μ (by simp [S, roots, h0, hb]) le_rfl
   exact Module.finite_def.mpr (top_le_iff.mp htop ▸ hfg)
+
+omit hA in
+/-- A nonzero ideal of `𝔤(A)` meets `𝔥` nontrivially ([Kac] §1.3 (check)): its preimage in
+`𝔤̃(A)` would otherwise be an ideal meeting `𝔥` trivially, hence contained in `𝔯`. -/
+theorem exists_h_mem_of_ne_bot {J : LieIdeal K P.KacMoodyAlgebra} (hJ : J ≠ ⊥) :
+    ∃ a : H, a ≠ 0 ∧ h P a ∈ J := by
+  by_contra! hJh
+  refine hJ (eq_bot_iff.mpr fun x hx ↦ ?_)
+  obtain ⟨y, rfl⟩ := π_surjective P x
+  have hle : J.comap (π P) ≤ AuxLieAlgebra.maxIdeal P := by
+    rw [AuxLieAlgebra.le_maxIdeal_iff, eq_bot_iff]
+    rintro _ ⟨hz, a, rfl⟩
+    have ha : h P a ∈ J := by
+      rw [← π_h]
+      exact LieIdeal.mem_comap.mp hz
+    by_cases ha0 : a = 0
+    · simp [ha0]
+    · exact absurd ha (hJh a ha0)
+  exact (LieSubmodule.mem_bot _).mpr ((π_eq_zero_iff P).mpr (hle (LieIdeal.mem_comap.mpr hx)))
+
+/-- For `A` of finite type, `𝔤(A)` has no nonzero abelian ideals: if `h ∈ 𝔥 ∩ J` is nonzero,
+some `⟨αᵢ, h⟩` is nonzero (the simple roots span `𝔥*`), and then `[h, [h, eᵢ]] ≠ 0` with
+`h, [h, eᵢ] ∈ J`. -/
+theorem not_isLieAbelian_of_ne_bot [FiniteDimensional K H] {J : LieIdeal K P.KacMoodyAlgebra}
+    (hJ : J ≠ ⊥) : ¬IsLieAbelian J := by
+  obtain ⟨a, ha0, ha⟩ := exists_h_mem_of_ne_bot P hJ
+  obtain ⟨i, hi⟩ : ∃ i, P.root i a ≠ 0 := by
+    by_contra! h
+    refine ha0 ((Module.forall_dual_apply_eq_zero_iff K a).mp fun φ ↦ ?_)
+    have hφ : φ ∈ Submodule.span K (Set.range P.root) := by
+      rw [P.span_root_eq_top_of_isFiniteCartan hA]; trivial
+    induction hφ using Submodule.span_induction with
+    | mem x hx => obtain ⟨j, rfl⟩ := hx; exact h j
+    | zero => rfl
+    | add x y _ _ hx hy => rw [LinearMap.add_apply, hx, hy, add_zero]
+    | smul c x _ hx => rw [LinearMap.smul_apply, hx, smul_zero]
+  rw [LieSubmodule.lie_abelian_iff_lie_self_eq_bot, LieSubmodule.lie_eq_bot_iff]
+  intro hab
+  have h1 : ⁅h P a, e P i⁆ ∈ J := lie_mem_left K _ J _ _ ha
+  have h2 := hab _ ha _ h1
+  rw [lie_h_e, lie_smul, lie_h_e, smul_smul, smul_eq_zero] at h2
+  exact h2.elim (fun h ↦ hi (mul_self_eq_zero.mp h)) (e_ne_zero P i)
+
+/-- For `A` of finite type (and `𝔥` finite-dimensional), `𝔤(A)` is a semisimple Lie algebra
+([Kac] Prop. 4.9 (check)). The proof uses the nondegenerate invariant form of [Kac] Thm. 2.2 and
+the absence of nonzero abelian ideals (`not_isLieAbelian_of_ne_bot`). -/
+theorem isSemisimple [FiniteDimensional K H] : IsSemisimple K P.KacMoodyAlgebra := by
+  have := finiteDimensional P hA
+  obtain ⟨S⟩ := isSymmetrizable_iff_nonempty_symmetrization.mp hA.isSymmetrizable
+  exact InvariantForm.isSemisimple_of_nondegenerate (invForm P S) (nondegenerate_invForm P S)
+    (lieInvariant_invForm P S) (isSymm_invForm P S).isRefl
+    fun I hI ↦ not_isLieAbelian_of_ne_bot P hA hI.1
 
 end Matrix.Realization.KacMoodyAlgebra
