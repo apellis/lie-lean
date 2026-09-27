@@ -367,7 +367,7 @@ the Bruhat order (via reflections `T` and length), the subword property, chain p
 standard parabolic subgroups `W_J`, minimal coset representatives `W^J` and `w = w^J w_J`;
 the longest element for finite `W`.
 
-### M11. Iwahori–Hecke algebras and Kazhdan–Lusztig theory  `[~]`  ([HumC] Ch. 7, [KL], [BB] Ch. 5)
+### M11. Iwahori–Hecke algebras and Kazhdan–Lusztig theory  `[x]`  ([HumC] Ch. 7, [KL], [BB] Ch. 5)
 
 Done (`LieLean/GroupTheory/Coxeter/Hecke/`; convention `(T_s - q)(T_s + 1) = 0`, any commutative
 ring `R`, any `q : R`): `IwahoriHeckeAlgebra cs q` (constructed via the regular representation,
@@ -384,7 +384,13 @@ General Coxeter facts: strong exchange condition `CoxeterSystem.mem_rightInvSeq_
 `antiInvolution` (`T_w ↦ T_{w⁻¹}`), `signTwist`, `barSignTwist`; parabolic subalgebras
 (`Hecke/Parabolic.lean`): `parabolicHom` (injective), `leftBasis`/`rightBasis` (`𝓗` free over
 `𝓗_J` on minimal coset representatives), `InducedModule`, `inducedBasis`, `ParabolicModule`.
-Remaining: KL basis and polynomials (in progress).
+Kazhdan–Lusztig theory (`Hecke/KazhdanLusztig*.lean`, [KL]'s normalization
+`C'_w = v^{-ℓ(w)} Σ_{y≤w} P_{y,w}(q) T_y`): `existsUnique_klBasis` ([KL] Thm. 1.1), `klBasis`,
+`klPoly`, `klMu`, `klPoly_self`, `klPoly_eq_zero_of_not_bruhatLE`, degree bound
+`two_mul_natDegree_klPoly_add_length_lt`, `klSimple_mul_klBasis`, recursion `klPoly_simple_mul`
+([KL] (2.2.c)), `klPoly_simple_mul_left`, `coeff_zero_klPoly`, `klMu_eq_one`,
+`klPoly_inv_inv`, `specializeOne_klBasis`; Soergel's normalization up to `v ↦ v⁻¹`
+(`coeff_toFinsupp_klBasis_eq_zero`). Not done: dihedral examples, parabolic KL polynomials.
 
 
 The Hecke algebra `𝓗(W)` over `ℤ[v, v⁻¹]` with standard basis `T_w` (constructed without
@@ -415,7 +421,22 @@ criterion for `[M(λ) : L(μ)] ≠ 0` ([KK]); the Jantzen filtration and sum for
 the BGG resolution of `L(Λ)` for `Λ` dominant integral ([HumO] Ch. 6; [Kum] Ch. 3 in
 Kac–Moody generality).
 
-### M13. Lie algebra homology and Kostant's theorem  `[ ]`  ([GL], [Kum] Ch. 3)
+### M13. Lie algebra homology and Kostant's theorem  `[~]`  ([GL], [Kum] Ch. 3)
+
+Done (`LieLean/Algebra/Lie/Homology/`, `KacMoody/Kostant/`): the Chevalley–Eilenberg complex
+with module coefficients over any commutative ring (`LieModule.ChevalleyEilenberg.diff`,
+`diff_comp_diff`, `d`, `chainComplex : ChainComplex (ModuleCat R) ℕ`, `homology`,
+`homologyMap`); `𝔥`-weight decomposition (`DerivAction`, `iSup_homologyWeightSpace`);
+Euler–Poincaré per weight; for `V` in 𝒪: `IsCategoryO.hsum_homologyEulerFamily`
+(`Σ_k (-1)^k ch H_k(𝔫₋, V) = R · ch V`) and
+`IrreducibleModule.exp_rho_mul_hsum_homologyEulerFamily` (the Euler characteristic of
+`H_•(𝔫₋, L(Λ))` recovers Weyl–Kac); `H_0(𝔫₋, L(Λ)) = K_Λ`;
+`finrank_homologyWeightSpace_eq_one_of_weights` (Garland–Lepowsky multiplicities *given* the
+weight statement). Remaining: the Casimir/Laplacian step (weights of `H_k` are `w·Λ`,
+`ℓ(w) = k`: Kostant's `dδ + δd` identity), `H_1`, comparison with Mathlib's
+`HomologicalComplex.homology`, porting `Algebra/Lie/ChevalleyEilenberg.lean` (still used by
+`SerrePresented/Homology.lean`).
+
 
 The Chevalley–Eilenberg complex of a Lie algebra with coefficients in a module (all degrees,
 extending `ChevalleyEilenberg.lean`), `𝔥`-weight decomposition for `𝔫₋`-homology; the
@@ -494,6 +515,8 @@ beyond what the general Kac–Moody results give.
   Parabolic/CoxeterSystem,Matsumoto,Longest}.lean`; `IsAlgClosed.exists_orderOf_eq`.
 - Strong exchange condition (`LieLean/GroupTheory/Coxeter/Exchange.lean`, Mathlib lacks it);
   Iwahori–Hecke algebra and bar involution (`GroupTheory/Coxeter/Hecke/{Basic,Bar}.lean`).
+- Chevalley–Eilenberg complex (`LieLean/Algebra/Lie/Homology/{ChevalleyEilenberg,Complex,
+  ChainComplex}.lean`); `Module.End.weightSpaceOf` (`Homology/WeightSpace.lean`).
 - Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
   Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
