@@ -13,6 +13,7 @@ import LieLean.Algebra.Lie.KacMoody.CharacterRing
 import LieLean.Algebra.Lie.KacMoody.CharacterVerma
 import LieLean.Algebra.Lie.KacMoody.CharacterWeyl
 import LieLean.Algebra.Lie.KacMoody.CompleteReducibility
+import LieLean.Algebra.Lie.KacMoody.FiniteDimensional
 import LieLean.Algebra.Lie.KacMoody.FiniteType
 import LieLean.Algebra.Lie.KacMoody.GabberKac
 import LieLean.Algebra.Lie.KacMoody.HighestWeight
