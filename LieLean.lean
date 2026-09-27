@@ -61,8 +61,10 @@ import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Basic
+import LieLean.GroupTheory.Coxeter.Hecke.Bar
 import LieLean.GroupTheory.Coxeter.Hecke.Basic
 import LieLean.GroupTheory.Coxeter.Hecke.Exchange
+import LieLean.GroupTheory.Coxeter.Hecke.Specialization
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
