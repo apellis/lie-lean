@@ -27,7 +27,8 @@ This file proves step 2 unconditionally in the form of the identity
 characteristic of `𝔫₋`-homology recovers the Weyl–Kac character formula), and deduces the
 multiplicity statement of the Garland–Lepowsky theorem **from step 1, taken as a hypothesis**
 (`finrank_homologyWeightSpace_eq_one_of_weights`). Step 1 (the Casimir / Laplacian argument
-of [GL] §§5–8 (check)) is not formalized here.
+of [GL] §§5–8 (check)) is proved in `LieLean.Algebra.Lie.KacMoody.Kostant.Theorem`, which contains
+the unconditional theorem.
 
 ## Main results
 
