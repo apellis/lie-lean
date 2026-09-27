@@ -41,9 +41,10 @@ two-cycle `(⋀²φ) t` of `L'` is a boundary, then `∂₂ t ∈ [L, 𝔯]`
 
 ## References
 
-* C. A. Weibel, *An introduction to homological algebra*, CUP 1994, §7.7 (Chevalley–Eilenberg
-  complex) and Exercise 7.7.6 (check) (the five-term exact sequence; we prove only the part used
-  here, by a direct argument).
+* C. A. Weibel, *An introduction to homological algebra*, CUP 1994, §7.7 (check) (the
+  Chevalley–Eilenberg complex) and §7.5 (check) (the Hochschild–Serre spectral sequence and its
+  five-term exact sequence; we prove only the part used here, by a direct argument which we
+  reconstructed).
 -/
 
 open exteriorPower
