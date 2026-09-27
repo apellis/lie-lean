@@ -44,8 +44,10 @@ import LieLean.Algebra.Lie.KacMoody.Jantzen.OrderFormula
 import LieLean.Algebra.Lie.KacMoody.Jantzen.Weight
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Criterion
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Determinant
+import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Factorization
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Families
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Gram
+import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Hyperplane
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Leading
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Polynomial
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Words
