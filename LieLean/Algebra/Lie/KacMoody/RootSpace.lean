@@ -9,8 +9,9 @@ import LieLean.Algebra.Lie.Weights.OfMap
 /-!
 # Root space decomposition of `𝔤̃(A)` and the maximal ideal `𝔯`
 
-We prove parts (d), (e) of [Kac] Theorem 1.2 (in the numbering of the roadmap, the root space
-decomposition and the existence of the maximal ideal `𝔯`).
+We prove parts (d), (e) of [Kac] Theorem 1.2: the root space decomposition of `𝔤̃(A)` and the
+existence of the maximal ideal `𝔯`. (The Chevalley involution, part (c), is
+`Matrix.Realization.AuxLieAlgebra.chevalleyInvolution`.)
 
 ## Main definitions
 

@@ -199,16 +199,8 @@ theorem toIrreducibleModule_injective {Λ : Dual K H} {n : ι → ℕ}
 `L̃(Λ) = M(Λ) / ∑ᵢ U(𝔤) fᵢ^{⟨Λ,αᵢ^∨⟩+1} v_Λ` is isomorphic to `L(Λ)`. -/
 def fPowQuotientEquiv {Λ : Dual K H} {n : ι → ℕ} (hn : ∀ i, Λ (P.coroot i) = n i) :
     FPowQuotient P Λ n ≃ₗ⁅K,P.KacMoodyAlgebra⁆ IrreducibleModule P Λ :=
-  let e := LinearEquiv.ofBijective (FPowQuotient.toIrreducibleModule P hA hn : _ →ₗ[K] _)
+  LieModuleEquiv.ofBijective (FPowQuotient.toIrreducibleModule P hA hn)
     ⟨hB.toIrreducibleModule_injective hA hn, FPowQuotient.toIrreducibleModule_surjective P hA hn⟩
-  { FPowQuotient.toIrreducibleModule P hA hn with
-    invFun := e.symm
-    left_inv x := by
-      conv_rhs => rw [← e.symm_apply_apply x]
-      rfl
-    right_inv y := by
-      conv_rhs => rw [← e.apply_symm_apply y]
-      rfl }
 
 @[simp] lemma fPowQuotientEquiv_apply {Λ : Dual K H} {n : ι → ℕ}
     (hn : ∀ i, Λ (P.coroot i) = n i) (x : FPowQuotient P Λ n) :

@@ -6,15 +6,19 @@ Authors: Alex Ellis
 import Mathlib.Algebra.Lie.Quotient
 
 /-!
-# Lifting morphisms through quotients of Lie algebras
+# Lifting morphisms through quotients of Lie algebras and Lie modules
 
-Additions to `Mathlib.Algebra.Lie.Quotient`.
+Additions to `Mathlib.Algebra.Lie.Quotient` (and, for `LieModuleEquiv.ofBijective`, to
+`Mathlib.Algebra.Lie.Basic`, which has the analogue `LieEquiv.ofBijective` for Lie algebras).
 
 ## Main definitions
 
 * `LieIdeal.mkHom`: the quotient map `L → L ⧸ I` as a morphism of Lie algebras.
 * `LieIdeal.lift`: a morphism of Lie algebras `L → L'` vanishing on an ideal `I` induces a
   morphism `L ⧸ I → L'`.
+* `LieSubmodule.Quotient.lift`: a morphism of Lie modules `M → M'` vanishing on a submodule `N`
+  induces a morphism `M ⧸ N → M'`.
+* `LieModuleEquiv.ofBijective`: a bijective morphism of Lie modules is an equivalence.
 -/
 
 namespace LieIdeal
@@ -60,3 +64,44 @@ lemma lieHom_ext {g₁ g₂ : L ⧸ I →ₗ⁅R⁆ L'}
   exact h _
 
 end LieIdeal
+
+namespace LieSubmodule.Quotient
+
+variable {R L M M' : Type*} [CommRing R] [LieRing L] [LieAlgebra R L] [AddCommGroup M]
+  [Module R M] [LieRingModule L M] [LieModule R L M] [AddCommGroup M'] [Module R M']
+  [LieRingModule L M'] [LieModule R L M'] (N : LieSubmodule R L M)
+
+/-- A morphism of Lie modules vanishing on a submodule `N` factors through `M ⧸ N`. -/
+def lift (φ : M →ₗ⁅R,L⁆ M') (hφ : N ≤ φ.ker) : M ⧸ N →ₗ⁅R,L⁆ M' :=
+  { N.toSubmodule.liftQ (φ : M →ₗ[R] M') (fun _ hm ↦ hφ hm) with
+    map_lie' := by
+      intro x m
+      induction m using Quotient.inductionOn'
+      exact φ.map_lie _ _ }
+
+omit [LieModule R L M'] in
+@[simp] lemma lift_mk (φ : M →ₗ⁅R,L⁆ M') (hφ : N ≤ φ.ker) (m : M) :
+    lift N φ hφ (mk' N m) = φ m := rfl
+
+omit [LieModule R L M'] in
+lemma lift_surjective (φ : M →ₗ⁅R,L⁆ M') (hφ : N ≤ φ.ker) (hs : Function.Surjective φ) :
+    Function.Surjective (lift N φ hφ) := fun m' ↦ by
+  obtain ⟨m, rfl⟩ := hs m'
+  exact ⟨mk' N m, rfl⟩
+
+end LieSubmodule.Quotient
+
+namespace LieModuleEquiv
+
+variable {R L M N : Type*} [CommRing R] [LieRing L] [AddCommGroup M]
+  [Module R M] [LieRingModule L M] [AddCommGroup N] [Module R N] [LieRingModule L N]
+
+/-- A bijective morphism of Lie modules is an equivalence of Lie modules. -/
+noncomputable def ofBijective (f : M →ₗ⁅R,L⁆ N) (hf : Function.Bijective f) : M ≃ₗ⁅R,L⁆ N :=
+  { f, LinearEquiv.ofBijective (f : M →ₗ[R] N) hf with }
+
+@[simp] lemma ofBijective_apply (f : M →ₗ⁅R,L⁆ N) (hf : Function.Bijective f) (m : M) :
+    ofBijective f hf m = f m :=
+  rfl
+
+end LieModuleEquiv

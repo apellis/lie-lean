@@ -330,7 +330,7 @@ lemma lie_casimirTerm_sub' {γ : Dual K H} {z : P.KacMoodyAlgebra} (hz : z ∈ r
       hB.casimirSum (fun y x ↦ ⁅⁅z, y⁆, ⁅x, v⁆⁆) μ -
         hB.casimirSum (fun y x ↦ ⁅⁅z, y⁆, ⁅x, v⁆⁆) (μ + γ) := by
   rw [lie_casimirTerm, hB.casimirSum_lie_left_lie V hz (μ + γ), add_sub_cancel_right]
-  abel
+  abel_nf
 
 /-- The `𝔥`-part of `L`: `L_0(z) = -z ν⁻¹(γ)` for `z ∈ 𝔤_γ`. -/
 lemma casimirSum_zero_left {γ : Dual K H} {z : P.KacMoodyAlgebra} (hz : z ∈ rootSpace P γ)

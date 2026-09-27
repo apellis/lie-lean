@@ -50,7 +50,7 @@ of `U(L)`.
 ## References
 
 * N. Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7 (corollaries of Theorem 1).
-* J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §17.4
+* J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §17.3
   (Corollary D for the injectivity of `U(L₁) → U(L)`).
 
 The exact corollary numbers were not checked against the books; the argument is reconstructed
@@ -251,7 +251,7 @@ are complementary and free, then multiplication `U(L₁) ⊗[R] U(L₂) → U(L)
 bijective.
 
 See Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, corollaries of Theorem 1, and
-Humphreys, *Introduction to Lie algebras and representation theory*, §17.4 (Corollary D treats
+Humphreys, *Introduction to Lie algebras and representation theory*, §17.3 (Corollary D treats
 `U(L₁) → U(L)` over a field). The corollary numbers were not checked against the books; the proof
 here is reconstructed from the PBW basis. -/
 theorem mulMap_bijective_of_isCompl : Function.Bijective (mulMap L₁ L₂) := by
@@ -281,7 +281,7 @@ include h in
 and both are free as modules, then the induced map `U(L₁) → U(L)` is injective.
 
 See Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, and Humphreys, *Introduction to Lie
-algebras and representation theory*, §17.4, Corollary D (numbering not checked against the book).
+algebras and representation theory*, §17.3, Corollary D (numbering not checked against the book).
 -/
 theorem map_incl_injective_of_isCompl : Function.Injective (map L₁.incl) := by
   let : LinearOrder (Free.ChooseBasisIndex R L₁) := IsWellOrder.linearOrder WellOrderingRel

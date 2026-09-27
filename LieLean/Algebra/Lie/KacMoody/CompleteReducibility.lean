@@ -18,7 +18,6 @@ a vector of weight `λ` killed by all the `eᵢ` by `c(λ) = (λ + 2ρ | λ)`; f
 
 ## Main definitions
 
-* `LieModuleEquiv.ofBijective`: a bijective morphism of Lie modules is an equivalence.
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.casimirHom`: the Casimir operator as a
   morphism of `𝔤(A)`-modules.
 
@@ -90,23 +89,6 @@ and wrote it out as follows. Call `v ∈ V_μ` *primitive* if `eᵢ v = 0` for a
 open Module LieModule
 
 noncomputable section
-
-/-! ### Bijective morphisms of Lie modules -/
-
-namespace LieModuleEquiv
-
-variable {R L M N : Type*} [CommRing R] [LieRing L] [AddCommGroup M]
-  [Module R M] [LieRingModule L M] [AddCommGroup N] [Module R N] [LieRingModule L N]
-
-/-- A bijective morphism of Lie modules is an equivalence of Lie modules. -/
-def ofBijective (f : M →ₗ⁅R,L⁆ N) (hf : Function.Bijective f) : M ≃ₗ⁅R,L⁆ N :=
-  { f, LinearEquiv.ofBijective (f : M →ₗ[R] N) hf with }
-
-@[simp] lemma ofBijective_apply (f : M →ₗ⁅R,L⁆ N) (hf : Function.Bijective f) (m : M) :
-    ofBijective f hf m = f m :=
-  rfl
-
-end LieModuleEquiv
 
 namespace Matrix.Realization.KacMoodyAlgebra
 
