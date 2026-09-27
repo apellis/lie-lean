@@ -89,6 +89,13 @@ import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Algebra.QuantumGroup.Basic
 import LieLean.Algebra.QuantumGroup.CartanDatum
+import LieLean.Algebra.QuantumGroup.GabberKac
+import LieLean.Algebra.QuantumGroup.GabberKac.Classical
+import LieLean.Algebra.QuantumGroup.GabberKac.MapCoeffs
+import LieLean.Algebra.QuantumGroup.GabberKac.Quantum
+import LieLean.Algebra.QuantumGroup.GabberKac.SerreSpan
+import LieLean.Algebra.QuantumGroup.GabberKac.Specialization
+import LieLean.Algebra.QuantumGroup.GabberKac.VermaOperator
 import LieLean.Algebra.QuantumGroup.Hopf
 import LieLean.Algebra.QuantumGroup.LusztigF.Basic
 import LieLean.Algebra.QuantumGroup.LusztigF.Comul
