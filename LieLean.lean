@@ -64,6 +64,7 @@ import LieLean.Basic
 import LieLean.GroupTheory.Coxeter.Bruhat
 import LieLean.GroupTheory.Coxeter.Exchange
 import LieLean.GroupTheory.Coxeter.GeometricRepresentation
+import LieLean.GroupTheory.Coxeter.Parabolic
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
