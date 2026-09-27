@@ -32,6 +32,13 @@ The images `Tᵢ(Eⱼ)`, `Tᵢ(Fⱼ)` for `j ≠ i` and the relations involving 
 * `QuantumGroup.braidK R v i`: `μ ↦ K_{sᵢ(μ)}`.
 * `QuantumGroup.rankOneBraidEquiv`: `Tᵢ` as an algebra automorphism for rank-one root data.
 
+## Main results
+
+* `QuantumGroup.braidK_mul_braidEi`, `QuantumGroup.braidK_mul_braidFi`,
+  `QuantumGroup.braidEi_mul_braidFi_sub`: the relations of `U` between `Tᵢ(K_μ)`, `Tᵢ(Eᵢ)`,
+  `Tᵢ(Fᵢ)`, and their analogues for the inverse.
+* `QuantumGroup.rankOneBraidInv_comp_rankOneBraid`, `rankOneBraid_comp_rankOneBraidInv`.
+
 ## References
 
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §37.1.

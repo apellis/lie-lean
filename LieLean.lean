@@ -4,7 +4,6 @@ import LieLean.Algebra.Lie.Homology.ChainComplex
 import LieLean.Algebra.Lie.Homology.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Homology.Complex
 import LieLean.Algebra.Lie.Homology.Euler
-import LieLean.Algebra.Lie.Homology.WeightSpace
 import LieLean.Algebra.Lie.Homology.Weights
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.BGG
@@ -157,6 +156,7 @@ import LieLean.GroupTheory.Coxeter.Matsumoto
 import LieLean.GroupTheory.Coxeter.Parabolic
 import LieLean.GroupTheory.Coxeter.Parabolic.CoxeterSystem
 import LieLean.GroupTheory.Coxeter.Squares
+import LieLean.LinearAlgebra.Eigenspace.Weight
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable

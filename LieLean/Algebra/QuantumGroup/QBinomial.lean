@@ -42,6 +42,8 @@ reconstruction and avoids the usual expansion into `q`-multinomials: writing
 
 * `QuantumGroup.qInt`, `QuantumGroup.qFactorial`, `QuantumGroup.qBinomial`.
 * `QuantumGroup.qSerre`: the quantum Serre element (in binomial form).
+* `QuantumGroup.qIntU`, `QuantumGroup.qBinomialU`, `QuantumGroup.qSerreU`: the same with respect
+  to a unit `q` of a commutative ring (`map_qBinomialU` relates them to `qBinomial`).
 
 ## Main results
 
@@ -644,5 +646,78 @@ lemma qSerreDiv_smul_smul (m : ℕ) (a b : B) (c d : k) :
   congr 1
   rw [show c ^ m = c ^ (m - r) * c ^ r by rw [← pow_add, Nat.sub_add_cancel hr]]
   ring
+
+end QuantumGroup
+
+namespace QuantumGroup
+
+/-! ### Quantum integers and binomial coefficients with respect to a unit of a ring
+
+The quantities above over a commutative ring `R`, for a unit `q ∈ Rˣ`; they map to those of
+`φ q` under a ring homomorphism `φ : R → k` to a field (`map_qNatU`, `map_qBinomialU`). -/
+
+variable {R : Type*} [CommRing R] (q : Rˣ)
+
+/-- The quantum integer `[n]_q = Σ_{s < n} q^{n-1-2s}` for a unit `q` of a commutative ring. -/
+def qNatU (n : ℕ) : R := ∑ s ∈ range n, ((q ^ (n - 1 - s) * q⁻¹ ^ s : Rˣ) : R)
+
+/-- The quantum integer `[n]_q` for `n ∈ ℤ`, with `[-n]_q = -[n]_q`. -/
+def qIntU : ℤ → R
+  | .ofNat n => qNatU q n
+  | .negSucc n => -qNatU q (n + 1)
+
+/-- The quantum binomial coefficient `[n j]_q` for a unit `q` of a commutative ring, by the Pascal
+rule of `QuantumGroup.qBinomial`. -/
+def qBinomialU : ℕ → ℕ → R
+  | _, 0 => 1
+  | 0, _ + 1 => 0
+  | n + 1, j + 1 => ((q⁻¹ ^ (j + 1) : Rˣ) : R) * qBinomialU n (j + 1) +
+      ((q ^ (n - j) : Rˣ) : R) * qBinomialU n j
+
+variable {B : Type*} [Ring B] [Algebra R B]
+
+/-- The quantum Serre element `Σ_{r=0}^{m} (-1)^r [m r]_q a^{m-r} b a^r` for a unit `q`. -/
+def qSerreU (m : ℕ) (a b : B) : B :=
+  ∑ r ∈ range (m + 1), ((-1) ^ r * qBinomialU q m r) • (a ^ (m - r) * b * a ^ r)
+
+variable {k : Type*} [Field k] (φ : R →+* k)
+
+lemma map_units_val_pow_inv (a b : ℕ) :
+    φ ((q ^ a * q⁻¹ ^ b : Rˣ) : R) = φ q ^ a * (φ q)⁻¹ ^ b := by
+  rw [Units.val_mul, map_mul, Units.val_pow_eq_pow_val, Units.val_pow_eq_pow_val, map_pow,
+    map_pow, map_units_inv φ q]
+
+lemma map_qNatU (n : ℕ) : φ (qNatU q n) = qInt (φ q) n := by
+  simp only [qNatU, map_sum, map_units_val_pow_inv, qInt]
+
+lemma map_qBinomialU (n j : ℕ) : φ (qBinomialU q n j) = qBinomial (φ q) n j := by
+  induction n generalizing j with
+  | zero => cases j <;> simp [qBinomialU, qBinomial]
+  | succ n ih =>
+    cases j with
+    | zero => simp [qBinomialU]
+    | succ j =>
+      rw [qBinomialU, qBinomial_succ_succ, map_add, map_mul, map_mul, ih, ih,
+        Units.val_pow_eq_pow_val, Units.val_pow_eq_pow_val, map_pow, map_pow, map_units_inv φ q]
+
+/-- `(q - q⁻¹) [n]_q = qⁿ - q⁻ⁿ` after mapping to a field, for `n ∈ ℤ`. -/
+lemma sub_mul_map_qIntU (n : ℤ) :
+    (φ q - (φ q)⁻¹) * φ (qIntU q n) = φ q ^ n - φ q ^ (-n) := by
+  cases n with
+  | ofNat n =>
+    rw [qIntU, map_qNatU, qInt_mul_sub]
+    simp [zpow_neg]
+  | negSucc n =>
+    rw [qIntU, map_neg, map_qNatU, mul_neg, qInt_mul_sub, Int.neg_negSucc, zpow_natCast,
+      zpow_negSucc, inv_pow]
+    ring
+
+/-- At `q ↦ 1` the quantum integer `[n]_q` becomes `n`. -/
+lemma map_qIntU_of_eq_one (hφ : φ q = 1) (n : ℤ) : φ (qIntU q n) = n := by
+  cases n with
+  | ofNat n => simp [qIntU, map_qNatU, hφ, qInt]
+  | negSucc n =>
+    rw [qIntU, map_neg, map_qNatU, hφ]
+    simp [qInt, Int.negSucc_eq]
 
 end QuantumGroup

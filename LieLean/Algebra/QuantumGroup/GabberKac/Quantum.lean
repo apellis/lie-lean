@@ -38,6 +38,12 @@ reconstruction.
 * `LusztigF.evalAt v hv`: evaluation `ℚ[T, T⁻¹] → k`, `T ↦ v`.
 * `LusztigF.vermaOpQ D v n i`: the quantum raising operator on `'f`.
 
+## Main results
+
+* `LusztigF.vermaOpQ_θ_mul`, `LusztigF.vermaOpQ_eq_vermaOp`: the recursion.
+* `LusztigF.vermaOpQ_mem_radical`, `LusztigF.vermaForm_eq_zero_of_mem_radical`: compatibility
+  with the radical of Lusztig's form.
+
 ## References
 
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §1.2, §3.1 (check).

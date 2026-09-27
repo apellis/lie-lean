@@ -249,6 +249,18 @@ theorem BruhatLE.mul_simple_or {u w : W} (h : cs.BruhatLE u w) (i : B) :
       · exact .inl (e ▸ h)
       · exact .inr (h.trans hs'.bruhatLE)
 
+/-- If `u ≤ w`, then `sᵢ u ≤ w` or `sᵢ u ≤ sᵢ w` (left-handed version of
+`CoxeterSystem.BruhatLE.mul_simple_or`). -/
+theorem BruhatLE.simple_mul_or {u w : W} (h : cs.BruhatLE u w) (i : B) :
+    cs.BruhatLE (s i * u) w ∨ cs.BruhatLE (s i * u) (s i * w) := by
+  rcases h.inv.mul_simple_or i with h' | h'
+  · left
+    rw [← bruhatLE_inv_iff]
+    simpa [mul_inv_rev] using h'
+  · right
+    rw [← bruhatLE_inv_iff]
+    simpa [mul_inv_rev] using h'
+
 /-- If `ω sᵢ` is reduced, then `sᵢ` is not a right descent of `π ω`. -/
 theorem IsReduced.not_isRightDescent_of_append_singleton {ω : List B} {i : B}
     (hω : cs.IsReduced (ω ++ [i])) : ¬cs.IsRightDescent (π ω) i := by
