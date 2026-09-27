@@ -225,7 +225,7 @@ def reflectPerm (i : ι) : Equiv.Perm (NegRootIndex P) :=
 
 lemma reflectPerm_simpleIndex (i : ι) : reflectPerm hA i (simpleIndex P i) = simpleIndex P i := by
   classical
-  rw [reflectPerm, 
+  rw [reflectPerm,
     Equiv.Perm.subtypeCongr.left_apply (a := simpleIndex P i) _ _ (root_simpleIndex i)]
   rfl
 

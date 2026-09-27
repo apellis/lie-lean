@@ -111,11 +111,7 @@ theorem Quotient.nonempty_lieModuleEquiv_of_surjective {M' : Type*} [AddCommGrou
     rw [LieSubmodule.Quotient.lift_mk, LieSubmodule.Quotient.lift_mk] at hxy
     rw [← sub_eq_zero, ← map_sub, LieSubmodule.Quotient.mk_eq_zero, ← hN, LieModuleHom.mem_ker,
       map_sub, hxy, sub_self]
-  let e := LinearEquiv.ofBijective (g : M ⧸ N →ₗ[R] M') hg
-  exact ⟨{ g with
-    invFun := e.symm
-    left_inv := e.left_inv
-    right_inv := e.right_inv }⟩
+  exact ⟨LieModuleEquiv.ofBijective g hg⟩
 
 end LieSubmodule
 

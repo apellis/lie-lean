@@ -29,12 +29,14 @@ these ordered monomials form an `R`-basis of `U(L)`.
 
 * `UniversalEnvelopingAlgebra.pbwBasis_apply`: the PBW basis consists of the ordered monomials.
 * `UniversalEnvelopingAlgebra.ι_injective`: if `L` is free as an `R`-module then
-  `σ : L → U(L)` is injective.
+  `ι : L → U(L)` is injective.
 
 ## Proof
 
 We follow Humphreys, *Introduction to Lie algebras and representation theory*, §17.4
-(Lemmas A–D; the argument is due to Jacobson). Let `S = R[z_i : i ∈ σ]` be the polynomial ring.
+(Lemmas A–D; the argument is due to Jacobson). Humphreys writes `σ` for the canonical map
+`L → U(L)`; here it is `ι`, and `σ` is the index type of the basis. Let `S = R[z_i : i ∈ σ]`
+be the polynomial ring.
 We construct a representation `ρ` of `L` on `S` such that, writing `X_i = ρ (b i)`,
 
 * (A) `X_i z^s = z_i z^s` whenever `i ≤ j` for every `j` occurring in `s`;
@@ -48,7 +50,7 @@ Property (C) is then proved by induction on the degree, using the Jacobi identit
 
 The representation `ρ` extends to `U(L)`, and `u ↦ ρ(u) 1` sends `pbwMonomial R b s` to `z^s`
 (by (A)), giving linear independence. For spanning we show that the linear map
-`φ : S → U(L)`, `z^s ↦ pbwMonomial R b s`, satisfies `φ (ρ x p) = σ x * φ p`; it follows that
+`φ : S → U(L)`, `z^s ↦ pbwMonomial R b s`, satisfies `φ (ρ x p) = ι x * φ p`; it follows that
 `u ↦ ρ(u) 1` and `φ` are mutually inverse.
 
 ## References
@@ -668,9 +670,10 @@ def pbwEquiv : UniversalEnvelopingAlgebra R L ≃ₗ[R] MvPolynomial σ R :=
 basis `b` indexed by a linearly ordered type `σ`, then the ordered monomials `pbwMonomial R b s`
 form an `R`-basis of the universal enveloping algebra.
 
-See Humphreys, *Introduction to Lie algebras and representation theory*, §17.4, Theorem C and
-Corollary C (stated there over a field; the proof works over any commutative ring for free
-modules), and Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, Theorem 1. -/
+See Humphreys, *Introduction to Lie algebras and representation theory*, §17.3, Theorem and
+Corollary C, proved in §17.4 (check) (stated there over a field; the proof works over any
+commutative ring for free modules), and Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7,
+Theorem 1. -/
 def pbwBasis : Basis (σ →₀ ℕ) R (UniversalEnvelopingAlgebra R L) :=
   (basisMonomials σ R).map (pbwEquiv b).symm
 
@@ -701,7 +704,7 @@ theorem ι_injective_of_basis (b : Basis σ R L) :
 
 variable (R L) in
 /-- **Corollary of PBW**: if `L` is free as an `R`-module then the canonical map `ι : L → U(L)`
-is injective. See Humphreys, §17.4, Corollary C. -/
+is injective. See Humphreys, §17.3, Corollary B (check). -/
 theorem ι_injective [Module.Free R L] :
     Function.Injective (ι R : L → UniversalEnvelopingAlgebra R L) := by
   let b := Module.Free.chooseBasis R L
