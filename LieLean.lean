@@ -7,6 +7,15 @@ import LieLean.Algebra.Lie.Homology.Euler
 import LieLean.Algebra.Lie.Homology.WeightSpace
 import LieLean.Algebra.Lie.Homology.Weights
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
+import LieLean.Algebra.Lie.KacMoody.BGG
+import LieLean.Algebra.Lie.KacMoody.BGG.Character
+import LieLean.Algebra.Lie.KacMoody.BGG.LowDegree
+import LieLean.Algebra.Lie.KacMoody.BGG.Nilradical
+import LieLean.Algebra.Lie.KacMoody.BGG.Projectivity
+import LieLean.Algebra.Lie.KacMoody.BGG.Sl2
+import LieLean.Algebra.Lie.KacMoody.BGG.Uniqueness
+import LieLean.Algebra.Lie.KacMoody.BGG.Verma
+import LieLean.Algebra.Lie.KacMoody.BGG.VermaDecomposition
 import LieLean.Algebra.Lie.KacMoody.Basic
 import LieLean.Algebra.Lie.KacMoody.Blocks
 import LieLean.Algebra.Lie.KacMoody.Casimir
@@ -142,6 +151,7 @@ import LieLean.GroupTheory.Coxeter.Longest
 import LieLean.GroupTheory.Coxeter.Matsumoto
 import LieLean.GroupTheory.Coxeter.Parabolic
 import LieLean.GroupTheory.Coxeter.Parabolic.CoxeterSystem
+import LieLean.GroupTheory.Coxeter.Squares
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
