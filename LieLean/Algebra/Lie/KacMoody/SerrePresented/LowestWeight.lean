@@ -40,7 +40,7 @@ variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [AddCommGroup 
   {A : Matrix ι ι ℤ} (P : Realization A K H)
 
 omit [DecidableEq ι] in
-lemma rootOf_apply_coroot (k : ι → ℤ) (i : ι) :
+lemma rootOf_apply_coroot_eq_sum (k : ι → ℤ) (i : ι) :
     P.rootOf k (P.coroot i) = ((∑ j, A i j * k j : ℤ) : K) := by
   simp [rootOf_apply, P.root_coroot, mul_comm]
 
@@ -142,7 +142,7 @@ theorem sum_mul_le_zero_of_minimal {k : ι → ℤ} (hk : k ∈ posCone ι)
     (hx0 : x ≠ 0) (i : ι) : ∑ j, A i j * k j ≤ 0 := by
   obtain ⟨n, hn⟩ := exists_nat_of_lie_e_eq_zero P hA i hxk hx0
     (lie_e_eq_zero_of_minimal P hA hk hmin hx hxk i)
-  rw [LinearMap.neg_apply, rootOf_apply_coroot, neg_eq_iff_eq_neg] at hn
+  rw [LinearMap.neg_apply, rootOf_apply_coroot_eq_sum, neg_eq_iff_eq_neg] at hn
   have : (∑ j, A i j * k j : ℤ) = -n := by exact_mod_cast hn
   omega
 
