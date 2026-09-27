@@ -169,7 +169,15 @@ Done: `Matrix.Realization.reflection`, `coreflection`, `weylGroup`, `realRoots`,
   form); it commutes with the action ([Kac] Thm. 2.6) and acts on a highest-weight module of
   highest weight `λ` by `(λ + 2ρ | λ)` ([Kac] Cor. 2.6).
 
-### M6. Category 𝒪 and highest-weight modules  `[ ]`  ([Kac] Ch. 9)
+### M6. Category 𝒪 and highest-weight modules  `[~]`  ([Kac] Ch. 9)
+
+Done (`Algebra/Lie/KacMoody/{Triangular,Verma*,CategoryO}.lean`): subalgebras `nNeg`, `nPos`,
+`cartan`, `borel`, `isCompl_nNeg_borel`; `VermaModule` with universal property
+`existsUnique_lieModuleHom`, PBW iso `equivEnvNNeg : U(𝔫₋) ≃ₗ M(Λ)`, weights
+(`iSup_weightSpace_eq_top`, `finiteDimensional_weightSpace`, `weightSpace_self`),
+`maxSubmodule`, `IrreducibleModule` (= L(Λ)) with `isIrreducible`, `eq_of_equiv`; `IsCategoryO`.
+Not done: Shapovalov form, composition factors (Prop. 9.8), characters.
+
 
 - Category `𝒪` ([Kac] §9.1): `𝔥`-diagonalizable, finite-dimensional weight spaces, weights in a
   finite union of cones `λ - Q₊`. Formal characters.
