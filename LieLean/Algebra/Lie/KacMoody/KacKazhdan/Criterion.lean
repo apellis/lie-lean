@@ -19,7 +19,9 @@ Shapovalov form is degenerate on `M(Λ)_{Λ - η}` iff `M'(Λ)_{Λ - η} ≠ 0`
 The **Kac–Kazhdan criterion** ([KK] Thm. 1 and Thm. 2 (check); [Kac] §9 (check)) states, for
 symmetrizable `A`, that `M'(Λ)_{Λ - η} ≠ 0` iff there are a positive root `α` and an integer
 `n ≥ 1` with `n α ≤ η` and `2 (Λ + ρ | α) = n (α | α)`; it follows from the Kac–Kazhdan
-determinant formula. This file proves the two parts of it that do not need the determinant:
+determinant formula (`VermaModule.maxSubmodule_inf_weightSpace_ne_bot_iff` in
+`KacMoody/KacKazhdan/Formula.lean`). This file proves the two parts of it that do not need the
+determinant:
 
 * **A necessary condition** (via the Casimir operator, [Kac] Prop. 9.8 (check)): if
   `M'(Λ)_{Λ - η} ≠ 0`, then there is `β ∈ Q₊ \ {0}` with `β ≤ η` and `2 (Λ + ρ | β) = (β | β)`,
