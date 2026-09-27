@@ -370,6 +370,42 @@ theorem mem_radical_iff {x : LusztigF k I} : x ∈ radical D v ↔ ∀ y, form D
 theorem mem_radical_iff' {x : LusztigF k I} : x ∈ radical D v ↔ ∀ y, form D v y x = 0 := by
   simp only [mem_radical_iff, form_comm D v x]
 
+omit [DecidableEq I] in
+lemma thetaNorm_ne_zero {i : I} (h : (v ^ D.d i) ^ 2 ≠ 1) : thetaNorm D v i ≠ 0 := by
+  refine inv_ne_zero fun h0 ↦ h ?_
+  rw [sub_eq_zero, inv_pow, eq_comm, inv_eq_one] at h0
+  exact h0
+
+/-- If `x` has no constant term and `rᵢ(x)` lies in the radical for all `i`, then so does `x`
+(cf. [Lus] 1.2.15 (check)). -/
+theorem mem_radical_of_rDeriv_mem {x : LusztigF k I} (hx0 : counit x = 0)
+    (hx : ∀ i, rDeriv D v i x ∈ radical D v) : x ∈ radical D v := by
+  rw [mem_radical_iff']
+  intro y
+  induction y using induction_right with
+  | algebraMap c => rw [form_algebraMap_left, hx0, mul_zero]
+  | smul c y hy => simp [hy]
+  | add y z hy hz => simp [hy, hz]
+  | mul_θ y i _ => rw [form_mul_θ, (mem_radical_iff' D v).1 (hx i), mul_zero]
+
+/-- The radical is stable under `rᵢ` when `(θᵢ, θᵢ) ≠ 0`. -/
+theorem rDeriv_mem_radical {i : I} (hi : thetaNorm D v i ≠ 0) {x : LusztigF k I}
+    (hx : x ∈ radical D v) : rDeriv D v i x ∈ radical D v := by
+  rw [mem_radical_iff']
+  intro y
+  have := form_mul_θ D v y i x
+  rw [(mem_radical_iff' D v).1 hx] at this
+  exact (mul_eq_zero.1 this.symm).resolve_left hi
+
+/-- The radical is stable under `ᵢr` when `(θᵢ, θᵢ) ≠ 0`. -/
+theorem lDeriv_mem_radical {i : I} (hi : thetaNorm D v i ≠ 0) {x : LusztigF k I}
+    (hx : x ∈ radical D v) : lDeriv D v i x ∈ radical D v := by
+  rw [mem_radical_iff']
+  intro y
+  have := form_θ_mul D v i y x
+  rw [(mem_radical_iff' D v).1 hx] at this
+  exact (mul_eq_zero.1 this.symm).resolve_left hi
+
 /-- Lusztig's algebra `f = 'f / I`, the quotient of `'f` by the radical of its bilinear form
 ([Lus] 1.2.5 (check)). -/
 abbrev Quotient := (radical D v).ringCon.Quotient
