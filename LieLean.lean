@@ -7,6 +7,7 @@ import LieLean.Algebra.Lie.Homology.Euler
 import LieLean.Algebra.Lie.Homology.WeightSpace
 import LieLean.Algebra.Lie.Homology.Weights
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
+import LieLean.Algebra.Lie.KacMoody.BGG.Verma
 import LieLean.Algebra.Lie.KacMoody.Basic
 import LieLean.Algebra.Lie.KacMoody.Blocks
 import LieLean.Algebra.Lie.KacMoody.Casimir
