@@ -391,7 +391,14 @@ Kazhdan–Lusztig theory (`Hecke/KazhdanLusztig*.lean`, [KL]'s normalization
 `two_mul_natDegree_klPoly_add_length_lt`, `klSimple_mul_klBasis`, recursion `klPoly_simple_mul`
 ([KL] (2.2.c)), `klPoly_simple_mul_left`, `coeff_zero_klPoly`, `klMu_eq_one`,
 `klPoly_inv_inv`, `specializeOne_klBasis`; Soergel's normalization up to `v ↦ v⁻¹`
-(`coeff_toFinsupp_klBasis_eq_zero`). Not done: dihedral examples, parabolic KL polynomials.
+(`coeff_toFinsupp_klBasis_eq_zero`). Parabolic KL theory (`KazhdanLusztig/{Canonical,Parabolic,
+ParabolicRelations}.lean`): an abstract Lusztig lemma `existsUnique_canonical`; bar involution
+`parabolicBar` on the induced modules (Deodhar's `u = q` and `u = -1`),
+`existsUnique_parabolicKLBasis`, `parabolicKLPoly` (support, degree bound), Deodhar's relations
+`parabolicKLPoly_sgn` (alternating sums of `P_{y,d}`) and `parabolicKLPoly_ind`
+(`P_{d'w_J, dw_J}`, finite `W_J`); rank ≤ 2 (`KazhdanLusztig/Dihedral.lean`):
+`bruhatLE_iff_of_card_le_two`, `klPoly_eq_one_of_card_le_two`. Remaining: Deodhar's `C'_s`
+recursion and parabolic μ-coefficients.
 
 
 The Hecke algebra `𝓗(W)` over `ℤ[v, v⁻¹]` with standard basis `T_w` (constructed without
@@ -615,6 +622,7 @@ beyond what the general Kac–Moody results give.
   (`LieLean/LinearAlgebra/Eigenspace/Weight.lean`).
 - Crystal lemmas: highest-weight elements, injectivity of strict morphisms, `Crystal.sigma`
   (`Crystal/Path/{Isomorphism,Decomposition}.lean`).
+- Lusztig's lemma on canonical bases (`Hecke/KazhdanLusztig/Canonical.lean`).
 - Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
   Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
