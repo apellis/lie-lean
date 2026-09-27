@@ -73,6 +73,25 @@ lemma twistAct_one_tmul (b d : LusztigF k I) : twistAct D v b (1 ⊗ₜ d) = 1 �
   | mul a b ha hb => rw [map_mul, Module.End.mul_apply, hb, ha, mul_assoc]
   | add a b ha hb => rw [map_add, LinearMap.add_apply, ha, hb, add_mul, tmul_add]
 
+variable {D v} in
+/-- For homogeneous `b ∈ 'f_β` and `c ∈ 'f_γ`, `ρ(b)(c ⊗ d) = v^{β·γ} c ⊗ bd`. -/
+theorem twistAct_tmul_of_mem (hv : v ≠ 0) {β γ : I →₀ ℕ} {b c : LusztigF k I}
+    (hb : b ∈ weightSpace k β) (hc : c ∈ weightSpace k γ) (d : LusztigF k I) :
+    twistAct D v b (c ⊗ₜ d) = v ^ D.weightDot β γ • (c ⊗ₜ (b * d)) := by
+  induction hb using Submodule.span_induction generalizing d with
+  | mem y hy =>
+    obtain ⟨w, rfl, rfl⟩ := hy
+    induction w generalizing d with
+    | nil => simp [Module.End.one_apply]
+    | cons l w ih =>
+      rw [monomial_cons, map_mul, Module.End.mul_apply, ih, map_smul, twistAct_θ, map_tmul,
+        AlgHom.toLinearMap_apply, twist_of_mem hv l hc, LinearMap.mulLeft_apply, smul_tmul',
+        smul_smul, wordWeight_cons, D.weightDot_add_left, zpow_add₀ hv, mul_assoc, mul_comm,
+        smul_tmul']
+  | zero => simp
+  | add y z _ _ hy hz => rw [map_add, LinearMap.add_apply, hy, hz, add_mul, tmul_add, smul_add]
+  | smul a y _ hy => rw [map_smul, LinearMap.smul_apply, hy, smul_mul_assoc, tmul_smul, smul_comm]
+
 /-- The bilinear map `a, b ↦ (a · ⊗ id) ∘ ρ(b)`. -/
 def twistedMulAux :
     LusztigF k I →ₗ[k] LusztigF k I →ₗ[k] Module.End k (LusztigF k I ⊗[k] LusztigF k I) :=
@@ -100,6 +119,15 @@ lemma twistedMul_tmul (a b : LusztigF k I) (Z : LusztigF k I ⊗[k] LusztigF k I
 lemma twistedMul_tmul_tmul_θ (a c d : LusztigF k I) (i : I) :
     twistedMul D v (a ⊗ₜ θ k i) (c ⊗ₜ d) = (a * twist D v i c) ⊗ₜ (θ k i * d) := by
   simp [twistedMul_tmul, twistAct_θ]
+
+/-- The twisted multiplication on homogeneous elements ([Lus] 1.2.2 (check)):
+`(x₁ ⊗ x₂)(x₁' ⊗ x₂') = v^{|x₂|·|x₁'|} x₁x₁' ⊗ x₂x₂'`. -/
+theorem twistedMul_tmul_tmul (hv : v ≠ 0) {β γ : I →₀ ℕ} {x₂ x₁' : LusztigF k I}
+    (h₂ : x₂ ∈ weightSpace k β) (h₁ : x₁' ∈ weightSpace k γ) (x₁ x₂' : LusztigF k I) :
+    twistedMul D v (x₁ ⊗ₜ x₂) (x₁' ⊗ₜ x₂') =
+      v ^ D.weightDot β γ • ((x₁ * x₁') ⊗ₜ (x₂ * x₂')) := by
+  rw [twistedMul_tmul, twistAct_tmul_of_mem hv h₂ h₁, map_smul, LinearMap.rTensor_tmul,
+    LinearMap.mulLeft_apply]
 
 @[simp] lemma twistedMul_one_left (Z : LusztigF k I ⊗[k] LusztigF k I) :
     twistedMul D v (1 ⊗ₜ 1) Z = Z := by

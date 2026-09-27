@@ -289,6 +289,23 @@ lemma twist_comm (i j : I) (x : LusztigF k I) :
   have : counit.comp (twist D v i) = counit := by ext l; simp
   exact congr($this x)
 
+variable {D v} in
+/-- On `'f_ν` the twist `σᵢ` is multiplication by `v^{i·ν}`. -/
+theorem twist_of_mem (hv : v ≠ 0) (i : I) {ν : I →₀ ℕ} {x : LusztigF k I}
+    (hx : x ∈ weightSpace k ν) :
+    twist D v i x = v ^ D.weightDot (Finsupp.single i 1) ν • x := by
+  induction hx using Submodule.span_induction with
+  | mem y hy =>
+    obtain ⟨w, rfl, rfl⟩ := hy
+    induction w with
+    | nil => simp
+    | cons l w ih =>
+      rw [monomial_cons, map_mul, ih, twist_θ, smul_mul_smul_comm, wordWeight_cons,
+        D.weightDot_add_right, D.weightDot_single_single, zpow_add₀ hv]
+  | zero => simp
+  | add y z _ _ hy hz => rw [map_add, hy, hz, smul_add]
+  | smul c y _ hy => rw [map_smul, hy, smul_comm]
+
 variable [DecidableEq I]
 
 /-- The algebra homomorphism `'f → M₂('f)`, `x ↦ [[x, rᵢ(x)], [0, σᵢ(x)]]`, used to construct the
