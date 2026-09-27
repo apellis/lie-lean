@@ -2,6 +2,7 @@ import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.Basic
 import LieLean.Algebra.Lie.KacMoody.Integrable
+import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
