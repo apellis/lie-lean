@@ -132,7 +132,9 @@ import LieLean.RepresentationTheory.Crystal.Basic
 import LieLean.RepresentationTheory.Crystal.Character
 import LieLean.RepresentationTheory.Crystal.Normal
 import LieLean.RepresentationTheory.Crystal.Path.Basic
+import LieLean.RepresentationTheory.Crystal.Path.Cancellation
 import LieLean.RepresentationTheory.Crystal.Path.Character
+import LieLean.RepresentationTheory.Crystal.Path.CharacterFormula
 import LieLean.RepresentationTheory.Crystal.Path.Concatenation
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.Realization
