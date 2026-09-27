@@ -210,11 +210,17 @@ theorem zsmul_T_mul_aeval {a b m : ℕ} {μ : ℤ} (h : μ ≠ 0 → a = b + 2 *
 `y ≤ w`, and for `y ≠ w` the coefficient of `q^k` in `P(y)` vanishes if `2k + ℓ(y) ≥ ℓ(w)`
 (i.e. `deg P(y) ≤ (ℓ(w) - ℓ(y) - 1)/2`). -/
 structure IsKLElement (w : W) (C : 𝓗) (P : W → Polynomial ℤ) : Prop where
+  /-- `C` is bar invariant. -/
   barL_eq : barL cs C = C
+  /-- The coefficient of `T_y` in `C` is `v^{-ℓ(w)} P(y)(q)`. -/
   toFinsupp_apply (y : W) : toFinsupp cs _ C y =
     LaurentPolynomial.T (-(ℓ w : ℤ)) * Polynomial.aeval (LaurentPolynomial.T 2) (P y)
+  /-- `P(w) = 1`. -/
   self : P w = 1
+  /-- `P(y) = 0` unless `y ≤ w`. -/
   bruhatLE {y : W} : P y ≠ 0 → cs.BruhatLE y w
+  /-- The degree bound: for `y ≠ w`, the coefficient of `q^k` in `P(y)` vanishes if
+  `2k + ℓ(y) ≥ ℓ(w)`. -/
   coeff_eq_zero {y : W} (hy : y ≠ w) {k : ℕ} : ℓ w ≤ 2 * k + ℓ y → (P y).coeff k = 0
 
 variable {cs}
