@@ -19,6 +19,8 @@ form `Matrix.Realization.AuxLieAlgebra.invFormAux` on `𝔤̃(A)`, whose radical
 ## Main definitions
 
 * `Matrix.Realization.KacMoodyAlgebra.invForm`: the invariant form `(·|·)` on `𝔤(A)`.
+* `Matrix.Realization.KacMoodyAlgebra.rootSpacePairingEquiv`: the induced isomorphism
+  `𝔤_{-α} ≃ (𝔤_α)*`.
 
 ## Main results
 
@@ -32,8 +34,9 @@ form `Matrix.Realization.AuxLieAlgebra.invFormAux` on `𝔤̃(A)`, whose radical
   on `𝔥`.
 * `Matrix.Realization.KacMoodyAlgebra.invForm_eq_zero`: c) `(𝔤_α | 𝔤_β) = 0` unless
   `α + β = 0`.
-* `Matrix.Realization.KacMoodyAlgebra.eq_zero_of_invForm_rootSpace_eq_zero`: d) the form pairs
-  `𝔤_α` and `𝔤_{-α}` nondegenerately.
+* `Matrix.Realization.KacMoodyAlgebra.eq_zero_of_invForm_rootSpace_eq_zero`,
+  `Matrix.Realization.KacMoodyAlgebra.rootSpacePairingEquiv`: d) the form pairs `𝔤_α` and
+  `𝔤_{-α}` nondegenerately, identifying `𝔤_{-α}` with the dual of `𝔤_α`.
 * `Matrix.Realization.KacMoodyAlgebra.lie_eq_invForm_smul`: e) `[x, y] = (x | y) ν⁻¹(α)` for
   `x ∈ 𝔤_α`, `y ∈ 𝔤_{-α}`.
 * `Matrix.Realization.KacMoodyAlgebra.invForm_e_f`: `(eᵢ | fⱼ) = δᵢⱼ εᵢ`.
@@ -157,6 +160,60 @@ theorem eq_zero_of_invForm_rootSpace_eq_zero {μ : Dual K H} {x : P.KacMoodyAlge
   · obtain rfl : ν = -μ := eq_neg_of_add_eq_zero_right hμν
     exact hx0 y hy
   · exact invForm_eq_zero P S hx hy hμν
+
+/-- The pairing `𝔤_{-α} → (𝔤_α)*` induced by the invariant form. -/
+def rootSpacePairing (μ : Dual K H) : rootSpace P (-μ) →ₗ[K] Dual K (rootSpace P μ) :=
+  ((invForm P S).domRestrict₁₂ (rootSpace P μ) (rootSpace P (-μ))).flip
+
+@[simp] lemma rootSpacePairing_apply (μ : Dual K H) (y : rootSpace P (-μ)) (x : rootSpace P μ) :
+    rootSpacePairing P S μ y x = invForm P S x y := rfl
+
+lemma rootSpacePairing_injective (μ : Dual K H) : Function.Injective (rootSpacePairing P S μ) := by
+  rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+  intro y hy
+  ext
+  refine eq_zero_of_invForm_rootSpace_eq_zero P S y.2 fun x hx ↦ ?_
+  rw [neg_neg] at hx
+  rw [(isSymm_invForm P S).eq]
+  exact LinearMap.congr_fun hy ⟨x, hx⟩
+
+omit [FiniteDimensional K H] in
+lemma chevalleyInvolution_mem_rootSpace {μ : Dual K H} {x : P.KacMoodyAlgebra}
+    (hx : x ∈ rootSpace P μ) : chevalleyInvolution P x ∈ rootSpace P (-μ) := by
+  intro a
+  have := congr_arg (chevalleyInvolution P) (hx (-a))
+  simp only [LieHom.map_lie, map_neg, chevalleyInvolution_h, neg_neg, map_smul] at this
+  rw [this, LinearMap.neg_apply, neg_smul]
+
+omit [FiniteDimensional K H] in
+/-- `dim 𝔤_{-α} = dim 𝔤_α`, via the Chevalley involution. -/
+theorem finrank_rootSpace_neg_eq {μ : Dual K H} (hμ : μ ∈ P.posWeights) :
+    finrank K (rootSpace P (-μ)) = finrank K (rootSpace P μ) := by
+  have hfin := finiteDimensional_rootSpace P hμ
+  have := finiteDimensional_rootSpace_neg P hμ
+  have : FiniteDimensional K (rootSpace P (-(-μ))) := by rwa [neg_neg]
+  have hinj : ∀ ν : Dual K H, Function.Injective ((chevalleyInvolution P).toLinearMap.restrict
+      (p := rootSpace P ν) (q := rootSpace P (-ν))
+      fun _ hx ↦ chevalleyInvolution_mem_rootSpace P hx) := fun ν x y hxy ↦ by
+    ext
+    simpa using congr_arg (fun z : rootSpace P (-ν) ↦ chevalleyInvolution P z) hxy
+  have h1 := LinearMap.finrank_le_finrank_of_injective (hinj μ)
+  have h2 := LinearMap.finrank_le_finrank_of_injective (hinj (-μ))
+  rw [neg_neg] at h2
+  omega
+
+/-- The invariant form identifies `𝔤_{-α}` with the dual of `𝔤_α` for `α ∈ Q₊ \ {0}`
+([Kac] Thm. 2.2 d) (check)). -/
+def rootSpacePairingEquiv {μ : Dual K H} (hμ : μ ∈ P.posWeights) :
+    rootSpace P (-μ) ≃ₗ[K] Dual K (rootSpace P μ) :=
+  have := finiteDimensional_rootSpace P hμ
+  have := finiteDimensional_rootSpace_neg P hμ
+  LinearMap.linearEquivOfInjective (rootSpacePairing P S μ) (rootSpacePairing_injective P S μ)
+    (by rw [Subspace.dual_finrank_eq, finrank_rootSpace_neg_eq P hμ])
+
+@[simp] lemma rootSpacePairingEquiv_apply {μ : Dual K H} (hμ : μ ∈ P.posWeights)
+    (y : rootSpace P (-μ)) (x : rootSpace P μ) :
+    rootSpacePairingEquiv P S hμ y x = invForm P S x y := rfl
 
 end KacMoodyAlgebra
 
