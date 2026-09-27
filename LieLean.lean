@@ -24,6 +24,7 @@ import LieLean.Algebra.Lie.KacMoody.FiniteDimensional
 import LieLean.Algebra.Lie.KacMoody.FiniteType
 import LieLean.Algebra.Lie.KacMoody.GabberKac
 import LieLean.Algebra.Lie.KacMoody.Geck
+import LieLean.Algebra.Lie.KacMoody.Grothendieck
 import LieLean.Algebra.Lie.KacMoody.HighestWeight
 import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
 import LieLean.Algebra.Lie.KacMoody.Integrable
@@ -34,6 +35,9 @@ import LieLean.Algebra.Lie.KacMoody.InvariantFormAux
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
+import LieLean.Algebra.Lie.KacMoody.SerreAssociative
+import LieLean.Algebra.Lie.KacMoody.SerreAssociative.HighestWeight
+import LieLean.Algebra.Lie.KacMoody.SerreAssociative.NegativePart
 import LieLean.Algebra.Lie.KacMoody.SerrePresented
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.Homology
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.LowestWeight
@@ -45,6 +49,7 @@ import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra
 import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra.Injective
 import LieLean.Algebra.Lie.KacMoody.Triangular
 import LieLean.Algebra.Lie.KacMoody.Verma
+import LieLean.Algebra.Lie.KacMoody.VermaHom
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
@@ -53,6 +58,7 @@ import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
 import LieLean.Algebra.Lie.Sl2
 import LieLean.Algebra.Lie.Subalgebra
+import LieLean.Algebra.Lie.UniversalEnveloping.Domain
 import LieLean.Algebra.Lie.UniversalEnveloping.Filtration
 import LieLean.Algebra.Lie.UniversalEnveloping.Free
 import LieLean.Algebra.Lie.UniversalEnveloping.Graded
@@ -62,8 +68,14 @@ import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Basic
 import LieLean.GroupTheory.Coxeter.Bruhat
+import LieLean.GroupTheory.Coxeter.Deletion
 import LieLean.GroupTheory.Coxeter.Exchange
 import LieLean.GroupTheory.Coxeter.GeometricRepresentation
+import LieLean.GroupTheory.Coxeter.Hecke.Bar
+import LieLean.GroupTheory.Coxeter.Hecke.BaseChange
+import LieLean.GroupTheory.Coxeter.Hecke.Basic
+import LieLean.GroupTheory.Coxeter.Hecke.RPolynomial
+import LieLean.GroupTheory.Coxeter.Hecke.Specialization
 import LieLean.GroupTheory.Coxeter.Parabolic
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
@@ -76,4 +88,11 @@ import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupExchange
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupTits
+import LieLean.RepresentationTheory.Crystal.Basic
+import LieLean.RepresentationTheory.Crystal.Character
+import LieLean.RepresentationTheory.Crystal.Normal
+import LieLean.RepresentationTheory.Crystal.Realization
+import LieLean.RepresentationTheory.Crystal.Subcrystal
+import LieLean.RepresentationTheory.Crystal.Tensor
+import LieLean.RepresentationTheory.Crystal.WeylAction
 import LieLean.RingTheory.FormalCharacter
