@@ -33,6 +33,11 @@ polynomial function of the highest weight.
 * `MvPolynomial.homogeneousComponent_det`: the leading term of a determinant.
 * `Module.Dual.evalPoly_injective`: over an infinite field, polynomials are determined by the
   functions they define on `H*`.
+
+## References
+
+Elementary commutative algebra, used for the leading term of the Shapovalov determinant
+([KK] §3 (check), [Kac] §9.4 (check)).
 -/
 
 open Module

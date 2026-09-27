@@ -18,6 +18,15 @@ in `U` on the elements `y⁻ K_μ x⁺ ↔ y ⊗ e^μ ⊗ x` (`y, x ∈ 'f`), fo
 These operators satisfy the relations (b)–(d) of `U` (`QuantumGroup.preRelations_op`); the
 construction is our own rendering of the standard argument ([Jan] 4.21 (check)).
 
+## Main definitions
+
+* `QuantumGroup.opE`, `QuantumGroup.opF`, `QuantumGroup.opKHom`: the operators on
+  `'f ⊗ k[Y] ⊗ 'f`.
+
+## Main results
+
+* `QuantumGroup.preRelations_op`: they satisfy the relations (b)–(d) of `U`.
+
 ## References
 
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.1–3.2.

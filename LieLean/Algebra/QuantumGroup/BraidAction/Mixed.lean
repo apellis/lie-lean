@@ -22,6 +22,10 @@ vanishes in `U`, we get `Fᵢ Tᵢ(Fⱼ) = q^r Tᵢ(Fⱼ) Fᵢ`, and likewise fo
 the relations (d) between `Tᵢ(Eᵢ)` and `Tᵢ(Fⱼ)`, and between `Tᵢ(Eⱼ)` and `Tᵢ(Fᵢ)`
 (our own write-up of the standard computation).
 
+## Main definitions
+
+* `QuantumGroup.braidEj`, `QuantumGroup.braidFj`: the images `Tᵢ(Eⱼ)`, `Tᵢ(Fⱼ)` for `j ≠ i`.
+
 ## Main results
 
 For `j ≠ i`:

@@ -137,6 +137,7 @@ theorem form_comm (x y : LusztigF k I) : form D v x y = form D v y x := by
   | add y y' hy hy' => simp [hy, hy']
   | mul_θ y j hy => rw [form_mul_θ_right, hy, form_mul_θ]
 
+/-- Lusztig's form is symmetric, as a bilinear form ([Lus] 1.2.3 (check)). -/
 theorem isSymm_form : LinearMap.IsSymm (form D v) :=
   LinearMap.isSymm_def.2 fun x y ↦ by simpa using form_comm D v x y
 

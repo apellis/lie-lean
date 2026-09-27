@@ -30,6 +30,10 @@ sets.
 ## Main results
 
 * `LusztigF.weightProj_mem_serreSpan`: the weight components of the Serre ideal.
+
+## References
+
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §1.4 (check).
 -/
 
 noncomputable section

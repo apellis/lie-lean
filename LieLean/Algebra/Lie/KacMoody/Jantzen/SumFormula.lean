@@ -23,6 +23,12 @@ formal characters this is the **Jantzen sum formula**
 `∑_{i ≥ 1} ch M(λ₀)^i = ∑_{α > 0} ∑_{n ≥ 1, 2 (λ₀ + ρ | α) = n (α | α)} mult α · ch M(λ₀ - n α)`
 ([HumO] §5.3 (check) for finite type; [Kac] §9 (check), [KK] (check) for the determinant).
 
+## Main results
+
+* `Matrix.Realization.KacMoodyAlgebra.VermaModule.finsum_finrank_jantzen_inf_weightSpace`,
+  `VermaModule.finsum_finrank_jantzen_inf_weightSpace_eq_sum_verma` (in the form with Verma
+  modules): the Jantzen sum formula, weight space by weight space.
+
 ## Proof
 
 By the order formula (`VermaModule.sum_finrank_jantzen_inf_weightSpace`), the left side is the
@@ -30,6 +36,14 @@ order of vanishing at `t = 0` of `D_η(λ₀ + t δ)`, which by the Kac–Kazhda
 (`VermaModule.exists_shapovalovDet_eq_prod_kkPairs`) is a nonzero constant times
 `∏_{(x, n)} (((λ₀ + ρ | α_x) - n (α_x | α_x)/2) + t (δ | α_x))^{P(η - n α_x)}`. The factors with
 `2 (λ₀ + ρ | α_x) = n (α_x | α_x)` vanish to order one, the others not at all.
+
+## References
+
+* [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
+  GSM 94, §5.3 (check).
+* [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
+  infinite-dimensional Lie algebras*, Adv. Math. **34** (1979), 97–108.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9 (check).
 -/
 
 open Module LieModule Module.Dual Polynomial
