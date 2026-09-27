@@ -76,6 +76,7 @@ import LieLean.RepresentationTheory.Crystal.Basic
 import LieLean.RepresentationTheory.Crystal.Character
 import LieLean.RepresentationTheory.Crystal.Normal
 import LieLean.RepresentationTheory.Crystal.Realization
+import LieLean.RepresentationTheory.Crystal.Subcrystal
 import LieLean.RepresentationTheory.Crystal.Tensor
 import LieLean.RepresentationTheory.Crystal.WeylAction
 import LieLean.RingTheory.FormalCharacter
