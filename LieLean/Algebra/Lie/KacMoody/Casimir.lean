@@ -216,9 +216,7 @@ lemma root_toDual_symm_root [CharZero K] [FiniteDimensional K H] (S : A.Symmetri
     (hA : A.IsGeneralizedCartan) (i : ι) :
     P.root i ((P.toDual S).symm (P.root i)) = 2 * P.root i ((P.toDual S).symm P.rho) := by
   rw [← dualBilinForm_apply_eq, ← dualBilinForm_apply_eq, (P.isSymm_dualBilinForm S).eq _ P.rho,
-    dualBilinForm_root_self S hA, dualBilinForm_root_right, rho_coroot]
-  push_cast
-  ring
+    two_mul_dualBilinForm_rho_root S hA]
 
 /-! ### The Casimir operator -/
 
