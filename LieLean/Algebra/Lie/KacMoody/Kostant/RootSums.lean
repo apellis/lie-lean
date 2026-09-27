@@ -170,6 +170,25 @@ lemma finsum_mem_neg (s : Set (Dual K H)) (F : Dual K H → M) :
     simp only [Set.indicator_apply]
     split_ifs <;> simp
 
+omit [Fintype ι] [DecidableEq ι] [CharZero K] in
+lemma smul_finsum_mem_of_field [Module K M] (c : K) (s : Set (Dual K H)) (F : Dual K H → M) :
+    c • ∑ᶠ α ∈ s, F α = ∑ᶠ α ∈ s, c • F α := by
+  classical
+  rw [finsum_mem_def, finsum_mem_def, smul_finsum]
+  exact finsum_congr fun α ↦ by simp only [Set.indicator_apply]; split_ifs <;> simp
+
+omit [Fintype ι] [DecidableEq ι] [CharZero K] in
+lemma smul_finsum_mem_of_finite {N : Type*} [AddCommMonoid N] [Module K N] (c : K)
+    {s : Set (Dual K H)} {F : Dual K H → N} (h : (s ∩ Function.support F).Finite) :
+    c • ∑ᶠ α ∈ s, F α = ∑ᶠ α ∈ s, c • F α :=
+  (DistribSMul.toAddMonoidHom N c).map_finsum_mem' h
+
+omit [Fintype ι] [DecidableEq ι] [CharZero K] in
+lemma map_finsum_mem_of_finite {N : Type*} [AddCommGroup N] [Module K M] [Module K N]
+    (T : M →ₗ[K] N) {s : Set (Dual K H)} {F : Dual K H → M}
+    (h : (s ∩ Function.support F).Finite) : T (∑ᶠ α ∈ s, F α) = ∑ᶠ α ∈ s, T (F α) :=
+  T.toAddMonoidHom.map_finsum_mem' h
+
 end Reindex
 
 /-! ### Sums over dual bases -/
