@@ -50,6 +50,8 @@ Cartan subalgebra `𝔥` on the complex of `𝔫₋`.
 * `LieModule.ChevalleyEilenberg.lieAction_lie`: `θ([x, y]) = [θ(x), θ(y)]`.
 * `LieModule.ChevalleyEilenberg.diff_comp_derivExt`: `d` commutes with `θ(D, φ)`.
 * `LieModule.ChevalleyEilenberg.diff_comp_diff`: `d ∘ d = 0`.
+* `LieModule.ChevalleyEilenberg.diff_ι_tmul`, `diff_ι_mul_ι_tmul`: the explicit formula in degrees
+  `1` and `2`: `d(x ⊗ m) = -(1 ⊗ x m)`, `d(x ∧ y ⊗ m) = -y ⊗ x m + x ⊗ y m - [x, y] ⊗ m`.
 * `LieModule.ChevalleyEilenberg.lTensor_comp_diff`: naturality of `d` in `M`.
 
 ## References
@@ -325,6 +327,18 @@ lemma diff_ι_tmul (x : L) (m : M) : diff R L M (ι R x ⊗ₜ m) = -(1 ⊗ₜ �
   have := diff_wedge (R := R) (M := M) x (1 ⊗ₜ m)
   rw [wedge_tmul, mul_one] at this
   simp [this]
+
+/-- `d(x ∧ y ⊗ m) = -y ⊗ x m + x ⊗ y m - [x, y] ⊗ m`. -/
+lemma diff_ι_mul_ι_tmul (x y : L) (m : M) :
+    diff R L M ((ι R x * ι R y) ⊗ₜ m) =
+      -(ι R y ⊗ₜ ⁅x, m⁆) + ι R x ⊗ₜ ⁅y, m⁆ - ι R ⁅x, y⁆ ⊗ₜ m := by
+  have h1 := diff_wedge (R := R) (M := M) x (ι R y ⊗ₜ m)
+  have h2 := lieAction_wedge (R := R) (M := M) x y (1 ⊗ₜ m)
+  rw [wedge_tmul] at h1
+  rw [wedge_tmul, wedge_tmul, mul_one, mul_one] at h2
+  rw [h1, h2, diff_ι_tmul, lieAction_one_tmul]
+  simp only [wedge_tmul, map_neg, mul_one]
+  abel
 
 /-- The differential `d` commutes with the operators `θ(D, φ)`, for a derivation `D` of `L` and a
 compatible endomorphism `φ` of `M`. -/
