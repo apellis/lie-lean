@@ -7,6 +7,7 @@ import LieLean.Algebra.Lie.Homology.Euler
 import LieLean.Algebra.Lie.Homology.WeightSpace
 import LieLean.Algebra.Lie.Homology.Weights
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
+import LieLean.Algebra.Lie.KacMoody.BGG
 import LieLean.Algebra.Lie.KacMoody.BGG.Character
 import LieLean.Algebra.Lie.KacMoody.BGG.LowDegree
 import LieLean.Algebra.Lie.KacMoody.BGG.Nilradical
