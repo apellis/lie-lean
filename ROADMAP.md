@@ -265,7 +265,15 @@ the character formula (characters and the denominator are in place, see M6; next
 - The Weyl–Kac character formula ([Kac] Thm. 10.4) and target theorem 2 ([Kac] Cor. 10.4).
 - Target theorem 3, complete reducibility ([Kac] Thm. 10.7).
 
-### M9 (optional). Finite type  `[ ]`
+### M9 (optional). Finite type  `[~]`
+
+Done (`LinearAlgebra/Matrix/Cartan/FiniteType.lean`, `Algebra/Lie/KacMoody/FiniteType.lean`), with
+Mathlib's `Matrix.IsFiniteCartan` as the definition of finite type: `finite_weylGroup`,
+`finite_realRoots`, `finrank_eq_card_of_isFiniteCartan`, `KacMoodyAlgebra.roots_eq_realRoots`
+([Kac] Prop. 5.10 (a)), `finite_roots`, `finrank_rootSpace_of_mem_roots`, `finiteDimensional`,
+`isSemisimple` (via `invForm` and `exists_h_mem_of_ne_bot`: nonzero ideals of `𝔤(A)` meet `𝔥`).
+Not done: comparison with the Geck construction / `ToLieAlgebra` (in progress, see M3), Weyl's
+complete reducibility for finite-dimensional modules.
 
 For a Cartan matrix of finite type: `𝔤(A)` is finite-dimensional semisimple and agrees with
 Mathlib's Geck construction and `Matrix.ToLieAlgebra` (Serre's theorem, [Hum] §18); Weyl's complete
@@ -290,6 +298,7 @@ the general Kac–Moody results give.
 - `IsSl2Triple` lemmas in `KacMoody/IntegrableWeyl.lean`; `LieModule.locallyNilpotentSubmodule`,
   `exists_toEnd_pow_eq_zero_of_lieSpan` in `KacMoody/Integrable.lean`.
 - `LieModuleEquiv.ofBijective` (`KacMoody/CompleteReducibility.lean`).
+- `Matrix.dotProduct_diagonal_mul_mulVec_reflection` (`LinearAlgebra/Matrix/Cartan/FiniteType.lean`).
 - `UniversalEnvelopingAlgebra.ker_map_eq_span`, `LieHom.descend`
   (`LieLean/Algebra/Lie/UniversalEnveloping/Kernel.lean`).
 - `FormalCharacter.sum_neg_one_pow_card_eq_ite` (`LieLean/RingTheory/FormalCharacter.lean`);
