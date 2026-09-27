@@ -51,7 +51,7 @@ occur (`reflectMset`); then `ρ - ⟨rᵢ ⋆ m⟩ = rᵢ (ρ - ⟨m⟩)`, so th
 * `Matrix.Realization.dualBilinForm_weylGroup`: `W` preserves the form on `𝔥*`.
 * `Matrix.Realization.KacMoodyAlgebra.exists_weylGroup_of_dualBilinForm_eq`: Kostant's lemma.
 * `Matrix.Realization.KacMoodyAlgebra.IrreducibleModule.
-  exists_weylGroup_of_homologyWeightSpace_ne_bot`: if `H_k(𝔫₋, L(Λ))_μ ≠ 0` and
+  exists_weylGroup_of_homologyWeightSpace_ne_bot_of_eq`: if `H_k(𝔫₋, L(Λ))_μ ≠ 0` and
   `(μ + ρ | μ + ρ) = (Λ + ρ | Λ + ρ)`, then `μ = w(Λ + ρ) - ρ` with
   `ℓ(w) = k`.
 
@@ -617,8 +617,9 @@ lemma exists_eq_sub_of_weightSpace_ne_bot {ν : Dual K H}
 (The weights of `C_k(𝔫₋, L(Λ))` are `ν - (β₁ + ⋯ + β_k)` with `ν` a weight of `L(Λ)` and the `βⱼ`
 roots of distinct elements of a basis of root vectors of `𝔫₋`;
 `exists_weylGroup_of_dualBilinForm_eq` applies.) -/
-theorem exists_weylGroup_of_homologyWeightSpace_ne_bot (hΛ : P.IsDominantIntegral Λ) {k : ℕ}
-    {μ : Dual K H} (h : (nNegDerivAction P (IrreducibleModule P Λ)).homologyWeightSpace k μ ≠ ⊥)
+theorem exists_weylGroup_of_homologyWeightSpace_ne_bot_of_eq (hΛ : P.IsDominantIntegral Λ)
+    {k : ℕ} {μ : Dual K H}
+    (h : (nNegDerivAction P (IrreducibleModule P Λ)).homologyWeightSpace k μ ≠ ⊥)
     (hform : P.dualBilinForm S (μ + P.rho) (μ + P.rho) =
       P.dualBilinForm S (Λ + P.rho) (Λ + P.rho)) :
     ∃ w : P.weylGroup hA, (P.coxeterSystem hA).length w = k ∧
