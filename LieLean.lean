@@ -137,6 +137,7 @@ import LieLean.RepresentationTheory.Crystal.Path.Character
 import LieLean.RepresentationTheory.Crystal.Path.CharacterFormula
 import LieLean.RepresentationTheory.Crystal.Path.Concatenation
 import LieLean.RepresentationTheory.Crystal.Path.LS
+import LieLean.RepresentationTheory.Crystal.Path.LittlewoodRichardson
 import LieLean.RepresentationTheory.Crystal.Path.Realization
 import LieLean.RepresentationTheory.Crystal.Path.RootOperators
 import LieLean.RepresentationTheory.Crystal.Path.Stability
