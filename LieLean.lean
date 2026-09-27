@@ -72,4 +72,6 @@ import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupExchange
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupTits
+import LieLean.RepresentationTheory.Crystal.Basic
+import LieLean.RepresentationTheory.Crystal.Tensor
 import LieLean.RingTheory.FormalCharacter
