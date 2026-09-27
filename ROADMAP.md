@@ -341,7 +341,8 @@ the general Kac–Moody results give.
   equivToLieAlgebra` (`KacMoody/Geck.lean`).
 - `Matrix.ToLieAlgebra` API (`lift`, `hom_ext`, generator lemmas), `AddMonoidAlgebra.degreeDerivation`,
   `LieAlgebra.ExtendScalars.evalHom` (`KacMoody/ToLieAlgebra*.lean`).
-- `LieModuleEquiv.ofBijective` (`KacMoody/CompleteReducibility.lean`); `LieSubmodule.Subquotient`,
+- `LieModuleEquiv.ofBijective`, `LieSubmodule.Quotient.lift` (`LieLean/Algebra/Lie/Quotient.lean`);
+  `LieSubmodule.Subquotient`,
   `LieSubmodule.Quotient.nonempty_lieModuleEquiv_of_surjective` (`KacMoody/CompositionSeries.lean`).
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
 - `Matrix.dotProduct_diagonal_mul_mulVec_reflection` (`LinearAlgebra/Matrix/Cartan/FiniteType.lean`).
