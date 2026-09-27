@@ -344,7 +344,21 @@ Phase 1 (M1–M9, the four target theorems) is complete. Phase 2 builds the deca
 structures that categorification lifts. KLR (quiver Hecke) algebras, 2-Kac–Moody algebras and
 categorical actions are **not** part of Phase 2.
 
-### M10. Coxeter groups: Bruhat order, parabolic subgroups, Matsumoto  `[ ]`  ([HumC] Ch. 5, [BB])
+### M10. Coxeter groups: Bruhat order, parabolic subgroups, Matsumoto  `[x]`  ([HumC] Ch. 5, [BB])
+
+Done (`LieLean/GroupTheory/Coxeter/`, arbitrary Coxeter systems): strong exchange and deletion
+(`Exchange.lean`, `Deletion.lean`: `mem_rightInvSeq_iff`, `exists_sublist_isReduced`,
+`isReduced_iff_nodup_rightInvSeq`, `ncard_setOf_isRightInversion`); Bruhat order (`Bruhat.lean`:
+`BruhatLE`, subword property `IsReduced.bruhatLE_iff`, `bruhatLE_inv_iff`, lifting property
+`BruhatLE.lifting`, chain property `bruhatLE_iff_reflTransGen`, `finite_setOf_bruhatLE`,
+`BruhatOrder` partial order); Matsumoto's theorem (`Matsumoto.lean`:
+`reflTransGen_braidMove_of_isReduced`, `exists_eq_of_braidMove`, `braidLift`); parabolic
+subgroups (`Parabolic*.lean`: `minCosetReps`, `w = w^J w_J`, `parabolicCoxeterSystem`,
+`length_parabolicCoxeterSystem`); longest element (`Longest.lean`); geometric representation over
+an algebraically closed char-0 field (`GeometricRepresentation.lean`:
+`orderOf_simple_mul_simple` — the order of `sᵢsⱼ` is `mᵢⱼ` — and `simple_injective`, two TODOs
+of Mathlib's `Coxeter/Basic.lean`; faithfulness not proved).
+
 
 For a general Coxeter system (Mathlib's `CoxeterSystem`; applies to our
 `Realization.coxeterSystem`):
@@ -471,6 +485,8 @@ beyond what the general Kac–Moody results give.
 - `LieModuleEquiv.ofBijective`, `LieSubmodule.Quotient.lift` (`LieLean/Algebra/Lie/Quotient.lean`);
   `LieSubmodule.Subquotient`,
   `LieSubmodule.Quotient.nonempty_lieModuleEquiv_of_surjective` (`KacMoody/CompositionSeries.lean`).
+- `LieLean/GroupTheory/Coxeter/{Exchange,Deletion,Bruhat,GeometricRepresentation,Parabolic,
+  Parabolic/CoxeterSystem,Matsumoto,Longest}.lean`; `IsAlgClosed.exists_orderOf_eq`.
 - Strong exchange condition (`LieLean/GroupTheory/Coxeter/Exchange.lean`, Mathlib lacks it);
   Iwahori–Hecke algebra and bar involution (`GroupTheory/Coxeter/Hecke/{Basic,Bar}.lean`).
 - Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
