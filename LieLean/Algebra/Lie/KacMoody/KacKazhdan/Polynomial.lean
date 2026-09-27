@@ -192,6 +192,14 @@ lemma isHomogeneous_linPoly (a : H) : (linPoly K H a).IsHomogeneous 1 := by
   simp only [MvPolynomial.smul_eq_C_mul]
   simpa using (MvPolynomial.isHomogeneous_X K j).C_mul ((Module.Free.chooseBasis K H).repr a j)
 
+lemma linPoly_ne_zero {a : H} (ha : a ≠ 0) : linPoly K H a ≠ 0 := by
+  intro h
+  obtain ⟨Λ, hΛ⟩ : ∃ Λ : Dual K H, Λ a ≠ 0 := by
+    by_contra! h'
+    exact ha ((Module.forall_dual_apply_eq_zero_iff K a).mp h')
+  apply hΛ
+  rw [← evalPoly_linPoly, h, map_zero, Pi.zero_apply]
+
 lemma totalDegree_linPoly_le (a : H) : (linPoly K H a).totalDegree ≤ 1 :=
   (isHomogeneous_linPoly a).totalDegree_le
 
@@ -279,6 +287,13 @@ lemma mul {e : ℕ} (hF : HasTop d q F) (hG : HasTop e q' G) : HasTop (d + e) (q
     MvPolynomial.homogeneousComponent_mul_of_totalDegree_le hp hp', map_mul _ _ _⟩
 
 lemma congr_fun (hF : HasTop d q F) (h : F = G) : HasTop d q G := h ▸ hF
+
+/-- If the top component is nonzero, the polynomial function has degree exactly `d`. -/
+lemma exists_totalDegree_eq (h : HasTop d q F) (hq : q ≠ 0) :
+    ∃ p : MvPolynomial (PolyIdx K H) K, p.totalDegree = d ∧ evalPoly K H p = F := by
+  obtain ⟨p, hp, rfl, rfl⟩ := h
+  refine ⟨p, le_antisymm hp (not_lt.mp fun hlt ↦ hq ?_), rfl⟩
+  exact MvPolynomial.homogeneousComponent_eq_zero _ _ hlt
 
 lemma unique [Infinite K] (hF : HasTop d q F) (hF' : HasTop d q' F) : q = q' := by
   obtain ⟨p, -, rfl, hp⟩ := hF
