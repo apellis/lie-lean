@@ -139,7 +139,7 @@ The comparison with `Matrix.ToLieAlgebra` is not done.
   is known; for singular `A` it has a smaller Cartan part and should be compared with the derived
   algebra `𝔤'(A)`. Do this comparison only when it is needed or cheap.
 
-### M4. Integrable modules and the Weyl group  `[~]`  ([Kac] Ch. 3)
+### M4. Integrable modules and the Weyl group  `[x]`  ([Kac] Ch. 3)
 
 Done: `Matrix.Realization.reflection`, `coreflection`, `weylGroup`, `realRoots`, W preserves `Q`
 (`LinearAlgebra/Matrix/Cartan/WeylGroup.lean`); `KacMoodyAlgebra.IsIntegrable`,
@@ -153,7 +153,13 @@ Done: `Matrix.Realization.reflection`, `coreflection`, `weylGroup`, `realRoots`,
 positive roots made negative), dominant weights: `exists_sub_apply_eq_rootOf`,
 `apply_eq_self_of_dominant` (`LinearAlgebra/Matrix/Cartan/WeylGroup{Tits,Coxeter,Exchange,
 Dominant}.lean`, `KacMoody/WeylLength.lean`; proved via Tits' criterion rather than Kac's
-argument). Not done: the Tits cone (Prop. 3.12).
+argument). Tits cone ([Kac] Prop. 3.12 (a)–(d), worked dually in `Dual K H`,
+`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`): `dominantChamber`, `titsCone`,
+`exists_nonneg_sub_apply_eq_sum`, `stabilizer_eq_closure_reflection`,
+`eq_one_of_apply_eq_self_of_forall_pos`, `eq_of_apply_eq_of_mem_dominantChamber`,
+`existsUnique_mem_dominantChamber`, `mem_titsCone_iff` (via positive real coroots),
+`convex_titsCone`; real coroots and the coweyl group in `TitsCone/Coroots.lean`. Not done (not
+needed downstream): Prop. 3.12 (e), (f).
 
 
 - `𝔥`-diagonalizable (weight) modules, weights, `P(V)`; integrable modules (`eᵢ, fᵢ` locally
@@ -298,6 +304,7 @@ the general Kac–Moody results give.
 - `IsSl2Triple` lemmas in `KacMoody/IntegrableWeyl.lean`; `LieModule.locallyNilpotentSubmodule`,
   `exists_toEnd_pow_eq_zero_of_lieSpan` in `KacMoody/Integrable.lean`.
 - `LieModuleEquiv.ofBijective` (`KacMoody/CompleteReducibility.lean`).
+- Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
 - `Matrix.dotProduct_diagonal_mul_mulVec_reflection` (`LinearAlgebra/Matrix/Cartan/FiniteType.lean`).
 - `UniversalEnvelopingAlgebra.ker_map_eq_span`, `LieHom.descend`
   (`LieLean/Algebra/Lie/UniversalEnveloping/Kernel.lean`).
