@@ -1,6 +1,7 @@
 import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.Basic
+import LieLean.Algebra.Lie.KacMoody.CategoryO
 import LieLean.Algebra.Lie.KacMoody.Integrable
 import LieLean.Algebra.Lie.KacMoody.IntegrableRoots
 import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
@@ -8,6 +9,11 @@ import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
 import LieLean.Algebra.Lie.KacMoody.TensorRep
+import LieLean.Algebra.Lie.KacMoody.Triangular
+import LieLean.Algebra.Lie.KacMoody.Verma
+import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
+import LieLean.Algebra.Lie.KacMoody.VermaPBW
+import LieLean.Algebra.Lie.KacMoody.VermaWeights
 import LieLean.Algebra.Lie.Quotient
 import LieLean.Algebra.Lie.Subalgebra
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
