@@ -3,6 +3,8 @@ import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.Homology.ChainComplex
 import LieLean.Algebra.Lie.Homology.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Homology.Complex
+import LieLean.Algebra.Lie.Homology.WeightSpace
+import LieLean.Algebra.Lie.Homology.Weights
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.Basic
 import LieLean.Algebra.Lie.KacMoody.Casimir
@@ -34,6 +36,7 @@ import LieLean.Algebra.Lie.KacMoody.IntegrableRoots
 import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
 import LieLean.Algebra.Lie.KacMoody.InvariantForm
 import LieLean.Algebra.Lie.KacMoody.InvariantFormAux
+import LieLean.Algebra.Lie.KacMoody.Kostant.Chains
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
