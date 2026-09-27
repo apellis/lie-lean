@@ -38,6 +38,7 @@ We take the formula for `eᵢ` as the definition and define `fᵢ` through the t
 ## Main results
 
 * `LittelmannPath.minPairing_eRaw`: `eᵢ` raises the minimum `mᵢ` by `1`.
+* `LittelmannPath.f_apply`: the closed formula for `fᵢ`.
 * `LittelmannPath.f_eq_some_iff`: `fᵢ π = π'` if and only if `eᵢ π' = π` ([Lit95] Lemma 2.1
   (check)); in particular `eᵢ` and `fᵢ` are inverse to each other where defined.
 * `LittelmannPath.isSeminormal_crystal`: the path crystal is seminormal: `εᵢ(π)` (resp. `φᵢ(π)`)
@@ -315,6 +316,23 @@ lemma f_rev (i : ι) (π : LittelmannPath S) : f i π.rev = (e i π).map rev := 
 @[simp] lemma pairing_one_rev (i : ι) (π : LittelmannPath S) :
     π.rev.pairing i 1 = -π.pairing i 1 := by
   rw [pairing_rev, sub_self, pairing_zero, zero_sub]
+
+/-- The closed formula for `fᵢ` ([Lit95] §1 (check), in our reformulation): if `fᵢ π = π'` then
+`π'(t) = π(t) - (min(min_{[t,1]} hᵢ, mᵢ + 1) - mᵢ) αᵢ` for `t ∈ [0,1]`. -/
+theorem f_apply (h : f i π = some π') {t : 𝕜} (ht : t ∈ Icc (0 : 𝕜) 1) :
+    π' t = π t - (min (π.rightMin i t) (π.minPairing i + 1) - π.minPairing i) • S.root i := by
+  obtain ⟨ρ, hρ, rfl⟩ := Option.map_eq_some_iff.mp h
+  obtain ⟨hQ, rfl⟩ := e_eq_some_iff.mp hρ
+  have ht' : 1 - t ∈ Icc (0 : 𝕜) 1 := ⟨by linarith [ht.2], by linarith [ht.1]⟩
+  have key : min (π.rightMin i t - π.pairing i 1) (π.minPairing i - π.pairing i 1 + 1) =
+      min (π.rightMin i t) (π.minPairing i + 1) - π.pairing i 1 := by
+    rw [← min_sub_sub_right]
+    congr 1
+    ring
+  rw [rev_apply, eRaw_apply, eRaw_apply, π.rev.eCoeff_of_one_le i le_rfl, eCoeff,
+    π.runningMin_rev ht', sub_sub_cancel, minPairing_rev, key, rev_apply, rev_apply, sub_self,
+    apply_zero, sub_sub_cancel]
+  module
 
 /-! ### The path crystal -/
 
