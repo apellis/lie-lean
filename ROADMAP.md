@@ -200,7 +200,11 @@ Formal characters (§9.7, `KacMoody/Character*.lean`): `CharacterRing` (Kac's `�
 on `WeightOrd`; `WeightOrd.isPWO_iff`), `IsCategoryO.character`, `character_eq_add`,
 `VermaModule.finrank_weightSpace_sub` (Kostant partition function), `denominator`,
 `VermaModule.denominator_mul_character` (`R · ch M(Λ) = e^Λ`), `IsCategoryO.isWeylInvariant_character`.
-Not done: Shapovalov form, composition factors (Prop. 9.8) (both in progress).
+Shapovalov form (§9.4, `KacMoody/Shapovalov.lean`): `transpose` (σ = -ω), `envTranspose`,
+`TwistedDual`, `VermaModule.contravariantForm` with `existsUnique_contravariantForm`,
+`isSymm_contravariantForm`, `contravariantForm_eq_zero_of_ne`, `mem_maxSubmodule_iff` (radical =
+`M'(Λ)`), `nondegenerate_weightSpaceForm_iff`, `IrreducibleModule.nondegenerate_contravariantForm`.
+Not done: composition factors (Prop. 9.8) (in progress); Kac–Kazhdan determinant (not needed).
 
 
 - Category `𝒪` ([Kac] §9.1): `𝔥`-diagonalizable, finite-dimensional weight spaces, weights in a
