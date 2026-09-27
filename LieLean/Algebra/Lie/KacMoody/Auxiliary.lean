@@ -235,26 +235,40 @@ lemma induction_on {p : P.AuxLieAlgebra → Prop} (y : P.AuxLieAlgebra)
   | smul a y _ hy => exact smul a y hy
   | lie y z _ _ hy hz => exact lie y z hy hz
 
+/-- A submodule of `𝔤̃(A)` stable under the adjoint action of the generators is stable under the
+adjoint action of every element. -/
+lemma lie_mem_of_generators (S : Submodule K P.AuxLieAlgebra)
+    (he : ∀ i, ∀ x ∈ S, ⁅e P i, x⁆ ∈ S) (hf : ∀ i, ∀ x ∈ S, ⁅f P i, x⁆ ∈ S)
+    (hh : ∀ a, ∀ x ∈ S, ⁅h P a, x⁆ ∈ S) (y : P.AuxLieAlgebra) : ∀ x ∈ S, ⁅y, x⁆ ∈ S := by
+  induction y using induction_on with
+  | he i => exact he i
+  | hf i => exact hf i
+  | hh a => exact hh a
+  | zero => simp
+  | add y z hy hz => intro x hx; rw [add_lie]; exact S.add_mem (hy x hx) (hz x hx)
+  | smul a y hy => intro x hx; rw [smul_lie]; exact S.smul_mem a (hy x hx)
+  | lie y z hy hz =>
+    intro x hx
+    rw [lie_lie]
+    exact S.sub_mem (hy _ (hz x hx)) (hz _ (hy x hx))
+
+/-- The ideal of `𝔤̃(A)` given by a submodule stable under the adjoint action of the
+generators. -/
+def idealOfGenerators (S : Submodule K P.AuxLieAlgebra)
+    (he : ∀ i, ∀ x ∈ S, ⁅e P i, x⁆ ∈ S) (hf : ∀ i, ∀ x ∈ S, ⁅f P i, x⁆ ∈ S)
+    (hh : ∀ a, ∀ x ∈ S, ⁅h P a, x⁆ ∈ S) : LieIdeal K P.AuxLieAlgebra where
+  __ := S
+  lie_mem := fun {y} {_} hx ↦ lie_mem_of_generators S he hf hh y _ hx
+
+@[simp] lemma idealOfGenerators_toSubmodule (S : Submodule K P.AuxLieAlgebra) (he hf hh) :
+    (idealOfGenerators S he hf hh).toSubmodule = S := rfl
+
 /-- A submodule of `𝔤̃(A)` containing the generators and stable under the adjoint action of the
 generators is everything. -/
 lemma eq_top_of_generators (S : Submodule K P.AuxLieAlgebra)
     (hse : ∀ i, e P i ∈ S) (hsf : ∀ i, f P i ∈ S) (hsh : ∀ a, h P a ∈ S)
     (he : ∀ i, ∀ x ∈ S, ⁅e P i, x⁆ ∈ S) (hf : ∀ i, ∀ x ∈ S, ⁅f P i, x⁆ ∈ S)
     (hh : ∀ a, ∀ x ∈ S, ⁅h P a, x⁆ ∈ S) : S = ⊤ := by
-  -- every element acts on `S`
-  have hall : ∀ y : P.AuxLieAlgebra, ∀ x ∈ S, ⁅y, x⁆ ∈ S := by
-    intro y
-    induction y using induction_on with
-    | he i => exact he i
-    | hf i => exact hf i
-    | hh a => exact hh a
-    | zero => simp
-    | add y z hy hz => intro x hx; rw [add_lie]; exact S.add_mem (hy x hx) (hz x hx)
-    | smul a y hy => intro x hx; rw [smul_lie]; exact S.smul_mem a (hy x hx)
-    | lie y z hy hz =>
-      intro x hx
-      rw [lie_lie]
-      exact S.sub_mem (hy _ (hz x hx)) (hz _ (hy x hx))
   rw [eq_top_iff]
   rintro y -
   induction y using induction_on with
@@ -264,7 +278,7 @@ lemma eq_top_of_generators (S : Submodule K P.AuxLieAlgebra)
   | zero => exact S.zero_mem
   | add y z hy hz => exact S.add_mem hy hz
   | smul a y hy => exact S.smul_mem a hy
-  | lie y z _ hz => exact hall y z hz
+  | lie y z _ hz => exact lie_mem_of_generators S he hf hh y z hz
 
 variable (P)
 
