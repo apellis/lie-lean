@@ -45,6 +45,7 @@ import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra
 import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra.Injective
 import LieLean.Algebra.Lie.KacMoody.Triangular
 import LieLean.Algebra.Lie.KacMoody.Verma
+import LieLean.Algebra.Lie.KacMoody.VermaHom
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
@@ -53,6 +54,7 @@ import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
 import LieLean.Algebra.Lie.Sl2
 import LieLean.Algebra.Lie.Subalgebra
+import LieLean.Algebra.Lie.UniversalEnveloping.Domain
 import LieLean.Algebra.Lie.UniversalEnveloping.Filtration
 import LieLean.Algebra.Lie.UniversalEnveloping.Free
 import LieLean.Algebra.Lie.UniversalEnveloping.Graded
