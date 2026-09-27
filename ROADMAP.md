@@ -201,7 +201,14 @@ the Serre-presented algebra give `2(ρ | β) = (β | β)`, which is impossible f
 satisfying the constraints from integrability (use `W`-invariance). Write out the argument in the
 module docstring before formalizing it.
 
-### M8. Integrable highest-weight modules  `[ ]`  ([Kac] Ch. 10)
+### M8. Integrable highest-weight modules  `[~]`  ([Kac] Ch. 10)
+
+Done (`Algebra/Lie/KacMoody/HighestWeight*.lean`): `Matrix.Realization.IsDominantIntegral`,
+`FPowQuotient` (= L̃(Λ) = M(Λ)/Σ U(𝔤) fᵢ^{nᵢ+1} v_Λ) with `FPowQuotient.isIntegrable`,
+`toIrreducibleModule`, `IrreducibleModule.isIntegrable_iff` (Lemma 10.1),
+`IsCategoryO.exists_lieModuleHom_verma_of_isIntegrable`. Remaining: Cor. 10.4 and Thm. 10.7
+(need the Casimir operator), the character formula.
+
 
 - `L(Λ)` is integrable iff `Λ` is dominant integral ([Kac] Lemma 10.1 (check)).
 - The Weyl–Kac character formula ([Kac] Thm. 10.4) and target theorem 2 ([Kac] Cor. 10.4).
