@@ -76,6 +76,17 @@ import LieLean.Algebra.Lie.UniversalEnveloping.Kernel
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
+import LieLean.Algebra.QuantumGroup.Basic
+import LieLean.Algebra.QuantumGroup.CartanDatum
+import LieLean.Algebra.QuantumGroup.Hopf
+import LieLean.Algebra.QuantumGroup.LusztigF.Basic
+import LieLean.Algebra.QuantumGroup.LusztigF.Comul
+import LieLean.Algebra.QuantumGroup.LusztigF.Form
+import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
+import LieLean.Algebra.QuantumGroup.LusztigF.Serre
+import LieLean.Algebra.QuantumGroup.QBinomial
+import LieLean.Algebra.QuantumGroup.Triangular
+import LieLean.Algebra.QuantumGroup.TriangularRep
 import LieLean.Basic
 import LieLean.GroupTheory.Coxeter.Bruhat
 import LieLean.GroupTheory.Coxeter.Deletion
