@@ -4,6 +4,7 @@ import LieLean.Algebra.Lie.KacMoody.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.Basic
 import LieLean.Algebra.Lie.KacMoody.CategoryO
 import LieLean.Algebra.Lie.KacMoody.Character
+import LieLean.Algebra.Lie.KacMoody.CharacterDenominator
 import LieLean.Algebra.Lie.KacMoody.CharacterRing
 import LieLean.Algebra.Lie.KacMoody.CharacterVerma
 import LieLean.Algebra.Lie.KacMoody.HighestWeight
@@ -35,3 +36,4 @@ import LieLean.Basic
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
+import LieLean.RingTheory.FormalCharacter
