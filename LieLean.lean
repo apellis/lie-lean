@@ -47,6 +47,7 @@ import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Determinant
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Exponents
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Factorization
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Families
+import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Formula
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Generic
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Gram
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Hyperplane
