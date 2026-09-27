@@ -12,6 +12,7 @@ import LieLean.Algebra.Lie.KacMoody.BGG.LowDegree
 import LieLean.Algebra.Lie.KacMoody.BGG.Nilradical
 import LieLean.Algebra.Lie.KacMoody.BGG.Projectivity
 import LieLean.Algebra.Lie.KacMoody.BGG.Sl2
+import LieLean.Algebra.Lie.KacMoody.BGG.Uniqueness
 import LieLean.Algebra.Lie.KacMoody.BGG.Verma
 import LieLean.Algebra.Lie.KacMoody.BGG.VermaDecomposition
 import LieLean.Algebra.Lie.KacMoody.Basic
