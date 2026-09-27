@@ -51,6 +51,9 @@ import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
 import LieLean.Algebra.Lie.Subalgebra
+import LieLean.Algebra.Lie.UniversalEnveloping.Filtration
+import LieLean.Algebra.Lie.UniversalEnveloping.Free
+import LieLean.Algebra.Lie.UniversalEnveloping.Graded
 import LieLean.Algebra.Lie.UniversalEnveloping.Kernel
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
