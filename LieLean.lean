@@ -137,6 +137,7 @@ import LieLean.RepresentationTheory.Crystal.Path.Concatenation
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.Realization
 import LieLean.RepresentationTheory.Crystal.Path.RootOperators
+import LieLean.RepresentationTheory.Crystal.Path.Stability
 import LieLean.RepresentationTheory.Crystal.Realization
 import LieLean.RepresentationTheory.Crystal.Subcrystal
 import LieLean.RepresentationTheory.Crystal.Tensor
