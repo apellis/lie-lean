@@ -18,7 +18,10 @@ Let `A` be a symmetrizable matrix and `𝔤 = 𝔤(A)` over a field `K` of chara
 basis. We prove ([KK] §3 (check); cf. [Kac] §9 (check)):
 
 `D_β` is a polynomial function of `λ` of degree `N = ∑_{s ∈ T_β} |s|`, whose homogeneous component
-of degree `N` is `c ∏_{s ∈ T_β} ∏_x (λ | α_x)^{s(x)}` for a nonzero constant `c`.
+of degree `N` is `c ∏_{s ∈ T_β} ∏_x (λ | α_x)^{s(x)}` for a nonzero constant `c`. Counting Kostant
+partitions, `∑_{s ∈ T_β} s(x) = ∑_{n ≥ 1} P(β - n α_x)`, so the leading term is
+`c ∏_{α > 0} ∏_{n ≥ 1} (λ | α)^{mult α · P(β - n α)}` and `N = ∑_{α > 0} ∑_{n ≥ 1} mult α ·
+P(β - n α)`.
 
 This is the "leading term" part of the Kac–Kazhdan determinant formula
 `D_β(λ) = c ∏_{α > 0} ∏_{n ≥ 1} ((λ + ρ | α) - n (α | α)/2)^{mult α · P(β - n α)}`.
@@ -40,11 +43,18 @@ matrix expressing the basis `(e'_t)` in the basis `(e_s)` of `U(𝔫₋)`.
 * `Matrix.Realization.KacMoodyAlgebra.partitions`: the finite set `T_β`.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.pbwWeightBasis`: the PBW basis of
   `M(λ)_{λ-β}`.
+* `Matrix.Realization.KacMoodyAlgebra.VermaModule.kkExponent`: the exponent
+  `∑_{n ≥ 1} P(β - n α_x)`.
 
 ## Main results
 
-* `Matrix.Realization.KacMoodyAlgebra.VermaModule.hasTop_det_pbwWeightBasis`: the leading term of
-  the Shapovalov determinant.
+* `Matrix.Realization.KacMoodyAlgebra.VermaModule.hasTop_det_pbwWeightBasis`,
+  `Matrix.Realization.KacMoodyAlgebra.VermaModule.hasTop_det_pbwWeightBasis_kkExponent`: the leading
+  term of the Shapovalov determinant.
+* `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_totalDegree_det_pbwWeightBasis`: its
+  degree.
+* `Matrix.Realization.KacMoodyAlgebra.sum_partitions_apply`: `∑_{s ∈ T_β} s(x) = ∑_{n ≥ 1}
+  P(β - n α_x)`.
 
 ## References
 
@@ -130,6 +140,96 @@ def partitions (β : Dual K H) : Finset (NegRootIndex P →₀ ℕ) :=
 @[simp] lemma mem_partitions {β : Dual K H} {s : NegRootIndex P →₀ ℕ} :
     s ∈ partitions P β ↔ negRootWt P s = β := by
   simp [partitions]
+
+/-! ### Counting Kostant partitions -/
+
+lemma kostantPartition_eq_card (γ : Dual K H) :
+    kostantPartition P γ = (partitions P γ).card := by
+  rw [kostantPartition, ← Nat.card_eq_finsetCard]
+  exact Nat.card_congr (Equiv.subtypeEquivRight fun s ↦ (mem_partitions P).symm)
+
+/-- The Kostant partitions of `β` containing `x` at least `n` times correspond to the Kostant
+partitions of `β - n α_x`. -/
+lemma card_filter_le_apply (β : Dual K H) (x : NegRootIndex P) (n : ℕ) :
+    ((partitions P β).filter fun s ↦ n ≤ s x).card = kostantPartition P (β - n • x.root) := by
+  classical
+  rw [kostantPartition_eq_card]
+  refine Finset.card_nbij' (fun s ↦ s - Finsupp.single x n) (fun t ↦ t + Finsupp.single x n)
+    (fun s hs ↦ ?_) (fun t ht ↦ ?_) (fun s hs ↦ ?_) (fun t _ ↦ ?_)
+  · simp only [Finset.coe_filter, mem_partitions, Set.mem_ofPred_eq] at hs
+    simp only [Finset.mem_coe, mem_partitions]
+    have hle : Finsupp.single x n ≤ s := Finsupp.single_le_iff.mpr hs.2
+    rw [← hs.1, ← tsub_add_cancel_of_le hle, negRootWt_add, negRootWt_single,
+      tsub_add_cancel_of_le hle, add_sub_cancel_right]
+  · simp only [Finset.mem_coe, mem_partitions] at ht
+    simp only [Finset.coe_filter, mem_partitions, Set.mem_ofPred_eq, negRootWt_add,
+      negRootWt_single, ht, sub_add_cancel, Finsupp.coe_add, Pi.add_apply,
+      Finsupp.single_eq_same, le_add_iff_nonneg_left, zero_le, and_self]
+  · simp only [Finset.coe_filter, mem_partitions, Set.mem_ofPred_eq] at hs
+    exact tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr hs.2)
+  · exact add_tsub_cancel_right t _
+
+/-- `∑_{s ∈ T_β} s(x) = ∑_{n ≥ 1} P(β - n α_x)`, where `P` is Kostant's partition function. -/
+theorem sum_partitions_apply (β : Dual K H) (x : NegRootIndex P) :
+    ∑ s ∈ partitions P β, s x = ∑ᶠ n : ℕ, kostantPartition P (β - (n + 1) • x.root) := by
+  classical
+  set M := (partitions P β).sup fun s ↦ s x
+  have hM : ∀ s ∈ partitions P β, s x ≤ M := fun s hs ↦ Finset.le_sup (f := fun s ↦ s x) hs
+  rw [finsum_eq_sum_of_support_subset (s := Finset.range M) _ (fun n hn ↦ ?_)]
+  · have : ∀ s ∈ partitions P β, s x = ∑ n ∈ Finset.range M, if n + 1 ≤ s x then 1 else 0 :=
+      fun s hs ↦ by
+        rw [Finset.sum_boole, Nat.cast_id]
+        have : (Finset.range M).filter (fun n ↦ n + 1 ≤ s x) = Finset.range (s x) := by
+          ext n
+          simp only [Finset.mem_filter, Finset.mem_range]
+          have := hM s hs
+          omega
+        rw [this, Finset.card_range]
+    rw [Finset.sum_congr rfl this, Finset.sum_comm]
+    refine Finset.sum_congr rfl fun n _ ↦ ?_
+    rw [Finset.sum_boole, Nat.cast_id, card_filter_le_apply]
+  · simp only [Function.mem_support, ne_eq] at hn
+    rw [Finset.coe_range, Set.mem_Iio]
+    by_contra h
+    apply hn
+    rw [← card_filter_le_apply, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
+    intro s hs
+    have := hM s hs
+    omega
+
+/-- The top polynomial of `hasTop_det_pbwWeightBasis`, regrouped by root vectors. -/
+lemma prod_partitions_prod_support {M : Type*} [CommMonoid M] (β : Dual K H)
+    (f : NegRootIndex P → M) :
+    ∏ s ∈ partitions P β, ∏ x ∈ s.support, f x ^ s x =
+      ∏ᶠ x : NegRootIndex P, f x ^ (∑ s ∈ partitions P β, s x) := by
+  classical
+  set X := (partitions P β).biUnion Finsupp.support
+  have h1 : ∀ s ∈ partitions P β, ∏ x ∈ s.support, f x ^ s x = ∏ x ∈ X, f x ^ s x :=
+    fun s hs ↦ Finset.prod_subset (Finset.subset_biUnion_of_mem _ hs) fun x _ hx ↦ by
+      rw [Finsupp.notMem_support_iff.mp hx, pow_zero]
+  rw [Finset.prod_congr rfl h1, Finset.prod_comm,
+    finprod_eq_prod_of_mulSupport_subset (s := X) _ (fun x hx ↦ ?_)]
+  · exact Finset.prod_congr rfl fun x _ ↦ Finset.prod_pow_eq_pow_sum _ _ _
+  · by_contra hxX
+    apply hx
+    rw [Finset.sum_eq_zero fun s hs ↦ Finsupp.notMem_support_iff.mp fun h ↦
+      hxX (Finset.mem_biUnion.mpr ⟨s, hs, h⟩), pow_zero]
+
+lemma sum_partitions_degree (β : Dual K H) :
+    ∑ s ∈ partitions P β, s.degree = ∑ᶠ x : NegRootIndex P, ∑ s ∈ partitions P β, s x := by
+  classical
+  set X := (partitions P β).biUnion Finsupp.support
+  have h1 : ∀ s ∈ partitions P β, s.degree = ∑ x ∈ X, s x :=
+    fun s hs ↦ by
+      rw [Finsupp.degree_apply]
+      exact Finset.sum_subset (Finset.subset_biUnion_of_mem _ hs) fun x _ hx ↦
+        Finsupp.notMem_support_iff.mp hx
+  rw [Finset.sum_congr rfl h1, Finset.sum_comm,
+    finsum_eq_sum_of_support_subset (s := X) _ (fun x hx ↦ ?_)]
+  by_contra hxX
+  apply hx
+  exact Finset.sum_eq_zero fun s hs ↦ Finsupp.notMem_support_iff.mp fun h ↦
+    hxX (Finset.mem_biUnion.mpr ⟨s, hs, h⟩)
 
 /-! ### PBW bases of weight spaces -/
 
@@ -301,6 +401,53 @@ theorem hasTop_det_pbwWeightBasis :
   convert h using 1
   simp only [pbwTopPoly, Finset.prod_mul_distrib, ← map_prod, smul_eq_C_mul, map_mul]
   ring
+
+/-- The exponent `∑_{n ≥ 1} P(β - n α_x)` of `(λ | α_x)` in the leading term of the Shapovalov
+determinant on `M(λ)_{λ - β}`. -/
+def kkExponent (β : Dual K H) (x : NegRootIndex P) : ℕ :=
+  ∑ᶠ n : ℕ, kostantPartition P (β - (n + 1) • x.root)
+
+/-- **The leading term of the Shapovalov determinant** ([KK] §3 (check); cf. [Kac] §9 (check)).
+Let `A` be symmetrizable, and let `D_β(λ)` be the determinant of the Shapovalov form on
+`M(λ)_{λ-β}` with respect to the PBW basis (independent of `λ` via `U(𝔫₋) ≃ M(λ)`). Then `D_β` is
+a polynomial function of `λ` of degree at most `N = ∑_x ∑_{n ≥ 1} P(β - n α_x)`, whose homogeneous
+component of degree `N` is
+`c ∏_x ∏_{n ≥ 1} (λ | α_x)^{P(β - n α_x)} = c ∏_{α > 0} ∏_{n ≥ 1} (λ | α)^{mult α · P(β - n α)}`
+for a nonzero constant `c`. Here `x` runs over the root vector basis `nNegBasis` of `𝔫₋`, in which
+each positive root `α` occurs `mult α = dim 𝔤_{-α}` times, `P` is Kostant's partition function,
+and `(λ | α) = λ(ν⁻¹ α)`. This is the leading term of the Kac–Kazhdan determinant formula, whose
+factors are `(λ + ρ | α) - n (α | α)/2`. -/
+theorem hasTop_det_pbwWeightBasis_kkExponent :
+    ∃ c : K, c ≠ 0 ∧ HasTop (∑ᶠ x : NegRootIndex P, kkExponent P β x)
+      (C c * ∏ᶠ x : NegRootIndex P, linPoly K H ((P.toDual S).symm x.root) ^ kkExponent P β x)
+      (fun Λ ↦ (LinearMap.BilinForm.toMatrix (pbwWeightBasis P Λ β)
+        (weightSpaceForm P Λ (Λ - β))).det) := by
+  obtain ⟨c, hc, h⟩ := hasTop_det_pbwWeightBasis P S β
+  refine ⟨c, hc, ?_⟩
+  rw [prod_partitions_prod_support, sum_partitions_degree] at h
+  simp only [sum_partitions_apply] at h
+  exact h
+
+include S in
+/-- **The degree of the Shapovalov determinant** ([KK] §3 (check)): `D_β` is a polynomial
+function of `λ` of degree exactly `∑_x ∑_{n ≥ 1} P(β - n α_x) = ∑_{α > 0} ∑_{n ≥ 1} mult α ·
+P(β - n α)`; in particular it is not identically zero. -/
+theorem exists_totalDegree_det_pbwWeightBasis :
+    ∃ p : MvPolynomial (PolyIdx K H) K,
+      p.totalDegree = ∑ᶠ x : NegRootIndex P, kkExponent P β x ∧
+      evalPoly K H p = fun Λ ↦ (LinearMap.BilinForm.toMatrix (pbwWeightBasis P Λ β)
+        (weightSpaceForm P Λ (Λ - β))).det := by
+  obtain ⟨c, hc, h⟩ := hasTop_det_pbwWeightBasis P S β
+  have hne : C c * ∏ s ∈ partitions P β, ∏ x ∈ s.support,
+      linPoly K H ((P.toDual S).symm x.root) ^ s x ≠ 0 := by
+    refine mul_ne_zero (by rwa [Ne, C_eq_zero]) (Finset.prod_ne_zero_iff.mpr fun s _ ↦
+      Finset.prod_ne_zero_iff.mpr fun x _ ↦ pow_ne_zero _ (linPoly_ne_zero ?_))
+    rw [Ne, LinearEquiv.map_eq_zero_iff]
+    exact fun h0 ↦ P.zero_notMem_posWeights (h0 ▸ x.1.2)
+  obtain ⟨p, hp, hpe⟩ := h.exists_totalDegree_eq hne
+  refine ⟨p, ?_, hpe⟩
+  rw [hp, sum_partitions_degree]
+  simp only [sum_partitions_apply, kkExponent]
 
 end VermaModule
 
