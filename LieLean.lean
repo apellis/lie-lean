@@ -22,6 +22,7 @@ import LieLean.Algebra.Lie.KacMoody.Verma
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
+import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
 import LieLean.Algebra.Lie.Subalgebra
@@ -32,3 +33,7 @@ import LieLean.Basic
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupExchange
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupTits
