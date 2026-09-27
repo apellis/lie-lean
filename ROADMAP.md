@@ -294,8 +294,14 @@ Mathlib's `Matrix.IsFiniteCartan` as the definition of finite type: `finite_weyl
 `finite_realRoots`, `finrank_eq_card_of_isFiniteCartan`, `KacMoodyAlgebra.roots_eq_realRoots`
 ([Kac] Prop. 5.10 (a)), `finite_roots`, `finrank_rootSpace_of_mem_roots`, `finiteDimensional`,
 `isSemisimple` (via `invForm` and `exists_h_mem_of_ne_bot`: nonzero ideals of `𝔤(A)` meet `𝔥`).
-`𝔤(A) ≅ Matrix.ToLieAlgebra K A` in finite type: `toLieAlgebraEquiv` (M3). In progress: comparison
-with the Geck construction, Weyl's complete reducibility for finite-dimensional modules.
+`𝔤(A) ≅ Matrix.ToLieAlgebra K A` in finite type: `toLieAlgebraEquiv` (M3). Comparison with Geck's
+construction (`KacMoody/Geck.lean`; Kac's matrix is `b.cartanMatrixᵀ` in Mathlib's convention):
+`LieAlgebra.Basis.kacMoodyEquiv` (any Mathlib `LieAlgebra.Basis` with finite-type Cartan matrix in a
+finite-dimensional Lie algebra gives `𝔤(A) ≃ L`), with the Serre relations
+`LieAlgebra.Basis.ad_e_pow_e_eq_zero/ad_f_pow_f_eq_zero`; `RootPairing.GeckConstruction.
+equivKacMoodyAlgebra`, `equivSerrePresentedAlgebra`, `equivToLieAlgebra` (Serre's theorem linking
+Mathlib's two constructions). In progress: Weyl's complete reducibility for finite-dimensional
+modules.
 
 For a Cartan matrix of finite type: `𝔤(A)` is finite-dimensional semisimple and agrees with
 Mathlib's Geck construction and `Matrix.ToLieAlgebra` (Serre's theorem, [Hum] §18); Weyl's complete
@@ -319,6 +325,8 @@ the general Kac–Moody results give.
 - `LieSubalgebra.lieSpan_toSubmodule_eq_span_adProd` (`LieLean/Algebra/Lie/Subalgebra.lean`).
 - `IsSl2Triple` lemmas in `KacMoody/IntegrableWeyl.lean`; `LieModule.locallyNilpotentSubmodule`,
   `exists_toEnd_pow_eq_zero_of_lieSpan` in `KacMoody/Integrable.lean`.
+- `LieAlgebra.Basis.ad_e_pow_e_eq_zero`, `ad_f_pow_f_eq_zero`; `RootPairing.GeckConstruction.
+  equivToLieAlgebra` (`KacMoody/Geck.lean`).
 - `Matrix.ToLieAlgebra` API (`lift`, `hom_ext`, generator lemmas), `AddMonoidAlgebra.degreeDerivation`,
   `LieAlgebra.ExtendScalars.evalHom` (`KacMoody/ToLieAlgebra*.lean`).
 - `LieModuleEquiv.ofBijective` (`KacMoody/CompleteReducibility.lean`); `LieSubmodule.Subquotient`,
