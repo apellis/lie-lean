@@ -292,7 +292,7 @@ reducibility): `IsCategoryO.exists_isInternal_irreducibleModule`,
 - The Weyl–Kac character formula ([Kac] Thm. 10.4) and target theorem 2 ([Kac] Cor. 10.4).
 - Target theorem 3, complete reducibility ([Kac] Thm. 10.7).
 
-### M9 (optional). Finite type  `[~]`
+### M9 (optional). Finite type  `[x]`
 
 Done (`LinearAlgebra/Matrix/Cartan/FiniteType.lean`, `Algebra/Lie/KacMoody/FiniteType.lean`), with
 Mathlib's `Matrix.IsFiniteCartan` as the definition of finite type: `finite_weylGroup`,
@@ -305,8 +305,12 @@ construction (`KacMoody/Geck.lean`; Kac's matrix is `b.cartanMatrixᵀ` in Mathl
 finite-dimensional Lie algebra gives `𝔤(A) ≃ L`), with the Serre relations
 `LieAlgebra.Basis.ad_e_pow_e_eq_zero/ad_f_pow_f_eq_zero`; `RootPairing.GeckConstruction.
 equivKacMoodyAlgebra`, `equivSerrePresentedAlgebra`, `equivToLieAlgebra` (Serre's theorem linking
-Mathlib's two constructions). In progress: Weyl's complete reducibility for finite-dimensional
-modules.
+Mathlib's two constructions). Weyl's complete reducibility (`KacMoody/FiniteDimensional.lean`,
+deduced from target 3): `exists_isInternal_irreducibleModule_of_finiteDimensional`,
+`complementedLattice_of_finiteDimensional`, `IrreducibleModule.finiteDimensional_iff` (`L(Λ)` is
+finite-dimensional iff `Λ` is dominant integral); generic sl₂ facts (`LieLean/Algebra/Lie/Sl2.lean`):
+`IsSl2Triple.isNilpotent_toEnd_e/f`, `iSup_eigenspace_toEnd_h_eq_top` (`h` diagonalizable with integer
+eigenvalues on finite-dimensional modules, any char-0 field).
 
 For a Cartan matrix of finite type: `𝔤(A)` is finite-dimensional semisimple and agrees with
 Mathlib's Geck construction and `Matrix.ToLieAlgebra` (Serre's theorem, [Hum] §18); Weyl's complete
@@ -331,6 +335,8 @@ the general Kac–Moody results give.
 - `LieSubalgebra.lieSpan_toSubmodule_eq_span_adProd` (`LieLean/Algebra/Lie/Subalgebra.lean`).
 - `IsSl2Triple` lemmas in `KacMoody/IntegrableWeyl.lean`; `LieModule.locallyNilpotentSubmodule`,
   `exists_toEnd_pow_eq_zero_of_lieSpan` in `KacMoody/Integrable.lean`.
+- `LieLean/Algebra/Lie/Sl2.lean` (finite-dimensional sl₂-modules over any char-0 field);
+  `Module.End.iSup_iInf_eigenspace_eq_top_of_commute` (`KacMoody/FiniteDimensional.lean`).
 - `LieAlgebra.Basis.ad_e_pow_e_eq_zero`, `ad_f_pow_f_eq_zero`; `RootPairing.GeckConstruction.
   equivToLieAlgebra` (`KacMoody/Geck.lean`).
 - `Matrix.ToLieAlgebra` API (`lift`, `hom_ext`, generator lemmas), `AddMonoidAlgebra.degreeDerivation`,
