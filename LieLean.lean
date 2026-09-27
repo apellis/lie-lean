@@ -45,6 +45,7 @@ import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Basic
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
+import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
