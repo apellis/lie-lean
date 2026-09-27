@@ -165,14 +165,18 @@ argument). Not done: the Tits cone (Prop. 3.12).
   check what Mathlib's `CoxeterSystem` provides).
 - Real roots, the Tits cone, dominant chamber (only what later milestones use).
 
-### M5. Symmetrizable case: invariant form and Casimir  `[~]`  ([Kac] Ch. 2)
+### M5. Symmetrizable case: invariant form and Casimir  `[x]`  ([Kac] Ch. 2)
 
 Done: §2.1 (`Matrix.Symmetrization`, `Realization.bilinForm`, `toDual` (ν), `dualBilinForm`,
 `rho`, `rhoCheck`; `LinearAlgebra/Matrix/Cartan/Symmetrizable.lean`); Thm. 2.2
 (`KacMoodyAlgebra.invForm`, `nondegenerate_invForm`, `lieInvariant_invForm`, `invForm_eq_zero`,
 `lie_eq_invForm_smul`, `invForm_e_f`, `rootSpacePairingEquiv`; on 𝔤̃: radical of the form is 𝔯,
 `invFormAux_eq_zero_iff_mem_maxIdeal`; `KacMoody/InvariantForm*.lean`). Thm. 2.2 holds for any
-symmetrizable integer matrix. Remaining: the Casimir operator (in progress).
+symmetrizable integer matrix. Casimir operator (`KacMoody/Casimir*.lean`): the properties of the
+form used are packaged as `KacMoodyAlgebra.IsStandardForm` (`isStandardForm_invForm`); dual bases
+of root spaces and Lemma 2.4 (`IsStandardForm.casimirSum_lie_left`); `IsStandardForm.casimir` on
+modules where `𝔫₊` acts locally finitely (`IsPosFinite`, e.g. any module in 𝒪), Thm. 2.6
+(`casimir_lie`), Cor. 2.6 (`casimir_apply_of_lie_e_eq_zero`, `casimir_eq_smul_of_surjective`).
 
 
 - For symmetrizable `A`: a nondegenerate symmetric invariant bilinear form `(·|·)` on `𝔤(A)`,
@@ -191,7 +195,8 @@ Done (`Algebra/Lie/KacMoody/{Triangular,Verma*,CategoryO}.lean`): subalgebras `n
 `existsUnique_lieModuleHom`, PBW iso `equivEnvNNeg : U(𝔫₋) ≃ₗ M(Λ)`, weights
 (`iSup_weightSpace_eq_top`, `finiteDimensional_weightSpace`, `weightSpace_self`),
 `maxSubmodule`, `IrreducibleModule` (= L(Λ)) with `isIrreducible`, `eq_of_equiv`; `IsCategoryO`.
-Not done: Shapovalov form, composition factors (Prop. 9.8), characters.
+`IsCategoryO.lieSubmodule` (𝒪 is closed under submodules). Not done: Shapovalov form,
+composition factors (Prop. 9.8), characters.
 
 
 - Category `𝒪` ([Kac] §9.1): `𝔥`-diagonalizable, finite-dimensional weight spaces, weights in a
@@ -221,8 +226,12 @@ module docstring before formalizing it.
 Done (`Algebra/Lie/KacMoody/HighestWeight*.lean`): `Matrix.Realization.IsDominantIntegral`,
 `FPowQuotient` (= L̃(Λ) = M(Λ)/Σ U(𝔤) fᵢ^{nᵢ+1} v_Λ) with `FPowQuotient.isIntegrable`,
 `toIrreducibleModule`, `IrreducibleModule.isIntegrable_iff` (Lemma 10.1),
-`IsCategoryO.exists_lieModuleHom_verma_of_isIntegrable`. Remaining: Cor. 10.4 and Thm. 10.7
-(need the Casimir operator), the character formula.
+`IsCategoryO.exists_lieModuleHom_verma_of_isIntegrable`. **Target 2** (Cor. 10.4):
+`FPowQuotient.equivIrreducibleModule` (`L̃(Λ) ≃ L(Λ)` for symmetrizable `A`), via
+`isIrreducible_of_isIntegrable` (integrable quotients of `M(Λ)` are irreducible) and
+`dualBilinForm_add_two_rho_ne` — proved with the Casimir operator directly, not via the character
+formula (`KacMoody/CasimirIrreducible.lean`). Remaining: Thm. 10.7 (in progress), the character
+formula.
 
 
 - `L(Λ)` is integrable iff `Λ` is dominant integral ([Kac] Lemma 10.1 (check)).
