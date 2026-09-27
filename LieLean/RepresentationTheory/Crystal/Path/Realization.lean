@@ -29,6 +29,8 @@ we obtain Littelmann's crystal `B(Λ)`, the connected component of the straight 
   weight element of `B(Λ)` with `φᵢ(π_Λ) = ⟨Λ, αᵢ^∨⟩`.
 * `Matrix.Realization.card_wt_weylGroup_pathCrystal`: the number of paths in `B(Λ)` of weight
   `w μ` equals the number of paths of weight `μ`, for every `w` in the Weyl group.
+* `Matrix.Realization.straightLine_mem_pathCrystal`: the straight line paths `π_{wΛ}`, `w ∈ W`,
+  lie in `B(Λ)`.
 * `Matrix.Realization.finite_wt_pathCrystal`: *if* the set of paths `f_{i₁} ⋯ f_{iₖ} π_Λ` is stable
   under all `eⱼ` (Littelmann's theorem, not formalized here), then each weight occurs only
   finitely often in `B(Λ)`, and all weights lie in `Λ - Q₊`
@@ -161,6 +163,27 @@ theorem card_wt_weylGroup_pathCrystal (hΛ : P.IsDominantIntegral Λ) {w : Dual 
     ((P.pathCrystal hA hΛ).wt b : Dual K H) = w μ} = Nat.card {b //
       ((P.pathCrystal hA hΛ).wt b : Dual K H) = μ}) (fun _ ↦ rfl) (fun i w ih μ ↦ ?_) hw μ
   rw [LinearEquiv.mul_apply, card_reflection_aux hA _ (isSeminormal_pathCrystal hA hΛ), ih]
+
+/-- For every `w` in the Weyl group, the straight line path `π_{wΛ}` lies in `B(Λ)`
+([Lit95] §5 (check)); in particular `wΛ` is a weight of `B(Λ)`. -/
+theorem straightLine_mem_pathCrystal (hΛ : P.IsDominantIntegral Λ)
+    {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA) :
+    ∃ h : w Λ ∈ P.integralWeights, LittelmannPath.straightLine (P.pathSpace hA) ⟨w Λ, h⟩ ∈
+      (LittelmannPath.straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component := by
+  refine P.weylGroup_induction hA (p := fun w ↦ ∃ h : w Λ ∈ P.integralWeights,
+    LittelmannPath.straightLine (P.pathSpace hA) ⟨w Λ, h⟩ ∈
+      (LittelmannPath.straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component)
+    ⟨hΛ.mem_integralWeights, LittelmannPath.mem_component_self _⟩ (fun i w hw' ↦ ?_) hw
+  obtain ⟨h, hmem⟩ := hw'
+  have hx : ((P.cartanDatum hA).reflection i ⟨w Λ, h⟩ : Dual K H) = (P.reflection hA i * w) Λ := by
+    rw [coe_reflection_cartanDatum]
+    rfl
+  refine ⟨hx ▸ ((P.cartanDatum hA).reflection i ⟨w Λ, h⟩).2, ?_⟩
+  have heq : (⟨(P.reflection hA i * w) Λ, hx ▸ ((P.cartanDatum hA).reflection i ⟨w Λ, h⟩).2⟩ :
+      P.integralWeights) = (P.cartanDatum hA).reflection i ⟨w Λ, h⟩ := Subtype.ext hx.symm
+  rw [heq]
+  exact Crystal.closure_singleton_subset hmem
+    (LittelmannPath.straightLine_reflection_mem_component _ i)
 
 /-- The stability hypothesis of Littelmann's theorem for `B(Λ)`: the set of paths
 `f_{i₁} ⋯ f_{iₖ} π_Λ` is stable under all root operators `eⱼ` ([Lit95] §5–7 (check); not
