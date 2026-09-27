@@ -64,6 +64,10 @@ For a symmetrizable generalized Cartan matrix `A` and `K` of characteristic zero
    category `𝒪` is a direct sum of modules `L(Λ)`, `Λ` dominant integral.
 4. **Weyl–Kac character formula** ([Kac] Thm. 10.4) — optional, but the standard route to 2.
 
+Status: all four are proved — 1: `AuxLieAlgebra.maxIdeal_eq_serreIdeal` (M7); 2:
+`FPowQuotient.equivIrreducibleModule`; 3: `IsCategoryO.exists_isInternal_irreducibleModule`; 4:
+`IrreducibleModule.exp_rho_mul_denominator_mul_character` (M8).
+
 ## Milestones (in dependency order)
 
 ### M1. Poincaré–Birkhoff–Witt  `[x]`
@@ -254,7 +258,7 @@ the Serre-presented algebra give `2(ρ | β) = (β | β)`, which is impossible f
 satisfying the constraints from integrability (use `W`-invariance). Write out the argument in the
 module docstring before formalizing it.
 
-### M8. Integrable highest-weight modules  `[~]`  ([Kac] Ch. 10)
+### M8. Integrable highest-weight modules  `[x]`  ([Kac] Ch. 10)
 
 Done (`Algebra/Lie/KacMoody/HighestWeight*.lean`): `Matrix.Realization.IsDominantIntegral`,
 `FPowQuotient` (= L̃(Λ) = M(Λ)/Σ U(𝔤) fᵢ^{nᵢ+1} v_Λ) with `FPowQuotient.isIntegrable`,
@@ -266,9 +270,13 @@ Done (`Algebra/Lie/KacMoody/HighestWeight*.lean`): `Matrix.Realization.IsDominan
 formula (`KacMoody/CasimirIrreducible.lean`). **Target 3** (Thm. 10.7 (b), complete
 reducibility): `IsCategoryO.exists_isInternal_irreducibleModule`,
 `IsCategoryO.exists_sSupIndep_irreducibleModule`, `IsCategoryO.complementedLattice`
-(`KacMoody/CompleteReducibility.lean`; naturality of Ω: `IsStandardForm.map_casimir`). Remaining:
-the character formula (characters and the denominator are in place, see M6; next: `W`-anti-invariance of
-`e^ρ R`, [Kac] §10.2).
+(`KacMoody/CompleteReducibility.lean`; naturality of Ω: `IsStandardForm.map_casimir`). **Target 4**
+(Weyl–Kac character formula, Thm. 10.4): `IrreducibleModule.exp_rho_mul_denominator_mul_character`
+(`e^ρ R ch L(Λ) = ∑_w (-1)^{ℓ(w)} e^{w(Λ+ρ)}` in `ℰ`, `CharacterRing.weylAltSum`), coefficientwise
+`coeffAt_exp_rho_mul_denominator_mul_character(_apply, _eq_zero)`; denominator identity (10.4.4)
+`IrreducibleModule.exp_rho_mul_denominator`; `W`-anti-invariance of `e^ρ R` (§10.2,
+`isWeylAntiInvariant_exp_rho_mul_denominator`) (`KacMoody/CharacterAntiInvariant.lean`,
+`KacMoody/CharacterFormula*.lean`).
 
 
 - `L(Λ)` is integrable iff `Λ` is dominant integral ([Kac] Lemma 10.1 (check)).
