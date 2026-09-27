@@ -38,12 +38,16 @@ Casimir argument of [Hum] §6.3) was chosen by us; the statement is classical.
   isomorphic to modules `L(Λ)` with `Λ` dominant integral.
 * `Matrix.Realization.KacMoodyAlgebra.complementedLattice_of_finiteDimensional`: every submodule
   of a finite-dimensional `𝔤(A)`-module has a complement.
+* `Matrix.Realization.KacMoodyAlgebra.sum_weylGroup_apply_eq_zero`: `∑_{w ∈ W} w ν = 0`.
+* `Matrix.Realization.KacMoodyAlgebra.IrreducibleModule.finiteDimensional_iff`: `L(Λ)` is
+  finite-dimensional iff `Λ` is dominant integral. So the finite-dimensional irreducible
+  `𝔤(A)`-modules are exactly the `L(Λ)`, `Λ` dominant integral.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.6, §10.7.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.6, §10.1, §10.7.
 * [Hum] J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §6.3,
-  §7.2.
+  §7.2, §21.2.
 -/
 
 open Module LieModule
@@ -177,5 +181,88 @@ theorem complementedLattice_of_finiteDimensional :
     ComplementedLattice (LieSubmodule K P.KacMoodyAlgebra V) :=
   IsCategoryO.complementedLattice hA.isGeneralizedCartan hA.isSymmetrizable
     (isCategoryO_of_finiteDimensional hA) (isIntegrable_of_finiteDimensional hA)
+
+/-- For `A` of finite type, `∑_{w ∈ W} w ν = 0` for every `ν ∈ 𝔥*`: the sum is fixed by every
+fundamental reflection `rᵢ`, so it vanishes on every coroot, and the coroots span `𝔥`. -/
+theorem sum_weylGroup_apply_eq_zero [Fintype (P.weylGroup hA.isGeneralizedCartan)]
+    (ν : Dual K H) :
+    ∑ w : P.weylGroup hA.isGeneralizedCartan, (w : Dual K H ≃ₗ[K] Dual K H) ν = 0 := by
+  set s := ∑ w : P.weylGroup hA.isGeneralizedCartan, (w : Dual K H ≃ₗ[K] Dual K H) ν
+  have hfix : ∀ i, P.reflection hA.isGeneralizedCartan i s = s := fun i ↦ by
+    let ri : P.weylGroup hA.isGeneralizedCartan :=
+      ⟨_, P.reflection_mem_weylGroup hA.isGeneralizedCartan i⟩
+    simp only [s, map_sum]
+    exact Fintype.sum_equiv (Equiv.mulLeft ri) _ _ fun w ↦ rfl
+  have hzero : ∀ i, s (P.coroot i) = 0 := fun i ↦ by
+    have := hfix i
+    rw [reflection_apply, sub_eq_self, smul_eq_zero] at this
+    exact this.resolve_right (P.linearIndependent_root.ne_zero i)
+  have hspan := P.linearIndependent_coroot.span_eq_top_of_card_eq_finrank'
+    (P.finrank_eq_card_of_isFiniteCartan hA).symm
+  exact LinearMap.ext_on_range hspan fun i ↦ by simp [hzero i]
+
+/-- For `A` of finite type and `Λ` dominant integral, `L(Λ)` is finite-dimensional ([Kac] §10.1
+(check); [Hum] §21.2, Thm. (check)).
+
+Proof (reconstructed by us): `L(Λ)` is integrable (`IrreducibleModule.isIntegrable_iff`), so its
+set of weights is `W`-invariant. If `μ` is a weight, write `w μ = Λ - kʷ` with `kʷ ∈ Q₊` for each
+`w ∈ W` (`W` is finite). Summing and using `∑_w w μ = 0` gives `∑_w kʷ = |W| Λ`, independent of `μ`,
+so `μ = Λ - k¹` with `0 ≤ k¹ ≤ |W| Λ` in `Q`: there are finitely many weights, each with a
+finite-dimensional weight space. -/
+theorem IrreducibleModule.finiteDimensional {Λ : Dual K H} (hΛ : P.IsDominantIntegral Λ) :
+    FiniteDimensional K (IrreducibleModule P Λ) := by
+  have hGC := hA.isGeneralizedCartan
+  have := P.finite_weylGroup hA
+  let : Fintype (P.weylGroup hGC) := Fintype.ofFinite _
+  have hI := (IrreducibleModule.isIntegrable_iff P hGC).mpr hΛ
+  have hcone : ∀ μ, weightSpace P (IrreducibleModule P Λ) μ ≠ ⊥ →
+      ∃ k : ι → ℤ, 0 ≤ k ∧ μ = Λ - P.rootOf k := fun μ hμ ↦ by
+    obtain ⟨x, hx, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hμ
+    exact VermaModule.exists_eq_sub_of_mem_weightSpace P Λ (LieSubmodule.Quotient.mk' _)
+      (LieSubmodule.Quotient.surjective_mk' _) hx hx0
+  have key : ∀ μ, weightSpace P (IrreducibleModule P Λ) μ ≠ ⊥ → ∃ k κ : ι → ℤ, 0 ≤ k ∧
+      k ≤ κ ∧ μ = Λ - P.rootOf k ∧ P.rootOf κ = Fintype.card (P.weylGroup hGC) • Λ := by
+    intro μ hμ
+    have : ∀ w : P.weylGroup hGC, ∃ k : ι → ℤ, 0 ≤ k ∧
+        (w : Dual K H ≃ₗ[K] Dual K H) μ = Λ - P.rootOf k := fun w ↦
+      hcone _ (by rwa [Ne, weightSpace_weylGroup_eq_bot_iff hGC hI w.2])
+    choose k hk0 hk using this
+    refine ⟨k 1, ∑ w, k w, hk0 1, Finset.single_le_sum (fun w _ ↦ hk0 w) (Finset.mem_univ 1),
+      by simpa using hk 1, ?_⟩
+    have hsum : ∑ w, P.rootOf (k w) =
+        ∑ w : P.weylGroup hGC, (Λ - (w : Dual K H ≃ₗ[K] Dual K H) μ) :=
+      Finset.sum_congr rfl fun w _ ↦ by rw [hk w]; abel
+    rw [map_sum, hsum, Finset.sum_sub_distrib, sum_weylGroup_apply_eq_zero hA, sub_zero,
+      Finset.sum_const, Finset.card_univ]
+  obtain ⟨-, κ, -, -, -, hκ⟩ := key Λ ((Submodule.ne_bot_iff _).mpr
+    ⟨_, IrreducibleModule.hwv_mem_weightSpace P Λ, IrreducibleModule.hwv_ne_zero P Λ⟩)
+  have hfinK : (Set.univ.pi fun i ↦ Set.Icc (0 : ℤ) (κ i)).Finite :=
+    Set.Finite.pi fun i ↦ Set.finite_Icc _ _
+  set F : Finset (Dual K H) := (hfinK.image fun k ↦ Λ - P.rootOf k).toFinset
+  have hF : ∀ μ, weightSpace P (IrreducibleModule P Λ) μ ≠ ⊥ → μ ∈ F := fun μ hμ ↦ by
+    obtain ⟨k, κ', hk0, hkκ, rfl, hκ'⟩ := key μ hμ
+    have : κ' = κ := P.rootOf_injective (hκ'.trans hκ.symm)
+    subst this
+    exact (Set.Finite.mem_toFinset _).mpr
+      ⟨k, Set.mem_univ_pi.mpr fun i ↦ ⟨hk0 i, hkκ i⟩, rfl⟩
+  have htop : (⊤ : Submodule K (IrreducibleModule P Λ)) ≤
+      F.sup (weightSpace P (IrreducibleModule P Λ)) := by
+    rw [← (hI.isHDiagonalizable : ⨆ μ, weightSpace P (IrreducibleModule P Λ) μ = ⊤)]
+    refine iSup_le fun μ ↦ ?_
+    by_cases hμ : weightSpace P (IrreducibleModule P Λ) μ = ⊥
+    · rw [hμ]; exact bot_le
+    · exact Finset.le_sup (f := weightSpace P (IrreducibleModule P Λ)) (hF μ hμ)
+  have := (IrreducibleModule.isCategoryO P Λ).finiteDimensional_weightSpaceOfMap
+  have : FiniteDimensional K (⊤ : Submodule K (IrreducibleModule P Λ)) :=
+    Submodule.finiteDimensional_of_le htop
+  exact LinearEquiv.finiteDimensional Submodule.topEquiv
+
+/-- For `A` of finite type, `L(Λ)` is finite-dimensional if and only if `Λ` is dominant integral
+([Kac] §10.1 (check); [Hum] §21.2 (check)). -/
+theorem IrreducibleModule.finiteDimensional_iff {Λ : Dual K H} :
+    FiniteDimensional K (IrreducibleModule P Λ) ↔ P.IsDominantIntegral Λ := by
+  refine ⟨fun _ ↦ ?_, IrreducibleModule.finiteDimensional hA⟩
+  exact (IrreducibleModule.isIntegrable_iff P hA.isGeneralizedCartan).mp
+    (isIntegrable_of_finiteDimensional hA)
 
 end Matrix.Realization.KacMoodyAlgebra
