@@ -7,6 +7,7 @@ import LieLean.Algebra.Lie.KacMoody.Character
 import LieLean.Algebra.Lie.KacMoody.CharacterDenominator
 import LieLean.Algebra.Lie.KacMoody.CharacterRing
 import LieLean.Algebra.Lie.KacMoody.CharacterVerma
+import LieLean.Algebra.Lie.KacMoody.CharacterWeyl
 import LieLean.Algebra.Lie.KacMoody.HighestWeight
 import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
 import LieLean.Algebra.Lie.KacMoody.Integrable
