@@ -55,8 +55,10 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.GarlandLepowsky
 import LieLean.Algebra.Lie.KacMoody.Kostant.Identity
 import LieLean.Algebra.Lie.KacMoody.Kostant.Laplacian
 import LieLean.Algebra.Lie.KacMoody.Kostant.LaplacianIdentity
+import LieLean.Algebra.Lie.KacMoody.Kostant.LaplacianScalar
 import LieLean.Algebra.Lie.KacMoody.Kostant.RhoShift
 import LieLean.Algebra.Lie.KacMoody.Kostant.RootSums
+import LieLean.Algebra.Lie.KacMoody.Kostant.Theorem
 import LieLean.Algebra.Lie.KacMoody.Kostant.Weights
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
