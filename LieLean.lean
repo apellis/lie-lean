@@ -13,6 +13,8 @@ import LieLean.Algebra.Lie.KacMoody.CharacterRing
 import LieLean.Algebra.Lie.KacMoody.CharacterVerma
 import LieLean.Algebra.Lie.KacMoody.CharacterWeyl
 import LieLean.Algebra.Lie.KacMoody.CompositionSeries
+import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Casimir
+import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Multiplicity
 import LieLean.Algebra.Lie.KacMoody.HighestWeight
 import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
 import LieLean.Algebra.Lie.KacMoody.Integrable
