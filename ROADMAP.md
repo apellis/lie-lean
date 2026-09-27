@@ -361,7 +361,19 @@ involution, `R`-polynomials; existence and uniqueness of the Kazhdan–Lusztig b
 ([KL] Thm. 1.1), KL polynomials `P_{y,w}` (degree bound, `P_{w,w} = 1`, `P_{y,w} = 0` unless
 `y ≤ w`), specialization `v = 1` to `ℤ[W]`.
 
-### M12. Deeper category 𝒪  `[ ]`  ([Kac] §9, [HumO], [KK])
+### M12. Deeper category 𝒪  `[~]`  ([Kac] §9, [HumO], [KK])
+
+Done: `UniversalEnvelopingAlgebra.instIsDomain` (`UniversalEnveloping/Domain.lean`, via graded
+PBW); `KacMoody/VermaHom.lean`: `primitiveVectors`, `VermaModule.homEquiv`
+(`Hom(M(μ), V) ≃ primitive vectors of weight μ`), `injective_of_ne_zero`,
+`exists_injective_reflection`, `finrank_hom_reflection` (`M(rᵢ·λ) ↪ M(λ)`, unique up to scalar);
+`KacMoody/Grothendieck.lean`: `sumIrreducibleCharacter(_injective)`,
+`IsCategoryO.character_eq_sumIrreducibleCharacter` (`ch V = Σ [V:L(μ)] ch L(μ)`), `multiplicities`
+(class in the completed Grothendieck group), `character_eq_iff`, `multiplicity_eq_add`,
+`VermaModule.multiplicity_self`. Open: `dim Hom(M(μ), M(λ)) ≤ 1` in general — Humphreys' proof uses
+that `U(𝔫₋)` is Ore, which fails in Kac–Moody generality (`𝔫₋` may contain free Lie algebras);
+needs a literature check. Remaining: Kac–Kazhdan determinant, Jantzen filtration, BGG resolution.
+
 
 For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
 homomorphisms are injective and `dim Hom(M(μ), M(λ)) ≤ 1`; the embeddings `M(rᵢ·λ) ↪ M(λ)`;
@@ -405,7 +417,7 @@ beyond what the general Kac–Moody results give.
 (List self-contained, Mathlib-ready results here as they land.)
 
 - PBW: `LieLean/Algebra/Lie/UniversalEnveloping/PBW.lean`, `TensorDecomposition.lean`,
-  `Filtration.lean`, `Graded.lean`, `Free.lean`
+  `Filtration.lean`, `Graded.lean`, `Free.lean`, `Domain.lean`
   (`UniversalEnvelopingAlgebra.map` is also missing from Mathlib).
 - `FreeLieAlgebra.toFreeAlgebra_injective`, `FreeLieAlgebra.induction_on`
   (`LieLean/Algebra/Lie/Free.lean`).
