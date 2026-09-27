@@ -378,7 +378,7 @@ without Matsumoto) with basis `T w`, `T_simple_mul_T`, `T_mul_T`, quadratic rela
 `rPoly_self`, triangularity via subwords (`exists_sublist_of_rPoly_ne_zero`), polynomiality.
 General Coxeter facts: strong exchange condition `CoxeterSystem.mem_rightInvSeq_iff`,
 `exists_mul_eq_wordProd_eraseIdx` (`LieLean/GroupTheory/Coxeter/Exchange.lean`),
-`induction_mul_simple`. Presentation (`Hecke/Presentation.lean`): `IwahoriHeckeAlgebra.lift`
+`induction_mul_simple` (now in `Coxeter/Exchange.lean`). Presentation (`Hecke/Presentation.lean`): `IwahoriHeckeAlgebra.lift`
 (quadratic + braid relations, via Matsumoto), `equivHeckeAlgebra` with the concrete
 `CoxeterMatrix.HeckeAlgebra`; involutions (`Hecke/Involutions.lean`): `ind`, `sgn`,
 `antiInvolution` (`T_w ↦ T_{w⁻¹}`), `signTwist`, `barSignTwist`; parabolic subalgebras
@@ -447,7 +447,7 @@ criterion for `[M(λ) : L(μ)] ≠ 0` ([KK]); the Jantzen filtration and sum for
 the BGG resolution of `L(Λ)` for `Λ` dominant integral ([HumO] Ch. 6; [Kum] Ch. 3 in
 Kac–Moody generality).
 
-### M13. Lie algebra homology and Kostant's theorem  `[~]`  ([GL], [Kum] Ch. 3)
+### M13. Lie algebra homology and Kostant's theorem  `[x]`  ([GL], [Kum] Ch. 3)
 
 Done (`LieLean/Algebra/Lie/Homology/`, `KacMoody/Kostant/`): the Chevalley–Eilenberg complex
 with module coefficients over any commutative ring (`LieModule.ChevalleyEilenberg.diff`,
@@ -457,10 +457,16 @@ Euler–Poincaré per weight; for `V` in 𝒪: `IsCategoryO.hsum_homologyEulerFa
 (`Σ_k (-1)^k ch H_k(𝔫₋, V) = R · ch V`) and
 `IrreducibleModule.exp_rho_mul_hsum_homologyEulerFamily` (the Euler characteristic of
 `H_•(𝔫₋, L(Λ))` recovers Weyl–Kac); `H_0(𝔫₋, L(Λ)) = K_Λ`;
-`finrank_homologyWeightSpace_eq_one_of_weights` (Garland–Lepowsky multiplicities *given* the
-weight statement). Remaining: the Casimir/Laplacian step (weights of `H_k` are `w·Λ`,
-`ℓ(w) = k`: Kostant's `dδ + δd` identity), `H_1`, comparison with Mathlib's
-`HomologicalComplex.homology`, porting `Algebra/Lie/ChevalleyEilenberg.lean` (still used by
+**Garland–Lepowsky theorem** (`KacMoody/Kostant/Theorem.lean`; symmetrizable, Λ dominant
+integral): `IrreducibleModule.homologyWeightSpace_ne_bot_iff` (`H_k(𝔫₋, L(Λ))_μ ≠ 0` iff
+`μ = w(Λ+ρ) − ρ` with `ℓ(w) = k`) and `finrank_homologyWeightSpace_eq_one`; `H_1`:
+`finrank_homology_one` (`dim H_1 = |I|`). Proof (reconstructed): Kostant's identity
+`IsStandardForm.laplacianComm_kostant_eq`, the Laplacian `□` acting by
+`½(κ − (μ+2ρ|μ))` on the weight-μ chains (`kostantLaplacian_eq_smul`), `δ` as a contracting
+homotopy on nonzero eigenspaces (no harmonic theory needed over a general char-0 field),
+Kostant's combinatorial lemma `exists_weylGroup_of_dualBilinForm_eq`. Remaining (optional):
+comparison with Mathlib's `HomologicalComplex.homology`; porting or deleting
+`Algebra/Lie/ChevalleyEilenberg.lean` (used only by the unused alternative route
 `SerrePresented/Homology.lean`).
 
 
@@ -490,7 +496,13 @@ character formula (`Path/{Cancellation,CharacterFormula}.lean`): generalized Bra
 `coeffAt_weylAltSum_mul_pathCharacter`, `weylAltSum_rho_mul_pathCharacter` (any GCM), and
 **`pathCharacter_eq_character`** (`ch B(Λ) = ch L(Λ)`, symmetrizable); Littlewood–Richardson rule
 at character level `character_mul_character` (`Path/LittlewoodRichardson.lean`). Stability
-argument reconstructed. Remaining: Littelmann's isomorphism theorem and the crystal-level LR
+argument reconstructed. Tensor products (`Path/{Isomorphism,Decomposition,CharacterSubcrystal}
+.lean`): `tensorPathCrystalEquiv` (`B(λ) ⊗ B(μ) ≅ B(λ) * B(μ)`),
+`isHighestWeight_tensorPathCrystal_iff`, `multiplicity_tensorProduct`
+(`[L(λ)⊗L(μ) : L(ν)] = #{η ∈ B(μ) λ-dominant, λ + η(1) = ν}`),
+`card_isHighestWeight_tensorPathCrystal`, `setCharacter_eq_hsum`; the crystal isomorphism
+`nonempty_equiv_sigma` is *conditional* on `LRIsomorphismHypothesis` (instances of Littelmann's
+isomorphism theorem). Remaining: Littelmann's isomorphism theorem and the crystal-level LR
 decomposition, braid relations/normality, concrete `a`-chain description of LS paths.
 
 
@@ -583,7 +595,7 @@ beyond what the general Kac–Moody results give.
 - Strong exchange condition (`LieLean/GroupTheory/Coxeter/Exchange.lean`, Mathlib lacks it);
   Iwahori–Hecke algebra and bar involution (`GroupTheory/Coxeter/Hecke/{Basic,Bar}.lean`).
 - Chevalley–Eilenberg complex (`LieLean/Algebra/Lie/Homology/{ChevalleyEilenberg,Complex,
-  ChainComplex}.lean`); `Module.End.weightSpaceOf` (`Homology/WeightSpace.lean`).
+  ChainComplex}.lean`).
 - `Module.End.mem_iSup_maxGenEigenspace_of_prod_apply_eq_zero`, `iSupIndep.mem_of_mem_iSup_of_le`
   (`KacMoody/Blocks.lean`).
 - `LinearIndependent.of_comp_ratHom`, `LaurentPolynomial.eval₂_injective_of_transcendental`,
@@ -597,6 +609,11 @@ beyond what the general Kac–Moody results give.
   `IsSl2Triple.eq_zero_of_toEnd_e_pow_eq_zero` (`BGG/Sl2.lean`); `DirectSum.toLieModule`.
 - `Submodule.finrank_span_le_of_comp_ratHom`, `LinearMap.finrank_range_eq_of_ker_eq`
   (`QuantumGroup/IrreducibleCharacter/Rank.lean`).
+- Kostant's codifferential/Laplacian framework (`KacMoody/Kostant/Laplacian.lean`), `cocycleMap`.
+- `Module.End.weightSpaceOf`, `iSupIndep.mem_of_mem_iSup_of_le`
+  (`LieLean/LinearAlgebra/Eigenspace/Weight.lean`).
+- Crystal lemmas: highest-weight elements, injectivity of strict morphisms, `Crystal.sigma`
+  (`Crystal/Path/{Isomorphism,Decomposition}.lean`).
 - Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
   Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
