@@ -80,8 +80,9 @@ commutative ring for `L` with an ordered basis); `UniversalEnvelopingAlgebra.map
 `FreeLieAlgebra.toFreeAlgebra_injective` (`LieLean/Algebra/Lie/Free.lean`). PBW filtration
 (`.../Filtration.lean`): `filtration`, `commutator_mem_filtration`, `filtrationBasis` (ordered
 monomials of length ≤ n); graded PBW (`.../Graded.lean`, `gr U(L)` modelled as Rees algebra mod
-`t`): `AssociatedGraded` (commutative, `isInternal_range_toGr`), `symmetricAlgebraEquivAssociatedGraded :
-Sym(L) ≃ₐ gr U(L)` for `L` free over any commutative ring; freeness (`.../Free.lean`):
+`t`): `AssociatedGraded` (commutative, `isInternal_range_toGr`),
+`symmetricAlgebraEquivAssociatedGraded : Sym(L) ≃ₐ gr U(L)` for `L` free over any commutative ring;
+freeness (`.../Free.lean`):
 `pbwBasisOfIsCompl`, `free_of_isCompl` (`U(L)` free over `U(L')` for a complemented free `L'`),
 `instFreeLieSubalgebra`, `map_incl_injective` (over a field, any subalgebra).
 
@@ -128,8 +129,8 @@ root space decomposition (`rootSpace_zero`, `rootSpace_pos_le`, `finiteDimension
 `maxIdeal_eq`); `Matrix.Realization.KacMoodyAlgebra` (𝔤(A)) with `triangular_eq_zero`,
 `rootSpace_eq_map`, `finrank_rootSpace_root`, `chevalleyInvolution`, and the Serre relations
 `serre_e`, `serre_f` (from `AuxLieAlgebra.serreIdeal_le_maxIdeal`, Kac Lemma 1.5 argument).
-Comparison with `Matrix.ToLieAlgebra` (`KacMoody/ToLieAlgebra{,/Injective}.lean`, with a `lift`/`hom_ext`
-API for `Matrix.ToLieAlgebra`): `ofToLieAlgebra` with image `[𝔤(A), 𝔤(A)]`
+Comparison with `Matrix.ToLieAlgebra` (`KacMoody/ToLieAlgebra{,/Injective}.lean`, with a
+`lift`/`hom_ext` API for `Matrix.ToLieAlgebra`): `ofToLieAlgebra` with image `[𝔤(A), 𝔤(A)]`
 (`range_ofToLieAlgebra_eq_derivedSeries`); for symmetrizable `A`,
 `toLieAlgebraEquivDerived : Matrix.ToLieAlgebra K A ≃ 𝔤'(A)`, and if moreover `A.det ≠ 0`,
 `toLieAlgebraEquiv : Matrix.ToLieAlgebra K A ≃ 𝔤(A)` (Serre's theorem in finite type).
@@ -218,7 +219,8 @@ Done (`Algebra/Lie/KacMoody/{Triangular,Verma*,CategoryO}.lean`): subalgebras `n
 Formal characters (§9.7, `KacMoody/Character*.lean`): `CharacterRing` (Kac's `ℰ`, as Hahn series
 on `WeightOrd`; `WeightOrd.isPWO_iff`), `IsCategoryO.character`, `character_eq_add`,
 `VermaModule.finrank_weightSpace_sub` (Kostant partition function), `denominator`,
-`VermaModule.denominator_mul_character` (`R · ch M(Λ) = e^Λ`), `IsCategoryO.isWeylInvariant_character`.
+`VermaModule.denominator_mul_character` (`R · ch M(Λ) = e^Λ`),
+`IsCategoryO.isWeylInvariant_character`.
 Shapovalov form (§9.4, `KacMoody/Shapovalov.lean`): `transpose` (σ = -ω), `envTranspose`,
 `TwistedDual`, `VermaModule.contravariantForm` with `existsUnique_contravariantForm`,
 `isSymm_contravariantForm`, `contravariantForm_eq_zero_of_ne`, `mem_maxSubmodule_iff` (radical =
@@ -308,9 +310,10 @@ equivKacMoodyAlgebra`, `equivSerrePresentedAlgebra`, `equivToLieAlgebra` (Serre'
 Mathlib's two constructions). Weyl's complete reducibility (`KacMoody/FiniteDimensional.lean`,
 deduced from target 3): `exists_isInternal_irreducibleModule_of_finiteDimensional`,
 `complementedLattice_of_finiteDimensional`, `IrreducibleModule.finiteDimensional_iff` (`L(Λ)` is
-finite-dimensional iff `Λ` is dominant integral); generic sl₂ facts (`LieLean/Algebra/Lie/Sl2.lean`):
-`IsSl2Triple.isNilpotent_toEnd_e/f`, `iSup_eigenspace_toEnd_h_eq_top` (`h` diagonalizable with integer
-eigenvalues on finite-dimensional modules, any char-0 field).
+finite-dimensional iff `Λ` is dominant integral); generic sl₂ facts
+(`LieLean/Algebra/Lie/Sl2.lean`): `IsSl2Triple.isNilpotent_toEnd_e/f`,
+`iSup_eigenspace_toEnd_h_eq_top` (`h` diagonalizable with integer eigenvalues on
+finite-dimensional modules, any char-0 field).
 
 For a Cartan matrix of finite type: `𝔤(A)` is finite-dimensional semisimple and agrees with
 Mathlib's Geck construction and `Matrix.ToLieAlgebra` (Serre's theorem, [Hum] §18); Weyl's complete
@@ -339,13 +342,15 @@ the general Kac–Moody results give.
   `Module.End.iSup_iInf_eigenspace_eq_top_of_commute` (`KacMoody/FiniteDimensional.lean`).
 - `LieAlgebra.Basis.ad_e_pow_e_eq_zero`, `ad_f_pow_f_eq_zero`; `RootPairing.GeckConstruction.
   equivToLieAlgebra` (`KacMoody/Geck.lean`).
-- `Matrix.ToLieAlgebra` API (`lift`, `hom_ext`, generator lemmas), `AddMonoidAlgebra.degreeDerivation`,
+- `Matrix.ToLieAlgebra` API (`lift`, `hom_ext`, generator lemmas),
+  `AddMonoidAlgebra.degreeDerivation`,
   `LieAlgebra.ExtendScalars.evalHom` (`KacMoody/ToLieAlgebra*.lean`).
 - `LieModuleEquiv.ofBijective`, `LieSubmodule.Quotient.lift` (`LieLean/Algebra/Lie/Quotient.lean`);
   `LieSubmodule.Subquotient`,
   `LieSubmodule.Quotient.nonempty_lieModuleEquiv_of_surjective` (`KacMoody/CompositionSeries.lean`).
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
-- `Matrix.dotProduct_diagonal_mul_mulVec_reflection` (`LinearAlgebra/Matrix/Cartan/FiniteType.lean`).
+- `Matrix.dotProduct_diagonal_mul_mulVec_reflection`
+  (`LinearAlgebra/Matrix/Cartan/FiniteType.lean`).
 - `UniversalEnvelopingAlgebra.ker_map_eq_span`, `LieHom.descend`
   (`LieLean/Algebra/Lie/UniversalEnveloping/Kernel.lean`).
 - `FormalCharacter.sum_neg_one_pow_card_eq_ite` (`LieLean/RingTheory/FormalCharacter.lean`);
