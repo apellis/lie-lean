@@ -63,6 +63,7 @@ import LieLean.Algebra.Lie.KacMoody.SerrePresented.LowestWeight
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.Syzygy
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.SyzygyEnveloping
 import LieLean.Algebra.Lie.KacMoody.Shapovalov
+import LieLean.Algebra.Lie.KacMoody.TensorProduct
 import LieLean.Algebra.Lie.KacMoody.TensorRep
 import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra
 import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra.Injective
