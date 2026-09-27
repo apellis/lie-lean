@@ -28,6 +28,7 @@ import LieLean.Algebra.Lie.KacMoody.SerrePresented.Homology
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.LowestWeight
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.Syzygy
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.SyzygyEnveloping
+import LieLean.Algebra.Lie.KacMoody.Shapovalov
 import LieLean.Algebra.Lie.KacMoody.TensorRep
 import LieLean.Algebra.Lie.KacMoody.Triangular
 import LieLean.Algebra.Lie.KacMoody.Verma
