@@ -318,6 +318,22 @@ omit [NeZero v] in
 lemma mem_triangularSpan_of (u : QuantumGroup R v) (hv : v ≠ 0) : u ∈ triangularSpan R v := by
   rw [span_triangular (R := R) hv]; trivial
 
+/-- `M_q(Λ) = U⁻ v_Λ`. -/
+theorem range_toVerma : LinearMap.range (toVerma R v Λ) = ⊤ := by
+  rw [eq_top_iff]
+  rintro m -
+  obtain ⟨u, rfl⟩ := Submodule.Quotient.mk_surjective _ m
+  induction mem_triangularSpan_of u (NeZero.ne v) using Submodule.span_induction with
+  | mem u hu =>
+    obtain ⟨w, μ, w', rfl⟩ := hu
+    refine ⟨(v ^ Λ μ * LusztigF.counit (monomial k w')) • monomial k w, ?_⟩
+    rw [map_smul, toVerma_apply, mk_eq_smul_hwv, mul_smul, mul_smul, plusHom_smul_hwv]
+    rw [mul_smul, smul_comm (K R v μ), K_smul_hwv, smul_comm (minusHom R v _),
+      smul_comm (minusHom R v _), smul_comm (v ^ Λ μ)]
+  | zero => exact Submodule.zero_mem _
+  | add x y _ _ hx hy => rw [Submodule.Quotient.mk_add]; exact Submodule.add_mem _ hx hy
+  | smul c x _ hx => rw [Submodule.Quotient.mk_smul]; exact Submodule.smul_mem _ _ hx
+
 lemma coordAux_mul_E (u : QuantumGroup R v) (i : I) : coordAux Λ hv' (u * E R v i) = 0 := by
   induction mem_triangularSpan_of u (NeZero.ne v) using Submodule.span_induction with
   | mem u hu =>
@@ -433,11 +449,10 @@ theorem weightSpace_eq_map (hR : R.IsXRegular) (ν : I →₀ ℕ) :
   · rw [Submodule.map_le_iff_le_comap]
     exact fun y hy ↦ toVerma_mem_weightSpace hy
 
-include hv' in
 /-- `M_q(Λ)` is a weight module. -/
 theorem iSup_weightSpace_eq_top :
     ⨆ Λ', QuantumGroup.weightSpace R v (VermaModule R v Λ) Λ' = ⊤ := by
-  rw [eq_top_iff, ← LinearMap.range_eq_top.2 (toVerma_surjective hv'), ← iSup_map_toVerma]
+  rw [eq_top_iff, ← range_toVerma, ← iSup_map_toVerma]
   exact iSup_le fun ν ↦ Submodule.map_le_iff_le_comap.2 fun y hy ↦
     Submodule.mem_iSup_of_mem _ (toVerma_mem_weightSpace hy)
 
