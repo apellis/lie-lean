@@ -5,6 +5,7 @@ Authors: Alex Ellis
 -/
 import Mathlib.Algebra.Lie.Sl2
 import LieLean.Algebra.Lie.KacMoody.Integrable
+import LieLean.Algebra.Lie.Sl2
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
 
 /-!
@@ -24,7 +25,8 @@ irreducible `𝔰𝔩₂`-modules (as in [Kac] §3.6–3.7). Let `(h, e, f)` be 
 module `M` over a field of characteristic zero.
 
 1. If `h v = c v`, then `e fᵐ⁺¹ v = fᵐ⁺¹ e v + (m + 1)(c - m) fᵐ v`
-   (`IsSl2Triple.lie_e_pow_succ_toEnd_f_of_lie_h`), by induction on `m`. Hence for a primitive
+   (`IsSl2Triple.lie_e_pow_succ_toEnd_f_of_lie_h`, a special case of
+   `IsSl2Triple.lie_e_pow_succ_toEnd_f` in `LieLean/Algebra/Lie/Sl2.lean`). Hence for a primitive
    vector `v` (`e v = 0`, `h v = c v`) we get `eᵐ fᵐ v = ∏_{j < m} (j + 1)(c - j) v`
    (`IsSl2Triple.pow_toEnd_e_pow_toEnd_f`).
 2. Suppose `e` acts locally nilpotently. If `h v = n v` with `n ∈ ℕ` and `fⁿ v = 0`, then `v = 0`
@@ -87,20 +89,7 @@ lemma lie_h_lie_e {c : K} {v : M} (hv : ⁅h, v⁆ = c • v) : ⁅h, ⁅e, v⁆
 lemma lie_e_pow_succ_toEnd_f_of_lie_h (m : ℕ) {c : K} {v : M} (hv : ⁅h, v⁆ = c • v) :
     ⁅e, (toEnd K L M f ^ (m + 1)) v⁆ =
       (toEnd K L M f ^ (m + 1)) ⁅e, v⁆ + ((m + 1 : K) * (c - m)) • (toEnd K L M f ^ m) v := by
-  have base : ∀ (c : K) (v : M), ⁅h, v⁆ = c • v → ⁅e, ⁅f, v⁆⁆ = ⁅f, ⁅e, v⁆⁆ + c • v := by
-    intro c v hv
-    rw [leibniz_lie, t.lie_e_f, hv, add_comm]
-  induction m generalizing c v with
-  | zero => simp [base c v hv]
-  | succ m ih =>
-    have hfv := t.lie_h_lie_f hv
-    have e1 : ∀ (n : ℕ) (w : M), (toEnd K L M f ^ (n + 1)) w = (toEnd K L M f ^ n) ⁅f, w⁆ := by
-      intro n w; rw [pow_succ, Module.End.mul_apply, toEnd_apply_apply]
-    rw [e1 (m + 1) v, ih hfv, base c v hv, map_add, map_smul, ← e1, ← e1 m v, add_assoc,
-      ← add_smul]
-    congr 2
-    push_cast
-    ring
+  rw [t.lie_e_pow_succ_toEnd_f, hv, ← sub_smul, map_smul, smul_smul]
 
 /-- For a primitive vector `v` (`e v = 0`, `h v = c v`), `eᵐ fᵐ v = ∏_{j < m} (j + 1)(c - j) v`. -/
 lemma pow_toEnd_e_pow_toEnd_f (m : ℕ) {c : K} {v : M} (hv : ⁅h, v⁆ = c • v) (he : ⁅e, v⁆ = 0) :
