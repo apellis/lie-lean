@@ -64,6 +64,7 @@ import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.LusztigF.Basic
 import LieLean.Algebra.QuantumGroup.LusztigF.Comul
 import LieLean.Algebra.QuantumGroup.LusztigF.Form
+import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Basic
