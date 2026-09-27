@@ -8,6 +8,7 @@ import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
 import LieLean.Algebra.Lie.KacMoody.TensorRep
+import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.Algebra.Lie.Quotient
 import LieLean.Algebra.Lie.Subalgebra
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
