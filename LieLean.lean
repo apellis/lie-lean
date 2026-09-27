@@ -142,6 +142,7 @@ import LieLean.GroupTheory.Coxeter.Hecke.Basic
 import LieLean.GroupTheory.Coxeter.Hecke.Involutions
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Canonical
+import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Dihedral
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Inverse
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Parabolic
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.ParabolicRelations
