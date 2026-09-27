@@ -35,6 +35,11 @@ eigenvalues `n (n + 2)`, `n < m`; these consist of `f`-strings through primitive
 `n` (`IsSl2Triple.mem_primitiveSpan`), whose weights are `≥ -n > -m`. Hence `x = 0`. The locally
 nilpotent case reduces to this one by passing to the finite-dimensional subspace spanned by the
 `fᵃ eᵇ x`. The argument was reconstructed by us.
+
+## References
+
+* [Hum] J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §7
+  (representations of `𝔰𝔩₂`).
 -/
 
 open LieModule Module Polynomial

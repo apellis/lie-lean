@@ -30,6 +30,11 @@ filtration.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.actEnv_mem_polyFam`: the action is polynomial.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.contravariantForm_mem_polyFun`: the Shapovalov
   pairing of polynomial families is polynomial.
+
+## References
+
+* [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
+  GSM 94, §5.2 (check) (the universal Verma module and the Jantzen filtration).
 -/
 
 open Module LieModule Module.Dual MvPolynomial UniversalEnvelopingAlgebra

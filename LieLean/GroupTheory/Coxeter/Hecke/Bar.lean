@@ -284,6 +284,7 @@ theorem barL_C'_simple (i : B) :
   rw [smul_add, smul_sub, smul_smul, smul_smul, e1, e2, sub_smul, smul_add]
   abel
 
+/-- The bar involution of `𝓗` over `A[v, v⁻¹]` is an involution ([KL] §1 (check)). -/
 theorem barL_barL (h : IwahoriHeckeAlgebra cs (LaurentPolynomial.T 2 : A[T;T⁻¹])) :
     barL cs (barL cs h) = h :=
   bar_bar cs _ _ (fun a ↦ involutive_invert a) h

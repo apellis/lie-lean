@@ -36,6 +36,13 @@ Thus `R_{y,w} = ε_y ε_w q^{ℓ(w)} · [T_y] T_{w⁻¹}⁻¹` (`IwahoriHeckeAlg
 * `IwahoriHeckeAlgebra.invCoeff`: the coefficient `[T_y] T_{w⁻¹}⁻¹`.
 * `IwahoriHeckeAlgebra.rPoly`: the `R`-polynomial `R_{y,w}` evaluated at `q`.
 
+## Main results
+
+* `IwahoriHeckeAlgebra.rPoly_mul_simple`: the recursion for `R`-polynomials.
+* `IwahoriHeckeAlgebra.rPoly_self`, `IwahoriHeckeAlgebra.exists_sublist_of_rPoly_ne_zero`:
+  `R_{w,w} = 1`, and `R_{y,w} ≠ 0` only if `y` is a subword of a reduced word of `w`.
+* `IwahoriHeckeAlgebra.exists_rPoly_eq_aeval`: `R_{y,w}` is a polynomial in `q`.
+
 ## References
 
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,

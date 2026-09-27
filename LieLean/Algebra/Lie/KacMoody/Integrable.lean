@@ -139,6 +139,13 @@ structure IsIntegrable : Prop where
 
 variable {P V}
 
+open Classical in
+/-- An `𝔥`-diagonalizable module is the internal direct sum of its weight spaces. -/
+theorem IsHDiagonalizable.isInternal_weightSpace (hV : IsHDiagonalizable P V) :
+    DirectSum.IsInternal (weightSpace P V) :=
+  DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top
+    (iSupIndep_weightSpaceOfMap (M := V) (h P)) hV
+
 /-- `eᵢ V_λ ⊆ V_{λ + αᵢ}`. -/
 lemma toEnd_e_mem_weightSpace (i : ι) {μ : Dual K H} {v : V} (hv : v ∈ weightSpace P V μ) :
     toEnd K P.KacMoodyAlgebra V (e P i) v ∈ weightSpace P V (μ + P.root i) := by

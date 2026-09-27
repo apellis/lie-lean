@@ -248,7 +248,8 @@ include S in
 /-- **The Jantzen order formula** ([HumO] §5.6 (check); [Jantzen] (check)): if
 `d(t) = D_β(λ₀ + t δ)` is a nonzero polynomial in `t` (`D_β` the Shapovalov determinant on
 `M(λ)_{λ-β}` in the PBW basis) with order of vanishing `N` at `t = 0`, then
-`∑_{i = 1}^{N} dim M(λ₀)^i_{λ₀-β} = N`, and `M(λ₀)^i_{λ₀-β} = 0` for `i > N`. -/
+`∑_{i = 1}^{N} dim M(λ₀)^i_{λ₀-β} = N` (and `M(λ₀)^i_{λ₀-β} = 0` for `i > N`, see
+`finrank_jantzen_inf_weightSpace_eq_zero`). -/
 theorem sum_finrank_jantzen_inf_weightSpace (Λ₀ δ β : Dual K H) (d : K[X]) (hd : d ≠ 0)
     (hdet : ∀ t, d.eval t = (LinearMap.BilinForm.toMatrix (pbwWeightBasis P (Λ₀ + t • δ) β)
       (weightSpaceForm P (Λ₀ + t • δ) (Λ₀ + t • δ - β))).det) :
