@@ -88,14 +88,6 @@ end TensorSerre
 variable {Y : Type*} [AddCommGroup Y] [DecidableEq I] {D : CartanDatum I}
   (R : D.RootDatum Y) (v : k)
 
-omit [DecidableEq I] in
-lemma root_ktilde (i j : I) : R.root j (ktilde R i) = D.d i * D.cartanMatrix i j := by
-  simp [ktilde, R.root_coroot]
-
-omit [DecidableEq I] in
-lemma root_ktilde_comm (i j : I) : R.root j (ktilde R i) = R.root i (ktilde R j) := by
-  rw [root_ktilde, root_ktilde, D.d_mul_cartanMatrix_comm]
-
 variable {R v}
 
 lemma E_mul_K (hv : v ≠ 0) (μ : Y) (i : I) :
