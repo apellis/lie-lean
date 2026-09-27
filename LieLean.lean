@@ -24,6 +24,7 @@ import LieLean.Algebra.Lie.KacMoody.FiniteDimensional
 import LieLean.Algebra.Lie.KacMoody.FiniteType
 import LieLean.Algebra.Lie.KacMoody.GabberKac
 import LieLean.Algebra.Lie.KacMoody.Geck
+import LieLean.Algebra.Lie.KacMoody.Grothendieck
 import LieLean.Algebra.Lie.KacMoody.HighestWeight
 import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
 import LieLean.Algebra.Lie.KacMoody.Integrable
