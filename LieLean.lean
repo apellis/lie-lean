@@ -20,8 +20,10 @@ import LieLean.Algebra.Lie.KacMoody.CompositionSeries
 import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Casimir
 import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Character
 import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Multiplicity
+import LieLean.Algebra.Lie.KacMoody.FiniteDimensional
 import LieLean.Algebra.Lie.KacMoody.FiniteType
 import LieLean.Algebra.Lie.KacMoody.GabberKac
+import LieLean.Algebra.Lie.KacMoody.Geck
 import LieLean.Algebra.Lie.KacMoody.HighestWeight
 import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
 import LieLean.Algebra.Lie.KacMoody.Integrable
@@ -39,6 +41,8 @@ import LieLean.Algebra.Lie.KacMoody.SerrePresented.Syzygy
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.SyzygyEnveloping
 import LieLean.Algebra.Lie.KacMoody.Shapovalov
 import LieLean.Algebra.Lie.KacMoody.TensorRep
+import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra
+import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra.Injective
 import LieLean.Algebra.Lie.KacMoody.Triangular
 import LieLean.Algebra.Lie.KacMoody.Verma
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
@@ -47,7 +51,11 @@ import LieLean.Algebra.Lie.KacMoody.VermaWeights
 import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
+import LieLean.Algebra.Lie.Sl2
 import LieLean.Algebra.Lie.Subalgebra
+import LieLean.Algebra.Lie.UniversalEnveloping.Filtration
+import LieLean.Algebra.Lie.UniversalEnveloping.Free
+import LieLean.Algebra.Lie.UniversalEnveloping.Graded
 import LieLean.Algebra.Lie.UniversalEnveloping.Kernel
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
