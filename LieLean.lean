@@ -40,6 +40,7 @@ import LieLean.Algebra.Lie.KacMoody.VermaWeights
 import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
+import LieLean.Algebra.Lie.Sl2
 import LieLean.Algebra.Lie.Subalgebra
 import LieLean.Algebra.Lie.UniversalEnveloping.Kernel
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
