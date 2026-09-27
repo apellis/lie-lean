@@ -21,6 +21,7 @@ of `LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig` (normalization of [KL]: `q
   `x` ([KL] (2.3.g) (check)).
 * `IwahoriHeckeAlgebra.coeff_zero_klPoly`: `P_{y,w}(0) = 1` for `y ≤ w`;
   in particular `P_{1,w}(0) = 1` (`coeff_zero_klPoly_one_left`) ([KL] §2 (check)).
+* `IwahoriHeckeAlgebra.klMu_eq_one`: `μ(y, w) = 1` if `y ≤ w` and `ℓ(w) = ℓ(y) + 1`.
 * `IwahoriHeckeAlgebra.klPoly_eq_one_of_length_le_two`: `P_{y,w} = 1` for `y ≤ w` if
   `ℓ(w) ≤ 2`.
 * `IwahoriHeckeAlgebra.specializeOne_klBasis`: at `v = 1`, `C'_w` specializes to
@@ -149,6 +150,15 @@ theorem klPoly_eq_one_of_length_le_two {y w : W} (hyw : cs.BruhatLE y w) (hw : �
   have hdeg := two_mul_natDegree_klPoly_add_length_lt cs hyw hne
   rw [Polynomial.eq_C_of_natDegree_eq_zero (p := klPoly cs y w) (by omega),
     coeff_zero_klPoly cs hyw, map_one]
+
+/-- If `y ≤ w` and `ℓ(w) = ℓ(y) + 1`, then `μ(y, w) = 1`. -/
+theorem klMu_eq_one {y w : W} (hyw : cs.BruhatLE y w) (hl : ℓ w = ℓ y + 1) : klMu cs y w = 1 := by
+  rw [klMu, muCoeff, hl, show ℓ y + 1 - ℓ y = 1 by omega, ite_eq_left odd_one]
+  exact coeff_zero_klPoly cs hyw
+
+/-- `μ(y, w) = 0` unless `y ≤ w`. -/
+theorem klMu_eq_zero_of_not_bruhatLE {y w : W} (h : ¬cs.BruhatLE y w) : klMu cs y w = 0 := by
+  simp [klMu, muCoeff, klPoly_eq_zero_of_not_bruhatLE cs h]
 
 /-- The evaluation `v ↦ 1` of `P(q)` is `P(1)`. -/
 theorem eval₂_one_aeval_T_two (P : Polynomial ℤ) :
