@@ -139,7 +139,15 @@ The comparison with `Matrix.ToLieAlgebra` is not done.
   is known; for singular `A` it has a smaller Cartan part and should be compared with the derived
   algebra `𝔤'(A)`. Do this comparison only when it is needed or cheap.
 
-### M4. Integrable modules and the Weyl group  `[ ]`  ([Kac] Ch. 3)
+### M4. Integrable modules and the Weyl group  `[~]`  ([Kac] Ch. 3)
+
+Done: `Matrix.Realization.reflection`, `coreflection`, `weylGroup`, `realRoots`, W preserves `Q`
+(`LinearAlgebra/Matrix/Cartan/WeylGroup.lean`); `KacMoodyAlgebra.IsIntegrable`,
+`isIntegrable_adjoint` (Lemma 3.4/3.5), `isSl2Triple`, `exists_int_of_weightSpace_ne_bot`
+(Prop. 3.6), `rank_weightSpace_weylGroup` (Prop. 3.7), `rank_rootSpace_weylGroup`,
+`reflection_mem_posWeights` (Lemma 3.7), `rank_rootSpace_of_mem_realRoots`
+(`Algebra/Lie/KacMoody/Integrable*.lean`). Not done: W is a Coxeter group (Prop. 3.13), Tits cone.
+
 
 - `𝔥`-diagonalizable (weight) modules, weights, `P(V)`; integrable modules (`eᵢ, fᵢ` locally
   nilpotent). The `sl₂`-subalgebras `⟨eᵢ, fᵢ, αᵢ^∨⟩` (connect to Mathlib's `IsSl2Triple`).
@@ -213,3 +221,5 @@ the general Kac–Moody results give.
   (`LieLean/Algebra/Lie/Free.lean`).
 - `LieIdeal.lift`, `LieIdeal.mkHom` (`LieLean/Algebra/Lie/Quotient.lean`).
 - `LieSubalgebra.lieSpan_toSubmodule_eq_span_adProd` (`LieLean/Algebra/Lie/Subalgebra.lean`).
+- `IsSl2Triple` lemmas in `KacMoody/IntegrableWeyl.lean`; `LieModule.locallyNilpotentSubmodule`,
+  `exists_toEnd_pow_eq_zero_of_lieSpan` in `KacMoody/Integrable.lean`.
