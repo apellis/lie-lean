@@ -3,7 +3,7 @@ Copyright (c) 2026 Alex Ellis. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
-import LieLean.Algebra.Lie.KacMoody.SerrePresented.Homology
+import LieLean.Algebra.Lie.KacMoody.SerrePresented.NegativePart
 import LieLean.Algebra.Lie.KacMoody.Verma
 import LieLean.Algebra.Lie.UniversalEnveloping.Kernel
 

@@ -1,4 +1,3 @@
-import LieLean.Algebra.Lie.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.Homology.ChainComplex
 import LieLean.Algebra.Lie.Homology.ChevalleyEilenberg
@@ -85,8 +84,8 @@ import LieLean.Algebra.Lie.KacMoody.SerreAssociative
 import LieLean.Algebra.Lie.KacMoody.SerreAssociative.HighestWeight
 import LieLean.Algebra.Lie.KacMoody.SerreAssociative.NegativePart
 import LieLean.Algebra.Lie.KacMoody.SerrePresented
-import LieLean.Algebra.Lie.KacMoody.SerrePresented.Homology
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.LowestWeight
+import LieLean.Algebra.Lie.KacMoody.SerrePresented.NegativePart
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.Syzygy
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.SyzygyEnveloping
 import LieLean.Algebra.Lie.KacMoody.Shapovalov
