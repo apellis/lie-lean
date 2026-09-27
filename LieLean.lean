@@ -64,6 +64,7 @@ import LieLean.Basic
 import LieLean.GroupTheory.Coxeter.Hecke.Bar
 import LieLean.GroupTheory.Coxeter.Hecke.Basic
 import LieLean.GroupTheory.Coxeter.Hecke.Exchange
+import LieLean.GroupTheory.Coxeter.Hecke.RPolynomial
 import LieLean.GroupTheory.Coxeter.Hecke.Specialization
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
