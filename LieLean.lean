@@ -34,6 +34,7 @@ import LieLean.Algebra.Lie.KacMoody.InvariantFormAux
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
+import LieLean.Algebra.Lie.KacMoody.SerreAssociative
 import LieLean.Algebra.Lie.KacMoody.SerrePresented
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.Homology
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.LowestWeight
