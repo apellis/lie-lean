@@ -40,8 +40,11 @@ so it is the unique maximal submodule and `L_q(Λ) = M_q(Λ) ⧸ M'_q(Λ)` is si
 ## Main results
 
 * `QuantumGroup.VermaModule.equivSerreQuotient`: `'f ⧸ J ≃ₗ[k] M_q(Λ)`, `[y] ↦ y⁻ v_Λ`.
+* `QuantumGroup.VermaModule.toVerma_eq_zero_iff`: `y⁻ v_Λ = 0 ↔ y ∈ J`.
 * `QuantumGroup.VermaModule.toVerma_mem_weightSpace`,
-  `QuantumGroup.VermaModule.weightSpace_eq_map`: weight spaces of `M_q(Λ)`.
+  `QuantumGroup.VermaModule.weightSpace_eq_map`, `QuantumGroup.VermaModule.weightSpace_eq_bot`,
+  `QuantumGroup.VermaModule.finiteDimensional_weightSpace`,
+  `QuantumGroup.VermaModule.iSup_weightSpace_eq_top`: weight spaces of `M_q(Λ)`.
 * `QuantumGroup.VermaModule.le_maxSubmodule`, `QuantumGroup.VermaModule.isCoatom_maxSubmodule`.
 * `QuantumGroup.IrreducibleModule.isSimpleModule`: `L_q(Λ)` is simple.
 
@@ -118,13 +121,6 @@ namespace QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
-
-/-- If `v` is not a root of unity, `v^n ≠ 1` for all integers `n ≠ 0`. -/
-lemma zpow_ne_one_of_not_root {v : k} (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) {n : ℤ} (hn : n ≠ 0) :
-    v ^ n ≠ 1 := by
-  rcases Int.natAbs_eq n with h | h
-  · rw [h, zpow_natCast]; exact hv' _ (Int.natAbs_pos.2 hn)
-  · rw [h, zpow_neg, zpow_natCast, inv_ne_one]; exact hv' _ (Int.natAbs_pos.2 hn)
 
 /-- The left ideal `Σᵢ U Eᵢ + Σ_μ U (K_μ - v^{⟨μ, Λ⟩})` of `U`. -/
 def vermaIdeal (Λ : Y →+ ℤ) : Submodule (QuantumGroup R v) (QuantumGroup R v) :=
@@ -219,26 +215,14 @@ theorem exists_zeroHom_smul_eq (hR : R.IsXRegular) (hv' : ∀ n : ℕ, 0 < n →
     rw [weightProj_of_mem hy]
     split_ifs with h
     · exact ⟨1, map_one _, by rw [map_one, one_smul]⟩
-    · obtain ⟨μ, hμ⟩ := R.exists_rootSum_ne hR h
-      set a := v ^ (Λ - R.rootSum ν₀) μ
-      set b := v ^ (Λ - R.rootSum ν) μ
-      have hab : a - b ≠ 0 := by
-        rw [sub_ne_zero]
-        intro hab
-        have hv0 := NeZero.ne v
-        refine zpow_ne_one_of_not_root hv' (sub_ne_zero.2 hμ) ?_
-        rw [zpow_sub₀ hv0, div_eq_one_iff_eq (zpow_ne_zero _ hv0)]
-        have := hab
-        simp only [a, b, AddMonoidHom.sub_apply, zpow_sub₀ hv0] at this
-        field_simp at this
-        exact this
-      refine ⟨(a - b)⁻¹ • (AddMonoidAlgebra.single μ 1 - AddMonoidAlgebra.single 0 b), ?_, ?_⟩
-      · simp only [map_smul, map_sub, charHom_single, one_mul, AddMonoidHom.map_zero,
-          zpow_zero, mul_one, smul_eq_mul]
-        exact inv_mul_cancel₀ hab
-      · rw [zeroHom_smul_of_mem_weightSpace (toVerma_mem_weightSpace hy), map_zero]
-        simp only [map_smul, map_sub, charHom_single, one_mul, AddMonoidHom.map_zero,
-          zpow_zero, mul_one, smul_eq_mul, sub_self, mul_zero, zero_smul, b]
+    · have hne : Λ - R.rootSum ν₀ ≠ Λ - R.rootSum ν := fun e ↦ by
+        obtain ⟨μ, hμ⟩ := R.exists_rootSum_ne hR h
+        have := congr($e μ)
+        simp only [AddMonoidHom.sub_apply] at this
+        omega
+      obtain ⟨g, hg1, hg2⟩ := exists_charHom_eq_one_eq_zero hv' hne
+      exact ⟨g, hg1, by rw [zeroHom_smul_of_mem_weightSpace (toVerma_mem_weightSpace hy), hg2,
+        zero_smul, map_zero]⟩
   | zero => exact ⟨1, map_one _, by simp⟩
   | add y z _ _ hy hz =>
     obtain ⟨g₁, hg₁, hy⟩ := hy
@@ -466,6 +450,30 @@ def counitQ : (LusztigF k I ⧸ serreSubmodule D v) →ₗ[k] k :=
 omit [DecidableEq I] [NeZero v] in
 @[simp] lemma counitQ_mk (y : LusztigF k I) :
     counitQ D v (Submodule.Quotient.mk y) = LusztigF.counit y := rfl
+
+include hv' in
+/-- The weights of `M_q(Λ)` lie in `Λ - Σᵢ ℕ i'`: all other weight spaces vanish. Requires `v`
+not a root of unity. -/
+theorem weightSpace_eq_bot {Λ' : Y →+ ℤ} (h : ∀ ν, Λ' ≠ Λ - R.rootSum ν) :
+    QuantumGroup.weightSpace R v (VermaModule R v Λ) Λ' = ⊥ := by
+  have htop : ⨆ ν : I →₀ ℕ, QuantumGroup.weightSpace R v (VermaModule R v Λ)
+      (Λ - R.rootSum ν) = ⊤ := by
+    rw [eq_top_iff, ← range_toVerma, ← iSup_map_toVerma]
+    exact iSup_mono fun ν ↦ Submodule.map_le_iff_le_comap.2 fun y hy ↦ toVerma_mem_weightSpace hy
+  have hle : ⨆ ν : I →₀ ℕ, QuantumGroup.weightSpace R v (VermaModule R v Λ) (Λ - R.rootSum ν) ≤
+      ⨆ Λ'' , ⨆ (_ : Λ'' ≠ Λ'), QuantumGroup.weightSpace R v (VermaModule R v Λ) Λ'' :=
+    iSup_le fun ν ↦ le_iSup₂_of_le (Λ - R.rootSum ν) (Ne.symm (h ν)) le_rfl
+  have := (iSupIndep_weightSpace (M := VermaModule R v Λ) hv' Λ').mono_right
+    (htop.symm.le.trans hle)
+  exact disjoint_top.1 this
+
+include hv' in
+/-- The weight spaces of `M_q(Λ)` are finite-dimensional. -/
+theorem finiteDimensional_weightSpace (hR : R.IsXRegular) (ν : I →₀ ℕ) :
+    FiniteDimensional k
+      (QuantumGroup.weightSpace R v (VermaModule R v Λ) (Λ - R.rootSum ν)) := by
+  rw [weightSpace_eq_map hv' hR]
+  infer_instance
 
 variable (Λ) in
 /-- The coefficient of `v_Λ`: the linear form `y⁻ v_Λ ↦ ε(y)` on `M_q(Λ)`. -/
