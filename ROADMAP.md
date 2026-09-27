@@ -451,8 +451,14 @@ Done (`LieLean/RepresentationTheory/Crystal/`): `CartanDatum`, `Crystal` (Kashiw
 convention) `Crystal.tensor` with `tensorAssoc`; `IsSeminormal` and `IsSeminormal.tensor`;
 Kashiwara's `Sᵢ` (`reflection`, `reflection_reflection`, `wt_reflection`, `card_wt_reflection`);
 characters (`character_tensor`, `formalCharacter` in `CharacterRing`); subcrystals and closures;
-bridge `Realization.cartanDatum`. Remaining: Littelmann path model (`B(λ)`,
-`ch B(λ) = ch L(λ)`), braid relations for normal crystals.
+bridge `Realization.cartanDatum`. Littelmann paths (`Crystal/Path/`; paths over a conditionally
+complete ordered field, root operators by closed running-minimum formulas): `LittelmannPath.crystal`
+(seminormal, `f_eq_some_iff`), time reversal `revEquiv` / `Crystal.dual`, concatenation =
+Kashiwara tensor rule for integral paths (`e_concat_eq_tensor`), `B(π)` (`componentCrystal`),
+`Realization.pathCrystal` (`B(Λ)`) with W-invariant fibre sizes (`card_wt_weylGroup_pathCrystal`),
+`π_{wΛ} ∈ B(Λ)`; weights in `Λ - Q₊` and finite fibres *conditional* on Littelmann's stability
+theorem (`FOrbitStable`). Remaining: the stability theorem, `ch B(λ) = ch L(λ)`, LS paths, braid
+relations for normal crystals.
 
 
 Abstract (Kashiwara) crystals for a Cartan datum: morphisms, the tensor product rule (signature
