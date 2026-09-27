@@ -20,6 +20,7 @@ import LieLean.Algebra.Lie.KacMoody.CompositionSeries
 import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Casimir
 import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Character
 import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Multiplicity
+import LieLean.Algebra.Lie.KacMoody.FiniteDimensional
 import LieLean.Algebra.Lie.KacMoody.FiniteType
 import LieLean.Algebra.Lie.KacMoody.GabberKac
 import LieLean.Algebra.Lie.KacMoody.Geck
@@ -50,6 +51,7 @@ import LieLean.Algebra.Lie.KacMoody.VermaWeights
 import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
+import LieLean.Algebra.Lie.Sl2
 import LieLean.Algebra.Lie.Subalgebra
 import LieLean.Algebra.Lie.UniversalEnveloping.Filtration
 import LieLean.Algebra.Lie.UniversalEnveloping.Free
