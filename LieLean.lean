@@ -185,7 +185,10 @@ import LieLean.RepresentationTheory.Crystal.Path.Basic
 import LieLean.RepresentationTheory.Crystal.Path.Cancellation
 import LieLean.RepresentationTheory.Crystal.Path.Character
 import LieLean.RepresentationTheory.Crystal.Path.CharacterFormula
+import LieLean.RepresentationTheory.Crystal.Path.CharacterSubcrystal
 import LieLean.RepresentationTheory.Crystal.Path.Concatenation
+import LieLean.RepresentationTheory.Crystal.Path.Decomposition
+import LieLean.RepresentationTheory.Crystal.Path.Isomorphism
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.LittlewoodRichardson
 import LieLean.RepresentationTheory.Crystal.Path.Realization
