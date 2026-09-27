@@ -162,11 +162,6 @@ lemma weylGroup_induction {p : (Dual K H ≃ₗ[K] Dual K H) → Prop} (one : p 
     rw [reflection_inv]
     exact mul i w ih
 
-/-- `⟨∑ kₗ αₗ, αⱼ^∨⟩ = ∑ₗ aⱼₗ kₗ`. -/
-lemma rootOf_apply_coroot (k : ι → ℤ) (j : ι) :
-    P.rootOf k (P.coroot j) = ((A *ᵥ k) j : ℤ) := by
-  simp [rootOf_apply, P.root_coroot, mulVec, dotProduct, mul_comm]
-
 /-- Every `w ∈ W` changes an integral weight `λ` (i.e. `⟨λ, αⱼ^∨⟩ ∈ ℤ` for all `j`) by an element
 of the root lattice: `w λ ∈ λ + Q`. -/
 theorem exists_apply_eq_add_rootOf {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA)

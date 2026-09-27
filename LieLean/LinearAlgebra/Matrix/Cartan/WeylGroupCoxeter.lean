@@ -504,6 +504,25 @@ theorem not_isRightDescent_coxeterSystem_iff {w : P.weylGroup hA} {i : ι} :
     rw [← hwk, LinearEquiv.map_eq_zero_iff] at h0
     exact P.linearIndependent_root.ne_zero i h0
 
+/-- Induction on the length in the Weyl group: a property of elements of `W` which holds for `1`
+and passes from `w` to `w rᵢ` whenever `ℓ(w rᵢ) > ℓ(w)` holds on `W`. -/
+lemma weylGroup_induction_length {p : P.weylGroup hA → Prop}
+    (one : p 1)
+    (step : ∀ w i, ¬(P.coxeterSystem hA).IsRightDescent w i → p w →
+      p (w * (P.coxeterSystem hA).simple i))
+    (w : P.weylGroup hA) : p w := by
+  set cs := P.coxeterSystem hA
+  generalize hn : cs.length w = n
+  induction n using Nat.strong_induction_on generalizing w with
+  | _ n ih =>
+  by_cases hw1 : w = 1
+  · exact hw1 ▸ one
+  obtain ⟨i, hi⟩ := cs.exists_rightDescent_of_ne_one hw1
+  have hnd : ¬cs.IsRightDescent (w * cs.simple i) i := by
+    rwa [← isRightDescent_iff_not_isRightDescent_mul]
+  have := step _ i hnd (ih _ (hn ▸ hi) _ rfl)
+  rwa [cs.simple_mul_simple_cancel_right] at this
+
 end Descent
 
 end Matrix.Realization

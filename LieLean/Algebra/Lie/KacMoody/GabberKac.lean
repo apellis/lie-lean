@@ -106,7 +106,7 @@ theorem dualBilinForm_neg_rootOf_add_two_rho_ne_zero {k : ι → ℤ} (hk : k �
   have key : P.dualBilinForm S (-P.rootOf k + 2 • P.rho) (-P.rootOf k) = ((-q : ℚ) : K) := by
     rw [map_neg, dualBilinForm_rootOf_right, hq]
     simp only [LinearMap.add_apply, LinearMap.neg_apply, LinearMap.smul_apply,
-      rootOf_apply_coroot_eq_sum, rho_coroot]
+      rootOf_apply_coroot, mulVec, dotProduct, rho_coroot]
     push_cast
     congr 1
     refine Finset.sum_congr rfl fun i _ ↦ ?_
