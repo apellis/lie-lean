@@ -65,45 +65,6 @@ multiplication on `E` with unit `e_1`, and `𝓗` is `E` with this multiplicatio
 
 open Finsupp Module
 
-namespace CoxeterSystem
-
-variable {B W : Type*} [Group W] {M : CoxeterMatrix B} (cs : CoxeterSystem M W)
-
-local prefix:100 "s " => cs.simple
-local prefix:100 "ℓ " => cs.length
-
-/-- Induction along reduced words, adding simple reflections on the right: a property that holds
-for `1` and passes from `w` to `w sᵢ` whenever `ℓ(w sᵢ) > ℓ(w)` holds for all `w`. -/
-theorem induction_mul_simple {p : W → Prop} (one : p 1)
-    (mul_simple : ∀ w i, ℓ w < ℓ (w * s i) → p w → p (w * s i)) (w : W) : p w := by
-  induction h : ℓ w using Nat.strong_induction_on generalizing w with
-  | _ n ih =>
-    rcases eq_or_ne w 1 with rfl | hw
-    · exact one
-    obtain ⟨i, hi⟩ := cs.exists_rightDescent_of_ne_one hw
-    have e : w * s i * s i = w := cs.simple_mul_simple_cancel_right i
-    rw [← e]
-    refine mul_simple _ i (by rw [e]; exact hi) (ih _ ?_ _ rfl)
-    rw [← h]
-    exact hi
-
-/-- Induction along reduced words, adding simple reflections on the left: a property that holds
-for `1` and passes from `w` to `sᵢ w` whenever `ℓ(sᵢ w) > ℓ(w)` holds for all `w`. -/
-theorem induction_simple_mul {p : W → Prop} (one : p 1)
-    (simple_mul : ∀ w i, ℓ w < ℓ (s i * w) → p w → p (s i * w)) (w : W) : p w := by
-  induction h : ℓ w using Nat.strong_induction_on generalizing w with
-  | _ n ih =>
-    rcases eq_or_ne w 1 with rfl | hw
-    · exact one
-    obtain ⟨i, hi⟩ := cs.exists_leftDescent_of_ne_one hw
-    have e : s i * (s i * w) = w := cs.simple_mul_simple_cancel_left i
-    rw [← e]
-    refine simple_mul _ i (by rw [e]; exact hi) (ih _ ?_ _ rfl)
-    rw [← h]
-    exact hi
-
-end CoxeterSystem
-
 namespace IwahoriHeckeAlgebra
 
 variable {B W : Type*} [Group W] {M : CoxeterMatrix B} (cs : CoxeterSystem M W)

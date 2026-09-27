@@ -75,26 +75,6 @@ delicate point: the `μ`-terms exactly cancel the top coefficients) is written o
 
 open Finsupp
 
-namespace CoxeterSystem
-
-variable {B W : Type*} [Group W] {M : CoxeterMatrix B} {cs : CoxeterSystem M W}
-
-local prefix:100 "s " => cs.simple
-
-/-- If `u ≤ w`, then `sᵢ u ≤ w` or `sᵢ u ≤ sᵢ w` (left-handed version of
-`CoxeterSystem.BruhatLE.mul_simple_or`). -/
-theorem BruhatLE.simple_mul_or {u w : W} (h : cs.BruhatLE u w) (i : B) :
-    cs.BruhatLE (s i * u) w ∨ cs.BruhatLE (s i * u) (s i * w) := by
-  rcases h.inv.mul_simple_or i with h' | h'
-  · left
-    rw [← bruhatLE_inv_iff]
-    simpa [mul_inv_rev] using h'
-  · right
-    rw [← bruhatLE_inv_iff]
-    simpa [mul_inv_rev] using h'
-
-end CoxeterSystem
-
 namespace IwahoriHeckeAlgebra
 
 variable {B W : Type*} [Group W] {M : CoxeterMatrix B} (cs : CoxeterSystem M W)
