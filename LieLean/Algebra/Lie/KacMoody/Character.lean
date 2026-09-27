@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.Lie.KacMoody.CategoryO
+import LieLean.Algebra.Lie.KacMoody.CategoryOSubmodule
 import LieLean.Algebra.Lie.KacMoody.CharacterRing
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 
@@ -20,9 +21,8 @@ character ([Kac] §9.7 (check)) is the element `ch V = ∑_μ (dim V_μ) e^μ` o
 
 ## Main results
 
-* `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.lieSubmodule`,
-  `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.quotient`: the category `𝒪` is stable under
-  submodules and quotients.
+* `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.quotient`: the category `𝒪` is stable under
+  quotients (for submodules see `IsCategoryO.lieSubmodule`).
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.character_eq_add`: `ch V = ch N + ch (V/N)`
   for a submodule `N` of `V`.
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.character_congr`: isomorphic modules have the
@@ -129,33 +129,6 @@ end WeightSpace
 namespace IsCategoryO
 
 variable {P}
-
-/-- A submodule of a module in the category `𝒪` lies in `𝒪` ([Kac] §9.1). -/
-theorem lieSubmodule (hV : IsCategoryO P V) (N : LieSubmodule K P.KacMoodyAlgebra V) :
-    IsCategoryO P N := by
-  refine ⟨eq_top_iff.mpr fun n _ ↦ ?_, fun μ ↦ ?_, ?_⟩
-  · have hn : (n : V) ∈ N.toSubmodule ⊓ ⨆ μ ∈ Set.univ, weightSpaceOfMap V (h P) μ := by
-      rw [iSup_univ, hV.iSup_weightSpaceOfMap_eq_top]
-      exact ⟨n.2, trivial⟩
-    have hn' := inf_iSup_weightSpaceOfMap_le (h P) N.toSubmodule (fun _ _ hm ↦ N.lie_mem hm)
-      Set.univ hn
-    simp_rw [iSup_univ, ← map_weightSpaceOfMap_lieSubmodule, ← Submodule.map_iSup] at hn'
-    obtain ⟨m, hm, hmn⟩ := hn'
-    rwa [← Subtype.ext hmn]
-  · have := hV.finiteDimensional_weightSpaceOfMap μ
-    have : FiniteDimensional K ((weightSpaceOfMap N (h P) μ).map N.toSubmodule.subtype) := by
-      rw [map_weightSpaceOfMap_lieSubmodule]
-      exact Submodule.finiteDimensional_of_le inf_le_right
-    exact LinearEquiv.finiteDimensional
-      (Submodule.equivMapOfInjective _ N.toSubmodule.injective_subtype _).symm
-  · obtain ⟨s, hs⟩ := hV.exists_finset
-    refine ⟨s, fun μ hμ ↦ hs μ fun h0 ↦ hμ ?_⟩
-    rw [eq_bot_iff]
-    intro n hn
-    have : (n : V) ∈ weightSpaceOfMap V (h P) μ := fun a ↦ congrArg Subtype.val (hn a)
-    rw [h0, Submodule.mem_bot] at this
-    rw [Submodule.mem_bot, ← Subtype.coe_inj, this]
-    rfl
 
 /-- A quotient of a module in the category `𝒪` lies in `𝒪` ([Kac] §9.1). -/
 theorem quotient (hV : IsCategoryO P V) (N : LieSubmodule K P.KacMoodyAlgebra V) :

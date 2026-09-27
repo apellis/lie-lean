@@ -6,6 +6,7 @@ import LieLean.Algebra.Lie.KacMoody.Casimir
 import LieLean.Algebra.Lie.KacMoody.CasimirForm
 import LieLean.Algebra.Lie.KacMoody.CasimirIrreducible
 import LieLean.Algebra.Lie.KacMoody.CategoryO
+import LieLean.Algebra.Lie.KacMoody.CategoryOSubmodule
 import LieLean.Algebra.Lie.KacMoody.Character
 import LieLean.Algebra.Lie.KacMoody.CharacterDenominator
 import LieLean.Algebra.Lie.KacMoody.CharacterRing
