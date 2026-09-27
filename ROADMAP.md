@@ -507,8 +507,16 @@ q-binomials (`QBinomial.lean`); Lusztig's `'f` (`LusztigF k I := FreeAlgebra k I
 (reconstructed): weight-by-weight dimension count over `ℚ[T^±]`, specializing at `T = v` and
 `T = 1`; the lower bound comes from a quantum Shapovalov pairing built from Lusztig's skew
 derivations, which at `T = 1` becomes the contravariant form of `L(Λ)`, combined with the
-classical Gabber–Kac theorem via `serreAssocQuotientEquiv`. In progress: `U_q(sl₂)`-modules,
-quantum Verma modules and `L_q(λ)`, braid group action `Tᵢ`. Remaining: characters of `L_q(λ)`,
+classical Gabber–Kac theorem via `serreAssocQuotientEquiv`. Modules (`QuantumGroup/{Weight,Sl2,
+Verma,Integrable}.lean`, `Sl2/SimpleModule.lean`): weight spaces and their independence;
+`U_q(sl₂)` identities (`E_mul_F_pow_sub`) and simple modules `Sl2.simpleRep` (irreducible);
+quantum Verma modules `VermaModule.equivSerreQuotient : 'f/J ≃ M_q(Λ)`, weight spaces,
+unique maximal submodule, `IrreducibleModule` (= `L_q(Λ)`, `isSimpleModule`); `IsIntegrable`,
+`FPowQuotient.isIntegrable` (`L̃_q(Λ)`), `IrreducibleModule.isIntegrable` (Λ dominant). Braid
+action (`BraidAction*.lean`, Lusztig's `T''_{i,1}`): `rankOneBraidEquiv` (rank one), relations
+(a)–(d) involving `i` and the mixed ones `braidEi_mul_braidFj_sub`. Remaining: the other
+relations for `Tᵢ` (so `Tᵢ` as an automorphism in general) and braid relations; `L̃_q(Λ) ≅
+L_q(Λ)`; characters of `L_q(λ)` = classical; classification of simple `U_q(sl₂)`-modules;
 canonical bases.
 
 
