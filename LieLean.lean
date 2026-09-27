@@ -109,6 +109,7 @@ import LieLean.Algebra.QuantumGroup.Basic
 import LieLean.Algebra.QuantumGroup.BraidAction
 import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
 import LieLean.Algebra.QuantumGroup.CartanDatum
+import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.GabberKac
 import LieLean.Algebra.QuantumGroup.GabberKac.Classical
 import LieLean.Algebra.QuantumGroup.GabberKac.MapCoeffs
@@ -118,6 +119,9 @@ import LieLean.Algebra.QuantumGroup.GabberKac.Specialization
 import LieLean.Algebra.QuantumGroup.GabberKac.VermaOperator
 import LieLean.Algebra.QuantumGroup.Hopf
 import LieLean.Algebra.QuantumGroup.Integrable
+import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Classical
+import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Rank
+import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Verma
 import LieLean.Algebra.QuantumGroup.LusztigF.Basic
 import LieLean.Algebra.QuantumGroup.LusztigF.Comul
 import LieLean.Algebra.QuantumGroup.LusztigF.Form
