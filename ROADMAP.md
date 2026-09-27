@@ -492,9 +492,16 @@ q-binomials (`QBinomial.lean`); Lusztig's `'f` (`LusztigF k I := FreeAlgebra k I
 `serreIdeal_le_radical` ([Lus] 1.4.3; `_ratFunc` over `ℚ(v)`); `QuantumGroup R v` (presentation,
 `lift`), Hopf algebra (`instBialgebra`, `instHopfAlgebra`); triangular decomposition
 `QuantumGroup.triangularEquiv` (`U ≅ ('f ⊗ k[Y] ⊗ 'f)/W`), `plusHom_eq_zero_iff`
-(`U^± ≅ 'f/J`), `zeroHom_injective`. In progress: **quantum Gabber–Kac** ([Lus] §33.1:
-`radical = serreIdeal`, hence `f ≅ U^±`). Remaining: braid group action `Tᵢ`, `L_q(λ)` and
-characters, canonical bases.
+(`U^± ≅ 'f/J`), `zeroHom_injective`. **Quantum Gabber–Kac** ([Lus] Thm. 33.1.3 (check);
+`QuantumGroup/GabberKac*.lean`): `LusztigF.radical_eq_serreIdeal_ratFunc` (over `ℚ(v)`),
+`radical_eq_serreIdeal` (char-0 `k`, `v` transcendental), `toQuotient_eq_zero_iff_mem_serreIdeal`
+(`f` is presented by the quantum Serre relations; with `plusHom_eq_zero_iff`, `f ≅ U^±`). Proof
+(reconstructed): weight-by-weight dimension count over `ℚ[T^±]`, specializing at `T = v` and
+`T = 1`; the lower bound comes from a quantum Shapovalov pairing built from Lusztig's skew
+derivations, which at `T = 1` becomes the contravariant form of `L(Λ)`, combined with the
+classical Gabber–Kac theorem via `serreAssocQuotientEquiv`. In progress: `U_q(sl₂)`-modules,
+quantum Verma modules and `L_q(λ)`, braid group action `Tᵢ`. Remaining: characters of `L_q(λ)`,
+canonical bases.
 
 
 For symmetrizable `A`: `U_q(𝔤)` over `ℚ(v)` (Drinfeld–Jimbo presentation with the realization's
@@ -542,6 +549,10 @@ beyond what the general Kac–Moody results give.
   ChainComplex}.lean`); `Module.End.weightSpaceOf` (`Homology/WeightSpace.lean`).
 - `Module.End.mem_iSup_maxGenEigenspace_of_prod_apply_eq_zero`, `iSupIndep.mem_of_mem_iSup_of_le`
   (`KacMoody/Blocks.lean`).
+- `LinearIndependent.of_comp_ratHom`, `LaurentPolynomial.eval₂_injective_of_transcendental`,
+  `FreeAlgebra.wordBasis`, `FreeAlgebra.mapCoeffs`, `FreeAlgebra.weightProj`
+  (`QuantumGroup/GabberKac/*.lean`); q-binomials `QuantumGroup/QBinomial.lean`;
+  `Submodule.endStab`/`endDescend`; Bialgebra/HopfAlgebra instances on `U_q`.
 - Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
   Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
