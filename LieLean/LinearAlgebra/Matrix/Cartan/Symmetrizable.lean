@@ -344,6 +344,18 @@ theorem apply_coroot_eq (hA : A.IsGeneralizedCartan) (μ : Dual K H) (i : ι) :
   push_cast
   field_simp
 
+/-- `(ρ | αᵢ) = εᵢ⁻¹`. -/
+theorem dualBilinForm_rho_root (i : ι) : P.dualBilinForm S P.rho (P.root i) = (S.ε i : K)⁻¹ := by
+  rw [dualBilinForm_root_right, rho_coroot, one_div]
+
+variable {P} in
+/-- `2 (ρ | αᵢ) = (αᵢ | αᵢ)` ([Kac] §2.5 (check)). -/
+theorem two_mul_dualBilinForm_rho_root (hA : A.IsGeneralizedCartan) (i : ι) :
+    2 * P.dualBilinForm S P.rho (P.root i) = P.dualBilinForm S (P.root i) (P.root i) := by
+  rw [dualBilinForm_rho_root, dualBilinForm_root_self S hA]
+  push_cast
+  ring
+
 end Realization
 
 end Matrix

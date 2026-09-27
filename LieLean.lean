@@ -8,6 +8,8 @@ import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
 import LieLean.Algebra.Lie.KacMoody.Integrable
 import LieLean.Algebra.Lie.KacMoody.IntegrableRoots
 import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
+import LieLean.Algebra.Lie.KacMoody.InvariantForm
+import LieLean.Algebra.Lie.KacMoody.InvariantFormAux
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
