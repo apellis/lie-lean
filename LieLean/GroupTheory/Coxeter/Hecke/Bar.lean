@@ -37,6 +37,7 @@ relation `(T_s⁻¹)² = (q⁻¹ - 1) T_s⁻¹ + q⁻¹`; multiplicativity then 
 * `IwahoriHeckeAlgebra.bar_T`: `T̄_w = T_{w⁻¹}⁻¹`.
 * `IwahoriHeckeAlgebra.bar_smul`, `bar_algebraMap`: the bar map is `σ`-semilinear.
 * `IwahoriHeckeAlgebra.bar_bar`: the bar map is an involution if `σ` is.
+* `IwahoriHeckeAlgebra.barL_C'_simple`: `C'_s = v⁻¹(T_s + 1)` is bar invariant.
 
 ## References
 
@@ -261,6 +262,27 @@ noncomputable def barL :
 theorem barL_smul (a : A[T;T⁻¹]) (h : IwahoriHeckeAlgebra cs (LaurentPolynomial.T 2 : A[T;T⁻¹])) :
     barL cs (a • h) = invert a • barL cs h :=
   bar_smul cs _ _ a h
+
+theorem barL_T_simple (i : B) :
+    barL cs (IwahoriHeckeAlgebra.T cs (LaurentPolynomial.T 2 : A[T;T⁻¹]) (cs.simple i)) =
+      (LaurentPolynomial.T (-2) : A[T;T⁻¹]) •
+          IwahoriHeckeAlgebra.T cs (LaurentPolynomial.T 2 : A[T;T⁻¹]) (cs.simple i) -
+        (1 - (LaurentPolynomial.T (-2) : A[T;T⁻¹])) • 1 := by
+  rw [barL, bar_T_simple, invertHom_apply, invert_T]
+
+/-- The Kazhdan–Lusztig element `C'_s = v⁻¹ (T_s + 1)` is bar invariant ([KL] §1 (check)). -/
+theorem barL_C'_simple (i : B) :
+    barL cs ((LaurentPolynomial.T (-1) : A[T;T⁻¹]) •
+      (IwahoriHeckeAlgebra.T cs (LaurentPolynomial.T 2 : A[T;T⁻¹]) (cs.simple i) + 1)) =
+      (LaurentPolynomial.T (-1) : A[T;T⁻¹]) •
+        (IwahoriHeckeAlgebra.T cs (LaurentPolynomial.T 2 : A[T;T⁻¹]) (cs.simple i) + 1) := by
+  rw [barL_smul, map_add, map_one, barL_T_simple, invert_T, neg_neg]
+  have e1 : (LaurentPolynomial.T 1 : A[T;T⁻¹]) * LaurentPolynomial.T (-2) =
+      LaurentPolynomial.T (-1) := by rw [← T_add]; norm_num
+  have e2 : (LaurentPolynomial.T 1 : A[T;T⁻¹]) * (1 - LaurentPolynomial.T (-2)) =
+      LaurentPolynomial.T 1 - LaurentPolynomial.T (-1) := by rw [mul_sub, mul_one, e1]
+  rw [smul_add, smul_sub, smul_smul, smul_smul, e1, e2, sub_smul, smul_add]
+  abel
 
 theorem barL_barL (h : IwahoriHeckeAlgebra cs (LaurentPolynomial.T 2 : A[T;T⁻¹])) :
     barL cs (barL cs h) = h :=
