@@ -399,7 +399,7 @@ involution, `R`-polynomials; existence and uniqueness of the Kazhdan–Lusztig b
 ([KL] Thm. 1.1), KL polynomials `P_{y,w}` (degree bound, `P_{w,w} = 1`, `P_{y,w} = 0` unless
 `y ≤ w`), specialization `v = 1` to `ℤ[W]`.
 
-### M12. Deeper category 𝒪  `[~]`  ([Kac] §9, [HumO], [KK])
+### M12. Deeper category 𝒪  `[x]`  ([Kac] §9, [HumO], [KK])
 
 Done: `UniversalEnvelopingAlgebra.instIsDomain` (`UniversalEnveloping/Domain.lean`, via graded
 PBW); `KacMoody/VermaHom.lean`: `primitiveVectors`, `VermaModule.homEquiv`
@@ -425,8 +425,18 @@ n(α|α)/2)^{mult α · P(β-nα)}`; also `exists_shapovalovDet_eq_prod_kkPairs/
 `jantzen` (`jantzen_one : M^1 = M'`), order formula `sum_finrank_jantzen_inf_weightSpace`, sum
 formula `finsum_finrank_jantzen_inf_weightSpace_eq_sum_verma` (for a transversal direction `δ`).
 Proof reconstructed (Jantzen filtration + leading terms, [KK] §3 style); generic polynomial
-factorization lemmas in `KacKazhdan/{Hyperplane,Factorization}.lean`. Remaining: [KK] Thm. 2
-(composition multiplicities), BGG resolution (in progress), `dim Hom ≤ 1`.
+factorization lemmas in `KacKazhdan/{Hyperplane,Factorization}.lean`. **[KK] Thm. 2**
+(`KacKazhdan/Multiplicity.lean`): `VermaModule.multiplicity_ne_zero_iff_reflTransGen`
+(`[M(λ):L(μ)] ≠ 0` iff a chain of KK steps `λ → λ - nα`, `2(λ+ρ|α) = n(α|α)`, real or imaginary
+α), Jantzen sum formula for multiplicities `finsum_multiplicity_jantzen`, irreducibility
+criterion `maxSubmodule_eq_bot_iff_kacKazhdan`, generic simplicity. BGG (`KacMoody/BGG*.lean`,
+`GroupTheory/Coxeter/Squares.lean`): Verma's theorem `VermaModule.exists_injective_of_bruhatLE`
+(`M(w'·Λ) ↪ M(w·Λ)` for `w ≤ w'`), `finrank_hom_weylDot_le_one` (`dim Hom ≤ 1` on the orbit
+`W·Λ`, any GCM, via sl₂-projectivity rather than the Ore condition), squares lemma
+`bruhatSign_square`, the BGG complex `bggDiff` with `bggDiff_comp_bggDiff` (`d² = 0`),
+exactness of `C₁ → C₀ → L(Λ) → 0` (`ker_bggAugmentation`), Euler characteristic
+`hsum_vermaAltFamily`. Remaining: exactness of the BGG complex in degrees ≥ 1 (needs the
+Garland–Lepowsky homology computation, M13), `dim Hom(M(μ), M(λ)) ≤ 1` off the dot-orbit.
 
 
 For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
@@ -579,6 +589,8 @@ beyond what the general Kac–Moody results give.
 - `KacKazhdan/{Polynomial,Hyperplane,Factorization}.lean` (homogeneous components, products of
   affine hyperplane polynomials); `Matrix.jantzenSpace`, `Matrix.sum_finrank_jantzenSpace`
   (Jantzen order formula for matrices over `K[X]`, `Jantzen/OrderFormula.lean`).
+- `LieLean/GroupTheory/Coxeter/Squares.lean` (Bruhat squares, BGG signs);
+  `IsSl2Triple.eq_zero_of_toEnd_e_pow_eq_zero` (`BGG/Sl2.lean`); `DirectSum.toLieModule`.
 - Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
   Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
