@@ -22,8 +22,9 @@ basis of `𝔫₋` consisting of root vectors, in which each positive root `α` 
 
 As a corollary we obtain the **Kac–Kazhdan criterion**: `M(λ)` has a proper submodule meeting
 `M(λ)_{λ-β}` (equivalently, the Shapovalov form is degenerate on `M(λ)_{λ-β}`) iff
-`2 (λ + ρ | α) = n (α | α)` for some positive root `α` and `n ≥ 1` with `P(β - n α) ≠ 0`
-(`VermaModule.maxSubmodule_inf_weightSpace_ne_bot_iff`).
+`2 (λ + ρ | α) = n (α | α)` for some positive root `α` and `n ≥ 1` with `n α ≤ β`
+(`VermaModule.maxSubmodule_inf_weightSpace_ne_bot_iff`; this uses `P(γ) ≠ 0 ↔ γ ∈ Q₊`,
+`VermaModule.kostantPartition_ne_zero_iff`).
 
 ## Proof
 
@@ -51,9 +52,12 @@ product of their equations.
 
 ## Main results
 
-* `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_shapovalovDet_eq_prod_kkIdx`,
-  `Matrix.Realization.KacMoodyAlgebra.VermaModule.shapovalovDet_eq`: **the Kac–Kazhdan
-  determinant formula**.
+* `Matrix.Realization.KacMoodyAlgebra.VermaModule.shapovalovDet_eq`: **the Kac–Kazhdan
+  determinant formula**; also in the forms
+  `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_shapovalovDet_eq_prod_kkPairs` (finite
+  product over pairs `(x, n)`) and
+  `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_shapovalovDet_eq_prod_kkIdx` (grouped by
+  `γ = n α`).
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.maxSubmodule_inf_weightSpace_ne_bot_iff`:
   **the Kac–Kazhdan criterion**.
 
@@ -202,6 +206,145 @@ theorem exists_shapovalovDet_eq_prod_kkIdx [IsAlgClosed K] (η : ι → ℤ) :
   simp only [Pi.mul_apply, Finset.prod_apply, evalPoly_C, map_pow, Pi.pow_apply,
     evalPoly_affPoly, apply_kkVec_add_kkConst]
   ring
+
+/-! ### The formula as a product over positive roots -/
+
+/-- The index of the simple root vector `f_i` in the root vector basis of `𝔫₋`. -/
+def simpleIdx (i : ι) : NegRootIndex P :=
+  ⟨⟨P.root i, (Pi.single i (1 : ℤ) : ι → ℤ), ⟨Pi.single_nonneg.mpr zero_le_one,
+    fun h ↦ (one_ne_zero : (1 : ℤ) ≠ 0) (by simpa using congrFun h i)⟩, P.rootOf_single i⟩,
+    ⟨0, by simp [finrank_rootSpace_neg_root]⟩⟩
+
+omit [FiniteDimensional K H] in
+@[simp] lemma simpleIdx_root (i : ι) : (simpleIdx P i).root = P.root i := rfl
+
+omit [FiniteDimensional K H] in
+/-- `P(γ) ≠ 0` iff `γ ∈ Q₊`. -/
+theorem kostantPartition_ne_zero_iff {γ : Dual K H} :
+    kostantPartition P γ ≠ 0 ↔ ∃ m : ι → ℤ, 0 ≤ m ∧ γ = P.rootOf m := by
+  refine ⟨exists_rootOf_of_kostantPartition_ne_zero P, ?_⟩
+  rintro ⟨m, hm, rfl⟩
+  set s : NegRootIndex P →₀ ℕ := ∑ i, Finsupp.single (simpleIdx P i) (m i).toNat
+  have hs : negRootWt P s = P.rootOf m := by
+    rw [show negRootWt P s = AddMonoidHom.mk' (negRootWt P) (negRootWt_add P) s from rfl,
+      map_sum, rootOf_apply]
+    refine Finset.sum_congr rfl fun i _ ↦ ?_
+    rw [AddMonoidHom.mk'_apply, negRootWt_single, simpleIdx_root, ← Nat.cast_smul_eq_nsmul K]
+    congr 1
+    exact_mod_cast Int.toNat_of_nonneg (hm i)
+  rw [kostantPartition_eq_card]
+  exact Finset.card_ne_zero.mpr ⟨s, (mem_partitions P).mpr hs⟩
+
+include hA in
+/-- **The Kac–Kazhdan determinant formula** as a finite product over pairs `(x, n)`, `n ≥ 1`,
+with `n α_x ≤ η`: for some `c ≠ 0`,
+`D_η(λ) = c ∏_{(x, n)} ((λ + ρ | α_x) - n (α_x | α_x)/2)^{P(η - n α_x)}`. -/
+theorem exists_shapovalovDet_eq_prod_kkPairs [IsAlgClosed K] (η : ι → ℤ) :
+    ∃ c : K, c ≠ 0 ∧ ∀ Λ : Dual K H, shapovalovDet P (P.rootOf η) Λ =
+      c * ∏ z ∈ kkPairs P η, (P.dualBilinForm S (Λ + P.rho) z.1.root -
+        ((z.2 : K) + 1) / 2 * P.dualBilinForm S z.1.root z.1.root) ^
+          kostantPartition P (P.rootOf η - (z.2 + 1) • z.1.root) := by
+  classical
+  obtain ⟨c, hc, h⟩ := exists_shapovalovDet_eq_prod_kkIdx P S hA η
+  set Z := kkPairs P η
+  refine ⟨c * ∏ z ∈ Z, (2 * ((z.2 : K) + 1)) ^
+      kostantPartition P (P.rootOf η - (z.2 + 1) • z.1.root),
+    mul_ne_zero hc (Finset.prod_ne_zero_iff.mpr fun z _ ↦
+      pow_ne_zero _ (mul_ne_zero two_ne_zero (Nat.cast_add_one_ne_zero _))), fun Λ ↦ ?_⟩
+  rw [h Λ, mul_assoc, ← Finset.prod_mul_distrib]
+  congr 1
+  rw [← Finset.prod_fiberwise_of_maps_to (g := kkPairCoeff P) (t := kkIdx η)
+    fun z hz ↦ kkPairCoeff_mem P hz]
+  refine Finset.prod_congr rfl fun k _ ↦ ?_
+  rw [mul_comm (kkMult P η k), pow_mul, kkMult, ← Finset.prod_const]
+  refine Finset.prod_congr rfl fun z hz ↦ ?_
+  obtain ⟨-, hzk⟩ := Finset.mem_filter.mp hz
+  have hroot : P.rootOf k = ((z.2 : K) + 1) • z.1.root := by
+    rw [← hzk, rootOf_kkPairCoeff, ← Nat.cast_smul_eq_nsmul K]
+    push_cast
+    rfl
+  rw [← mul_pow, ← rootOf_kkPairCoeff P z, hzk]
+  congr 1
+  rw [hroot]
+  simp only [map_smul, LinearMap.smul_apply, smul_eq_mul]
+  field_simp
+
+include hA in
+/-- **The Kac–Kazhdan determinant formula** ([KK] Thm. 1 (check); [Kac] §9 (check)). Let `A` be
+a symmetrizable generalized Cartan matrix and `K` algebraically closed of characteristic zero.
+For every `β ∈ 𝔥*` there is `c ≠ 0` such that for all `λ ∈ 𝔥*` the determinant of the Shapovalov
+form on `M(λ)_{λ-β}` with respect to the PBW basis is
+
+`D_β(λ) = c ∏_x ∏_{n ≥ 1} ((λ + ρ | α_x) - n (α_x | α_x)/2)^{P(β - n α_x)}`,
+
+where `x` runs over a basis of `𝔫₋` of root vectors (so that each positive root `α` occurs
+`mult α` times, and this is `c ∏_{α > 0} ∏_{n ≥ 1} ((λ + ρ | α) - n (α | α)/2)^{mult α ·
+P(β - n α)}`) and `P` is Kostant's partition function. All but finitely many factors are `1`. -/
+theorem shapovalovDet_eq [IsAlgClosed K] (β : Dual K H) :
+    ∃ c : K, c ≠ 0 ∧ ∀ Λ : Dual K H, shapovalovDet P β Λ =
+      c * ∏ᶠ (x : NegRootIndex P) (n : ℕ), (P.dualBilinForm S (Λ + P.rho) x.root -
+        ((n : K) + 1) / 2 * P.dualBilinForm S x.root x.root) ^
+          kostantPartition P (β - (n + 1) • x.root) := by
+  classical
+  by_cases hβ : ∃ η, β = P.rootOf η
+  · obtain ⟨η, rfl⟩ := hβ
+    obtain ⟨c, hc, h⟩ := exists_shapovalovDet_eq_prod_kkPairs P S hA η
+    refine ⟨c, hc, fun Λ ↦ ?_⟩
+    rw [h Λ]
+    congr 1
+    set f : NegRootIndex P × ℕ → K := fun z ↦ (P.dualBilinForm S (Λ + P.rho) z.1.root -
+      ((z.2 : K) + 1) / 2 * P.dualBilinForm S z.1.root z.1.root) ^
+        kostantPartition P (P.rootOf η - (z.2 + 1) • z.1.root)
+    have hsupp : Function.mulSupport f ⊆ ↑(kkPairs P η) := fun z hz ↦ by
+      by_contra hzZ
+      apply hz
+      have h0 : kostantPartition P (P.rootOf η - (z.2 + 1) • z.1.root) = 0 := by
+        by_contra hne
+        exact hzZ (mem_kkPairs_of_kostantPartition_ne_zero P le_rfl hne)
+      simp only [f, h0, pow_zero]
+    rw [← finprod_eq_prod_of_mulSupport_subset f hsupp,
+      finprod_curry f ((kkPairs P η).finite_toSet.subset hsupp)]
+  · refine ⟨1, one_ne_zero, fun Λ ↦ ?_⟩
+    have hempty : partitions P β = ∅ := Finset.eq_empty_of_forall_notMem fun s hs ↦ by
+      obtain ⟨m, -, hm⟩ := exists_negRootWt_eq_rootOf P s
+      exact hβ ⟨m, ((mem_partitions P).mp hs).symm.trans hm⟩
+    have : IsEmpty (partitions P β) := Finset.isEmpty_coe_sort.mpr hempty
+    have hP (x : NegRootIndex P) (n : ℕ) : kostantPartition P (β - (n + 1) • x.root) = 0 := by
+      by_contra hne
+      obtain ⟨m, -, hm⟩ := exists_rootOf_of_kostantPartition_ne_zero P hne
+      refine hβ ⟨m + (n + 1) • x.coeff, ?_⟩
+      rw [map_add, map_nsmul, NegRootIndex.rootOf_coeff, ← hm, sub_add_cancel]
+    rw [shapovalovDet, Matrix.det_isEmpty, one_mul]
+    simp only [hP, pow_zero, finprod_one]
+
+include hA in
+/-- **The Kac–Kazhdan criterion** ([KK] (check); [Kac] §9 (check)). Let `A` be a symmetrizable
+generalized Cartan matrix and `K` algebraically closed of characteristic zero. The maximal
+proper submodule `M'(λ)` of `M(λ)` has a nonzero vector of weight `λ - η` (equivalently, the
+Shapovalov form on `M(λ)_{λ-η}` is degenerate) iff `2 (λ + ρ | α) = n (α | α)` for some positive
+root `α` and `n ≥ 1` with `n α ≤ η`. Here `α = α_x` for an index `x` of the root vector basis of
+`𝔫₋`, and `x.coeff` are the coordinates of `α_x` in the basis of simple roots. -/
+theorem maxSubmodule_inf_weightSpace_ne_bot_iff [IsAlgClosed K] (Λ : Dual K H) (η : ι → ℤ) :
+    (maxSubmodule P Λ).toSubmodule ⊓ weightSpace P Λ (Λ - P.rootOf η) ≠ ⊥ ↔
+      ∃ x : NegRootIndex P, ∃ n : ℕ, (n + 1) • x.coeff ≤ η ∧
+        2 * P.dualBilinForm S (Λ + P.rho) x.root =
+          ((n : K) + 1) * P.dualBilinForm S x.root x.root := by
+  classical
+  rw [Ne, ← det_toMatrix_weightSpaceForm_ne_zero_iff P Λ _ (pbwWeightBasis P Λ (P.rootOf η)),
+    not_not]
+  change shapovalovDet P (P.rootOf η) Λ = 0 ↔ _
+  obtain ⟨c, hc, h⟩ := exists_shapovalovDet_eq_prod_kkPairs P S hA η
+  rw [h Λ, mul_eq_zero, or_iff_right hc, Finset.prod_eq_zero_iff]
+  constructor
+  · rintro ⟨z, hz, h0⟩
+    obtain ⟨h1, -⟩ := pow_eq_zero_iff'.mp h0
+    exact ⟨z.1, z.2, (mem_kkPairs P).mp hz, by linear_combination 2 * h1⟩
+  · rintro ⟨x, n, hle, heq⟩
+    refine ⟨(x, n), (mem_kkPairs P).mpr hle,
+      pow_eq_zero_iff'.mpr ⟨by linear_combination heq / 2, ?_⟩⟩
+    rw [kostantPartition_ne_zero_iff]
+    refine ⟨η - (n + 1) • x.coeff, sub_nonneg.mpr hle, ?_⟩
+    rw [map_sub, map_nsmul, NegRootIndex.rootOf_coeff]
 
 end VermaModule
 
