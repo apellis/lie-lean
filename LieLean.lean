@@ -69,6 +69,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Form
 import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.QBinomial
+import LieLean.Algebra.QuantumGroup.Triangular
 import LieLean.Basic
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
