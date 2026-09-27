@@ -391,7 +391,16 @@ Garland–Lepowsky theorem (Kostant's theorem in finite type): for `Λ` dominant
 `H_k(𝔫₋, L(Λ)) ≅ ⊕_{w ∈ W, ℓ(w) = k} K_{w(Λ+ρ)-ρ}` as `𝔥`-modules; the Euler characteristic
 recovers the Weyl–Kac formula.
 
-### M14. Crystals  `[ ]`  ([Kas], [Lit], [HK])
+### M14. Crystals  `[~]`  ([Kas], [Lit], [HK])
+
+Done (`LieLean/RepresentationTheory/Crystal/`): `CartanDatum`, `Crystal` (Kashiwara's axioms,
+`ε, φ` valued in `WithBot ℤ`), `StrictHom`, `Crystal.Equiv`; tensor product (Kashiwara's
+convention) `Crystal.tensor` with `tensorAssoc`; `IsSeminormal` and `IsSeminormal.tensor`;
+Kashiwara's `Sᵢ` (`reflection`, `reflection_reflection`, `wt_reflection`, `card_wt_reflection`);
+characters (`character_tensor`, `formalCharacter` in `CharacterRing`); subcrystals and closures;
+bridge `Realization.cartanDatum`. Remaining: Littelmann path model (`B(λ)`,
+`ch B(λ) = ch L(λ)`), braid relations for normal crystals.
+
 
 Abstract (Kashiwara) crystals for a Cartan datum: morphisms, the tensor product rule (signature
 rule), seminormal/normal crystals, Kashiwara's action of `W` on normal crystals; Littelmann's
@@ -435,6 +444,8 @@ beyond what the general Kac–Moody results give.
 - `LieModuleEquiv.ofBijective`, `LieSubmodule.Quotient.lift` (`LieLean/Algebra/Lie/Quotient.lean`);
   `LieSubmodule.Subquotient`,
   `LieSubmodule.Quotient.nonempty_lieModuleEquiv_of_surjective` (`KacMoody/CompositionSeries.lean`).
+- Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
+  Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
 - `Matrix.dotProduct_diagonal_mul_mulVec_reflection`
   (`LinearAlgebra/Matrix/Cartan/FiniteType.lean`).
