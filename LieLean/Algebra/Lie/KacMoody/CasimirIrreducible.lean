@@ -27,6 +27,11 @@ irreducible. Consequently, for `Λ` dominant integral the canonical surjection
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.toIrreducibleModule_injective`,
   `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.fPowQuotientEquiv`: `L̃(Λ) ≅ L(Λ)` for `Λ`
   dominant integral ([Kac] Cor. 10.4 (check)).
+* `Matrix.Realization.KacMoodyAlgebra.isIrreducible_of_isIntegrable`,
+  `Matrix.Realization.KacMoodyAlgebra.FPowQuotient.toIrreducibleModule_injective`,
+  `Matrix.Realization.KacMoodyAlgebra.FPowQuotient.equivIrreducibleModule`: the same for any
+  symmetrizable generalized Cartan matrix, using the invariant form
+  `Matrix.Realization.KacMoodyAlgebra.invForm` of [Kac] Thm. 2.2 (check).
 
 ## Proof
 
@@ -259,5 +264,39 @@ def fPowQuotientEquiv {Λ : Dual K H} {n : ι → ℕ} (hn : ∀ i, Λ (P.coroot
   rfl
 
 end IsStandardForm
+
+/-! ### Versions for the invariant form `invForm` -/
+
+variable (hS : A.IsSymmetrizable) (hA : A.IsGeneralizedCartan)
+include hS hA
+
+/-- For a symmetrizable generalized Cartan matrix, every nonzero integrable quotient of a Verma
+module is irreducible ([Kac] Cor. 10.4 (check)). -/
+theorem isIrreducible_of_isIntegrable [Nontrivial V] {Λ : Dual K H}
+    (φ : VermaModule P Λ →ₗ⁅K,P.KacMoodyAlgebra⁆ V) (hφ : Function.Surjective φ)
+    (hV : IsIntegrable P V) : IsIrreducible K P.KacMoodyAlgebra V :=
+  have S := (isSymmetrizable_iff_nonempty_symmetrization.mp hS).some
+  (isStandardForm_invForm P S).isIrreducible_of_isIntegrable hA φ hφ hV
+
+/-- **[Kac] Cor. 10.4 (check)**: for a symmetrizable generalized Cartan matrix `A` and `Λ`
+dominant integral with `nᵢ = ⟨Λ, αᵢ^∨⟩`, the canonical surjection `L̃(Λ) → L(Λ)` is injective. -/
+theorem FPowQuotient.toIrreducibleModule_injective {Λ : Dual K H} {n : ι → ℕ}
+    (hn : ∀ i, Λ (P.coroot i) = n i) :
+    Function.Injective (FPowQuotient.toIrreducibleModule P hA hn) :=
+  have S := (isSymmetrizable_iff_nonempty_symmetrization.mp hS).some
+  (isStandardForm_invForm P S).toIrreducibleModule_injective hA hn
+
+/-- **[Kac] Cor. 10.4 (check)**: for a symmetrizable generalized Cartan matrix `A` and `Λ`
+dominant integral, `L(Λ)` is isomorphic to `L̃(Λ) = M(Λ) / ∑ᵢ U(𝔤) fᵢ^{⟨Λ,αᵢ^∨⟩+1} v_Λ`. -/
+def FPowQuotient.equivIrreducibleModule {Λ : Dual K H} {n : ι → ℕ}
+    (hn : ∀ i, Λ (P.coroot i) = n i) :
+    FPowQuotient P Λ n ≃ₗ⁅K,P.KacMoodyAlgebra⁆ IrreducibleModule P Λ :=
+  (isStandardForm_invForm P (isSymmetrizable_iff_nonempty_symmetrization.mp hS).some)
+    |>.fPowQuotientEquiv hA hn
+
+@[simp] lemma FPowQuotient.equivIrreducibleModule_apply {Λ : Dual K H} {n : ι → ℕ}
+    (hn : ∀ i, Λ (P.coroot i) = n i) (x : FPowQuotient P Λ n) :
+    FPowQuotient.equivIrreducibleModule hS hA hn x = FPowQuotient.toIrreducibleModule P hA hn x :=
+  rfl
 
 end Matrix.Realization.KacMoodyAlgebra

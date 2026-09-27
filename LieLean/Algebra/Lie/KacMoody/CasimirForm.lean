@@ -6,6 +6,7 @@ Authors: Alex Ellis
 import Mathlib.Algebra.Lie.InvariantForm
 import Mathlib.LinearAlgebra.Dual.Basis
 import LieLean.Algebra.Lie.KacMoody.IntegrableRoots
+import LieLean.Algebra.Lie.KacMoody.InvariantForm
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
 
 /-!
@@ -48,6 +49,8 @@ the proof that the Casimir operator commutes with `𝔤(A)`: for `z ∈ 𝔤_γ`
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.casimirSum_lie_left`: [Kac] Lemma 2.4 (check).
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.casimirSum_eq_of_basis`: the sums do not depend
   on the chosen dual bases.
+* `Matrix.Realization.KacMoodyAlgebra.isStandardForm_invForm`: the invariant form
+  `KacMoodyAlgebra.invForm` of [Kac] Thm. 2.2 (check) is a standard form.
 
 ## References
 
@@ -329,5 +332,16 @@ theorem casimirSum_eq_of_basis {M : Type*} [AddCommGroup M] [Module K M]
         Finset.sum_congr rfl fun l _ ↦ by rw [hy (hB.dualBasis_mem μ l)]
 
 end IsStandardForm
+
+/-- The invariant form `KacMoodyAlgebra.invForm` of [Kac] Thm. 2.2 (check) is a standard form. -/
+theorem isStandardForm_invForm (S : A.Symmetrization) :
+    IsStandardForm P S (invForm P S) where
+  isSymm := isSymm_invForm P S
+  lieInvariant := lieInvariant_invForm P S
+  h_h := invForm_h_h P S
+  eq_zero := fun hx hy hμν ↦ invForm_eq_zero P S hx hy hμν
+  eq_zero_of_pos := fun _ _ hx hx0 ↦ eq_zero_of_invForm_rootSpace_eq_zero P S hx hx0
+  eq_zero_of_neg := fun _ _ hx hx0 ↦
+    eq_zero_of_invForm_rootSpace_eq_zero P S hx fun y hy ↦ hx0 y (by rwa [neg_neg] at hy)
 
 end Matrix.Realization.KacMoodyAlgebra
