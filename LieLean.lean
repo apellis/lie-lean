@@ -3,6 +3,7 @@ import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.Homology.ChainComplex
 import LieLean.Algebra.Lie.Homology.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Homology.Complex
+import LieLean.Algebra.Lie.Homology.Euler
 import LieLean.Algebra.Lie.Homology.WeightSpace
 import LieLean.Algebra.Lie.Homology.Weights
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
