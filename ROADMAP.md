@@ -460,7 +460,7 @@ Garland–Lepowsky theorem (Kostant's theorem in finite type): for `Λ` dominant
 `H_k(𝔫₋, L(Λ)) ≅ ⊕_{w ∈ W, ℓ(w) = k} K_{w(Λ+ρ)-ρ}` as `𝔥`-modules; the Euler characteristic
 recovers the Weyl–Kac formula.
 
-### M14. Crystals  `[~]`  ([Kas], [Lit], [HK])
+### M14. Crystals  `[x]`  ([Kas], [Lit], [HK])
 
 Done (`LieLean/RepresentationTheory/Crystal/`): `CartanDatum`, `Crystal` (Kashiwara's axioms,
 `ε, φ` valued in `WithBot ℤ`), `StrictHom`, `Crystal.Equiv`; tensor product (Kashiwara's
@@ -472,9 +472,16 @@ complete ordered field, root operators by closed running-minimum formulas): `Lit
 (seminormal, `f_eq_some_iff`), time reversal `revEquiv` / `Crystal.dual`, concatenation =
 Kashiwara tensor rule for integral paths (`e_concat_eq_tensor`), `B(π)` (`componentCrystal`),
 `Realization.pathCrystal` (`B(Λ)`) with W-invariant fibre sizes (`card_wt_weylGroup_pathCrystal`),
-`π_{wΛ} ∈ B(Λ)`; weights in `Λ - Q₊` and finite fibres *conditional* on Littelmann's stability
-theorem (`FOrbitStable`). Remaining: the stability theorem, `ch B(λ) = ch L(λ)`, LS paths, braid
-relations for normal crystals.
+`π_{wΛ} ∈ B(Λ)`. LS paths and stability (`Path/{LS,Stability}.lean`; LS paths via an axiomatic
+interface `LSData`/`IsLS`, instantiated for realizations by `lsData`): root operators preserve LS
+paths, **Littelmann's stability theorem** `Realization.component_straightLine_eq_fOrbit`,
+`fOrbitStable` (so weights of `B(Λ)` lie in `Λ - Q₊` with finite fibres); Littelmann's
+character formula (`Path/{Cancellation,CharacterFormula}.lean`): generalized Brauer–Klimyk
+`coeffAt_weylAltSum_mul_pathCharacter`, `weylAltSum_rho_mul_pathCharacter` (any GCM), and
+**`pathCharacter_eq_character`** (`ch B(Λ) = ch L(Λ)`, symmetrizable); Littlewood–Richardson rule
+at character level `character_mul_character` (`Path/LittlewoodRichardson.lean`). Stability
+argument reconstructed. Remaining: Littelmann's isomorphism theorem and the crystal-level LR
+decomposition, braid relations/normality, concrete `a`-chain description of LS paths.
 
 
 Abstract (Kashiwara) crystals for a Cartan datum: morphisms, the tensor product rule (signature
