@@ -98,6 +98,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.Sl2
+import LieLean.Algebra.QuantumGroup.Sl2.SimpleModule
 import LieLean.Algebra.QuantumGroup.Triangular
 import LieLean.Algebra.QuantumGroup.TriangularDecomposition
 import LieLean.Algebra.QuantumGroup.TriangularRep
