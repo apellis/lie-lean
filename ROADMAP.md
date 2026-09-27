@@ -353,7 +353,20 @@ the Bruhat order (via reflections `T` and length), the subword property, chain p
 standard parabolic subgroups `W_J`, minimal coset representatives `W^J` and `w = w^J w_J`;
 the longest element for finite `W`.
 
-### M11. Iwahori–Hecke algebras and Kazhdan–Lusztig theory  `[ ]`  ([HumC] Ch. 7, [KL], [BB] Ch. 5)
+### M11. Iwahori–Hecke algebras and Kazhdan–Lusztig theory  `[~]`  ([HumC] Ch. 7, [KL], [BB] Ch. 5)
+
+Done (`LieLean/GroupTheory/Coxeter/Hecke/`; convention `(T_s - q)(T_s + 1) = 0`, any commutative
+ring `R`, any `q : R`): `IwahoriHeckeAlgebra cs q` (constructed via the regular representation,
+without Matsumoto) with basis `T w`, `T_simple_mul_T`, `T_mul_T`, quadratic relation, `isUnit_T`,
+`algHom_ext`; specialization `equivMonoidAlgebra`, `baseChangeEquivMonoidAlgebra`
+(`𝓗 ⊗ S ≅ S[W]` when `q ↦ 1`), `specializeOne`; bar involution `bar`, `barL` (over `ℤ[v^±]`,
+`q = v²`) with `barL_barL`; `R`-polynomials `rPoly` with recursion `rPoly_mul_simple`,
+`rPoly_self`, triangularity via subwords (`exists_sublist_of_rPoly_ne_zero`), polynomiality.
+General Coxeter facts: strong exchange condition `CoxeterSystem.mem_rightInvSeq_iff`,
+`exists_mul_eq_wordProd_eraseIdx` (`LieLean/GroupTheory/Coxeter/Exchange.lean`),
+`induction_mul_simple`. Remaining: presentation/`lift` (needs Matsumoto), KL basis and
+polynomials (needs Bruhat order).
+
 
 The Hecke algebra `𝓗(W)` over `ℤ[v, v⁻¹]` with standard basis `T_w` (constructed without
 Matsumoto via the regular representation, [HumC] §7.1–7.3), the quadratic relation, the bar
@@ -458,6 +471,8 @@ beyond what the general Kac–Moody results give.
 - `LieModuleEquiv.ofBijective`, `LieSubmodule.Quotient.lift` (`LieLean/Algebra/Lie/Quotient.lean`);
   `LieSubmodule.Subquotient`,
   `LieSubmodule.Quotient.nonempty_lieModuleEquiv_of_surjective` (`KacMoody/CompositionSeries.lean`).
+- Strong exchange condition (`LieLean/GroupTheory/Coxeter/Exchange.lean`, Mathlib lacks it);
+  Iwahori–Hecke algebra and bar involution (`GroupTheory/Coxeter/Hecke/{Basic,Bar}.lean`).
 - Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
   Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
