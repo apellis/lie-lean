@@ -38,10 +38,14 @@ For symmetrizable `A`, the left side is `e^ρ R ch B(λ)` by the denominator ide
 ## Main definitions
 
 * `Matrix.Realization.pathCharacter`: the character of `B(λ)` in `ℰ`.
+* `Matrix.Realization.shiftLevel`: the levels `-1 - ⟨ν, αⱼ^∨⟩` of `ν`-dominance.
 * `Matrix.Realization.reflectPair`: Littelmann's involution on pairs `(w, π)`.
 
 ## Main results
 
+* `Matrix.Realization.coeffAt_weylAltSum_mul_pathCharacter`: the generalized Brauer–Klimyk
+  formula `(∑_w (-1)^{ℓ(w)} e^{w(ν+ρ)}) ch B(λ) = ∑_{π ν-dominant} ∑_w (-1)^{ℓ(w)} e^{w(ν+π(1)+ρ)}`,
+  coefficientwise.
 * `Matrix.Realization.weylAltSum_rho_mul_pathCharacter`: the path-model Weyl character formula
   (any generalized Cartan matrix).
 * `Matrix.Realization.pathCharacter_eq_character`: **Littelmann's character formula**
@@ -114,18 +118,22 @@ lemma pathMult_apply (w : P.weylGroup hA) (x : Dual K H) :
   card_wt_weylGroup_pathCrystal hA hΛ w.2 x
 
 omit [DecidableEq ι] in
-/-- For each `μ`, only finitely many `w ∈ W` have `μ - wρ` a weight of `B(λ)`. -/
-lemma finite_setOf_pathMult_ne_zero (μ : Dual K H) :
-    {w : P.weylGroup hA | pathMult hA hΛ (μ - w.1 P.rho) ≠ 0}.Finite := by
+/-- For each `μ` and each regular dominant integral `ρ'`, only finitely many `w ∈ W` have
+`μ - wρ'` a weight of `B(λ)`. -/
+lemma finite_setOf_pathMult_ne_zero {ρ' : Dual K H}
+    (hρ' : ∀ i, ∃ n : ℕ, ρ' (P.coroot i) = n + 1) (μ : Dual K H) :
+    {w : P.weylGroup hA | pathMult hA hΛ (μ - w.1 ρ') ≠ 0}.Finite := by
   classical
-  have hρ := IrreducibleModule.isDominantIntegral_rho (P := P)
-  -- if `μ - wρ = wt b`, then `Λ + ρ - μ = (ρ - wρ) + (Λ - wt b)` with both terms in `Q₊`
-  have key : ∀ w : P.weylGroup hA, pathMult hA hΛ (μ - w.1 P.rho) ≠ 0 →
-      ∃ k k' : ι → ℤ, 0 ≤ k ∧ 0 ≤ k' ∧ P.rho - w.1 P.rho = P.rootOf k ∧
-        Λ + P.rho - μ = P.rootOf (k + k') := by
+  have hρ : P.IsDominantIntegral ρ' := fun i ↦ by
+    obtain ⟨n, hn⟩ := hρ' i
+    exact ⟨n + 1, by rw [hn]; push_cast; ring⟩
+  -- if `μ - wρ' = wt b`, then `Λ + ρ' - μ = (ρ' - wρ') + (Λ - wt b)` with both terms in `Q₊`
+  have key : ∀ w : P.weylGroup hA, pathMult hA hΛ (μ - w.1 ρ') ≠ 0 →
+      ∃ k k' : ι → ℤ, 0 ≤ k ∧ 0 ≤ k' ∧ ρ' - w.1 ρ' = P.rootOf k ∧
+        Λ + ρ' - μ = P.rootOf (k + k') := by
     intro w hw
     obtain ⟨⟨b, hb⟩⟩ : Nonempty {b : (straightLine (P.pathSpace hA)
-        ⟨Λ, hΛ.mem_integralWeights⟩).component // (b.1.wt : Dual K H) = μ - w.1 P.rho} := by
+        ⟨Λ, hΛ.mem_integralWeights⟩).component // (b.1.wt : Dual K H) = μ - w.1 ρ'} := by
       by_contra h
       exact hw (by rw [not_nonempty_iff] at h; exact Nat.card_of_isEmpty)
     obtain ⟨k, hk, hwk⟩ := P.exists_sub_apply_eq_rootOf hA hρ w
@@ -134,13 +142,13 @@ lemma finite_setOf_pathMult_ne_zero (μ : Dual K H) :
     change (b.1.wt : Dual K H) = _ at hbk
     rw [map_add, ← hwk]
     rw [hb] at hbk
-    rw [show P.rootOf k' = Λ - (μ - w.1 P.rho) by rw [hbk]; abel]
+    rw [show P.rootOf k' = Λ - (μ - w.1 ρ') by rw [hbk]; abel]
     abel
-  by_cases hne : ∃ w₀ : P.weylGroup hA, pathMult hA hΛ (μ - w₀.1 P.rho) ≠ 0
+  by_cases hne : ∃ w₀ : P.weylGroup hA, pathMult hA hΛ (μ - w₀.1 ρ') ≠ 0
   · obtain ⟨w₀, hw₀⟩ := hne
     obtain ⟨k₀, k₀', hk₀, hk₀', -, hμ₀⟩ := key w₀ hw₀
-    refine (((Set.finite_Icc (0 : ι → ℤ) (k₀ + k₀')).image fun k ↦ P.rho - P.rootOf k).preimage
-      (P.apply_injective_of_regular hA (rho_regular P)).injOn).subset fun w hw ↦ ?_
+    refine (((Set.finite_Icc (0 : ι → ℤ) (k₀ + k₀')).image fun k ↦ ρ' - P.rootOf k).preimage
+      (P.apply_injective_of_regular hA hρ').injOn).subset fun w hw ↦ ?_
     obtain ⟨k, k', hk, hk', hwk, hμ⟩ := key w hw
     have hkk : k + k' = k₀ + k₀' := P.rootOf_injective (hμ.symm.trans hμ₀)
     refine ⟨k, ⟨hk, fun j ↦ ?_⟩, by simp only; rw [← hwk]; abel⟩
@@ -160,7 +168,7 @@ omit [DecidableEq ι] in
 lemma hitSet_nonempty_of_ne
     (b : (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component)
     (hb : b.1 ≠ straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩) :
-    b.1.hitSet.Nonempty := by
+    (b.1.hitSet fun _ ↦ -1).Nonempty := by
   classical
   have h := (component_straightLine_eq_fOrbit (hA := hA) hΛ).1
   obtain ⟨l, hl⟩ : b.1 ∈ (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).fOrbit :=
@@ -170,23 +178,98 @@ lemma hitSet_nonempty_of_ne
   | cons j l =>
     obtain ⟨b', -, hf⟩ := Option.bind_eq_some_iff.mp hl
     have he := f_eq_some_iff.mp hf
-    have hm : b.1.minPairing j ≤ -1 := by
+    have hm : b.1.minPairing j ≤ ((-1 : ℤ) : K) := by
       by_contra hlt
+      push_cast at hlt
       rw [(e_eq_none_iff).mpr (not_le.mp hlt)] at he
       simp at he
-    exact hitSet_nonempty hm
+    exact hitSet_nonempty (c := fun _ ↦ -1) hm
 
 omit [DecidableEq ι] in
 lemma hitSet_straightLine :
-    (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).hitSet = ∅ := by
+    ((straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).hitSet fun _ ↦ -1) = ∅ := by
   refine Set.eq_empty_of_forall_notMem fun t ⟨ht, j, hj⟩ ↦ ?_
   rw [pairing_straightLine] at hj
   have : (0 : K) ≤ ((P.cartanDatum hA).coroot j ⟨Λ, hΛ.mem_integralWeights⟩ : K) := by
     exact_mod_cast IsDominantIntegral.coroot_nonneg hA hΛ j
   have := mul_nonneg (le_max_left 0 (min 1 t)) this
+  push_cast at hj
   linarith
 
 end Fibres
+
+/-! ### Dominance relative to a weight -/
+
+section Shift
+
+variable {ν : Dual K H} (hν : P.IsDominantIntegral ν)
+
+/-- The levels `cⱼ = -1 - ⟨ν, αⱼ^∨⟩` for a dominant integral weight `ν`: a path `η` has
+`hⱼ > cⱼ` everywhere iff `ν + η(t)` has all `⟨·, αⱼ^∨⟩ > -1` (for Lakshmibai–Seshadri paths:
+iff `ν + η(t)` is dominant for all `t`). -/
+noncomputable def shiftLevel (j : ι) : ℤ :=
+  -1 - (P.cartanDatum hA).coroot j ⟨ν, hν.mem_integralWeights⟩
+
+omit [DecidableEq ι] [TopologicalSpace K] [OrderTopology K] in
+lemma shiftLevel_le (j : ι) : shiftLevel hA hν j ≤ -1 := by
+  have := IsDominantIntegral.coroot_nonneg hA hν j
+  unfold shiftLevel
+  omega
+
+omit [DecidableEq ι] [TopologicalSpace K] [OrderTopology K] in
+lemma shiftLevel_cast (j : ι) : (shiftLevel hA hν j : K) = -1 - ν (P.coroot j) := by
+  rw [shiftLevel, Int.cast_sub, coroot_cartanDatum_cast]
+  norm_num
+
+omit [DecidableEq ι] [TopologicalSpace K] [OrderTopology K] in
+lemma shiftLevel_zero (j : ι) :
+    shiftLevel hA (IrreducibleModule.isDominantIntegral_zero (P := P)) j = -1 := by
+  have := shiftLevel_cast hA (IrreducibleModule.isDominantIntegral_zero (P := P)) j
+  rw [LinearMap.zero_apply, sub_zero] at this
+  exact_mod_cast this
+
+include hΛ
+
+/-- Littelmann's involution on pairs `(w, π)`, `π ∈ B(λ)` not `ν`-dominant: with `τ` the first
+time some `hⱼ(τ) = cⱼ = -1 - ⟨ν, αⱼ^∨⟩` and `i` the chosen such index, `(w, π) ↦ (w rᵢ, π')`
+where `π'` reflects the part of `π` after `τ` (`LittelmannPath.exists_reflectAfter_hitIndex`). -/
+noncomputable def reflectPair
+    (p : P.weylGroup hA × (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component)
+    (h : (p.2.1.hitSet (shiftLevel hA hν)).Nonempty) :
+    P.weylGroup hA × (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component :=
+  (p.1 * (P.coxeterSystem hA).simple (hitIndex h),
+    ⟨(exists_reflectAfter_hitIndex (shiftLevel_le hA hν) h).choose,
+      Crystal.closure_singleton_subset p.2.2
+        (exists_reflectAfter_hitIndex (shiftLevel_le hA hν) h).choose_spec.2.1⟩)
+
+lemma reflectPair_spec
+    (p : P.weylGroup hA × (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component)
+    (h : (p.2.1.hitSet (shiftLevel hA hν)).Nonempty) :
+    ∃ h' : ((reflectPair hA hΛ hν p h).2.1.hitSet (shiftLevel hA hν)).Nonempty,
+      hitIndex h' = hitIndex h ∧
+      ((reflectPair hA hΛ hν p h).2.1.wt : Dual K H) + (ν + P.rho) =
+        P.reflection hA (hitIndex h) ((p.2.1.wt : Dual K H) + (ν + P.rho)) ∧
+      reflectPair hA hΛ hν (reflectPair hA hΛ hν p h) h' = p := by
+  obtain ⟨-, -, h', hi, hwt, hback⟩ :=
+    (exists_reflectAfter_hitIndex (shiftLevel_le hA hν) h).choose_spec
+  refine ⟨h', hi, ?_, ?_⟩
+  · change ((exists_reflectAfter_hitIndex (shiftLevel_le hA hν) h).choose.wt : Dual K H) +
+      (ν + P.rho) = _
+    rw [hwt, AddSubgroup.coe_add, coe_reflection_cartanDatum, AddSubgroup.coe_zsmul,
+      coe_root_cartanDatum, ← Int.cast_smul_eq_zsmul K, shiftLevel_cast, map_add, map_add,
+      reflection_apply P hA _ P.rho, rho_coroot, one_smul, reflection_apply P hA _ ν]
+    module
+  · have hc := (exists_reflectAfter_hitIndex (shiftLevel_le hA hν) h').choose_spec.1
+    have hc2 : reflectAfter (reflectPair hA hΛ hν p h).2.1 (hitIndex h')
+        (shiftLevel hA hν (hitIndex h')) = some p.2.1 := by
+      rw [hi]
+      exact hback
+    refine Prod.ext ?_ (Subtype.ext ?_)
+    · change p.1 * _ * (P.coxeterSystem hA).simple (hitIndex h') = p.1
+      rw [hi, CoxeterSystem.simple_mul_simple_cancel_right]
+    · exact Option.some_injective _ (hc.symm.trans hc2)
+
+end Shift
 
 /-! ### The path-model Weyl character formula -/
 
@@ -203,73 +286,50 @@ lemma coeffAt_pathCharacter (μ : Dual K H) :
     (pathCharacter hA hΛ).coeffAt μ = pathMult hA hΛ μ :=
   Crystal.coeffAt_formalCharacterOfCones _ _ μ
 
-/-- Littelmann's involution on pairs `(w, π)` with `π ∈ B(λ)` not dominant: with `τ` the first
-time some `hⱼ(τ) = -1` and `i` the chosen such index, `(w, π) ↦ (w rᵢ, π')` where `π'` reflects
-the part of `π` after `τ` (`LittelmannPath.exists_reflectAfter_hitIndex`). -/
-noncomputable def reflectPair
-    (p : P.weylGroup hA × (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component)
-    (h : p.2.1.hitSet.Nonempty) :
-    P.weylGroup hA × (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component :=
-  (p.1 * (P.coxeterSystem hA).simple (hitIndex h),
-    ⟨(exists_reflectAfter_hitIndex h).choose,
-      Crystal.closure_singleton_subset p.2.2 (exists_reflectAfter_hitIndex h).choose_spec.2.1⟩)
+open Classical in
+/-- **Littelmann's generalized Brauer–Klimyk formula** ([Lit94] §5–6, [Lit95] §9 (check); our
+write-up): for dominant integral `ν` and `λ`, the coefficient of `e^κ` in
+`(∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(ν + ρ)}) · ch B(λ)` is the signed count of pairs `(w, π)`,
+`π ∈ B(λ)` `ν`-dominant (no `hⱼ` reaches `-1 - ⟨ν, αⱼ^∨⟩`), with `w(ν + π(1) + ρ) = κ`. That
+is, `(∑_w (-1)^{ℓ(w)} e^{w(ν + ρ)}) · ch B(λ)` is
+`∑_{π ν-dominant} ∑_w (-1)^{ℓ(w)} e^{w(ν + π(1) + ρ)}`.
 
-lemma reflectPair_spec
-    (p : P.weylGroup hA × (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component)
-    (h : p.2.1.hitSet.Nonempty) :
-    ∃ h' : (reflectPair hA hΛ p h).2.1.hitSet.Nonempty,
-      hitIndex h' = hitIndex h ∧
-      ((reflectPair hA hΛ p h).2.1.wt : Dual K H) + P.rho =
-        P.reflection hA (hitIndex h) ((p.2.1.wt : Dual K H) + P.rho) ∧
-      reflectPair hA hΛ (reflectPair hA hΛ p h) h' = p := by
-  obtain ⟨-, -, h', hi, hwt, hback⟩ := (exists_reflectAfter_hitIndex h).choose_spec
-  refine ⟨h', hi, ?_, ?_⟩
-  · change (((exists_reflectAfter_hitIndex h).choose.wt : Dual K H)) + P.rho = _
-    rw [hwt, AddSubgroup.coe_sub, coe_reflection_cartanDatum, coe_root_cartanDatum, map_add,
-      reflection_apply P hA _ P.rho, rho_coroot, one_smul]
-    abel
-  · have hc := (exists_reflectAfter_hitIndex h').choose_spec.1
-    have hc2 : reflectAfter (reflectPair hA hΛ p h).2.1 (hitIndex h') = some p.2.1 := by
-      rw [hi]
-      exact hback
-    refine Prod.ext ?_ (Subtype.ext ?_)
-    · change p.1 * _ * (P.coxeterSystem hA).simple (hitIndex h') = p.1
-      rw [hi, CoxeterSystem.simple_mul_simple_cancel_right]
-    · exact Option.some_injective _ (hc.symm.trans hc2)
-
-/-- **Littelmann's path-model Weyl character formula** ([Lit95] Thm. 9.1 (check), in the form of
-the Weyl character formula): for any generalized Cartan matrix and dominant integral `λ`,
-`(∑_{w ∈ W} (-1)^{ℓ(w)} e^{wρ}) · ch B(λ) = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(λ + ρ)}` in `ℰ`.
-
-Proof (our write-up of Littelmann's argument): by the `W`-invariance of the weight
-multiplicities of `B(λ)`, the coefficient of `e^μ` on the left is the signed count
-`∑ (-1)^{ℓ(w)}` over the finitely many pairs `(w, π)`, `π ∈ B(λ)`, with `w(π(1) + ρ) = μ`. Pairs
-with `π ≠ π_λ` cancel under Littelmann's involution `(w, π) ↦ (w rᵢ, π')`
-(`Matrix.Realization.reflectPair`), and `π_λ` is the only dominant path of `B(λ)`. -/
-theorem weylAltSum_rho_mul_pathCharacter :
-    weylAltSum P hA (IrreducibleModule.isDominantIntegral_rho (P := P)) * pathCharacter hA hΛ =
-      weylAltSum P hA (IrreducibleModule.isDominantIntegral_add_rho hΛ) := by
+Proof: by the `W`-invariance of the weight multiplicities, the coefficient is the signed count of
+all pairs `(w, π)` with `w(π(1) + ν + ρ) = κ`; the pairs with `π` not `ν`-dominant cancel under
+Littelmann's involution (`Matrix.Realization.reflectPair`). -/
+theorem coeffAt_weylAltSum_mul_pathCharacter {ν : Dual K H} (hν : P.IsDominantIntegral ν)
+    (κ : Dual K H) :
+    (weylAltSum P hA (IrreducibleModule.isDominantIntegral_add_rho hν) *
+      pathCharacter hA hΛ).coeffAt κ =
+    ∑ᶠ p : P.weylGroup hA ×
+        (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component,
+      if p.2.1.hitSet (shiftLevel hA hν) = ∅ ∧
+          p.1.1 ((p.2.1.wt : Dual K H) + (ν + P.rho)) = κ then
+        (-1) ^ (P.coxeterSystem hA).length p.1 else 0 := by
   classical
   set πΛ := straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩ with hπΛ
   set ε : P.weylGroup hA → ℤ := fun w ↦ (-1) ^ (P.coxeterSystem hA).length w with hε
-  have hinj := P.apply_injective_of_regular hA (rho_regular P)
-  ext μ
-  have hF := finite_setOf_pathMult_ne_zero hA hΛ μ
+  set ρ' := ν + P.rho with hρ'
+  have hreg : ∀ i, ∃ n : ℕ, ρ' (P.coroot i) = n + 1 := fun i ↦ by
+    obtain ⟨n, hn⟩ := hν i
+    exact ⟨n, by rw [hρ', LinearMap.add_apply, hn, rho_coroot]⟩
+  have hinj := P.apply_injective_of_regular hA hreg
+  have hF := finite_setOf_pathMult_ne_zero hA hΛ hreg κ
   set T := hF.toFinset with hT
   -- the coefficient as a sum over `w`
-  have step1 : (weylAltSum P hA (IrreducibleModule.isDominantIntegral_rho (P := P)) *
-      pathCharacter hA hΛ).coeffAt μ = ∑ w ∈ T, ε w * (pathMult hA hΛ (μ - w.1 P.rho) : ℤ) := by
-    rw [coeff_mul, finsum_eq_sum_of_support_subset _ (s := T.image fun w ↦ w.1 P.rho) ?_,
+  have step1 : (weylAltSum P hA (IrreducibleModule.isDominantIntegral_add_rho hν) *
+      pathCharacter hA hΛ).coeffAt κ = ∑ w ∈ T, ε w * (pathMult hA hΛ (κ - w.1 ρ') : ℤ) := by
+    rw [coeff_mul, finsum_eq_sum_of_support_subset _ (s := T.image fun w ↦ w.1 ρ') ?_,
       Finset.sum_image fun w _ w' _ h ↦ hinj h]
     · refine Finset.sum_congr rfl fun w _ ↦ ?_
       simp only [weylAltSum, coeff_ofFun]
       rw [finsum_eq_single _ w fun w' hw' ↦
         ite_eq_right fun h ↦ hw' (hinj h), ite_eq_left rfl, coeffAt_pathCharacter]
-    · intro ν hν
-      rw [Function.mem_support] at hν
-      obtain ⟨h₁, h₂⟩ := mul_ne_zero_iff.mp hν
+    · intro μ hμ
+      rw [Function.mem_support] at hμ
+      obtain ⟨h₁, h₂⟩ := mul_ne_zero_iff.mp hμ
       simp only [weylAltSum, coeff_ofFun] at h₁
-      obtain ⟨w, hw⟩ : ∃ w : P.weylGroup hA, w.1 P.rho = ν := by
+      obtain ⟨w, hw⟩ : ∃ w : P.weylGroup hA, w.1 ρ' = μ := by
         by_contra! h
         exact h₁ (finsum_eq_zero_of_forall_eq_zero fun w ↦ ite_eq_right (h w))
       rw [Finset.coe_image]
@@ -278,7 +338,7 @@ theorem weylAltSum_rho_mul_pathCharacter :
       rw [coeffAt_pathCharacter, ← hw] at h₂
       exact_mod_cast h₂
   -- the fibres and the set of pairs
-  have hinv : ∀ (w : P.weylGroup hA) (x : Dual K H), w.1 x = μ ↔ x = (w⁻¹).1 μ := by
+  have hinv : ∀ (w : P.weylGroup hA) (x : Dual K H), w.1 x = κ ↔ x = (w⁻¹).1 κ := by
     intro w x
     constructor
     · rintro rfl
@@ -287,30 +347,30 @@ theorem weylAltSum_rho_mul_pathCharacter :
     · rintro rfl
       rw [← LinearEquiv.mul_apply, ← Subgroup.coe_mul, mul_inv_cancel, Subgroup.coe_one]
       rfl
-  have hfin := fun w : P.weylGroup hA ↦ finite_fibre hA hΛ ((w⁻¹).1 μ - P.rho)
-  have hμw : ∀ w : P.weylGroup hA, μ - w.1 P.rho = w.1 ((w⁻¹).1 μ - P.rho) := fun w ↦ by
+  have hfin := fun w : P.weylGroup hA ↦ finite_fibre hA hΛ ((w⁻¹).1 κ - ρ')
+  have hκw : ∀ w : P.weylGroup hA, κ - w.1 ρ' = w.1 ((w⁻¹).1 κ - ρ') := fun w ↦ by
     rw [map_sub, ((hinv w _).mpr rfl)]
   have hcard : ∀ w : P.weylGroup hA,
-      pathMult hA hΛ (μ - w.1 P.rho) = (hfin w).toFinset.card := fun w ↦ by
-    rw [hμw, pathMult_apply, ← Nat.card_eq_card_finite_toFinset]
+      pathMult hA hΛ (κ - w.1 ρ') = (hfin w).toFinset.card := fun w ↦ by
+    rw [hκw, pathMult_apply, ← Nat.card_eq_card_finite_toFinset]
     rfl
   set Fall := T.biUnion fun w ↦ (hfin w).toFinset
-  set S := (T ×ˢ Fall).filter fun p ↦ p.1.1 ((p.2.1.wt : Dual K H) + P.rho) = μ with hS
+  set S := (T ×ˢ Fall).filter fun p ↦ p.1.1 ((p.2.1.wt : Dual K H) + ρ') = κ with hS
   have hmemfib : ∀ (w : P.weylGroup hA) (b : πΛ.component),
-      b ∈ (hfin w).toFinset ↔ w.1 ((b.1.wt : Dual K H) + P.rho) = μ := fun w b ↦ by
+      b ∈ (hfin w).toFinset ↔ w.1 ((b.1.wt : Dual K H) + ρ') = κ := fun w b ↦ by
     rw [Set.Finite.mem_toFinset, hinv, Set.mem_ofPred_eq, eq_sub_iff_add_eq]
   have hmemT : ∀ (w : P.weylGroup hA) (b : πΛ.component),
-      w.1 ((b.1.wt : Dual K H) + P.rho) = μ → w ∈ T := fun w b hb ↦ by
+      w.1 ((b.1.wt : Dual K H) + ρ') = κ → w ∈ T := fun w b hb ↦ by
     rw [hT, Set.Finite.mem_toFinset, Set.mem_ofPred_eq, hcard]
     exact Finset.card_ne_zero.mpr ⟨b, (hmemfib w b).mpr hb⟩
-  have hmemS : ∀ p, p ∈ S ↔ p.1.1 ((p.2.1.wt : Dual K H) + P.rho) = μ := by
+  have hmemS : ∀ p, p ∈ S ↔ p.1.1 ((p.2.1.wt : Dual K H) + ρ') = κ := by
     rintro ⟨w, b⟩
     simp only [hS, Finset.mem_filter, Finset.mem_product, Fall, Finset.mem_biUnion]
     refine ⟨fun h ↦ h.2, fun h ↦ ⟨⟨hmemT w b h, w, hmemT w b h, (hmemfib w b).mpr h⟩, h⟩⟩
-  have step2 : ∑ w ∈ T, ε w * (pathMult hA hΛ (μ - w.1 P.rho) : ℤ) = ∑ p ∈ S, ε p.1 := by
+  have step2 : ∑ w ∈ T, ε w * (pathMult hA hΛ (κ - w.1 ρ') : ℤ) = ∑ p ∈ S, ε p.1 := by
     rw [hS, Finset.sum_filter, Finset.sum_product]
     refine Finset.sum_congr rfl fun w hw ↦ ?_
-    have hfil : Fall.filter (fun b ↦ w.1 ((b.1.wt : Dual K H) + P.rho) = μ) =
+    have hfil : Fall.filter (fun b ↦ w.1 ((b.1.wt : Dual K H) + ρ') = κ) =
         (hfin w).toFinset := by
       ext b
       simp only [Finset.mem_filter, Fall, Finset.mem_biUnion]
@@ -318,13 +378,15 @@ theorem weylAltSum_rho_mul_pathCharacter :
     rw [← Finset.sum_filter]
     dsimp only
     rw [hfil, Finset.sum_const, nsmul_eq_mul, hcard, mul_comm]
-  rw [step1, step2, ← Finset.sum_filter_add_sum_filter_not S (fun p ↦ p.2.1 = πΛ)]
-  -- the non-dominant pairs cancel
-  have hne : ∀ p ∈ S.filter (fun p ↦ ¬p.2.1 = πΛ), p.2.1.hitSet.Nonempty := fun p hp ↦
-    hitSet_nonempty_of_ne hA hΛ p.2 (Finset.mem_filter.mp hp).2
-  have hzero : ∑ p ∈ S.filter (fun p ↦ ¬p.2.1 = πΛ), ε p.1 = 0 := by
-    refine Finset.sum_involution (fun p hp ↦ reflectPair hA hΛ p (hne p hp)) (fun p hp ↦ ?_)
-      (fun p hp _ ↦ ?_) (fun p hp ↦ ?_) (fun p hp ↦ ?_)
+  rw [step1, step2, ← Finset.sum_filter_add_sum_filter_not S
+    (fun p ↦ p.2.1.hitSet (shiftLevel hA hν) = ∅)]
+  -- the pairs which are not `ν`-dominant cancel
+  have hne : ∀ p ∈ S.filter (fun p ↦ ¬p.2.1.hitSet (shiftLevel hA hν) = ∅),
+      (p.2.1.hitSet (shiftLevel hA hν)).Nonempty := fun p hp ↦
+    Set.nonempty_iff_ne_empty.mpr (Finset.mem_filter.mp hp).2
+  have hzero : ∑ p ∈ S.filter (fun p ↦ ¬p.2.1.hitSet (shiftLevel hA hν) = ∅), ε p.1 = 0 := by
+    refine Finset.sum_involution (fun p hp ↦ reflectPair hA hΛ hν p (hne p hp))
+      (fun p hp ↦ ?_) (fun p hp _ ↦ ?_) (fun p hp ↦ ?_) (fun p hp ↦ ?_)
     · change ε p.1 + ε (p.1 * _) = 0
       rw [hε]
       simp only [neg_one_pow_length_mul_simple]
@@ -335,42 +397,79 @@ theorem weylAltSum_rho_mul_pathCharacter :
       have h2 := (P.coxeterSystem hA).length_simple (hitIndex (hne p hp))
       rw [mul_eq_left.mp h1, CoxeterSystem.length_one] at h2
       exact absurd h2 (by norm_num)
-    · obtain ⟨h', -, hwt, -⟩ := reflectPair_spec hA hΛ p (hne p hp)
-      refine Finset.mem_filter.mpr ⟨(hmemS _).mpr ?_, fun h ↦ ?_⟩
-      · change (p.1 * _).1 _ = μ
-        rw [coe_mul_simple_apply, hwt, reflection_reflection]
-        exact (hmemS p).mp (Finset.mem_filter.mp hp).1
-      · rw [h, hitSet_straightLine hA hΛ] at h'
-        exact Set.not_nonempty_empty h'
-    · obtain ⟨h', -, -, hback⟩ := reflectPair_spec hA hΛ p (hne p hp)
+    · obtain ⟨h', -, hwt, -⟩ := reflectPair_spec hA hΛ hν p (hne p hp)
+      refine Finset.mem_filter.mpr ⟨(hmemS _).mpr ?_, Set.nonempty_iff_ne_empty.mp h'⟩
+      change (p.1 * _).1 _ = κ
+      rw [coe_mul_simple_apply, hwt, reflection_reflection]
+      exact (hmemS p).mp (Finset.mem_filter.mp hp).1
+    · obtain ⟨h', -, -, hback⟩ := reflectPair_spec hA hΛ hν p (hne p hp)
       exact hback
-  -- the dominant pairs give the alternating sum
+  rw [hzero, add_zero, finsum_eq_sum_of_support_subset _ (s := S) fun p hp ↦ ?_,
+    Finset.sum_filter]
+  · refine Finset.sum_congr rfl fun p hp ↦ ?_
+    by_cases hd : p.2.1.hitSet (shiftLevel hA hν) = ∅
+    · rw [ite_eq_left hd, ite_eq_left (And.intro hd ((hmemS p).mp hp))]
+    · rw [ite_eq_right hd, ite_eq_right fun h : _ ∧ _ ↦ hd h.1]
+  · rw [Function.mem_support] at hp
+    exact (hmemS p).mpr (by by_contra h; exact hp (ite_eq_right fun h' : _ ∧ _ ↦ h h'.2))
+
+/-- **Littelmann's path-model Weyl character formula** ([Lit95] Thm. 9.1 (check), in the form of
+the Weyl character formula): for any generalized Cartan matrix and dominant integral `λ`,
+`(∑_{w ∈ W} (-1)^{ℓ(w)} e^{wρ}) · ch B(λ) = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(λ + ρ)}` in `ℰ`. This is
+the case `ν = 0` of `Matrix.Realization.coeffAt_weylAltSum_mul_pathCharacter`: `π_λ` is the only
+dominant path of `B(λ)`. -/
+theorem weylAltSum_rho_mul_pathCharacter :
+    weylAltSum P hA (IrreducibleModule.isDominantIntegral_rho (P := P)) * pathCharacter hA hΛ =
+      weylAltSum P hA (IrreducibleModule.isDominantIntegral_add_rho hΛ) := by
+  set πΛ := straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩ with hπΛ
+  have h0 := IrreducibleModule.isDominantIntegral_zero (P := P)
+  have hdom : ∀ b : πΛ.component, b.1.hitSet (shiftLevel hA h0) = ∅ ↔ b.1 = πΛ := by
+    intro b
+    have hl : shiftLevel hA h0 = fun _ ↦ -1 := funext (shiftLevel_zero hA)
+    rw [hl]
+    constructor
+    · intro h
+      by_contra hne
+      exact (Set.nonempty_iff_ne_empty.mp (hitSet_nonempty_of_ne hA hΛ b hne)) h
+    · intro h
+      rw [h]
+      exact hitSet_straightLine hA hΛ
   have hreg : ∀ i, ∃ n : ℕ, (Λ + P.rho) (P.coroot i) = n + 1 := fun i ↦ by
     obtain ⟨n, hn⟩ := hΛ i
     exact ⟨n, by rw [LinearMap.add_apply, hn, rho_coroot]⟩
   have hinj' := P.apply_injective_of_regular hA hreg
-  rw [hzero, add_zero]
+  have hcongr : ∀ (μ₀ μ₁ : Dual K H) (_ : μ₀ = μ₁) (h₀ : ∀ i, ∃ n : ℕ, μ₀ (P.coroot i) = n)
+      (h₁ : ∀ i, ∃ n : ℕ, μ₁ (P.coroot i) = n), weylAltSum P hA h₀ = weylAltSum P hA h₁ := by
+    rintro μ₀ μ₁ rfl h₀ h₁
+    rfl
+  ext κ
+  have key := coeffAt_weylAltSum_mul_pathCharacter hA hΛ h0 κ
+  rw [← hcongr _ _ (zero_add P.rho).symm (IrreducibleModule.isDominantIntegral_rho (P := P))
+    (IrreducibleModule.isDominantIntegral_add_rho h0)] at key
+  rw [key]
   simp only [weylAltSum, coeff_ofFun]
-  by_cases hex : ∃ w₀ : P.weylGroup hA, w₀.1 (Λ + P.rho) = μ
+  by_cases hex : ∃ w₀ : P.weylGroup hA, w₀.1 (Λ + P.rho) = κ
   · obtain ⟨w₀, hw₀⟩ := hex
-    rw [finsum_eq_single _ w₀ fun w hw ↦ ite_eq_right fun h ↦ hw (hinj' (h.trans hw₀.symm)),
-      ite_eq_left hw₀]
-    have : S.filter (fun p ↦ p.2.1 = πΛ) = {(w₀, ⟨πΛ, πΛ.mem_component_self⟩)} := by
-      ext ⟨w, b⟩
-      simp only [Finset.mem_filter, hmemS, Finset.mem_singleton, Prod.mk.injEq]
-      constructor
-      · rintro ⟨h1, h2⟩
-        obtain rfl : b = ⟨πΛ, πΛ.mem_component_self⟩ := Subtype.ext h2
-        exact ⟨hinj' (h1.trans hw₀.symm), rfl⟩
-      · rintro ⟨rfl, rfl⟩
-        exact ⟨hw₀, rfl⟩
-    rw [this, Finset.sum_singleton]
+    rw [finsum_eq_single _ w₀ fun w hw ↦
+        ite_eq_right fun (h : w.1 (Λ + P.rho) = κ) ↦ hw (hinj' (h.trans hw₀.symm)),
+      ite_eq_left hw₀, finsum_eq_single _ (w₀, ⟨πΛ, πΛ.mem_component_self⟩) ?_]
+    · refine ite_eq_left ⟨(hdom _).mpr rfl, ?_⟩
+      change w₀.1 (Λ + (0 + P.rho)) = κ
+      rw [zero_add]
+      exact hw₀
+    · rintro ⟨w, b⟩ hne
+      refine ite_eq_right fun ⟨h1, h2⟩ ↦ hne ?_
+      obtain rfl : b = ⟨πΛ, πΛ.mem_component_self⟩ := Subtype.ext ((hdom b).mp h1)
+      change w.1 (Λ + (0 + P.rho)) = κ at h2
+      rw [zero_add] at h2
+      rw [show w = w₀ from hinj' (h2.trans hw₀.symm)]
   · push Not at hex
-    rw [finsum_eq_zero_of_forall_eq_zero fun w ↦ ite_eq_right (hex w)]
-    refine Finset.sum_eq_zero fun p hp ↦ absurd ?_ (hex p.1)
-    obtain ⟨h1, h2⟩ := Finset.mem_filter.mp hp
-    rw [hmemS, h2] at h1
-    exact h1
+    rw [finsum_eq_zero_of_forall_eq_zero fun w : P.weylGroup hA ↦ ite_eq_right (hex w)]
+    refine finsum_eq_zero_of_forall_eq_zero fun p ↦ ite_eq_right fun ⟨h1, h2⟩ ↦ hex p.1 ?_
+    have hb := (hdom p.2).mp h1
+    change p.1.1 ((p.2.1.wt : Dual K H) + (0 + P.rho)) = κ at h2
+    rw [hb, zero_add] at h2
+    exact h2
 
 /-- **Littelmann's character formula** ([Lit95] Thm. 9.1 (check), [Lit94]): for a symmetrizable
 generalized Cartan matrix and a dominant integral weight `λ`, the character of the path crystal
