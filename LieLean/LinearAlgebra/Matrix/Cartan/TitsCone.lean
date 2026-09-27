@@ -105,26 +105,6 @@ lemma sub_mul_reflection_apply (v : Dual K H ≃ₗ[K] Dual K H) (i : ι) (μ : 
   rw [LinearEquiv.mul_apply, reflection_apply, map_sub, map_smul]
   abel
 
-omit [LinearOrder K] [IsStrictOrderedRing K] in
-/-- Induction on the length in the Weyl group: a property of elements of `W` which holds for `1`
-and passes from `w` to `w rᵢ` whenever `ℓ(w rᵢ) > ℓ(w)` holds on `W`. -/
-lemma weylGroup_induction_length [DecidableEq ι] [CharZero K] {p : P.weylGroup hA → Prop}
-    (one : p 1)
-    (step : ∀ w i, ¬(P.coxeterSystem hA).IsRightDescent w i → p w →
-      p (w * (P.coxeterSystem hA).simple i))
-    (w : P.weylGroup hA) : p w := by
-  set cs := P.coxeterSystem hA
-  generalize hn : cs.length w = n
-  induction n using Nat.strong_induction_on generalizing w with
-  | _ n ih =>
-  by_cases hw1 : w = 1
-  · exact hw1 ▸ one
-  obtain ⟨i, hi⟩ := cs.exists_rightDescent_of_ne_one hw1
-  have hnd : ¬cs.IsRightDescent (w * cs.simple i) i := by
-    rwa [← isRightDescent_iff_not_isRightDescent_mul]
-  have := step _ i hnd (ih _ (hn ▸ hi) _ rfl)
-  rwa [cs.simple_mul_simple_cancel_right] at this
-
 /-! ### `λ - w λ ≥ 0` for `λ ∈ C` -/
 
 /-- For `λ ∈ C` and `w ∈ W`, `λ - w λ` is a nonnegative combination of simple roots:

@@ -289,6 +289,11 @@ lemma rootOf_apply (P : Realization A K H) (k : ι → ℤ) :
     P.rootOf (Pi.single i 1) = P.root i := by
   simp [rootOf_apply, Pi.single_apply]
 
+/-- `⟨∑ kₗ αₗ, αⱼ^∨⟩ = ∑ₗ aⱼₗ kₗ`. -/
+lemma rootOf_apply_coroot (P : Realization A K H) (k : ι → ℤ) (j : ι) :
+    P.rootOf k (P.coroot j) = ((A *ᵥ k) j : ℤ) := by
+  simp [rootOf_apply, P.root_coroot, mulVec, dotProduct, mul_comm]
+
 /-- In characteristic zero, the root lattice embeds in `𝔥*`. -/
 lemma rootOf_injective [CharZero K] (P : Realization A K H) : Function.Injective P.rootOf := by
   rw [injective_iff_map_eq_zero]

@@ -15,9 +15,9 @@ characteristic zero, and `W` its Weyl group. A weight `λ ∈ 𝔥*` is dominant
 These are the integral forms, for weights, of the statement that the fundamental chamber is a
 fundamental domain for the action of `W` on the Tits cone ([Kac] Prop. 3.12 (b) (check)).
 
-The proof is by induction on `ℓ(w)`: if `ℓ(w rᵢ) < ℓ(w)` then `(w rᵢ) αᵢ ∈ Q₊`
-(`Matrix.Realization.not_isRightDescent_coxeterSystem_iff`) and
-`λ - w λ = (λ - (w rᵢ) λ) + ⟨λ, αᵢ^∨⟩ (w rᵢ) αᵢ`.
+The proof is by induction on `ℓ(w)` (`Matrix.Realization.weylGroup_induction_length`): if
+`ℓ(w rᵢ) > ℓ(w)` then `w αᵢ ∈ Q₊` (`Matrix.Realization.not_isRightDescent_coxeterSystem_iff`) and
+`λ - (w rᵢ) λ = (λ - w λ) + ⟨λ, αᵢ^∨⟩ w αᵢ`.
 
 ## Main results
 
@@ -43,29 +43,16 @@ theorem exists_sub_apply_eq_rootOf {μ : Dual K H} (hμ : ∀ i, ∃ n : ℕ, μ
     (w : P.weylGroup hA) :
     ∃ k : ι → ℤ, 0 ≤ k ∧ μ - (w : Dual K H ≃ₗ[K] Dual K H) μ = P.rootOf k := by
   classical
-  set cs := P.coxeterSystem hA
-  generalize hn : cs.length w = n
-  induction n using Nat.strong_induction_on generalizing w with
-  | _ n ih =>
-  by_cases hw1 : w = 1
-  · exact ⟨0, le_rfl, by simp [hw1]⟩
-  obtain ⟨i, hi⟩ := cs.exists_rightDescent_of_ne_one hw1
-  have hlen : cs.length (w * cs.simple i) < n := hn ▸ hi
-  obtain ⟨k, hk, hwk⟩ := ih _ hlen (w * cs.simple i) rfl
-  have hnd : ¬cs.IsRightDescent (w * cs.simple i) i := by
-    rwa [← isRightDescent_iff_not_isRightDescent_mul]
-  obtain ⟨l, hl, hwl⟩ := (P.not_isRightDescent_coxeterSystem_iff hA).mp hnd
+  refine P.weylGroup_induction_length hA (p := fun w : P.weylGroup hA ↦ ∃ k : ι → ℤ, 0 ≤ k ∧
+    μ - (w : Dual K H ≃ₗ[K] Dual K H) μ = P.rootOf k) ⟨0, le_rfl, by simp⟩
+    (fun w i hwi ⟨k, hk, hwk⟩ ↦ ?_) w
+  obtain ⟨l, hl, hwl⟩ := (P.not_isRightDescent_coxeterSystem_iff hA).mp hwi
   obtain ⟨m, hm⟩ := hμ i
   refine ⟨k + (m : ℤ) • l, add_nonneg hk (smul_nonneg (Int.natCast_nonneg m) hl), ?_⟩
-  simp only [Subgroup.coe_mul, LinearEquiv.mul_apply] at hwk hwl
-  have hw : (w : Dual K H ≃ₗ[K] Dual K H) μ =
-      (w : Dual K H ≃ₗ[K] Dual K H) (P.reflection hA i μ) -
-        (m : K) • (w : Dual K H ≃ₗ[K] Dual K H) (P.reflection hA i (P.root i)) := by
-    rw [reflection_apply P hA i μ, reflection_root_self, map_sub, map_smul, map_neg, hm]
-    module
-  rw [hw, map_add, map_zsmul, ← Int.cast_smul_eq_zsmul K, ← hwk, ← hwl]
+  rw [Subgroup.coe_mul, coxeterSystem_simple, LinearEquiv.mul_apply, reflection_apply, map_sub,
+    map_smul, hm, hwl, map_add, map_zsmul, ← hwk, ← Int.cast_smul_eq_zsmul K]
   push_cast
-  abel
+  module
 
 /-- If `λ` and `w λ` are both dominant integral weights, then `w λ = λ` ([Kac] Prop. 3.12 (b)
 (check), for weights): the `W`-orbit of a dominant integral weight contains no other dominant
