@@ -78,6 +78,8 @@ import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupTits
 import LieLean.RepresentationTheory.Crystal.Basic
 import LieLean.RepresentationTheory.Crystal.Character
 import LieLean.RepresentationTheory.Crystal.Normal
+import LieLean.RepresentationTheory.Crystal.Path.Basic
+import LieLean.RepresentationTheory.Crystal.Path.RootOperators
 import LieLean.RepresentationTheory.Crystal.Realization
 import LieLean.RepresentationTheory.Crystal.Subcrystal
 import LieLean.RepresentationTheory.Crystal.Tensor
