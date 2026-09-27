@@ -57,26 +57,6 @@ The right module structure is expressed as a module over the opposite algebra `�
 
 open MulOpposite Module
 
-namespace CoxeterSystem
-
-variable {B W : Type*} [Group W] {M : CoxeterMatrix B} (cs : CoxeterSystem M W) (J : Set B)
-
-/-- The parabolic decomposition as a bijection `W^J × W_J ≃ W`, `(d, v) ↦ d v`. -/
-noncomputable def minCosetRepsProdEquiv : cs.minCosetReps J × cs.parabolicSubgroup J ≃ W :=
-  Equiv.ofBijective (fun p ↦ (p.1 : W) * p.2)
-    ⟨fun p p' h ↦ by
-      obtain ⟨h1, h2⟩ := eq_and_eq_of_mul_eq_mul p.1.2 p'.1.2 p.2.2 p'.2.2 h
-      exact Prod.ext (Subtype.ext h1) (Subtype.ext h2),
-    fun w ↦ by
-      obtain ⟨u, hu, v, hv, rfl⟩ := cs.exists_mem_minCosetReps_mul_eq J w
-      exact ⟨(⟨u, hu⟩, ⟨v, hv⟩), rfl⟩⟩
-
-@[simp]
-theorem minCosetRepsProdEquiv_apply (p : cs.minCosetReps J × cs.parabolicSubgroup J) :
-    cs.minCosetRepsProdEquiv J p = (p.1 : W) * p.2 := rfl
-
-end CoxeterSystem
-
 namespace IwahoriHeckeAlgebra
 
 open CoxeterSystem

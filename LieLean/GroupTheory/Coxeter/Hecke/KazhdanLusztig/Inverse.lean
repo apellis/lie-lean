@@ -3,26 +3,22 @@ Copyright (c) 2026 Alex Ellis. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
+import LieLean.GroupTheory.Coxeter.Hecke.Involutions
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Properties
 
 /-!
 # Kazhdan–Lusztig polynomials and inversion
 
 The `R`-linear map `𝓗 → 𝓗`, `T_w ↦ T_{w⁻¹}`, is an anti-involution of the Iwahori–Hecke algebra
-(`IwahoriHeckeAlgebra.antiInvolutionSelf`), and over `ℤ[v, v⁻¹]` it commutes with the bar
-involution.
-It maps `C'_w` to `C'_{w⁻¹}`, so that `P_{y⁻¹, w⁻¹} = P_{y,w}` ([KL] §2 (check), [HumC] §7.11
-(check)). Combined with the left-handed invariance `klPoly_simple_mul_left` this gives the
-right-handed one: `P_{xs,w} = P_{x,w}` if `ws < w` ([KL] (2.3.g) (check)).
-
-## Main definitions
-
-* `IwahoriHeckeAlgebra.antiInvolutionSelf`: the anti-involution `T_w ↦ T_{w⁻¹}`.
+(`IwahoriHeckeAlgebra.antiInvolutionSelf`, `Hecke/Involutions.lean`); over `ℤ[v, v⁻¹]` it
+commutes with the bar involution. It maps `C'_w` to `C'_{w⁻¹}`, so that
+`P_{y⁻¹, w⁻¹} = P_{y,w}` ([KL] §2 (check), [HumC] §7.11 (check)).
+Combined with the left-handed invariance `klPoly_simple_mul_left` this gives the right-handed
+one: `P_{xs,w} = P_{x,w}` if `ws < w` ([KL] (2.3.g) (check)).
 
 ## Main results
 
-* `IwahoriHeckeAlgebra.antiInvolutionSelf_mul`, `antiInvolutionSelf_antiInvolution`,
-  `antiInvolutionSelf_barL`.
+* `IwahoriHeckeAlgebra.antiInvolutionSelf_barL`: `T_w ↦ T_{w⁻¹}` commutes with the bar involution.
 * `IwahoriHeckeAlgebra.antiInvolutionSelf_klBasis`: `C'_w ↦ C'_{w⁻¹}`.
 * `IwahoriHeckeAlgebra.klPoly_inv_inv`: `P_{y⁻¹, w⁻¹} = P_{y,w}`.
 * `IwahoriHeckeAlgebra.klPoly_mul_simple_right`: `P_{xs,w} = P_{x,w}` if `ws < w`.
@@ -42,65 +38,6 @@ variable {B W : Type*} [Group W] {M : CoxeterMatrix B} (cs : CoxeterSystem M W)
 
 local prefix:100 "s " => cs.simple
 local prefix:100 "ℓ " => cs.length
-
-section General
-
-variable {R : Type*} [CommRing R] (q : R)
-
-/-- The anti-involution `T_w ↦ T_{w⁻¹}` of the Iwahori–Hecke algebra (as an `R`-linear
-equivalence; it reverses products, `antiInvolutionSelf_mul`). It is the underlying map of
-`IwahoriHeckeAlgebra.antiInvolution : 𝓗 ≃ₐ[R] 𝓗ᵐᵒᵖ` (`Hecke/Involutions.lean`) viewed as a
-linear self-equivalence of `𝓗`. -/
-noncomputable def antiInvolutionSelf : IwahoriHeckeAlgebra cs q ≃ₗ[R] IwahoriHeckeAlgebra cs q :=
-  (toFinsupp cs q).trans ((Finsupp.domLCongr (Equiv.inv W)).trans (toFinsupp cs q).symm)
-
-theorem antiInvolutionSelf_T (w : W) : antiInvolutionSelf cs q (T cs q w) = T cs q w⁻¹ := by
-  simp [antiInvolutionSelf, T]
-
-theorem toFinsupp_antiInvolution_apply (h : IwahoriHeckeAlgebra cs q) (y : W) :
-    toFinsupp cs q (antiInvolutionSelf cs q h) y = toFinsupp cs q h y⁻¹ := by
-  simp [antiInvolutionSelf, Finsupp.domLCongr_apply, Finsupp.equivMapDomain_apply]
-
-theorem antiInvolutionSelf_one : antiInvolutionSelf cs q 1 = 1 := by
-  rw [← T_one, antiInvolutionSelf_T, inv_one]
-
-theorem antiInvolutionSelf_antiInvolution (h : IwahoriHeckeAlgebra cs q) :
-    antiInvolutionSelf cs q (antiInvolutionSelf cs q h) = h := by
-  apply (toFinsupp cs q).injective
-  ext y
-  rw [toFinsupp_antiInvolution_apply, toFinsupp_antiInvolution_apply, inv_inv]
-
-theorem antiInvolutionSelf_mul_T_simple (h : IwahoriHeckeAlgebra cs q) (i : B) :
-    antiInvolutionSelf cs q (h * T cs q (s i)) = T cs q (s i) * antiInvolutionSelf cs q h := by
-  induction h using induction_on cs q with
-  | T w =>
-    have e : (w * s i)⁻¹ = s i * w⁻¹ := by rw [mul_inv_rev, CoxeterSystem.inv_simple]
-    have h1 : ℓ (s i * w⁻¹) = ℓ (w * s i) := by rw [← e, cs.length_inv]
-    rw [T_mul_T_simple, antiInvolutionSelf_T, T_simple_mul_T, cs.length_inv, h1]
-    split_ifs
-    · rw [antiInvolutionSelf_T, e]
-    · rw [map_add, map_smul, map_smul, antiInvolutionSelf_T, antiInvolutionSelf_T, e]
-  | add x y hx hy => rw [add_mul, map_add, hx, hy, map_add, mul_add]
-  | smul a x hx => rw [smul_mul_assoc, map_smul, hx, map_smul, mul_smul_comm]
-
-/-- The map `T_w ↦ T_{w⁻¹}` reverses products. -/
-theorem antiInvolutionSelf_mul (x y : IwahoriHeckeAlgebra cs q) :
-    antiInvolutionSelf cs q (x * y) = antiInvolutionSelf cs q y * antiInvolutionSelf cs q x := by
-  induction y using induction_on cs q generalizing x with
-  | T w =>
-    induction w using cs.induction_mul_simple generalizing x with
-    | one => simp [antiInvolutionSelf_one]
-    | mul_simple w i hlt ih =>
-      have hlen : ℓ (s i * w⁻¹) = ℓ (s i) + ℓ w⁻¹ := by
-        have e : s i * w⁻¹ = (w * s i)⁻¹ := by rw [mul_inv_rev, CoxeterSystem.inv_simple]
-        rw [e, cs.length_inv, cs.length_inv, cs.length_simple]
-        rcases cs.length_mul_simple w i with h | h <;> omega
-      rw [← T_mul_T_simple_of_lt cs q hlt, ← mul_assoc, antiInvolutionSelf_mul_T_simple, ih,
-        antiInvolutionSelf_mul_T_simple, ← mul_assoc]
-  | add y z hy hz => rw [mul_add, map_add, hy, hz, map_add, add_mul]
-  | smul a y hy => rw [mul_smul_comm, map_smul, hy, map_smul, smul_mul_assoc]
-
-end General
 
 section Laurent
 

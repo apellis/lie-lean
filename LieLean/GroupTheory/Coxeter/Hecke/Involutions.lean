@@ -26,14 +26,16 @@ Let `𝓗 = 𝓗_q(W)` be the Iwahori–Hecke algebra of a Coxeter system over a
 ## Main definitions
 
 * `IwahoriHeckeAlgebra.ind`, `IwahoriHeckeAlgebra.sgn`: `𝓗 →ₐ[R] R`.
-* `IwahoriHeckeAlgebra.antiInvolution : 𝓗 ≃ₐ[R] 𝓗ᵐᵒᵖ`.
+* `IwahoriHeckeAlgebra.antiInvolution : 𝓗 ≃ₐ[R] 𝓗ᵐᵒᵖ`, and `antiInvolutionSelf : 𝓗 ≃ₗ[R] 𝓗`, the
+  same map viewed as a linear self-equivalence of `𝓗`.
 * `IwahoriHeckeAlgebra.signTwist : 𝓗 ≃ₐ[R] 𝓗` (for `q` a unit).
 * `IwahoriHeckeAlgebra.barSignTwist : 𝓗 →+* 𝓗` (for `σ : R →+* R` with `σ(q) q = 1`).
 
 ## Main results
 
 * `IwahoriHeckeAlgebra.ind_T`, `sgn_T`: `ind T_w = q^{ℓ(w)}`, `sgn T_w = (-1)^{ℓ(w)}`.
-* `IwahoriHeckeAlgebra.antiInvolution_T`: `T_w ↦ T_{w⁻¹}`.
+* `IwahoriHeckeAlgebra.antiInvolution_T`: `T_w ↦ T_{w⁻¹}`; `antiInvolutionSelf_mul`,
+  `antiInvolutionSelf_antiInvolution`.
 * `IwahoriHeckeAlgebra.signTwist_T`: `T_w ↦ (-q)^{ℓ(w)} T_{w⁻¹}⁻¹`;
   `signTwist_symm`, `sgn_comp_signTwist`, `ind_comp_signTwist`.
 * `IwahoriHeckeAlgebra.barSignTwist_T`, `barSignTwist_smul`, `barSignTwist_barSignTwist`.
@@ -219,6 +221,47 @@ theorem unop_antiInvolution_unop (x : IwahoriHeckeAlgebra cs q) :
   | T w => simp
   | add x y hx hy => simp only [map_add, unop_add, hx, hy]
   | smul a x hx => simp only [map_smul, unop_smul, hx]
+
+/-- The anti-involution `T_w ↦ T_{w⁻¹}` as an `R`-linear self-equivalence of `𝓗`: the composite
+of `antiInvolution : 𝓗 ≃ₐ[R] 𝓗ᵐᵒᵖ` with `unop` (`antiInvolutionSelf_apply`). It reverses
+products (`antiInvolutionSelf_mul`). -/
+noncomputable def antiInvolutionSelf : IwahoriHeckeAlgebra cs q ≃ₗ[R] IwahoriHeckeAlgebra cs q :=
+  (antiInvolution cs q).toLinearEquiv.trans (MulOpposite.opLinearEquiv R).symm
+
+theorem antiInvolutionSelf_apply (x : IwahoriHeckeAlgebra cs q) :
+    antiInvolutionSelf cs q x = (antiInvolution cs q x).unop := rfl
+
+@[simp]
+theorem antiInvolutionSelf_T (w : W) : antiInvolutionSelf cs q (T cs q w) = T cs q w⁻¹ := by
+  simp [antiInvolutionSelf_apply]
+
+theorem toFinsupp_antiInvolution_apply (h : IwahoriHeckeAlgebra cs q) (y : W) :
+    toFinsupp cs q (antiInvolutionSelf cs q h) y = toFinsupp cs q h y⁻¹ := by
+  induction h using induction_on cs q with
+  | T w =>
+    classical
+    rw [antiInvolutionSelf_T, toFinsupp_T, toFinsupp_T, Finsupp.single_apply,
+      Finsupp.single_apply]
+    exact if_congr inv_eq_iff_eq_inv rfl rfl
+  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | smul a x hx => simp only [map_smul, Finsupp.smul_apply, hx]
+
+theorem antiInvolutionSelf_one : antiInvolutionSelf cs q 1 = 1 := by
+  simp [antiInvolutionSelf_apply]
+
+/-- `T_w ↦ T_{w⁻¹}` is an involution. -/
+theorem antiInvolutionSelf_antiInvolution (h : IwahoriHeckeAlgebra cs q) :
+    antiInvolutionSelf cs q (antiInvolutionSelf cs q h) = h :=
+  unop_antiInvolution_unop cs q h
+
+/-- The map `T_w ↦ T_{w⁻¹}` reverses products. -/
+theorem antiInvolutionSelf_mul (x y : IwahoriHeckeAlgebra cs q) :
+    antiInvolutionSelf cs q (x * y) = antiInvolutionSelf cs q y * antiInvolutionSelf cs q x := by
+  simp [antiInvolutionSelf_apply]
+
+theorem antiInvolutionSelf_mul_T_simple (h : IwahoriHeckeAlgebra cs q) (i : B) :
+    antiInvolutionSelf cs q (h * T cs q (s i)) = T cs q (s i) * antiInvolutionSelf cs q h := by
+  rw [antiInvolutionSelf_mul, antiInvolutionSelf_T, CoxeterSystem.inv_simple]
 
 /-! ### The sign twist `T_s ↦ -q T_s⁻¹` -/
 
