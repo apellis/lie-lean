@@ -12,19 +12,22 @@ Let `π` be a Littelmann path, `hᵢ(t) = ⟨π(t), αᵢ^∨⟩` and `mᵢ = mi
 operators ([Lit95] §1 (check)) are defined as follows.
 
 * If `mᵢ > -1` then `eᵢ π = 0`. Otherwise let `t₁` be the first time with `hᵢ(t₁) = mᵢ` and
-  `t₀ ≤ t₁` the last time before `t₁` with `hᵢ ≥ mᵢ + 1` on `[0, t₀]`; `eᵢ π` is obtained by
+  `t₀ ≤ t₁` maximal with `hᵢ ≥ mᵢ + 1` on `[0, t₀]`; `eᵢ π` is obtained by
   keeping `π` on `[0, t₀]`, reflecting by `rᵢ` those pieces of `π|[t₀, t₁]` on which `hᵢ` attains
   a new running minimum, keeping (translated) the pieces between them, and translating
   `π|[t₁, 1]` by `+αᵢ`.
 * `fᵢ` is defined symmetrically, using the minima from the right; if `hᵢ(1) - mᵢ < 1` then
   `fᵢ π = 0`.
 
-Unwinding the definition, both operators have a closed form ([Lit95] §1 (check); the formulas
-below are our reformulation): with `m(t) = min_{[0,t]} hᵢ` and `M(t) = min_{[t,1]} hᵢ`,
+Unwinding the definition, both operators have a closed form (our reformulation): with
+`m(t) = min_{[0,t]} hᵢ` and `M(t) = min_{[t,1]} hᵢ`,
 `eᵢ π(t) = π(t) - (min(m(t), mᵢ + 1) - mᵢ - 1) αᵢ` and
 `fᵢ π(t) = π(t) - (min(M(t), mᵢ + 1) - mᵢ) αᵢ`.
-We take the formula for `eᵢ` as the definition and define `fᵢ` through the time reversal
-`π^∨(t) = π(1 - t) - π(1)` by `fᵢ π = (eᵢ π^∨)^∨` ([Lit95] Lemma 2.1 (check)).
+(Indeed, the coefficient of `αᵢ` in `eᵢ π(t) - π(t)` changes only where the running minimum
+`m(t) ∈ [mᵢ, mᵢ + 1]` decreases, i.e. on the reflected pieces, and there it changes like `-hᵢ`.)
+We take the closed formula for `eᵢ` as the definition (the piecewise recipe is not formalized) and
+define `fᵢ` through the time reversal `π^∨(t) = π(1 - t) - π(1)` by `fᵢ π = (eᵢ π^∨)^∨`
+([Lit95] Lemma 2.1 (check)); `LittelmannPath.f_apply` recovers the closed formula for `fᵢ`.
 
 ## Main definitions
 
@@ -44,19 +47,17 @@ We take the formula for `eᵢ` as the definition and define `fᵢ` through the t
 * `LittelmannPath.isSeminormal_crystal`: the path crystal is seminormal: `εᵢ(π)` (resp. `φᵢ(π)`)
   is the maximal number of times `eᵢ` (resp. `fᵢ`) can be applied to `π`.
 
-Littelmann works with paths whose minima `mᵢ` are integers ("integral paths"), for which
-`εᵢ = -mᵢ` and `φᵢ = hᵢ(1) - mᵢ`. With the definitions above (via the running minima; this is the
-definition of [Lit95], not the simpler "reflect the whole window" of [Lit94]) no integrality is
-needed: all paths with endpoint in `X` form a seminormal crystal, with `εᵢ = ⌊-mᵢ⌋`. The proof
-that `eᵢ` and `fᵢ` are mutually inverse (`LittelmannPath.min_rightMin_eRaw`) was reconstructed by
-us from the closed formulas.
+Littelmann works with paths whose minima `mᵢ` are integers ("integral paths", [Lit95] §2
+(check)), for which `εᵢ = -mᵢ` and `φᵢ = hᵢ(1) - mᵢ`. With the definitions above (via the running
+minima; reflecting the whole of `π|[t₀, t₁]` instead would need integrality hypotheses) no
+integrality is needed: all paths with endpoint in `X` form a seminormal crystal, with
+`εᵢ = ⌊-mᵢ⌋`. The proof that `eᵢ` and `fᵢ` are mutually inverse
+(`LittelmannPath.min_rightMin_eRaw`) was reconstructed by us from the closed formulas.
 
 ## References
 
 * [Lit95] P. Littelmann, *Paths and root operators in representation theory*, Ann. of Math.
   **142** (1995), 499–525.
-* [Lit94] P. Littelmann, *A Littlewood–Richardson rule for symmetrizable Kac–Moody algebras*,
-  Invent. Math. **116** (1994), 329–346.
 * [Kas] M. Kashiwara, *On crystal bases*, CMS Conf. Proc. 16 (1995).
 -/
 
