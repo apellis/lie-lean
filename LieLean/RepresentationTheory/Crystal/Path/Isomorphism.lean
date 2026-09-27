@@ -54,15 +54,23 @@ set `{f_{i₁} ⋯ f_{iₖ} π}` is stable under all `eⱼ`), together with the 
 resulting crystal structure from `π`. For straight lines this is
 `Matrix.Realization.component_straightLine_eq_fOrbit` (via Lakshmibai–Seshadri paths), whose
 proof uses that all paths of `B(π_λ)` have their directions in the single orbit `Wλ`; this fails
-for general dominant paths, and a characters-only argument cannot work (the characters of the
-components of `B(λ) ⊗ B(μ)` are already determined by the number of their highest weight
-elements).
+for general dominant paths. A characters-only argument cannot work: the character of any
+connected component of `B(λ) ⊗ B(μ)` is `∑ ch L(ν)` over the highest weight elements it contains
+(`Matrix.Realization.setCharacter_component_concat_eq_hsum`), whatever their number, so the
+characters do not see whether two highest weight elements lie in the same component. A natural
+route (which we believe to be close to Littelmann's, [Lit95] §4–7 (check); we could not consult
+the source) is a theory of Lakshmibai–Seshadri type paths "of shape `π`" for an arbitrary
+dominant path `π` (pieces of `π` twisted by Weyl group elements, with chain conditions),
+generalizing `LittelmannPath.LSData`; in finite type an alternative is the Pitman transform
+`P_{w₀}` of [BBO], which requires the braid relations for Pitman transforms.
 
 ## References
 
 * [Lit95] P. Littelmann, *Paths and root operators in representation theory*, Ann. of Math.
   **142** (1995), 499–525.
 * [Kas] M. Kashiwara, *On crystal bases*, CMS Conf. Proc. 16 (1995).
+* [BBO] P. Biane, P. Bougerol, N. O'Connell, *Littelmann paths and Brownian paths*, Duke Math. J.
+  **130** (2005), 127–167.
 -/
 
 open Set Module
