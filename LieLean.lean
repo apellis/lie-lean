@@ -8,7 +8,10 @@ import LieLean.Algebra.Lie.KacMoody.CasimirIrreducible
 import LieLean.Algebra.Lie.KacMoody.CategoryO
 import LieLean.Algebra.Lie.KacMoody.CategoryOSubmodule
 import LieLean.Algebra.Lie.KacMoody.Character
+import LieLean.Algebra.Lie.KacMoody.CharacterAntiInvariant
 import LieLean.Algebra.Lie.KacMoody.CharacterDenominator
+import LieLean.Algebra.Lie.KacMoody.CharacterFormula
+import LieLean.Algebra.Lie.KacMoody.CharacterFormula.Orbit
 import LieLean.Algebra.Lie.KacMoody.CharacterRing
 import LieLean.Algebra.Lie.KacMoody.CharacterVerma
 import LieLean.Algebra.Lie.KacMoody.CharacterWeyl
@@ -37,6 +40,8 @@ import LieLean.Algebra.Lie.KacMoody.SerrePresented.Syzygy
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.SyzygyEnveloping
 import LieLean.Algebra.Lie.KacMoody.Shapovalov
 import LieLean.Algebra.Lie.KacMoody.TensorRep
+import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra
+import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra.Injective
 import LieLean.Algebra.Lie.KacMoody.Triangular
 import LieLean.Algebra.Lie.KacMoody.Verma
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
