@@ -1,6 +1,9 @@
 import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.Basic
+import LieLean.Algebra.Lie.KacMoody.Integrable
+import LieLean.Algebra.Lie.KacMoody.IntegrableRoots
+import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
@@ -12,3 +15,4 @@ import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Basic
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
