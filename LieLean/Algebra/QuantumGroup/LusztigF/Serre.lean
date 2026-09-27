@@ -46,7 +46,7 @@ open QuantumGroup Matrix
 
 namespace LusztigF
 
-variable {k I : Type*} [Field k] [DecidableEq I] (D : CartanDatum I) (v : k)
+variable {k I : Type*} [Field k] [DecidableEq I] (D : LusztigCartanDatum I) (v : k)
 
 /-- The quantum Serre element `Σ_{r+s = 1-aᵢⱼ} (-1)^r θᵢ^{(s)} θⱼ θᵢ^{(r)}` of `'f`, with
 divided powers taken with respect to `vᵢ = v^{dᵢ}` ([Lus] 1.4.3 (check)). -/

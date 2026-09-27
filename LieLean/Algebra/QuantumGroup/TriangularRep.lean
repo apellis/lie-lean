@@ -30,7 +30,7 @@ open LusztigF TensorProduct
 
 namespace QuantumGroup
 
-variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : CartanDatum I}
+variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
 
 variable (k I Y) in
@@ -214,7 +214,7 @@ def opF (i : I) : Module.End k (TriSpace k I Y) := tri (LinearMap.mulLeft k (θ 
 def opK (ν : Y) : Module.End k (TriSpace k I Y) := tri (tau R v ν).toLinearMap (shift ν) 1
 
 /-- The constant `(vᵢ - vᵢ⁻¹)⁻¹`. -/
-abbrev cst (D : CartanDatum I) (i : I) : k := (v ^ D.d i - (v ^ D.d i)⁻¹)⁻¹
+abbrev cst (D : LusztigCartanDatum I) (i : I) : k := (v ^ D.d i - (v ^ D.d i)⁻¹)⁻¹
 
 /-- The part `y⁻ Eᵢ K_μ x⁺` of `Eᵢ y⁻ K_μ x⁺`. -/
 def opE0 (i : I) : Module.End k (TriSpace k I Y) :=

@@ -13,8 +13,9 @@ import LieLean.Algebra.QuantumGroup.QBinomial
 
 Let `(I, ·)` be a Cartan datum with Cartan matrix `aᵢⱼ = 2 (i·j)/(i·i)` and `dᵢ = (i·i)/2`, and
 let `(Y, …)` be a root datum of type `(I, ·)` ([Lus] 2.2.1 (check)): an abelian group `Y` (the
-coweight lattice) with elements `i ∈ Y` (the simple coroots, `CartanDatum.RootDatum.coroot`) and
-homomorphisms `⟨·, j'⟩ : Y → ℤ` (the simple roots, `CartanDatum.RootDatum.root`) such that
+coweight lattice) with elements `i ∈ Y` (the simple coroots,
+`LusztigCartanDatum.RootDatum.coroot`) and homomorphisms `⟨·, j'⟩ : Y → ℤ` (the simple roots,
+`LusztigCartanDatum.RootDatum.root`) such that
 `⟨i, j'⟩ = aᵢⱼ`. Let `k` be a field and `v ∈ k`, `vᵢ = v^{dᵢ}`, `K̃ᵢ = K_{dᵢ i}`.
 
 Following [Lus] 3.1.1 (check), `U = U_q(𝔤)` is the associative `k`-algebra with generators `Eᵢ`,
@@ -34,7 +35,7 @@ algebra on the generators.
 
 ## Main definitions
 
-* `CartanDatum.RootDatum`: a root datum of type `(I, ·)`.
+* `LusztigCartanDatum.RootDatum`: a root datum of type `(I, ·)`.
 * `QuantumGroup R v`: the algebra `U`; generators `QuantumGroup.E`, `QuantumGroup.F`,
   `QuantumGroup.K`, and `QuantumGroup.Kt i = K̃ᵢ`.
 * `QuantumGroup.Relations`: the relations (b)–(e) for elements of an arbitrary `k`-algebra.
@@ -59,7 +60,7 @@ variable {I : Type*}
 coweight lattice `Y`: elements `coroot i ∈ Y` and homomorphisms `root j : Y →+ ℤ` with
 `⟨i, j'⟩ = root j (coroot i) = aᵢⱼ`. (Lusztig's `X` is the dual lattice, which we do not
 need.) -/
-structure CartanDatum.RootDatum (D : CartanDatum I) (Y : Type*) [AddCommGroup Y] where
+structure LusztigCartanDatum.RootDatum (D : LusztigCartanDatum I) (Y : Type*) [AddCommGroup Y] where
   /-- The simple coroots `i ∈ Y`. -/
   coroot : I → Y
   /-- The simple roots `j' ∈ X = Hom(Y, ℤ)`. -/
@@ -75,7 +76,7 @@ inductive Generator (Y : Type*)
   | F : I → Generator Y
   | K : Y → Generator Y
 
-variable {k Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : CartanDatum I}
+variable {k Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
 
 /-- `K̃ᵢ = K_{dᵢ i}`: the element `dᵢ • coroot i ∈ Y`. -/
@@ -145,13 +146,13 @@ end QuantumGroup
 open QuantumGroup in
 /-- The quantized enveloping algebra `U = U_q(𝔤)` of a root datum `R` of type `(I, ·)` over a
 field `k`, at the parameter `v ∈ k` ([Lus] 3.1.1 (check)). -/
-def QuantumGroup {k Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : CartanDatum I}
+def QuantumGroup {k Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
     (R : D.RootDatum Y) (v : k) : Type _ :=
   RingQuot (Rel R v)
 
 namespace QuantumGroup
 
-variable {k Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : CartanDatum I}
+variable {k Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
 
 instance : Ring (QuantumGroup R v) := inferInstanceAs (Ring (RingQuot _))

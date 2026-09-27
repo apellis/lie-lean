@@ -43,7 +43,7 @@ open LusztigF
 
 namespace QuantumGroup
 
-variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : CartanDatum I}
+variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
 
 /-- The algebra homomorphism `'f → U`, `x ↦ x⁺`, `θᵢ ↦ Eᵢ` ([Lus] 3.1.2 (check)). -/
