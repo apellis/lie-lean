@@ -21,8 +21,8 @@ Kostant's codifferential `δ` (the transpose of the differential of `𝔫₊`-co
   along the Borel subalgebra.
 
 All sums are finite on each vector. Kostant's identity for the Laplacian `□ = dδ + δd` is proved
-in `LieLean.Algebra.Lie.KacMoody.Kostant.Weights`-independent form in
-`LieLean.Algebra.Lie.KacMoody.Kostant.Casimir` (check the file list below).
+in `LieLean.Algebra.Lie.KacMoody.Kostant.LaplacianIdentity` and
+`LieLean.Algebra.Lie.KacMoody.Kostant.Cocycle`.
 
 ## Main definitions
 

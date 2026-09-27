@@ -6,9 +6,32 @@ Authors: Alex Ellis
 import LieLean.Algebra.Lie.KacMoody.Kostant.Identity
 
 /-!
-# Kostant's identity
+# Kostant's identity in degree zero
 
-test
+With the notation of `LieLean.Algebra.Lie.KacMoody.Kostant.Identity`, let
+`R(y) = [□, ε(y)]` (`LieModule.ChevalleyEilenberg.laplacianComm`) for `y ∈ 𝔫₋`. We compute it on
+chains of degree zero: for a root vector `y ∈ 𝔤_{-β}` (`β > 0`) and `v ∈ V`,
+
+  `R(y)(1 ⊗ v) = y ⊗ (ν⁻¹(β) v + ((ρ|β) - ½(β|β)) v)`.
+
+*Proof (reconstructed).* `R(y)(1 ⊗ v) = θ(y) δ₀ v - δ₀(y v) - d G(y)(1 ⊗ v)`. Using
+[Kac] Lemma 2.4 the first two terms combine into the sum over the root string through `β`:
+the term `α = β` gives `y ⊗ ν⁻¹(β) v` (`casimirSum_lie_self`), the terms `α > β` cancel, and the
+terms `0 < α < β` give `-½ ∑ₖ [π e_{-α}, π[e_α, y]] ⊗ v` together with `d G(y)`. By the ρ-shift
+identity (`coe_rhoShiftSum`), `∑_{0<α<β} ∑ₖ [e_{-α}, [e_α, y]] = (2(ρ|β) - (β|β)) y`.
+
+## Main results
+
+* `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.laplacianComm_one_tmul_eq`: the formula
+  above.
+
+## References
+
+* B. Kostant, *Lie algebra cohomology and the generalized Borel–Weil theorem*, Ann. of Math.
+  **74** (1961), 329–387, §4 (check).
+* [GL] H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent.
+  Math. **34** (1976), 37–76, §§5–8 (check).
+* The computation above is reconstructed by us; the sources were not consulted.
 -/
 
 open Module LieModule LieModule.ChevalleyEilenberg TensorProduct ExteriorAlgebra
