@@ -7,6 +7,7 @@ import Mathlib.Algebra.Algebra.Hom
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+import Mathlib.Algebra.Module.BigOperators
 import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.FieldSimp
@@ -416,5 +417,33 @@ theorem qSerre_add (hv : v ≠ 0) {u w b b' : B} {m : ℕ} (hwu : w * u = v ^ 2 
   rw [hadd, ← serreAux_one, ← serreAux_one, serreAux_add_right hv hwu m 1 b (by simpa using hb),
     add_comm u w, serreAux_add_left hv huw m 1 b' (by simpa using hb'), serreAux_one,
     serreAux_one]
+
+@[simp] lemma qSerre_zero_right (m : ℕ) (a : B) : qSerre v m a 0 = 0 := by simp [qSerre]
+
+lemma qSerre_add_right (m : ℕ) (a b b' : B) :
+    qSerre v m a (b + b') = qSerre v m a b + qSerre v m a b' := by
+  simp only [qSerre, mul_add, add_mul, smul_add, Finset.sum_add_distrib]
+
+/-- `Σ_{r=0}^{m+1} (-1)^r [m+1, r]_v v^{-mr} = 0` ([Lus] 1.3.4 (check)). -/
+theorem sum_qBinomial_mul_inv_pow_eq_zero (hv : v ≠ 0) (m : ℕ) :
+    ∑ r ∈ range (m + 2), (-1) ^ r * qBinomial v (m + 1) r * (v⁻¹ ^ m) ^ r = 0 := by
+  have h := serreAux_succ (B := k) hv (v⁻¹ ^ m) m 1 1
+  have h1 : v⁻¹ ^ m * v ^ m = 1 := by rw [← mul_pow, inv_mul_cancel₀ hv, one_pow]
+  rw [h1, one_smul, mul_one, sub_self] at h
+  simpa [serreAux] using h
+
+/-- If `b a = v^{-m} a b`, then the Serre element `S(a, b)` of degree `m + 1` vanishes. -/
+theorem qSerre_eq_zero_of_mul_eq_smul (hv : v ≠ 0) {m : ℕ} {a b : B}
+    (h : b * a = v⁻¹ ^ m • (a * b)) : qSerre v (m + 1) a b = 0 := by
+  have key : ∀ r ≤ m + 1, a ^ (m + 1 - r) * b * a ^ r = (v⁻¹ ^ m) ^ r • (a ^ (m + 1) * b) := by
+    intro r hr
+    rw [mul_assoc, mul_pow_of_mul_eq_smul h, mul_smul_comm, ← mul_assoc, ← pow_add,
+      Nat.sub_add_cancel hr]
+  calc qSerre v (m + 1) a b
+      = ∑ r ∈ range (m + 2), ((-1) ^ r * qBinomial v (m + 1) r * (v⁻¹ ^ m) ^ r) •
+          (a ^ (m + 1) * b) := by
+        refine Finset.sum_congr rfl fun r hr ↦ ?_
+        rw [key r (Nat.lt_succ_iff.1 (Finset.mem_range.1 hr)), smul_smul]
+    _ = 0 := by rw [← Finset.sum_smul, sum_qBinomial_mul_inv_pow_eq_zero hv, zero_smul]
 
 end QuantumGroup
