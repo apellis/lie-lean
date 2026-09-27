@@ -9,6 +9,7 @@ import LieLean.Algebra.Lie.Homology.Weights
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.BGG.Character
 import LieLean.Algebra.Lie.KacMoody.BGG.LowDegree
+import LieLean.Algebra.Lie.KacMoody.BGG.Sl2
 import LieLean.Algebra.Lie.KacMoody.BGG.Verma
 import LieLean.Algebra.Lie.KacMoody.Basic
 import LieLean.Algebra.Lie.KacMoody.Blocks
