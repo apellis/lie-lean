@@ -378,7 +378,8 @@ without Matsumoto) with basis `T w`, `T_simple_mul_T`, `T_mul_T`, quadratic rela
 `rPoly_self`, triangularity via subwords (`exists_sublist_of_rPoly_ne_zero`), polynomiality.
 General Coxeter facts: strong exchange condition `CoxeterSystem.mem_rightInvSeq_iff`,
 `exists_mul_eq_wordProd_eraseIdx` (`LieLean/GroupTheory/Coxeter/Exchange.lean`),
-`induction_mul_simple` (now in `Coxeter/Exchange.lean`). Presentation (`Hecke/Presentation.lean`): `IwahoriHeckeAlgebra.lift`
+`induction_mul_simple` (now in `Coxeter/Exchange.lean`). Presentation
+(`Hecke/Presentation.lean`): `IwahoriHeckeAlgebra.lift`
 (quadratic + braid relations, via Matsumoto), `equivHeckeAlgebra` with the concrete
 `CoxeterMatrix.HeckeAlgebra`; involutions (`Hecke/Involutions.lean`): `ind`, `sgn`,
 `antiInvolution` (`T_w ↦ T_{w⁻¹}`), `signTwist`, `barSignTwist`; parabolic subalgebras
