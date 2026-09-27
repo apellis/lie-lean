@@ -98,6 +98,16 @@ def mapEquiv (e : L ≃ₗ⁅R⁆ L') :
 
 end UniversalEnvelopingAlgebra
 
+/-! ### The exponent in the Serre relations -/
+
+/-- For a generalized Cartan matrix and `i ≠ j`, the exponent `max(-aᵢⱼ, 0) + 1` used in
+`Matrix.serreAssocElem` and `Matrix.serreLieElem` is `1 - aᵢⱼ`. -/
+lemma Matrix.IsGeneralizedCartan.toNat_neg_add_one {ι : Type*} {A : Matrix ι ι ℤ}
+    (hA : A.IsGeneralizedCartan) {i j : ι} (hij : i ≠ j) :
+    (-A i j).toNat + 1 = (1 - A i j).toNat := by
+  have := hA.toNat_neg_eq hij
+  omega
+
 /-! ### Quotients of the free Lie algebra by the Serre ideal -/
 
 namespace Matrix.SerreLieAlgebra
