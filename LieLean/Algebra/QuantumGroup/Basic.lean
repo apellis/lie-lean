@@ -232,6 +232,23 @@ theorem relations : Relations R v (E R v) (F R v) (KHom R v) where
   serre_E _ _ h := serre_E R v h
   serre_F _ _ h := serre_F R v h
 
+/-- Induction on `U`: a property of elements of `U` that holds for scalars and the generators
+and is closed under sums and products holds everywhere. -/
+theorem induction_on {P : QuantumGroup R v → Prop} (x : QuantumGroup R v)
+    (algebraMap : ∀ c, P (algebraMap k _ c)) (E : ∀ i, P (E R v i)) (F : ∀ i, P (F R v i))
+    (K : ∀ μ, P (K R v μ)) (add : ∀ x y, P x → P y → P (x + y))
+    (mul : ∀ x y, P x → P y → P (x * y)) : P x := by
+  obtain ⟨y, rfl⟩ := RingQuot.mkAlgHom_surjective k (Rel R v) x
+  induction y using FreeAlgebra.induction with
+  | grade0 c => rw [AlgHom.commutes]; exact algebraMap c
+  | grade1 g =>
+    cases g with
+    | E i => exact E i
+    | F i => exact F i
+    | K μ => exact K μ
+  | mul a b ha hb => rw [map_mul]; exact mul _ _ ha hb
+  | add a b ha hb => rw [map_add]; exact add _ _ ha hb
+
 section lift
 
 variable {R v} {A : Type*} [Ring A] [Algebra k A]

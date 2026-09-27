@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import Mathlib.Algebra.Algebra.Hom
+import Mathlib.Algebra.Algebra.Opposite
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Algebra.BigOperators.GroupWithZero.Action
@@ -47,7 +48,12 @@ reconstruction and avoids the usual expansion into `q`-multinomials: writing
 * `QuantumGroup.qBinomial_mul_qFactorial_mul_qFactorial`: `[n j]! [j]! [n-j]! = [n]!`.
 * `QuantumGroup.qBinomial_one`: at `v = 1` the quantum binomials are the binomial coefficients.
 * `QuantumGroup.qInt_ne_zero`: `[n]_v ≠ 0` if `v^{2n} ≠ 1`.
+* `QuantumGroup.qBinomial_symm`: `[n, n-k]_v = [n k]_v`.
 * `QuantumGroup.qSerre_add`: the additivity of the Serre element described above.
+* `QuantumGroup.qSerre_eq_zero_of_mul_eq_smul`: `S(a, b) = 0` if `b a = v^{-m} a b`
+  (the identity [Lus] 1.3.4 (check)).
+* `QuantumGroup.qSerre_op`, `QuantumGroup.qSerre_mul_mul`: Serre elements in the opposite
+  algebra and of `q`-twisted generators.
 
 ## References
 
@@ -141,18 +147,17 @@ lemma qInt_succ (n : ℕ) : qInt v (n + 1) = v⁻¹ * qInt v n + v ^ n := by
   rw [qInt_add]; simp [qInt]
 
 /-- `(v - v⁻¹) [n]_v = vⁿ - v⁻ⁿ`. -/
-lemma qInt_mul_sub (hv : v ≠ 0) (n : ℕ) : (v - v⁻¹) * qInt v n = v ^ n - v⁻¹ ^ n := by
+lemma qInt_mul_sub (n : ℕ) : (v - v⁻¹) * qInt v n = v ^ n - v⁻¹ ^ n := by
   induction n with
   | zero => simp
   | succ n ih =>
-    rw [qInt_succ, mul_add, mul_left_comm, ih, pow_succ, pow_succ]
-    field_simp
+    rw [qInt_succ, mul_add, mul_left_comm, ih]
     ring
 
 /-- `[n]_v ≠ 0` as soon as `v^{2n} ≠ 1`. -/
 theorem qInt_ne_zero (hv : v ≠ 0) {n : ℕ} (h : v ^ (2 * n) ≠ 1) : qInt v n ≠ 0 := by
   intro h0
-  have := qInt_mul_sub hv n
+  have := qInt_mul_sub (v := v) n
   rw [h0, mul_zero, eq_comm, sub_eq_zero] at this
   apply h
   rw [two_mul, pow_add]
@@ -194,6 +199,61 @@ theorem qBinomial_mul_qFactorial_mul_qFactorial {n j : ℕ} (hj : j ≤ n) :
         linear_combination (-qFactorial v n) * key +
           (v⁻¹ ^ (j + 1) * qInt v (n - (j + 1) + 1)) * h1 +
           (v ^ (n - (j + 1) + 1) * qInt v (j + 1)) * h2
+
+variable (v) in
+lemma qBinomial_one_right (n : ℕ) : qBinomial v n 1 = qInt v n := by
+  induction n with
+  | zero => simp
+  | succ n ih => rw [qBinomial_succ_succ, ih, qInt_succ]; simp
+
+variable (v) in
+/-- `(v^{n-k} - v^{k-n}) [n k]_v = (v^{k+1} - v^{-k-1}) [n, k+1]_v`, i.e. `[n-k] [n k] = [k+1]
+[n, k+1]` up to the factor `v - v⁻¹`. -/
+theorem qBinomial_mul_sub (n k : ℕ) :
+    (v ^ (n - k) - v⁻¹ ^ (n - k)) * qBinomial v n k =
+      (v ^ (k + 1) - v⁻¹ ^ (k + 1)) * qBinomial v n (k + 1) := by
+  induction n generalizing k with
+  | zero => cases k <;> simp
+  | succ n ih =>
+    cases k with
+    | zero => simp [qBinomial_one_right, qInt_mul_sub]
+    | succ k =>
+      rcases le_or_gt n k with hnk | hnk
+      · rw [qBinomial_eq_zero_of_lt v (by omega : n + 1 < k + 1 + 1),
+          show n + 1 - (k + 1) = 0 by omega]
+        simp
+      · obtain ⟨p, hp⟩ : ∃ p, n - k = p + 1 := ⟨n - k - 1, by omega⟩
+        have h1 := ih k
+        have h2 := ih (k + 1)
+        rw [hp] at h1
+        rw [show n - (k + 1) = p by omega] at h2
+        rw [show n + 1 - (k + 1) = p + 1 by omega, qBinomial_succ_succ, qBinomial_succ_succ, hp,
+          show n - (k + 1) = p by omega]
+        linear_combination (v ^ (p + 1)) * h1 + (v⁻¹ ^ (k + 2)) * h2
+
+variable (v) in
+/-- The symmetry `[n, n-k]_v = [n k]_v` of quantum binomial coefficients. -/
+theorem qBinomial_symm {n k : ℕ} (hk : k ≤ n) : qBinomial v n (n - k) = qBinomial v n k := by
+  induction n generalizing k with
+  | zero => obtain rfl : k = 0 := by omega
+            simp
+  | succ n ih =>
+    cases k with
+    | zero => simp
+    | succ k =>
+      rcases Nat.eq_or_lt_of_le hk with h | h
+      · obtain rfl : k = n := by omega
+        simp
+      · obtain ⟨p, hp⟩ : ∃ p, n - k = p + 1 := ⟨n - k - 1, by omega⟩
+        rw [show n + 1 - (k + 1) = p + 1 by omega, qBinomial_succ_succ, qBinomial_succ_succ,
+          show n - p = k + 1 by omega, hp]
+        have e1 : qBinomial v n (p + 1) = qBinomial v n k := by rw [← hp]; exact ih (by omega)
+        have e2 : qBinomial v n p = qBinomial v n (k + 1) := by
+          rw [show p = n - (k + 1) by omega]; exact ih (by omega)
+        have h1 := qBinomial_mul_sub v n k
+        rw [hp] at h1
+        rw [e1, e2]
+        linear_combination -h1
 
 /-! ### Quantum Serre elements -/
 
@@ -445,5 +505,103 @@ theorem qSerre_eq_zero_of_mul_eq_smul (hv : v ≠ 0) {m : ℕ} {a b : B}
         refine Finset.sum_congr rfl fun r hr ↦ ?_
         rw [key r (Nat.lt_succ_iff.1 (Finset.mem_range.1 hr)), smul_smul]
     _ = 0 := by rw [← Finset.sum_smul, sum_qBinomial_mul_inv_pow_eq_zero hv, zero_smul]
+
+/-! ### Opposite algebras and twisted generators -/
+
+/-- Serre elements in the opposite algebra: `S(aᵒᵖ, bᵒᵖ) = (-1)^m S(a, b)ᵒᵖ`. -/
+theorem qSerre_op (m : ℕ) (a b : B) : qSerre v m (MulOpposite.op a) (MulOpposite.op b) =
+    (-1 : k) ^ m • MulOpposite.op (qSerre v m a b) := by
+  simp only [qSerre, ← MulOpposite.op_pow, ← MulOpposite.op_mul, Finset.op_sum,
+    MulOpposite.op_smul, Finset.smul_sum, smul_smul]
+  rw [← Finset.sum_range_reflect]
+  refine Finset.sum_congr rfl fun r hr ↦ ?_
+  have hr : r ≤ m := Nat.lt_succ_iff.1 (Finset.mem_range.1 hr)
+  rw [show m + 1 - 1 - r = m - r by omega, show m - (m - r) = r by omega, qBinomial_symm v hr]
+  rw [← mul_assoc (a ^ (m - r))]
+  congr 1
+  have h1 : (-1 : k) ^ m = (-1) ^ (m - r) * (-1) ^ r := by rw [← pow_add, Nat.sub_add_cancel hr]
+  have h2 : (-1 : k) ^ r * (-1) ^ r = 1 := by rw [← pow_add, ← two_mul, pow_mul]; simp
+  rw [h1]
+  linear_combination (-((-1) ^ (m - r) * qBinomial v m r)) * h2
+
+lemma pow_mul_pow_of_mul_eq_smul {w a : B} {t : k} (h : w * a = t • (a * w)) (m n : ℕ) :
+    w ^ m * a ^ n = t ^ (m * n) • (a ^ n * w ^ m) := by
+  induction m with
+  | zero => simp
+  | succ m ih =>
+    rw [pow_succ, mul_assoc, mul_pow_of_mul_eq_smul h, mul_smul_comm, ← mul_assoc, ih,
+      smul_mul_assoc, smul_smul, mul_assoc, ← pow_succ, ← pow_add, Nat.succ_mul, add_comm]
+
+lemma mul_pow_eq_smul {g e : B} {t : k} (ht : t ≠ 0) (h : g * e = t • (e * g)) (n : ℕ) :
+    (g * e) ^ n = t⁻¹ ^ n.choose 2 • (g ^ n * e ^ n) := by
+  have heg : e * g = t⁻¹ • (g * e) := by rw [h, smul_smul, inv_mul_cancel₀ ht, one_smul]
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    have hen : e ^ n * g = t⁻¹ ^ n • (g * e ^ n) := by
+      simpa using pow_mul_pow_of_mul_eq_smul heg n 1
+    calc (g * e) ^ (n + 1) = (g * e) ^ n * (g * e) := pow_succ _ _
+      _ = t⁻¹ ^ n.choose 2 • (g ^ n * (e ^ n * g) * e) := by
+        rw [ih]; simp only [smul_mul_assoc, mul_assoc]
+      _ = (t⁻¹ ^ n.choose 2 * t⁻¹ ^ n) • (g ^ n * g * (e ^ n * e)) := by
+        rw [hen]; simp only [smul_mul_assoc, mul_smul_comm, smul_smul, mul_assoc]
+      _ = _ := by
+        rw [← pow_succ, ← pow_succ, Nat.choose_succ_succ', Nat.choose_one_right,
+          mul_comm (t⁻¹ ^ n.choose 2), ← pow_add]
+
+private lemma choose_two_add (a b : ℕ) : (a + b).choose 2 = a.choose 2 + b.choose 2 + a * b := by
+  induction b with
+  | zero => simp
+  | succ b ih =>
+    rw [← add_assoc, Nat.choose_succ_succ', Nat.choose_one_right, ih, Nat.choose_succ_succ',
+      Nat.choose_one_right]
+    ring
+
+/-- Serre elements of twisted generators: if `g e = t e g`, `e h = s h e`, `f g = s g f` and
+`g h = h g`, then `S(g e, h f) = t^{-C(M,2)} s^M g^M h S(e, f)`. -/
+theorem qSerre_mul_mul {t s : k} (ht : t ≠ 0) {g e h f : B} (hge : g * e = t • (e * g))
+    (heh : e * h = s • (h * e)) (hfg : f * g = s • (g * f)) (hgh : g * h = h * g) (M : ℕ) :
+    qSerre v M (g * e) (h * f) = (t⁻¹ ^ M.choose 2 * s ^ M) • (g ^ M * h * qSerre v M e f) := by
+  have heg : e * g = t⁻¹ • (g * e) := by rw [hge, smul_smul, inv_mul_cancel₀ ht, one_smul]
+  simp only [qSerre, Finset.mul_sum, Finset.smul_sum, mul_smul_comm, smul_smul]
+  refine Finset.sum_congr rfl fun r hr ↦ ?_
+  have hr : r ≤ M := Nat.lt_succ_iff.1 (Finset.mem_range.1 hr)
+  have key : (g * e) ^ (M - r) * (h * f) * (g * e) ^ r =
+      (t⁻¹ ^ M.choose 2 * s ^ M) • (g ^ M * h * (e ^ (M - r) * f * e ^ r)) := by
+    rw [mul_pow_eq_smul ht hge, mul_pow_eq_smul ht hge]
+    have e1 : e ^ (M - r) * h = s ^ (M - r) • (h * e ^ (M - r)) := by
+      simpa using pow_mul_pow_of_mul_eq_smul heh (M - r) 1
+    have e2 : f * g ^ r = s ^ r • (g ^ r * f) := by
+      simpa using pow_mul_pow_of_mul_eq_smul hfg 1 r
+    have e3 : e ^ (M - r) * g ^ r = t⁻¹ ^ ((M - r) * r) • (g ^ r * e ^ (M - r)) :=
+      pow_mul_pow_of_mul_eq_smul heg (M - r) r
+    have e4 : g ^ (M - r) * h * g ^ r = g ^ M * h := by
+      rw [mul_assoc, ← ((Commute.pow_left hgh r).eq), ← mul_assoc, ← pow_add,
+        Nat.sub_add_cancel hr]
+    calc t⁻¹ ^ (M - r).choose 2 • (g ^ (M - r) * e ^ (M - r)) * (h * f) *
+          t⁻¹ ^ r.choose 2 • (g ^ r * e ^ r)
+        = (t⁻¹ ^ (M - r).choose 2 * t⁻¹ ^ r.choose 2) •
+            (g ^ (M - r) * (e ^ (M - r) * h) * (f * g ^ r) * e ^ r) := by
+          simp only [smul_mul_assoc, mul_smul_comm, smul_smul, mul_assoc]
+          congr 1; ring
+      _ = (t⁻¹ ^ (M - r).choose 2 * t⁻¹ ^ r.choose 2 * s ^ (M - r) * s ^ r) •
+            (g ^ (M - r) * h * (e ^ (M - r) * g ^ r) * f * e ^ r) := by
+          rw [e1, e2]
+          simp only [smul_mul_assoc, mul_smul_comm, smul_smul, mul_assoc]
+          congr 1; ring
+      _ = (t⁻¹ ^ (M - r).choose 2 * t⁻¹ ^ r.choose 2 * s ^ (M - r) * s ^ r *
+            t⁻¹ ^ ((M - r) * r)) • (g ^ (M - r) * h * g ^ r * e ^ (M - r) * f * e ^ r) := by
+          rw [e3]
+          simp only [smul_mul_assoc, mul_smul_comm, smul_smul, mul_assoc]
+      _ = _ := by
+          rw [e4]
+          congr 1
+          · have hM : M.choose 2 = (M - r).choose 2 + r.choose 2 + (M - r) * r := by
+              rw [← choose_two_add, Nat.sub_add_cancel hr]
+            have hs : s ^ M = s ^ (M - r) * s ^ r := by rw [← pow_add, Nat.sub_add_cancel hr]
+            rw [hM, hs, pow_add, pow_add]
+            ring
+          · simp only [mul_assoc]
+  rw [key, smul_smul, mul_comm ((-1) ^ r * qBinomial v M r)]
 
 end QuantumGroup
