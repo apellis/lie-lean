@@ -19,7 +19,8 @@ divisible by tⁱ for all w ∈ U(𝔫₋)}`.
 It is a decreasing filtration of `M(λ₀)` by submodules with `M(λ₀)^0 = M(λ₀)` and
 `M(λ₀)^1 = M'(λ₀)`, the maximal proper submodule. (The usual definition works over the local ring
 `K[t]_{(t)}`; with polynomial families one gets the same spaces, and the order formula of
-`KacMoody/Jantzen/Weight.lean` relates them to the Shapovalov determinant.)
+`KacMoody/Jantzen/Weight.lean` relates them to the Shapovalov determinant.) The Jantzen sum
+formula is proved in `KacMoody/Jantzen/SumFormula.lean`.
 
 ## Main definitions
 
