@@ -194,7 +194,7 @@ modules where `𝔫₊` acts locally finitely (`IsPosFinite`, e.g. any module in
   form); it commutes with the action ([Kac] Thm. 2.6) and acts on a highest-weight module of
   highest weight `λ` by `(λ + 2ρ | λ)` ([Kac] Cor. 2.6).
 
-### M6. Category 𝒪 and highest-weight modules  `[~]`  ([Kac] Ch. 9)
+### M6. Category 𝒪 and highest-weight modules  `[x]`  ([Kac] Ch. 9)
 
 Done (`Algebra/Lie/KacMoody/{Triangular,Verma*,CategoryO}.lean`): subalgebras `nNeg`, `nPos`,
 `cartan`, `borel`, `isCompl_nNeg_borel`; `VermaModule` with universal property
@@ -210,7 +210,11 @@ Shapovalov form (§9.4, `KacMoody/Shapovalov.lean`): `transpose` (σ = -ω), `en
 `TwistedDual`, `VermaModule.contravariantForm` with `existsUnique_contravariantForm`,
 `isSymm_contravariantForm`, `contravariantForm_eq_zero_of_ne`, `mem_maxSubmodule_iff` (radical =
 `M'(Λ)`), `nondegenerate_weightSpaceForm_iff`, `IrreducibleModule.nondegenerate_contravariantForm`.
-Not done: composition factors (Prop. 9.8) (in progress); Kac–Kazhdan determinant (not needed).
+Composition factors (`KacMoody/CompositionSeries*.lean`): `IsLocalCompositionSeries`,
+`IsCategoryO.exists_isLocalCompositionSeries` (Lemma 9.6), `IsCategoryO.multiplicity` with
+`count_factorWeights_eq_multiplicity` (independence of the series, §9.6), Prop. 9.8
+(`mem_cone_and_eq_of_mem_factorWeights`, `mem_cone_and_eq_of_multiplicity_ne_zero`, character form
+`coeffAt_denominator_mul_character_ne_zero`). Not done (not needed): Kac–Kazhdan determinant.
 
 
 - Category `𝒪` ([Kac] §9.1): `𝔥`-diagonalizable, finite-dimensional weight spaces, weights in a
@@ -303,7 +307,8 @@ the general Kac–Moody results give.
 - `LieSubalgebra.lieSpan_toSubmodule_eq_span_adProd` (`LieLean/Algebra/Lie/Subalgebra.lean`).
 - `IsSl2Triple` lemmas in `KacMoody/IntegrableWeyl.lean`; `LieModule.locallyNilpotentSubmodule`,
   `exists_toEnd_pow_eq_zero_of_lieSpan` in `KacMoody/Integrable.lean`.
-- `LieModuleEquiv.ofBijective` (`KacMoody/CompleteReducibility.lean`).
+- `LieModuleEquiv.ofBijective` (`KacMoody/CompleteReducibility.lean`); `LieSubmodule.Subquotient`,
+  `LieSubmodule.Quotient.nonempty_lieModuleEquiv_of_surjective` (`KacMoody/CompositionSeries.lean`).
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
 - `Matrix.dotProduct_diagonal_mul_mulVec_reflection` (`LinearAlgebra/Matrix/Cartan/FiniteType.lean`).
 - `UniversalEnvelopingAlgebra.ker_map_eq_span`, `LieHom.descend`
