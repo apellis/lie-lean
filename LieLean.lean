@@ -39,6 +39,7 @@ import LieLean.Algebra.Lie.KacMoody.IntegrableRoots
 import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
 import LieLean.Algebra.Lie.KacMoody.InvariantForm
 import LieLean.Algebra.Lie.KacMoody.InvariantFormAux
+import LieLean.Algebra.Lie.KacMoody.Jantzen
 import LieLean.Algebra.Lie.KacMoody.Jantzen.OrderFormula
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Criterion
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Determinant
