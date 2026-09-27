@@ -2,7 +2,9 @@ import LieLean.Algebra.Lie.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.Basic
+import LieLean.Algebra.Lie.KacMoody.CasimirEigenvalue
 import LieLean.Algebra.Lie.KacMoody.CategoryO
+import LieLean.Algebra.Lie.KacMoody.CompleteReducibility
 import LieLean.Algebra.Lie.KacMoody.HighestWeight
 import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
 import LieLean.Algebra.Lie.KacMoody.Integrable
