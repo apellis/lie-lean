@@ -5,8 +5,10 @@ and the references in `ROADMAP.md` are all that is needed.
 
 ## Scope
 
-- Lie theory only: Lie algebras, their enveloping algebras and representations, Kac–Moody
-  algebras, root systems and Weyl groups as they arise there. Nothing farther afield.
+- Lie theory and the representation-theoretic structures used in categorification: Lie algebras,
+  their enveloping algebras and representations, Kac–Moody algebras, root systems, Weyl and
+  Coxeter groups, Iwahori–Hecke algebras and Kazhdan–Lusztig theory, category `𝒪`, Lie algebra
+  homology, crystals, and quantum groups (Phase 2 of `ROADMAP.md`). Nothing farther afield.
 - Use Mathlib wherever it already has the concept or result. Before defining anything, search
   Mathlib (at the pinned version) for an existing definition; extend it rather than duplicating it.
 - Everything should be written so it can be upstreamed to Mathlib with minimal changes.

@@ -21,6 +21,10 @@ of `𝔤_α` and `𝔤_{-α}`; the sum over `α > 0` is finite on each vector. W
 `KacMoody/CasimirForm.lean` for all root spaces including `𝔤_0 = 𝔥`; by
 `IsStandardForm.casimirSum_eq_of_basis` the operator does not depend on these choices.
 
+Kac's Ch. 2 only assumes `A` symmetrizable, with `ρ` normalized by `⟨ρ, αᵢ^∨⟩ = aᵢᵢ/2`. Here `ρ`
+(`Matrix.Symmetrization.rho`) is normalized by `⟨ρ, αᵢ^∨⟩ = 1`, which agrees with Kac's when
+`aᵢᵢ = 2`; this is why results about the Casimir operator assume `A.IsGeneralizedCartan`.
+
 ## Main definitions
 
 * `Matrix.Realization.KacMoodyAlgebra.IsPosFinite`: for every `v`, `𝔤_α v = 0` for all but

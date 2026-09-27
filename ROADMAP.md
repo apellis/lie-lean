@@ -18,6 +18,24 @@ Secondary references:
   with complete proofs, Chapters 14–19).
 - **[Bou]** N. Bourbaki, *Lie groups and Lie algebras*, Ch. I §2.7 (PBW).
 
+Phase 2 references (see "Phase 2" below):
+- **[HumC]** J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990 (Bruhat order
+  §5.9–5.11, parabolic subgroups §1.10/§5.5, Hecke algebras §7.1–7.3, Kazhdan–Lusztig §7.9–7.12).
+- **[BB]** A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231 (subword property
+  Thm. 2.2.2, Matsumoto's theorem Thm. 3.3.1, Kazhdan–Lusztig polynomials Ch. 5).
+- **[KL]** D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*, Invent.
+  Math. **53** (1979), 165–184.
+- **[HumO]** J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category
+  𝒪*, GSM 94 (Verma homomorphisms Ch. 4, BGG resolution Ch. 6, Jantzen filtration Ch. 5).
+- **[GL]** H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*,
+  Invent. Math. **34** (1976), 37–76; **[Kum]** S. Kumar, *Kac–Moody groups, their flag varieties
+  and representation theory*, Progr. Math. 204 (Ch. 3: 𝔫-homology, BGG–Kempf resolution).
+- **[Kas]** M. Kashiwara, *On crystal bases*, CMS Conf. Proc. 16 (1995); **[Lit]** P. Littelmann,
+  *Paths and root operators in representation theory*, Ann. of Math. **142** (1995), 499–525;
+  **[HK]** J. Hong, S.-J. Kang, *Introduction to quantum groups and crystal bases*, GSM 42.
+- **[Lus]** G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993; **[Jan]** J. C. Jantzen,
+  *Lectures on quantum groups*, GSM 6.
+
 Throughout, `K` is a field of characteristic zero unless stated otherwise (Kac works over `ℂ`;
 all arguments used here work over any field of characteristic zero). Prove results over more
 general rings when the argument allows it.
@@ -320,10 +338,67 @@ Mathlib's Geck construction and `Matrix.ToLieAlgebra` (Serre's theorem, [Hum] §
 reducibility for finite-dimensional modules of semisimple Lie algebras ([Hum] §6). These are
 valuable for Mathlib on their own and may be taken up whenever convenient.
 
+## Phase 2: towards categorification
+
+Phase 1 (M1–M9, the four target theorems) is complete. Phase 2 builds the decategorified
+structures that categorification lifts. KLR (quiver Hecke) algebras, 2-Kac–Moody algebras and
+categorical actions are **not** part of Phase 2.
+
+### M10. Coxeter groups: Bruhat order, parabolic subgroups, Matsumoto  `[ ]`  ([HumC] Ch. 5, [BB])
+
+For a general Coxeter system (Mathlib's `CoxeterSystem`; applies to our
+`Realization.coxeterSystem`):
+the Bruhat order (via reflections `T` and length), the subword property, chain property and
+`w ≤ w' ↔ w⁻¹ ≤ w'⁻¹`; Matsumoto's theorem (reduced words are connected by braid moves);
+standard parabolic subgroups `W_J`, minimal coset representatives `W^J` and `w = w^J w_J`;
+the longest element for finite `W`.
+
+### M11. Iwahori–Hecke algebras and Kazhdan–Lusztig theory  `[ ]`  ([HumC] Ch. 7, [KL], [BB] Ch. 5)
+
+The Hecke algebra `𝓗(W)` over `ℤ[v, v⁻¹]` with standard basis `T_w` (constructed without
+Matsumoto via the regular representation, [HumC] §7.1–7.3), the quadratic relation, the bar
+involution, `R`-polynomials; existence and uniqueness of the Kazhdan–Lusztig basis `C'_w`
+([KL] Thm. 1.1), KL polynomials `P_{y,w}` (degree bound, `P_{w,w} = 1`, `P_{y,w} = 0` unless
+`y ≤ w`), specialization `v = 1` to `ℤ[W]`.
+
+### M12. Deeper category 𝒪  `[ ]`  ([Kac] §9, [HumO], [KK])
+
+For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
+homomorphisms are injective and `dim Hom(M(μ), M(λ)) ≤ 1`; the embeddings `M(rᵢ·λ) ↪ M(λ)`;
+the character identity `ch V = Σ_μ [V : L(μ)] ch L(μ)` in `ℰ`; Grothendieck group of 𝒪
+identified with (a subgroup of) `ℰ`; the Kac–Kazhdan determinant formula and the Kac–Kazhdan
+criterion for `[M(λ) : L(μ)] ≠ 0` ([KK]); the Jantzen filtration and sum formula ([HumO] §5.3);
+the BGG resolution of `L(Λ)` for `Λ` dominant integral ([HumO] Ch. 6; [Kum] Ch. 3 in
+Kac–Moody generality).
+
+### M13. Lie algebra homology and Kostant's theorem  `[ ]`  ([GL], [Kum] Ch. 3)
+
+The Chevalley–Eilenberg complex of a Lie algebra with coefficients in a module (all degrees,
+extending `ChevalleyEilenberg.lean`), `𝔥`-weight decomposition for `𝔫₋`-homology; the
+Garland–Lepowsky theorem (Kostant's theorem in finite type): for `Λ` dominant integral,
+`H_k(𝔫₋, L(Λ)) ≅ ⊕_{w ∈ W, ℓ(w) = k} K_{w(Λ+ρ)-ρ}` as `𝔥`-modules; the Euler characteristic
+recovers the Weyl–Kac formula.
+
+### M14. Crystals  `[ ]`  ([Kas], [Lit], [HK])
+
+Abstract (Kashiwara) crystals for a Cartan datum: morphisms, the tensor product rule (signature
+rule), seminormal/normal crystals, Kashiwara's action of `W` on normal crystals; Littelmann's
+path model: LS paths, root operators, the crystal `B(λ)` for `λ` dominant integral, and
+`ch B(λ) = ch L(λ)` (via the Weyl–Kac formula of M8).
+
+### M15. Quantum groups  `[ ]`  ([Lus], [Jan], [HK])
+
+For symmetrizable `A`: `U_q(𝔤)` over `ℚ(v)` (Drinfeld–Jimbo presentation with the realization's
+`𝔥`, or Lusztig's `K_μ`), Hopf algebra structure, triangular decomposition; Lusztig's algebra
+`f` with its bilinear form and the quantum Serre relations; Lusztig's braid group action `Tᵢ`;
+highest-weight modules `L_q(λ)` and equality of characters with `L(λ)` for `λ` dominant
+integral; Lusztig's canonical basis / Kashiwara's global basis if reachable.
+
 ## Non-goals
 
-Anything outside Lie theory; quantum groups; geometric methods; affine-specific theory beyond what
-the general Kac–Moody results give.
+Anything outside the scope in `AGENTS.md`; geometric methods (perverse sheaves, flag varieties);
+KLR algebras, 2-Kac–Moody algebras and categorical actions (for now); affine-specific theory
+beyond what the general Kac–Moody results give.
 
 ## Upstreaming candidates
 
