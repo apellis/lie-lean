@@ -247,7 +247,7 @@ Composition factors (`KacMoody/CompositionSeries*.lean`): `IsLocalCompositionSer
 `IsCategoryO.exists_isLocalCompositionSeries` (Lemma 9.6), `IsCategoryO.multiplicity` with
 `count_factorWeights_eq_multiplicity` (independence of the series, §9.6), Prop. 9.8
 (`mem_cone_and_eq_of_mem_factorWeights`, `mem_cone_and_eq_of_multiplicity_ne_zero`, character form
-`coeffAt_denominator_mul_character_ne_zero`). Not done (not needed): Kac–Kazhdan determinant.
+`coeffAt_denominator_mul_character_ne_zero`). Kac–Kazhdan determinant and criterion: see M12.
 
 
 - Category `𝒪` ([Kac] §9.1): `𝔥`-diagonalizable, finite-dimensional weight spaces, weights in a
@@ -417,8 +417,16 @@ Translation}.lean`): Casimir block decomposition `IsCategoryO.isInternal_casimir
 `IrreducibleModule.exists_isInternal_tensorProduct` (`L(Λ) ⊗ L(Λ')` decomposes);
 `IsStandardForm.translation` with exactness on characters `character_translation_eq_add`,
 `denominator_mul_character_tensorProduct_verma`. Open: [HumO] Thm. 7.6 (needs linkage finer than
-the Casimir eigenvalue). In progress: Kac–Kazhdan determinant (leading term and degree done),
-Jantzen filtration, BGG resolution.
+the Casimir eigenvalue). Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
+`KacMoody/Jantzen*.lean`; `[IsAlgClosed K]` as in [KK], who work over `ℂ`): determinant formula
+`VermaModule.shapovalovDet_eq` ([KK] Thm. 1: `D_β(λ) = c ∏_{α>0} ∏_{n≥1} ((λ+ρ|α) -
+n(α|α)/2)^{mult α · P(β-nα)}`; also `exists_shapovalovDet_eq_prod_kkPairs/_kkIdx`), criterion
+`maxSubmodule_inf_weightSpace_ne_bot_iff`, `kostantPartition_ne_zero_iff`; Jantzen filtration
+`jantzen` (`jantzen_one : M^1 = M'`), order formula `sum_finrank_jantzen_inf_weightSpace`, sum
+formula `finsum_finrank_jantzen_inf_weightSpace_eq_sum_verma` (for a transversal direction `δ`).
+Proof reconstructed (Jantzen filtration + leading terms, [KK] §3 style); generic polynomial
+factorization lemmas in `KacKazhdan/{Hyperplane,Factorization}.lean`. Remaining: [KK] Thm. 2
+(composition multiplicities), BGG resolution (in progress), `dim Hom ≤ 1`.
 
 
 For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
@@ -553,6 +561,9 @@ beyond what the general Kac–Moody results give.
   `FreeAlgebra.wordBasis`, `FreeAlgebra.mapCoeffs`, `FreeAlgebra.weightProj`
   (`QuantumGroup/GabberKac/*.lean`); q-binomials `QuantumGroup/QBinomial.lean`;
   `Submodule.endStab`/`endDescend`; Bialgebra/HopfAlgebra instances on `U_q`.
+- `KacKazhdan/{Polynomial,Hyperplane,Factorization}.lean` (homogeneous components, products of
+  affine hyperplane polynomials); `Matrix.jantzenSpace`, `Matrix.sum_finrank_jantzenSpace`
+  (Jantzen order formula for matrices over `K[X]`, `Jantzen/OrderFormula.lean`).
 - Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
   Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
