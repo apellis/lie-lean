@@ -5,6 +5,7 @@ Authors: Alex Ellis
 -/
 import LieLean.Algebra.Lie.KacMoody.FiniteType
 import LieLean.Algebra.Lie.KacMoody.GabberKac
+import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra
 import Mathlib.LinearAlgebra.RootSystem.GeckConstruction.Basis
 
 /-!
@@ -56,6 +57,8 @@ we reconstructed it in the present setting.
   isomorphic to the Kac–Moody algebra of (Kac's form of) its Cartan matrix.
 * `RootPairing.GeckConstruction.equivSerrePresentedAlgebra`: Geck's Lie algebra is presented by
   the Chevalley–Serre generators and relations (Serre's theorem).
+* `RootPairing.GeckConstruction.equivToLieAlgebra`: Mathlib's `Matrix.ToLieAlgebra K A` is
+  isomorphic to Geck's Lie algebra (`A = b.cartanMatrixᵀ`).
 
 ## Main results
 
@@ -280,5 +283,15 @@ built on the standard realization of `A` (`Matrix.Realization.std`). -/
 def equivKacMoodyAlgebraStd :
     (Matrix.Realization.std b.cartanMatrixᵀ K).KacMoodyAlgebra ≃ₗ⁅K⁆ lieAlgebra b :=
   equivKacMoodyAlgebra b _
+
+/-- **Serre's theorem**, comparing Mathlib's two constructions ([Hum] §18.3–18.4 (check)): for a
+reduced, irreducible, crystallographic root system with base `b` over a field of characteristic
+zero, Mathlib's `Matrix.ToLieAlgebra K A` (the Lie algebra presented by the Chevalley–Serre
+relations, `A = b.cartanMatrixᵀ` in Kac's convention) is isomorphic to Geck's Lie algebra
+`RootPairing.GeckConstruction.lieAlgebra b`. -/
+def equivToLieAlgebra : Matrix.ToLieAlgebra K b.cartanMatrixᵀ ≃ₗ⁅K⁆ lieAlgebra b :=
+  have hA := (b.cartanMatrix_isFiniteCartan (P := P)).transpose
+  (KacMoodyAlgebra.toLieAlgebraEquiv (Matrix.Realization.std b.cartanMatrixᵀ K)
+    hA.isGeneralizedCartan hA.isSymmetrizable hA.det_pos.ne').trans (equivKacMoodyAlgebraStd b)
 
 end RootPairing.GeckConstruction
