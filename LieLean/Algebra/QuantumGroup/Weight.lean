@@ -28,6 +28,8 @@ Here a `U`-module is a `k`-vector space `M` with `[Module U M]` and `[IsScalarTo
 * `QuantumGroup.E_smul_mem_weightSpace`, `QuantumGroup.F_smul_mem_weightSpace`:
   `Eᵢ M^Λ ⊆ M^{Λ + i'}`, `Fᵢ M^Λ ⊆ M^{Λ - i'}`.
 * `QuantumGroup.zeroHom_smul_of_mem_weightSpace`: `U⁰` acts on `M^Λ` through `charHom v Λ`.
+* `QuantumGroup.exists_charHom_eq_one_eq_zero`, `QuantumGroup.iSupIndep_weightSpace`: if `v` is
+  not a root of unity, `U⁰` separates weights and the weight spaces are independent.
 * `LusztigCartanDatum.RootDatum.exists_rootSum_ne`: for `X`-regular root data,
   `ν ↦ Σᵢ νᵢ i'` is injective on `ℕ[I]`.
 
@@ -154,6 +156,66 @@ theorem K_neg_ktilde_smul_of_mem_weightSpace {Λ : Y →+ ℤ} {m : M}
     (hm : m ∈ weightSpace R v M Λ) (i : I) :
     K R v (-ktilde R i) • m = (v ^ D.d i) ^ (-Λ (R.coroot i)) • m := by
   rw [hm, map_neg, ktilde, map_nsmul, nsmul_eq_mul, ← zpow_natCast, ← zpow_mul, neg_mul_eq_mul_neg]
+
+omit [DecidableEq I] [NeZero v] in
+/-- If `v` is not a root of unity, `v^n ≠ 1` for all integers `n ≠ 0`. -/
+lemma zpow_ne_one_of_not_root (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) {n : ℤ} (hn : n ≠ 0) :
+    v ^ n ≠ 1 := by
+  rcases Int.natAbs_eq n with h | h
+  · rw [h, zpow_natCast]; exact hv' _ (Int.natAbs_pos.2 hn)
+  · rw [h, zpow_neg, zpow_natCast, inv_ne_one]; exact hv' _ (Int.natAbs_pos.2 hn)
+
+omit [DecidableEq I] in
+/-- Distinct weights are separated by `U⁰ = k[Y]` if `v` is not a root of unity: there is
+`g ∈ k[Y]` acting by `1` on `M^{Λ₁}` and by `0` on `M^{Λ₂}`. -/
+theorem exists_charHom_eq_one_eq_zero (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) {Λ₁ Λ₂ : Y →+ ℤ}
+    (h : Λ₁ ≠ Λ₂) : ∃ g, charHom v Λ₁ g = 1 ∧ charHom v Λ₂ g = 0 := by
+  obtain ⟨μ, hμ⟩ := DFunLike.ne_iff.1 h
+  have hv0 := NeZero.ne v
+  have hab : v ^ Λ₁ μ - v ^ Λ₂ μ ≠ 0 := by
+    rw [sub_ne_zero]
+    intro hab
+    refine zpow_ne_one_of_not_root hv' (sub_ne_zero.2 hμ) ?_
+    rw [zpow_sub₀ hv0, hab, div_self (zpow_ne_zero _ hv0)]
+  refine ⟨(v ^ Λ₁ μ - v ^ Λ₂ μ)⁻¹ • (AddMonoidAlgebra.single μ 1 -
+    AddMonoidAlgebra.single 0 (v ^ Λ₂ μ)), ?_, ?_⟩
+  · simp only [map_smul, map_sub, charHom_single, one_mul, AddMonoidHom.map_zero, zpow_zero,
+      mul_one, smul_eq_mul]
+    exact inv_mul_cancel₀ hab
+  · simp [charHom_single]
+
+/-- The weight spaces of any `U`-module are independent, if `v` is not a root of unity. -/
+theorem iSupIndep_weightSpace (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) :
+    iSupIndep (weightSpace R v M) := by
+  intro Λ
+  rw [Submodule.disjoint_def]
+  intro x hx hx'
+  have comb : ∀ y z : M, (∃ g, charHom v Λ g = 1 ∧ zeroHom R v g • y = 0) →
+      (∃ g, charHom v Λ g = 1 ∧ zeroHom R v g • z = 0) →
+      ∃ g, charHom v Λ g = 1 ∧ zeroHom R v g • (y + z) = 0 := by
+    rintro y z ⟨g₁, hg₁, hy⟩ ⟨g₂, hg₂, hz⟩
+    refine ⟨g₁ * g₂, by rw [map_mul, hg₁, hg₂, one_mul], ?_⟩
+    have e1 : zeroHom R v (g₁ * g₂) • y = zeroHom R v g₂ • zeroHom R v g₁ • y := by
+      rw [← mul_smul, ← map_mul, mul_comm]
+    have e2 : zeroHom R v (g₁ * g₂) • z = zeroHom R v g₁ • zeroHom R v g₂ • z := by
+      rw [← mul_smul, ← map_mul]
+    rw [smul_add, e1, e2, hy, hz, smul_zero, smul_zero, add_zero]
+  -- every element of `⨆_{Λ' ≠ Λ} M^{Λ'}` is killed by some `g` with `Λ(g) = 1`
+  have key : ∀ y ∈ ⨆ Λ', ⨆ (_ : Λ' ≠ Λ), weightSpace R v M Λ',
+      ∃ g, charHom v Λ g = 1 ∧ zeroHom R v g • y = 0 := by
+    intro y hy
+    induction hy using Submodule.iSup_induction' with
+    | mem Λ' y hy =>
+      induction hy using Submodule.iSup_induction' with
+      | mem hΛ' y hy =>
+        obtain ⟨g, hg1, hg2⟩ := exists_charHom_eq_one_eq_zero hv' (Ne.symm hΛ')
+        exact ⟨g, hg1, by rw [zeroHom_smul_of_mem_weightSpace hy, hg2, zero_smul]⟩
+      | zero => exact ⟨1, map_one _, smul_zero _⟩
+      | add y z _ _ hy hz => exact comb y z hy hz
+    | zero => exact ⟨1, map_one _, smul_zero _⟩
+    | add y z _ _ hy hz => exact comb y z hy hz
+  obtain ⟨g, hg, hgx⟩ := key x hx'
+  rwa [zeroHom_smul_of_mem_weightSpace hx, hg, one_smul] at hgx
 
 end Weight
 
