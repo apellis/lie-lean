@@ -41,7 +41,8 @@ module `LieSubmodule.Subquotient V_{j-1} V_j`.
   `N₁ ⊆ M₁`.
 
 The multiplicities `[V : L(μ)]` are in `KacMoody/CompositionSeries/Multiplicity.lean`, and
-[Kac] Prop. 9.8 (check) in `KacMoody/CompositionSeries/Casimir.lean`.
+[Kac] Prop. 9.8 (check) in `KacMoody/CompositionSeries/Casimir.lean` (character form in
+`KacMoody/CompositionSeries/Character.lean`).
 
 ## Proofs
 
