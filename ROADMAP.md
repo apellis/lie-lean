@@ -410,7 +410,15 @@ PBW); `KacMoody/VermaHom.lean`: `primitiveVectors`, `VermaModule.homEquiv`
 (class in the completed Grothendieck group), `character_eq_iff`, `multiplicity_eq_add`,
 `VermaModule.multiplicity_self`. Open: `dim Hom(M(μ), M(λ)) ≤ 1` in general — Humphreys' proof uses
 that `U(𝔫₋)` is Ore, which fails in Kac–Moody generality (`𝔫₋` may contain free Lie algebras);
-needs a literature check. Remaining: Kac–Kazhdan determinant, Jantzen filtration, BGG resolution.
+needs a literature check. Blocks, tensor products, translation (`KacMoody/{Blocks,TensorProduct,
+Translation}.lean`): Casimir block decomposition `IsCategoryO.isInternal_casimirBlock`,
+`multiplicity_casimirBlock`; `IsCategoryO.tensorProduct`, `character_tensorProduct`
+(`ch(V ⊗ W) = ch V · ch W`), `IsIntegrable.tensorProduct`,
+`IrreducibleModule.exists_isInternal_tensorProduct` (`L(Λ) ⊗ L(Λ')` decomposes);
+`IsStandardForm.translation` with exactness on characters `character_translation_eq_add`,
+`denominator_mul_character_tensorProduct_verma`. Open: [HumO] Thm. 7.6 (needs linkage finer than
+the Casimir eigenvalue). In progress: Kac–Kazhdan determinant (leading term and degree done),
+Jantzen filtration, BGG resolution.
 
 
 For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
@@ -523,6 +531,8 @@ beyond what the general Kac–Moody results give.
   Iwahori–Hecke algebra and bar involution (`GroupTheory/Coxeter/Hecke/{Basic,Bar}.lean`).
 - Chevalley–Eilenberg complex (`LieLean/Algebra/Lie/Homology/{ChevalleyEilenberg,Complex,
   ChainComplex}.lean`); `Module.End.weightSpaceOf` (`Homology/WeightSpace.lean`).
+- `Module.End.mem_iSup_maxGenEigenspace_of_prod_apply_eq_zero`, `iSupIndep.mem_of_mem_iSup_of_le`
+  (`KacMoody/Blocks.lean`).
 - Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
   Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
