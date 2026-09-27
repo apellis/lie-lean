@@ -74,6 +74,8 @@ import LieLean.GroupTheory.Coxeter.GeometricRepresentation
 import LieLean.GroupTheory.Coxeter.Hecke.Bar
 import LieLean.GroupTheory.Coxeter.Hecke.BaseChange
 import LieLean.GroupTheory.Coxeter.Hecke.Basic
+import LieLean.GroupTheory.Coxeter.Hecke.Involutions
+import LieLean.GroupTheory.Coxeter.Hecke.Presentation
 import LieLean.GroupTheory.Coxeter.Hecke.RPolynomial
 import LieLean.GroupTheory.Coxeter.Hecke.Specialization
 import LieLean.GroupTheory.Coxeter.Longest
