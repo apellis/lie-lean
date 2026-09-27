@@ -273,8 +273,7 @@ syzygy among the `fᵢ v₀` in `⊕ᵢ M(-αᵢ) → M(0)` that is a highest-we
 syzygies (`SerrePresented/Syzygy.lean`: `exists_syzygy`, via PBW and
 `UniversalEnvelopingAlgebra.ker_map_eq_span`); the Casimir, which is `0` on `⊕ᵢ M(-αᵢ)`, forces
 `(β|β) = 2(ρ|β)`, contradicting `⟨β, αᵢ^∨⟩ ≤ 0` (`radicalNeg_inf_rootSpace_eq_bot_of_minimal`,
-`radicalNeg_eq_bot`). (`SerrePresented/Homology.lean` has an alternative reduction to
-`H₂(𝔫₋)`, not used in the final proof.)
+`radicalNeg_eq_bot`). (An alternative reduction to `H₂(𝔫₋)` was removed.)
 
 Original plan:
 
@@ -473,9 +472,10 @@ integral): `IrreducibleModule.homologyWeightSpace_ne_bot_iff` (`H_k(𝔫₋, L(�
 `½(κ − (μ+2ρ|μ))` on the weight-μ chains (`kostantLaplacian_eq_smul`), `δ` as a contracting
 homotopy on nonzero eigenspaces (no harmonic theory needed over a general char-0 field),
 Kostant's combinatorial lemma `exists_weylGroup_of_dualBilinForm_eq`. Remaining (optional):
-comparison with Mathlib's `HomologicalComplex.homology`; porting or deleting
-`Algebra/Lie/ChevalleyEilenberg.lean` (used only by the unused alternative route
-`SerrePresented/Homology.lean`).
+comparison with Mathlib's `HomologicalComplex.homology`. (The old low-degree complex
+`Algebra/Lie/ChevalleyEilenberg.lean` and the unused `H₂` route to Gabber–Kac
+`SerrePresented/Homology.lean` were removed; the lemmas still needed moved to
+`SerrePresented/NegativePart.lean`.)
 
 
 The Chevalley–Eilenberg complex of a Lie algebra with coefficients in a module (all degrees,
@@ -553,7 +553,10 @@ unique maximal submodule, `IrreducibleModule` (= `L_q(Λ)`, `isSimpleModule`); `
 action (`BraidAction*.lean`, Lusztig's `T''_{i,1}`): `rankOneBraidEquiv` (rank one), relations
 (a)–(d) involving `i` and the mixed ones `braidEi_mul_braidFj_sub`. Remaining: the other
 relations for `Tᵢ` (so `Tᵢ` as an automorphism in general) and braid relations; classification
-of simple `U_q(sl₂)`-modules; canonical bases. Quantum target 2 and characters
+of simple `U_q(sl₂)`-modules; canonical bases. Future simplification to consider: unify the two
+q-integer families in
+`QBinomial.lean` (`qInt`/`qBinomial` over a field vs `qIntU`/`qBinomialU` over a ring with a
+unit; currently linked by `map_qNatU`, `map_qBinomialU`). Quantum target 2 and characters
 (`QuantumGroup/Character.lean`, `IrreducibleCharacter/*`; `v` transcendental, `Λ` dominant):
 `VermaModule.maxSubmodule_eq_fPowSubmodule` (`M'_q(Λ) = Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ`),
 `FPowQuotient.equivIrreducibleModule` (`L̃_q(Λ) ≅ L_q(Λ)`),
@@ -566,6 +569,30 @@ For symmetrizable `A`: `U_q(𝔤)` over `ℚ(v)` (Drinfeld–Jimbo presentation 
 `f` with its bilinear form and the quantum Serre relations; Lusztig's braid group action `Tᵢ`;
 highest-weight modules `L_q(λ)` and equality of characters with `L(λ)` for `λ` dominant
 integral; Lusztig's canonical basis / Kashiwara's global basis if reachable.
+
+## Status and open threads (paused 2026-09-27)
+
+Everything above is merged on `main`; full `lake build` green, axiom checks clean. Threads that
+were in progress when work paused (no code from them is on `main`; restart from these notes):
+
+- **BGG exactness in degrees ≥ 1** (M12): plan — compare the BGG complex with
+  `H_•(𝔫₋, L(Λ))` (Garland–Lepowsky, now proved) via a graded-Nakayama / minimal-resolution
+  argument for free `U(𝔫₋)`-modules; or, in finite type, the relative Chevalley–Eilenberg
+  resolution cut down by Casimir blocks.
+- **Littelmann's isomorphism theorem** (M14): needed to make `nonempty_equiv_sigma` (crystal-level
+  LR decomposition) unconditional; key missing fact: for dominant `π`, the f-orbit of `π` is
+  stable under all `eⱼ` (generalize the LS stability proof to paths of arbitrary dominant shape).
+- **Braid automorphisms `Tᵢ` in general** (M15): route — `Tᵢ` on integrable modules ([Lus] 5.2),
+  faithfulness of `⊕ L_q(λ)` (via `maxSubmodule_eq_fPowSubmodule` and the triangular
+  decomposition), then all relations of `U_q` hold for the candidate images.
+- **Weight-basis cleanup** (approved): merge `diagWeightBasis` (`KacMoody/TensorProduct.lean`)
+  and `IsCategoryO.weightBasis` (`KacMoody/Kostant/Euler.lean`) into one shared construction.
+- Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
+  `Hecke/KazhdanLusztig/Canonical.lean`), Deodhar's recursion, classification of simple
+  `U_q(sl₂)`-modules, Humphreys O Thm. 7.6, `dim Hom(M(μ), M(λ)) ≤ 1` off the dot-orbit.
+- Pending decisions: delete the empty `LieLean/Basic.lean`; rename
+  `LieLean/RingTheory/FormalCharacter.lean` to a Mathlib-style path/namespace; a checklist for
+  verifying the ~400 "(check)" citations against the books.
 
 ## Non-goals
 
