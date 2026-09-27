@@ -24,7 +24,8 @@ form along the line, a matrix of polynomials in `t`, and the formula is
 
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.finrank_jantzen_inf_weightSpace`: the dimension
   of `M(λ₀)^i_{λ₀-β}` is that of the `i`-th Jantzen space of the Gram matrix.
-* `Matrix.Realization.KacMoodyAlgebra.VermaModule.sum_finrank_jantzen_inf_weightSpace`: **the
+* `Matrix.Realization.KacMoodyAlgebra.VermaModule.sum_finrank_jantzen_inf_weightSpace`,
+  `Matrix.Realization.KacMoodyAlgebra.VermaModule.finrank_jantzen_inf_weightSpace_eq_zero`: **the
   order formula**.
 
 ## References
@@ -259,6 +260,20 @@ theorem sum_finrank_jantzen_inf_weightSpace (Λ₀ δ β : Dual K H) (d : K[X]) 
   simp_rw [finrank_jantzen_inf_weightSpace S]
   rw [← hG]
   exact Matrix.sum_finrank_jantzenSpace _ (hG ▸ hd)
+
+include S in
+/-- With the notation of `sum_finrank_jantzen_inf_weightSpace`, `M(λ₀)^i_{λ₀-β} = 0` for `i > N`,
+`N` the order of vanishing of `D_β(λ₀ + t δ)` at `t = 0`. -/
+theorem finrank_jantzen_inf_weightSpace_eq_zero (Λ₀ δ β : Dual K H) (d : K[X]) (hd : d ≠ 0)
+    (hdet : ∀ t, d.eval t = (LinearMap.BilinForm.toMatrix (pbwWeightBasis P (Λ₀ + t • δ) β)
+      (weightSpaceForm P (Λ₀ + t • δ) (Λ₀ + t • δ - β))).det) {i : ℕ}
+    (hi : d.natTrailingDegree < i) :
+    finrank K ((jantzen P Λ₀ δ i).toSubmodule ⊓ weightSpace P Λ₀ (Λ₀ - β) :
+      Submodule K _) = 0 := by
+  have hG : (gramPoly P S Λ₀ δ β).det = d :=
+    Polynomial.funext fun t ↦ by rw [eval_det_gramPoly, hdet]
+  rw [finrank_jantzen_inf_weightSpace S, Matrix.jantzenSpace_eq_bot _ (hG ▸ hd) (hG ▸ hi),
+    finrank_bot]
 
 end VermaModule
 
