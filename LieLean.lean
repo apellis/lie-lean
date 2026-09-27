@@ -38,6 +38,7 @@ import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
 import LieLean.Algebra.Lie.KacMoody.InvariantForm
 import LieLean.Algebra.Lie.KacMoody.InvariantFormAux
 import LieLean.Algebra.Lie.KacMoody.Kostant.Chains
+import LieLean.Algebra.Lie.KacMoody.Kostant.Degree0
 import LieLean.Algebra.Lie.KacMoody.Kostant.Euler
 import LieLean.Algebra.Lie.KacMoody.Kostant.GarlandLepowsky
 import LieLean.Algebra.Lie.KacMoody.RootSpace
