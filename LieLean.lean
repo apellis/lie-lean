@@ -38,6 +38,14 @@ import LieLean.Algebra.Lie.KacMoody.IntegrableRoots
 import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
 import LieLean.Algebra.Lie.KacMoody.InvariantForm
 import LieLean.Algebra.Lie.KacMoody.InvariantFormAux
+import LieLean.Algebra.Lie.KacMoody.Jantzen.OrderFormula
+import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Criterion
+import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Determinant
+import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Families
+import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Gram
+import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Leading
+import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Polynomial
+import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Words
 import LieLean.Algebra.Lie.KacMoody.Kostant.Chains
 import LieLean.Algebra.Lie.KacMoody.Kostant.Degree0
 import LieLean.Algebra.Lie.KacMoody.Kostant.Euler
@@ -125,8 +133,8 @@ import LieLean.RepresentationTheory.Crystal.Normal
 import LieLean.RepresentationTheory.Crystal.Path.Basic
 import LieLean.RepresentationTheory.Crystal.Path.Character
 import LieLean.RepresentationTheory.Crystal.Path.Concatenation
-import LieLean.RepresentationTheory.Crystal.Path.RootOperators
 import LieLean.RepresentationTheory.Crystal.Path.Realization
+import LieLean.RepresentationTheory.Crystal.Path.RootOperators
 import LieLean.RepresentationTheory.Crystal.Realization
 import LieLean.RepresentationTheory.Crystal.Subcrystal
 import LieLean.RepresentationTheory.Crystal.Tensor
