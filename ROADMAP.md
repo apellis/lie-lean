@@ -532,9 +532,13 @@ unique maximal submodule, `IrreducibleModule` (= `L_q(Λ)`, `isSimpleModule`); `
 `FPowQuotient.isIntegrable` (`L̃_q(Λ)`), `IrreducibleModule.isIntegrable` (Λ dominant). Braid
 action (`BraidAction*.lean`, Lusztig's `T''_{i,1}`): `rankOneBraidEquiv` (rank one), relations
 (a)–(d) involving `i` and the mixed ones `braidEi_mul_braidFj_sub`. Remaining: the other
-relations for `Tᵢ` (so `Tᵢ` as an automorphism in general) and braid relations; `L̃_q(Λ) ≅
-L_q(Λ)`; characters of `L_q(λ)` = classical; classification of simple `U_q(sl₂)`-modules;
-canonical bases.
+relations for `Tᵢ` (so `Tᵢ` as an automorphism in general) and braid relations; classification
+of simple `U_q(sl₂)`-modules; canonical bases. Quantum target 2 and characters
+(`QuantumGroup/Character.lean`, `IrreducibleCharacter/*`; `v` transcendental, `Λ` dominant):
+`VermaModule.maxSubmodule_eq_fPowSubmodule` (`M'_q(Λ) = Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ`),
+`FPowQuotient.equivIrreducibleModule` (`L̃_q(Λ) ≅ L_q(Λ)`),
+`IrreducibleModule.finrank_weightSpace_eq` (`dim L_q(Λ)_{Λ-ν} = dim L(Λ)_{Λ-ν}`), with `_ratFunc`
+versions; proof (reconstructed) by the same specialization argument as quantum Gabber–Kac.
 
 
 For symmetrizable `A`: `U_q(𝔤)` over `ℚ(v)` (Drinfeld–Jimbo presentation with the realization's
@@ -591,6 +595,8 @@ beyond what the general Kac–Moody results give.
   (Jantzen order formula for matrices over `K[X]`, `Jantzen/OrderFormula.lean`).
 - `LieLean/GroupTheory/Coxeter/Squares.lean` (Bruhat squares, BGG signs);
   `IsSl2Triple.eq_zero_of_toEnd_e_pow_eq_zero` (`BGG/Sl2.lean`); `DirectSum.toLieModule`.
+- `Submodule.finrank_span_le_of_comp_ratHom`, `LinearMap.finrank_range_eq_of_ker_eq`
+  (`QuantumGroup/IrreducibleCharacter/Rank.lean`).
 - Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
   Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
