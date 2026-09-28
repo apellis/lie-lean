@@ -581,8 +581,15 @@ compatibility for the translation theorem remain open.
 coefficient; on the full enveloping centre it recovers the Verma central character. Polynomial
 identity over infinite fields proves multiplicativity, giving the genuine central algebra map.
 The characteristic-zero realization setting is retained without extra finite-type, algebraic-closure
-or weight-integrality assumptions. Arbitrary-weight shifted Weyl invariance, the image/isomorphism
-theorem and finite-type character separation remain open; no classification is inferred.
+or weight-integrality assumptions.
+`KacMoody/HarishChandraInvariance.lean` proves dot-Weyl invariance of the actual full-central
+Verma character at arbitrary weights. Affine-line polynomial density extends the proved
+single-integral-coroot reflection identity without requiring all weight pairings to be integral.
+The unshifted HC polynomial is dot-reflection invariant; translation by negative rho gives
+ordinary reflection-invariant polynomials and all-Weyl evaluation invariance. No additional
+finite-type, symmetrization, algebraic-closure or Cartan-dimension hypothesis is added beyond
+the supplied characteristic-zero GCM realization. HC image/isomorphism and converse finite-type
+character separation remain open; invariance alone does not prove classification.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -902,8 +909,14 @@ coarsening preserves retained increments and the original orbit; a fixed interva
 recovers the original initial direction, preserving both cut chains and compatibility. The actual
 source power and its coarsened representative are distinguished. Cuts, auxiliary directions and
 left source are unchanged, and output global-minimum integrality holds for every simple root.
-Unmatched strict-before transport, iteration bookkeeping, equality/crossing seams and full
-mixed-word stability remain open.
+`Path/GluingSeams.lean` transports this to general strict-before raising and constructs the
+right equality-seam lowering witness when the right cut is the last global minimizer and
+the right auxiliary direction is nonpositive. The outgoing source direction is instead proved
+positive and reflected; both auxiliary directions, cuts and the left source remain unchanged.
+Closed-cut normalization, a reflected output interval and an integral-position target-chain
+reflection supply every strict field. Both sectors derive all-simple-root output integrality.
+Positive-auxiliary equality, other equality/crossing sectors, general iteration bookkeeping
+and full mixed-word stability remain open.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -1068,8 +1081,14 @@ and toral lattice are arbitrary; all other centre edges vanish, and edges from i
 neighbour to untouched nodes are zero or mutual simple. Untouched–untouched entries remain
 unrestricted. The centre quantum sum/difference and forward path cyclotomic factor are explicitly
 nonzero. This includes the terminal orientation of pinned Mathlib's literal `C n`, not the
-nonterminal outgoing `-2` node in literal `B n` for `n ≥ 3`. The opposite terminal orientation,
-nonterminal double centres, higher-rank braid relations and all-node action remain open.
+nonterminal outgoing `-2` node in literal `B n` for `n ≥ 3`.
+`BraidAction/TerminalDoubleOther.lean` constructs the opposite terminal `(-1,-2)` automorphism,
+with explicit reversal-conjugate inverse and both compositions. A degree-five original-Serre
+certificate proves the missing connected relation with the derived identity `qᵢ=qⱼ²`.
+The centre quantum sum and difference are explicitly nonzero. Rank, toral lattice and
+untouched–untouched entries remain unrestricted; next edges are zero or mutual simple.
+This covers the literal B-chain terminal orientation, not its adjacent nonterminal double centre.
+Nonterminal double centres, higher-rank braid relations and all-node action remain open.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
