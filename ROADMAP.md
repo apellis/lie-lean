@@ -597,8 +597,14 @@ tensors into the full centre. Its diagonal normalization includes degree zero. T
 is linear, not asserted multiplicative; its HC evaluation is the genuine Verma character of
 the same central element. The characteristic-zero central-lift interface allows arbitrary
 dimension, with the current scalar/index universe restriction inherited from symmetric powers.
-Filtration/leading-symbol compatibility, homogeneous-component identification, Chevalley
-restriction and HC image/injectivity remain open; this is not the HC isomorphism.
+`KacMoody/HarishChandraSymbol.lean` proves actual PBW filtration membership and identifies
+the normalized symmetrization's leading symbol with the graded-PBW image of the canonical
+symmetric-tensor product. This includes degree zero and the same actual invariant-tensor
+central lift. Filtration membership needs only a field; symbol compatibility assumes exactly
+nonzero degree factorial, supplied in all degrees by characteristic zero. Positive-degree
+filtration drop is equivalent to vanishing commutative product. Identification with the full
+homogeneous component, Chevalley restriction, graded HC compatibility and HC image/injectivity
+remain open; this is not the HC isomorphism.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -929,8 +935,16 @@ an actual strict lowering-output pair, unchanged cuts and left source, and both 
 reflected. Incoming source nonpositivity and both same-cut chains are derived, including
 zero left-auxiliary pairing. The actual incremented source string remains distinct from its
 strict coarsening; retained-tail increments agree. Output integrality holds for every simple
-root. Other equality/crossing sectors, dual sectors, general iteration bookkeeping and full
-mixed-word stability remain open.
+root. `Path/GluingCrossing.lean` transports both equality signs to left first-minimum raising
+and constructs actual strict lowering output across a nonintegral seam under the input
+crossing-window and future-height bound. Actual source powers and inverse strings are
+constructed separately from strict coarsenings; both original Weyl orbits and cuts are retained,
+both auxiliaries reflect, and all-simple-root integrality follows. The alternative source
+construction fully lowers the left string, without identifying its exponent with the printed
+proof's intermediate exponent. The literal crossing-time corollary requires strict increase
+only on the retained intervals, never across the pause. Dual raising crossing, opposite
+equality endpoints, exhaustive partition assembly, general iteration and mixed-word stability
+remain open; full Proposition 5.6 is not yet claimed.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -1110,8 +1124,15 @@ Centre edges may be zero, mutual simple or either double orientation; distinct n
 are orthogonal, at most one centre entry is outgoing `-2`, and neighbour–untouched edges
 are zero or mutual simple. Rank, toral lattice and untouched–untouched entries are unrestricted.
 The parameter, centre quantum difference/sum, forward path factor and `qᵢ⁴+qᵢ²+1`
-are explicitly nonzero. Literal named-matrix specializations and higher-rank braid relations
-remain separate; this does not yet prove an all-node Artin action.
+are explicitly nonzero. `BraidAction/HigherDoubleRelation.lean` proves the actual higher-rank
+length-four equality for these quotient maps and algebra equivalences, including external
+E/F generators attached to either side and every toral generator. Its `HigherDoubleData`
+packages only the existing local graph/scalar hypotheses; external classification is derived,
+and the symmetrizer gives `qⱼ=qᵢ²`. New original-Serre certificates handle both external sides,
+with opposite-algebra transport for negative generators. The hypotheses admit the classical
+B/C/F double-pair chains at generic parameters, without rank-two exhaustion or a toral
+coroot-span restriction. Literal named-matrix wrappers, broader length-two/three relations
+and all-node Artin assembly remain separate; triple edges/length six are not covered.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
