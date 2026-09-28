@@ -490,14 +490,19 @@ now extends the dimension bound to every integral target, including singular tar
 with the same field, finite-type, symmetrization and finite-dimensional-Cartan hypotheses.
 It proves the closed-endpoint sl₂ injectivity lemma, actual primitive-vector lifting at
 the singular wall, source-only reflection invariance and weakly dot-dominant uniqueness.
-Nonintegral targets remain open. Finite-dimensionality of Hom is supplied by the existing
-primitive-vector theorem. These arguments are reconstructed.
+`KacMoody/VermaHomGeneralFiniteType.lean` now proves the full finite-type bound for arbitrary
+source and target weights, without integrality or regularity. It constructs an irreducible
+Verma embedding using the finite KK-linked Weyl orbit and reverse-dominance maximality,
+then uses uniformity and injective restriction to prove scalar uniqueness. Algebraic closure,
+characteristic zero, finite-dimensional Cartan, finite Cartan and symmetrization remain
+explicit. Finite-dimensionality of Hom is supplied by the existing primitive-vector theorem.
+These arguments are reconstructed, not a certification of a newly consulted printed proof.
 `KacMoody/VermaUniformity.lean` proves actual left Ore for the enveloping algebra of any
 finite-dimensional Lie algebra over a field, using PBW polynomial growth rather than an
 assumed Ore instance. It instantiates this for finite-type `U(𝔫₋)` and proves that any two
 nonzero submodules of an arbitrary-weight Verma module intersect nontrivially. This is the
-uniformity step toward nonintegral Hom uniqueness, not yet a new Hom dimension bound;
-the socle/restriction argument remains. Neither integrality nor algebraic closure is needed
+uniformity step used by the full arbitrary-weight Hom theorem; this module alone does not
+give the dimension bound. Neither integrality nor algebraic closure is needed
 for uniformity; the finite-type application retains characteristic zero and finite Cartan.
 Blocks, tensor products, translation (`KacMoody/{Blocks,TensorProduct,
 Translation}.lean`): Casimir block decomposition `IsCategoryO.isInternal_casimirBlock`,
@@ -609,7 +614,7 @@ Nonsymmetrizable exactness and removal of the finite-dimensional Cartan hypothes
 The alternate Garland–Lepowsky/dimension-shifting/Nakayama route is not used in this proof;
 its supporting APIs remain available. Positive-degree CE acyclicity still does not imply the
 degree-zero vanishing premise of the general dimension-shifting equivalence.
-Beyond the proved dominant dot-orbit, local two-root and finite-type integral target
+Beyond the proved dominant dot-orbit, local two-root and arbitrary-weight finite-type
 cases, the general Hom bound still requires valid finite-type or noncritical hypotheses.
 `VermaHomSingularReduction.lean` proves actual embeddings into weakly dot-dominant Verma
 modules: zero shifted coroot pairings give identity steps, rather than requiring regularity.
@@ -763,6 +768,14 @@ under the source sign conditions. Positive-root transport and exact exceptional-
 identification are proved, not assumed. Arbitrary real weights and general GCM realizations
 are allowed. This is the direction-compatibility input to Proposition 5.6, not the full
 Definition 5.3 gluing pair, Lemma 5.5 integrality, or Propositions 5.6–5.7.
+`Path/GluingPair.lean` now constructs the literal paused finite rational-PL glued path
+and derives cut-position chains, the integral translation, seam/plateau minimum integrality,
+and global-minimum integrality. Both LS classes are dominant integral; individual directions
+need not be dominant. The source integral-endpoint premise is retained, not replaced by
+assumed glued-path integrality. This is not full Lemma 5.5 or component stability. Broader
+second-class support (or a proved reduction) is a genuine remaining classical dependency:
+Proposition 5.7/Theorem 6.3 assume dominance of the first weight and their sum, not that the
+second class has a dominant representative. Clearing denominators alone does not fix this.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -870,8 +883,14 @@ chosen node are not covered.
 length-three braid relations for these actual automorphisms and quotient homomorphisms.
 Every extra `E,F` generator, common neighbours of orthogonal centres, and arbitrary `K_μ`
 are included. Both centres retain their local Cartan and scalar hypotheses; there is no
-two-node exhaustion, finite-rank, or coroot-span assumption. Global Artin-group packaging
-is separate; higher braid lengths and triangle cases remain outside these theorems.
+two-node exhaustion, finite-rank, or coroot-span assumption.
+`BraidAction/Artin.lean` packages the triangle-free simply-laced result as a genuine
+`PresentedGroup` with length-two/three relators and no involution relations, universal lift
+and uniqueness, and an actual `artinHom`/`artinAction` on the quantum quotient. Forward and
+inverse generator formulas cover all `E,F,K_μ` and fix coefficients. Exponent sum proves
+the abstract generators are not involutions; faithfulness of the quantum action is not
+claimed. Rank, valency and toral lattice remain unrestricted, with both parameter sum and
+difference conditions explicit. Higher braid lengths and triangle cases remain outside scope.
 Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
