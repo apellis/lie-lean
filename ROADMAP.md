@@ -205,8 +205,10 @@ Its reconstructed averaging proof uses positive integer root heights, not an ord
 the scalar field. With an ordered field, this also identifies full root-system finiteness
 with fullness of the Tits cone. Thus (e)(i)–(iii) are connected; the full dual-root bridge
 in (e)(iv) remains open in production. No finite-type or symmetrizability premise is used.
-Proposition 3.12(f), finite stabilizer iff interior point of the Tits cone, remains open;
-freeness on the open dominant chamber is not a substitute for this statement.
+`TitsCone/Interior.lean` proves the finite-stabilizer ⇒ interior direction of Proposition
+3.12(f), for points of the actual Tits cone in the finite-dimensional Hausdorff real topology.
+It uses the actual Weyl stabilizer and requires cone membership, not merely finite stabilizer.
+The reverse implication remains open; freeness on the open dominant chamber is not a substitute.
 
 
 - `𝔥`-diagonalizable (weight) modules, weights, `P(V)`; integrable modules (`eᵢ, fᵢ` locally
@@ -449,7 +451,13 @@ explicitly notes failure of the general bound
 ([arXiv:2009.04147v2](https://arxiv.org/html/2009.04147v2)). This is a literature-backed
 counterexample, not a Lean formalization of the counterexample. The finite-type and appropriate
 noncritical hypotheses must be retained in any extension beyond the proved dominant dot-orbit
-result; the unrestricted statement is withdrawn, not marked proved. Blocks, tensor products, translation (`KacMoody/{Blocks,TensorProduct,
+result; the unrestricted statement is withdrawn, not marked proved.
+`KacMoody/VermaHomTwoRoots.lean` proves the local bound for arbitrary highest weights at
+difference `αᵢ + αⱼ`, for distinct connected nodes, over characteristic-zero fields.
+At a mutual `-1` edge and highest-weight coroot values `-1/2`, it constructs a nonzero
+singular vector and injective Hom, proving dimension exactly one, with a concrete rational
+`A₂` instance. This does not settle arbitrary finite-type weights or general noncritical blocks.
+Blocks, tensor products, translation (`KacMoody/{Blocks,TensorProduct,
 Translation}.lean`): Casimir block decomposition `IsCategoryO.isInternal_casimirBlock`,
 `multiplicity_casimirBlock`; `IsCategoryO.tensorProduct`, `character_tensorProduct`
 (`ch(V ⊗ W) = ch V · ch W`), `IsIntegrable.tensorProduct`,
@@ -551,8 +559,8 @@ Nonsymmetrizable exactness and removal of the finite-dimensional Cartan hypothes
 The alternate Garland–Lepowsky/dimension-shifting/Nakayama route is not used in this proof;
 its supporting APIs remain available. Positive-degree CE acyclicity still does not imply the
 degree-zero vanishing premise of the general dimension-shifting equivalence.
-Extensions of the Hom dimension bound beyond the proved dominant dot-orbit require valid
-finite-type or noncritical hypotheses as above.
+The general Hom bound beyond the proved dominant dot-orbit and local two-root cases still
+requires valid finite-type or noncritical hypotheses as above.
 
 
 For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
@@ -722,6 +730,15 @@ Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators
 the remaining transformed Serre relations (including opposite order and negative images),
 the general
 automorphism/inverse construction, braid relations and canonical bases remain open.
+`LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
+involution on the actual free algebra `'f`, fixing every generator divided power and
+divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
+This is a generic-parameter prerequisite, not quotient descent or global-basis existence.
+The global-basis target over `ℚ(v)` still needs compatible divided-power forms, crystal
+lattices and residue bases, and proved balancedness; the stronger `ℤ[v,v⁻¹]` integral-basis
+statement is distinct. Arbitrary scalar specialization supplies none of these structures.
+Descent through the existing radical-equals-Serre-ideal theorem must retain its finite-index
+and characteristic-zero/generic-parameter hypotheses.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
 irreducible representation over an algebraically closed field, for nonzero `v` of infinite

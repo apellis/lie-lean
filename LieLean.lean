@@ -117,6 +117,7 @@ import LieLean.Algebra.Lie.KacMoody.Translation
 import LieLean.Algebra.Lie.KacMoody.Triangular
 import LieLean.Algebra.Lie.KacMoody.Verma
 import LieLean.Algebra.Lie.KacMoody.VermaHom
+import LieLean.Algebra.Lie.KacMoody.VermaHomTwoRoots
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
@@ -160,6 +161,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Basic
 import LieLean.Algebra.QuantumGroup.LusztigF.Comul
 import LieLean.Algebra.QuantumGroup.LusztigF.Form
 import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
+import LieLean.Algebra.QuantumGroup.LusztigF.Bar
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.Sl2
@@ -212,6 +214,7 @@ import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Convex
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Coroots
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Finite
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.FiniteConverse
+import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Interior
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
