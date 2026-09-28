@@ -12,6 +12,7 @@ import LieLean.Algebra.Lie.KacMoody.BGG
 import LieLean.Algebra.Lie.KacMoody.BGG.Character
 import LieLean.Algebra.Lie.KacMoody.BGG.LowDegree
 import LieLean.Algebra.Lie.KacMoody.BGG.Minimality
+import LieLean.Algebra.Lie.KacMoody.BGG.Nakayama
 import LieLean.Algebra.Lie.KacMoody.BGG.Nilradical
 import LieLean.Algebra.Lie.KacMoody.BGG.Projectivity
 import LieLean.Algebra.Lie.KacMoody.BGG.Sl2

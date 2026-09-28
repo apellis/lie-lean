@@ -464,9 +464,14 @@ homology with coinvariants (`BGGMinimality.homologyZeroEquivCoinvariants`), prov
 `H₀(𝔫₋, M(μ)) ≃ K` for every highest weight (`BGGMinimality.VermaModule.homologyZeroEquiv`),
 and proves that the actual BGG differential induces zero on degree-zero nilradical homology
 (`BGGMinimality.homologyZeroMap_bggDiff_eq_zero`). These are supporting results, not exactness
-in positive degrees. Remaining: positive-degree Verma acyclicity, Cartan-equivariant
-dimension shifting, detection of the actual syzygy generators on coinvariants, and the
-bounded-weight Nakayama step needed to conclude exactness of the BGG complex in degrees ≥ 1.
+in positive degrees. `BGG/Nakayama.lean` proves bounded-weight Nakayama in characteristic zero:
+for a Cartan-diagonalizable module supported in finitely many cones `Λ - Q₊`, vanishing coinvariants
+implies the module is zero, without finite-dimensional weight-space assumptions. The category-𝒪
+corollary `BGGMinimality.surjective_of_coinvariantsMap` upgrades surjectivity of the actual
+coinvariant map to surjectivity of a genuine module map with category-𝒪 target.
+Remaining: positive-degree Verma acyclicity, Cartan-equivariant dimension shifting, and
+detection of the actual syzygy generators on coinvariants. The proved Nakayama upgrade does
+not supply the missing coinvariant-surjectivity premise for the BGG syzygy maps.
 The Garland–Lepowsky computation (M13) is proved but does not alone close these gaps.
 Extensions of the Hom dimension bound beyond the proved dominant dot-orbit require valid
 finite-type or noncritical hypotheses as above.
