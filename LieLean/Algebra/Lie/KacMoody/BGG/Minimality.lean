@@ -28,35 +28,22 @@ The new minimality argument invokes no Hom dimension theorem: it uses distinct d
 weights and the highest-weight coordinate, so it holds for any GCM and dominant integral Λ.
 The general CE/coinvariant bridge does not require characteristic zero.
 
-## Non-circular route and precise outstanding obligations
+## Relation to positive-degree exactness
 
-The bounded route suggested by the current APIs is dimension shifting on the actual BGG
-syzygies, using Garland-Lepowsky only for `L(Λ)` and the existing exact augmentation.
-For symmetrizable GCM, finite-dimensional Cartan space and dominant integral Λ, its current
-status is:
+`BGG/Exactness.lean` proves positive-degree exactness for symmetrizable GCM and
+finite-dimensional Cartan space by the independent lowering-operator/Casimir route.
+`BGG/Syzygy.lean` detects cycles by simple-ascent coordinates, `BGG/Integrable.lean` proves
+local lowering-operator nilpotence modulo actual boundaries, and `BGG/Casimir.lean`
+annihilates the resulting actual homology. This file does not import or use that result.
 
-1. Positive-degree CE acyclicity of `M(μ)` restricted to `𝔫₋` is proved in
-   `BGG/VermaAcyclicity.lean`, and its extension to actual `BGGTerm` direct sums is proved in
-   `BGG/TermHomology.lean`. The present degree-zero computation is not that acyclicity theorem.
-2. Actual CE coefficient long exact sequences, Cartan-equivariant connecting maps and
-   conditional weight-space dimension shifting are proved. Their application to actual
-   syzygies and the degree-zero end of the sequence still needs to be assembled; positive-degree
-   acyclicity does not imply degree-zero vanishing.
-3. Under the inductive lower-exactness hypotheses, it remains to prove that the ACTUAL map
-   `Cₖ₊₁ → Zₖ = ker(dₖ₋₁)` surjects on nilradical coinvariants. This requires detecting the
-   proposed BGG highest-weight generators as nonzero classes modulo `𝔫₋ Zₖ`, not merely
-   as nonzero vectors of `Cₖ`. GL multiplicities alone and minimality do not supply this.
-4. `BGG/Nakayama.lean` proves the upgrade from coinvariant surjectivity to actual module
-   surjectivity under the stated bounded-weight hypotheses. It does not supply the premise
-   missing in item 3. Direct-sum coinvariant and weight identifications are also still needed
-   for the per-weight GL application.
-
-An alternative is an independent exact minimal Verma resolution followed by a chain
-isomorphism to BGG; existence and the nonzero-cover-map comparison are likewise missing.
-No exactness conclusion is inferred from Euler characteristics or matching Betti numbers.
-`BGG/Syzygy.lean` supplies a different route's descent-elimination step: actual cycles are
-detected by their simple-ascent coordinates. Integrability modulo actual boundaries and the
-final vanishing argument remain to be proved; this does not solve item 3 above.
+The alternative Garland–Lepowsky/dimension-shifting/Nakayama route was not needed.
+Its supporting ingredients remain useful: Verma and BGG-term CE acyclicity, coefficient
+long exact sequences and weight-space connecting maps, and bounded-weight Nakayama.
+Minimality alone does not detect a prescribed generator modulo the action on the syzygy:
+membership in `𝔫₋ Cₖ` is different from membership in `𝔫₋ ker(dₖ₋₁)`.
+Neither Euler characteristics nor matching Betti numbers are used to infer exactness.
+Positive-degree CE acyclicity does not imply the degree-zero vanishing assumption in
+the general dimension-shifting equivalence.
 
 ## References
 
