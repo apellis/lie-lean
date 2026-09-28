@@ -526,6 +526,14 @@ exactness for Casimir-block restriction. Injectivity and middle exactness use po
 modules; surjectivity is stated for category-O modules. These are actual morphism results,
 not just character equalities. Open: [HumO] Thm. 7.6, which needs finer/full-central-character
 projection, tensor-Verma standard filtrations, facet exclusion and dual compatibility.
+`KacMoody/TensorVerma.lean` proves the actual left-regular enveloping tensor identity over
+any commutative ring, with a Hom-module inverse and both inverse laws. Its PBW specialization
+identifies `U(n₋) ⊗ Z_trivial` with `M(Λ) ⊗ Z`, equivariantly for `n₋`, and constructs
+injective coefficient-subspace maps with monotone ranges and top range the whole tensor
+module. These are negative-nilradical submodules, not yet full Lie-algebra submodules or
+a standard filtration. Borel flags, full Lie-algebra stability and shifted-Verma quotient
+identifications remain. This is a reconstructed tensor identity, not a certification of
+the primary-source translation theorem.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -791,6 +799,12 @@ glued endpoint. This removes the dominant-second-class restriction for those cha
 results. Proposition 5.7/Theorem 6.3 assume dominance of the first weight and their sum,
 not a dominant representative of the second class. Full arbitrary-class path/operator
 stability, all-minima integrality and the reparametrization/isomorphism bridge remain open.
+`Path/GeneralClassStability.lean` proves integral source-walk height bounds and attained
+maximum lengths, saturated refinements, simple-root saturation and same-sign reflection
+preservation ([Lit] Lemma 4.1). `LSGeneralClass.lsData` now constructs genuine LS data on
+the orbit of any integral weight, without a dominant representative; every interface field
+uses the actual source saturated-step relation. The explicit finite-constructor Chain/IsLS
+bridge and generalized gluing stability remain separate; no component isomorphism is claimed.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -911,6 +925,11 @@ both degree-two candidate expansions, and the symmetrizer-correct reflected tora
 Ambient rank and the reverse Cartan entry are unrestricted; only `v ≠ 0`,
 `qᵢ - qᵢ⁻¹ ≠ 0` and `qᵢ + qᵢ⁻¹ ≠ 0` are assumed, with no nonvanishing condition at `j`.
 This is a higher-edge automorphism prerequisite, not the automorphism or length-four relation.
+`BraidAction/HigherMixed.lean` proves actual coupled off-diagonal zero commutators at outgoing
+entry pairs `(-2,-1)`, `(-1,-2)` and `(-2,-2)`. Only `v ≠ 0` is needed; reverse entries,
+entries between target nodes, ambient rank and characteristic remain unrestricted.
+At singular quantum factorials these are identities for the totalized candidates, not
+automorphism assertions. No nonzero sum/difference or transformed-relation premise is assumed.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general

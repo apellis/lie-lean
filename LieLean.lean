@@ -112,6 +112,7 @@ import LieLean.Algebra.Lie.KacMoody.SerrePresented.Syzygy
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.SyzygyEnveloping
 import LieLean.Algebra.Lie.KacMoody.Shapovalov
 import LieLean.Algebra.Lie.KacMoody.TensorProduct
+import LieLean.Algebra.Lie.KacMoody.TensorVerma
 import LieLean.Algebra.Lie.KacMoody.TensorRep
 import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra
 import LieLean.Algebra.Lie.KacMoody.ToLieAlgebra.Injective
@@ -160,6 +161,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.SimplyLaced
 import LieLean.Algebra.QuantumGroup.BraidAction.SimplyLacedRelations
 import LieLean.Algebra.QuantumGroup.BraidAction.Artin
 import LieLean.Algebra.QuantumGroup.BraidAction.DegreeTwo
+import LieLean.Algebra.QuantumGroup.BraidAction.HigherMixed
 import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
@@ -265,6 +267,7 @@ import LieLean.RepresentationTheory.Crystal.Path.Linking
 import LieLean.RepresentationTheory.Crystal.Path.GluingDirections
 import LieLean.RepresentationTheory.Crystal.Path.GluingPair
 import LieLean.RepresentationTheory.Crystal.Path.GeneralClass
+import LieLean.RepresentationTheory.Crystal.Path.GeneralClassStability
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.LSTwoPiece
 import LieLean.RepresentationTheory.Crystal.Path.LSFinitePieces
