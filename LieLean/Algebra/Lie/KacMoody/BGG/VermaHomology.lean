@@ -17,11 +17,11 @@ import LieLean.Algebra.Lie.Homology.Vanishing
   of the actual concrete CE homology in every degree.
 * `VermaModule.homologyEquivLeftRegular`: PBW identifies actual Verma homology with
   left-regular enveloping homology.
-* `VermaModule.subsingleton_homology_succ_iff_leftRegular_exact`: the precise remaining
+* `VermaModule.subsingleton_homology_succ_iff_leftRegular_exact`: the precise
   range/kernel equality needed for positive-degree Verma acyclicity.
 
-This is a reduction, NOT a proof of positive-degree acyclicity. The missing theorem is
-exactness in positive degrees of the left-regular CE complex for a general Lie algebra.
+This file gives the reduction, not its acyclicity proof. `Homology/RegularAcyclic.lean`
+proves regular CE acyclicity; `BGG/VermaAcyclicity.lean` applies it to Verma modules.
 No BGG exactness or irreducible-module homology computation is used.
 
 ## References
@@ -127,7 +127,7 @@ def homologyEquivLeftRegular (k : ℕ) :
       homology K (nNeg P) (LeftRegular K (nNeg P)) k :=
   homologyEquiv (equivLeftRegular P Λ).symm k
 
-/-- The exact, still unproved regular-CE obligation for positive-degree Verma acyclicity.
+/-- The precise regular-CE exactness criterion for positive-degree Verma acyclicity.
 Reconstructed from the coefficient equivalence and the concrete CE vanishing criterion. -/
 theorem subsingleton_homology_succ_iff_leftRegular_exact (k : ℕ) :
     Subsingleton (homology K (nNeg P) (VermaModule P Λ) (k + 1)) ↔

@@ -7,6 +7,7 @@ import LieLean.Algebra.Lie.Homology.EquivariantSequence
 import LieLean.Algebra.Lie.Homology.Euler
 import LieLean.Algebra.Lie.Homology.LeadingDifferential
 import LieLean.Algebra.Lie.Homology.LongExactSequence
+import LieLean.Algebra.Lie.Homology.RegularAcyclic
 import LieLean.Algebra.Lie.Homology.RegularFiltration
 import LieLean.Algebra.Lie.Homology.Vanishing
 import LieLean.Algebra.Lie.Homology.Weights
@@ -21,6 +22,7 @@ import LieLean.Algebra.Lie.KacMoody.BGG.Projectivity
 import LieLean.Algebra.Lie.KacMoody.BGG.Sl2
 import LieLean.Algebra.Lie.KacMoody.BGG.Uniqueness
 import LieLean.Algebra.Lie.KacMoody.BGG.Verma
+import LieLean.Algebra.Lie.KacMoody.BGG.VermaAcyclicity
 import LieLean.Algebra.Lie.KacMoody.BGG.VermaDecomposition
 import LieLean.Algebra.Lie.KacMoody.BGG.VermaHomology
 import LieLean.Algebra.Lie.KacMoody.Basic
