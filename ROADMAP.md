@@ -600,6 +600,14 @@ its supporting APIs remain available. Positive-degree CE acyclicity still does n
 degree-zero vanishing premise of the general dimension-shifting equivalence.
 Beyond the proved dominant dot-orbit, local two-root and finite-type regular-integral target
 cases, the general Hom bound still requires valid finite-type or noncritical hypotheses.
+`VermaHomSingularReduction.lean` proves actual embeddings into weakly dot-dominant Verma
+modules: zero shifted coroot pairings give identity steps, rather than requiring regularity.
+For every integral finite-type target, it constructs one weakly dot-dominant representative
+in its dot orbit and an injection into that representative's Verma module. Postcomposition
+then bounds Hom dimensions for every arbitrary source simultaneously. This is a reduction,
+not singular Hom uniqueness: the bound by one for weakly dot-dominant singular targets
+remains open. The reduction uses characteristic zero, with no algebraic-closure or
+finite-dimensional-Cartan premise.
 
 
 For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
@@ -721,8 +729,14 @@ Weyl-orbit realization data. Steps use arbitrary positive real roots, negative p
 pairing and saturated descending minimal-representative Bruhat covers. The incoming
 root-lattice congruence is derived from zero in both finite-chain directions, not assumed.
 This uses [Lit] Remark 4.2's dominant-orbit presentation; it does not separately formalize
-the maximal-distance function or the arbitrary-integral-orbit case. Path constructors,
-endpoint-integrality derivation and the reparametrization bridge remain separate.
+the maximal-distance function or the arbitrary-integral-orbit case.
+`Path/AChains/Construction.lean` now constructs actual LS paths from finite strict rational
+subdivisions and dominant-integral Weyl-orbit directions with source `a`-chains. Its explicit
+clamped cumulative affine sum has the required piece formulas and continuity; endpoint
+integrality is derived from propagated root-lattice congruences, not assumed. It handles
+every positive finite piece count and arbitrary finite rank, and recovers the straight line
+for one piece. Redundant equal directions are an explicitly labelled extension. This is
+path existence, not a component isomorphism; the reparametrization bridge remains open.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -812,6 +826,13 @@ relations and both inverse identities. `a3MiddleBraidEquiv` is the explicit A₃
 The field and root-datum lattice remain arbitrary, but this argument additionally assumes
 `vᵢ + vᵢ⁻¹ ≠ 0`, independently of `vᵢ - vᵢ⁻¹ ≠ 0`; necessity is not claimed. This is
 not an automorphism theorem for arbitrary simply-laced graphs or a full A₃ braid action.
+`BraidAction/PathSerre.lean` proves both ordered positive and negative transformed Serre
+relations between a neighbour and an untouched non-neighbour joined along a three-vertex
+path, in arbitrary ambient rank. These use the actual quotient and the outer node's
+Serre parameter/degree; symmetrizer equality is derived where needed. The forward argument
+assumes `vᵢ + vᵢ⁻¹ ≠ 0`, a bound on parameter generality that does not obstruct the generic
+classical target. These close the connected mixed-pair cases needed beyond whole-star
+graphs; the full simply-laced quotient automorphism assembly is not yet proved.
 Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general

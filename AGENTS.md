@@ -13,20 +13,21 @@ and the references in `ROADMAP.md` are all that is needed.
   Mathlib (at the pinned version) for an existing definition; extend it rather than duplicating it.
 - Everything should be written so it can be upstreamed to Mathlib with minimal changes.
 
-### Priority: classical foundations, not exploratory generalization
+### Priority: classical foundations and clearly scoped generality
 
 - The primary goal is to formalize existing classical and well-known quantum Lie theory
-  as a stable foundation for downstream work. Prefer source-faithful definitions, hypotheses
-  and established proof routes over stronger statements or clever replacement constructions.
-- Preserve broader hypotheses when essentially free, or when a named downstream theorem
-  needs them. Do not make generalization or counterexample hunting a separate workstream.
+  as a stable foundation for downstream work. More generality is welcome, not a problem;
+  keep the classical target and any stronger extension clearly distinguished.
+- When an extension fails, explicitly report it as a boundary on extra generality unless
+  it actually obstructs the classical target. Do not imply a published theorem is false
+  or the main programme is blocked merely because a generalized encoding fails.
 - Use bounded cases when they supply an identified lemma or construction needed for a
   roadmap theorem, not merely to accumulate examples or confidence in known mathematics.
 - Run concrete confidence probes only to address a specific uncertainty about the formal
   statement, encoding or implementation. Kernel compilation, axiom checks and statement
   review remain required; established mathematical results do not need rediscovery by tests.
-- If a generalized encoding fails to support a classical theorem, first restore or construct
-  the source-faithful object rather than expanding the detour into a counterexample project.
+- If a generalized encoding fails to support a classical theorem, preserve a source-faithful
+  route to the main target and state separately what is known about the extension.
 
 ## Environment
 
