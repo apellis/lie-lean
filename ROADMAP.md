@@ -485,9 +485,13 @@ weight `μ` and dot-regular integral target `Λ` in finite type, over an algebra
 characteristic-zero field, with finite-dimensional Cartan and explicit symmetrization.
 It proves, rather than assumes, a dominant-integral dot representative by integer-height
 maximization and that a nonzero Hom forces a common dot orbit via actual KK multiplicities.
-The orbit-forcing statement permits arbitrary weights; the dimension-bound extension does
-not yet cover singular-integral or nonintegral targets. Finite-dimensionality of Hom is
-supplied by the existing primitive-vector theorem. These arguments are reconstructed.
+The orbit-forcing statement permits arbitrary weights. `KacMoody/VermaHomIntegral.lean`
+now extends the dimension bound to every integral target, including singular targets,
+with the same field, finite-type, symmetrization and finite-dimensional-Cartan hypotheses.
+It proves the closed-endpoint sl₂ injectivity lemma, actual primitive-vector lifting at
+the singular wall, source-only reflection invariance and weakly dot-dominant uniqueness.
+Nonintegral targets remain open. Finite-dimensionality of Hom is supplied by the existing
+primitive-vector theorem. These arguments are reconstructed.
 Blocks, tensor products, translation (`KacMoody/{Blocks,TensorProduct,
 Translation}.lean`): Casimir block decomposition `IsCategoryO.isInternal_casimirBlock`,
 `multiplicity_casimirBlock`; `IsCategoryO.tensorProduct`, `character_tensorProduct`
@@ -598,16 +602,17 @@ Nonsymmetrizable exactness and removal of the finite-dimensional Cartan hypothes
 The alternate Garland–Lepowsky/dimension-shifting/Nakayama route is not used in this proof;
 its supporting APIs remain available. Positive-degree CE acyclicity still does not imply the
 degree-zero vanishing premise of the general dimension-shifting equivalence.
-Beyond the proved dominant dot-orbit, local two-root and finite-type regular-integral target
+Beyond the proved dominant dot-orbit, local two-root and finite-type integral target
 cases, the general Hom bound still requires valid finite-type or noncritical hypotheses.
 `VermaHomSingularReduction.lean` proves actual embeddings into weakly dot-dominant Verma
 modules: zero shifted coroot pairings give identity steps, rather than requiring regularity.
 For every integral finite-type target, it constructs one weakly dot-dominant representative
 in its dot orbit and an injection into that representative's Verma module. Postcomposition
-then bounds Hom dimensions for every arbitrary source simultaneously. This is a reduction,
-not singular Hom uniqueness: the bound by one for weakly dot-dominant singular targets
-remains open. The reduction uses characteristic zero, with no algebraic-closure or
-finite-dimensional-Cartan premise.
+then bounds Hom dimensions for every arbitrary source simultaneously. This module is a
+reduction; `VermaHomIntegral.lean` now proves the remaining bound by one for weakly
+dot-dominant singular targets and applies the reduction. The reduction alone uses
+characteristic zero, with no algebraic-closure or finite-dimensional-Cartan premise;
+the final arbitrary-source finite-type uniqueness theorem retains those hypotheses.
 
 
 For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
@@ -737,6 +742,14 @@ integrality is derived from propagated root-lattice congruences, not assumed. It
 every positive finite piece count and arbitrary finite rank, and recovers the straight line
 for one piece. Redundant equal directions are an explicitly labelled extension. This is
 path existence, not a component isomorphism; the reparametrization bridge remains open.
+`Path/Linking.lean` proves the root-operator continuity estimates of [Lit] Proposition 3.1
+and a fixed-parametrization form of Lemma 6.1: arbitrary mixed root words preserve vanishing
+along arbitrary finite sufficiently close linking chains. Integral stable sets/components
+are explicit inputs, not consequences inferred from dominance. This does not construct the
+required links or prove equality of word relations. Source §§5–7 identify the remaining
+gluing-pair stability/integrality, highest-path uniqueness, endpoint-fiber and two-piece
+isomorphism arguments, then stretching and concatenation transport. Pause-allowing source
+reparametrizations are not supplied by the existing order-automorphism equivalence.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -832,7 +845,14 @@ path, in arbitrary ambient rank. These use the actual quotient and the outer nod
 Serre parameter/degree; symmetrizer equality is derived where needed. The forward argument
 assumes `vᵢ + vᵢ⁻¹ ≠ 0`, a bound on parameter generality that does not obstruct the generic
 classical target. These close the connected mixed-pair cases needed beyond whole-star
-graphs; the full simply-laced quotient automorphism assembly is not yet proved.
+graphs. `BraidAction/SimplyLaced.lean` now assembles the actual quotient automorphism
+`simplyLacedBraidEquiv` and its explicit reversal-conjugate inverse, with both compositions
+proved on every generator. Centre edges are zero or mutual simple edges, distinct centre
+neighbours are orthogonal, and neighbour/non-neighbour edges are zero or mutual simple
+edges; entries between two untouched nodes are unrestricted. These local hypotheses cover
+classical finite-type simply-laced diagrams, without assuming finite rank or characteristic
+zero. Both parameter sum and difference nonvanishing are explicit. Triangles through the
+chosen node and braid relations between the different automorphisms are not claimed.
 Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
