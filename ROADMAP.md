@@ -385,6 +385,19 @@ an algebraically closed char-0 field (`GeometricRepresentation.lean`:
 `orderOf_simple_mul_simple` — the order of `sᵢsⱼ` is `mᵢⱼ` — and `simple_injective`, two TODOs
 of Mathlib's `Coxeter/Basic.lean`; faithfulness not proved).
 
+**Faithfulness scope correction.** Exact-order primitive roots alone do not ensure a faithful
+geometric representation. `GeometricRepresentation/RootChoice.lean` exposes those choices and
+identifies the existing opaque construction as a specialization. The explicit `(5,10,2)` Coxeter
+presentation in `CounterexampleMatrices.lean`, primitive-root certificates in
+`CounterexampleRoots.lean`, and formula-level bridge in `Counterexample.lean` prove
+`GeometricParametric.exists_nonfaithful_choice`: an admissible root choice gives the actual
+geometric lift a nontrivial kernel word. The same witness proves noninjectivity with the units
+of the endomorphism ring as a genuine group codomain. These are reconstructed exact proofs,
+not a faithfulness theorem from [HumC]. The root identification left separate in the matrix
+module is completed by the root and bridge modules. This refutes uniform faithfulness over
+all admissible choices; it does **not** decide faithfulness of the fixed opaque
+`Classical.choose` specialization or refute the canonical real geometric representation.
+
 
 For a general Coxeter system (Mathlib's `CoxeterSystem`; applies to our
 `Realization.coxeterSystem`):
