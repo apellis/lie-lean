@@ -480,6 +480,14 @@ difference `αᵢ + αⱼ`, for distinct connected nodes, over characteristic-ze
 At a mutual `-1` edge and highest-weight coroot values `-1/2`, it constructs a nonzero
 singular vector and injective Hom, proving dimension exactly one, with a concrete rational
 `A₂` instance. This does not settle arbitrary finite-type weights or general noncritical blocks.
+`KacMoody/VermaHomFiniteType.lean` proves `dim Hom(M(μ), M(Λ)) ≤ 1` for arbitrary source
+weight `μ` and dot-regular integral target `Λ` in finite type, over an algebraically closed
+characteristic-zero field, with finite-dimensional Cartan and explicit symmetrization.
+It proves, rather than assumes, a dominant-integral dot representative by integer-height
+maximization and that a nonzero Hom forces a common dot orbit via actual KK multiplicities.
+The orbit-forcing statement permits arbitrary weights; the dimension-bound extension does
+not yet cover singular-integral or nonintegral targets. Finite-dimensionality of Hom is
+supplied by the existing primitive-vector theorem. These arguments are reconstructed.
 Blocks, tensor products, translation (`KacMoody/{Blocks,TensorProduct,
 Translation}.lean`): Casimir block decomposition `IsCategoryO.isInternal_casimirBlock`,
 `multiplicity_casimirBlock`; `IsCategoryO.tensorProduct`, `character_tensorProduct`
@@ -590,8 +598,8 @@ Nonsymmetrizable exactness and removal of the finite-dimensional Cartan hypothes
 The alternate Garland–Lepowsky/dimension-shifting/Nakayama route is not used in this proof;
 its supporting APIs remain available. Positive-degree CE acyclicity still does not imply the
 degree-zero vanishing premise of the general dimension-shifting equivalence.
-The general Hom bound beyond the proved dominant dot-orbit and local two-root cases still
-requires valid finite-type or noncritical hypotheses as above.
+Beyond the proved dominant dot-orbit, local two-root and finite-type regular-integral target
+cases, the general Hom bound still requires valid finite-type or noncritical hypotheses.
 
 
 For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
@@ -707,11 +715,18 @@ or an identification modulo reparametrization.
 rational subdivision and arbitrary orbit directions: a supplied path with the literal
 cumulative affine formulas is LS iff the actual position chain holds at every internal
 breakpoint. It handles a single segment, inward endpoint directions and redundant slopes.
-The supplied path already has an integral endpoint. General source time-times-coroot
-`a`-chain comparison, path constructors and the reparametrization bridge remain separate.
+The supplied path already has an integral endpoint. `Path/AChains{,/Roots}.lean` now proves
+the concrete source time-times-coroot `a`-chain characterization for actual dominant-integral
+Weyl-orbit realization data. Steps use arbitrary positive real roots, negative preceding
+pairing and saturated descending minimal-representative Bruhat covers. The incoming
+root-lattice congruence is derived from zero in both finite-chain directions, not assumed.
+This uses [Lit] Remark 4.2's dominant-orbit presentation; it does not separately formalize
+the maximal-distance function or the arbitrary-integral-orbit case. Path constructors,
+endpoint-integrality derivation and the reparametrization bridge remain separate.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
-braid relations/normality, concrete `a`-chain description of LS paths. Source-scope caution:
+braid relations/normality, and extension of the concrete `a`-chain description beyond the
+proved dominant-orbit supplied-path scope. Source-scope caution:
 Littelmann's Theorem 7.1 treats piecewise-linear rational paths modulo reparametrization in
 the symmetrizable setting, not all continuous paths in the repository's general interface.
 
@@ -790,6 +805,13 @@ rank-two A₂. `BraidAction/A2Relation.lean` proves the actual length-three rela
 It checks every `E,F,K_μ` generator, including arbitrary lattice elements outside the
 coroot span; equality of symmetrizer entries and the swapped denominator condition are
 derived. It retains precisely the two-node, arbitrary-field/lattice hypotheses above.
+`BraidAction/Star.lean` constructs actual `starBraidEquiv` at the centre of any simply-laced
+star, including infinite stars: every other node is a mutual `-1` neighbour and distinct
+leaves are orthogonal. It proves the missing neighbour commutation relations, all quotient
+relations and both inverse identities. `a3MiddleBraidEquiv` is the explicit A₃ specialization.
+The field and root-datum lattice remain arbitrary, but this argument additionally assumes
+`vᵢ + vᵢ⁻¹ ≠ 0`, independently of `vᵢ - vᵢ⁻¹ ≠ 0`; necessity is not claimed. This is
+not an automorphism theorem for arbitrary simply-laced graphs or a full A₃ braid action.
 Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general

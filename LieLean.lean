@@ -120,6 +120,7 @@ import LieLean.Algebra.Lie.KacMoody.Triangular
 import LieLean.Algebra.Lie.KacMoody.Verma
 import LieLean.Algebra.Lie.KacMoody.VermaHom
 import LieLean.Algebra.Lie.KacMoody.VermaHomTwoRoots
+import LieLean.Algebra.Lie.KacMoody.VermaHomFiniteType
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
@@ -149,6 +150,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.CoupledSerreReverse
 import LieLean.Algebra.QuantumGroup.BraidAction.CoupledSerreNegative
 import LieLean.Algebra.QuantumGroup.BraidAction.CoupledSerreNegativeReverse
 import LieLean.Algebra.QuantumGroup.BraidAction.Isolated
+import LieLean.Algebra.QuantumGroup.BraidAction.Star
 import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
@@ -252,6 +254,8 @@ import LieLean.RepresentationTheory.Crystal.Path.Isomorphism
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.LSTwoPiece
 import LieLean.RepresentationTheory.Crystal.Path.LSFinitePieces
+import LieLean.RepresentationTheory.Crystal.Path.AChains.Roots
+import LieLean.RepresentationTheory.Crystal.Path.AChains
 import LieLean.RepresentationTheory.Crystal.Path.LittlewoodRichardson
 import LieLean.RepresentationTheory.Crystal.Path.Realization
 import LieLean.RepresentationTheory.Crystal.Path.RootOperators
