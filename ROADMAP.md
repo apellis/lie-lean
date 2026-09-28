@@ -471,8 +471,16 @@ integral): `IrreducibleModule.homologyWeightSpace_ne_bot_iff` (`H_k(𝔫₋, L(�
 `IsStandardForm.laplacianComm_kostant_eq`, the Laplacian `□` acting by
 `½(κ − (μ+2ρ|μ))` on the weight-μ chains (`kostantLaplacian_eq_smul`), `δ` as a contracting
 homotopy on nonzero eigenspaces (no harmonic theory needed over a general char-0 field),
-Kostant's combinatorial lemma `exists_weylGroup_of_dualBilinForm_eq`. Remaining (optional):
-comparison with Mathlib's `HomologicalComplex.homology`. (The old low-degree complex
+Kostant's combinatorial lemma `exists_weylGroup_of_dualBilinForm_eq`. Comparison with
+Mathlib's `HomologicalComplex.homology` (`Homology/Comparison.lean`):
+`LieModule.ChevalleyEilenberg.chainComplexHomologyIso` identifies categorical and concrete
+homology in every degree over a commutative ring, naturally in the coefficient module
+(`chainComplexHomologyIso_naturality`) and compatibly with homology classes of cycles
+(`chainComplexHomologyIso_homologyπ`). The comparison is reconstructed from the definitions
+and the kernel/cokernel universal properties. `Homology/Vanishing.lean` proves vanishing iff
+cycles equal boundaries (`subsingleton_homology_iff`), including degree zero, and the
+positive-degree range-equals-kernel criterion (`subsingleton_homology_succ_iff`).
+(The old low-degree complex
 `Algebra/Lie/ChevalleyEilenberg.lean` and the unused `H₂` route to Gabber–Kac
 `SerrePresented/Homology.lean` were removed; the lemmas still needed moved to
 `SerrePresented/NegativePart.lean`.)
