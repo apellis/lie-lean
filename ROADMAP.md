@@ -544,7 +544,7 @@ dimension of `Z_μ`. The coefficient module is finite-dimensional and Cartan-dia
 the characteristic-zero field and finite-index realization are retained, without finite-type,
 dominance, integrality or algebraic-closure assumptions. Repeated weights and the zero module
 are included. These are reconstructed arguments, not certification of the primary-source
-translation theorem; projection/filtration integration, facet exclusion and dual compatibility remain.
+translation theorem; character classification, facet exclusion and dual compatibility remain.
 `KacMoody/VermaCentralCharacter.lean` constructs the actual full-centre algebra character
 `Z(U(g)) →ₐ[K] K` of each Verma module and proves scalar action on every vector. Nonzero
 Verma morphisms force equal characters, and scalar action passes to their images and
@@ -567,6 +567,15 @@ module need not be finite-dimensional. Projections have exact block range, are i
 orthogonal, and reconstruct each vector with finite support. Category-O corollaries use its
 proved local central finiteness. Algebraic closure is explicit for decomposition; no finite-type
 or characteristic-zero hypothesis is added. No Harish-Chandra or character classification is claimed.
+`KacMoody/CentralTensorFiltration.lean` projects the actual tensor-Verma standard filtration
+to every full-central block. Its pieces are literally the central-projection images, equivalently
+intersections with the block. Canonical successive quotient images are the actual shifted Verma
+modules when their central character matches, and zero otherwise; retained weight multiplicities
+equal the coefficient weight-space dimensions. Category O is derived from the finite-dimensional
+Cartan-diagonalizable coefficient module. Algebraic closure and characteristic zero are explicit;
+no finite type, dominance, integrality or character separation is assumed. The projected chain
+retains zero steps and is monotone, not asserted strict. Facet exclusion, classification and dual
+compatibility for the translation theorem remain open.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -872,8 +881,15 @@ successful source raising iterates in the original orbit and proves actual stric
 outputs in the source-minimum-matched sector. An actual glued minimizer before the left cut and
 nonnegative terminal left-source slope suffice. The left source uses the same exponent; the right
 source, cuts and auxiliary directions remain unchanged. Output global-minimum integrality holds
-for every simple root. Unmatched normalization, equality/crossing seams, coarsening and full
-mixed-word two-class stability remain open; neither class is assumed dominant.
+for every simple root; neither class is assumed dominant.
+`Path/GluingNormalization.lean` derives the natural discarded-source height gap `k` at an
+actual late glued minimum. Actual source lowering by `k` translates the retained tail and
+leaves re-gluing unchanged; a successful glued lowering is literally re-gluing of the original
+source lowered `k+1` times, with inverse raising, finite source chains and original-orbit
+directions. No slope-sign restriction is imposed. These are raw path equalities: new early
+breakpoints can violate the strict source-cut condition, so output cut reconstruction and
+compatible chains are still needed. No strict output gluing witness or output integrality is
+inferred. Equality/crossing seams, coarsening and full mixed-word stability remain open.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -1024,6 +1040,14 @@ proved inverse identities supply the generator equalities. The scope is exactly 
 nodes with entries `(-2,-1)`, arbitrary field and root-datum lattice, `v ≠ 0`, and short-node
 quantum sum/difference nonzero; the other denominator follows from `qⱼ = qᵢ²`.
 Connected higher-rank double-edge assembly and the triple-edge/length-six relation remain open.
+`BraidAction/DoublePathSerre.lean` proves both ordered positive/negative transformed Serre
+relations for a connected double-edge path, in arbitrary ambient rank. The forward relation
+uses entries `aᵢⱼ=-2`, `aⱼᵢ=-1`, `aⱼₗ=-1`, `aᵢₗ=0`, derives `qⱼ=qᵢ²`, and explicitly
+requires `(1+qᵢ⁻⁴)(1+qᵢ⁻²+qᵢ⁻⁴) ≠ 0`. The reverse relation only requires `v ≠ 0`,
+`aᵢⱼ=-2`, `aₗⱼ=-1`, `aᵢₗ=0`. A degree-seven original-Serre certificate and the genuine
+Chevalley involution prove the relations, not an assumed braid map. The extra forward scalar
+condition bounds optional parameter generality, not the classical generic programme; necessity
+is not claimed. These supply terminal double-node assembly prerequisites, not an assembled map.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
