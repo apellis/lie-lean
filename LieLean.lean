@@ -33,6 +33,7 @@ import LieLean.Algebra.Lie.KacMoody.BGG.VermaDecomposition
 import LieLean.Algebra.Lie.KacMoody.BGG.VermaHomology
 import LieLean.Algebra.Lie.KacMoody.Basic
 import LieLean.Algebra.Lie.KacMoody.Blocks
+import LieLean.Algebra.Lie.KacMoody.Blocks.Exact
 import LieLean.Algebra.Lie.KacMoody.Casimir
 import LieLean.Algebra.Lie.KacMoody.CasimirForm
 import LieLean.Algebra.Lie.KacMoody.CasimirIrreducible
@@ -175,6 +176,7 @@ import LieLean.Algebra.QuantumGroup.Sl2
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Equivalence
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Uniqueness
 import LieLean.Algebra.QuantumGroup.Sl2.SimpleModule
+import LieLean.Algebra.QuantumGroup.Sl2.CrystalLattice
 import LieLean.Algebra.QuantumGroup.Triangular
 import LieLean.Algebra.QuantumGroup.TriangularDecomposition
 import LieLean.Algebra.QuantumGroup.TriangularRep
@@ -246,6 +248,7 @@ import LieLean.RepresentationTheory.Crystal.Path.DominantIsomorphism
 import LieLean.RepresentationTheory.Crystal.Path.CoupledStability
 import LieLean.RepresentationTheory.Crystal.Path.Isomorphism
 import LieLean.RepresentationTheory.Crystal.Path.LS
+import LieLean.RepresentationTheory.Crystal.Path.LSTwoPiece
 import LieLean.RepresentationTheory.Crystal.Path.LittlewoodRichardson
 import LieLean.RepresentationTheory.Crystal.Path.Realization
 import LieLean.RepresentationTheory.Crystal.Path.RootOperators
