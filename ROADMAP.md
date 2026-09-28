@@ -551,6 +551,14 @@ surjective quotients. Integral dot-Weyl invariance follows from genuine reflecti
 including negative and zero pairings, for generalized Cartan matrices without finite type.
 This is not character separation/classification, nonintegral invariance, a Harish-Chandra
 isomorphism or full-central block decomposition. Casimir blocks remain a distinct construction.
+`KacMoody/CentralBlocks.lean` constructs genuine simultaneous generalized full-centre
+character submodules, actual restricted morphisms, injection reflection, kernel/image
+exactness and family independence. Category-O weight spaces prove local finiteness under
+the entire centre; over an algebraically closed field, finite simultaneous spectral
+decomposition proves surjective lifting and preservation of actual short exact sequences.
+Only the middle term needs category O. Verma modules and their irreducible quotients have
+the expected block equal to top and distinct-character blocks zero. Global character-indexed
+direct-sum spanning and projections remain unconstructed; no classification is claimed.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -844,6 +852,13 @@ signs and both reflected source chains at the original times, with simultaneous 
 Matching actual glued operator intervals and source iterates, integral equality-seam cases,
 raising, subdivision coarsening and final strict gluing witnesses remain open. No full
 two-class stability is inferred from the proved single-source output reconstruction.
+`Path/GluingAfter.lean` proves actual strict-after lowering outputs and same-root iterates
+in the source-minimum-matched sector. An actual glued minimizer after the right cut plus
+nonpositive initial right-source slope derives the matching conditions. Output witnesses
+are strict gluing pairs with unchanged cuts, auxiliary directions and left source; the right
+source uses the same exponent and retains its original orbit. Exact breakpoint control
+preserves the strict right cut, and output global-minimum integrality holds for every root.
+Positive-slope normalization, strict-before, equality/crossing seams and raising remain open.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -982,9 +997,13 @@ automorphism assembly remain separate.
 `-2` centre of an exact two-node `(-2,-1)` diagram, with explicit inverse generator formulas
 and both composition identities. Its positive/negative neighbor recovery identities allow
 arbitrary ambient rank and unrestricted reverse entry. The automorphism retains arbitrary
-field and toral lattice, with `v ≠ 0` and centre quantum sum/difference nonzero. This is one
-node's automorphism, not both B₂ generators: the simple-side neighbor-first cubic relations,
-the other node map, length-four braid relation and connected higher-rank assembly remain open.
+field and toral lattice, with `v ≠ 0` and centre quantum sum/difference nonzero.
+`BraidAction/DoubleEdgeOther.lean` proves the simple-side neighbor-first cubic relations
+in arbitrary ambient rank and constructs the other exact-two-node automorphism with its
+explicit inverse and both compositions. Its centre difference nonvanishing is explicit
+and follows from the first node's sum/difference hypotheses by the parameter-square identity.
+Both B₂ node maps are now constructed; length-four braid equality and connected higher-rank
+assembly remain unproved and are not inferred from the two automorphisms.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
