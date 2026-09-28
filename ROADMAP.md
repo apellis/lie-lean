@@ -469,9 +469,16 @@ for a Cartan-diagonalizable module supported in finitely many cones `Λ - Q₊`,
 implies the module is zero, without finite-dimensional weight-space assumptions. The category-𝒪
 corollary `BGGMinimality.surjective_of_coinvariantsMap` upgrades surjectivity of the actual
 coinvariant map to surjectivity of a genuine module map with category-𝒪 target.
-Remaining: positive-degree Verma acyclicity, Cartan-equivariant dimension shifting, and
-detection of the actual syzygy generators on coinvariants. The proved Nakayama upgrade does
-not supply the missing coinvariant-surjectivity premise for the BGG syzygy maps.
+`BGG/VermaHomology.lean` upgrades PBW to an actual `𝔫₋`-module equivalence with the
+left-regular enveloping module (action `x • u = ι(x)u`, not the adjoint action), and transports
+concrete CE homology in every degree. Positive-degree Verma acyclicity is thereby reduced
+to exactness of the actual left-regular CE complex; that exactness is not yet proved.
+The Cartan-equivariant connecting maps and conditional weight-space dimension shifting are
+now available (M13), but their application to actual BGG syzygies and detection of the syzygy
+generators on coinvariants remain open. In particular, positive-degree acyclicity does not
+give the degree-zero vanishing hypothesis of the general dimension-shifting equivalence.
+The proved Nakayama upgrade does not supply the missing coinvariant-surjectivity premise
+for the BGG syzygy maps.
 The Garland–Lepowsky computation (M13) is proved but does not alone close these gaps.
 Extensions of the Hom dimension bound beyond the proved dominant dot-orbit require valid
 finite-type or noncritical hypotheses as above.
