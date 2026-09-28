@@ -477,8 +477,15 @@ Two ingredients for the filtered proof are available: `LinearAlgebra/Filtered/Ex
 lifts exactness of the actual adjacent filtration quotients to exactness, preserving the
 primitive's filtration bound, over any ring; `RingTheory/MvPolynomial/EulerIdentity.lean`
 proves finite-support Euler identities for arbitrary variable types and positive-degree scalar
-normalization. These do not yet construct the CE filtration, its PBW quotient comparison, or
-the full exterior/polynomial Koszul contraction (including mixed-term cancellation).
+normalization. `Homology/RegularFiltration.lean` constructs an increasing, exhaustive,
+zero-bottom total-degree filtration on the actual left-regular CE chains and proves that the
+existing CE differential preserves it, over arbitrary commutative rings.
+`LinearAlgebra/ExteriorAlgebra/Koszul.lean` defines concrete finite-coordinate differential
+and derivative homotopy operators, proves square-zero and mixed-term cancellation, and
+proves their anticommutator is total-degree multiplication on the span of supported
+homogeneous tensors. It imposes no finite-dimensionality or characteristic restriction.
+The CE associated-graded/PBW identification, identification of that homogeneous span with
+the standard graded-piece API, and normalized exactness argument remain to be connected.
 The Cartan-equivariant connecting maps and conditional weight-space dimension shifting are
 now available (M13), but their application to actual BGG syzygies and detection of the syzygy
 generators on coinvariants remain open. In particular, positive-degree acyclicity does not
