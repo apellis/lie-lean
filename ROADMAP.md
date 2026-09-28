@@ -590,6 +590,15 @@ ordinary reflection-invariant polynomials and all-Weyl evaluation invariance. No
 finite-type, symmetrization, algebraic-closure or Cartan-dimension hypothesis is added beyond
 the supplied characteristic-zero GCM realization. HC image/isomorphism and converse finite-type
 character separation remain open; invariance alone does not prove classification.
+`KacMoody/HarishChandraSymmetrization.lean` constructs factorial-normalized degreewise
+symmetrization from Mathlib's symmetric tensor quotient into the actual enveloping algebra.
+It intertwines diagonal infinitesimal adjoint operators with commutators and sends invariant
+tensors into the full centre. Its diagonal normalization includes degree zero. The central lift
+is linear, not asserted multiplicative; its HC evaluation is the genuine Verma character of
+the same central element. The characteristic-zero central-lift interface allows arbitrary
+dimension, with the current scalar/index universe restriction inherited from symmetric powers.
+Filtration/leading-symbol compatibility, homogeneous-component identification, Chevalley
+restriction and HC image/injectivity remain open; this is not the HC isomorphism.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -915,8 +924,13 @@ the right auxiliary direction is nonpositive. The outgoing source direction is i
 positive and reflected; both auxiliary directions, cuts and the left source remain unchanged.
 Closed-cut normalization, a reflected output interval and an integral-position target-chain
 reflection supply every strict field. Both sectors derive all-simple-root output integrality.
-Positive-auxiliary equality, other equality/crossing sectors, general iteration bookkeeping
-and full mixed-word stability remain open.
+`Path/GluingPositiveSeam.lean` closes the positive-right-auxiliary equality branch with
+an actual strict lowering-output pair, unchanged cuts and left source, and both auxiliaries
+reflected. Incoming source nonpositivity and both same-cut chains are derived, including
+zero left-auxiliary pairing. The actual incremented source string remains distinct from its
+strict coarsening; retained-tail increments agree. Output integrality holds for every simple
+root. Other equality/crossing sectors, dual sectors, general iteration bookkeeping and full
+mixed-word stability remain open.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -1088,7 +1102,16 @@ certificate proves the missing connected relation with the derived identity `q�
 The centre quantum sum and difference are explicitly nonzero. Rank, toral lattice and
 untouched–untouched entries remain unrestricted; next edges are zero or mutual simple.
 This covers the literal B-chain terminal orientation, not its adjacent nonterminal double centre.
-Nonterminal double centres, higher-rank braid relations and all-node action remain open.
+`BraidAction/NonterminalDouble.lean` constructs a genuine nonterminal double-edge
+automorphism with explicit reversal-conjugate inverse and both compositions on every
+generator, including all toral elements. An original-Serre degree-five certificate proves
+commutation of the orthogonal outgoing degree-two and degree-one neighbour images.
+Centre edges may be zero, mutual simple or either double orientation; distinct neighbours
+are orthogonal, at most one centre entry is outgoing `-2`, and neighbour–untouched edges
+are zero or mutual simple. Rank, toral lattice and untouched–untouched entries are unrestricted.
+The parameter, centre quantum difference/sum, forward path factor and `qᵢ⁴+qᵢ²+1`
+are explicitly nonzero. Literal named-matrix specializations and higher-rank braid relations
+remain separate; this does not yet prove an all-node Artin action.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
