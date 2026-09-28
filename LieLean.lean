@@ -164,6 +164,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Comul
 import LieLean.Algebra.QuantumGroup.LusztigF.Form
 import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
 import LieLean.Algebra.QuantumGroup.LusztigF.Bar
+import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.Sl2
@@ -217,6 +218,7 @@ import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Coroots
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Finite
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.FiniteConverse
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Interior
+import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.InteriorConverse
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant

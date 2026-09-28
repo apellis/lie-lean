@@ -214,7 +214,11 @@ equivalence uses ordered fields. No finite-type or symmetrizability premise is u
 `TitsCone/Interior.lean` proves the finite-stabilizer ⇒ interior direction of Proposition
 3.12(f), for points of the actual Tits cone in the finite-dimensional Hausdorff real topology.
 It uses the actual Weyl stabilizer and requires cone membership, not merely finite stabilizer.
-The reverse implication remains open; freeness on the open dominant chamber is not a substitute.
+`TitsCone/InteriorConverse.lean` proves the converse and the combined
+`mem_interior_titsCone_iff_finite_stabilizer`, completing Proposition 3.12(f) under these
+topology hypotheses. The proof bounds vanishing real coroots by perturbation and proves
+stabilizer-tuple injectivity on the entire dual. Cone membership is explicit in the iff;
+no finite-Weyl-group or symmetrizability assumption is added.
 
 
 - `𝔥`-diagonalizable (weight) modules, weights, `P(V)`; integrable modules (`eᵢ, fᵢ` locally
@@ -742,11 +746,15 @@ automorphism/inverse construction, braid relations and canonical bases remain op
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
-This is a generic-parameter prerequisite, not quotient descent or global-basis existence.
+`LusztigF/BarQuotient.lean` proves stability of the actual two-sided Serre ideal and
+descends bar to the Serre quotient for arbitrary index types. Over `ℚ(X)` and finite
+index type, it also descends to the existing form-radical quotient through quantum
+Gabber–Kac. Both ring involutions are coefficient-semilinear, compatible with projection,
+and fix generator divided powers. These are generic-parameter results, not global bases.
 The global-basis target over `ℚ(v)` still needs compatible divided-power forms, crystal
 lattices and residue bases, and proved balancedness; the stronger `ℤ[v,v⁻¹]` integral-basis
 statement is distinct. Arbitrary scalar specialization supplies none of these structures.
-Descent through the existing radical-equals-Serre-ideal theorem must retain its finite-index
+The radical descent retains the existing radical-equals-Serre-ideal theorem's finite-index
 and characteristic-zero/generic-parameter hypotheses.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
