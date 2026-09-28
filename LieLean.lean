@@ -188,6 +188,7 @@ import LieLean.GroupTheory.Coxeter.Parabolic.CoxeterSystem
 import LieLean.GroupTheory.Coxeter.Squares
 import LieLean.LinearAlgebra.Eigenspace.Weight
 import LieLean.LinearAlgebra.ExteriorAlgebra.Koszul
+import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulSupport
 import LieLean.LinearAlgebra.Filtered.Exactness
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
