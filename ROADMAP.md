@@ -203,8 +203,14 @@ finite Weyl group forces every full root to be real, and that full root-system f
 is equivalent to Weyl-group finiteness over every characteristic-zero field, including ℂ.
 Its reconstructed averaging proof uses positive integer root heights, not an order on
 the scalar field. With an ordered field, this also identifies full root-system finiteness
-with fullness of the Tits cone. Thus (e)(i)–(iii) are connected; the full dual-root bridge
-in (e)(iv) remains open in production. No finite-type or symmetrizability premise is used.
+with fullness of the Tits cone. `KacMoody/DualFiniteRoots.lean` constructs the Weyl-group
+isomorphism with the transposed realization and proves the full dual-root branch (e)(iv).
+It also transports these roots to the original Cartan space via evaluation, without assuming
+that the entire Cartan space is isomorphic to its double dual. Thus Proposition 3.12(e)'s
+four conditions are equivalent: finite Weyl group, full Tits cone, finite full roots,
+and finite full dual roots, with the stated dual-space convention for the cone.
+The root/Weyl equivalences hold over arbitrary characteristic-zero fields; the cone
+equivalence uses ordered fields. No finite-type or symmetrizability premise is used.
 `TitsCone/Interior.lean` proves the finite-stabilizer ⇒ interior direction of Proposition
 3.12(f), for points of the actual Tits cone in the finite-dimensional Hausdorff real topology.
 It uses the actual Weyl stabilizer and requires cone membership, not merely finite stabilizer.
