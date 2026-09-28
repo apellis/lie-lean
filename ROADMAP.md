@@ -536,9 +536,14 @@ identities, and constructs injective shifted-Verma maps from primitive coefficie
 For a one-dimensional weight coefficient step, `shiftedVermaEquivTensorBorelStep` identifies
 the shifted Verma module with the actual image of the upper piece in the ambient quotient
 by the lower piece. The literal nested-submodule quotient wrapper is not packaged.
-Finite weight-compatible Borel flags, assembled standard filtrations and their multiplicities
-remain. These are reconstructed arguments, not certification of the primary-source
-translation theorem.
+`KacMoody/TensorVermaFiltration.lean` now constructs the finite weight-compatible Borel flag
+and a strict, exhaustive full-Lie-algebra tensor-Verma standard filtration. Every canonical
+successive quotient image is equivalent to `M(Λ + μ)`, with factor count equal to the actual
+dimension of `Z_μ`. The coefficient module is finite-dimensional and Cartan-diagonalizable;
+the characteristic-zero field and finite-index realization are retained, without finite-type,
+dominance, integrality or algebraic-closure assumptions. Repeated weights and the zero module
+are included. These are reconstructed arguments, not certification of the primary-source
+translation theorem; full-centre projection, facet exclusion and dual compatibility remain.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -818,6 +823,12 @@ derived integral from the source endpoint hypothesis. Neither class needs domina
 This does not assert integrality of arbitrary weak local minima within artificial pauses.
 Two-class root-operator stability and hence whole-component integrality remain open;
 no component isomorphism is claimed.
+`Path/GluingReconstruction.lean` implements [Lit] Remark 5.4's two-sided finite cut
+extensions. Their source chains derive integral cut directions; both auxiliary paths are LS
+in the original classes, and re-gluing them gives literal equality at every real parameter,
+including coincident cuts. The inserted breakpoints equal the cuts, so these auxiliary
+presentations are not asserted to form another same-cut strict `GluingPair`. This supplies
+the reconstruction used in Proposition 5.6, not its root-operator stability conclusion.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -946,8 +957,12 @@ automorphism assertions. No nonzero sum/difference or transformed-relation premi
 `BraidAction/HigherSerre.lean` proves the centre-first positive and negative cubic Serre
 relations at directed `-2` edges, with the correct `qᵢ` parameter and Chevalley factor
 `qᵢ⁻²` on the neighbor. Only `v ≠ 0` is required; no quantum sum/difference is cancelled.
-The reverse entry and ambient rank remain unrestricted. Neighbor-first relations with
-`qⱼ`, higher degrees and automorphism assembly remain separate.
+The reverse entry and ambient rank remain unrestricted for those centre-first relations.
+`BraidAction/HigherSerreReverse.lean` proves both neighbor-first quadratic relations at
+mutual entries `(-2,-1)`, deriving `qⱼ = qᵢ²` from the symmetrizer. An explicit polynomial
+certificate uses the original cubic and quadratic relations. Only `v ≠ 0` is required;
+quantum sum/difference nonvanishing is not assumed. Higher degrees, other target pairs and
+automorphism assembly remain separate.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
