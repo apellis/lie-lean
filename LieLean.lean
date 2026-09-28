@@ -167,6 +167,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Form
 import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
 import LieLean.Algebra.QuantumGroup.LusztigF.Bar
 import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
+import LieLean.Algebra.QuantumGroup.LusztigF.IntegralForm
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.Sl2

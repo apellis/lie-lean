@@ -756,9 +756,14 @@ descends bar to the Serre quotient for arbitrary index types. Over `ℚ(X)` and 
 index type, it also descends to the existing form-radical quotient through quantum
 Gabber–Kac. Both ring involutions are coefficient-semilinear, compatible with projection,
 and fix generator divided powers. These are generic-parameter results, not global bases.
-The global-basis target over `ℚ(v)` still needs compatible divided-power forms, crystal
-lattices and residue bases, and proved balancedness; the stronger `ℤ[v,v⁻¹]` integral-basis
-statement is distinct. Arbitrary scalar specialization supplies none of these structures.
+`LusztigF/IntegralForm.lean` embeds `ℤ[X,X⁻¹]` into `ℚ(X)` and constructs the actual
+divided-power-generated integral subalgebras in both quotients. They span the generic
+algebras over `ℚ(X)` and are bar-stable, with restricted Laurent-semilinear ring involutions.
+Serre results allow arbitrary index types; radical construction and spanning use decidable
+equality, and radical bar additionally retains finite index. This does not prove freeness,
+an integral basis or a scalar-extension isomorphism. The global-basis target still needs
+crystal lattices, residue bases and proved balancedness; the stronger integer integral-basis
+statement remains distinct. No arbitrary scalar specialization is inferred.
 The radical descent retains the existing radical-equals-Serre-ideal theorem's finite-index
 and characteristic-zero/generic-parameter hypotheses.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
