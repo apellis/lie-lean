@@ -193,8 +193,13 @@ argument). Tits cone ([Kac] Prop. 3.12 (a)–(d), worked dually in `Dual K H`,
 `convex_titsCone`; real coroots and the coweyl group in `TitsCone/Coroots.lean`.
 `TitsCone/Finite.lean` proves that finite Weyl group implies full Tits cone, and that fullness
 is equivalent to finiteness of the positive real coroots, over arbitrary ordered fields.
-This supplies (e)(i)⇒(ii) and a real-coroot characterization, not all of Proposition 3.12(e):
-fullness ⇒ finite Weyl group and the bridges to the full root systems remain open.
+`TitsCone/FiniteConverse.lean` proves the converse and
+`finite_weylGroup_iff_titsCone_eq_univ`: (e)(i) iff (ii), in the same dual-space convention.
+Finiteness follows from an injective finite-valued simple-coroot image tuple; injectivity
+uses chamber uniqueness and freeness at a strictly dominant weight on the entire dual space,
+not an assumed faithful action on a smaller span. No symmetrizability or extra
+finite-dimensionality hypothesis is needed. The bridges to finiteness of the full root
+systems in (e)(iii)/(iv) remain open; real-coroot finiteness is not a substitute.
 Proposition 3.12(f), finite stabilizer iff interior point of the Tits cone, remains open;
 freeness on the open dominant chamber is not a substitute for this statement.
 
