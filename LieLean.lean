@@ -184,6 +184,10 @@ import LieLean.GroupTheory.Coxeter.Bruhat
 import LieLean.GroupTheory.Coxeter.Deletion
 import LieLean.GroupTheory.Coxeter.Exchange
 import LieLean.GroupTheory.Coxeter.GeometricRepresentation
+import LieLean.GroupTheory.Coxeter.GeometricRepresentation.Counterexample
+import LieLean.GroupTheory.Coxeter.GeometricRepresentation.CounterexampleMatrices
+import LieLean.GroupTheory.Coxeter.GeometricRepresentation.CounterexampleRoots
+import LieLean.GroupTheory.Coxeter.GeometricRepresentation.RootChoice
 import LieLean.GroupTheory.Coxeter.Hecke.Bar
 import LieLean.GroupTheory.Coxeter.Hecke.BaseChange
 import LieLean.GroupTheory.Coxeter.Hecke.Basic
