@@ -383,7 +383,7 @@ subgroups (`Parabolic*.lean`: `minCosetReps`, `w = w^J w_J`, `parabolicCoxeterSy
 `length_parabolicCoxeterSystem`); longest element (`Longest.lean`); geometric representation over
 an algebraically closed char-0 field (`GeometricRepresentation.lean`:
 `orderOf_simple_mul_simple` — the order of `sᵢsⱼ` is `mᵢⱼ` — and `simple_injective`, two TODOs
-of Mathlib's `Coxeter/Basic.lean`; faithfulness not proved).
+of Mathlib's `Coxeter/Basic.lean`; faithfulness of that opaque specialization is not proved).
 
 **Faithfulness scope correction.** Exact-order primitive roots alone do not ensure a faithful
 geometric representation. `GeometricRepresentation/RootChoice.lean` exposes those choices and
@@ -397,6 +397,16 @@ not a faithfulness theorem from [HumC]. The root identification left separate in
 module is completed by the root and bridge modules. This refutes uniform faithfulness over
 all admissible choices; it does **not** decide faithfulness of the fixed opaque
 `Classical.choose` specialization or refute the canonical real geometric representation.
+
+**Canonical faithfulness proved.** `GeometricRepresentation/Canonical.lean` constructs the
+actual real cosine-coefficient representation and its lift to units of the endomorphism ring.
+`CanonicalGeometric.representationUnits_injective` and `representation_injective` prove
+[HumC] §§5.3–5.4 faithfulness, with explicit finite/infinite dihedral formulas and the
+root-sign/length induction. The arbitrary-rank finitely supported root space is a proved
+extension of the source's finite-generator setting. `canonicalComplex_injective` transfers
+faithfulness through the proved intertwiner to the explicit exponential root choice, not
+the opaque choice above. No geometric faithfulness assumption enters the combinatorial
+exchange/parabolic dependencies.
 
 
 For a general Coxeter system (Mathlib's `CoxeterSystem`; applies to our
@@ -772,10 +782,15 @@ Definition 5.3 gluing pair, Lemma 5.5 integrality, or Propositions 5.6–5.7.
 and derives cut-position chains, the integral translation, seam/plateau minimum integrality,
 and global-minimum integrality. Both LS classes are dominant integral; individual directions
 need not be dominant. The source integral-endpoint premise is retained, not replaced by
-assumed glued-path integrality. This is not full Lemma 5.5 or component stability. Broader
-second-class support (or a proved reduction) is a genuine remaining classical dependency:
-Proposition 5.7/Theorem 6.3 assume dominance of the first weight and their sum, not that the
-second class has a dominant representative. Clearing denominators alone does not fix this.
+assumed glued-path integrality. This is not full Lemma 5.5 or component stability.
+`Path/GeneralClass.lean` now supplies arbitrary-class source root walks, maximum-length-one
+saturation, the crossing argument and time/position/scaling bridges. Its finite constructor
+uses integral directions without a dominant-orbit premise; `finite_seam_integral` derives
+the translation and seam integrality from the concrete paths, source chains and integral
+glued endpoint. This removes the dominant-second-class restriction for those chain/seam
+results. Proposition 5.7/Theorem 6.3 assume dominance of the first weight and their sum,
+not a dominant representative of the second class. Full arbitrary-class path/operator
+stability, all-minima integrality and the reparametrization/isomorphism bridge remain open.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -891,7 +906,12 @@ inverse generator formulas cover all `E,F,K_μ` and fix coefficients. Exponent s
 the abstract generators are not involutions; faithfulness of the quantum action is not
 claimed. Rank, valency and toral lattice remain unrestricted, with both parameter sum and
 difference conditions explicit. Higher braid lengths and triangle cases remain outside scope.
-Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
+`BraidAction/DegreeTwo.lean` proves the actual diagonal mixed commutator for `aᵢⱼ = -2`,
+both degree-two candidate expansions, and the symmetrizer-correct reflected toral exponent.
+Ambient rank and the reverse Cartan entry are unrestricted; only `v ≠ 0`,
+`qᵢ - qᵢ⁻¹ ≠ 0` and `qᵢ + qᵢ⁻¹ ≠ 0` are assumed, with no nonvanishing condition at `j`.
+This is a higher-edge automorphism prerequisite, not the automorphism or length-four relation.
+Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
 automorphism/inverse construction, other braid relations and general canonical bases remain open.

@@ -159,6 +159,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.PathSerre
 import LieLean.Algebra.QuantumGroup.BraidAction.SimplyLaced
 import LieLean.Algebra.QuantumGroup.BraidAction.SimplyLacedRelations
 import LieLean.Algebra.QuantumGroup.BraidAction.Artin
+import LieLean.Algebra.QuantumGroup.BraidAction.DegreeTwo
 import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
@@ -199,6 +200,7 @@ import LieLean.GroupTheory.Coxeter.Bruhat
 import LieLean.GroupTheory.Coxeter.Deletion
 import LieLean.GroupTheory.Coxeter.Exchange
 import LieLean.GroupTheory.Coxeter.GeometricRepresentation
+import LieLean.GroupTheory.Coxeter.GeometricRepresentation.Canonical
 import LieLean.GroupTheory.Coxeter.GeometricRepresentation.Counterexample
 import LieLean.GroupTheory.Coxeter.GeometricRepresentation.CounterexampleMatrices
 import LieLean.GroupTheory.Coxeter.GeometricRepresentation.CounterexampleRoots
@@ -262,6 +264,7 @@ import LieLean.RepresentationTheory.Crystal.Path.Isomorphism
 import LieLean.RepresentationTheory.Crystal.Path.Linking
 import LieLean.RepresentationTheory.Crystal.Path.GluingDirections
 import LieLean.RepresentationTheory.Crystal.Path.GluingPair
+import LieLean.RepresentationTheory.Crystal.Path.GeneralClass
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.LSTwoPiece
 import LieLean.RepresentationTheory.Crystal.Path.LSFinitePieces
