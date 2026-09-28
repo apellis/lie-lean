@@ -703,6 +703,12 @@ not an assumed LS condition. The general two-piece helper identifies the sole br
 chain; the simple-cover result specializes to the actual Weyl-orbit `lsData` realization.
 This is a bounded consequence of [Lit] §4, not arbitrary a-chains, general path existence,
 or an identification modulo reparametrization.
+`Path/LSFinitePieces.lean` extends the local-to-breakpoint criterion to any finite strict
+rational subdivision and arbitrary orbit directions: a supplied path with the literal
+cumulative affine formulas is LS iff the actual position chain holds at every internal
+breakpoint. It handles a single segment, inward endpoint directions and redundant slopes.
+The supplied path already has an integral endpoint. General source time-times-coroot
+`a`-chain comparison, path constructors and the reparametrization bridge remain separate.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, concrete `a`-chain description of LS paths. Source-scope caution:
@@ -779,11 +785,15 @@ and obtains the genuine algebra equivalence `a2BraidEquiv`. The field and root-d
 remain arbitrary; the parameter assumptions are `[NeZero v]` and `vᵢ - vᵢ⁻¹ ≠ 0`.
 No faithful action, lattice separation or relation package is assumed. Its product-reversal
 anti-involution works in arbitrary rank; its coupled automorphism theorem is specifically
-rank-two A₂. The braid relation between the two A₂ automorphisms is not yet proved.
+rank-two A₂. `BraidAction/A2Relation.lean` proves the actual length-three relation
+`Tᵢ Tⱼ Tᵢ = Tⱼ Tᵢ Tⱼ` for both quotient algebra homomorphisms and equivalences.
+It checks every `E,F,K_μ` generator, including arbitrary lattice elements outside the
+coroot span; equality of symmetrizer entries and the swapped denominator condition are
+derived. It retains precisely the two-node, arbitrary-field/lattice hypotheses above.
 Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
-automorphism/inverse construction, braid relations and canonical bases remain open.
+automorphism/inverse construction, other braid relations and general canonical bases remain open.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
@@ -808,8 +818,16 @@ It proves a coefficient-semilinear involutive module bar fixing this basis and c
 with represented `E,F` and `K_μ ↦ K_{-μ}`. It also constructs a free full lattice over the
 actual localization `ℚ[X]_(X)`, stable under explicit rank-one Kashiwara string shifts.
 The basis is bar-fixed; the local lattice is **not** bar-stable (bar sends `X b₀` to
-`X⁻¹ b₀`). No residue basis, balanced triple, full quantum-algebra bar, general global basis,
-or integer integral basis is established by this rank-one result.
+`X⁻¹ b₀`). `Sl2/GlobalBasis.lean` constructs evaluation at zero and proves its kernel is
+`(X)`, identifies the independently defined multiplication image `XL` with the lattice
+residue kernel, and constructs the actual quotient basis with descended string operators.
+It proves the scalar intersection `ℚ[X,X⁻¹] ∩ A₀ ∩ bar(A₀) = ℚ`, then bijectivity of the
+actual projection `L ∩ bar(L) ∩ V_{ℚ[X,X⁻¹]} → L/XL`. Its unique global lifts are exactly
+the represented divided powers of the highest vector and are bar-fixed. This is a proved
+rational balanced triple for every positive type-1 rank-one module `simpleRep X n 1`,
+including `n=0`, not an assumed balancedness interface. The argument is reconstructed;
+the primary Kashiwara source was not consulted. No full quantum-algebra bar, general-rank
+global basis, integer integral basis or arbitrary specialization is asserted.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
 irreducible representation over an algebraically closed field, for nonzero `v` of infinite
