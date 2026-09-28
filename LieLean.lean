@@ -83,6 +83,7 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.LaplacianScalar
 import LieLean.Algebra.Lie.KacMoody.Kostant.RhoShift
 import LieLean.Algebra.Lie.KacMoody.Kostant.RootSums
 import LieLean.Algebra.Lie.KacMoody.Kostant.Theorem
+import LieLean.Algebra.Lie.KacMoody.Kostant.WeightShift
 import LieLean.Algebra.Lie.KacMoody.Kostant.Weights
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
