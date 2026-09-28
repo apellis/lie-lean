@@ -641,7 +641,13 @@ argument reconstructed. Tensor products (`Path/{Isomorphism,Decomposition,Charac
 isomorphism theorem). `Path/DominantIsomorphism.lean` proves directly for continuous paths:
 other-color lowering increases height; raising colors must occur in the lowering word;
 monochromatic cancellation; and `component_eq_fOrbit_of_subsingleton` for arbitrary dominant
-paths in rank at most one. These do not discharge `LRIsomorphismHypothesis`. Remaining:
+paths in rank at most one. `Path/CoupledStability.lean` additionally proves raising stability
+at genuinely coupled two-letter descendants `f_j f_i π` of dominant continuous paths:
+when both directed Cartan entries are negative, the entire `i`-height is nonnegative;
+any successful raising operator is `e_j` and returns `f_i π`. The two lowering steps
+exist whenever the initial `i` endpoint height is at least one. There is no rank,
+piecewise-linearity or symmetrizability restriction on this bounded result.
+These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, concrete `a`-chain description of LS paths. Source-scope caution:
 Littelmann's Theorem 7.1 treats piecewise-linear rational paths modulo reparametrization in
@@ -694,8 +700,12 @@ from the presentation. `BraidAction/Coupled.lean` proves the diagonal mixed comm
 `[Tᵢ(Eⱼ), Tᵢ(Fⱼ)]` for the existing candidate images at a directed edge `aᵢⱼ = -1`, with
 the reflected toral right-hand side. The ambient rank and reverse entry `aⱼᵢ` are unrestricted;
 the hypotheses explicitly require `v ≠ 0` and `vᵢ - vᵢ⁻¹ ≠ 0`. This is one genuine
-coupled-node presentation relation, not a general braid automorphism. Higher-degree diagonal
-relations, fully coupled off-diagonal commutators, transformed Serre relations, the general
+coupled-node presentation relation, not a general braid automorphism.
+`BraidAction/CoupledMixed.lean` also proves the fully coupled off-diagonal relation
+`[braidEj i j, braidFj i l] = 0` for distinct `j,l` with `aᵢⱼ = aᵢₗ = -1`, under
+the same parameter hypotheses; reverse entries and entries between `j,l` are unrestricted.
+Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
+transformed Serre relations, the general
 automorphism/inverse construction, braid relations and canonical bases remain open.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
