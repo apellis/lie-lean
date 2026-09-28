@@ -102,6 +102,7 @@ import LieLean.Algebra.Lie.KacMoody.VermaHom
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
+import LieLean.Algebra.Lie.KacMoody.WeightBasis
 import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
@@ -139,6 +140,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.Sl2
+import LieLean.Algebra.QuantumGroup.Sl2.Classification.Equivalence
 import LieLean.Algebra.QuantumGroup.Sl2.SimpleModule
 import LieLean.Algebra.QuantumGroup.Triangular
 import LieLean.Algebra.QuantumGroup.TriangularDecomposition
@@ -159,6 +161,7 @@ import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Canonical
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Dihedral
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Inverse
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Parabolic
+import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.ParabolicRecursion
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.ParabolicRelations
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Properties
 import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Triangular
@@ -193,6 +196,7 @@ import LieLean.RepresentationTheory.Crystal.Path.CharacterFormula
 import LieLean.RepresentationTheory.Crystal.Path.CharacterSubcrystal
 import LieLean.RepresentationTheory.Crystal.Path.Concatenation
 import LieLean.RepresentationTheory.Crystal.Path.Decomposition
+import LieLean.RepresentationTheory.Crystal.Path.DominantIsomorphism
 import LieLean.RepresentationTheory.Crystal.Path.Isomorphism
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.LittlewoodRichardson

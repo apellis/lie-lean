@@ -6,6 +6,7 @@ Authors: Alex Ellis
 import LieLean.Algebra.Lie.Homology.Euler
 import LieLean.Algebra.Lie.KacMoody.Kostant.Chains
 import LieLean.Algebra.Lie.KacMoody.Casimir
+import LieLean.Algebra.Lie.KacMoody.WeightBasis
 
 /-!
 # The Euler characteristic of `𝔫₋`-homology
@@ -96,34 +97,7 @@ theorem IsCategoryO.finite_setOf_weightSpace_add_finsetWt_ne_bot (hV : IsCategor
     rw [Set.mem_ofPred_eq, add_comm] at hS
     exact hS
 
-/-! ### A basis of weight vectors of a module in `𝒪` -/
-
 variable {P}
-
-/-- The index set `{(ν, j) | j < dim V_ν}` of a basis of `V` consisting of weight vectors. -/
-abbrev WeightBasisIndex (P : Realization A K H) (V : Type*) [AddCommGroup V] [Module K V]
-    [LieRingModule P.KacMoodyAlgebra V] [LieModule K P.KacMoodyAlgebra V] : Type _ :=
-  Σ ν : Dual K H, Fin (finrank K (weightSpace P V ν))
-
-open Classical in
-omit [CharZero K] in
-lemma IsCategoryO.isInternal_weightSpace (hV : IsCategoryO P V) :
-    DirectSum.IsInternal (weightSpace P V) :=
-  DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top
-    (iSupIndep_weightSpaceOfMap (h P)) hV.iSup_weightSpaceOfMap_eq_top
-
-open Classical in
-/-- A basis of a module `V` in the category `𝒪` consisting of weight vectors. -/
-def IsCategoryO.weightBasis (hV : IsCategoryO P V) : Basis (WeightBasisIndex P V) K V :=
-  hV.isInternal_weightSpace.collectedBasis fun ν ↦
-    haveI := hV.finiteDimensional_weightSpaceOfMap ν
-    Module.finBasis K (weightSpace P V ν)
-
-open Classical in
-omit [CharZero K] in
-lemma IsCategoryO.weightBasis_mem (hV : IsCategoryO P V) (j : WeightBasisIndex P V) :
-    hV.weightBasis j ∈ weightSpace P V j.1 :=
-  hV.isInternal_weightSpace.collectedBasis_mem _ j
 
 /-! ### The weight-`μ` basis vectors of `⋀𝔫₋ ⊗ V` -/
 
