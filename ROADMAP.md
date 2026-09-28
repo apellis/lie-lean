@@ -739,8 +739,13 @@ ordered defining relation, not preservation of every Serre relation at that edge
 `BraidAction/CoupledSerreReverse.lean` proves the reverse positive ordered relation
 when both directed Cartan entries are `-1`, with the correct parameter `vⱼ`;
 the symmetrizer identity proves `dᵢ = dⱼ` rather than assuming it.
+`BraidAction/CoupledSerreNegative{,Reverse}.lean` constructs the actual coefficient-linear
+quantum Chevalley involution (`Eᵢ ↔ Fᵢ`, `K_μ ↦ K_{-μ}`), without a nonzero-parameter
+premise. Its proved scalar factors on the braid candidates give both negative ordered
+Serre relations: the forward one at a directed `-1` edge and the reverse one at a mutual
+`-1` edge, with the same nonzero-parameter and denominator hypotheses as the positive results.
 Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
-the remaining transformed Serre relations (including negative images and other node pairs),
+the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
 automorphism/inverse construction, braid relations and canonical bases remain open.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring

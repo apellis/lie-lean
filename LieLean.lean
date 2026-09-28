@@ -143,6 +143,8 @@ import LieLean.Algebra.QuantumGroup.BraidAction.Coupled
 import LieLean.Algebra.QuantumGroup.BraidAction.CoupledMixed
 import LieLean.Algebra.QuantumGroup.BraidAction.CoupledSerre
 import LieLean.Algebra.QuantumGroup.BraidAction.CoupledSerreReverse
+import LieLean.Algebra.QuantumGroup.BraidAction.CoupledSerreNegative
+import LieLean.Algebra.QuantumGroup.BraidAction.CoupledSerreNegativeReverse
 import LieLean.Algebra.QuantumGroup.BraidAction.Isolated
 import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
 import LieLean.Algebra.QuantumGroup.CartanDatum
