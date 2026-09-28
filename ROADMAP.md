@@ -508,6 +508,13 @@ homology in every degree over a commutative ring, naturally in the coefficient m
 and the kernel/cokernel universal properties. `Homology/Vanishing.lean` proves vanishing iff
 cycles equal boundaries (`subsingleton_homology_iff`), including degree zero, and the
 positive-degree range-equals-kernel criterion (`subsingleton_homology_succ_iff`).
+`Homology/LongExactSequence.lean` constructs the connecting map `homologyConnecting` on the
+concrete CE homology and proves all three exactness positions of the coefficient sequence,
+plus surjectivity of its degree-zero terminal map. Over a commutative ring this assumes
+flat exterior powers of the Lie algebra; the assumptions hold automatically over fields.
+`homologyConnectingEquiv` gives dimension shifting when the middle coefficient module's
+homology vanishes in both adjacent degrees. These are linear maps/equivalences; compatibility
+with the Cartan action and the remaining BGG exactness prerequisites are still open.
 (The old low-degree complex
 `Algebra/Lie/ChevalleyEilenberg.lean` and the unused `H₂` route to Gabber–Kac
 `SerrePresented/Homology.lean` were removed; the lemmas still needed moved to
