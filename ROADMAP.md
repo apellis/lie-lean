@@ -588,8 +588,12 @@ Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.l
 `QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
 irreducible representation over an algebraically closed field, for nonzero `v` of infinite
 multiplicative order, with some `simpleRep v n σ`, `σ² = 1`. Both signs are retained; no
-characteristic-zero or type-1 hypothesis is imposed. Parameter uniqueness and classification
-of arbitrary infinite-dimensional simple modules are not claimed. Future simplification to consider: unify the two
+characteristic-zero or type-1 hypothesis is imposed. Parameter uniqueness
+(`Sl2/Classification/Uniqueness.lean`, `QuantumGroup.Sl2.simpleRep_equiv_iff`) proves that
+`L(n, σ)` and `L(m, τ)` are equivalent exactly when `n = m` and `σ = τ`; this part needs
+only a field, not algebraic closedness. Thus the finite-dimensional classification is complete
+up to equivalence under the stated generic-parameter hypotheses. Classification of arbitrary
+infinite-dimensional simple modules is not claimed. Future simplification: unify the two
 q-integer families in
 `QBinomial.lean` (`qInt`/`qBinomial` over a field vs `qIntU`/`qBinomialU` over a ring with a
 unit; currently linked by `map_qNatU`, `map_qBinomialU`). Quantum target 2 and characters
@@ -627,10 +631,11 @@ The original continuation threads are:
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
 - Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
-  `Hecke/KazhdanLusztig/Canonical.lean`), Deodhar's recursion, classification of simple
-  parameter uniqueness/infinite-dimensional extensions of quantum `sl₂` classification,
-  Humphreys O Thm. 7.6, and valid restricted extensions of the Hom dimension bound.
-  Finite-dimensional exhaustion (both signs at generic parameter) is now proved. The unrestricted bound is false
+  `Hecke/KazhdanLusztig/Canonical.lean`), the spherical Deodhar recursion,
+  infinite-dimensional extensions of quantum `sl₂` classification, Humphreys O Thm. 7.6,
+  and valid restricted extensions of the Hom dimension bound.
+  Finite-dimensional exhaustion and parameter uniqueness are proved for both signs at generic
+  parameter. The unrestricted Verma Hom dimension bound is false
   (see M12); finite-dimensional quantum classification does not classify all infinite-dimensional
   simple modules.
 - Pending decisions: delete the empty `LieLean/Basic.lean`; rename
