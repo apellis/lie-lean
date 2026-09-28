@@ -576,6 +576,13 @@ Cartan-diagonalizable coefficient module. Algebraic closure and characteristic z
 no finite type, dominance, integrality or character separation is assumed. The projected chain
 retains zero steps and is monotone, not asserted strict. Facet exclusion, classification and dual
 compatibility for the translation theorem remain open.
+`KacMoody/HarishChandra.lean` constructs the actual weight-independent PBW projection to
+`SymmetricAlgebra K H`. Its unshifted evaluation at every weight is the actual highest-vector
+coefficient; on the full enveloping centre it recovers the Verma central character. Polynomial
+identity over infinite fields proves multiplicativity, giving the genuine central algebra map.
+The characteristic-zero realization setting is retained without extra finite-type, algebraic-closure
+or weight-integrality assumptions. Arbitrary-weight shifted Weyl invariance, the image/isomorphism
+theorem and finite-type character separation remain open; no classification is inferred.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -887,9 +894,16 @@ actual late glued minimum. Actual source lowering by `k` translates the retained
 leaves re-gluing unchanged; a successful glued lowering is literally re-gluing of the original
 source lowered `k+1` times, with inverse raising, finite source chains and original-orbit
 directions. No slope-sign restriction is imposed. These are raw path equalities: new early
-breakpoints can violate the strict source-cut condition, so output cut reconstruction and
-compatible chains are still needed. No strict output gluing witness or output integrality is
-inferred. Equality/crossing seams, coarsening and full mixed-word stability remain open.
+breakpoints can violate the strict source-cut condition, so that module alone does not supply
+a strict output witness or output integrality.
+`Path/GluingStrict.lean` now constructs genuine strict output gluing pairs for general single
+strict-after lowering, with no slope-sign or source-minimum-matching restriction. Finite prefix
+coarsening preserves retained increments and the original orbit; a fixed interval after the cut
+recovers the original initial direction, preserving both cut chains and compatibility. The actual
+source power and its coarsened representative are distinguished. Cuts, auxiliary directions and
+left source are unchanged, and output global-minimum integrality holds for every simple root.
+Unmatched strict-before transport, iteration bookkeeping, equality/crossing seams and full
+mixed-word stability remain open.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -1039,7 +1053,7 @@ every toral lattice generator. Two normal-ordering certificates, Chevalley trans
 proved inverse identities supply the generator equalities. The scope is exactly two distinct
 nodes with entries `(-2,-1)`, arbitrary field and root-datum lattice, `v ≠ 0`, and short-node
 quantum sum/difference nonzero; the other denominator follows from `qⱼ = qᵢ²`.
-Connected higher-rank double-edge assembly and the triple-edge/length-six relation remain open.
+General connected double-edge assembly and the triple-edge/length-six relation remain open.
 `BraidAction/DoublePathSerre.lean` proves both ordered positive/negative transformed Serre
 relations for a connected double-edge path, in arbitrary ambient rank. The forward relation
 uses entries `aᵢⱼ=-2`, `aⱼᵢ=-1`, `aⱼₗ=-1`, `aᵢₗ=0`, derives `qⱼ=qᵢ²`, and explicitly
@@ -1048,6 +1062,14 @@ requires `(1+qᵢ⁻⁴)(1+qᵢ⁻²+qᵢ⁻⁴) ≠ 0`. The reverse relation on
 Chevalley involution prove the relations, not an assumed braid map. The extra forward scalar
 condition bounds optional parameter generality, not the classical generic programme; necessity
 is not claimed. These supply terminal double-node assembly prerequisites, not an assembled map.
+`BraidAction/TerminalDouble.lean` assembles the actual quotient automorphism at a terminal
+outgoing `-2` node, with explicit reversal-conjugate inverse and both compositions. Ambient rank
+and toral lattice are arbitrary; all other centre edges vanish, and edges from its distinguished
+neighbour to untouched nodes are zero or mutual simple. Untouched–untouched entries remain
+unrestricted. The centre quantum sum/difference and forward path cyclotomic factor are explicitly
+nonzero. This includes the terminal orientation of pinned Mathlib's literal `C n`, not the
+nonterminal outgoing `-2` node in literal `B n` for `n ≥ 3`. The opposite terminal orientation,
+nonterminal double centres, higher-rank braid relations and all-node action remain open.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
