@@ -198,8 +198,13 @@ is equivalent to finiteness of the positive real coroots, over arbitrary ordered
 Finiteness follows from an injective finite-valued simple-coroot image tuple; injectivity
 uses chamber uniqueness and freeness at a strictly dominant weight on the entire dual space,
 not an assumed faithful action on a smaller span. No symmetrizability or extra
-finite-dimensionality hypothesis is needed. The bridges to finiteness of the full root
-systems in (e)(iii)/(iv) remain open; real-coroot finiteness is not a substitute.
+finite-dimensionality hypothesis is needed. `KacMoody/FiniteRoots.lean` proves that
+finite Weyl group forces every full root to be real, and that full root-system finiteness
+is equivalent to Weyl-group finiteness over every characteristic-zero field, including ℂ.
+Its reconstructed averaging proof uses positive integer root heights, not an order on
+the scalar field. With an ordered field, this also identifies full root-system finiteness
+with fullness of the Tits cone. Thus (e)(i)–(iii) are connected; the full dual-root bridge
+in (e)(iv) remains open in production. No finite-type or symmetrizability premise is used.
 Proposition 3.12(f), finite stabilizer iff interior point of the Tits cone, remains open;
 freeness on the open dominant chamber is not a substitute for this statement.
 

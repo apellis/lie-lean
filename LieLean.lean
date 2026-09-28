@@ -52,6 +52,7 @@ import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Casimir
 import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Character
 import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Multiplicity
 import LieLean.Algebra.Lie.KacMoody.FiniteDimensional
+import LieLean.Algebra.Lie.KacMoody.FiniteRoots
 import LieLean.Algebra.Lie.KacMoody.FiniteType
 import LieLean.Algebra.Lie.KacMoody.GabberKac
 import LieLean.Algebra.Lie.KacMoody.Geck
