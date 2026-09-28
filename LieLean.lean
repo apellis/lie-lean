@@ -139,6 +139,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Algebra.QuantumGroup.Basic
 import LieLean.Algebra.QuantumGroup.BraidAction
+import LieLean.Algebra.QuantumGroup.BraidAction.A2
 import LieLean.Algebra.QuantumGroup.BraidAction.Coupled
 import LieLean.Algebra.QuantumGroup.BraidAction.CoupledMixed
 import LieLean.Algebra.QuantumGroup.BraidAction.CoupledSerre
