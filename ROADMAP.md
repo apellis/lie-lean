@@ -518,8 +518,12 @@ concrete CE homology and proves all three exactness positions of the coefficient
 plus surjectivity of its degree-zero terminal map. Over a commutative ring this assumes
 flat exterior powers of the Lie algebra; the assumptions hold automatically over fields.
 `homologyConnectingEquiv` gives dimension shifting when the middle coefficient module's
-homology vanishes in both adjacent degrees. These are linear maps/equivalences; compatibility
-with the Cartan action and the remaining BGG exactness prerequisites are still open.
+homology vanishes in both adjacent degrees. `Homology/EquivariantSequence.lean` proves that
+the concrete connecting map commutes with compatible derivation actions and preserves
+simultaneous eigen-equations, without assuming diagonalizability or an equivariant splitting.
+The action is the existing quotient action, and the categorical/concrete comparison intertwines
+it. Specialization to the Cartan action, weight-space dimension shifting, and the remaining BGG
+exactness prerequisites are still open.
 (The old low-degree complex
 `Algebra/Lie/ChevalleyEilenberg.lean` and the unused `H₂` route to Gabber–Kac
 `SerrePresented/Homology.lean` were removed; the lemmas still needed moved to
