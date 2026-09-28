@@ -185,6 +185,7 @@ import LieLean.GroupTheory.Coxeter.Parabolic
 import LieLean.GroupTheory.Coxeter.Parabolic.CoxeterSystem
 import LieLean.GroupTheory.Coxeter.Squares
 import LieLean.LinearAlgebra.Eigenspace.Weight
+import LieLean.LinearAlgebra.Filtered.Exactness
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
@@ -218,3 +219,4 @@ import LieLean.RepresentationTheory.Crystal.Subcrystal
 import LieLean.RepresentationTheory.Crystal.Tensor
 import LieLean.RepresentationTheory.Crystal.WeylAction
 import LieLean.RingTheory.FormalCharacter
+import LieLean.RingTheory.MvPolynomial.EulerIdentity

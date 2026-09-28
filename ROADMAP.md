@@ -473,6 +473,12 @@ coinvariant map to surjectivity of a genuine module map with category-𝒪 targe
 left-regular enveloping module (action `x • u = ι(x)u`, not the adjoint action), and transports
 concrete CE homology in every degree. Positive-degree Verma acyclicity is thereby reduced
 to exactness of the actual left-regular CE complex; that exactness is not yet proved.
+Two ingredients for the filtered proof are available: `LinearAlgebra/Filtered/Exactness.lean`
+lifts exactness of the actual adjacent filtration quotients to exactness, preserving the
+primitive's filtration bound, over any ring; `RingTheory/MvPolynomial/EulerIdentity.lean`
+proves finite-support Euler identities for arbitrary variable types and positive-degree scalar
+normalization. These do not yet construct the CE filtration, its PBW quotient comparison, or
+the full exterior/polynomial Koszul contraction (including mixed-term cancellation).
 The Cartan-equivariant connecting maps and conditional weight-space dimension shifting are
 now available (M13), but their application to actual BGG syzygies and detection of the syzygy
 generators on coinvariants remain open. In particular, positive-degree acyclicity does not
