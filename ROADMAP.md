@@ -525,8 +525,12 @@ The action is the existing quotient action, and the categorical/concrete compari
 it. `Kostant/ExactSequence.lean` specializes this to the actual Cartan action on nilradical
 homology of a short exact sequence of Kac–Moody modules. In characteristic zero, if the target
 coefficient module is Cartan-diagonalizable, the connecting map preserves the existing
-image-of-weighted-cycles homology weight spaces. Weight-space dimension shifting and the
-remaining BGG exactness prerequisites are still open.
+image-of-weighted-cycles homology weight spaces. `Kostant/WeightShift.lean` restricts this
+map to each weight and proves it is an equivalence when both endpoint coefficient modules
+are Cartan-diagonalizable and the middle module's homology vanishes in both adjacent degrees.
+This includes degree zero only under the explicit degree-zero vanishing assumption; it does
+not infer it from positive-degree acyclicity. Verma acyclicity and actual BGG syzygy-generator
+detection remain open.
 (The old low-degree complex
 `Algebra/Lie/ChevalleyEilenberg.lean` and the unused `H₂` route to Gabber–Kac
 `SerrePresented/Homology.lean` were removed; the lemmas still needed moved to
