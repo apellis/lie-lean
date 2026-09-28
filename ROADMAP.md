@@ -486,8 +486,16 @@ Translation}.lean`): Casimir block decomposition `IsCategoryO.isInternal_casimir
 (`ch(V ⊗ W) = ch V · ch W`), `IsIntegrable.tensorProduct`,
 `IrreducibleModule.exists_isInternal_tensorProduct` (`L(Λ) ⊗ L(Λ')` decomposes);
 `IsStandardForm.translation` with exactness on characters `character_translation_eq_add`,
-`denominator_mul_character_tensorProduct_verma`. Open: [HumO] Thm. 7.6 (needs linkage finer than
-the Casimir eigenvalue). Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
+`denominator_mul_character_tensorProduct_verma`. `KacMoody/Blocks/Exact.lean` now constructs
+actual restricted Lie-module maps and proves injectivity, surjectivity and kernel/image
+exactness for Casimir-block restriction. Injectivity and middle exactness use positive-finite
+modules; surjectivity is stated for category-O modules. These are actual morphism results,
+not just character equalities. Open: [HumO] Thm. 7.6, which needs finer/full-central-character
+projection, tensor-Verma standard filtrations, facet exclusion and dual compatibility.
+The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
+published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
+eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
+(`KacMoody/KacKazhdan/*.lean`,
 `KacMoody/Jantzen*.lean`; `[IsAlgClosed K]` as in [KK], who work over `ℂ`): determinant formula
 `VermaModule.shapovalovDet_eq` ([KK] Thm. 1: `D_β(λ) = c ∏_{α>0} ∏_{n≥1} ((λ+ρ|α) -
 n(α|α)/2)^{mult α · P(β-nα)}`; also `exists_shapovalovDet_eq_prod_kkPairs/_kkIdx`), criterion
@@ -688,6 +696,13 @@ when both directed Cartan entries are negative, the entire `i`-height is nonnega
 any successful raising operator is `e_j` and returns `f_i π`. The two lowering steps
 exist whenever the initial `i` endpoint height is at least one. There is no rank,
 piecewise-linearity or symmetrizability restriction on this bounded result.
+`Path/LSTwoPiece.lean` proves the numerical LS criterion for a supplied rational two-piece
+path with slopes `sᵢ x,x`, positive `⟨x,αᵢ∨⟩`, and breakpoint `0<a<1`:
+`IsLS L π` iff `a⟨x,αᵢ∨⟩` is integral. The hypotheses are the literal affine formulas,
+not an assumed LS condition. The general two-piece helper identifies the sole breakpoint
+chain; the simple-cover result specializes to the actual Weyl-orbit `lsData` realization.
+This is a bounded consequence of [Lit] §4, not arbitrary a-chains, general path existence,
+or an identification modulo reparametrization.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, concrete `a`-chain description of LS paths. Source-scope caution:
@@ -787,6 +802,14 @@ crystal lattices, residue bases and proved balancedness; the stronger integer in
 statement remains distinct. No arbitrary scalar specialization is inferred.
 The radical descent retains the existing radical-equals-Serre-ideal theorem's finite-index
 and characteristic-zero/generic-parameter hypotheses.
+`Sl2/CrystalLattice.lean` constructs the actual divided-power basis of every type-1
+`simpleRep X n 1` over `ℚ(X)`, including `n=0`, with the required inverse-factorial scaling.
+It proves a coefficient-semilinear involutive module bar fixing this basis and compatible
+with represented `E,F` and `K_μ ↦ K_{-μ}`. It also constructs a free full lattice over the
+actual localization `ℚ[X]_(X)`, stable under explicit rank-one Kashiwara string shifts.
+The basis is bar-fixed; the local lattice is **not** bar-stable (bar sends `X b₀` to
+`X⁻¹ b₀`). No residue basis, balanced triple, full quantum-algebra bar, general global basis,
+or integer integral basis is established by this rank-one result.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
 irreducible representation over an algebraically closed field, for nonzero `v` of infinite
