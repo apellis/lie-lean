@@ -13,6 +13,21 @@ and the references in `ROADMAP.md` are all that is needed.
   Mathlib (at the pinned version) for an existing definition; extend it rather than duplicating it.
 - Everything should be written so it can be upstreamed to Mathlib with minimal changes.
 
+### Priority: classical foundations, not exploratory generalization
+
+- The primary goal is to formalize existing classical and well-known quantum Lie theory
+  as a stable foundation for downstream work. Prefer source-faithful definitions, hypotheses
+  and established proof routes over stronger statements or clever replacement constructions.
+- Preserve broader hypotheses when essentially free, or when a named downstream theorem
+  needs them. Do not make generalization or counterexample hunting a separate workstream.
+- Use bounded cases when they supply an identified lemma or construction needed for a
+  roadmap theorem, not merely to accumulate examples or confidence in known mathematics.
+- Run concrete confidence probes only to address a specific uncertainty about the formal
+  statement, encoding or implementation. Kernel compilation, axiom checks and statement
+  review remain required; established mathematical results do not need rediscovery by tests.
+- If a generalized encoding fails to support a classical theorem, first restore or construct
+  the source-faithful object rather than expanding the detour into a counterexample project.
+
 ## Environment
 
 ```sh
@@ -51,8 +66,9 @@ lake build LieLean.Algebra.Lie.Foo   # a single module
   -/
   ```
 
-- Prefer general hypotheses as Mathlib does: commutative rings where the argument allows,
-  fields of characteristic zero only where needed (state it as `[CharZero K]`).
+- Prefer general hypotheses as Mathlib does when the proof naturally allows them without
+  detouring from the classical target; retain source hypotheses otherwise. State needed
+  characteristic-zero assumptions explicitly as `[CharZero K]`.
 - Keep files focused and reasonably short (Mathlib files are typically under ~1000 lines).
 
 ## Mathematical standards
