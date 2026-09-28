@@ -459,9 +459,17 @@ criterion `maxSubmodule_eq_bot_iff_kacKazhdan`, generic simplicity. BGG (`KacMoo
 `W·Λ`, any GCM, via sl₂-projectivity rather than the Ore condition), squares lemma
 `bruhatSign_square`, the BGG complex `bggDiff` with `bggDiff_comp_bggDiff` (`d² = 0`),
 exactness of `C₁ → C₀ → L(Λ) → 0` (`ker_bggAugmentation`), Euler characteristic
-`hsum_vermaAltFamily`. Remaining: exactness of the BGG complex in degrees ≥ 1 (needs the
-Garland–Lepowsky homology computation, M13); extensions of the Hom dimension bound beyond the
-proved dominant dot-orbit require valid finite-type or noncritical hypotheses as above.
+`hsum_vermaAltFamily`. `BGG/Minimality.lean` identifies the actual degree-zero nilradical
+homology with coinvariants (`BGGMinimality.homologyZeroEquivCoinvariants`), proves
+`H₀(𝔫₋, M(μ)) ≃ K` for every highest weight (`BGGMinimality.VermaModule.homologyZeroEquiv`),
+and proves that the actual BGG differential induces zero on degree-zero nilradical homology
+(`BGGMinimality.homologyZeroMap_bggDiff_eq_zero`). These are supporting results, not exactness
+in positive degrees. Remaining: positive-degree Verma acyclicity, Cartan-equivariant
+dimension shifting, detection of the actual syzygy generators on coinvariants, and the
+bounded-weight Nakayama step needed to conclude exactness of the BGG complex in degrees ≥ 1.
+The Garland–Lepowsky computation (M13) is proved but does not alone close these gaps.
+Extensions of the Hom dimension bound beyond the proved dominant dot-orbit require valid
+finite-type or noncritical hypotheses as above.
 
 
 For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
