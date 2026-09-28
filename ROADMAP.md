@@ -524,8 +524,9 @@ Translation}.lean`): Casimir block decomposition `IsCategoryO.isInternal_casimir
 actual restricted Lie-module maps and proves injectivity, surjectivity and kernel/image
 exactness for Casimir-block restriction. Injectivity and middle exactness use positive-finite
 modules; surjectivity is stated for category-O modules. These are actual morphism results,
-not just character equalities. Open: [HumO] Thm. 7.6, which needs finer/full-central-character
-projection, tensor-Verma standard filtrations, facet exclusion and dual compatibility.
+not just character equalities. Open: [HumO] Thm. 7.6, which needs integration of full-central
+projection with tensor-Verma standard filtrations, character classification, facet exclusion
+and dual compatibility.
 `KacMoody/TensorVerma.lean` proves the actual left-regular enveloping tensor identity over
 any commutative ring, with a Hom-module inverse and both inverse laws. Its PBW specialization
 identifies `U(n₋) ⊗ Z_trivial` with `M(Λ) ⊗ Z`, equivariantly for `n₋`, and constructs
@@ -543,7 +544,7 @@ dimension of `Z_μ`. The coefficient module is finite-dimensional and Cartan-dia
 the characteristic-zero field and finite-index realization are retained, without finite-type,
 dominance, integrality or algebraic-closure assumptions. Repeated weights and the zero module
 are included. These are reconstructed arguments, not certification of the primary-source
-translation theorem; full-centre projection, facet exclusion and dual compatibility remain.
+translation theorem; projection/filtration integration, facet exclusion and dual compatibility remain.
 `KacMoody/VermaCentralCharacter.lean` constructs the actual full-centre algebra character
 `Z(U(g)) →ₐ[K] K` of each Verma module and proves scalar action on every vector. Nonzero
 Verma morphisms force equal characters, and scalar action passes to their images and
@@ -557,8 +558,15 @@ exactness and family independence. Category-O weight spaces prove local finitene
 the entire centre; over an algebraically closed field, finite simultaneous spectral
 decomposition proves surjective lifting and preservation of actual short exact sequences.
 Only the middle term needs category O. Verma modules and their irreducible quotients have
-the expected block equal to top and distinct-character blocks zero. Global character-indexed
-direct-sum spanning and projections remain unconstructed; no classification is claimed.
+the expected block equal to top and distinct-character blocks zero.
+`KacMoody/CentralDecomposition.lean` proves full-central character-indexed internal direct-sum
+decomposition and constructs natural full-Lie-module projections. Spectral functions on nonzero
+joint generalized spaces are proved to be algebra characters, not assumed to be characters.
+Local central finiteness supplies actual finite-dimensional invariant subspaces; the whole
+module need not be finite-dimensional. Projections have exact block range, are idempotent and
+orthogonal, and reconstruct each vector with finite support. Category-O corollaries use its
+proved local central finiteness. Algebraic closure is explicit for decomposition; no finite-type
+or characteristic-zero hypothesis is added. No Harish-Chandra or character classification is claimed.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -849,16 +857,23 @@ lowering operators and same-root iterates, with proved rational operator times, 
 deduplicated refinements, source chains, original-orbit directions and literal output equality.
 At a nonintegral gluing seam with positive outgoing slope, it derives both cut-direction
 signs and both reflected source chains at the original times, with simultaneous compatibility.
-Matching actual glued operator intervals and source iterates, integral equality-seam cases,
-raising, subdivision coarsening and final strict gluing witnesses remain open. No full
+Matching actual glued operator intervals and source iterates outside the sectors below,
+integral equality-seam cases, subdivision coarsening and general strict witnesses remain open. No full
 two-class stability is inferred from the proved single-source output reconstruction.
 `Path/GluingAfter.lean` proves actual strict-after lowering outputs and same-root iterates
 in the source-minimum-matched sector. An actual glued minimizer after the right cut plus
 nonpositive initial right-source slope derives the matching conditions. Output witnesses
 are strict gluing pairs with unchanged cuts, auxiliary directions and left source; the right
 source uses the same exponent and retains its original orbit. Exact breakpoint control
-preserves the strict right cut, and output global-minimum integrality holds for every root.
-Positive-slope normalization, strict-before, equality/crossing seams and raising remain open.
+preserves the strict right cut, and output global-minimum integrality holds for every simple root.
+`Path/GluingBefore.lean` constructs complementary-time source-chain reversal, literal finite
+presentation reversal and involution, and reversal of genuine strict gluing pairs. It reconstructs
+successful source raising iterates in the original orbit and proves actual strict-before raising
+outputs in the source-minimum-matched sector. An actual glued minimizer before the left cut and
+nonnegative terminal left-source slope suffice. The left source uses the same exponent; the right
+source, cuts and auxiliary directions remain unchanged. Output global-minimum integrality holds
+for every simple root. Unmatched normalization, equality/crossing seams, coarsening and full
+mixed-word two-class stability remain open; neither class is assumed dominant.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -1002,8 +1017,13 @@ field and toral lattice, with `v ≠ 0` and centre quantum sum/difference nonzer
 in arbitrary ambient rank and constructs the other exact-two-node automorphism with its
 explicit inverse and both compositions. Its centre difference nonvanishing is explicit
 and follows from the first node's sum/difference hypotheses by the parameter-square identity.
-Both B₂ node maps are now constructed; length-four braid equality and connected higher-rank
-assembly remain unproved and are not inferred from the two automorphisms.
+`BraidAction/DoubleEdgeRelation.lean` proves the actual length-four equality for both published
+quotient homomorphisms and algebra equivalences, checking all four Chevalley generators and
+every toral lattice generator. Two normal-ordering certificates, Chevalley transport and the
+proved inverse identities supply the generator equalities. The scope is exactly two distinct
+nodes with entries `(-2,-1)`, arbitrary field and root-datum lattice, `v ≠ 0`, and short-node
+quantum sum/difference nonzero; the other denominator follows from `qⱼ = qᵢ²`.
+Connected higher-rank double-edge assembly and the triple-edge/length-six relation remain open.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
