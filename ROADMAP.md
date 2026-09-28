@@ -513,6 +513,17 @@ characteristic-zero field, without a basis or finite-dimensionality assumption i
 This proof does not require separately packaging the associated-graded quotients. Those API
 identifications are not established here and are no longer a prerequisite for acyclicity.
 Positive-degree BGG exactness remains open.
+`Homology/DirectSum.lean` proves that arbitrary direct sums preserve CE homology vanishing
+in each degree over commutative rings, using actual coefficient projections/inclusions.
+`BGG/TermHomology.lean` applies this to every actual `BGGTerm`, proving positive-degree
+nilradical acyclicity without dominance, symmetrizability or finite-dimensionality assumptions.
+`BGG/Syzygy.lean` proves that projection of actual BGG cycles onto the simple-ascent
+coordinates is injective: a cycle supported entirely on the complementary simple-descent
+summands is zero. This is a vector-level detector, not detection modulo nilradical action.
+It formalizes the descent-elimination step of Heckenberger–Kolb, arXiv:math/0605460,
+§3.1 Proposition 3.4. The alternative integrable-homology route still requires the
+simple-cover/reflection-quotient range comparison, local nilpotence modulo actual boundaries,
+and the final homology-vanishing argument; no integrability or BGG exactness is claimed yet.
 The Cartan-equivariant connecting maps and conditional weight-space dimension shifting are
 now available (M13), but their application to actual BGG syzygies and detection of the syzygy
 generators on coinvariants remain open. In particular, positive-degree acyclicity does not

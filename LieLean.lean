@@ -3,6 +3,7 @@ import LieLean.Algebra.Lie.Homology.ChainComplex
 import LieLean.Algebra.Lie.Homology.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Homology.Comparison
 import LieLean.Algebra.Lie.Homology.Complex
+import LieLean.Algebra.Lie.Homology.DirectSum
 import LieLean.Algebra.Lie.Homology.EquivariantSequence
 import LieLean.Algebra.Lie.Homology.Euler
 import LieLean.Algebra.Lie.Homology.LeadingDifferential
@@ -20,6 +21,8 @@ import LieLean.Algebra.Lie.KacMoody.BGG.Nakayama
 import LieLean.Algebra.Lie.KacMoody.BGG.Nilradical
 import LieLean.Algebra.Lie.KacMoody.BGG.Projectivity
 import LieLean.Algebra.Lie.KacMoody.BGG.Sl2
+import LieLean.Algebra.Lie.KacMoody.BGG.Syzygy
+import LieLean.Algebra.Lie.KacMoody.BGG.TermHomology
 import LieLean.Algebra.Lie.KacMoody.BGG.Uniqueness
 import LieLean.Algebra.Lie.KacMoody.BGG.Verma
 import LieLean.Algebra.Lie.KacMoody.BGG.VermaAcyclicity
