@@ -544,6 +544,13 @@ the characteristic-zero field and finite-index realization are retained, without
 dominance, integrality or algebraic-closure assumptions. Repeated weights and the zero module
 are included. These are reconstructed arguments, not certification of the primary-source
 translation theorem; full-centre projection, facet exclusion and dual compatibility remain.
+`KacMoody/VermaCentralCharacter.lean` constructs the actual full-centre algebra character
+`Z(U(g)) →ₐ[K] K` of each Verma module and proves scalar action on every vector. Nonzero
+Verma morphisms force equal characters, and scalar action passes to their images and
+surjective quotients. Integral dot-Weyl invariance follows from genuine reflection embeddings,
+including negative and zero pairings, for generalized Cartan matrices without finite type.
+This is not character separation/classification, nonintegral invariance, a Harish-Chandra
+isomorphism or full-central block decomposition. Casimir blocks remain a distinct construction.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -829,6 +836,14 @@ in the original classes, and re-gluing them gives literal equality at every real
 including coincident cuts. The inserted breakpoints equal the cuts, so these auxiliary
 presentations are not asserted to form another same-cut strict `GluingPair`. This supplies
 the reconstruction used in Proposition 5.6, not its root-operator stability conclusion.
+`Path/GluingOperators.lean` constructs finite source presentations of actual successful
+lowering operators and same-root iterates, with proved rational operator times, strict
+deduplicated refinements, source chains, original-orbit directions and literal output equality.
+At a nonintegral gluing seam with positive outgoing slope, it derives both cut-direction
+signs and both reflected source chains at the original times, with simultaneous compatibility.
+Matching actual glued operator intervals and source iterates, integral equality-seam cases,
+raising, subdivision coarsening and final strict gluing witnesses remain open. No full
+two-class stability is inferred from the proved single-source output reconstruction.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -963,6 +978,13 @@ mutual entries `(-2,-1)`, deriving `qⱼ = qᵢ²` from the symmetrizer. An expl
 certificate uses the original cubic and quadratic relations. Only `v ≠ 0` is required;
 quantum sum/difference nonvanishing is not assumed. Higher degrees, other target pairs and
 automorphism assembly remain separate.
+`BraidAction/DoubleEdge.lean` constructs the genuine quotient automorphism at the outgoing
+`-2` centre of an exact two-node `(-2,-1)` diagram, with explicit inverse generator formulas
+and both composition identities. Its positive/negative neighbor recovery identities allow
+arbitrary ambient rank and unrestricted reverse entry. The automorphism retains arbitrary
+field and toral lattice, with `v ≠ 0` and centre quantum sum/difference nonzero. This is one
+node's automorphism, not both B₂ generators: the simple-side neighbor-first cubic relations,
+the other node map, length-four braid relation and connected higher-rank assembly remain open.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
