@@ -366,7 +366,7 @@ the Bruhat order (via reflections `T` and length), the subword property, chain p
 standard parabolic subgroups `W_J`, minimal coset representatives `W^J` and `w = w^J w_J`;
 the longest element for finite `W`.
 
-### M11. Iwahori–Hecke algebras and Kazhdan–Lusztig theory  `[x]`  ([HumC] Ch. 7, [KL], [BB] Ch. 5)
+### M11. Iwahori–Hecke algebras and Kazhdan–Lusztig theory  `[~]`  ([HumC] Ch. 7, [KL], [BB] Ch. 5)
 
 Done (`LieLean/GroupTheory/Coxeter/Hecke/`; convention `(T_s - q)(T_s + 1) = 0`, any commutative
 ring `R`, any `q : R`): `IwahoriHeckeAlgebra cs q` (constructed via the regular representation,
@@ -396,8 +396,14 @@ ParabolicRelations}.lean`): an abstract Lusztig lemma `existsUnique_canonical`; 
 `existsUnique_parabolicKLBasis`, `parabolicKLPoly` (support, degree bound), Deodhar's relations
 `parabolicKLPoly_sgn` (alternating sums of `P_{y,d}`) and `parabolicKLPoly_ind`
 (`P_{d'w_J, dw_J}`, finite `W_J`); rank ≤ 2 (`KazhdanLusztig/Dihedral.lean`):
-`bruhatLE_iff_of_card_le_two`, `klPoly_eq_one_of_card_le_two`. Remaining: Deodhar's `C'_s`
-recursion and parabolic μ-coefficients.
+`bruhatLE_iff_of_card_le_two`, `klPoly_eq_one_of_card_le_two`.
+`ParabolicRecursion{,/Mu,/SignProjection}.lean` defines `parabolicKLMu` for both inducing
+characters, identifies it with the normalized `v⁻¹` coefficient, and proves odd-degree,
+support and diagonal formulas. `klBasis_simple_smul_parabolicKLBasis_sgn` proves the complete
+sign-module `C'_s` multiplication recursion for arbitrary parabolic subgroups, by projection
+of the ordinary recursion. Remaining: the spherical/index (`u = q`) multiplication recursion
+for arbitrary parabolic subgroups; the finite-parabolic longest-element relation is not a
+replacement for this result.
 
 
 The Hecke algebra `𝓗(W)` over `ℤ[v, v⁻¹]` with standard basis `T_w` (constructed without
@@ -406,7 +412,7 @@ involution, `R`-polynomials; existence and uniqueness of the Kazhdan–Lusztig b
 ([KL] Thm. 1.1), KL polynomials `P_{y,w}` (degree bound, `P_{w,w} = 1`, `P_{y,w} = 0` unless
 `y ≤ w`), specialization `v = 1` to `ℤ[W]`.
 
-### M12. Deeper category 𝒪  `[x]`  ([Kac] §9, [HumO], [KK])
+### M12. Deeper category 𝒪  `[~]`  ([Kac] §9, [HumO], [KK])
 
 Done: `UniversalEnvelopingAlgebra.instIsDomain` (`UniversalEnveloping/Domain.lean`, via graded
 PBW); `KacMoody/VermaHom.lean`: `primitiveVectors`, `VermaModule.homEquiv`
@@ -415,9 +421,17 @@ PBW); `KacMoody/VermaHom.lean`: `primitiveVectors`, `VermaModule.homEquiv`
 `KacMoody/Grothendieck.lean`: `sumIrreducibleCharacter(_injective)`,
 `IsCategoryO.character_eq_sumIrreducibleCharacter` (`ch V = Σ [V:L(μ)] ch L(μ)`), `multiplicities`
 (class in the completed Grothendieck group), `character_eq_iff`, `multiplicity_eq_add`,
-`VermaModule.multiplicity_self`. Open: `dim Hom(M(μ), M(λ)) ≤ 1` in general — Humphreys' proof uses
-that `U(𝔫₋)` is Ore, which fails in Kac–Moody generality (`𝔫₋` may contain free Lie algebras);
-needs a literature check. Blocks, tensor products, translation (`KacMoody/{Blocks,TensorProduct,
+`VermaModule.multiplicity_self`. **Correction:** the unrestricted claim
+`dim Hom(M(μ), M(λ)) ≤ 1` is false in Kac–Moody generality, not merely missing an Ore argument.
+At critical affine level, Arakawa–Fiebig, *On the restricted Verma modules at the critical level*,
+Thm. 4.7(2) ([arXiv:0812.3334](https://arxiv.org/html/0812.3334)), gives
+`dim Hom(Tⁿ M(λ), M(λ)) = p(-n)`, where `p` is the rank-coloured partition function.
+For underlying finite rank one and `n = -2`, this dimension is 2. Liu's introduction also
+explicitly notes failure of the general bound
+([arXiv:2009.04147v2](https://arxiv.org/html/2009.04147v2)). This is a literature-backed
+counterexample, not a Lean formalization of the counterexample. The finite-type and appropriate
+noncritical hypotheses must be retained in any extension beyond the proved dominant dot-orbit
+result; the unrestricted statement is withdrawn, not marked proved. Blocks, tensor products, translation (`KacMoody/{Blocks,TensorProduct,
 Translation}.lean`): Casimir block decomposition `IsCategoryO.isInternal_casimirBlock`,
 `multiplicity_casimirBlock`; `IsCategoryO.tensorProduct`, `character_tensorProduct`
 (`ch(V ⊗ W) = ch V · ch W`), `IsIntegrable.tensorProduct`,
@@ -443,11 +457,14 @@ criterion `maxSubmodule_eq_bot_iff_kacKazhdan`, generic simplicity. BGG (`KacMoo
 `bruhatSign_square`, the BGG complex `bggDiff` with `bggDiff_comp_bggDiff` (`d² = 0`),
 exactness of `C₁ → C₀ → L(Λ) → 0` (`ker_bggAugmentation`), Euler characteristic
 `hsum_vermaAltFamily`. Remaining: exactness of the BGG complex in degrees ≥ 1 (needs the
-Garland–Lepowsky homology computation, M13), `dim Hom(M(μ), M(λ)) ≤ 1` off the dot-orbit.
+Garland–Lepowsky homology computation, M13); extensions of the Hom dimension bound beyond the
+proved dominant dot-orbit require valid finite-type or noncritical hypotheses as above.
 
 
 For `𝔤(A)` (symmetrizable where needed): `U(𝔫₋)` is a domain (via graded PBW); Verma
-homomorphisms are injective and `dim Hom(M(μ), M(λ)) ≤ 1`; the embeddings `M(rᵢ·λ) ↪ M(λ)`;
+homomorphisms are injective; the bound `dim Hom(M(μ), M(λ)) ≤ 1` requires restrictions
+(the unrestricted Kac–Moody version is false; see the correction above);
+the embeddings `M(rᵢ·λ) ↪ M(λ)`;
 the character identity `ch V = Σ_μ [V : L(μ)] ch L(μ)` in `ℰ`; Grothendieck group of 𝒪
 identified with (a subgroup of) `ℰ`; the Kac–Kazhdan determinant formula and the Kac–Kazhdan
 criterion for `[M(λ) : L(μ)] ≠ 0` ([KK]); the Jantzen filtration and sum formula ([HumO] §5.3);
@@ -492,7 +509,7 @@ Garland–Lepowsky theorem (Kostant's theorem in finite type): for `Λ` dominant
 `H_k(𝔫₋, L(Λ)) ≅ ⊕_{w ∈ W, ℓ(w) = k} K_{w(Λ+ρ)-ρ}` as `𝔥`-modules; the Euler characteristic
 recovers the Weyl–Kac formula.
 
-### M14. Crystals  `[x]`  ([Kas], [Lit], [HK])
+### M14. Crystals  `[~]`  ([Kas], [Lit], [HK])
 
 Done (`LieLean/RepresentationTheory/Crystal/`): `CartanDatum`, `Crystal` (Kashiwara's axioms,
 `ε, φ` valued in `WithBot ℤ`), `StrictHom`, `Crystal.Equiv`; tensor product (Kashiwara's
@@ -518,8 +535,14 @@ argument reconstructed. Tensor products (`Path/{Isomorphism,Decomposition,Charac
 (`[L(λ)⊗L(μ) : L(ν)] = #{η ∈ B(μ) λ-dominant, λ + η(1) = ν}`),
 `card_isHighestWeight_tensorPathCrystal`, `setCharacter_eq_hsum`; the crystal isomorphism
 `nonempty_equiv_sigma` is *conditional* on `LRIsomorphismHypothesis` (instances of Littelmann's
-isomorphism theorem). Remaining: Littelmann's isomorphism theorem and the crystal-level LR
-decomposition, braid relations/normality, concrete `a`-chain description of LS paths.
+isomorphism theorem). `Path/DominantIsomorphism.lean` proves directly for continuous paths:
+other-color lowering increases height; raising colors must occur in the lowering word;
+monochromatic cancellation; and `component_eq_fOrbit_of_subsingleton` for arbitrary dominant
+paths in rank at most one. These do not discharge `LRIsomorphismHypothesis`. Remaining:
+mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
+braid relations/normality, concrete `a`-chain description of LS paths. Source-scope caution:
+Littelmann's Theorem 7.1 treats piecewise-linear rational paths modulo reparametrization in
+the symmetrizable setting, not all continuous paths in the repository's general interface.
 
 
 Abstract (Kashiwara) crystals for a Cartan datum: morphisms, the tensor product rule (signature
@@ -560,8 +583,13 @@ unique maximal submodule, `IrreducibleModule` (= `L_q(Λ)`, `isSimpleModule`); `
 `FPowQuotient.isIntegrable` (`L̃_q(Λ)`), `IrreducibleModule.isIntegrable` (Λ dominant). Braid
 action (`BraidAction*.lean`, Lusztig's `T''_{i,1}`): `rankOneBraidEquiv` (rank one), relations
 (a)–(d) involving `i` and the mixed ones `braidEi_mul_braidFj_sub`. Remaining: the other
-relations for `Tᵢ` (so `Tᵢ` as an automorphism in general) and braid relations; classification
-of simple `U_q(sl₂)`-modules; canonical bases. Future simplification to consider: unify the two
+relations for `Tᵢ` (so `Tᵢ` as an automorphism in general) and braid relations; canonical bases.
+Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
+`QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
+irreducible representation over an algebraically closed field, for nonzero `v` of infinite
+multiplicative order, with some `simpleRep v n σ`, `σ² = 1`. Both signs are retained; no
+characteristic-zero or type-1 hypothesis is imposed. Parameter uniqueness and classification
+of arbitrary infinite-dimensional simple modules are not claimed. Future simplification to consider: unify the two
 q-integer families in
 `QBinomial.lean` (`qInt`/`qBinomial` over a field vs `qIntU`/`qBinomialU` over a ring with a
 unit; currently linked by `map_qNatU`, `map_qBinomialU`). Quantum target 2 and characters
@@ -578,10 +606,12 @@ For symmetrizable `A`: `U_q(𝔤)` over `ℚ(v)` (Drinfeld–Jimbo presentation 
 highest-weight modules `L_q(λ)` and equality of characters with `L(λ)` for `λ` dominant
 integral; Lusztig's canonical basis / Kashiwara's global basis if reachable.
 
-## Status and open threads (paused 2026-09-27)
+## Status and open threads
 
-Everything above is merged on `main`; full `lake build` green, axiom checks clean. Threads that
-were in progress when work paused (no code from them is on `main`; restart from these notes):
+The declarations listed as proved are on `main`; the explicit remaining items below are not
+completion claims. Work has resumed. M11, M12 and M14 are marked in progress because their
+remaining statements are not all proved; M1–M9's main targets and M13 are complete.
+The original continuation threads are:
 
 - **BGG exactness in degrees ≥ 1** (M12): plan — compare the BGG complex with
   `H_•(𝔫₋, L(Λ))` (Garland–Lepowsky, now proved) via a graded-Nakayama / minimal-resolution
@@ -593,11 +623,16 @@ were in progress when work paused (no code from them is on `main`; restart from 
 - **Braid automorphisms `Tᵢ` in general** (M15): route — `Tᵢ` on integrable modules ([Lus] 5.2),
   faithfulness of `⊕ L_q(λ)` (via `maxSubmodule_eq_fPowSubmodule` and the triangular
   decomposition), then all relations of `U_q` hold for the candidate images.
-- **Weight-basis cleanup** (approved): merge `diagWeightBasis` (`KacMoody/TensorProduct.lean`)
-  and `IsCategoryO.weightBasis` (`KacMoody/Kostant/Euler.lean`) into one shared construction.
+- **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
+  `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
+  `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
 - Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
   `Hecke/KazhdanLusztig/Canonical.lean`), Deodhar's recursion, classification of simple
-  `U_q(sl₂)`-modules, Humphreys O Thm. 7.6, `dim Hom(M(μ), M(λ)) ≤ 1` off the dot-orbit.
+  parameter uniqueness/infinite-dimensional extensions of quantum `sl₂` classification,
+  Humphreys O Thm. 7.6, and valid restricted extensions of the Hom dimension bound.
+  Finite-dimensional exhaustion (both signs at generic parameter) is now proved. The unrestricted bound is false
+  (see M12); finite-dimensional quantum classification does not classify all infinite-dimensional
+  simple modules.
 - Pending decisions: delete the empty `LieLean/Basic.lean`; rename
   `LieLean/RingTheory/FormalCharacter.lean` to a Mathlib-style path/namespace; a checklist for
   verifying the ~400 "(check)" citations against the books.

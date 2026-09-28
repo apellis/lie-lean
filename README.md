@@ -23,9 +23,10 @@ already provides. Contributor and agent conventions are in [`AGENTS.md`](AGENTS.
 
 ## Status
 
-All milestones of [`ROADMAP.md`](ROADMAP.md) are formalized, with no `sorry` and no axioms beyond
-`propext`, `Classical.choice` and `Quot.sound`. For a symmetrizable generalized Cartan matrix `A`
-over a field of characteristic zero:
+The Phase 1 main targets (M1–M9) of [`ROADMAP.md`](ROADMAP.md) are formalized, with no `sorry`
+and no axioms beyond `propext`, `Classical.choice` and `Quot.sound`. Phase 2 remains in progress;
+its explicit open items and statement corrections are recorded in the roadmap. For a
+symmetrizable generalized Cartan matrix `A` over a field of characteristic zero:
 
 1. **Gabber–Kac** (`Matrix.Realization.AuxLieAlgebra.maxIdeal_eq_serreIdeal`): `𝔤(A)` is presented
    by the Chevalley generators and the Serre relations.

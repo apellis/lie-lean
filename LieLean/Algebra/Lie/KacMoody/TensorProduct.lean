@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.Lie.KacMoody.Blocks
+import LieLean.Algebra.Lie.KacMoody.WeightBasis
 import Mathlib.Algebra.Lie.TensorProduct
 import Mathlib.LinearAlgebra.TensorProduct.Basis
 
@@ -116,22 +117,6 @@ theorem finrank_weightSpace_of_basis (ξ : Dual K H) (hfin : {k | wt k = ξ}.Fin
 end WeightBasis
 
 section Diagonalizable
-
-variable (P V) in
-/-- The index type of `diagWeightBasis`. -/
-abbrev DiagWeightBasisIndex : Type _ :=
-  Σ μ : Dual K H, Basis.ofVectorSpaceIndex K (weightSpace P V μ)
-
-open scoped Classical in
-/-- A basis of weight vectors of an `𝔥`-diagonalizable module, obtained by collecting bases of
-the weight spaces. -/
-def diagWeightBasis (hV : IsHDiagonalizable P V) : Basis (DiagWeightBasisIndex P V) K V :=
-  hV.isInternal_weightSpace.collectedBasis fun μ ↦ Basis.ofVectorSpace K (weightSpace P V μ)
-
-lemma diagWeightBasis_mem (hV : IsHDiagonalizable P V) (k : DiagWeightBasisIndex P V) :
-    diagWeightBasis hV k ∈ weightSpace P V k.1 := by
-  classical
-  exact DirectSum.IsInternal.collectedBasis_mem _ _ _
 
 /-- `V_μ ⊗ W_ν ⊆ (V ⊗ W)_{μ + ν}`. -/
 lemma tmul_mem_weightSpace {μ ν : Dual K H} {v : V} {w : W} (hv : v ∈ weightSpace P V μ)
