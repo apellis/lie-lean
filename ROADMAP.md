@@ -757,6 +757,14 @@ quantum Chevalley involution (`Eᵢ ↔ Fᵢ`, `K_μ ↦ K_{-μ}`), without a no
 premise. Its proved scalar factors on the braid candidates give both negative ordered
 Serre relations: the forward one at a directed `-1` edge and the reverse one at a mutual
 `-1` edge, with the same nonzero-parameter and denominator hypotheses as the positive results.
+`BraidAction/A2.lean` assembles **all** defining relations into the actual quotient lift
+`a2Braid` when the index type consists of exactly two distinct nodes with mutual Cartan
+entries `-1`. It constructs `a2BraidInv` explicitly, proves both composition identities,
+and obtains the genuine algebra equivalence `a2BraidEquiv`. The field and root-datum lattice
+remain arbitrary; the parameter assumptions are `[NeZero v]` and `vᵢ - vᵢ⁻¹ ≠ 0`.
+No faithful action, lattice separation or relation package is assumed. Its product-reversal
+anti-involution works in arbitrary rank; its coupled automorphism theorem is specifically
+rank-two A₂. The braid relation between the two A₂ automorphisms is not yet proved.
 Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
