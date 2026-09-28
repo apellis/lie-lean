@@ -190,8 +190,13 @@ argument). Tits cone ([Kac] Prop. 3.12 (a)–(d), worked dually in `Dual K H`,
 `exists_nonneg_sub_apply_eq_sum`, `stabilizer_eq_closure_reflection`,
 `eq_one_of_apply_eq_self_of_forall_pos`, `eq_of_apply_eq_of_mem_dominantChamber`,
 `existsUnique_mem_dominantChamber`, `mem_titsCone_iff` (via positive real coroots),
-`convex_titsCone`; real coroots and the coweyl group in `TitsCone/Coroots.lean`. Not done (not
-needed downstream): Prop. 3.12 (e), (f).
+`convex_titsCone`; real coroots and the coweyl group in `TitsCone/Coroots.lean`.
+`TitsCone/Finite.lean` proves that finite Weyl group implies full Tits cone, and that fullness
+is equivalent to finiteness of the positive real coroots, over arbitrary ordered fields.
+This supplies (e)(i)⇒(ii) and a real-coroot characterization, not all of Proposition 3.12(e):
+fullness ⇒ finite Weyl group and the bridges to the full root systems remain open.
+Proposition 3.12(f), finite stabilizer iff interior point of the Tits cone, remains open;
+freeness on the open dominant chamber is not a substitute for this statement.
 
 
 - `𝔥`-diagonalizable (weight) modules, weights, `P(V)`; integrable modules (`eᵢ, fᵢ` locally
@@ -685,8 +690,13 @@ action (`BraidAction*.lean`, Lusztig's `T''_{i,1}`): `rankOneBraidEquiv` (rank o
 arbitrary ambient rank, with an explicit two-sided inverse; `isolatedBraid_comp_comm` proves
 commutation of these isolated-node braid maps. Only a nonzero parameter is required for this
 bounded result. It also proves orthogonal-generator and mixed commutator identities directly
-from the presentation. Remaining: the coupled-node relations for `Tᵢ` (so `Tᵢ` as an
-automorphism in general), their braid relations, and canonical bases.
+from the presentation. `BraidAction/Coupled.lean` proves the diagonal mixed commutator
+`[Tᵢ(Eⱼ), Tᵢ(Fⱼ)]` for the existing candidate images at a directed edge `aᵢⱼ = -1`, with
+the reflected toral right-hand side. The ambient rank and reverse entry `aⱼᵢ` are unrestricted;
+the hypotheses explicitly require `v ≠ 0` and `vᵢ - vᵢ⁻¹ ≠ 0`. This is one genuine
+coupled-node presentation relation, not a general braid automorphism. Higher-degree diagonal
+relations, fully coupled off-diagonal commutators, transformed Serre relations, the general
+automorphism/inverse construction, braid relations and canonical bases remain open.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
 irreducible representation over an algebraically closed field, for nonzero `v` of infinite
