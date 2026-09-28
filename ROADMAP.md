@@ -484,6 +484,10 @@ existing CE differential preserves it, over arbitrary commutative rings.
 and derivative homotopy operators, proves square-zero and mixed-term cancellation, and
 proves their anticommutator is total-degree multiplication on the span of supported
 homogeneous tensors. It imposes no finite-dimensionality or characteristic restriction.
+`UniversalEnveloping/LeadingAction.lean` proves that PBW intertwines actual left multiplication
+with polynomial multiplication modulo lower degree: for `u ∈ Fₙ`, the error has degree at most
+`n`, over a commutative ring with an arbitrary ordered basis. This is the coefficient-level
+leading-action comparison, not yet a chain-level identification.
 The CE associated-graded/PBW identification, identification of that homogeneous span with
 the standard graded-piece API, and normalized exactness argument remain to be connected.
 The Cartan-equivariant connecting maps and conditional weight-space dimension shifting are

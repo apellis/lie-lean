@@ -121,6 +121,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.Filtration
 import LieLean.Algebra.Lie.UniversalEnveloping.Free
 import LieLean.Algebra.Lie.UniversalEnveloping.Graded
 import LieLean.Algebra.Lie.UniversalEnveloping.Kernel
+import LieLean.Algebra.Lie.UniversalEnveloping.LeadingAction
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
