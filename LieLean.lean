@@ -137,6 +137,7 @@ import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Algebra.QuantumGroup.Basic
 import LieLean.Algebra.QuantumGroup.BraidAction
 import LieLean.Algebra.QuantumGroup.BraidAction.Coupled
+import LieLean.Algebra.QuantumGroup.BraidAction.CoupledMixed
 import LieLean.Algebra.QuantumGroup.BraidAction.Isolated
 import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
 import LieLean.Algebra.QuantumGroup.CartanDatum
@@ -224,6 +225,7 @@ import LieLean.RepresentationTheory.Crystal.Path.CharacterSubcrystal
 import LieLean.RepresentationTheory.Crystal.Path.Concatenation
 import LieLean.RepresentationTheory.Crystal.Path.Decomposition
 import LieLean.RepresentationTheory.Crystal.Path.DominantIsomorphism
+import LieLean.RepresentationTheory.Crystal.Path.CoupledStability
 import LieLean.RepresentationTheory.Crystal.Path.Isomorphism
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.LittlewoodRichardson
