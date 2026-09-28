@@ -522,8 +522,11 @@ homology vanishes in both adjacent degrees. `Homology/EquivariantSequence.lean` 
 the concrete connecting map commutes with compatible derivation actions and preserves
 simultaneous eigen-equations, without assuming diagonalizability or an equivariant splitting.
 The action is the existing quotient action, and the categorical/concrete comparison intertwines
-it. Specialization to the Cartan action, weight-space dimension shifting, and the remaining BGG
-exactness prerequisites are still open.
+it. `Kostant/ExactSequence.lean` specializes this to the actual Cartan action on nilradical
+homology of a short exact sequence of Kac–Moody modules. In characteristic zero, if the target
+coefficient module is Cartan-diagonalizable, the connecting map preserves the existing
+image-of-weighted-cycles homology weight spaces. Weight-space dimension shifting and the
+remaining BGG exactness prerequisites are still open.
 (The old low-degree complex
 `Algebra/Lie/ChevalleyEilenberg.lean` and the unused `H₂` route to Gabber–Kac
 `SerrePresented/Homology.lean` were removed; the lemmas still needed moved to

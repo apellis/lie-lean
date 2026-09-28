@@ -74,6 +74,7 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.Cocycle
 import LieLean.Algebra.Lie.KacMoody.Kostant.Degree0
 import LieLean.Algebra.Lie.KacMoody.Kostant.Degree1
 import LieLean.Algebra.Lie.KacMoody.Kostant.Euler
+import LieLean.Algebra.Lie.KacMoody.Kostant.ExactSequence
 import LieLean.Algebra.Lie.KacMoody.Kostant.GarlandLepowsky
 import LieLean.Algebra.Lie.KacMoody.Kostant.Identity
 import LieLean.Algebra.Lie.KacMoody.Kostant.Laplacian
