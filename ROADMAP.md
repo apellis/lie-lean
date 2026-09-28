@@ -512,7 +512,8 @@ The zero-bound case vanishes in positive exterior degree. Transport through actu
 characteristic-zero field, without a basis or finite-dimensionality assumption in the statement).
 This proof does not require separately packaging the associated-graded quotients. Those API
 identifications are not established here and are no longer a prerequisite for acyclicity.
-Positive-degree BGG exactness remains open.
+Positive-degree BGG exactness is proved in the symmetrizable, finite-dimensional Cartan scope
+described below.
 `Homology/DirectSum.lean` proves that arbitrary direct sums preserve CE homology vanishing
 in each degree over commutative rings, using actual coefficient projections/inclusions.
 `BGG/TermHomology.lean` applies this to every actual `BGGTerm`, proving positive-degree
@@ -521,16 +522,20 @@ nilradical acyclicity without dominance, symmetrizability or finite-dimensionali
 coordinates is injective: a cycle supported entirely on the complementary simple-descent
 summands is zero. This is a vector-level detector, not detection modulo nilradical action.
 It formalizes the descent-elimination step of Heckenberger–Kolb, arXiv:math/0605460,
-§3.1 Proposition 3.4. The alternative integrable-homology route still requires the
-simple-cover/reflection-quotient range comparison, local nilpotence modulo actual boundaries,
-and the final homology-vanishing argument; no integrability or BGG exactness is claimed yet.
-The Cartan-equivariant connecting maps and conditional weight-space dimension shifting are
-now available (M13), but their application to actual BGG syzygies and detection of the syzygy
-generators on coinvariants remain open. In particular, positive-degree acyclicity does not
-give the degree-zero vanishing hypothesis of the general dimension-shifting equivalence.
-The proved Nakayama upgrade does not supply the missing coinvariant-surjectivity premise
-for the BGG syzygy maps.
-The Garland–Lepowsky computation (M13) is proved but does not alone close these gaps.
+§3.1 Proposition 3.4. `BGG/Integrable.lean` identifies actual simple-cover ranges with the
+rank-one reflection-map ranges and proves local nilpotence of each `fᵢ` on every actual cycle
+modulo incoming boundaries, for arbitrary GCM and dominant integral highest weight.
+`BGG/Casimir.lean` proves category-𝒪 membership, strict weight bounds and the common Casimir
+scalar for the actual positive-degree BGG homology quotient. Its maximal-weight argument
+requires only this lowering-operator nilpotence, not complete reducibility.
+`BGG/Exactness.lean` discharges that premise and proves `ker_bggDiff_eq_range` for all
+positive degrees, over characteristic-zero fields, with symmetrizable GCM, dominant integral
+highest weight and finite-dimensional Cartan space. Together with the existing augmentation
+exactness and surjectivity, this gives the augmented BGG resolution in this scope.
+Nonsymmetrizable exactness and removal of the finite-dimensional Cartan hypothesis remain open.
+The alternate Garland–Lepowsky/dimension-shifting/Nakayama route is not used in this proof;
+its supporting APIs remain available. Positive-degree CE acyclicity still does not imply the
+degree-zero vanishing premise of the general dimension-shifting equivalence.
 Extensions of the Hom dimension bound beyond the proved dominant dot-orbit require valid
 finite-type or noncritical hypotheses as above.
 
@@ -588,7 +593,8 @@ map to each weight and proves it is an equivalence when both endpoint coefficien
 are Cartan-diagonalizable and the middle module's homology vanishes in both adjacent degrees.
 This includes degree zero only under the explicit degree-zero vanishing assumption; it does
 not infer it from positive-degree acyclicity. Positive-degree Verma acyclicity is now proved
-in `BGG/VermaAcyclicity.lean`; actual BGG syzygy-generator detection remains open.
+in `BGG/VermaAcyclicity.lean`. BGG exactness is separately proved by the lowering-operator/
+Casimir route (`BGG/Exactness.lean`), without assembling this alternative dimension-shifting route.
 (The old low-degree complex
 `Algebra/Lie/ChevalleyEilenberg.lean` and the unused `H₂` route to Gabber–Kac
 `SerrePresented/Homology.lean` were removed; the lemmas still needed moved to
@@ -714,10 +720,10 @@ completion claims. Work has resumed. M12 and M14 are marked in progress because 
 remaining statements are not all proved; M1–M9's main targets, M11 and M13 are complete.
 The original continuation threads are:
 
-- **BGG exactness in degrees ≥ 1** (M12): plan — compare the BGG complex with
-  `H_•(𝔫₋, L(Λ))` (Garland–Lepowsky, now proved) via a graded-Nakayama / minimal-resolution
-  argument for free `U(𝔫₋)`-modules; or, in finite type, the relative Chevalley–Eilenberg
-  resolution cut down by Casimir blocks.
+- **BGG exactness in degrees ≥ 1** (M12): proved for symmetrizable GCM and finite-dimensional
+  Cartan space by `ker_bggDiff_eq_range`, using actual lowering powers modulo boundaries
+  and Casimir vanishing. The theorem does not cover nonsymmetrizable GCM or arbitrary Cartan
+  dimension; these extensions remain open.
 - **Littelmann's isomorphism theorem** (M14): needed to make `nonempty_equiv_sigma` (crystal-level
   LR decomposition) unconditional; key missing fact: for dominant `π`, the f-orbit of `π` is
   stable under all `eⱼ` (generalize the LS stability proof to paths of arbitrary dominant shape).

@@ -42,17 +42,17 @@ follows from the squares lemma and the anticommutativity of the signs
   `Matrix.Realization.KacMoodyAlgebra.ker_bggAugmentation`: `C₁ → C₀ → L(Λ) → 0` is exact
   (symmetrizable `A`).
 
-## What is not proved
+## Positive-degree exactness
 
-The exactness of the BGG complex in degrees `≥ 1` (the BGG theorem, [HumO] Thm. 6.3 (check),
-[Kum] Thm. 9.1.3 (check)) is not proved here. Proved: `d² = 0`, exactness of
-`C₁ → C₀ → L(Λ) → 0` (`ker_bggAugmentation`, via `range_bggDiffOne` in
-`LieLean.Algebra.Lie.KacMoody.BGG.LowDegree`), and the Euler characteristic identity
-`∑_w (-1)^{ℓ(w)} ch M(w · Λ) = ch L(Λ)` (`hsum_vermaAltFamily`), i.e. exactness "in the
-Grothendieck group". The standard proof of exactness uses the relative Chevalley–Eilenberg
-resolution `U(𝔤) ⊗_{U(𝔟)} ⋀ᵏ(𝔤/𝔟) ⊗ L(Λ)` of `L(Λ)` (finite-dimensional `𝔤`) or the
-`𝔫₋`-homology `H_k(𝔫₋, L(Λ)) = ⊕_{ℓ(w) = k} K_{w · Λ}` ([GL], [Kum] Ch. 3), a filtration by
-Verma modules, and the Casimir operator to split off the block of `Λ`.
+The construction here is supplemented by `BGG/Exactness.lean`: `ker_bggDiff_eq_range`
+proves exactness in every positive degree for symmetrizable `A` and finite-dimensional
+Cartan space, over characteristic-zero fields. Together with `ker_bggAugmentation` and
+`bggAugmentation_surjective`, this gives the augmented BGG resolution in that scope.
+The proof follows the lowering-operator argument of Heckenberger–Kolb, arXiv:math/0605460,
+§3.1 Proposition 3.4, and a maximal-weight/Casimir variant of their Theorem 3.2 proof.
+It does not infer exactness from the Euler characteristic `hsum_vermaAltFamily` or assume
+Garland–Lepowsky. Nonsymmetrizable exactness and removal of the finite-dimensional Cartan
+hypothesis are not established by that theorem.
 
 ## References
 
