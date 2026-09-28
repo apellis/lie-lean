@@ -366,7 +366,7 @@ the Bruhat order (via reflections `T` and length), the subword property, chain p
 standard parabolic subgroups `W_J`, minimal coset representatives `W^J` and `w = w^J w_J`;
 the longest element for finite `W`.
 
-### M11. Iwahori–Hecke algebras and Kazhdan–Lusztig theory  `[~]`  ([HumC] Ch. 7, [KL], [BB] Ch. 5)
+### M11. Iwahori–Hecke algebras and Kazhdan–Lusztig theory  `[x]`  ([HumC] Ch. 7, [KL], [BB] Ch. 5)
 
 Done (`LieLean/GroupTheory/Coxeter/Hecke/`; convention `(T_s - q)(T_s + 1) = 0`, any commutative
 ring `R`, any `q : R`): `IwahoriHeckeAlgebra cs q` (constructed via the regular representation,
@@ -401,9 +401,12 @@ ParabolicRelations}.lean`): an abstract Lusztig lemma `existsUnique_canonical`; 
 characters, identifies it with the normalized `v⁻¹` coefficient, and proves odd-degree,
 support and diagonal formulas. `klBasis_simple_smul_parabolicKLBasis_sgn` proves the complete
 sign-module `C'_s` multiplication recursion for arbitrary parabolic subgroups, by projection
-of the ordinary recursion. Remaining: the spherical/index (`u = q`) multiplication recursion
-for arbitrary parabolic subgroups; the finite-parabolic longest-element relation is not a
-replacement for this result.
+of the ordinary recursion. `ParabolicRecursion/Index.lean` proves the spherical/index (`u = q`)
+multiplication recursion `index_klBasis_simple_smul` for arbitrary parabolic subgroups, without
+finiteness of `J` or `W_J`. Its ascent correction uses the genuine parabolic μ-coefficients at
+effective descents (ordinary descents and nonminimal boundary indices) strictly below `w`;
+descent and boundary branches have eigenvalue `v + v⁻¹`. The proof derives the normalized
+standard action and then uses canonical uniqueness, not a finite-parabolic reduction.
 
 
 The Hecke algebra `𝓗(W)` over `ℤ[v, v⁻¹]` with standard basis `T_w` (constructed without
@@ -618,8 +621,8 @@ integral; Lusztig's canonical basis / Kashiwara's global basis if reachable.
 ## Status and open threads
 
 The declarations listed as proved are on `main`; the explicit remaining items below are not
-completion claims. Work has resumed. M11, M12 and M14 are marked in progress because their
-remaining statements are not all proved; M1–M9's main targets and M13 are complete.
+completion claims. Work has resumed. M12 and M14 are marked in progress because their
+remaining statements are not all proved; M1–M9's main targets, M11 and M13 are complete.
 The original continuation threads are:
 
 - **BGG exactness in degrees ≥ 1** (M12): plan — compare the BGG complex with
@@ -636,7 +639,7 @@ The original continuation threads are:
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
 - Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
-  `Hecke/KazhdanLusztig/Canonical.lean`), the spherical Deodhar recursion,
+  `Hecke/KazhdanLusztig/Canonical.lean`),
   infinite-dimensional extensions of quantum `sl₂` classification, Humphreys O Thm. 7.6,
   and valid restricted extensions of the Hom dimension bound.
   Finite-dimensional exhaustion and parameter uniqueness are proved for both signs at generic
