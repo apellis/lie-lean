@@ -20,6 +20,7 @@ import LieLean.Algebra.Lie.KacMoody.BGG.Sl2
 import LieLean.Algebra.Lie.KacMoody.BGG.Uniqueness
 import LieLean.Algebra.Lie.KacMoody.BGG.Verma
 import LieLean.Algebra.Lie.KacMoody.BGG.VermaDecomposition
+import LieLean.Algebra.Lie.KacMoody.BGG.VermaHomology
 import LieLean.Algebra.Lie.KacMoody.Basic
 import LieLean.Algebra.Lie.KacMoody.Blocks
 import LieLean.Algebra.Lie.KacMoody.Casimir
