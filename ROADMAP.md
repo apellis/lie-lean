@@ -471,8 +471,10 @@ corollary `BGGMinimality.surjective_of_coinvariantsMap` upgrades surjectivity of
 coinvariant map to surjectivity of a genuine module map with category-𝒪 target.
 `BGG/VermaHomology.lean` upgrades PBW to an actual `𝔫₋`-module equivalence with the
 left-regular enveloping module (action `x • u = ι(x)u`, not the adjoint action), and transports
-concrete CE homology in every degree. Positive-degree Verma acyclicity is thereby reduced
-to exactness of the actual left-regular CE complex; that exactness is not yet proved.
+concrete CE homology in every degree. `BGG/VermaAcyclicity.lean` now proves positive-degree
+Verma acyclicity (`VermaModule.subsingleton_homology_of_pos`) using the regular CE theorem
+below. No dominance, integrality or symmetrizability hypothesis is imposed on the highest weight
+or realization beyond the existing Verma construction.
 Two ingredients for the filtered proof are available: `LinearAlgebra/Filtered/Exactness.lean`
 lifts exactness of the actual adjacent filtration quotients to exactness, preserving the
 primitive's filtration bound, over any ring; `RingTheory/MvPolynomial/EulerIdentity.lean`
@@ -501,9 +503,16 @@ at most `n`. No field or finite-dimensionality hypothesis is used.
 positive total degree over characteristic-zero fields, via an explicit normalized derivative
 homotopy. The primitive preserves finite support and has bidegree `(n-1,q+1)`; when `n=0`,
 positive-exterior-degree cycles vanish. The homotopy support/degree bounds hold over rings.
-The CE associated-graded/PBW identification, connection of the homogeneous tensor span to
-the actual filtration quotients, and application of this exactness to filtered descent remain
-to be connected. These results do not yet prove regular CE acyclicity or BGG exactness.
+`Homology/RegularAcyclic.lean` completes direct coefficient-degree descent: projection to the
+top polynomial degree of an actual CE cycle is a finite-support Koszul cycle; a negative
+Koszul primitive removes it, leaving a genuine CE cycle with smaller coefficient bound.
+The zero-bound case vanishes in positive exterior degree. Transport through actual PBW gives
+`CELeading.regular_positive_acyclic` (actual chain primitives) and
+`subsingleton_homology_leftRegular` (positive-degree regular CE homology vanishes over any
+characteristic-zero field, without a basis or finite-dimensionality assumption in the statement).
+This proof does not require separately packaging the associated-graded quotients. Those API
+identifications are not established here and are no longer a prerequisite for acyclicity.
+Positive-degree BGG exactness remains open.
 The Cartan-equivariant connecting maps and conditional weight-space dimension shifting are
 now available (M13), but their application to actual BGG syzygies and detection of the syzygy
 generators on coinvariants remain open. In particular, positive-degree acyclicity does not
@@ -567,8 +576,8 @@ image-of-weighted-cycles homology weight spaces. `Kostant/WeightShift.lean` rest
 map to each weight and proves it is an equivalence when both endpoint coefficient modules
 are Cartan-diagonalizable and the middle module's homology vanishes in both adjacent degrees.
 This includes degree zero only under the explicit degree-zero vanishing assumption; it does
-not infer it from positive-degree acyclicity. Verma acyclicity and actual BGG syzygy-generator
-detection remain open.
+not infer it from positive-degree acyclicity. Positive-degree Verma acyclicity is now proved
+in `BGG/VermaAcyclicity.lean`; actual BGG syzygy-generator detection remains open.
 (The old low-degree complex
 `Algebra/Lie/ChevalleyEilenberg.lean` and the unused `H₂` route to Gabber–Kac
 `SerrePresented/Homology.lean` were removed; the lemmas still needed moved to
