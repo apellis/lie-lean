@@ -492,6 +492,13 @@ It proves the closed-endpoint sl₂ injectivity lemma, actual primitive-vector l
 the singular wall, source-only reflection invariance and weakly dot-dominant uniqueness.
 Nonintegral targets remain open. Finite-dimensionality of Hom is supplied by the existing
 primitive-vector theorem. These arguments are reconstructed.
+`KacMoody/VermaUniformity.lean` proves actual left Ore for the enveloping algebra of any
+finite-dimensional Lie algebra over a field, using PBW polynomial growth rather than an
+assumed Ore instance. It instantiates this for finite-type `U(𝔫₋)` and proves that any two
+nonzero submodules of an arbitrary-weight Verma module intersect nontrivially. This is the
+uniformity step toward nonintegral Hom uniqueness, not yet a new Hom dimension bound;
+the socle/restriction argument remains. Neither integrality nor algebraic closure is needed
+for uniformity; the finite-type application retains characteristic zero and finite Cartan.
 Blocks, tensor products, translation (`KacMoody/{Blocks,TensorProduct,
 Translation}.lean`): Casimir block decomposition `IsCategoryO.isInternal_casimirBlock`,
 `multiplicity_casimirBlock`; `IsCategoryO.tensorProduct`, `character_tensorProduct`
@@ -750,6 +757,12 @@ required links or prove equality of word relations. Source §§5–7 identify th
 gluing-pair stability/integrality, highest-path uniqueness, endpoint-fiber and two-piece
 isomorphism arguments, then stretching and concatenation transport. Pause-allowing source
 reparametrizations are not supplied by the existing order-automorphism equivalence.
+`Path/GluingDirections.lean` proves [Lit] Lemma 5.2(a,b), p. 514: the compatibility relation
+quantifies over all positive real roots, and simultaneous simple reflection preserves it
+under the source sign conditions. Positive-root transport and exact exceptional-root coroot
+identification are proved, not assumed. Arbitrary real weights and general GCM realizations
+are allowed. This is the direction-compatibility input to Proposition 5.6, not the full
+Definition 5.3 gluing pair, Lemma 5.5 integrality, or Propositions 5.6–5.7.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -852,7 +865,13 @@ neighbours are orthogonal, and neighbour/non-neighbour edges are zero or mutual 
 edges; entries between two untouched nodes are unrestricted. These local hypotheses cover
 classical finite-type simply-laced diagrams, without assuming finite rank or characteristic
 zero. Both parameter sum and difference nonvanishing are explicit. Triangles through the
-chosen node and braid relations between the different automorphisms are not claimed.
+chosen node are not covered.
+`BraidAction/SimplyLacedRelations.lean` proves orthogonal-node commutation and adjacent-node
+length-three braid relations for these actual automorphisms and quotient homomorphisms.
+Every extra `E,F` generator, common neighbours of orthogonal centres, and arbitrary `K_μ`
+are included. Both centres retain their local Cartan and scalar hypotheses; there is no
+two-node exhaustion, finite-rank, or coroot-span assumption. Global Artin-group packaging
+is separate; higher braid lengths and triangle cases remain outside these theorems.
 Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
