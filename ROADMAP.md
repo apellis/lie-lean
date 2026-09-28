@@ -530,10 +530,15 @@ projection, tensor-Verma standard filtrations, facet exclusion and dual compatib
 any commutative ring, with a Hom-module inverse and both inverse laws. Its PBW specialization
 identifies `U(n₋) ⊗ Z_trivial` with `M(Λ) ⊗ Z`, equivariantly for `n₋`, and constructs
 injective coefficient-subspace maps with monotone ranges and top range the whole tensor
-module. These are negative-nilradical submodules, not yet full Lie-algebra submodules or
-a standard filtration. Borel flags, full Lie-algebra stability and shifted-Verma quotient
-identifications remain. This is a reconstructed tensor identity, not a certification of
-the primary-source translation theorem.
+module. `KacMoody/TensorVermaStability.lean` upgrades these same concrete ranges to full
+Lie-algebra submodules for Borel-stable coefficient spaces, proves monotonicity and bottom/top
+identities, and constructs injective shifted-Verma maps from primitive coefficient cosets.
+For a one-dimensional weight coefficient step, `shiftedVermaEquivTensorBorelStep` identifies
+the shifted Verma module with the actual image of the upper piece in the ambient quotient
+by the lower piece. The literal nested-submodule quotient wrapper is not packaged.
+Finite weight-compatible Borel flags, assembled standard filtrations and their multiplicities
+remain. These are reconstructed arguments, not certification of the primary-source
+translation theorem.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -797,14 +802,22 @@ uses integral directions without a dominant-orbit premise; `finite_seam_integral
 the translation and seam integrality from the concrete paths, source chains and integral
 glued endpoint. This removes the dominant-second-class restriction for those chain/seam
 results. Proposition 5.7/Theorem 6.3 assume dominance of the first weight and their sum,
-not a dominant representative of the second class. Full arbitrary-class path/operator
-stability, all-minima integrality and the reparametrization/isomorphism bridge remain open.
+not a dominant representative of the second class. Two-class gluing operator stability
+and the reparametrization/isomorphism bridge remain open.
 `Path/GeneralClassStability.lean` proves integral source-walk height bounds and attained
 maximum lengths, saturated refinements, simple-root saturation and same-sign reflection
 preservation ([Lit] Lemma 4.1). `LSGeneralClass.lsData` now constructs genuine LS data on
 the orbit of any integral weight, without a dominant representative; every interface field
-uses the actual source saturated-step relation. The explicit finite-constructor Chain/IsLS
-bridge and generalized gluing stability remain separate; no component isomorphism is claimed.
+uses the actual source saturated-step relation.
+`Path/GeneralClassGluing.lean` proves the exact Chain/PositionChain and Chain/a-chain bridges
+with their initial-orbit and root-lattice-congruence premises, and proves `IsLS` for the
+arbitrary-integral source constructor. All mixed-root descendants of a single presentation
+are LS and integral. Its actual two-class `GluingPair.path` has integral global minima for
+every simple coroot, including coincident cuts and zero incoming slope; the translation is
+derived integral from the source endpoint hypothesis. Neither class needs dominance.
+This does not assert integrality of arbitrary weak local minima within artificial pauses.
+Two-class root-operator stability and hence whole-component integrality remain open;
+no component isomorphism is claimed.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -930,6 +943,11 @@ entry pairs `(-2,-1)`, `(-1,-2)` and `(-2,-2)`. Only `v ≠ 0` is needed; revers
 entries between target nodes, ambient rank and characteristic remain unrestricted.
 At singular quantum factorials these are identities for the totalized candidates, not
 automorphism assertions. No nonzero sum/difference or transformed-relation premise is assumed.
+`BraidAction/HigherSerre.lean` proves the centre-first positive and negative cubic Serre
+relations at directed `-2` edges, with the correct `qᵢ` parameter and Chevalley factor
+`qᵢ⁻²` on the neighbor. Only `v ≠ 0` is required; no quantum sum/difference is cancelled.
+The reverse entry and ambient rank remain unrestricted. Neighbor-first relations with
+`qⱼ`, higher degrees and automorphism assembly remain separate.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
