@@ -709,8 +709,13 @@ coupled-node presentation relation, not a general braid automorphism.
 `BraidAction/CoupledMixed.lean` also proves the fully coupled off-diagonal relation
 `[braidEj i j, braidFj i l] = 0` for distinct `j,l` with `aᵢⱼ = aᵢₗ = -1`, under
 the same parameter hypotheses; reverse entries and entries between `j,l` are unrestricted.
+`BraidAction/CoupledSerre.lean` proves the transformed positive Serre relation for the
+ordered pair of actual images `braidEi i`, `braidEj i j` when `aᵢⱼ = -1`, with
+`[NeZero v]` and `vᵢ - vᵢ⁻¹ ≠ 0`; the reverse entry is unrestricted. This is one
+ordered defining relation, not preservation of every Serre relation at that edge.
 Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
-transformed Serre relations, the general
+the remaining transformed Serre relations (including opposite order and negative images),
+the general
 automorphism/inverse construction, braid relations and canonical bases remain open.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
