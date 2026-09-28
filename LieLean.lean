@@ -136,6 +136,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Algebra.QuantumGroup.Basic
 import LieLean.Algebra.QuantumGroup.BraidAction
+import LieLean.Algebra.QuantumGroup.BraidAction.Coupled
 import LieLean.Algebra.QuantumGroup.BraidAction.Isolated
 import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
 import LieLean.Algebra.QuantumGroup.CartanDatum
@@ -206,6 +207,7 @@ import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Convex
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Coroots
+import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Finite
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
