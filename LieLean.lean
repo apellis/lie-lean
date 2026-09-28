@@ -4,6 +4,7 @@ import LieLean.Algebra.Lie.Homology.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Homology.Comparison
 import LieLean.Algebra.Lie.Homology.Complex
 import LieLean.Algebra.Lie.Homology.Euler
+import LieLean.Algebra.Lie.Homology.LongExactSequence
 import LieLean.Algebra.Lie.Homology.Vanishing
 import LieLean.Algebra.Lie.Homology.Weights
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
