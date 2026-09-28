@@ -732,8 +732,11 @@ the same parameter hypotheses; reverse entries and entries between `j,l` are unr
 ordered pair of actual images `braidEi i`, `braidEj i j` when `aᵢⱼ = -1`, with
 `[NeZero v]` and `vᵢ - vᵢ⁻¹ ≠ 0`; the reverse entry is unrestricted. This is one
 ordered defining relation, not preservation of every Serre relation at that edge.
+`BraidAction/CoupledSerreReverse.lean` proves the reverse positive ordered relation
+when both directed Cartan entries are `-1`, with the correct parameter `vⱼ`;
+the symmetrizer identity proves `dᵢ = dⱼ` rather than assuming it.
 Higher-degree diagonal relations, higher-degree coupled off-diagonal commutators,
-the remaining transformed Serre relations (including opposite order and negative images),
+the remaining transformed Serre relations (including negative images and other node pairs),
 the general
 automorphism/inverse construction, braid relations and canonical bases remain open.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
