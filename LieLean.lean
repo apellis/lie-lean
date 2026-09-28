@@ -209,6 +209,7 @@ import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Convex
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Coroots
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Finite
+import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.FiniteConverse
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
