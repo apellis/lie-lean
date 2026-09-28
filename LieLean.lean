@@ -5,6 +5,7 @@ import LieLean.Algebra.Lie.Homology.Comparison
 import LieLean.Algebra.Lie.Homology.Complex
 import LieLean.Algebra.Lie.Homology.EquivariantSequence
 import LieLean.Algebra.Lie.Homology.Euler
+import LieLean.Algebra.Lie.Homology.LeadingDifferential
 import LieLean.Algebra.Lie.Homology.LongExactSequence
 import LieLean.Algebra.Lie.Homology.RegularFiltration
 import LieLean.Algebra.Lie.Homology.Vanishing
@@ -188,6 +189,7 @@ import LieLean.GroupTheory.Coxeter.Parabolic.CoxeterSystem
 import LieLean.GroupTheory.Coxeter.Squares
 import LieLean.LinearAlgebra.Eigenspace.Weight
 import LieLean.LinearAlgebra.ExteriorAlgebra.Koszul
+import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulExact
 import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulSupport
 import LieLean.LinearAlgebra.Filtered.Exactness
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType

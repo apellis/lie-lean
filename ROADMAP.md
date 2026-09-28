@@ -491,9 +491,19 @@ and arbitrary basis indices over commutative rings; it is not a CE graded-quotie
 `UniversalEnveloping/LeadingAction.lean` proves that PBW intertwines actual left multiplication
 with polynomial multiplication modulo lower degree: for `u ∈ Fₙ`, the error has degree at most
 `n`, over a commutative ring with an arbitrary ordered basis. This is the coefficient-level
-leading-action comparison, not yet a chain-level identification.
+leading-action comparison; the chain-level result is provided separately below.
+`Homology/LeadingDifferential.lean` conjugates the actual CE differential by the actual PBW
+tensor equivalence and proves that its leading term is **negative** Koszul: on tensors of
+exterior degree `q` and polynomial degree at most `n`, with finite exterior support, the sum
+of the transported differential and Koszul has exterior degree `q-1` and polynomial degree
+at most `n`. No field or finite-dimensionality hypothesis is used.
+`LinearAlgebra/ExteriorAlgebra/KoszulExact.lean` proves homogeneous Koszul exactness in
+positive total degree over characteristic-zero fields, via an explicit normalized derivative
+homotopy. The primitive preserves finite support and has bidegree `(n-1,q+1)`; when `n=0`,
+positive-exterior-degree cycles vanish. The homotopy support/degree bounds hold over rings.
 The CE associated-graded/PBW identification, connection of the homogeneous tensor span to
-the actual filtration quotients, and normalized exactness argument remain to be connected.
+the actual filtration quotients, and application of this exactness to filtered descent remain
+to be connected. These results do not yet prove regular CE acyclicity or BGG exactness.
 The Cartan-equivariant connecting maps and conditional weight-space dimension shifting are
 now available (M13), but their application to actual BGG syzygies and detection of the syzygy
 generators on coinvariants remain open. In particular, positive-degree acyclicity does not
