@@ -582,8 +582,13 @@ quantum Verma modules `VermaModule.equivSerreQuotient : 'f/J ≃ M_q(Λ)`, weigh
 unique maximal submodule, `IrreducibleModule` (= `L_q(Λ)`, `isSimpleModule`); `IsIntegrable`,
 `FPowQuotient.isIntegrable` (`L̃_q(Λ)`), `IrreducibleModule.isIntegrable` (Λ dominant). Braid
 action (`BraidAction*.lean`, Lusztig's `T''_{i,1}`): `rankOneBraidEquiv` (rank one), relations
-(a)–(d) involving `i` and the mixed ones `braidEi_mul_braidFj_sub`. Remaining: the other
-relations for `Tᵢ` (so `Tᵢ` as an automorphism in general) and braid relations; canonical bases.
+(a)–(d) involving `i` and the mixed ones `braidEi_mul_braidFj_sub`.
+`BraidAction/Isolated.lean` constructs `isolatedBraidEquiv` at an isolated Dynkin node in
+arbitrary ambient rank, with an explicit two-sided inverse; `isolatedBraid_comp_comm` proves
+commutation of these isolated-node braid maps. Only a nonzero parameter is required for this
+bounded result. It also proves orthogonal-generator and mixed commutator identities directly
+from the presentation. Remaining: the coupled-node relations for `Tᵢ` (so `Tᵢ` as an
+automorphism in general), their braid relations, and canonical bases.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
 irreducible representation over an algebraically closed field, for nonzero `v` of infinite

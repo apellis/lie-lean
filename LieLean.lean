@@ -118,6 +118,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Algebra.QuantumGroup.Basic
 import LieLean.Algebra.QuantumGroup.BraidAction
+import LieLean.Algebra.QuantumGroup.BraidAction.Isolated
 import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
