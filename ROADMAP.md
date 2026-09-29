@@ -634,8 +634,13 @@ the power sum weighted by actual weight-space dimensions, with finite support pr
 Finite-type diagonalizability and finite-dimensionality of dominant-integral irreducibles
 come from production theory, not additional extension premises. This supplies the trace-power
 step of Etingof Lecture 10, Thm. 10.1(ii), including degree zero and the zero module.
-Dominance-unitriangular inversion to distinct orbit sums and dominant averaged-power spanning
-remain unproved; this is not arbitrary Chevalley extension or HC surjectivity.
+`KacMoody/ChevalleyOrbit.lean` proves finite saturated lower cones, actual character expansion
+into distinct Weyl orbits, and integer dominance-unitriangular inversion. Degree-independent
+integer coefficients express every dominant-integral distinct-orbit power sum in actual
+irreducible character powers, producing a genuine homogeneous infinitesimally invariant
+extension. The stabilizer factor for full Weyl sums is explicit; singular weights, degree zero
+and empty root indices are included. Dominant averaged-power spanning remains unproved;
+this is not arbitrary Chevalley extension or HC surjectivity.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -1004,7 +1009,13 @@ and derived whole-component integrality. Only the sum of the two displacements m
 integral endpoint; the gluing consumer retains a supplied common denominator and compatibility.
 The rational-class/denominator-existence interface and straight-path component isomorphism
 remain separate. Proposition 5.7 concerns highest-path uniqueness in the ORIGINAL endpoint
-fibre, not unrestricted highest-path uniqueness; that argument is not yet proved.
+fibre, not unrestricted highest-path uniqueness. `Path/GluingFibre.lean` proves strict
+source-chain growth under `rhoCheck` and positive-duration endpoint rigidity: production
+right-source gluing data force the entire right path to be straight. With original cuts,
+straight left directions and the restored original right auxiliary, the original endpoint
+forces literal equality with `twoPieceGluing`. Finite-dimensional Cartan space is explicit.
+First-source straightness and Weyl-stabilizer normalization from highestness remain unproved,
+so this is a normalized reduction, not full Proposition 5.7 or the straight component theorem.
 These do not discharge `LRIsomorphismHypothesis`. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -1220,6 +1231,13 @@ discharge the local scalar restrictions over any field, retaining arbitrary comp
 data, positive symmetrizers and root-datum toral lattices. The named homomorphisms/actions
 carry every E/F/K generator formula. Triple edges/length six, unsupported local graphs and
 action faithfulness remain open; this is not unrestricted symmetrizable assembly.
+`BraidAction/TripleEdge.lean` and `TripleExpansion.lean` prove actual cubic candidate expansions,
+the odd-degree Chevalley factor, and both centre-first quartic Serre relations. At entries
+(-3,-1), symmetrizer compatibility derives qⱼ = qᵢ³; an explicit eleven-term certificate in
+the original Serre relations proves both neighbor-first quadratic relations with the explicit
+additional hypothesis qᵢ⁴ + 1 ≠ 0. This is a boundary of the reconstructed proof, not a
+necessity claim. Ambient rank, compatible toral lattice and field characteristic remain
+unrestricted. No degree-three diagonal relation, G₂ automorphism or length-six action is claimed.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
