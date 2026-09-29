@@ -620,6 +620,14 @@ top symbol. The same invariant-homogeneous central lift now has its shifted HC l
 term identified. No extra dimension hypothesis is added beyond the supplied `Realization`
 and its `finrank_add_rank` constraint. Chevalley extension, HC image/injectivity and character
 separation remain open; graded compatibility does not by itself prove the HC isomorphism.
+`KacMoody/ChevalleyInvariance.lean` proves that actual infinitesimal invariant symbols
+restrict to Weyl-invariant Cartan symbols in all degrees. In finite type it derives full
+and Cartan Killing nondegeneracy and the adjoint/coadjoint identification, including the
+contragredient sign and the commuting restriction diagram. Literal coordinate-polynomial
+restriction therefore lands in polynomials fixed by every actual Weyl element. This is
+the invariance direction of [Etingof, Lecture 10, Thm. 10.1], reconstructed through the
+independently proved central lift and graded HC; no circular extension or image premise.
+Chevalley extension and restriction injectivity, HC image/isomorphism and separation remain open.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -972,9 +980,17 @@ power of the original source. Strict coarsening, cut chains and original-orbit w
 give unconditional successful single-step lowering and raising outputs with unchanged cuts,
 unchanged or simultaneously reflected auxiliaries, and all-simple-root global-minimum
 integrality. No single-step sector remains. This is finite rational-breakpoint,
-integral-direction gluing stability; mixed-word/component closure, the full component
-statement of Proposition 5.6 and decomposition remain separate.
-These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
+integral-direction gluing stability.
+`Path/GluingComponent.lean` proves arbitrary finite mixed-word and genuine connected-component
+closure. Both original source orbits and the cuts are preserved, and one common Weyl element
+transports both auxiliaries. Component integrality is derived, not supplied. This proves
+Proposition 5.6's component conclusion for the finite rational-breakpoint, integral-direction
+presentations, without dominance assumptions. A supplied common clearing denominator constructs
+Remark 5.1's paused two-piece object, with exact region formulas, endpoint and integral component.
+Pause-allowing reparametrization transport and the rational-class/denominator-existence interface
+remain separate. Proposition 5.7 concerns highest-path uniqueness in the ORIGINAL endpoint
+fibre, not unrestricted highest-path uniqueness; that argument is not yet proved.
+These do not discharge `LRIsomorphismHypothesis`. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
 proved dominant-orbit supplied-path scope. Source-scope caution:
@@ -1175,8 +1191,15 @@ generator are covered. Centre edges are zero or mutual simple, neighbours are or
 and forward neighbour-to-untouched entries are zero, -1 or -2 without an extra reverse bound.
 The field, rank and torus are arbitrary, with explicit nonzero parameter and centre quantum
 difference/sum and `qᵢ⁴+qᵢ²+1`. The actual map instantiates orthogonal commutation.
-All-centre assembly, length-three relations, named-matrix wrappers and all-node Artin
-assembly remain open; triple edges/length six are not covered.
+`BraidAction/ThreeLocalArtin.lean` proves length three including degree-two external
+neighbours using an eight-context original-Serre certificate. It assembles actual compatible
+automorphisms at every node satisfying `ThreeNextData ∨ HigherDoubleData`, proving all
+length-two/three/four relations and the resulting algebra-automorphism-valued Artin action.
+These hypotheses are graph/scalar data, not assumed maps or target relations. Every E/F
+and arbitrary toral generator has the required formula; external unequal symmetrizers remain.
+The new simple/double presentation imposes length three only for mutual -1 entries and no
+involutions. Named B/C/F graph-data instantiations, triple edges/length six, unsupported local
+graphs and action faithfulness remain open; this is not unrestricted symmetrizable assembly.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
