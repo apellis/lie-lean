@@ -610,8 +610,16 @@ The coefficientwise inverse and both inverse laws hold over every field, in arbi
 dimension and degree, including zero. An independently constructed derivation intertwines
 diagonal insertion for every endomorphism. In characteristic zero, every actual adjoint-invariant
 homogeneous symbol has a central enveloping lift with exactly that PBW symbol. The scalar
-universe remains `K : Type`. Chevalley restriction, graded HC compatibility and HC
-image/injectivity remain open; this is not the HC isomorphism.
+universe remains `K : Type`.
+`KacMoody/HarishChandraGraded.lean` proves that actual HC preserves PBW degree and its
+top homogeneous component is genuine Cartan restriction of the canonical full PBW symbol,
+for every filtered enveloping element. The exact total formula uses adapted ordered PBW
+coordinates, not total symmetrization. Translation changes only lower terms, including an
+exact zero correction in degree zero, so the actual negative-rho shifted HC has the same
+top symbol. The same invariant-homogeneous central lift now has its shifted HC leading
+term identified. No extra dimension hypothesis is added beyond the supplied `Realization`
+and its `finrank_add_rank` constraint. Chevalley extension, HC image/injectivity and character
+separation remain open; graded compatibility does not by itself prove the HC isomorphism.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -955,10 +963,17 @@ last-minimum partition. Source local-minimum integrality supplies the missing ta
 crossing window and future bound. Every successful operator yields either an actual strict
 original-orbit output with all-root integrality or a precisely delimited residual sector.
 For lowering, actual times `p<q≤s`, strict increase, the entire upper-level future bound and
-the literal output suffix are proved. Strict source reconstruction remains for both `q<s`
-and `q=s`, and for their raising reversals. The seam height alone is not substituted for
-the first-upper-time equality. General iteration, mixed-word stability and full Proposition
-5.6 remain open; the output-or-residual theorem is not unconditional stability.
+the literal output suffix are proved. The seam height alone is not substituted for
+the first-upper-time equality.
+`Path/GluingStability.lean` closes both residual sectors `q<s` and `q=s`, then reverses
+the actual construction for raising. A safe terminal extension bends an unsafe discarded
+suffix at an integral level using a genuine saturated chain; it is not identified with a
+power of the original source. Strict coarsening, cut chains and original-orbit witnesses
+give unconditional successful single-step lowering and raising outputs with unchanged cuts,
+unchanged or simultaneously reflected auxiliaries, and all-simple-root global-minimum
+integrality. No single-step sector remains. This is finite rational-breakpoint,
+integral-direction gluing stability; mixed-word/component closure, the full component
+statement of Proposition 5.6 and decomposition remain separate.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -1151,10 +1166,17 @@ maps with the explicit Lusztig generator formulas, in arbitrary Cartan degrees a
 arbitrary common neighbours. Every E/F and toral generator is covered. This conditional
 identity requires no parameter cancellation or map-existence assertion at exceptional
 parameters. Published constructors instantiate it under their actual hypotheses and agree
-on their overlap. Both still exclude the simple endpoint of `i--j==l`: extending the
-next-edge cubic Serre relations is a remaining construction dependency. Broader local maps,
-length-three relations, named-matrix wrappers and all-node Artin assembly remain open;
-triple edges/length six are not covered.
+on their overlap.
+`BraidAction/NextEdge.lean` constructs the missing simple-centre map at `i--j==l`, with
+all quotient relations, explicit reversal-conjugate inverse and both composition identities.
+An original-Serre degree-seven certificate proves the forward cubic relation; the reverse
+relation holds in every degree with independent parameters. Both E/F signs and every toral
+generator are covered. Centre edges are zero or mutual simple, neighbours are orthogonal,
+and forward neighbour-to-untouched entries are zero, -1 or -2 without an extra reverse bound.
+The field, rank and torus are arbitrary, with explicit nonzero parameter and centre quantum
+difference/sum and `qᵢ⁴+qᵢ²+1`. The actual map instantiates orthogonal commutation.
+All-centre assembly, length-three relations, named-matrix wrappers and all-node Artin
+assembly remain open; triple edges/length six are not covered.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
