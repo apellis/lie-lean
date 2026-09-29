@@ -602,9 +602,16 @@ the normalized symmetrization's leading symbol with the graded-PBW image of the 
 symmetric-tensor product. This includes degree zero and the same actual invariant-tensor
 central lift. Filtration membership needs only a field; symbol compatibility assumes exactly
 nonzero degree factorial, supplied in all degrees by characteristic zero. Positive-degree
-filtration drop is equivalent to vanishing commutative product. Identification with the full
-homogeneous component, Chevalley restriction, graded HC compatibility and HC image/injectivity
-remain open; this is not the HC isomorphism.
+filtration drop is equivalent to vanishing commutative product.
+`KacMoody/HarishChandraHomogeneous.lean` identifies the actual symmetric tensor quotient
+with the full homogeneous component, independently defined by powers of the generator
+submodule and certified against Mathlib's homogeneous polynomials under every basis.
+The coefficientwise inverse and both inverse laws hold over every field, in arbitrary
+dimension and degree, including zero. An independently constructed derivation intertwines
+diagonal insertion for every endomorphism. In characteristic zero, every actual adjoint-invariant
+homogeneous symbol has a central enveloping lift with exactly that PBW symbol. The scalar
+universe remains `K : Type`. Chevalley restriction, graded HC compatibility and HC
+image/injectivity remain open; this is not the HC isomorphism.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -942,9 +949,16 @@ constructed separately from strict coarsenings; both original Weyl orbits and cu
 both auxiliaries reflect, and all-simple-root integrality follows. The alternative source
 construction fully lowers the left string, without identifying its exponent with the printed
 proof's intermediate exponent. The literal crossing-time corollary requires strict increase
-only on the retained intervals, never across the pause. Dual raising crossing, opposite
-equality endpoints, exhaustive partition assembly, general iteration and mixed-word stability
-remain open; full Proposition 5.6 is not yet claimed.
+only on the retained intervals, never across the pause.
+`Path/GluingPartition.lean` constructs dual raising crossing and proves an exhaustive
+last-minimum partition. Source local-minimum integrality supplies the missing tail bound,
+crossing window and future bound. Every successful operator yields either an actual strict
+original-orbit output with all-root integrality or a precisely delimited residual sector.
+For lowering, actual times `p<q≤s`, strict increase, the entire upper-level future bound and
+the literal output suffix are proved. Strict source reconstruction remains for both `q<s`
+and `q=s`, and for their raising reversals. The seam height alone is not substituted for
+the first-upper-time equality. General iteration, mixed-word stability and full Proposition
+5.6 remain open; the output-or-residual theorem is not unconditional stability.
 These do not discharge `LRIsomorphismHypothesis`; longer mixed words remain open. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -1131,8 +1145,16 @@ packages only the existing local graph/scalar hypotheses; external classificatio
 and the symmetrizer gives `qⱼ=qᵢ²`. New original-Serre certificates handle both external sides,
 with opposite-algebra transport for negative generators. The hypotheses admit the classical
 B/C/F double-pair chains at generic parameters, without rank-two exhaustion or a toral
-coroot-span restriction. Literal named-matrix wrappers, broader length-two/three relations
-and all-node Artin assembly remain separate; triple edges/length six are not covered.
+coroot-span restriction.
+`BraidAction/OrthogonalGeneral.lean` proves length-two commutation for actual quotient
+maps with the explicit Lusztig generator formulas, in arbitrary Cartan degrees and with
+arbitrary common neighbours. Every E/F and toral generator is covered. This conditional
+identity requires no parameter cancellation or map-existence assertion at exceptional
+parameters. Published constructors instantiate it under their actual hypotheses and agree
+on their overlap. Both still exclude the simple endpoint of `i--j==l`: extending the
+next-edge cubic Serre relations is a remaining construction dependency. Broader local maps,
+length-three relations, named-matrix wrappers and all-node Artin assembly remain open;
+triple edges/length six are not covered.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
