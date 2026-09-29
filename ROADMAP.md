@@ -628,6 +628,14 @@ restriction therefore lands in polynomials fixed by every actual Weyl element. T
 the invariance direction of [Etingof, Lecture 10, Thm. 10.1], reconstructed through the
 independently proved central lift and graded HC; no circular extension or image premise.
 Chevalley extension and restriction injectivity, HC image/isomorphism and separation remain open.
+`KacMoody/TracePower.lean` constructs genuine invariant homogeneous coordinate polynomials
+`Tr(ρ(x)^n)` for actual finite-dimensional Lie modules. Literal Cartan restriction equals
+the power sum weighted by actual weight-space dimensions, with finite support proved.
+Finite-type diagonalizability and finite-dimensionality of dominant-integral irreducibles
+come from production theory, not additional extension premises. This supplies the trace-power
+step of Etingof Lecture 10, Thm. 10.1(ii), including degree zero and the zero module.
+Dominance-unitriangular inversion to distinct orbit sums and dominant averaged-power spanning
+remain unproved; this is not arbitrary Chevalley extension or HC surjectivity.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -987,7 +995,14 @@ transports both auxiliaries. Component integrality is derived, not supplied. Thi
 Proposition 5.6's component conclusion for the finite rational-breakpoint, integral-direction
 presentations, without dominance assumptions. A supplied common clearing denominator constructs
 Remark 5.1's paused two-piece object, with exact region formulas, endpoint and integral component.
-Pause-allowing reparametrization transport and the rational-class/denominator-existence interface
+`Path/GluingPause.lean` proves continuous nondecreasing endpoint-fixing clocks commute with
+the actual raising/lowering operators, including failure, and preserve and reflect all
+mixed-word relations. Interval surjectivity makes precomposition injective without requiring
+an inverse clock. The explicit rational three-region clock identifies the paused gluing
+path with rational concatenation, yielding a marked isomorphism of actual component crystals
+and derived whole-component integrality. Only the sum of the two displacements must be an
+integral endpoint; the gluing consumer retains a supplied common denominator and compatibility.
+The rational-class/denominator-existence interface and straight-path component isomorphism
 remain separate. Proposition 5.7 concerns highest-path uniqueness in the ORIGINAL endpoint
 fibre, not unrestricted highest-path uniqueness; that argument is not yet proved.
 These do not discharge `LRIsomorphismHypothesis`. Remaining:
@@ -1198,8 +1213,13 @@ length-two/three/four relations and the resulting algebra-automorphism-valued Ar
 These hypotheses are graph/scalar data, not assumed maps or target relations. Every E/F
 and arbitrary toral generator has the required formula; external unequal symmetrizers remain.
 The new simple/double presentation imposes length three only for mutual -1 entries and no
-involutions. Named B/C/F graph-data instantiations, triple edges/length six, unsupported local
-graphs and action faithfulness remain open; this is not unrestricted symmetrizable assembly.
+involutions. `BraidAction/Families.lean` constructs the actual named actions for literal
+pinned Mathlib Bₙ/Cₙ at every natural rank (including the rank-zero/one degeneracies) and F₄.
+All graph fields and double-edge orientations are proved. Nonzero infinite-order parameters
+discharge the local scalar restrictions over any field, retaining arbitrary compatible Cartan
+data, positive symmetrizers and root-datum toral lattices. The named homomorphisms/actions
+carry every E/F/K generator formula. Triple edges/length six, unsupported local graphs and
+action faithfulness remain open; this is not unrestricted symmetrizable assembly.
 Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
 the remaining transformed Serre relations (higher-degree edges and other node pairs),
 the general
