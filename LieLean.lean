@@ -137,6 +137,7 @@ import LieLean.Algebra.Lie.KacMoody.HarishChandraInvariance
 import LieLean.Algebra.Lie.KacMoody.HarishChandraSymmetrization
 import LieLean.Algebra.Lie.KacMoody.HarishChandraSymbol
 import LieLean.Algebra.Lie.KacMoody.HarishChandraHomogeneous
+import LieLean.Algebra.Lie.KacMoody.HarishChandraGraded
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
@@ -184,6 +185,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.TerminalDoubleOther
 import LieLean.Algebra.QuantumGroup.BraidAction.NonterminalDouble
 import LieLean.Algebra.QuantumGroup.BraidAction.HigherDoubleRelation
 import LieLean.Algebra.QuantumGroup.BraidAction.OrthogonalGeneral
+import LieLean.Algebra.QuantumGroup.BraidAction.NextEdge
 import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
@@ -301,6 +303,7 @@ import LieLean.RepresentationTheory.Crystal.Path.GluingSeams
 import LieLean.RepresentationTheory.Crystal.Path.GluingPositiveSeam
 import LieLean.RepresentationTheory.Crystal.Path.GluingCrossing
 import LieLean.RepresentationTheory.Crystal.Path.GluingPartition
+import LieLean.RepresentationTheory.Crystal.Path.GluingStability
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.LSTwoPiece
 import LieLean.RepresentationTheory.Crystal.Path.LSFinitePieces
