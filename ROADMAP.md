@@ -1347,9 +1347,10 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   parameter. The unrestricted Verma Hom dimension bound is false
   (see M12); finite-dimensional quantum classification does not classify all infinite-dimensional
   simple modules.
-- Pending decisions: delete the empty `LieLean/Basic.lean`; rename
+- Pending maintainer decisions (details and instructions in `AGENTS.md`, "Pending maintainer
+  decisions"): delete the empty `LieLean/Basic.lean`; rename
   `LieLean/RingTheory/FormalCharacter.lean` to a Mathlib-style path/namespace; a checklist for
-  verifying the ~400 "(check)" citations against the books.
+  verifying the ~1000 "(check)" citations against the books.
 
 ## Non-goals
 
