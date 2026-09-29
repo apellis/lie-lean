@@ -639,8 +639,16 @@ into distinct Weyl orbits, and integer dominance-unitriangular inversion. Degree
 integer coefficients express every dominant-integral distinct-orbit power sum in actual
 irreducible character powers, producing a genuine homogeneous infinitesimally invariant
 extension. The stabilizer factor for full Weyl sums is explicit; singular weights, degree zero
-and empty root indices are included. Dominant averaged-power spanning remains unproved;
-this is not arbitrary Chevalley extension or HC surjectivity.
+and empty root indices are included.
+`KacMoody/ChevalleySurjectivity.lean` completes dominant-power spanning by characteristic-zero
+interpolation on the actual dominant-integral additive monoid. Finite Weyl averaging proves
+that distinct dominant-orbit powers span exactly the full homogeneous Weyl-fixed space.
+Actual invariant homogeneous extensions and finite homogeneous decomposition then prove
+surjectivity of literal coordinate Cartan restriction from infinitesimal invariants onto
+all Weyl-fixed Cartan polynomials. This holds for the finite-type realization over arbitrary
+characteristic-zero fields, including degree zero and empty simple-root indices, with no
+spanning or extension premise. Chevalley injectivity/isomorphism and Harish–Chandra
+image/injectivity remain separate; the translation theorem is not yet complete.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
