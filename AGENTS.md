@@ -43,6 +43,17 @@ lake build LieLean.Algebra.Lie.Foo   # a single module
 - The toolchain comes from `lean-toolchain`; do not rely on a global default.
 - Do not run `lake update` except as a deliberate Mathlib bump (see below).
 - Diagnose tool, download and memory failures separately from proof errors.
+- Sandboxed environments: if `lake exe cache get` cannot reach the Mathlib cache,
+  `lake build <Module>` builds just the Mathlib files that module needs (slow but fine; never
+  rebuild Mathlib wholesale). If elan's installer is blocked, download the toolchain release
+  from GitHub and register it with `elan toolchain link`.
+- Run `lake`/`lean` with stdin redirected (`< /dev/null`) in non-interactive shells; otherwise
+  they can hang.
+- Parallel work: use separate `git worktree`s (symlink `.lake/packages`, copy `.lake/build`),
+  one Lean process per worktree at a time. When merging, `LieLean.lean` import conflicts are
+  resolved by regenerating the sorted import list from the files under `LieLean/`. Check new
+  top-level names against the whole library before merging: independent branches have clashed
+  (e.g. `CartanDatum`, `antiInvolution`, `IsCategoryO.lieSubmodule`).
 
 ## Layout and naming (Mathlib-ready)
 
