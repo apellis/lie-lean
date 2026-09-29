@@ -45,6 +45,39 @@ comparisons with Mathlib's `Matrix.ToLieAlgebra` and Geck construction, and, in 
 finite-dimensionality, semisimplicity and Weyl's complete reducibility. See `ROADMAP.md` for the
 declaration names and the list of upstreaming candidates.
 
+### Phase 2 progress
+
+M10 (Coxeter theory), M11 (Hecke/Kazhdan–Lusztig theory) and M13 (Lie algebra homology)
+are complete at the roadmap's stated scope. M12, M14 and M15 remain in progress.
+Further proved results include:
+
+* **Homology and BGG:** concrete/categorical Chevalley–Eilenberg comparison, coefficient
+  long exact sequences, Verma acyclicity, and positive-degree BGG exactness under the
+  roadmap's symmetrizable, finite-dimensional-Cartan hypotheses.
+* **Category `𝒪`:** finite-type Verma Hom uniqueness for arbitrary weights, full-central
+  block decompositions and exact projections, and actual tensor-Verma standard filtrations.
+  The unrestricted Kac–Moody Verma Hom uniqueness claim is false at critical level;
+  it is not a completed general theorem.
+* **Harish–Chandra prerequisites and Chevalley surjectivity:** the actual HC projection,
+  arbitrary-weight dot-Weyl invariance and graded compatibility; invariant trace polynomials,
+  integer character inversion, and dominant-orbit spanning. In finite type over a
+  characteristic-zero field, every Weyl-invariant Cartan polynomial has an infinitesimally
+  invariant extension (`Matrix.Realization.KacMoodyAlgebra.chevalleyRestriction_surjective`).
+  Chevalley injectivity, the HC isomorphism and Humphreys' translation theorem remain open.
+* **Littelmann paths:** actual rational-piece gluing stability under all finite mixed
+  root-operator words, component integrality, pause-allowing transport, and a marked
+  concatenation–gluing component equivalence. Normalized original-endpoint-fibre rigidity
+  is proved; full Proposition 5.7, the straight-path component theorem and unconditional
+  crystal-level Littlewood–Richardson decomposition remain open.
+* **Quantum groups:** finite-dimensional generic quantum `sl₂` classification and parameter
+  uniqueness; actual named `Bₙ`, `Cₙ` and `F₄` Artin actions; triple-edge Serre prerequisites;
+  and rational rank-one balanced triples. G₂ automorphisms and length-six relations,
+  unrestricted all-node assembly, action faithfulness and general-rank global bases remain open.
+
+These summaries do not replace the precise hypotheses and remaining dependencies in
+[`ROADMAP.md`](ROADMAP.md). In particular, the named quantum actions are not claimed faithful,
+and Chevalley surjectivity is not a claim of the full restriction isomorphism.
+
 ## Building
 
 The project pins Lean `v4.34.1` and Mathlib tag `v4.34.1` (see `lean-toolchain` and

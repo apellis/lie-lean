@@ -618,8 +618,8 @@ coordinates, not total symmetrization. Translation changes only lower terms, inc
 exact zero correction in degree zero, so the actual negative-rho shifted HC has the same
 top symbol. The same invariant-homogeneous central lift now has its shifted HC leading
 term identified. No extra dimension hypothesis is added beyond the supplied `Realization`
-and its `finrank_add_rank` constraint. Chevalley extension, HC image/injectivity and character
-separation remain open; graded compatibility does not by itself prove the HC isomorphism.
+and its `finrank_add_rank` constraint. Chevalley extension is now proved below; HC image/injectivity
+and character separation remain open. Graded compatibility alone is not the HC isomorphism.
 `KacMoody/ChevalleyInvariance.lean` proves that actual infinitesimal invariant symbols
 restrict to Weyl-invariant Cartan symbols in all degrees. In finite type it derives full
 and Cartan Killing nondegeneracy and the adjoint/coadjoint identification, including the
@@ -627,7 +627,8 @@ contragredient sign and the commuting restriction diagram. Literal coordinate-po
 restriction therefore lands in polynomials fixed by every actual Weyl element. This is
 the invariance direction of [Etingof, Lecture 10, Thm. 10.1], reconstructed through the
 independently proved central lift and graded HC; no circular extension or image premise.
-Chevalley extension and restriction injectivity, HC image/isomorphism and separation remain open.
+Chevalley extension is completed below. Restriction injectivity, HC image/isomorphism and
+character separation remain open.
 `KacMoody/TracePower.lean` constructs genuine invariant homogeneous coordinate polynomials
 `Tr(ρ(x)^n)` for actual finite-dimensional Lie modules. Literal Cartan restriction equals
 the power sum weighted by actual weight-space dimensions, with finite support proved.
@@ -886,15 +887,15 @@ clamped cumulative affine sum has the required piece formulas and continuity; en
 integrality is derived from propagated root-lattice congruences, not assumed. It handles
 every positive finite piece count and arbitrary finite rank, and recovers the straight line
 for one piece. Redundant equal directions are an explicitly labelled extension. This is
-path existence, not a component isomorphism; the reparametrization bridge remains open.
+path existence, not a component isomorphism. Pause transport is supplied by `GluingPause.lean`
+below; the straight-path component theorem remains open.
 `Path/Linking.lean` proves the root-operator continuity estimates of [Lit] Proposition 3.1
 and a fixed-parametrization form of Lemma 6.1: arbitrary mixed root words preserve vanishing
 along arbitrary finite sufficiently close linking chains. Integral stable sets/components
 are explicit inputs, not consequences inferred from dominance. This does not construct the
-required links or prove equality of word relations. Source §§5–7 identify the remaining
-gluing-pair stability/integrality, highest-path uniqueness, endpoint-fiber and two-piece
-isomorphism arguments, then stretching and concatenation transport. Pause-allowing source
-reparametrizations are not supplied by the existing order-automorphism equivalence.
+required links or prove equality of word relations. The modules below supply gluing-pair
+stability/integrality and pause-allowing concatenation transport. Highest-path uniqueness,
+the §6 endpoint-fibre/linking argument and the straight-path component theorem remain open.
 `Path/GluingDirections.lean` proves [Lit] Lemma 5.2(a,b), p. 514: the compatibility relation
 quantifies over all positive real roots, and simultaneous simple reflection preserves it
 under the source sign conditions. Positive-root transport and exact exceptional-root coroot
@@ -912,8 +913,8 @@ uses integral directions without a dominant-orbit premise; `finite_seam_integral
 the translation and seam integrality from the concrete paths, source chains and integral
 glued endpoint. This removes the dominant-second-class restriction for those chain/seam
 results. Proposition 5.7/Theorem 6.3 assume dominance of the first weight and their sum,
-not a dominant representative of the second class. Two-class gluing operator stability
-and the reparametrization/isomorphism bridge remain open.
+not a dominant representative of the second class. Two-class gluing operator stability and
+pause transport are supplied below; the straight-path isomorphism remains open.
 `Path/GeneralClassStability.lean` proves integral source-walk height bounds and attained
 maximum lengths, saturated refinements, simple-root saturation and same-sign reflection
 preservation ([Lit] Lemma 4.1). `LSGeneralClass.lsData` now constructs genuine LS data on
@@ -926,8 +927,8 @@ are LS and integral. Its actual two-class `GluingPair.path` has integral global 
 every simple coroot, including coincident cuts and zero incoming slope; the translation is
 derived integral from the source endpoint hypothesis. Neither class needs dominance.
 This does not assert integrality of arbitrary weak local minima within artificial pauses.
-Two-class root-operator stability and hence whole-component integrality remain open;
-no component isomorphism is claimed.
+Two-class root-operator stability and whole-component integrality are supplied by
+`GluingStability.lean` and `GluingComponent.lean` below, not by this module alone.
 `Path/GluingReconstruction.lean` implements [Lit] Remark 5.4's two-sided finite cut
 extensions. Their source chains derive integral cut directions; both auxiliary paths are LS
 in the original classes, and re-gluing them gives literal equality at every real parameter,
@@ -939,9 +940,9 @@ lowering operators and same-root iterates, with proved rational operator times, 
 deduplicated refinements, source chains, original-orbit directions and literal output equality.
 At a nonintegral gluing seam with positive outgoing slope, it derives both cut-direction
 signs and both reflected source chains at the original times, with simultaneous compatibility.
-Matching actual glued operator intervals and source iterates outside the sectors below,
-integral equality-seam cases, subdivision coarsening and general strict witnesses remain open. No full
-two-class stability is inferred from the proved single-source output reconstruction.
+Matching glued operator intervals, integral equality seams, subdivision coarsening and strict
+witnesses are completed by the subsequent modules through `GluingStability.lean`. Full two-class
+stability is not inferred from this single-source output reconstruction alone.
 `Path/GluingAfter.lean` proves actual strict-after lowering outputs and same-root iterates
 in the source-minimum-matched sector. An actual glued minimizer after the right cut plus
 nonpositive initial right-source slope derives the matching conditions. Output witnesses
@@ -1173,7 +1174,8 @@ every toral lattice generator. Two normal-ordering certificates, Chevalley trans
 proved inverse identities supply the generator equalities. The scope is exactly two distinct
 nodes with entries `(-2,-1)`, arbitrary field and root-datum lattice, `v ≠ 0`, and short-node
 quantum sum/difference nonzero; the other denominator follows from `qⱼ = qᵢ²`.
-General connected double-edge assembly and the triple-edge/length-six relation remain open.
+Connected double-edge constructions and named-family assembly are supplied below.
+Triple-edge automorphisms and the length-six relation remain open.
 `BraidAction/DoublePathSerre.lean` proves both ordered positive/negative transformed Serre
 relations for a connected double-edge path, in arbitrary ambient rank. The forward relation
 uses entries `aᵢⱼ=-2`, `aⱼᵢ=-1`, `aⱼₗ=-1`, `aᵢₗ=0`, derives `qⱼ=qᵢ²`, and explicitly
@@ -1313,20 +1315,27 @@ integral; Lusztig's canonical basis / Kashiwara's global basis if reachable.
 ## Status and open threads
 
 The declarations listed as proved are on `main`; the explicit remaining items below are not
-completion claims. Work has resumed. M12 and M14 are marked in progress because their
-remaining statements are not all proved; M1–M9's main targets, M11 and M13 are complete.
-The original continuation threads are:
+completion claims. M1–M9's main targets, M10, M11 and M13 are complete at their stated scope;
+M12, M14 and M15 remain in progress. Current completed steps and continuation threads are:
 
 - **BGG exactness in degrees ≥ 1** (M12): proved for symmetrizable GCM and finite-dimensional
   Cartan space by `ker_bggDiff_eq_range`, using actual lowering powers modulo boundaries
   and Casimir vanishing. The theorem does not cover nonsymmetrizable GCM or arbitrary Cartan
   dimension; these extensions remain open.
-- **Littelmann's isomorphism theorem** (M14): needed to make `nonempty_equiv_sigma` (crystal-level
-  LR decomposition) unconditional; key missing fact: for dominant `π`, the f-orbit of `π` is
-  stable under all `eⱼ` (generalize the LS stability proof to paths of arbitrary dominant shape).
-- **Braid automorphisms `Tᵢ` in general** (M15): route — `Tᵢ` on integrable modules ([Lus] 5.2),
-  faithfulness of `⊕ L_q(λ)` (via `maxSubmodule_eq_fPowSubmodule` and the triangular
-  decomposition), then all relations of `U_q` hold for the candidate images.
+- **Chevalley restriction and category `𝒪`** (M12): actual Chevalley restriction surjectivity
+  is proved, including dominant-orbit spanning and invariant extensions. Restriction injectivity,
+  HC image/separation, facet exclusion and dual compatibility for Humphreys Thm. 7.6 remain.
+- **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
+  pause transport are proved. Next are highestness-to-normalization for original-endpoint-fibre
+  Proposition 5.7, §6 linking/endpoint-fibre arguments and the straight-path component theorem,
+  making `nonempty_equiv_sigma` unconditional. The classical target is rational PL paths modulo
+  reparametrization, not an unqualified assertion for all continuous dominant paths.
+  General crystal normality and Weyl braid relations also remain.
+- **Braid automorphisms `Tᵢ` in general** (M15): actual local-class and named Bₙ/Cₙ/F₄ actions
+  are proved, as are triple-edge Serre prerequisites. Remaining: degree-three diagonal and
+  inverse recovery, both G₂ automorphisms and length-six equality, unsupported all-node
+  assembly and action faithfulness. The integrable-module construction ([Lus] 5.2) remains
+  an alternative route; it is not an already-proved general action.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
