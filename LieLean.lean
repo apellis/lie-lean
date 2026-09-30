@@ -147,6 +147,7 @@ import LieLean.Algebra.Lie.KacMoody.HarishChandraIsomorphism
 import LieLean.Algebra.Lie.KacMoody.HarishChandraLinkage
 import LieLean.Algebra.Lie.KacMoody.TranslationFacet
 import LieLean.Algebra.Lie.KacMoody.TranslationVerma
+import LieLean.Algebra.Lie.KacMoody.TranslationFunctor
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
