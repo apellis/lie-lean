@@ -1496,8 +1496,13 @@ count. For `A₁ × A₁`, `A₂`, `B₂` and `G₂` every root vector `Tᵢ₁�
 alternating reduced word of `w₀` lies in `U⁺`, with explicit formulas in the twisted commutators
 `X n` (`a1a1_rootVector_two`, `a2_rootVectors_mem_adjoin`, `b2_rootVectors_mem_adjoin`,
 `g2_rootVectors_mem_adjoin`); the `B₂` fixed point `TᵢTⱼTᵢ(Eⱼ) = Eⱼ` (`b2_rootVector_four`) is
-obtained structurally from the lowering identities. Remaining: spanning and independence for `B₂`
-and `G₂` (Levendorskii–Soibelman straightening), higher rank, and canonical bases.
+obtained structurally from the lowering identities. `PBW/RankTwoB2.lean` does the same for `B₂`
+(`aᵢⱼ = -2`, `aⱼᵢ = -1`): the ordered monomials `Eᵢ^A Tᵢ(Eⱼ)^B (TᵢTⱼEᵢ)^C Eⱼ^D` span `U⁺`
+(`span_b2PBWMono`, `vᵢ - vᵢ⁻¹ ≠ 0`, `[2]ᵢ! ≠ 0`) and are independent for `v` not a root of unity
+(`linearIndependent_b2PBWMono`, `b2PBWBasis`, `b2PBWBasis_apply_braidEquiv`), via the
+straightening relations `f x = x f - (p-1) y²`, `y x = p⁻¹ x y` (`B2PBW.Rel`) and operators on
+`k[ℕ⁴]`. Remaining: spanning and independence for `G₂` (six root vectors, operators on `k[ℕ⁶]`),
+higher rank, and canonical bases.
 `BraidAction/BraidRelationsGeneral.lean`, `BraidAction/DoubleEdgeGeneral.lean` and
 `BraidAction/GeneralArtin.lean` prove braid relations for the general `Tᵢ` in arbitrary rank:
 length three at a simple edge when no third node meets both ends, with arbitrary Cartan entries
@@ -1630,7 +1635,7 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
 - Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
-  `Hecke/KazhdanLusztig/Canonical.lean`; the PBW basis is proved for `A₂`, `a2PBWBasis`, and root
+  `Hecke/KazhdanLusztig/Canonical.lean`; the PBW basis is proved for `A₂` and `B₂`, `a2PBWBasis`, `b2PBWBasis`, and root
   vectors lie in `U⁺` in all rank-two finite types),
   infinite-dimensional extensions of quantum `sl₂` classification, Humphreys O Thm. 7.6,
   and valid restricted extensions of the Hom dimension bound.
