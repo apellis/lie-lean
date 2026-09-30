@@ -720,8 +720,12 @@ algebraically closed characteristic-zero field). `KacMoody/TranslationAdjunction
 `χ₁`, `N` in the block `χ₂` and finite-dimensional `L ∈ 𝒪` (`L^* = Module.Dual K L`), via the
 Lie tensor–Hom adjunction (`tensorHomAdjunction`, `tensorDualEquivHom : N ⊗ L^* ≅ Hom_K(L, N)`)
 and block restriction (`homCentralBlockSourceEquiv`, `homCentralBlockTargetEquiv`);
-`translationAdjunction_irreducible` is the case `L = L(ν)`. The identification
-`L(ν)^* ≅ L(-w₀ν)` is not formalized; `T_μ^λ` is stated with `L(ν)^*`.
+`translationAdjunction_irreducible` is the case `L = L(ν)`; `T_μ^λ` is stated with `L(ν)^*`.
+`KacMoody/DualIrreducible.lean` proves `IrreducibleModule.exists_equiv_dual`: for `ν` dominant
+integral, `L(ν)^* ≅ L(z(-ν))` with `z ∈ W` and `z(-ν)` dominant integral (i.e. `-w₀ν`; the
+longest element itself is not used), via irreducibility of duals (`LieModule.isIrreducible_dual`),
+Weyl's theorem, weights of duals (`weightSpaceOfMap_neg_ne_bot_of_dual`) and the norm inequality
+for weights of `L(Λ)` with equality only on `WΛ` (`IrreducibleModule.exists_norm_eq_add`).
 `KacMoody/TranslationSimple.lean` proves the **dichotomy for simple modules**
 `translation_irreducible` (Humphreys GSM 94 Thm. 7.9 (check), first assertion): under the
 hypotheses of `translation_verma`, `T_λ^μ L(w·λ)` is zero or isomorphic to `L(w·μ)`. Proof:
@@ -729,9 +733,16 @@ hypotheses of `translation_verma`, `T_λ^μ L(w·λ)` is zero or isomorphic to `
 `T` preserves surjections and injections (`centralTranslationMap_surjective/_injective`), so
 `T L(w·λ)` is a quotient of `M(w·μ)` embedding in `M(w·μ)^∨`; every map `M(y) → M(y)^{*σ}` is a
 scalar multiple of the Shapovalov map (`VermaModule.eq_smul_toTwistedDual`), whose kernel is
-`M'(y)` (`subsingleton_or_nonempty_equiv_irreducible`). Remaining for Thm. 7.6/7.9:
-non-integral `λ` with the integral Weyl group `W_[λ]`, and the upper-closure criterion deciding
-which alternative of Thm. 7.9 occurs (e.g. `T_λ^μ L(w·λ) ≠ 0` when `λ, μ` lie in the same facet).
+`M'(y)` (`subsingleton_or_nonempty_equiv_irreducible`). `KacMoody/TranslationSameFacet.lean`
+proves the **same-facet case**: if `λ + ρ`, `μ + ρ` have the same simple walls, then
+`T_λ^μ L(w·λ) ≅ L(w·μ)` (`translation_irreducible_of_sameFacet`; nonvanishing by adjunction with
+the Verma part for `λ, μ` exchanged), `T_μ^λ T_λ^μ M(w·λ) ≅ M(w·λ)`
+(`translation_translation_verma_of_sameFacet`) and `T_μ^λ T_λ^μ L(w·λ) ≅ L(w·λ)`
+(`translation_translation_irreducible_of_sameFacet`), with `T_μ^λ` built from `L(ν)^*`
+(Humphreys GSM 94 §7.8, Thm. 7.9 (check)). Remaining: non-integral `λ` (`W_[λ]`); the general
+upper-closure criterion of Thm. 7.9 when `μ` lies on more walls than `λ`; and the
+equivalence of blocks as a natural isomorphism of functors (only its values on Verma and simple
+modules are proved).
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -1612,8 +1623,11 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   packaged translation functor (`centralTranslationMap_shortExact`), the duality functor
   `M ↦ M^∨` with `(T M)^∨ ≅ T(M^∨)`, and the dual-Verma part (`translation_dualVerma`:
   `T_λ^μ M(w·λ)^∨ ≅ M(w·μ)^∨`), adjointness of translation functors (`translationAdjunction`)
-  and the dichotomy `T_λ^μ L(w·λ) ∈ {0, L(w·μ)}` (`translation_irreducible`, Thm. 7.9 (check)).
-  Remaining: non-integral weights (`W_[λ]`) and the upper-closure criterion of Thm. 7.9.
+  and the dichotomy `T_λ^μ L(w·λ) ∈ {0, L(w·μ)}` (`translation_irreducible`, Thm. 7.9 (check)),
+  `L(ν)^* ≅ L(-w₀ν)` (`IrreducibleModule.exists_equiv_dual`) and the same-facet case
+  `T_λ^μ L(w·λ) ≅ L(w·μ)`, `T_μ^λ T_λ^μ ≅ id` on Verma and simple modules
+  (`translation_irreducible_of_sameFacet`, `translation_translation_*_of_sameFacet`).
+  Remaining: non-integral weights (`W_[λ]`) and the general upper-closure criterion of Thm. 7.9.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
   linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
