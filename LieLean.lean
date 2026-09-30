@@ -216,6 +216,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.TwoNodeGeneral
 import LieLean.Algebra.QuantumGroup.BraidAction.GeneralSerre
 import LieLean.Algebra.QuantumGroup.BraidAction.BraidRelationsGeneral
 import LieLean.Algebra.QuantumGroup.BraidAction.DoubleEdgeGeneral
+import LieLean.Algebra.QuantumGroup.BraidAction.TriangleRelation
 import LieLean.Algebra.QuantumGroup.BraidAction.GeneralArtin
 import LieLean.Algebra.QuantumGroup.BraidAction.FiniteTypeArtin
 import LieLean.Algebra.QuantumGroup.CartanDatum

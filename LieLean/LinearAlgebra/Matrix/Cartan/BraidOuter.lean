@@ -13,7 +13,7 @@ used for the braid relations of Lusztig's automorphisms `Tᵢ` of the quantum gr
 (`LusztigCartanDatum.BraidOuterCondition` in
 `LieLean/Algebra/QuantumGroup/BraidAction/GeneralArtin.lean`):
 
-* no third node meets both ends of a simple edge `aᵢⱼ = aⱼᵢ = -1`;
+* a third node `l` meeting both ends of a simple edge `aᵢⱼ = aⱼᵢ = -1` has `aᵢₗ = aⱼₗ = -1`;
 * at a double edge `aᵢⱼ = -2`, `aⱼᵢ = -1`, every third node `l` has
   `(aᵢₗ, aⱼₗ) ∈ {(0, 0), (-1, 0), (0, -1)}`;
 * at a triple edge `aᵢⱼ = -3`, `aⱼᵢ = -1`, every third node is orthogonal to both ends.
@@ -22,7 +22,8 @@ used for the braid relations of Lusztig's automorphisms `Tᵢ` of the quantum gr
 
 The condition holds for all of Mathlib's Cartan matrices of finite type, at every rank:
 `CartanMatrix.braidOuterCondition_A`, `_B`, `_C`, `_D`, `_E` (the families `A n`, ..., `E n`,
-including the degenerate small ranks), `CartanMatrix.braidOuterCondition_F₄`, `_G₂`.
+including the degenerate small ranks), `CartanMatrix.braidOuterCondition_F₄`, `_G₂`; and for
+every simply-laced matrix (`Matrix.IsSimplyLaced.braidOuterCondition`).
 
 ## References
 
@@ -37,10 +38,25 @@ variable {I : Type*} (A : Matrix I I ℤ)
 /-- The third-node condition on the Dynkin diagram of `A` under which the braid relations of
 Lusztig's `Tᵢ` are proved (see the module docstring). -/
 structure BraidOuterCondition : Prop where
-  simple : ∀ i j l, A i j = -1 → A j i = -1 → l ≠ i → l ≠ j → A i l = 0 ∨ A j l = 0
+  simple : ∀ i j l, A i j = -1 → A j i = -1 → l ≠ i → l ≠ j →
+    A i l = 0 ∨ A j l = 0 ∨ (A i l = -1 ∧ A j l = -1)
   double : ∀ i j l, A i j = -2 → A j i = -1 → l ≠ i → l ≠ j →
     (A i l = 0 ∧ A j l = 0) ∨ (A i l = -1 ∧ A j l = 0) ∨ (A i l = 0 ∧ A j l = -1)
   triple : ∀ i j l, A i j = -3 → A j i = -1 → l ≠ i → l ≠ j → A i l = 0 ∧ A j l = 0
+
+variable {A}
+
+/-- Every simply-laced matrix satisfies the third-node condition (for instance affine `Ãₙ`,
+including the triangle `Ã₂`, and all simply-laced Kac–Moody types). -/
+theorem IsSimplyLaced.braidOuterCondition (hA : A.IsSimplyLaced) : A.BraidOuterCondition where
+  simple i j l _ _ hli hlj := by
+    rcases hA hli.symm with h1 | h1 <;> rcases hA hlj.symm with h2 | h2 <;> simp [h1, h2]
+  double i j l h h' _ _ := by
+    have hij : i ≠ j := by rintro rfl; omega
+    rcases hA hij with h1 | h1 <;> omega
+  triple i j l h h' _ _ := by
+    have hij : i ≠ j := by rintro rfl; omega
+    rcases hA hij with h1 | h1 <;> omega
 
 end Matrix
 

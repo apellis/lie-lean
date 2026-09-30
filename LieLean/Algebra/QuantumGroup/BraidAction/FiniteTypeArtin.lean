@@ -23,6 +23,8 @@ compatible symmetrizer and root-datum lattice).
 * `QuantumGroup.braidArtinHomOfCartanMatrix`: the action of `A.coxeterMatrix.ArtinGroup`, with
   generator formulas `braidArtinHomOfCartanMatrix_artinGenerator`,
   `braidArtinHomOfCartanMatrix_images`.
+* `QuantumGroup.braidArtinHomOfSimplyLaced`: the action for every simply-laced Cartan datum
+  (e.g. affine `Ãₙ`, including the triangle `Ã₂`).
 * `QuantumGroup.braidArtinHom_A`, `_B`, `_C`, `_D`, `_E`, `_F₄`, `_G₂`: the named actions for
   Mathlib's `CartanMatrix.A n`, `B n`, `C n`, `D n`, `E n` (all `n`), `F₄`, `G₂`.
 * `QuantumGroup.braidArtinHom_B_artinGenerator` (and `_C`, `_F₄`, `_G₂`): on every generator they
@@ -86,6 +88,20 @@ theorem braidArtinHomOfCartanMatrix_images (i : I) :
       (braidSerreGeneric_of_not_root hpow i))
     (transformedSerre_of_braidSerreGeneric (shortNode_braidGeneric_of_not_root hpow i).sub_ne
       (braidSerreGeneric_of_not_root hpow i))
+
+omit hD hA in
+/-- **The braid group action for any simply-laced Cartan datum** (any rank; triangles such as
+affine `Ã₂` allowed), for `v` not a root of unity. -/
+def braidArtinHomOfSimplyLaced (hSL : D.cartanMatrix.IsSimplyLaced) :
+    D.cartanMatrix.coxeterMatrix.ArtinGroup →* (QuantumGroup R v ≃ₐ[k] QuantumGroup R v) :=
+  braidArtinHomOfCartanMatrix R rfl hSL.braidOuterCondition hpow
+
+omit hD hA in
+@[simp]
+theorem braidArtinHomOfSimplyLaced_artinGenerator (hSL : D.cartanMatrix.IsSimplyLaced) (i : I) :
+    braidArtinHomOfSimplyLaced R hpow hSL (D.cartanMatrix.coxeterMatrix.artinGenerator i) =
+      braidEquivOfNotRoot R hpow i :=
+  braidArtinHomOfCartanMatrix_artinGenerator R rfl _ hpow i
 
 end General
 
