@@ -1247,11 +1247,22 @@ the odd-degree Chevalley factor, and both centre-first quartic Serre relations. 
 the original Serre relations proves both neighbor-first quadratic relations with the explicit
 additional hypothesis qᵢ⁴ + 1 ≠ 0. This is a boundary of the reconstructed proof, not a
 necessity claim. Ambient rank, compatible toral lattice and field characteristic remain
-unrestricted. No degree-three diagonal relation, G₂ automorphism or length-six action is claimed.
-Higher-degree diagonal relations beyond degree two, higher-degree coupled off-diagonal commutators,
-the remaining transformed Serre relations (higher-degree edges and other node pairs),
-the general
-automorphism/inverse construction, other braid relations and general canonical bases remain open.
+unrestricted. No G₂ automorphism or length-six action is claimed.
+`BraidAction/Diagonal.lean` proves the diagonal relation
+`[Tᵢ(Eⱼ), Tᵢ(Fⱼ)] = (K_{sᵢ j̃} - K_{-sᵢ j̃})/(vⱼ - vⱼ⁻¹)` (`braidEj_mul_braidFj_sub`) for
+**every** Cartan entry `aᵢⱼ`, in arbitrary ambient rank, assuming only `v ≠ 0`,
+`vᵢ - vᵢ⁻¹ ≠ 0` and `[r]ᵢ! ≠ 0` (`r = -aᵢⱼ`); this includes the degree-three (G₂) case.
+The proof (reconstructed, not taken from a source) writes `Tᵢ(Eⱼ)`, `Tᵢ(Fⱼ)` as iterated twisted
+commutators `X r`, `Y r`, shows by a two-index induction that every `[X n, Y m]` (`n ≤ m`) is a
+single monomial in `Fᵢ, K̃ᵢ^{±1}, K̃ⱼ^{±1}`, and evaluates the diagonal coefficient
+`(-1)^r vᵢ^{-r} ([r]ᵢ!)²`; no Serre relation is used. The abstract computation
+(`BraidDiagonal.Hyp.comm_self`) is stated for any algebra satisfying the relevant relations.
+The same recursion gives `braidEj_commute_braidFj`: `[Tᵢ(Eⱼ), Tᵢ(Fₗ)] = 0` for distinct
+`j, l ≠ i` and arbitrary Cartan entries, assuming only `v ≠ 0`. Thus relations (b)–(d) are
+preserved by the candidate `Tᵢ` in every degree.
+Remaining for general `Tᵢ`: the transformed Serre relations (higher-degree edges and other
+node pairs), the general automorphism/inverse construction, other braid relations and general
+canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
@@ -1332,7 +1343,8 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   reparametrization, not an unqualified assertion for all continuous dominant paths.
   General crystal normality and Weyl braid relations also remain.
 - **Braid automorphisms `Tᵢ` in general** (M15): actual local-class and named Bₙ/Cₙ/F₄ actions
-  are proved, as are triple-edge Serre prerequisites. Remaining: degree-three diagonal and
+  are proved, as are triple-edge Serre prerequisites and the diagonal relation
+  `[Tᵢ(Eⱼ), Tᵢ(Fⱼ)]` in every degree (`BraidAction/Diagonal.lean`). Remaining: degree-three
   inverse recovery, both G₂ automorphisms and length-six equality, unsupported all-node
   assembly and action faithfulness. The integrable-module construction ([Lus] 5.2) remains
   an alternative route; it is not an already-proved general action.
