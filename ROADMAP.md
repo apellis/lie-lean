@@ -32,7 +32,9 @@ Phase 2 references (see "Phase 2" below):
   and representation theory*, Progr. Math. 204 (Ch. 3: 𝔫-homology, BGG–Kempf resolution).
 - **[Kas]** M. Kashiwara, *On crystal bases*, CMS Conf. Proc. 16 (1995); **[Lit]** P. Littelmann,
   *Paths and root operators in representation theory*, Ann. of Math. **142** (1995), 499–525;
-  **[HK]** J. Hong, S.-J. Kang, *Introduction to quantum groups and crystal bases*, GSM 42.
+  **[HK]** J. Hong, S.-J. Kang, *Introduction to quantum groups and crystal bases*, GSM 42;
+  **[BBO05]** P. Biane, P. Bougerol, N. O'Connell, *Littelmann paths and Brownian paths*, Duke
+  Math. J. **130** (2005), 127–167 (arXiv:math/0403171).
 - **[Lus]** G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993; **[Jan]** J. C. Jantzen,
   *Lectures on quantum groups*, GSM 6.
 
@@ -1167,10 +1169,20 @@ the `Sᵢ` to `W →* Perm B(λ)` (via `CoxeterSystem.lift`, `sᵢ ↦ Sᵢ`, `c
 relations for the pairs with `aᵢⱼaⱼᵢ ∈ {1,2,3}`; those with `mᵢⱼ = 1, 2, ∞` are proved, so the
 action is unconditional when no such pair exists (`pathBraidRelations_of_forall`).
 `LeviMap.iterate_reflection_eq_of_levi` reduces `(S_{e k} S_{e l})^m = 1` on `B(λ)` to the same
-relation on the Levi path crystals `B_J(μ)` (any subdiagram). Remaining: the braid relations
-of lengths 3, 4, 6 on the rank-two crystals `B_J(μ)` (`A₂`, `B₂`, `G₂`); identification of the
-Levi path crystals with crystal bases (normality in Kashiwara's sense); and extension of the
-concrete `a`-chain description beyond the proved dominant-orbit supplied-path scope.
+relation on the Levi path crystals `B_J(μ)` (any subdiagram). **`A₂` braid relation**
+(`Path/Pitman.lean`, `Crystal/BraidA2.lean`, `Path/BraidA2.lean`): string tops are Pitman
+transforms (`eIter_eq_pitman`, `top_apply`: `eᵢ^{εᵢ}π = π - (min_{[0,t]} hᵢ) αᵢ`); for
+`aᵢⱼ = aⱼᵢ = -1` the [BBO05] §2 identities (`runningMin_add_runningMin_eq`,
+`pitman_three_apply`, `minPairing_add_minPairing_eq`) give `PᵢPⱼPᵢ = PⱼPᵢPⱼ` and the `A₂`
+transition map of string coordinates, and `IsSeminormal.reflection_braid_three` turns these into
+`SᵢSⱼSᵢ = SⱼSᵢSⱼ` via the piecewise-linear identity `a2_braid_coordinates`
+(`LittelmannPath.reflection_braid_three`, `pathCrystal_reflection_braid_three`, any GCM, any
+rank). Hence `pathBraidRelations_of_simplyLaced`: `pathWeylAction` is unconditional whenever
+`aᵢⱼaⱼᵢ ∈ {0, 1} ∪ [4, ∞)` for all `i ≠ j` (all simply-laced types). Remaining: the braid
+relations of lengths 4 and 6 (`B₂`, `G₂`; the same route needs the corresponding transition maps
+and Pitman identities); identification of the Levi path crystals with crystal bases (normality
+in Kashiwara's sense); and extension of the concrete `a`-chain description beyond the proved
+dominant-orbit supplied-path scope.
 Source-scope caution: the isomorphism theorem is proved for rational piecewise-linear paths
 (finitely many pieces, rational vertices), not for all continuous dominant paths of the
 repository's general interface.
@@ -1627,9 +1639,11 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   `J`-component of `B(λ)` is a Levi path crystal `B_J(μ)` through a `J`-highest path.
   Kashiwara's `W`-action on `B(λ)` (`Realization.pathWeylAction`) is constructed from the braid
   relations of lengths 3, 4, 6, which reduce to rank-two Levi crystals
-  (`LeviMap.iterate_reflection_eq_of_levi`); length two (`reflection_comm`) and `mᵢⱼ = ∞` are
-  proved. Remaining: those rank-two relations (`A₂`, `B₂`, `G₂`) and identification of `B_J(μ)`
-  with Kashiwara's crystal bases (normality in his sense).
+  (`LeviMap.iterate_reflection_eq_of_levi`); lengths two (`reflection_comm`) and three (`A₂`,
+  `pathCrystal_reflection_braid_three`, via Pitman transforms and string coordinates) and
+  `mᵢⱼ = ∞` are proved, so the action is unconditional in the simply-laced case
+  (`pathBraidRelations_of_simplyLaced`). Remaining: the `B₂`, `G₂` relations and identification
+  of `B_J(μ)` with Kashiwara's crystal bases (normality in his sense).
 - **Braid automorphisms `Tᵢ` in general** (M15): **`braidEquivOfGeneric`**: Lusztig's `Tᵢ` is an
   algebra automorphism (explicit reversal-conjugate inverse) at every node of every Cartan
   datum, in arbitrary rank, over any field and root-datum lattice, under explicit q-factorial
