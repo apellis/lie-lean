@@ -1528,8 +1528,24 @@ obtained structurally from the lowering identities. `PBW/RankTwoB2.lean` does th
 (`span_b2PBWMono`, `vᵢ - vᵢ⁻¹ ≠ 0`, `[2]ᵢ! ≠ 0`) and are independent for `v` not a root of unity
 (`linearIndependent_b2PBWMono`, `b2PBWBasis`, `b2PBWBasis_apply_braidEquiv`), via the
 straightening relations `f x = x f - (p-1) y²`, `y x = p⁻¹ x y` (`B2PBW.Rel`) and operators on
-`k[ℕ⁴]`. Remaining: spanning and independence for `G₂` (six root vectors, operators on `k[ℕ⁶]`),
-higher rank, and canonical bases.
+`k[ℕ⁴]`. **Root vectors in arbitrary rank** (`PBW/RootVectors.lean`,
+`PBW/RootVectorsQuantum.lean`, `GroupTheory/Coxeter/RankTwoParabolic.lean`; [Jan] 8.20–8.21,
+[Lus] 40.1.2 (check)): for `T_w = cs.braidLift Tᵢ` (Matsumoto) with `Tᵢ = braidEquivOfGeneric` and
+any Coxeter group `W` with the Coxeter matrix of `D` (e.g. the Weyl group of a realization), if
+`ℓ(w sᵢ) > ℓ(w)` then `T_w(Eᵢ) ∈ U⁺` (`braidLift_E_mem_adjoin`) and `T_w(Eᵢ) = Eⱼ` when
+`w sᵢ = sⱼ w` (`braidLift_E_eq`); hence the root vectors `T_{i₁}⋯T_{iₙ₋₁}(E_{iₙ})` along every
+reduced word lie in `U⁺` (`rootVector_mem_adjoin_of_isReduced`), in particular along reduced words
+of `w₀` (`exists_longestElement_rootVectors_mem_adjoin(_of_isFiniteCartan)`), with
+`_of_not_root` versions. Hypotheses: those of `braidArtinHom` and `aᵢⱼ aⱼᵢ ≤ 3` for `i ≠ j`
+(implied by `Matrix.IsFiniteCartan`, `Matrix.IsFiniteCartan.mul_le_three`; also satisfied by the
+simply-laced affine types). The proof (reconstructed) is an abstract induction on `ℓ(w)` for any
+braid-liftable family of algebra automorphisms (`CoxeterSystem.braidLift_apply_mem_adjoin`),
+through `w = w' u`, `w' ∈ W^{i,k}`, `u` alternating in `W_{i,k}`, reduced to the rank-two
+property `CoxeterMatrix.RankTwoRootProperty` (`rankTwoRootProperty_braidEquivOfGeneric`, from the
+`A₁ × A₁`, `A₂`, `B₂`, `G₂` computations in both orientations). Pairs with `aᵢⱼ aⱼᵢ ≥ 4` are
+not covered (their rank-two statement is not proved). Remaining: spanning and independence for
+`G₂` (six root vectors, operators on `k[ℕ⁶]`), the PBW basis in higher rank, and canonical
+bases.
 `BraidAction/BraidRelationsGeneral.lean`, `BraidAction/DoubleEdgeGeneral.lean` and
 `BraidAction/GeneralArtin.lean` prove braid relations for the general `Tᵢ` in arbitrary rank:
 length three at a simple edge when no third node meets both ends, with arbitrary Cartan entries
@@ -1679,8 +1695,9 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
 - Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
-  `Hecke/KazhdanLusztig/Canonical.lean`; the PBW basis is proved for `A₂` and `B₂`, `a2PBWBasis`, `b2PBWBasis`, and root
-  vectors lie in `U⁺` in all rank-two finite types),
+  `Hecke/KazhdanLusztig/Canonical.lean`; the PBW basis is proved for `A₂` and `B₂`,
+  `a2PBWBasis`, `b2PBWBasis`, and the root vectors along reduced words lie in `U⁺` in every rank
+  with rank-two subdiagrams of finite type, `rootVector_mem_adjoin_of_isReduced`),
   infinite-dimensional extensions of quantum `sl₂` classification, Humphreys O Thm. 7.6,
   and valid restricted extensions of the Hom dimension bound.
   Finite-dimensional exhaustion and parameter uniqueness are proved for both signs at generic
@@ -1723,7 +1740,8 @@ beyond what the general Kac–Moody results give.
   `LieSubmodule.Subquotient`,
   `LieSubmodule.Quotient.nonempty_lieModuleEquiv_of_surjective` (`KacMoody/CompositionSeries.lean`).
 - `LieLean/GroupTheory/Coxeter/{Exchange,Deletion,Bruhat,GeometricRepresentation,Parabolic,
-  Parabolic/CoxeterSystem,Matsumoto,Longest}.lean`; `IsAlgClosed.exists_orderOf_eq`.
+  Parabolic/CoxeterSystem,Matsumoto,Longest,RankTwoParabolic}.lean`; `IsAlgClosed.exists_orderOf_eq`;
+  `Matrix.IsFiniteCartan.mul_le_three` (`LinearAlgebra/Matrix/Cartan/FiniteRankTwo.lean`).
 - Strong exchange condition (`LieLean/GroupTheory/Coxeter/Exchange.lean`, Mathlib lacks it);
   Iwahori–Hecke algebra and bar involution (`GroupTheory/Coxeter/Hecke/{Basic,Bar}.lean`).
 - Chevalley–Eilenberg complex (`LieLean/Algebra/Lie/Homology/{ChevalleyEilenberg,Complex,
