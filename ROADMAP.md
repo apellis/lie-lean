@@ -627,7 +627,7 @@ contragredient sign and the commuting restriction diagram. Literal coordinate-po
 restriction therefore lands in polynomials fixed by every actual Weyl element. This is
 the invariance direction of [Etingof, Lecture 10, Thm. 10.1], reconstructed through the
 independently proved central lift and graded HC; no circular extension or image premise.
-Chevalley extension is completed below. Restriction injectivity, HC image/isomorphism and
+Chevalley extension and restriction injectivity are completed below. HC image/isomorphism and
 character separation remain open.
 `KacMoody/TracePower.lean` constructs genuine invariant homogeneous coordinate polynomials
 `Tr(ρ(x)^n)` for actual finite-dimensional Lie modules. Literal Cartan restriction equals
@@ -648,8 +648,18 @@ Actual invariant homogeneous extensions and finite homogeneous decomposition the
 surjectivity of literal coordinate Cartan restriction from infinitesimal invariants onto
 all Weyl-fixed Cartan polynomials. This holds for the finite-type realization over arbitrary
 characteristic-zero fields, including degree zero and empty simple-root indices, with no
-spanning or extension premise. Chevalley injectivity/isomorphism and Harish–Chandra
-image/injectivity remain separate; the translation theorem is not yet complete.
+spanning or extension premise.
+`KacMoody/ChevalleyInjectivity.lean` proves restriction injectivity and hence
+`chevalleyRestriction_bijective` / `chevalleyRestrictionEquiv`: literal coordinate restriction
+is a bijection from the infinitesimal invariants onto the Weyl-fixed Cartan polynomials, in
+finite type over every characteristic-zero field. The general criterion
+`LieAlgebra.eq_zero_of_invariant_of_restrict_eq_zero` needs only a finite basis of weight
+vectors whose weight-zero members span the Cartan image, and uses invariance under the root
+vectors only. Its reconstructed proof is a lowest-term argument in coordinates with weight 0
+on the Cartan and 1 on the root directions (`RingTheory/MvPolynomial/LowestWeight.lean`:
+the component just below the lowest weight of `D p` is `∑ ℓ_α ∂_α p_k`, then Euler), replacing
+the density of semisimple elements. Harish–Chandra image/injectivity remain separate; the
+translation theorem is not yet complete.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -1333,9 +1343,10 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   Cartan space by `ker_bggDiff_eq_range`, using actual lowering powers modulo boundaries
   and Casimir vanishing. The theorem does not cover nonsymmetrizable GCM or arbitrary Cartan
   dimension; these extensions remain open.
-- **Chevalley restriction and category `𝒪`** (M12): actual Chevalley restriction surjectivity
-  is proved, including dominant-orbit spanning and invariant extensions. Restriction injectivity,
-  HC image/separation, facet exclusion and dual compatibility for Humphreys Thm. 7.6 remain.
+- **Chevalley restriction and category `𝒪`** (M12): Chevalley's restriction theorem is proved
+  in finite type (`chevalleyRestriction_bijective`: surjectivity via dominant-orbit spanning
+  and invariant extensions, injectivity via a lowest-term argument). HC image/separation,
+  facet exclusion and dual compatibility for Humphreys Thm. 7.6 remain.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved. Next are highestness-to-normalization for original-endpoint-fibre
   Proposition 5.7, §6 linking/endpoint-fibre arguments and the straight-path component theorem,
