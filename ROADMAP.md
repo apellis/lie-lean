@@ -1455,6 +1455,22 @@ length-three relations of `GeneralRelations.lean` apply to it.
 `CartanMatrix.G₂` (node `0` short, `a₀₁ = -3`) `artinHom_G₂`/`artinAction_G₂` need only
 `v ≠ 0` not a root of unity, over any field, compatible Cartan datum and root-datum lattice.
 Faithfulness is not asserted.
+**PBW bases, rank two** (`PBW/RankTwoA2.lean`, `PBW/RankTwoRootVectors.lean`; [Jan] 8.21–8.24,
+[Lus] 40.1–40.2, all (check)). For an exact two-node `A₂` datum, the ordered monomials
+`Eᵢ^a Tᵢ(Eⱼ)^b Eⱼ^c` in the root vectors along `sᵢ sⱼ sᵢ` span `U⁺ = ⟨Eₗ⟩`
+(`span_a2PBWMono`, only `v ≠ 0`) and, for `v` not a root of unity, are linearly independent
+(`linearIndependent_a2PBWMono`), giving `a2PBWBasis`; `a2PBWMono_eq_rootVectors` and
+`a2PBWBasis_apply_braidEquiv` identify the basis vectors with monomials in `Eᵢ`, `Tᵢ(Eⱼ)`,
+`TᵢTⱼ(Eᵢ)` for the actual automorphisms. Proof (reconstructed): the straightening formulas are
+realised as operators on `k[ℕ³]` satisfying the Serre relations, giving a representation of `'f`
+that kills the Serre ideal and intertwines with left multiplication on the monomials; with
+`plusHom_eq_zero_iff` (`U⁺ ≅ 'f ⧸ J`) this gives independence, without the form or a dimension
+count. For `A₁ × A₁`, `A₂`, `B₂` and `G₂` every root vector `Tᵢ₁⋯Tᵢₖ₋₁(Eᵢₖ)` along the
+alternating reduced word of `w₀` lies in `U⁺`, with explicit formulas in the twisted commutators
+`X n` (`a1a1_rootVector_two`, `a2_rootVectors_mem_adjoin`, `b2_rootVectors_mem_adjoin`,
+`g2_rootVectors_mem_adjoin`); the `B₂` fixed point `TᵢTⱼTᵢ(Eⱼ) = Eⱼ` (`b2_rootVector_four`) is
+obtained structurally from the lowering identities. Remaining: spanning and independence for `B₂`
+and `G₂` (Levendorskii–Soibelman straightening), higher rank, and canonical bases.
 Remaining for general `Tᵢ`: braid relations for these automorphisms beyond the cases covered by
 the constructor-independent `HasBraidGeneratorImages` results, the Artin-group action for
 arbitrary Cartan data, and general canonical bases.
@@ -1563,7 +1579,8 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
 - Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
-  `Hecke/KazhdanLusztig/Canonical.lean`),
+  `Hecke/KazhdanLusztig/Canonical.lean`; the PBW basis is proved for `A₂`, `a2PBWBasis`, and root
+  vectors lie in `U⁺` in all rank-two finite types),
   infinite-dimensional extensions of quantum `sl₂` classification, Humphreys O Thm. 7.6,
   and valid restricted extensions of the Hom dimension bound.
   Finite-dimensional exhaustion and parameter uniqueness are proved for both signs at generic
