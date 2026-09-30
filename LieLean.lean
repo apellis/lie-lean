@@ -236,6 +236,8 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Bar
 import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
 import LieLean.Algebra.QuantumGroup.LusztigF.IntegralForm
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
+import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2
+import LieLean.Algebra.QuantumGroup.PBW.RankTwoRootVectors
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.Sl2
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Equivalence
