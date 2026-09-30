@@ -682,7 +682,25 @@ by invariants for any finite group of linear automorphisms of `𝔥*` over an in
 (`SymmetricAlgebra.exists_invariant_separating`: the product over the group of one affine linear
 form vanishing at one point and nowhere on the other orbit; the generic form exists because a
 vector space over an infinite field is not a finite union of proper subspaces). Reconstructed.
-The translation theorem is not yet complete.
+`KacMoody/TranslationFacet.lean` proves **facet exclusion** for integral weights in finite type
+(Humphreys GSM 94 §7.5 / Jantzen II.7.7, cited with (check)):
+`IrreducibleModule.weylDot_add_eq_weylDot` — if `λ + ρ`, `μ + ρ` are antidominant integral, every
+simple wall of `λ + ρ` is a wall of `μ + ρ`, `ν = z (μ - λ)` is dominant, `ν'` is a weight of
+`L(ν)` and `w·λ + ν' = x·μ`, then `w·λ + ν' = w·μ` (and `weightSpace_weylDot_sub_ne_bot`: this
+weight occurs). Its root-datum core `Realization.apply_eq_of_add_eq_apply` is the norm argument
+for the `W`-invariant form of `Symmetrization.ofDiagonal` (the positive definite `diag(d) A` of
+`IsFiniteCartan`), with every comparison made in `ℤ`, so no order on `K` is needed.
+`KacMoody/TranslationVerma.lean` proves **translation of Verma modules**
+`translation_verma`: under the same hypotheses, for every `w ∈ W`, the `χ_μ`-block of
+`M(w·λ) ⊗ L(ν)` is isomorphic to `M(w·μ)` (Humphreys GSM 94 Thm. 7.6, Verma part, integral
+case, cited with (check)), over an algebraically closed field of characteristic zero with
+finite-dimensional Cartan. The proof combines the projected tensor-Verma filtration
+(`exists_centralTensorVermaFiltration`), linkage (`VermaModule.centralCharacter_eq_iff`), facet
+exclusion and multiplicity one of the extremal weight `w (μ - λ)`: exactly one step survives
+(`LieSubmodule.eq_bot_and_eq_last_of_single_step`). Remaining for Thm. 7.6: the dual-Verma
+statement (dual compatibility), non-integral `λ` with the integral Weyl group `W_[λ]`, and a
+packaged exact translation functor (the block is taken of `M ⊗ L(ν)` directly, which agrees
+with `pr_μ(L(ν) ⊗ pr_λ M)` for `M = M(w·λ)` but is not stated as a functor).
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -1467,7 +1485,10 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
   (`shiftedHarishChandraEquiv`) are proved in finite type over characteristic-zero fields, as
   is central-character separation (`VermaModule.centralCharacter_eq_iff`: `χ_Λ = χ_Λ'` iff
-  `Λ' ∈ W·Λ`). Facet exclusion and dual compatibility for Humphreys Thm. 7.6 remain.
+  `Λ' ∈ W·Λ`). Facet exclusion and the Verma part of Humphreys Thm. 7.6
+  (`translation_verma`: `pr_{χ_μ}(M(w·λ) ⊗ L(ν)) ≅ M(w·μ)`) are proved for integral weights in
+  finite type over algebraically closed characteristic-zero fields. Remaining for Thm. 7.6:
+  dual Verma modules, non-integral weights (`W_[λ]`), and a packaged translation functor.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
   linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
