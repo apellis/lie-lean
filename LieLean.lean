@@ -142,6 +142,8 @@ import LieLean.Algebra.Lie.KacMoody.ChevalleyInvariance
 import LieLean.Algebra.Lie.KacMoody.TracePower
 import LieLean.Algebra.Lie.KacMoody.ChevalleyOrbit
 import LieLean.Algebra.Lie.KacMoody.ChevalleySurjectivity
+import LieLean.Algebra.Lie.KacMoody.ChevalleyInjectivity
+import LieLean.Algebra.Lie.KacMoody.HarishChandraIsomorphism
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
@@ -340,3 +342,4 @@ import LieLean.RepresentationTheory.Crystal.Subcrystal
 import LieLean.RepresentationTheory.Crystal.Tensor
 import LieLean.RepresentationTheory.Crystal.WeylAction
 import LieLean.RingTheory.MvPolynomial.EulerIdentity
+import LieLean.RingTheory.MvPolynomial.LowestWeight
