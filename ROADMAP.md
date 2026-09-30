@@ -1022,9 +1022,18 @@ fibre, not unrestricted highest-path uniqueness. `Path/GluingFibre.lean` proves 
 source-chain growth under `rhoCheck` and positive-duration endpoint rigidity: production
 right-source gluing data force the entire right path to be straight. With original cuts,
 straight left directions and the restored original right auxiliary, the original endpoint
-forces literal equality with `twoPieceGluing`. Finite-dimensional Cartan space is explicit.
-First-source straightness and Weyl-stabilizer normalization from highestness remain unproved,
-so this is a normalized reduction, not full Proposition 5.7 or the straight component theorem.
+forces literal equality with `twoPieceGluing`. Finite-dimensional Cartan space is explicit;
+`twoPieceGluing_fibre_eq_of_chain` needs only a right-cut chain from `nμ`, not the restored
+auxiliary. `Path/GluingHighest.lean` proves **Proposition 5.7** (p. 516) for real `Λ, μ` with
+a supplied common denominator: if `Λ` and `Λ + μ` are dominant, `twoPieceGluing_highest_iff`
+shows the two-piece gluing is the only path of its component with endpoint `Λ + μ` and all
+`e_α` zero. Highestness plus derived component integrality gives dominance; the first
+direction is then `nΛ` and the first source straight (`ρ̌`-maximality in the dominant orbit);
+the common Weyl element fixes `nΛ`; the printed `s_α w` reduction runs on the right cut
+chain via Lemma 4.3 (`AChain.reflection_of_neg_of_nonneg`), terminating by integral `ρ̌`
+growth, and dominance of `N nΛ + nμ` restores `nμ` without parabolic-subgroup theory.
+`gluingPrecedes_of_mem_dominantChamber` discharges the compatibility premise for dominant `Λ`.
+This is not Proposition 6.2 or the straight component theorem.
 These do not discharge `LRIsomorphismHypothesis`. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -1337,9 +1346,9 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   is proved, including dominant-orbit spanning and invariant extensions. Restriction injectivity,
   HC image/separation, facet exclusion and dual compatibility for Humphreys Thm. 7.6 remain.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
-  pause transport are proved. Next are highestness-to-normalization for original-endpoint-fibre
-  Proposition 5.7, §6 linking/endpoint-fibre arguments and the straight-path component theorem,
-  making `nonempty_equiv_sigma` unconditional. The classical target is rational PL paths modulo
+  pause transport are proved, as is Proposition 5.7 (`twoPieceGluing_highest_iff`). Next are
+  the §6 linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and the straight-path component
+  theorem (Theorem 6.3), making `nonempty_equiv_sigma` unconditional. The classical target is rational PL paths modulo
   reparametrization, not an unqualified assertion for all continuous dominant paths.
   General crystal normality and Weyl braid relations also remain.
 - **Braid automorphisms `Tᵢ` in general** (M15): actual local-class and named Bₙ/Cₙ/F₄ actions
