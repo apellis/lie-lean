@@ -344,6 +344,8 @@ import LieLean.RepresentationTheory.Crystal.Path.ConcatIsomorphism
 import LieLean.RepresentationTheory.Crystal.Path.LittelmannIsomorphism
 import LieLean.RepresentationTheory.Crystal.Path.Levi
 import LieLean.RepresentationTheory.Crystal.Path.WeylAction
+import LieLean.RepresentationTheory.Crystal.Path.Pitman
+import LieLean.RepresentationTheory.Crystal.Path.BraidA2
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.LSTwoPiece
 import LieLean.RepresentationTheory.Crystal.Path.LSFinitePieces
@@ -359,5 +361,6 @@ import LieLean.RepresentationTheory.Crystal.Subcrystal
 import LieLean.RepresentationTheory.Crystal.Tensor
 import LieLean.RepresentationTheory.Crystal.WeylAction
 import LieLean.RepresentationTheory.Crystal.WeylGroupAction
+import LieLean.RepresentationTheory.Crystal.BraidA2
 import LieLean.RingTheory.MvPolynomial.EulerIdentity
 import LieLean.RingTheory.MvPolynomial.LowestWeight
