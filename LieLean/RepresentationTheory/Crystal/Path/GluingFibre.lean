@@ -236,6 +236,30 @@ theorem Presentation.path_eq_straight_of_tail_endpoint (σ : Presentation P hA)
     min_eq_right ht.2, max_eq_right ht.1]
   exact congrArg (t • ·) (hd 0).symm
 
+/-- Consume the production gluing pair's STRICT cut together with ANY source chain
+at the right cut ending in the first right direction. An exact endpoint normalized by
+that chain's initial weight forces the entire right source to be straight. The
+chain's initial weight need not be the recorded auxiliary; this is the form used after
+the Weyl-stabilizer normalization in Proposition 5.7. -/
+theorem GluingPair.right_source_rigidity_of_chain {σ δ : Presentation P hA}
+    (g : GluingPair σ δ) {m : Dual ℝ H} (hc : AChain P hA (g.s' : ℝ) m (δ.x 0))
+    (he : g.path 1 = σ.path g.s + (1 - (g.s' : ℝ)) • m) :
+    (∀ j, (δ.x j : Dual ℝ H) = m) ∧
+      δ.path = straightLine (P.pathSpace hA) (δ.x 0) := by
+  have hs : (g.s' : ℝ) < (δ.a (0 : Fin (δ.n + 1)).succ : ℝ) := by
+    exact_mod_cast g.first_gt
+  have hdisp : δ.path 1 - δ.path g.s' = (1 - (g.s' : ℝ)) • m := by
+    have hg := g.raw_right (t := 1) (by exact_mod_cast g.lt_one.le)
+    change g.path 1 = _ at hg
+    rw [he] at hg
+    calc
+      δ.path 1 - δ.path g.s' =
+          (δ.path 1 + (σ.path g.s - δ.path g.s')) - σ.path g.s := by abel
+      _ = (σ.path g.s + (1 - (g.s' : ℝ)) • m) - σ.path g.s := by rw [← hg]
+      _ = (1 - (g.s' : ℝ)) • m := by abel
+  exact ⟨δ.directions_eq_of_tail_endpoint g.right_cut_mem.1 hs hc hdisp,
+    δ.path_eq_straight_of_tail_endpoint g.right_cut_mem.1 hs hc hdisp⟩
+
 /-- Consume the production gluing pair's actual right chain and STRICT cut.
 An exact normalized endpoint forces its entire right source to be straight,
 even for nondominant auxiliary weights. No highest-weight or isomorphism result
@@ -243,34 +267,22 @@ is smuggled into this local rigidity theorem. -/
 theorem GluingPair.right_source_rigidity {σ δ : Presentation P hA} (g : GluingPair σ δ)
     (he : g.path 1 = σ.path g.s + (1 - (g.s' : ℝ)) • g.μ) :
     (∀ j, (δ.x j : Dual ℝ H) = g.μ) ∧
-      δ.path = straightLine (P.pathSpace hA) (δ.x 0) := by
-  have hs : (g.s' : ℝ) < (δ.a (0 : Fin (δ.n + 1)).succ : ℝ) := by
-    exact_mod_cast g.first_gt
-  have hdisp : δ.path 1 - δ.path g.s' = (1 - (g.s' : ℝ)) • g.μ := by
-    have hg := g.raw_right (t := 1) (by exact_mod_cast g.lt_one.le)
-    change g.path 1 = _ at hg
-    rw [he] at hg
-    calc
-      δ.path 1 - δ.path g.s' =
-          (δ.path 1 + (σ.path g.s - δ.path g.s')) - σ.path g.s := by abel
-      _ = (σ.path g.s + (1 - (g.s' : ℝ)) • g.μ) - σ.path g.s := by rw [← hg]
-      _ = (1 - (g.s' : ℝ)) • g.μ := by abel
-  exact ⟨δ.directions_eq_of_tail_endpoint g.right_cut_mem.1 hs g.right_chain hdisp,
-    δ.path_eq_straight_of_tail_endpoint g.right_cut_mem.1 hs g.right_chain hdisp⟩
+      δ.path = straightLine (P.pathSpace hA) (δ.x 0) :=
+  g.right_source_rigidity_of_chain g.right_chain he
 
 /-- The normalized ORIGINAL-endpoint-fibre rigidity reduction of Proposition 5.7.
-Once the first source has its original straight direction and the second auxiliary
-has been restored to the original weight, the entire gluing path is forced to be
-the original two-piece path. These normalization premises are explicit: deriving
-them from highestness and common Weyl transport is a SEPARATE remaining argument. -/
-theorem twoPieceGluing_fibre_eq_of_normalized (Λ μ : Dual ℝ H) (n : ℕ) (hn : 2 ≤ n)
+Once the first source has its original straight direction and there is a source
+chain at the right cut from the original weight `nμ` to the first right direction,
+the entire gluing path is forced to be the original two-piece path. Both premises
+are derived from highestness in `GluingHighest.lean`. -/
+theorem twoPieceGluing_fibre_eq_of_chain (Λ μ : Dual ℝ H) (n : ℕ) (hn : 2 ≤ n)
     (hΛ : (n : ℝ) • Λ ∈ P.integralWeights)
     (hμ : (n : ℝ) • μ ∈ P.integralWeights)
     (hsum : Λ + μ ∈ P.integralWeights) (hp : P.GluingPrecedes hA Λ μ)
     {τ ρ : Presentation P hA} (g : GluingPair τ ρ)
     (hs : g.s = (n : ℚ)⁻¹) (hs' : g.s' = 1 - (n : ℚ)⁻¹)
     (hl : ∀ j, (τ.x j : Dual ℝ H) = (n : ℝ) • Λ)
-    (haux : g.μ = (n : ℝ) • μ) (he : g.path 1 = Λ + μ) :
+    (hr : AChain P hA (g.s' : ℝ) ((n : ℝ) • μ) (ρ.x 0)) (he : g.path 1 = Λ + μ) :
     g.path = (twoPieceGluing Λ μ n hn hΛ hμ hsum hp).path := by
   have hnR : (2 : ℝ) ≤ n := by exact_mod_cast hn
   have hnpos : (0 : ℝ) < n := by linarith
@@ -281,8 +293,8 @@ theorem twoPieceGluing_fibre_eq_of_normalized (Λ μ : Dual ℝ H) (n : ℕ) (hn
     rw [τ.path_eq_smul_of_directions_eq hl
       ⟨by exact_mod_cast g.pos.le, by exact_mod_cast g.le.trans g.lt_one.le⟩,
       hsr, smul_smul, inv_mul_cancel₀ hnpos.ne', one_smul]
-  have hr := (g.right_source_rigidity (by
-    rw [he, hcut, haux, hs'r, sub_sub_cancel, smul_smul,
+  have hdir := (g.right_source_rigidity_of_chain hr (by
+    rw [he, hcut, hs'r, sub_sub_cancel, smul_smul,
       inv_mul_cancel₀ hnpos.ne', one_smul])).1
   have hτ : τ.path =
       (Presentation.straight (hA := hA) ⟨(n : ℝ) • Λ, hΛ⟩).path := by
@@ -293,10 +305,24 @@ theorem twoPieceGluing_fibre_eq_of_normalized (Λ μ : Dual ℝ H) (n : ℕ) (hn
       (Presentation.straight (hA := hA) ⟨(n : ℝ) • μ, hμ⟩).path := by
     apply ext_of_eqOn
     intro t ht
-    rw [ρ.path_eq_smul_of_directions_eq hr ht, haux, Presentation.straight_path _ ht]
+    rw [ρ.path_eq_smul_of_directions_eq hdir ht, Presentation.straight_path _ ht]
   apply ext_of_eqOn
   intro t _
   change glueRaw τ ρ g.s g.s' t = glueRaw _ _ (n : ℚ)⁻¹ (1 - (n : ℚ)⁻¹) t
   simp only [glueRaw, hτ, hρ, hs, hs']
+
+/-- The special case in which the recorded right auxiliary has already been
+restored to the original weight `nμ`. -/
+theorem twoPieceGluing_fibre_eq_of_normalized (Λ μ : Dual ℝ H) (n : ℕ) (hn : 2 ≤ n)
+    (hΛ : (n : ℝ) • Λ ∈ P.integralWeights)
+    (hμ : (n : ℝ) • μ ∈ P.integralWeights)
+    (hsum : Λ + μ ∈ P.integralWeights) (hp : P.GluingPrecedes hA Λ μ)
+    {τ ρ : Presentation P hA} (g : GluingPair τ ρ)
+    (hs : g.s = (n : ℚ)⁻¹) (hs' : g.s' = 1 - (n : ℚ)⁻¹)
+    (hl : ∀ j, (τ.x j : Dual ℝ H) = (n : ℝ) • Λ)
+    (haux : g.μ = (n : ℝ) • μ) (he : g.path 1 = Λ + μ) :
+    g.path = (twoPieceGluing Λ μ n hn hΛ hμ hsum hp).path :=
+  twoPieceGluing_fibre_eq_of_chain Λ μ n hn hΛ hμ hsum hp g hs hs' hl
+    (haux ▸ g.right_chain) he
 
 end Matrix.Realization.LSGeneralClass

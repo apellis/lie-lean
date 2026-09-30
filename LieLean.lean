@@ -322,6 +322,9 @@ import LieLean.RepresentationTheory.Crystal.Path.GluingStability
 import LieLean.RepresentationTheory.Crystal.Path.GluingComponent
 import LieLean.RepresentationTheory.Crystal.Path.GluingPause
 import LieLean.RepresentationTheory.Crystal.Path.GluingFibre
+import LieLean.RepresentationTheory.Crystal.Path.GluingHighest
+import LieLean.RepresentationTheory.Crystal.Path.ComponentWords
+import LieLean.RepresentationTheory.Crystal.Path.GluingLinking
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.LSTwoPiece
 import LieLean.RepresentationTheory.Crystal.Path.LSFinitePieces
