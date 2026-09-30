@@ -874,8 +874,9 @@ argument reconstructed. Tensor products (`Path/{Isomorphism,Decomposition,Charac
 `isHighestWeight_tensorPathCrystal_iff`, `multiplicity_tensorProduct`
 (`[L(λ)⊗L(μ) : L(ν)] = #{η ∈ B(μ) λ-dominant, λ + η(1) = ν}`),
 `card_isHighestWeight_tensorPathCrystal`, `setCharacter_eq_hsum`; the crystal isomorphism
-`nonempty_equiv_sigma` is *conditional* on `LRIsomorphismHypothesis` (instances of Littelmann's
-isomorphism theorem). `Path/DominantIsomorphism.lean` proves directly for continuous paths:
+`nonempty_equiv_sigma` takes `LRIsomorphismHypothesis` (instances of Littelmann's isomorphism
+theorem), which `lrIsomorphismHypothesis` now proves over `ℝ` (see `Path/LittelmannIsomorphism.lean`
+below). `Path/DominantIsomorphism.lean` proves directly for continuous paths:
 other-color lowering increases height; raising colors must occur in the lowering word;
 monochromatic cancellation; and `component_eq_fOrbit_of_subsingleton` for arbitrary dominant
 paths in rank at most one. `Path/CoupledStability.lean` additionally proves raising stability
@@ -1040,8 +1041,8 @@ and derived whole-component integrality. Only the sum of the two displacements m
 integral endpoint; the gluing consumer retains a supplied common denominator and compatibility.
 The rational-class/denominator-existence interface remains separate; the straight-path
 component isomorphism is Theorem 6.3 in `GluingLinking.lean`. Proposition 5.7 concerns
-highest-path uniqueness in the ORIGINAL endpoint fibre, not unrestricted highest-path uniqueness. `Path/GluingFibre.lean` proves strict
-source-chain growth under `rhoCheck` and positive-duration endpoint rigidity: production
+highest-path uniqueness in the ORIGINAL endpoint fibre, not unrestricted highest-path uniqueness.
+`Path/GluingFibre.lean` proves strict source-chain growth under `rhoCheck` and positive-duration endpoint rigidity: production
 right-source gluing data force the entire right path to be straight. With original cuts,
 straight left directions and the restored original right auxiliary, the original endpoint
 forces literal equality with `twoPieceGluing`. Finite-dimensional Cartan space is explicit;
@@ -1065,14 +1066,31 @@ for all words whenever `Λ ▷ μ` (no dominance). With `Λ`, `Λ + μ` dominant
 **Proposition 6.2** (`rationalConcat_eq_of_mem_component_of_endpoint`) and **Theorem 6.3**
 (`componentIso_straightLine_rationalConcat`: `B(π_{Λ+μ}) ≅ B(π_Λ * π_μ)`, `π_{Λ+μ} ↦ π_Λ * π_μ`)
 for real `Λ, μ` with a supplied common denominator, any GCM and finite-dimensional Cartan space.
-`π_Λ * π_μ` is the unit-speed `rationalConcat`, equal to `concat` for integral `Λ, μ`. Theorem 7.1
-(concatenations of more than two pieces, and LS paths `η` as in `LRIsomorphismHypothesis`) remains.
-These do not discharge `LRIsomorphismHypothesis`. Remaining:
-mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
-braid relations/normality, and extension of the concrete `a`-chain description beyond the
-proved dominant-orbit supplied-path scope. Source-scope caution:
-Littelmann's Theorem 7.1 treats piecewise-linear rational paths modulo reparametrization in
-the symmetrizable setting, not all continuous paths in the repository's general interface.
+`π_Λ * π_μ` is the unit-speed `rationalConcat`, equal to `concat` for integral `Λ, μ`.
+`Path/Stretching.lean` proves [Lit] Lemma 2.4 for the stretched path `Nπ` (`fIter_stretch`,
+`eIter_stretch`: `N(f_α π) = f_α^N(Nπ)`, including vanishing), the stretched-word identity
+`rootWord_stretchWord`, the converse of the word criterion (`ComponentIso.exists_map`) and
+Lemma 2.5 b) (`componentIso_of_componentIso_stretch`). `Path/ConcatIsomorphism.lean` proves
+Lemma 2.9 with Remark 2.8 (`componentIso_concat_left`: `B(π₁) ≅ B(π₁')` gives
+`B(π₁ * π₂) ≅ B(π₁' * π₂)`, integrality derived) and **Theorem 7.1** for dominant
+concatenations of straight lines with integral vertices at arbitrary split times
+(`IsDominantConcat.componentIso`, by induction from Theorem 6.3 as in the source).
+`Path/LittelmannIsomorphism.lean` proves **Theorem 7.1** for rational piecewise-linear paths:
+`componentIso_straightLine_of_rationalPieces` gives `B(π_{Q(1)}) ≅ B(Q)` (`π_{Q(1)} ↦ Q`) for
+any path `Q` affine between real breakpoints `0 = b₀ < ⋯ < b_{m+1} = 1` with dominant vertices
+and an explicit common denominator `N` (`N Q(b_j)` integral): `NQ` has integral vertices and
+Lemma 2.5 b) descends. Hence any two such paths with the same endpoint have isomorphic
+components. Paths are literal, the pieces' durations are arbitrary (no quotient by
+reparametrization is needed); any GCM, no symmetrizability, finite-dimensional Cartan space,
+scalars `ℝ`. Every path of `B(ν)` is the path of a finite presentation with rational
+breakpoints (`exists_presentation_of_mem_component`), so `lrIsomorphismHypothesis` proves
+`LRIsomorphismHypothesis` and `nonempty_equiv_sigma_of_finiteDimensional` gives the
+**crystal-level Littlewood–Richardson decomposition** `B(λ) ⊗ B(μ) ≅ ⊔_η B(λ + η(1))`
+unconditionally in that setting. Remaining: braid relations/normality, and extension of the
+concrete `a`-chain description beyond the proved dominant-orbit supplied-path scope.
+Source-scope caution: the isomorphism theorem is proved for rational piecewise-linear paths
+(finitely many pieces, rational vertices), not for all continuous dominant paths of the
+repository's general interface.
 
 
 Abstract (Kashiwara) crystals for a Cartan datum: morphisms, the tensor product rule (signature
@@ -1411,10 +1429,13 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
   linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
-  (`componentIso_straightLine_rationalConcat`). Next is Theorem 7.1 for `π_{ν₁} * ⋯ * π_{ν_s}`
-  and for `π_λ * η` with `η` an LS path, making `nonempty_equiv_sigma` unconditional. The classical target is rational PL paths modulo
-  reparametrization, not an unqualified assertion for all continuous dominant paths.
-  General crystal normality and Weyl braid relations also remain.
+  (`componentIso_straightLine_rationalConcat`), and Theorem 7.1 for rational piecewise-linear
+  dominant paths (`componentIso_straightLine_of_rationalPieces`, via stretching, Lemma 2.9 and
+  induction on the pieces). This discharges `LRIsomorphismHypothesis`
+  (`lrIsomorphismHypothesis`), so the crystal-level Littlewood–Richardson decomposition
+  `nonempty_equiv_sigma_of_finiteDimensional` is unconditional over `ℝ` with finite-dimensional
+  Cartan space. The theorem is not claimed for arbitrary continuous dominant paths.
+  General crystal normality and Weyl braid relations remain.
 - **Braid automorphisms `Tᵢ` in general** (M15): actual local-class and named Bₙ/Cₙ/F₄ actions
   are proved, as are the relations (b)–(d), inverse recovery and centre-first Serre relations in
   every degree; `braidEquiv` reduces `Tᵢ` being an automorphism to the neighbor-first
