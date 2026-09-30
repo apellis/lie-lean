@@ -1116,7 +1116,18 @@ scalars `ℝ`. Every path of `B(ν)` is the path of a finite presentation with r
 breakpoints (`exists_presentation_of_mem_component`), so `lrIsomorphismHypothesis` proves
 `LRIsomorphismHypothesis` and `nonempty_equiv_sigma_of_finiteDimensional` gives the
 **crystal-level Littlewood–Richardson decomposition** `B(λ) ⊗ B(μ) ≅ ⊔_η B(λ + η(1))`
-unconditionally in that setting. Remaining: braid relations/normality, and extension of the
+unconditionally in that setting. `Path/Levi.lean` proves **Levi restriction** (Littelmann's
+restriction rule): for injective `e : κ → ι` (a subdiagram `J`, any type) and any realization
+`Q` of the principal submatrix `A_J`, a restriction map `r : 𝔥* → 𝔥_J*` with
+`r(α_{e k}) = α_k^J`, `⟨r v, α_k^{J∨}⟩ = ⟨v, α_{e k}^∨⟩` exists (`exists_leviMap`, finite-
+dimensional `𝔥`); `π ↦ r ∘ π` intertwines `e_{e k}, f_{e k}` with the Levi root operators
+(`e_restrict`, `f_restrict`, `rootWord_restrict`) and maps each `J`-component bijectively onto
+the Levi component (`jComponent_bijOn`); for `J`-highest `π ∈ B(λ)` the Levi component is
+`B_J(r(π(1)))` (`componentIso_straightLine_restrict`, Theorem 7.1 for `Q`), and every
+`J`-component of `B(λ)` has a `J`-highest path (`exists_jHighest`). Combined:
+`LeviMap.exists_jHighest_componentIso`; for `J = {i}` each `i`-string is an `sl₂` path crystal.
+Remaining: Weyl braid relations for Kashiwara's `Sᵢ` on `B(λ)`; identification of the Levi path
+crystals with crystal bases (normality in Kashiwara's sense); and extension of the
 concrete `a`-chain description beyond the proved dominant-orbit supplied-path scope.
 Source-scope caution: the isomorphism theorem is proved for rational piecewise-linear paths
 (finitely many pieces, rational vertices), not for all continuous dominant paths of the
@@ -1534,7 +1545,10 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   (`lrIsomorphismHypothesis`), so the crystal-level Littlewood–Richardson decomposition
   `nonempty_equiv_sigma_of_finiteDimensional` is unconditional over `ℝ` with finite-dimensional
   Cartan space. The theorem is not claimed for arbitrary continuous dominant paths.
-  General crystal normality and Weyl braid relations remain.
+  Levi restriction is proved (`Path/Levi.lean`, `LeviMap.exists_jHighest_componentIso`): every
+  `J`-component of `B(λ)` is a Levi path crystal `B_J(μ)` through a `J`-highest path.
+  Remaining: identification of `B_J(μ)` with Kashiwara's crystal bases (normality in his sense)
+  and the Weyl braid relations for Kashiwara's `Sᵢ` on `B(λ)`.
 - **Braid automorphisms `Tᵢ` in general** (M15): **`braidEquivOfGeneric`**: Lusztig's `Tᵢ` is an
   algebra automorphism (explicit reversal-conjugate inverse) at every node of every Cartan
   datum, in arbitrary rank, over any field and root-datum lattice, under explicit q-factorial

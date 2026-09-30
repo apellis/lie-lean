@@ -340,6 +340,7 @@ import LieLean.RepresentationTheory.Crystal.Path.GluingLinking
 import LieLean.RepresentationTheory.Crystal.Path.Stretching
 import LieLean.RepresentationTheory.Crystal.Path.ConcatIsomorphism
 import LieLean.RepresentationTheory.Crystal.Path.LittelmannIsomorphism
+import LieLean.RepresentationTheory.Crystal.Path.Levi
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.LSTwoPiece
 import LieLean.RepresentationTheory.Crystal.Path.LSFinitePieces
