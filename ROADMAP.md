@@ -1497,8 +1497,20 @@ group `M.ArtinGroup` of a Coxeter matrix (presented group, `artinLift`), and
 `D.cartanMatrix.coxeterMatrix` on `U` for every Cartan datum satisfying
 `LusztigCartanDatum.BraidOuterCondition` (by inspection, all finite types; any rank), via
 `isBraidLiftable_braidEquivOfGeneric` (so Matsumoto's `braidLift` also gives `T_w`).
+`BraidAction/TriangleRelation.lean` adds triangles: at a simple edge, a third node `l` with
+`aᵢₗ = aⱼₗ = -1` (entries `aₗᵢ`, `aₗⱼ` arbitrary) satisfies `TᵢTⱼTᵢ(Eₗ) = TⱼTᵢTⱼ(Eₗ)` and the `F`
+analogue (`HasBraidGeneratorImages.three_E_triangle`, `_F_triangle`, from the rank-three
+identities `triangle_core_E`/`_F`: an explicit ten-term certificate in the quadratic Serre
+relations, assuming `vᵢ + vᵢ⁻¹ ≠ 0`), hence `braidEquiv_braid_three_triangle`;
+`BraidOuterCondition.simple` now allows these triangles. `LinearAlgebra/Matrix/Cartan/
+BraidOuter.lean` states the condition for a matrix (`Matrix.BraidOuterCondition`) and proves it
+for Mathlib's `CartanMatrix.A n`, `B n`, `C n`, `D n`, `E n` (every `n`), `F₄`, `G₂` and every
+simply-laced matrix; `BraidAction/FiniteTypeArtin.lean` gives the named actions
+`braidArtinHom_A`, ..., `braidArtinHom_G₂` of `(CartanMatrix.X).coxeterMatrix.ArtinGroup` and
+`braidArtinHomOfSimplyLaced` (e.g. affine `Ãₙ`, `n ≥ 2`), for `v` not a root of unity, agreeing on
+generators with `artinHom_B`, `artinHom_C`, `artinHom_F₄`, `artinHom_G₂`.
 Remaining for general `Tᵢ`: braid relations when a third node meets both ends of a simple edge
-(triangles; needs a rank-three identity), when a third node meets a double edge by a multiple
+with an entry `≤ -2` in the row of an end, when a third node meets a double edge by a multiple
 bond or meets both of its ends, and at a triple edge with neighbours (e.g. `G̃₂`); faithfulness;
 general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
@@ -1604,10 +1616,11 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   three in general (`GeneralRelations.lean`), the named Bₙ/Cₙ/F₄ actions, and the `G₂`
   length-six relation with the named `G₂` action (`artinHom_G₂`). In arbitrary rank
   (`BraidRelationsGeneral`, `DoubleEdgeGeneral`, `GeneralArtin`): lengths three, four and six
-  under the third-node condition `BraidOuterCondition` (all finite types), and the Artin-group
-  action `braidArtinHom` of `D.cartanMatrix.coxeterMatrix.ArtinGroup`. Remaining: braid
-  relations for data violating `BraidOuterCondition` (triangles, `G̃₂`, ...), action
-  faithfulness, and canonical bases.
+  under the third-node condition `BraidOuterCondition` (triangles with entries `-1` allowed,
+  `TriangleRelation`), and the Artin-group action `braidArtinHom` of
+  `D.cartanMatrix.coxeterMatrix.ArtinGroup`; named actions for all of Mathlib's finite-type Cartan
+  matrices and for every simply-laced datum (`FiniteTypeArtin`). Remaining: braid relations for
+  data violating `BraidOuterCondition` (e.g. `G̃₂`), action faithfulness, and canonical bases.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
