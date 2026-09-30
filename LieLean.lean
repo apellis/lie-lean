@@ -147,6 +147,11 @@ import LieLean.Algebra.Lie.KacMoody.HarishChandraIsomorphism
 import LieLean.Algebra.Lie.KacMoody.HarishChandraLinkage
 import LieLean.Algebra.Lie.KacMoody.TranslationFacet
 import LieLean.Algebra.Lie.KacMoody.TranslationVerma
+import LieLean.Algebra.Lie.KacMoody.TranslationFunctor
+import LieLean.Algebra.Lie.KacMoody.RestrictedDual
+import LieLean.Algebra.Lie.KacMoody.TranslationDuality
+import LieLean.Algebra.Lie.KacMoody.TranslationAdjunction
+import LieLean.Algebra.Lie.KacMoody.TranslationSimple
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
@@ -351,6 +356,8 @@ import LieLean.RepresentationTheory.Crystal.Path.ConcatIsomorphism
 import LieLean.RepresentationTheory.Crystal.Path.LittelmannIsomorphism
 import LieLean.RepresentationTheory.Crystal.Path.Levi
 import LieLean.RepresentationTheory.Crystal.Path.WeylAction
+import LieLean.RepresentationTheory.Crystal.Path.Pitman
+import LieLean.RepresentationTheory.Crystal.Path.BraidA2
 import LieLean.RepresentationTheory.Crystal.Path.LS
 import LieLean.RepresentationTheory.Crystal.Path.LSTwoPiece
 import LieLean.RepresentationTheory.Crystal.Path.LSFinitePieces
@@ -366,5 +373,6 @@ import LieLean.RepresentationTheory.Crystal.Subcrystal
 import LieLean.RepresentationTheory.Crystal.Tensor
 import LieLean.RepresentationTheory.Crystal.WeylAction
 import LieLean.RepresentationTheory.Crystal.WeylGroupAction
+import LieLean.RepresentationTheory.Crystal.BraidA2
 import LieLean.RingTheory.MvPolynomial.EulerIdentity
 import LieLean.RingTheory.MvPolynomial.LowestWeight
