@@ -1423,10 +1423,21 @@ proof reduces to the fixed-point identities `TⱼTᵢTⱼTᵢTⱼ(Eᵢ) = Eᵢ`,
 of the twisted-commutator family and the degree-one identity at the long node; no
 normal-ordering certificate is used. Arbitrary field and root-datum lattice; the fixed-point
 identities hold in arbitrary ambient rank.
-Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations for pairs `(l, m)` of
-two nodes other than `i` in higher rank (all rank-two pairs `(j, i)` are done, under the stated
-nonvanishing hypotheses), all-node assembly beyond the proved families, and general canonical
-bases.
+`BraidAction/GeneralSerre.lean` proves the remaining transformed Serre relations, between two
+distinct nodes `l, m ≠ i`: `S_{1-aₗₘ}(Tᵢ Eₗ, Tᵢ Eₘ) = 0` and the `F` analogue
+(`outer_qSerre_braidEj_braidEj`, `outer_qSerre_braidFj_braidFj`), in arbitrary rank, assuming
+only `v ≠ 0` and `[(1 - aₗₘ)(-aᵢₗ) + (-aᵢₘ)]ᵢ! ≠ 0`: the iteration lemma `TwoNode.dd_serreAux`,
+started at `Z = Eₘ`, carries the original Serre element `S_{1-aₗₘ}(Eₗ, Eₘ)` by `ad Eᵢ` to a
+nonzero multiple of `S_{1-aₗₘ}(X r, Y t)` (only the top term of the Leibniz expansion survives).
+Hence `TransformedSerre` holds at every node of every Cartan datum under the explicit
+q-factorial hypotheses `BraidSerreGeneric` (`transformedSerre_of_braidSerreGeneric`), and
+**`braidEquivOfGeneric`** is Lusztig's `Tᵢ` as an algebra automorphism at any node of any Cartan
+datum (arbitrary rank, field and root-datum lattice), with explicit reversal-conjugate inverse;
+`braidEquivOfNotRoot` needs only `v ≠ 0` not a root of unity. The length-two and simple-edge
+length-three relations of `GeneralRelations.lean` apply to it.
+Remaining for general `Tᵢ`: braid relations for these automorphisms beyond the cases covered by
+the constructor-independent `HasBraidGeneratorImages` results, the Artin-group action for
+arbitrary Cartan data, and general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
