@@ -697,10 +697,26 @@ case, cited with (check)), over an algebraically closed field of characteristic 
 finite-dimensional Cartan. The proof combines the projected tensor-Verma filtration
 (`exists_centralTensorVermaFiltration`), linkage (`VermaModule.centralCharacter_eq_iff`), facet
 exclusion and multiplicity one of the extremal weight `w (μ - λ)`: exactly one step survives
-(`LieSubmodule.eq_bot_and_eq_last_of_single_step`). Remaining for Thm. 7.6: the dual-Verma
-statement (dual compatibility), non-integral `λ` with the integral Weyl group `W_[λ]`, and a
-packaged exact translation functor (the block is taken of `M ⊗ L(ν)` directly, which agrees
-with `pr_μ(L(ν) ⊗ pr_λ M)` for `M = M(w·λ)` but is not stated as a functor).
+(`LieSubmodule.eq_bot_and_eq_last_of_single_step`).
+`KacMoody/TranslationFunctor.lean` packages translation `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ Z)` on
+full-central blocks as a functor (`centralTranslation`, `centralTranslationMap`, `_id`, `_comp`),
+proves it exact on short exact sequences with middle term in `𝒪` when `Z ∈ 𝒪`
+(`centralTranslationMap_shortExact`, algebraically closed field) and restates the Verma part as
+`T_λ^μ M(w·λ) ≅ M(w·μ)` (`translation_verma_equiv`).
+`KacMoody/RestrictedDual.lean` builds the duality functor of `𝒪`: `restrictedDual P V`, the sum
+of the weight spaces of the `σ`-twisted dual (so `V^∨ = ⨁ (V_μ)^*` for `V ∈ 𝒪`), with
+functoriality (`restrictedDualMap`, `restrictedDualEquiv`) and, for a finite-dimensional weight
+module with a nondegenerate symmetric contravariant form, `V^∨ ⊗ L ≅ (V ⊗ L)^∨`
+(`restrictedDualTensorEquiv`). `KacMoody/TranslationDuality.lean` proves that `σ` fixes
+`Z(U𝔤)` in finite type (`unop_envTranspose_center`, via `χ_Λ(σ z) = χ_Λ(z)` from the Shapovalov
+form and Harish-Chandra injectivity), hence `(pr_χ M)^∨ ≅ pr_χ(M^∨)` for `M ∈ 𝒪`
+(`restrictedDualCentralBlockEquiv`), that translation commutes with duality
+(`restrictedDualCentralTranslationEquiv`: `(T M)^∨ ≅ T(M^∨)` for `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ L(ν))`,
+`ν` dominant integral), and the **dual-Verma part** `translation_dualVerma`:
+`T_λ^μ M(w·λ)^∨ ≅ M(w·μ)^∨` (Humphreys GSM 94 Thm. 7.6 (check), integral weights, finite type,
+algebraically closed characteristic-zero field). Remaining for Thm. 7.6: non-integral `λ` with
+the integral Weyl group `W_[λ]`, and the other parts of Humphreys §7 (translation of simple
+modules, adjointness of `T_λ^μ` and `T_μ^λ`).
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -1487,8 +1503,10 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   is central-character separation (`VermaModule.centralCharacter_eq_iff`: `χ_Λ = χ_Λ'` iff
   `Λ' ∈ W·Λ`). Facet exclusion and the Verma part of Humphreys Thm. 7.6
   (`translation_verma`: `pr_{χ_μ}(M(w·λ) ⊗ L(ν)) ≅ M(w·μ)`) are proved for integral weights in
-  finite type over algebraically closed characteristic-zero fields. Remaining for Thm. 7.6:
-  dual Verma modules, non-integral weights (`W_[λ]`), and a packaged translation functor.
+  finite type over algebraically closed characteristic-zero fields, as are exactness of the
+  packaged translation functor (`centralTranslationMap_shortExact`), the duality functor
+  `M ↦ M^∨` with `(T M)^∨ ≅ T(M^∨)`, and the dual-Verma part (`translation_dualVerma`:
+  `T_λ^μ M(w·λ)^∨ ≅ M(w·μ)^∨`). Remaining for Thm. 7.6: non-integral weights (`W_[λ]`).
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
   linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
