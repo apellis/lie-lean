@@ -714,9 +714,24 @@ form and Harish-Chandra injectivity), hence `(pr_χ M)^∨ ≅ pr_χ(M^∨)` for
 (`restrictedDualCentralTranslationEquiv`: `(T M)^∨ ≅ T(M^∨)` for `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ L(ν))`,
 `ν` dominant integral), and the **dual-Verma part** `translation_dualVerma`:
 `T_λ^μ M(w·λ)^∨ ≅ M(w·μ)^∨` (Humphreys GSM 94 Thm. 7.6 (check), integral weights, finite type,
-algebraically closed characteristic-zero field). Remaining for Thm. 7.6: non-integral `λ` with
-the integral Weyl group `W_[λ]`, and the other parts of Humphreys §7 (translation of simple
-modules, adjointness of `T_λ^μ` and `T_μ^λ`).
+algebraically closed characteristic-zero field). `KacMoody/TranslationAdjunction.lean` proves
+**adjointness** (Humphreys GSM 94 §7.2 (check)): `translationAdjunction` gives a `K`-linear
+`Hom(pr_{χ₂}(pr_{χ₁} M ⊗ L), N) ≅ Hom(M, pr_{χ₁}(pr_{χ₂} N ⊗ L^*))` for `M ∈ 𝒪` in the block
+`χ₁`, `N` in the block `χ₂` and finite-dimensional `L ∈ 𝒪` (`L^* = Module.Dual K L`), via the
+Lie tensor–Hom adjunction (`tensorHomAdjunction`, `tensorDualEquivHom : N ⊗ L^* ≅ Hom_K(L, N)`)
+and block restriction (`homCentralBlockSourceEquiv`, `homCentralBlockTargetEquiv`);
+`translationAdjunction_irreducible` is the case `L = L(ν)`. The identification
+`L(ν)^* ≅ L(-w₀ν)` is not formalized; `T_μ^λ` is stated with `L(ν)^*`.
+`KacMoody/TranslationSimple.lean` proves the **dichotomy for simple modules**
+`translation_irreducible` (Humphreys GSM 94 Thm. 7.9 (check), first assertion): under the
+hypotheses of `translation_verma`, `T_λ^μ L(w·λ)` is zero or isomorphic to `L(w·μ)`. Proof:
+`L(x)` is a quotient of `M(x)` and embeds in `M(x)^∨` (`IrreducibleModule.toRestrictedDual`);
+`T` preserves surjections and injections (`centralTranslationMap_surjective/_injective`), so
+`T L(w·λ)` is a quotient of `M(w·μ)` embedding in `M(w·μ)^∨`; every map `M(y) → M(y)^{*σ}` is a
+scalar multiple of the Shapovalov map (`VermaModule.eq_smul_toTwistedDual`), whose kernel is
+`M'(y)` (`subsingleton_or_nonempty_equiv_irreducible`). Remaining for Thm. 7.6/7.9:
+non-integral `λ` with the integral Weyl group `W_[λ]`, and the upper-closure criterion deciding
+which alternative of Thm. 7.9 occurs (e.g. `T_λ^μ L(w·λ) ≠ 0` when `λ, μ` lie in the same facet).
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -1596,7 +1611,9 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   finite type over algebraically closed characteristic-zero fields, as are exactness of the
   packaged translation functor (`centralTranslationMap_shortExact`), the duality functor
   `M ↦ M^∨` with `(T M)^∨ ≅ T(M^∨)`, and the dual-Verma part (`translation_dualVerma`:
-  `T_λ^μ M(w·λ)^∨ ≅ M(w·μ)^∨`). Remaining for Thm. 7.6: non-integral weights (`W_[λ]`).
+  `T_λ^μ M(w·λ)^∨ ≅ M(w·μ)^∨`), adjointness of translation functors (`translationAdjunction`)
+  and the dichotomy `T_λ^μ L(w·λ) ∈ {0, L(w·μ)}` (`translation_irreducible`, Thm. 7.9 (check)).
+  Remaining: non-integral weights (`W_[λ]`) and the upper-closure criterion of Thm. 7.9.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
   linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
