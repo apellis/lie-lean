@@ -150,7 +150,7 @@ it from this list (and from the matching bullet in `ROADMAP.md`) in the same com
 - `ROADMAP.md` is the plan; keep its status markers current when a milestone lands.
 - Work in small, complete steps: each commit should build (`lake build` green, warnings are
   errors) and contain no `sorry`.
-- Commits may go directly to `main` after a green full `lake build` and the axiom check.
+- Commits may go directly to `master` after a green full `lake build` and the axiom check.
   Never force-push.
 - Commit messages: a short summary line naming the mathematical content, then details.
 - Mathlib bumps: move to a newer Mathlib release tag with `lake update` in a dedicated commit, fix

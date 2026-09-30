@@ -1314,7 +1314,7 @@ integral; Lusztig's canonical basis / Kashiwara's global basis if reachable.
 
 ## Status and open threads
 
-The declarations listed as proved are on `main`; the explicit remaining items below are not
+The declarations listed as proved are on `master`; the explicit remaining items below are not
 completion claims. M1–M9's main targets, M10, M11 and M13 are complete at their stated scope;
 M12, M14 and M15 remain in progress. Current completed steps and continuation threads are:
 
