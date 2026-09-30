@@ -888,14 +888,14 @@ integrality is derived from propagated root-lattice congruences, not assumed. It
 every positive finite piece count and arbitrary finite rank, and recovers the straight line
 for one piece. Redundant equal directions are an explicitly labelled extension. This is
 path existence, not a component isomorphism. Pause transport is supplied by `GluingPause.lean`
-below; the straight-path component theorem remains open.
+below; the two-piece straight-path component theorem is `GluingLinking.lean`.
 `Path/Linking.lean` proves the root-operator continuity estimates of [Lit] Proposition 3.1
 and a fixed-parametrization form of Lemma 6.1: arbitrary mixed root words preserve vanishing
 along arbitrary finite sufficiently close linking chains. Integral stable sets/components
-are explicit inputs, not consequences inferred from dominance. This does not construct the
-required links or prove equality of word relations. The modules below supply gluing-pair
-stability/integrality and pause-allowing concatenation transport. Highest-path uniqueness,
-the §6 endpoint-fibre/linking argument and the straight-path component theorem remain open.
+are explicit inputs, not consequences inferred from dominance. This module does not construct
+links or prove equality of word relations; the modules below supply gluing-pair
+stability/integrality, pause transport, highest-path uniqueness (Proposition 5.7), the linking
+chains, Proposition 6.2 and the two-piece component theorem (Theorem 6.3).
 `Path/GluingDirections.lean` proves [Lit] Lemma 5.2(a,b), p. 514: the compatibility relation
 quantifies over all positive real roots, and simultaneous simple reflection preserves it
 under the source sign conditions. Positive-root transport and exact exceptional-root coroot
@@ -914,7 +914,8 @@ the translation and seam integrality from the concrete paths, source chains and 
 glued endpoint. This removes the dominant-second-class restriction for those chain/seam
 results. Proposition 5.7/Theorem 6.3 assume dominance of the first weight and their sum,
 not a dominant representative of the second class. Two-class gluing operator stability and
-pause transport are supplied below; the straight-path isomorphism remains open.
+pause transport are supplied below; the two-piece straight-path isomorphism is Theorem 6.3
+below (`componentIso_straightLine_rationalConcat`).
 `Path/GeneralClassStability.lean` proves integral source-walk height bounds and attained
 maximum lengths, saturated refinements, simple-root saturation and same-sign reflection
 preservation ([Lit] Lemma 4.1). `LSGeneralClass.lsData` now constructs genuine LS data on
@@ -1016,9 +1017,9 @@ an inverse clock. The explicit rational three-region clock identifies the paused
 path with rational concatenation, yielding a marked isomorphism of actual component crystals
 and derived whole-component integrality. Only the sum of the two displacements must be an
 integral endpoint; the gluing consumer retains a supplied common denominator and compatibility.
-The rational-class/denominator-existence interface and straight-path component isomorphism
-remain separate. Proposition 5.7 concerns highest-path uniqueness in the ORIGINAL endpoint
-fibre, not unrestricted highest-path uniqueness. `Path/GluingFibre.lean` proves strict
+The rational-class/denominator-existence interface remains separate; the straight-path
+component isomorphism is Theorem 6.3 in `GluingLinking.lean`. Proposition 5.7 concerns
+highest-path uniqueness in the ORIGINAL endpoint fibre, not unrestricted highest-path uniqueness. `Path/GluingFibre.lean` proves strict
 source-chain growth under `rhoCheck` and positive-duration endpoint rigidity: production
 right-source gluing data force the entire right path to be straight. With original cuts,
 straight left directions and the restored original right auxiliary, the original endpoint
@@ -1033,7 +1034,18 @@ the common Weyl element fixes `nΛ`; the printed `s_α w` reduction runs on the 
 chain via Lemma 4.3 (`AChain.reflection_of_neg_of_nonneg`), terminating by integral `ρ̌`
 growth, and dominance of `N nΛ + nμ` restores `nμ` without parabolic-subgroup theory.
 `gluingPrecedes_of_mem_dominantChamber` discharges the compatibility premise for dominant `Λ`.
-This is not Proposition 6.2 or the straight component theorem.
+`Path/ComponentWords.lean` proves the word-relation criterion `componentIso_of_rootWord`:
+equal weights, equal vanishing of all mixed words and equal word relations give
+`ComponentIso` (`ε` via seminormality), with inverse words `invWord`.
+`Path/GluingLinking.lean` constructs the linking chains of the Example on p. 517: the family
+`π_x = π_{xΛ} * π_{μ+(1-x)Λ}` at `x = k/N`, with derived component integrality (denominator
+`nN`) and explicit uniform distance, so `rootWord_straightLine_eq_none_iff` (Lemma 6.1) holds
+for all words whenever `Λ ▷ μ` (no dominance). With `Λ`, `Λ + μ` dominant it proves
+**Proposition 6.2** (`rationalConcat_eq_of_mem_component_of_endpoint`) and **Theorem 6.3**
+(`componentIso_straightLine_rationalConcat`: `B(π_{Λ+μ}) ≅ B(π_Λ * π_μ)`, `π_{Λ+μ} ↦ π_Λ * π_μ`)
+for real `Λ, μ` with a supplied common denominator, any GCM and finite-dimensional Cartan space.
+`π_Λ * π_μ` is the unit-speed `rationalConcat`, equal to `concat` for integral `Λ, μ`. Theorem 7.1
+(concatenations of more than two pieces, and LS paths `η` as in `LRIsomorphismHypothesis`) remains.
 These do not discharge `LRIsomorphismHypothesis`. Remaining:
 mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
 braid relations/normality, and extension of the concrete `a`-chain description beyond the
@@ -1346,9 +1358,10 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   is proved, including dominant-orbit spanning and invariant extensions. Restriction injectivity,
   HC image/separation, facet exclusion and dual compatibility for Humphreys Thm. 7.6 remain.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
-  pause transport are proved, as is Proposition 5.7 (`twoPieceGluing_highest_iff`). Next are
-  the §6 linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and the straight-path component
-  theorem (Theorem 6.3), making `nonempty_equiv_sigma` unconditional. The classical target is rational PL paths modulo
+  pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
+  linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
+  (`componentIso_straightLine_rationalConcat`). Next is Theorem 7.1 for `π_{ν₁} * ⋯ * π_{ν_s}`
+  and for `π_λ * η` with `η` an LS path, making `nonempty_equiv_sigma` unconditional. The classical target is rational PL paths modulo
   reparametrization, not an unqualified assertion for all continuous dominant paths.
   General crystal normality and Weyl braid relations also remain.
 - **Braid automorphisms `Tᵢ` in general** (M15): actual local-class and named Bₙ/Cₙ/F₄ actions
