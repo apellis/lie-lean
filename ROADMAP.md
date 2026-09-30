@@ -1275,6 +1275,23 @@ extra `vᵢ⁴ + 1 ≠ 0` of `TripleEdge.lean`).
 (`braidHom_hasBraidGeneratorImages`), hence agrees with every earlier local construction
 (`braidHom_eq`) and satisfies the constructor-independent length-two (`braidEquiv_comm`) and
 simple-edge length-three (`braidEquiv_braid_three`) relations.
+`BraidAction/NeighborSerreShort.lean` reduces, for arbitrary entries `r = -aᵢⱼ ≥ 1`,
+`s = -aⱼᵢ`, the neighbor-first element `S_{s+1}(Tᵢ Eⱼ, Tᵢ Eᵢ)` to the positive-part element
+`[r]!^{-(s+1)} [r] serreAux vⱼ vⱼ s (X r) (X (r-1))` (`twoNode_qSerre_braidEj_braidEi_eq`), and
+proves the family `aⱼᵢ = -1` for every `aᵢⱼ` in arbitrary ambient rank
+(`shortNode_qSerre_braidEj_braidEi`, `shortNode_qSerre_braidFj_braidFi`), assuming `v ≠ 0`,
+`vᵢ - vᵢ⁻¹ ≠ 0` and `[2r-2, r-1]ᵢ ≠ 0`. The positive-part q-commutation
+`X r X (r-1) = vᵢ^r X (r-1) X r` is obtained by applying the twisted derivation `ad Eᵢ`
+`2r-2` times to `S₂(Eⱼ, Eᵢ)`, with Gaussian-binomial coefficients; the surviving scalar `α`
+satisfies `α [r]ᵢ = [2r-2, r-1]ᵢ`. The extra hypothesis holds when `v` is not a root of unity
+and for `r ≤ 2`; for `G₂` it is equivalent to `vᵢ⁴ + 1 ≠ 0` given `[3]ᵢ! ≠ 0`, and it cannot be
+dropped from the positive-part identity (exact computation over `ℚ(ζ₈)`, not formalized: at
+`vᵢ⁴ = -1` the element `X 3 X 2 - vᵢ³ X 2 X 3` is not in the Serre ideal of the free algebra).
+`BraidAction/TwoNodeBraid.lean` assembles `shortNodeBraidEquiv` at the short node of any exact
+two-node datum with `aⱼᵢ = -1` (uniformly `A₂`, `B₂`, `G₂` and the Kac–Moody pairs `(-r,-1)`),
+with no extra hypothesis for `r ≤ 2` (`shortNodeBraidEquiv_of_negA_le_two`) or when `v` is not a
+root of unity (`shortNodeBraidEquiv_of_not_root`); for `G₂` it is `tripleEdgeBraidEquiv`
+(`shortNodeBraidEquiv_eq_tripleEdgeBraidEquiv`).
 Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations in general (in
 particular at the simple node of `G₂`), the braid relations beyond the proved families
 (length six for `G₂`), and general canonical bases.
