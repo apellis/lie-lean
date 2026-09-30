@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.Lie.KacMoody.CharacterVerma
-import LieLean.RingTheory.FormalCharacter
+import LieLean.Combinatorics.Enumerative.SignReversingInvolution
 import Mathlib.Data.Finsupp.Interval
 import Mathlib.RingTheory.HahnSeries.Summable
 
@@ -22,7 +22,7 @@ of `𝔫₋` consisting of root vectors (`Matrix.Realization.KacMoodyAlgebra.nNe
 We prove `R · ch M(Λ) = e^Λ`, i.e. `ch M(Λ) = e^Λ ∏_{α ∈ Δ₊} (1 - e^{-α})^{-mult α}`
 ([Kac] (9.7.2) (check)). The proof combines the computation `dim M(Λ)_{Λ - β} = K(β)`
 (`Matrix.Realization.KacMoodyAlgebra.VermaModule.finrank_weightSpace_sub`) with the sign-reversing
-involution of `FormalCharacter.sum_neg_one_pow_card_eq_ite`.
+involution of `Finsupp.PairInvolution.sum_neg_one_pow_card_eq_ite`.
 
 ## Main definitions
 
@@ -138,9 +138,9 @@ lemma finite_setOf_finsetWt_eq (β : Dual K H) :
 
 /-- There are finitely many pairs `(S, s)` of a set and a multiset of indices of a given total
 weight. -/
-lemma finite_setOf_pairWt_eq (β : Dual K H) :
+lemma finite_setOf_pairWeight_eq (β : Dual K H) :
     {p : Finset (NegRootIndex P) × (NegRootIndex P →₀ ℕ) |
-      FormalCharacter.pairWt NegRootIndex.root p = β}.Finite := by
+      Finsupp.PairInvolution.pairWeight NegRootIndex.root p = β}.Finite := by
   classical
   let T := finite_setOf_negRootWt_eq P β
   refine (T.biUnion fun t _ ↦ ((t.support.powerset : Set (Finset (NegRootIndex P))).toFinite.prod
@@ -218,10 +218,10 @@ theorem denominator_mul_kostantSeries : denominator P * kostantSeries P = 1 := b
   classical
   rw [denominator, kostantSeries, ← SummableFamily.hsum_mul]
   refine HahnSeries.ext (funext fun g ↦ ?_)
-  have hfin := finite_setOf_pairWt_eq P (-ofWeightOrd P g)
+  have hfin := finite_setOf_pairWeight_eq P (-ofWeightOrd P g)
   have hmul : ∀ p : Finset (NegRootIndex P) × (NegRootIndex P →₀ ℕ),
       ((denominatorFamily P).mul (kostantFamily P) p).coeff g =
-        if FormalCharacter.pairWt NegRootIndex.root p = -ofWeightOrd P g then
+        if Finsupp.PairInvolution.pairWeight NegRootIndex.root p = -ofWeightOrd P g then
           (-1) ^ p.1.card else 0 := by
     intro p
     simp only [SummableFamily.mul_toFun, denominatorFamily, kostantFamily,
@@ -237,7 +237,7 @@ theorem denominator_mul_kostantSeries : denominator P * kostantSeries P = 1 := b
   rw [SummableFamily.coeff_hsum, finsum_eq_sum_of_support_subset _ (s := hfin.toFinset)]
   · rw [Finset.sum_congr rfl fun p hp ↦
       (hmul p).trans (ite_eq_left ((Set.Finite.mem_toFinset _).mp hp))]
-    rw [FormalCharacter.sum_neg_one_pow_card_eq_ite _ _ fun p ↦ Set.Finite.mem_toFinset _,
+    rw [Finsupp.PairInvolution.sum_neg_one_pow_card_eq_ite _ _ fun p ↦ Set.Finite.mem_toFinset _,
       coeff_one, neg_eq_zero]
     exact if_congr ⟨fun h ↦ by rw [← toWeightOrd_ofWeightOrd P g, h]; rfl,
       fun h ↦ by rw [h]; rfl⟩ rfl rfl

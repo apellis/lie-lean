@@ -229,7 +229,7 @@ import LieLean.Algebra.QuantumGroup.TriangularDecomposition
 import LieLean.Algebra.QuantumGroup.TriangularRep
 import LieLean.Algebra.QuantumGroup.Verma
 import LieLean.Algebra.QuantumGroup.Weight
-import LieLean.Basic
+import LieLean.Combinatorics.Enumerative.SignReversingInvolution
 import LieLean.GroupTheory.Coxeter.Bruhat
 import LieLean.GroupTheory.Coxeter.Deletion
 import LieLean.GroupTheory.Coxeter.Exchange
@@ -329,5 +329,4 @@ import LieLean.RepresentationTheory.Crystal.Realization
 import LieLean.RepresentationTheory.Crystal.Subcrystal
 import LieLean.RepresentationTheory.Crystal.Tensor
 import LieLean.RepresentationTheory.Crystal.WeylAction
-import LieLean.RingTheory.FormalCharacter
 import LieLean.RingTheory.MvPolynomial.EulerIdentity
