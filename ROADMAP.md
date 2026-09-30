@@ -1271,6 +1271,10 @@ reversal-conjugate inverse as soon as the neighbor-first transformed Serre relat
 `S(Tᵢ Eₗ, Tᵢ Eₘ) = 0`, `l ≠ i` (`TransformedSerre`) hold. `BraidAction/TripleEdgeBraid.lean`
 instantiates it at the triple node of an exact `G₂` datum (`tripleEdgeBraidEquiv`, with the
 extra `vᵢ⁴ + 1 ≠ 0` of `TripleEdge.lean`).
+`BraidAction/GeneralRelations.lean`: `braidHom` has the generator formulas
+(`braidHom_hasBraidGeneratorImages`), hence agrees with every earlier local construction
+(`braidHom_eq`) and satisfies the constructor-independent length-two (`braidEquiv_comm`) and
+simple-edge length-three (`braidEquiv_braid_three`) relations.
 Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations in general (in
 particular at the simple node of `G₂`), the braid relations beyond the proved families
 (length six for `G₂`), and general canonical bases.
