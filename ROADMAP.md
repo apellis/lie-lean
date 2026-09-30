@@ -1543,9 +1543,24 @@ braid-liftable family of algebra automorphisms (`CoxeterSystem.braidLift_apply_m
 through `w = w' u`, `w' ∈ W^{i,k}`, `u` alternating in `W_{i,k}`, reduced to the rank-two
 property `CoxeterMatrix.RankTwoRootProperty` (`rankTwoRootProperty_braidEquivOfGeneric`, from the
 `A₁ × A₁`, `A₂`, `B₂`, `G₂` computations in both orientations). Pairs with `aᵢⱼ aⱼᵢ ≥ 4` are
-not covered (their rank-two statement is not proved). Remaining: spanning and independence for
-`G₂` (six root vectors, operators on `k[ℕ⁶]`), the PBW basis in higher rank, and canonical
-bases.
+not covered (their rank-two statement is not proved). In finite type the diagram hypotheses are
+derived from `Matrix.IsFiniteCartan` (`_of_isFiniteCartan`, via
+`Matrix.IsFiniteCartan.braidOuterCondition` below). **Dimensions of `U⁺_ν`**
+(`PBW/WeightDimension.lean`, `PBW/KostantDimension.lean`; [Lus] 33.1.3, [Kac] (9.7.2) (check)):
+for `v` transcendental over `ℚ`, `dim U⁺_ν = K(ν)`, Kostant's partition function for any
+realization of the Cartan matrix over any field of characteristic zero
+(`finrank_plusWeightSpace_eq_kostantPartition'`, `U⁺_ν = plusWeightSpace`, the image of the
+words of weight `ν`). Proof: the quantum Gabber–Kac dimension count now also gives
+`dim J_ν = dim Z_ν` (`LusztigF.mem_serreSpan_of_mem_radical_and_finrank_serreSpan`, `Z_ν` the
+classical Serre products), and classically `K(ν) + dim Z_ν = #{words of weight ν}` through
+`y ↦ y(f) v_Λ ∈ M(Λ)` and `𝒮 ≅ U(𝔫₋)` (`LusztigF.kostantPartition_add_finrank_serreSpan`,
+`finrank_serreSpan_one`: field independence). Hence a family of `K(ν)` elements of `U⁺_ν` is
+linearly independent iff it spans (`linearIndependent_iff_span_eq_plusWeightSpace`). Remaining
+for the finite-type PBW basis: the weights of the root vectors (`T_w` maps `U⁺_{αᵢ}` to
+`U⁺_{wαᵢ}`), the bijection between the root vectors along a reduced word of `w₀` and the positive
+roots (so that ordered monomials of weight `ν` number `K(ν)`), and then either spanning
+(Levendorskii–Soibelman straightening) or independence (Lusztig's form, [Lus] 38.2 (check));
+spanning and independence for `G₂` (six root vectors, operators on `k[ℕ⁶]`); canonical bases.
 `BraidAction/BraidRelationsGeneral.lean`, `BraidAction/DoubleEdgeGeneral.lean` and
 `BraidAction/GeneralArtin.lean` prove braid relations for the general `Tᵢ` in arbitrary rank:
 length three at a simple edge when no third node meets both ends, with arbitrary Cartan entries
@@ -1559,7 +1574,7 @@ length six at a `(-3, -1)` edge with orthogonal third nodes
 group `M.ArtinGroup` of a Coxeter matrix (presented group, `artinLift`), and
 **`braidArtinHom`**/`braidArtinHomOfNotRoot` give the action `σᵢ ↦ Tᵢ` of the Artin group of
 `D.cartanMatrix.coxeterMatrix` on `U` for every Cartan datum satisfying
-`LusztigCartanDatum.BraidOuterCondition` (by inspection, all finite types; any rank), via
+`LusztigCartanDatum.BraidOuterCondition` (all finite types, see below; any rank), via
 `isBraidLiftable_braidEquivOfGeneric` (so Matsumoto's `braidLift` also gives `T_w`).
 `BraidAction/TriangleRelation.lean` adds triangles: at a simple edge, a third node `l` with
 `aᵢₗ = aⱼₗ = -1` (entries `aₗᵢ`, `aₗⱼ` arbitrary) satisfies `TᵢTⱼTᵢ(Eₗ) = TⱼTᵢTⱼ(Eₗ)` and the `F`
@@ -1573,6 +1588,14 @@ simply-laced matrix; `BraidAction/FiniteTypeArtin.lean` gives the named actions
 `braidArtinHom_A`, ..., `braidArtinHom_G₂` of `(CartanMatrix.X).coxeterMatrix.ArtinGroup` and
 `braidArtinHomOfSimplyLaced` (e.g. affine `Ãₙ`, `n ≥ 2`), for `v` not a root of unity, agreeing on
 generators with `artinHom_B`, `artinHom_C`, `artinHom_F₄`, `artinHom_G₂`.
+`LinearAlgebra/Matrix/Cartan/FiniteRankTwo.lean` derives the diagram facts from positive
+definiteness of `diag(d) A` (not from the classification): `aᵢⱼ aⱼᵢ ≤ 3` (`mul_le_three`),
+positive principal `3 × 3` minors (`det_three_pos`), no triangles
+(`eq_zero_or_eq_zero_of_ne_zero`), `aᵢⱼ aⱼᵢ + aᵢₗ aₗᵢ ≤ 3` at a node with non-adjacent neighbours
+(`mul_add_mul_le_three`), hence `Matrix.IsFiniteCartan.braidOuterCondition`; so
+`BraidAction/FiniteCartanArtin.lean` gives the Artin action `braidArtinHomOfIsFiniteCartan` for
+every Cartan datum of finite type with no diagram hypothesis
+(`LusztigCartanDatum.braidOuterCondition_of_isFiniteCartan`).
 Remaining for general `Tᵢ`: braid relations when a third node meets both ends of a simple edge
 with an entry `≤ -2` in the row of an end, when a third node meets a double edge by a multiple
 bond or meets both of its ends, and at a triple edge with neighbours (e.g. `G̃₂`); faithfulness;
@@ -1689,7 +1712,8 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   under the third-node condition `BraidOuterCondition` (triangles with entries `-1` allowed,
   `TriangleRelation`), and the Artin-group action `braidArtinHom` of
   `D.cartanMatrix.coxeterMatrix.ArtinGroup`; named actions for all of Mathlib's finite-type Cartan
-  matrices and for every simply-laced datum (`FiniteTypeArtin`). Remaining: braid relations for
+  matrices, for every Cartan datum of finite type (`braidArtinHomOfIsFiniteCartan`) and for every
+  simply-laced datum (`FiniteTypeArtin`, `FiniteCartanArtin`). Remaining: braid relations for
   data violating `BraidOuterCondition` (e.g. `G̃₂`), action faithfulness, and canonical bases.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
@@ -1741,7 +1765,8 @@ beyond what the general Kac–Moody results give.
   `LieSubmodule.Quotient.nonempty_lieModuleEquiv_of_surjective` (`KacMoody/CompositionSeries.lean`).
 - `LieLean/GroupTheory/Coxeter/{Exchange,Deletion,Bruhat,GeometricRepresentation,Parabolic,
   Parabolic/CoxeterSystem,Matsumoto,Longest,RankTwoParabolic}.lean`; `IsAlgClosed.exists_orderOf_eq`;
-  `Matrix.IsFiniteCartan.mul_le_three` (`LinearAlgebra/Matrix/Cartan/FiniteRankTwo.lean`).
+  `Matrix.IsFiniteCartan.mul_le_three`, `det_three_pos`, `braidOuterCondition`
+  (`LinearAlgebra/Matrix/Cartan/FiniteRankTwo.lean`).
 - Strong exchange condition (`LieLean/GroupTheory/Coxeter/Exchange.lean`, Mathlib lacks it);
   Iwahori–Hecke algebra and bar involution (`GroupTheory/Coxeter/Hecke/{Basic,Bar}.lean`).
 - Chevalley–Eilenberg complex (`LieLean/Algebra/Lie/Homology/{ChevalleyEilenberg,Complex,
