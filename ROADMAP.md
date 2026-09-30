@@ -1247,7 +1247,7 @@ proved inverse identities supply the generator equalities. The scope is exactly 
 nodes with entries `(-2,-1)`, arbitrary field and root-datum lattice, `v ≠ 0`, and short-node
 quantum sum/difference nonzero; the other denominator follows from `qⱼ = qᵢ²`.
 Connected double-edge constructions and named-family assembly are supplied below.
-Triple-edge automorphisms and the length-six relation remain open.
+Triple-edge automorphisms and the length-six relation are supplied below.
 `BraidAction/DoublePathSerre.lean` proves both ordered positive/negative transformed Serre
 relations for a connected double-edge path, in arbitrary ambient rank. The forward relation
 uses entries `aᵢⱼ=-2`, `aⱼᵢ=-1`, `aⱼₗ=-1`, `aᵢₗ=0`, derives `qⱼ=qᵢ²`, and explicitly
@@ -1311,8 +1311,9 @@ pinned Mathlib Bₙ/Cₙ at every natural rank (including the rank-zero/one dege
 All graph fields and double-edge orientations are proved. Nonzero infinite-order parameters
 discharge the local scalar restrictions over any field, retaining arbitrary compatible Cartan
 data, positive symmetrizers and root-datum toral lattices. The named homomorphisms/actions
-carry every E/F/K generator formula. Triple edges/length six, unsupported local graphs and
-action faithfulness remain open; this is not unrestricted symmetrizable assembly.
+carry every E/F/K generator formula. Triple edges (`G₂`, including length six) are treated
+separately below; unsupported local graphs and action faithfulness remain open; this is not
+unrestricted symmetrizable assembly.
 `BraidAction/TripleEdge.lean` and `TripleExpansion.lean` prove actual cubic candidate expansions,
 the odd-degree Chevalley factor, and both centre-first quartic Serre relations. At entries
 (-3,-1), symmetrizer compatibility derives qⱼ = qᵢ³; an explicit eleven-term certificate in
@@ -1377,10 +1378,21 @@ two-node datum with `aⱼᵢ = -1` (uniformly `A₂`, `B₂`, `G₂` and the Kac
 with no extra hypothesis for `r ≤ 2` (`shortNodeBraidEquiv_of_negA_le_two`) or when `v` is not a
 root of unity (`shortNodeBraidEquiv_of_not_root`); for `G₂` it is `tripleEdgeBraidEquiv`
 (`shortNodeBraidEquiv_eq_tripleEdgeBraidEquiv`).
+`BraidAction/TripleEdgeRelation.lean` proves the **length-six `G₂` relation**
+`Tᵢ Tⱼ Tᵢ Tⱼ Tᵢ Tⱼ = Tⱼ Tᵢ Tⱼ Tᵢ Tⱼ Tᵢ` for any algebra endomorphisms with Lusztig's generator
+formulas at the two nodes of an exact two-node datum with entries `(-3,-1)`
+(`HasBraidGeneratorImages.six_braid_of_triple_edge`), hence for `braidEquiv`
+(`braidEquiv_braid_six_of_triple_edge`) and for `tripleEdgeBraidEquiv`,
+`tripleEdgeOtherBraidEquiv` (`tripleEdgeBraidEquiv_braid_six`). The relation needs only `v ≠ 0`,
+`vᵢ - vᵢ⁻¹ ≠ 0` and `[3]ᵢ! ≠ 0` (the named automorphisms keep their own extra hypotheses). The
+proof reduces to the fixed-point identities `TⱼTᵢTⱼTᵢTⱼ(Eᵢ) = Eᵢ`, `TᵢTⱼTᵢTⱼTᵢ(Eⱼ) = Eⱼ` and their
+`F` analogues, each obtained structurally from the lowering identities `Hyp.stepE`/`Hyp.stepF`
+of the twisted-commutator family and the degree-one identity at the long node; no
+normal-ordering certificate is used. Arbitrary field and root-datum lattice; the fixed-point
+identities hold in arbitrary ambient rank.
 Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations in general
 (both `G₂` nodes and the whole family `aⱼᵢ = -1` are done, under the stated nonvanishing
-hypotheses), the braid relations beyond the proved families (length six for `G₂`), and general
-canonical bases.
+hypotheses), all-node assembly beyond the proved families, and general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
@@ -1473,8 +1485,9 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   (`tripleEdgeBraidEquiv`, `tripleEdgeOtherBraidEquiv`; extra hypotheses `vᵢ⁴ + 1 ≠ 0`,
   resp. `vᵢ² + 1 ≠ 0`). At a node with `aᵢⱼ = -1` the neighbor-first relation is reduced to a
   single `U⁺` identity for every reverse entry (`NeighborSerreDegreeOne.lean`).
-  Remaining: neighbor-first transformed Serre relations in general, the `G₂` length-six
-  equality, all-node assembly and action faithfulness. The integrable-module construction
+  The `G₂` length-six relation is proved (`HasBraidGeneratorImages.six_braid_of_triple_edge`,
+  `tripleEdgeBraidEquiv_braid_six`). Remaining: neighbor-first transformed Serre relations in
+  general, all-node assembly and action faithfulness. The integrable-module construction
   ([Lus] 5.2) remains an alternative route; it is not an already-proved general action.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
