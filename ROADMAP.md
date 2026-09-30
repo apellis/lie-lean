@@ -1126,8 +1126,19 @@ the Levi component (`jComponent_bijOn`); for `J`-highest `π ∈ B(λ)` the Levi
 `B_J(r(π(1)))` (`componentIso_straightLine_restrict`, Theorem 7.1 for `Q`), and every
 `J`-component of `B(λ)` has a `J`-highest path (`exists_jHighest`). Combined:
 `LeviMap.exists_jHighest_componentIso`; for `J = {i}` each `i`-string is an `sl₂` path crystal.
-Remaining: Weyl braid relations for Kashiwara's `Sᵢ` on `B(λ)`; identification of the Levi path
-crystals with crystal bases (normality in Kashiwara's sense); and extension of the
+Weyl group action (`Crystal/WeylGroupAction.lean`, `Path/WeylAction.lean`): strict morphisms
+commute with the `Sᵢ` (`StrictHom.map_reflection`); commuting colours give `Sᵢ Sⱼ = Sⱼ Sᵢ`
+(`IsSeminormal.reflection_comm`); on paths, root operators of orthogonal colours commute
+(`rootStep_bind_comm`), so `LittelmannPath.reflection_comm` is the braid relation for
+`mᵢⱼ = 2`; `Sᵢ π_ν = π_{rᵢν}` (`reflection_straightLine`). `Realization.pathWeylAction` extends
+the `Sᵢ` to `W →* Perm B(λ)` (via `CoxeterSystem.lift`, `sᵢ ↦ Sᵢ`, `coe_wt_pathWeylAction`:
+`wt (w b) = w (wt b)`, `pathWeylAction_top`: `w π_λ = π_{wλ}`) given `PathBraidRelations`, the
+relations for the pairs with `aᵢⱼaⱼᵢ ∈ {1,2,3}`; those with `mᵢⱼ = 1, 2, ∞` are proved, so the
+action is unconditional when no such pair exists (`pathBraidRelations_of_forall`).
+`LeviMap.iterate_reflection_eq_of_levi` reduces `(S_{e k} S_{e l})^m = 1` on `B(λ)` to the same
+relation on the Levi path crystals `B_J(μ)` (any subdiagram). Remaining: the braid relations
+of lengths 3, 4, 6 on the rank-two crystals `B_J(μ)` (`A₂`, `B₂`, `G₂`); identification of the
+Levi path crystals with crystal bases (normality in Kashiwara's sense); and extension of the
 concrete `a`-chain description beyond the proved dominant-orbit supplied-path scope.
 Source-scope caution: the isomorphism theorem is proved for rational piecewise-linear paths
 (finitely many pieces, rational vertices), not for all continuous dominant paths of the
@@ -1547,8 +1558,11 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   Cartan space. The theorem is not claimed for arbitrary continuous dominant paths.
   Levi restriction is proved (`Path/Levi.lean`, `LeviMap.exists_jHighest_componentIso`): every
   `J`-component of `B(λ)` is a Levi path crystal `B_J(μ)` through a `J`-highest path.
-  Remaining: identification of `B_J(μ)` with Kashiwara's crystal bases (normality in his sense)
-  and the Weyl braid relations for Kashiwara's `Sᵢ` on `B(λ)`.
+  Kashiwara's `W`-action on `B(λ)` (`Realization.pathWeylAction`) is constructed from the braid
+  relations of lengths 3, 4, 6, which reduce to rank-two Levi crystals
+  (`LeviMap.iterate_reflection_eq_of_levi`); length two (`reflection_comm`) and `mᵢⱼ = ∞` are
+  proved. Remaining: those rank-two relations (`A₂`, `B₂`, `G₂`) and identification of `B_J(μ)`
+  with Kashiwara's crystal bases (normality in his sense).
 - **Braid automorphisms `Tᵢ` in general** (M15): **`braidEquivOfGeneric`**: Lusztig's `Tᵢ` is an
   algebra automorphism (explicit reversal-conjugate inverse) at every node of every Cartan
   datum, in arbitrary rank, over any field and root-datum lattice, under explicit q-factorial
