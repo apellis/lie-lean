@@ -35,7 +35,7 @@ lowering identities `BraidDiagonal.Hyp.stepE` (as was done for `G₂` in `Triple
   `vᵢ - vᵢ⁻¹ ≠ 0` and `[3]ᵢ! ≠ 0`.
 
 The PBW basis itself (spanning and linear independence of the ordered monomials) is proved for
-`A₂` in `RankTwoA2.lean`; for `B₂` and `G₂` it is not proved here.
+`A₂` in `RankTwoA2.lean` and for `B₂` in `RankTwoB2.lean`; for `G₂` it is not proved.
 
 ## References
 
