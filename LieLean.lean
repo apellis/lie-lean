@@ -221,7 +221,9 @@ import LieLean.Algebra.QuantumGroup.BraidAction.TwoNodeGeneral
 import LieLean.Algebra.QuantumGroup.BraidAction.GeneralSerre
 import LieLean.Algebra.QuantumGroup.BraidAction.BraidRelationsGeneral
 import LieLean.Algebra.QuantumGroup.BraidAction.DoubleEdgeGeneral
+import LieLean.Algebra.QuantumGroup.BraidAction.TriangleRelation
 import LieLean.Algebra.QuantumGroup.BraidAction.GeneralArtin
+import LieLean.Algebra.QuantumGroup.BraidAction.FiniteTypeArtin
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.GabberKac
@@ -297,6 +299,7 @@ import LieLean.LinearAlgebra.ExteriorAlgebra.Koszul
 import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulExact
 import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulSupport
 import LieLean.LinearAlgebra.Filtered.Exactness
+import LieLean.LinearAlgebra.Matrix.Cartan.BraidOuter
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable

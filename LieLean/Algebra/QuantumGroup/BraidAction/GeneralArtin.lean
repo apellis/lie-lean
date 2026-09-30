@@ -5,6 +5,7 @@ Authors: Alex Ellis
 -/
 import LieLean.Algebra.QuantumGroup.BraidAction.BraidRelationsGeneral
 import LieLean.Algebra.QuantumGroup.BraidAction.DoubleEdgeGeneral
+import LieLean.Algebra.QuantumGroup.BraidAction.TriangleRelation
 import LieLean.GroupTheory.Coxeter.ArtinGroup
 import LieLean.GroupTheory.Coxeter.Matsumoto
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
@@ -18,17 +19,19 @@ Let `D` be a Cartan datum with Cartan matrix `A` and Coxeter matrix `M = A.coxet
 hence define an action of the Artin group `M.ArtinGroup` on `U` by algebra automorphisms, as soon
 as `D` satisfies `LusztigCartanDatum.BraidOuterCondition`:
 
-* no third node meets both ends of a simple edge (`aᵢⱼ = aⱼᵢ = -1`);
+* a third node `l` meeting both ends of a simple edge (`aᵢⱼ = aⱼᵢ = -1`) has
+  `aᵢₗ = aⱼₗ = -1` (a triangle; `aₗᵢ`, `aₗⱼ` arbitrary);
 * at a double edge `aᵢⱼ = -2`, `aⱼᵢ = -1`, every third node `l` has
   `(aᵢₗ, aⱼₗ) ∈ {(0, 0), (-1, 0), (0, -1)}`;
 * at a triple edge `aᵢⱼ = -3`, `aⱼᵢ = -1`, every third node is orthogonal to both ends.
 
 Edges with `aᵢⱼ aⱼᵢ ≥ 4` impose no relation. By inspection of the Dynkin diagrams (not formalized
 here) the condition holds for every Cartan datum of finite type; it imposes no bound on the rank
-and allows, e.g., the cycles of affine type `Ãₙ`, `n ≥ 3`. It excludes triangles through a simple
-edge (e.g. `Ã₂`), third nodes attached to a double edge by a multiple bond in the row of the
-double-edge node, and triple edges with neighbours (e.g. `G̃₂`); for these the braid relations
-are not proved here.
+and allows, e.g., the cycles of affine type `Ãₙ`, `n ≥ 2` (including the triangle `Ã₂`). It
+excludes third nodes meeting both ends of a simple edge with an entry `≤ -2` in the row of an end,
+third nodes attached to a double edge by a multiple bond in the row of the double-edge node or
+meeting both of its ends, and triple edges with neighbours (e.g. `G̃₂`); for these the braid
+relations are not proved here.
 
 ## Main definitions / results
 
@@ -54,11 +57,13 @@ namespace LusztigCartanDatum
 variable {I : Type*} (D : LusztigCartanDatum I)
 
 /-- The graph condition under which the braid relations of the general `Tᵢ` are proved here:
-no third node meets both ends of a simple edge; the third nodes at a double edge are attached to
+a third node meeting both ends of a simple edge does so with entries `-1` in their rows; the
+third nodes at a double edge are attached to
 one end only, by an entry `-1` in the row of that end; triple edges are isolated. -/
 structure BraidOuterCondition : Prop where
   simple : ∀ i j l, D.cartanMatrix i j = -1 → D.cartanMatrix j i = -1 → l ≠ i → l ≠ j →
-    D.cartanMatrix i l = 0 ∨ D.cartanMatrix j l = 0
+    D.cartanMatrix i l = 0 ∨ D.cartanMatrix j l = 0 ∨
+      (D.cartanMatrix i l = -1 ∧ D.cartanMatrix j l = -1)
   double : ∀ i j l, D.cartanMatrix i j = -2 → D.cartanMatrix j i = -1 → l ≠ i → l ≠ j →
     (D.cartanMatrix i l = 0 ∧ D.cartanMatrix j l = 0) ∨
     (D.cartanMatrix i l = -1 ∧ D.cartanMatrix j l = 0) ∨
@@ -144,8 +149,12 @@ theorem isBraidLiftable_braidEquivOfGeneric :
     simp only [Matrix.coxeterEntry, alternatingWord, List.concat_eq_append, List.nil_append,
       List.cons_append, List.map_cons, List.map_nil, List.prod_cons, List.prod_nil, mul_one,
       ← mul_assoc]
-    exact (braidEquiv_braid_three_outer (hg i) _ (hg j) _ hij h1 h1'
-      (fun l hli hlj ↦ hD.simple i j l h1 h1' hli hlj)).symm
+    refine (braidEquiv_braid_three_triangle (hg i) _ (hg j) _ hij h1 h1'
+      (fun l hli hlj ↦ ?_)).symm
+    rcases hD.simple i j l h1 h1' hli hlj with h0 | h0 | ⟨hil, hjl⟩
+    · exact Or.inl h0
+    · exact Or.inr (Or.inl h0)
+    · exact Or.inr (Or.inr ⟨hil, hjl, hs i⟩)
   · -- double edge: length four
     have e : D.cartanMatrix i j * D.cartanMatrix j i = 2 := by omega
     obtain ⟨b1, b2, b3, b4⟩ := cartan_entries_of_mul hij (by norm_num) (by norm_num) e
