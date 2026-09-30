@@ -669,8 +669,20 @@ commutator `UniversalEnvelopingAlgebra.toGr_commutator` (PBW symbols of central 
 (`exists_shiftedHarishChandra_eq`, `shiftedHarishChandra_range`) is a degree induction using
 Chevalley extension of the top component (`exists_invariant_cartanRestriction_eq`), the
 existing central lifts and HC invariance. Reconstructed arguments; Humphreys GSM 94 Thm. 1.10
-is cited with (check). Central-character separation (`χ_λ = χ_μ` iff `μ + ρ ∈ W(λ + ρ)`)
-is not yet derived; the translation theorem is not yet complete.
+is cited with (check).
+`KacMoody/HarishChandraLinkage.lean` proves **central-character separation** in finite type
+(Humphreys GSM 94 Thm. 1.10(b), cited with (check)):
+`VermaModule.centralCharacter_eq_iff : χ_Λ = χ_Λ' ↔ ∃ w ∈ W, w (Λ + ρ) = Λ' + ρ`, with the same
+hypotheses as `shiftedHarishChandraEquiv`, and the linkage corollary
+`VermaModule.exists_weyl_of_hom_ne_zero` (a nonzero `M(μ) → M(Λ)` forces `μ ∈ W·Λ`). It packages
+the Weyl action on `Sym(𝔥)` as `SymmetricAlgebra.pullbackDual` (`(w·p)(λ) = p(w λ)`, via the
+transpose `dualTranspose` on finite-dimensional `𝔥`), proves `mem_coreflectionInvariants_iff`
+(coreflection invariance = invariance under the whole `weylGroup`), and proves orbit separation
+by invariants for any finite group of linear automorphisms of `𝔥*` over an infinite field
+(`SymmetricAlgebra.exists_invariant_separating`: the product over the group of one affine linear
+form vanishing at one point and nowhere on the other orbit; the generic form exists because a
+vector space over an infinite field is not a finite union of proper subspaces). Reconstructed.
+The translation theorem is not yet complete.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the inaccessible
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -1405,9 +1417,9 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   dimension; these extensions remain open.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
-  (`shiftedHarishChandraEquiv`) are proved in finite type over characteristic-zero fields.
-  Central-character separation (linkage), facet exclusion and dual compatibility for
-  Humphreys Thm. 7.6 remain.
+  (`shiftedHarishChandraEquiv`) are proved in finite type over characteristic-zero fields, as
+  is central-character separation (`VermaModule.centralCharacter_eq_iff`: `χ_Λ = χ_Λ'` iff
+  `Λ' ∈ W·Λ`). Facet exclusion and dual compatibility for Humphreys Thm. 7.6 remain.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
   linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
