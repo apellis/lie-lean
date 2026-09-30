@@ -249,6 +249,8 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoB2
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoRootVectors
+import LieLean.Algebra.QuantumGroup.PBW.RootVectors
+import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.Sl2
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Equivalence
@@ -294,6 +296,7 @@ import LieLean.GroupTheory.Coxeter.ArtinGroup
 import LieLean.GroupTheory.Coxeter.Matsumoto
 import LieLean.GroupTheory.Coxeter.Parabolic
 import LieLean.GroupTheory.Coxeter.Parabolic.CoxeterSystem
+import LieLean.GroupTheory.Coxeter.RankTwoParabolic
 import LieLean.GroupTheory.Coxeter.Squares
 import LieLean.LinearAlgebra.Eigenspace.Weight
 import LieLean.LinearAlgebra.ExteriorAlgebra.Koszul
@@ -301,6 +304,7 @@ import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulExact
 import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulSupport
 import LieLean.LinearAlgebra.Filtered.Exactness
 import LieLean.LinearAlgebra.Matrix.Cartan.BraidOuter
+import LieLean.LinearAlgebra.Matrix.Cartan.FiniteRankTwo
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
 import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
