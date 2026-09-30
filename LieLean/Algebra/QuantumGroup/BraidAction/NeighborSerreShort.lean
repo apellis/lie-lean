@@ -5,6 +5,7 @@ Authors: Alex Ellis
 -/
 import LieLean.Algebra.QuantumGroup.BraidAction.Recovery
 import LieLean.Algebra.QuantumGroup.BraidAction.CoupledSerreNegative
+import LieLean.Algebra.QuantumGroup.BraidAction.NeighborSerreDegreeOne
 
 /-!
 # Neighbor-first transformed Serre relations at a short node
@@ -33,7 +34,9 @@ is short), for every `aᵢⱼ`, in arbitrary ambient rank.
   `QuantumGroup.shortNode_qSerre_braidFj_braidFi`: `S₂(Tᵢ Eⱼ, Tᵢ Eᵢ) = 0` and
   `S₂(Tᵢ Fⱼ, Tᵢ Fᵢ) = 0` when `aⱼᵢ = -1`, for every `aᵢⱼ`, in arbitrary ambient rank, assuming
   `v ≠ 0`, `vᵢ - vᵢ⁻¹ ≠ 0` and `[2r-2, r-1]ᵢ ≠ 0`. The `F`-version is transported by the
-  Chevalley involution (`twoNode_chevalley_braidEj`).
+  Chevalley involution (`twoNode_chevalley_braidEj`,
+  `twoNode_qSerre_braidFj_braidFi_of_braidEj`, valid for every Cartan entry).
+  The general `(r, s)` case is `BraidAction/NeighborSerreGeneral.lean`.
 
 ## Method
 
@@ -430,9 +433,8 @@ lemma serreAux_deg_one (v c : k) (a b : B) : serreAux v c 1 a b = a * b - c • 
 
 /-- Peeling off one twisted commutator: `S_{s+1}(a, b) = serreAux p p s a (a b - p⁻ˢ b a)`. -/
 lemma qSerre_succ_eq {p : k} (hp : p ≠ 0) (s : ℕ) (a b : B) :
-    qSerre p (s + 1) a b = serreAux p p s a (a * b - p⁻¹ ^ s • (b * a)) := by
-  rw [← serreAux_one, ← serreAux_inv p, serreAux_succ (inv_ne_zero hp), serreAux_inv]
-  simp only [one_mul, inv_inv]
+    qSerre p (s + 1) a b = serreAux p p s a (a * b - p⁻¹ ^ s • (b * a)) :=
+  qSerre_succ_eq_serreAux_of_mul_sub_inv_pow_smul hp s rfl
 
 /-- **The reduction** of the neighbor-first Serre element: with `A = -F K` (the image of the
 centre generator) and `p^s = Q = q^{n+1}`,
@@ -597,18 +599,25 @@ theorem twoNode_chevalley_braidEj (hv : v ≠ 0) (i j : I) :
   set f := (qFactorial (v ^ D.d i) (negA D i j))⁻¹
   linear_combination (-f * ((v ^ D.d i)⁻¹ ^ negA D i j * (v ^ D.d i) ^ negA D i j)) * e1 - f * e2
 
-/-- The neighbor-first transformed Serre relation for the `F`-images at a short node
-(`aⱼᵢ = -1`), transported from the `E`-version by the Chevalley involution. -/
-theorem shortNode_qSerre_braidFj_braidFi [NeZero v] {i j : I} (h' : D.cartanMatrix j i = -1)
-    (hq : v ^ D.d i - (v ^ D.d i)⁻¹ ≠ 0)
-    (hb : qBinomial (v ^ D.d i) (2 * negA D i j - 2) (negA D i j - 1) ≠ 0) :
-    qSerre (v ^ D.d j) (1 - D.cartanMatrix j i).toNat (braidFj R v i j) (braidFi R i) = 0 := by
+/-- The negative neighbor-first relation follows from the positive one (in any degree) by the
+Chevalley involution, for every Cartan entry. -/
+theorem twoNode_qSerre_braidFj_braidFi_of_braidEj [NeZero v] {i j : I} {p : k} {m : ℕ}
+    (hE : qSerre p m (braidEj R v i j) (braidEi R i) = 0) :
+    qSerre p m (braidFj R v i j) (braidFi R i) = 0 := by
   have hv := NeZero.ne v
-  have hs := congrArg (chevalley R v) (shortNode_qSerre_braidEj_braidEi (R := R) h' hq hb)
+  have hs := congrArg (chevalley R v) hE
   rw [map_qSerre, map_zero, chevalley_braidEi hv, twoNode_chevalley_braidEj hv,
     qSerre_smul_smul] at hs
   refine (smul_eq_zero.mp hs).resolve_left (mul_ne_zero (pow_ne_zero _ (mul_ne_zero
     (pow_ne_zero _ (neg_ne_zero.mpr one_ne_zero)) (pow_ne_zero _ (inv_ne_zero
       (pow_ne_zero _ hv))))) (pow_ne_zero _ (pow_ne_zero _ hv)))
+
+/-- The neighbor-first transformed Serre relation for the `F`-images at a short node
+(`aⱼᵢ = -1`), transported from the `E`-version by the Chevalley involution. -/
+theorem shortNode_qSerre_braidFj_braidFi [NeZero v] {i j : I} (h' : D.cartanMatrix j i = -1)
+    (hq : v ^ D.d i - (v ^ D.d i)⁻¹ ≠ 0)
+    (hb : qBinomial (v ^ D.d i) (2 * negA D i j - 2) (negA D i j - 1) ≠ 0) :
+    qSerre (v ^ D.d j) (1 - D.cartanMatrix j i).toNat (braidFj R v i j) (braidFi R i) = 0 :=
+  twoNode_qSerre_braidFj_braidFi_of_braidEj (shortNode_qSerre_braidEj_braidEi h' hq hb)
 
 end QuantumGroup
