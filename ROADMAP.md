@@ -1423,9 +1423,10 @@ proof reduces to the fixed-point identities `TⱼTᵢTⱼTᵢTⱼ(Eᵢ) = Eᵢ`,
 of the twisted-commutator family and the degree-one identity at the long node; no
 normal-ordering certificate is used. Arbitrary field and root-datum lattice; the fixed-point
 identities hold in arbitrary ambient rank.
-Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations in general
-(both `G₂` nodes and the whole family `aⱼᵢ = -1` are done, under the stated nonvanishing
-hypotheses), all-node assembly beyond the proved families, and general canonical bases.
+Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations for pairs `(l, m)` of
+two nodes other than `i` in higher rank (all rank-two pairs `(j, i)` are done, under the stated
+nonvanishing hypotheses), all-node assembly beyond the proved families, and general canonical
+bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
