@@ -214,6 +214,9 @@ import LieLean.Algebra.QuantumGroup.BraidAction.TwoNodeBraid
 import LieLean.Algebra.QuantumGroup.BraidAction.NeighborSerreGeneral
 import LieLean.Algebra.QuantumGroup.BraidAction.TwoNodeGeneral
 import LieLean.Algebra.QuantumGroup.BraidAction.GeneralSerre
+import LieLean.Algebra.QuantumGroup.BraidAction.BraidRelationsGeneral
+import LieLean.Algebra.QuantumGroup.BraidAction.DoubleEdgeGeneral
+import LieLean.Algebra.QuantumGroup.BraidAction.GeneralArtin
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.GabberKac
@@ -279,6 +282,7 @@ import LieLean.GroupTheory.Coxeter.Hecke.Presentation
 import LieLean.GroupTheory.Coxeter.Hecke.RPolynomial
 import LieLean.GroupTheory.Coxeter.Hecke.Specialization
 import LieLean.GroupTheory.Coxeter.Longest
+import LieLean.GroupTheory.Coxeter.ArtinGroup
 import LieLean.GroupTheory.Coxeter.Matsumoto
 import LieLean.GroupTheory.Coxeter.Parabolic
 import LieLean.GroupTheory.Coxeter.Parabolic.CoxeterSystem

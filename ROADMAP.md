@@ -1482,9 +1482,25 @@ alternating reduced word of `w₀` lies in `U⁺`, with explicit formulas in the
 `g2_rootVectors_mem_adjoin`); the `B₂` fixed point `TᵢTⱼTᵢ(Eⱼ) = Eⱼ` (`b2_rootVector_four`) is
 obtained structurally from the lowering identities. Remaining: spanning and independence for `B₂`
 and `G₂` (Levendorskii–Soibelman straightening), higher rank, and canonical bases.
-Remaining for general `Tᵢ`: braid relations for these automorphisms beyond the cases covered by
-the constructor-independent `HasBraidGeneratorImages` results, the Artin-group action for
-arbitrary Cartan data, and general canonical bases.
+`BraidAction/BraidRelationsGeneral.lean`, `BraidAction/DoubleEdgeGeneral.lean` and
+`BraidAction/GeneralArtin.lean` prove braid relations for the general `Tᵢ` in arbitrary rank:
+length three at a simple edge when no third node meets both ends, with arbitrary Cartan entries
+at the third nodes (`braidEquiv_braid_three_outer`; the outer-node identity
+`(ad_b)ʳ (ad_a)ʳ z = [r]! (ad_c)ʳ z`, `TwoNode.three_outer_core`, comes from the Gaussian Leibniz
+rule); length four at a `(-2, -1)` edge when each third node `l` has
+`(aᵢₗ, aⱼₗ) ∈ {(0,0), (-1,0), (0,-1)}` (`braidEquiv_braid_four`; the constructor-specific
+argument of `DoubleEdgeRelation`/`HigherDoubleRelation` transferred to `braidHom`/`braidInvHom`);
+length six at a `(-3, -1)` edge with orthogonal third nodes
+(`braidEquiv_braid_six_of_orthogonal`). `GroupTheory/Coxeter/ArtinGroup.lean` defines the Artin
+group `M.ArtinGroup` of a Coxeter matrix (presented group, `artinLift`), and
+**`braidArtinHom`**/`braidArtinHomOfNotRoot` give the action `σᵢ ↦ Tᵢ` of the Artin group of
+`D.cartanMatrix.coxeterMatrix` on `U` for every Cartan datum satisfying
+`LusztigCartanDatum.BraidOuterCondition` (by inspection, all finite types; any rank), via
+`isBraidLiftable_braidEquivOfGeneric` (so Matsumoto's `braidLift` also gives `T_w`).
+Remaining for general `Tᵢ`: braid relations when a third node meets both ends of a simple edge
+(triangles; needs a rank-three identity), when a third node meets a double edge by a multiple
+bond or meets both of its ends, and at a triple edge with neighbours (e.g. `G̃₂`); faithfulness;
+general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
@@ -1586,8 +1602,11 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   root of unity. All defining relations are proved in every degree (`Diagonal`, `Recovery`,
   `NeighborSerreGeneral`, `GeneralSerre`). Braid relations: length two and simple-edge length
   three in general (`GeneralRelations.lean`), the named Bₙ/Cₙ/F₄ actions, and the `G₂`
-  length-six relation with the named `G₂` action (`artinHom_G₂`). Remaining: the braid relations
-  (lengths four and six) and the Artin-group action for arbitrary Cartan data, action
+  length-six relation with the named `G₂` action (`artinHom_G₂`). In arbitrary rank
+  (`BraidRelationsGeneral`, `DoubleEdgeGeneral`, `GeneralArtin`): lengths three, four and six
+  under the third-node condition `BraidOuterCondition` (all finite types), and the Artin-group
+  action `braidArtinHom` of `D.cartanMatrix.coxeterMatrix.ArtinGroup`. Remaining: braid
+  relations for data violating `BraidOuterCondition` (triangles, `G̃₂`, ...), action
   faithfulness, and canonical bases.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
