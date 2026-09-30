@@ -658,8 +658,19 @@ vectors whose weight-zero members span the Cartan image, and uses invariance und
 vectors only. Its reconstructed proof is a lowest-term argument in coordinates with weight 0
 on the Cartan and 1 on the root directions (`RingTheory/MvPolynomial/LowestWeight.lean`:
 the component just below the lowest weight of `D p` is `∑ ℓ_α ∂_α p_k`, then Euler), replacing
-the density of semisimple elements. Harish–Chandra image/injectivity remain separate; the
-translation theorem is not yet complete.
+the density of semisimple elements.
+`KacMoody/HarishChandraIsomorphism.lean` proves **Harish-Chandra's theorem** in finite type:
+`shiftedHarishChandraEquiv : Z(U(𝔤)) ≃ₐ[K] coreflectionInvariants`, the `ρ`-shifted HC map
+(value at `μ` = Verma central character of `μ - ρ`) onto the polynomials on `𝔥*` fixed by all
+simple coreflections, over every characteristic-zero field. Injectivity
+(`harishChandra_injective`, `shiftedHarishChandra_injective`) uses the proved graded
+commutator `UniversalEnvelopingAlgebra.toGr_commutator` (PBW symbols of central elements are
+`ad`-invariant) and Chevalley injectivity for symbols; the image
+(`exists_shiftedHarishChandra_eq`, `shiftedHarishChandra_range`) is a degree induction using
+Chevalley extension of the top component (`exists_invariant_cartanRestriction_eq`), the
+existing central lifts and HC invariance. Reconstructed arguments; Humphreys GSM 94 Thm. 1.10
+is cited with (check). Central-character separation (`χ_λ = χ_μ` iff `μ + ρ ∈ W(λ + ρ)`)
+is not yet derived; the translation theorem is not yet complete.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -1343,10 +1354,11 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   Cartan space by `ker_bggDiff_eq_range`, using actual lowering powers modulo boundaries
   and Casimir vanishing. The theorem does not cover nonsymmetrizable GCM or arbitrary Cartan
   dimension; these extensions remain open.
-- **Chevalley restriction and category `𝒪`** (M12): Chevalley's restriction theorem is proved
-  in finite type (`chevalleyRestriction_bijective`: surjectivity via dominant-orbit spanning
-  and invariant extensions, injectivity via a lowest-term argument). HC image/separation,
-  facet exclusion and dual compatibility for Humphreys Thm. 7.6 remain.
+- **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
+  theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
+  (`shiftedHarishChandraEquiv`) are proved in finite type over characteristic-zero fields.
+  Central-character separation (linkage), facet exclusion and dual compatibility for
+  Humphreys Thm. 7.6 remain.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved. Next are highestness-to-normalization for original-endpoint-fibre
   Proposition 5.7, §6 linking/endpoint-fibre arguments and the straight-path component theorem,
