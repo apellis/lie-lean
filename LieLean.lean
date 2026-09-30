@@ -178,6 +178,8 @@ import LieLean.Algebra.QuantumGroup.BraidAction.SimplyLacedRelations
 import LieLean.Algebra.QuantumGroup.BraidAction.Artin
 import LieLean.Algebra.QuantumGroup.BraidAction.DegreeTwo
 import LieLean.Algebra.QuantumGroup.BraidAction.Diagonal
+import LieLean.Algebra.QuantumGroup.BraidAction.General
+import LieLean.Algebra.QuantumGroup.BraidAction.Recovery
 import LieLean.Algebra.QuantumGroup.BraidAction.HigherMixed
 import LieLean.Algebra.QuantumGroup.BraidAction.HigherSerre
 import LieLean.Algebra.QuantumGroup.BraidAction.HigherSerreReverse
@@ -194,6 +196,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.NextEdge
 import LieLean.Algebra.QuantumGroup.BraidAction.ThreeLocalArtin
 import LieLean.Algebra.QuantumGroup.BraidAction.Families
 import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdge
+import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdgeBraid
 import LieLean.Algebra.QuantumGroup.BraidAction.TripleExpansion
 import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
 import LieLean.Algebra.QuantumGroup.CartanDatum

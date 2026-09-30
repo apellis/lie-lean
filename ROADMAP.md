@@ -1260,9 +1260,20 @@ single monomial in `Fᵢ, K̃ᵢ^{±1}, K̃ⱼ^{±1}`, and evaluates the diagona
 The same recursion gives `braidEj_commute_braidFj`: `[Tᵢ(Eⱼ), Tᵢ(Fₗ)] = 0` for distinct
 `j, l ≠ i` and arbitrary Cartan entries, assuming only `v ≠ 0`. Thus relations (b)–(d) are
 preserved by the candidate `Tᵢ` in every degree.
-Remaining for general `Tᵢ`: the transformed Serre relations (higher-degree edges and other
-node pairs), the general automorphism/inverse construction, other braid relations and general
-canonical bases.
+`BraidAction/Recovery.lean` proves, in every degree, that `Tᵢ` maps the reversal-conjugate
+candidates for `Tᵢ⁻¹(Eⱼ)`, `Tᵢ⁻¹(Fⱼ)` back to `Eⱼ`, `Fⱼ` (`serreAux_braidEi_braidEj`,
+`serreAux_braidFi_braidFj`), and the centre-first transformed Serre relations
+`S_{1-aᵢⱼ}(Tᵢ Eᵢ, Tᵢ Eⱼ) = 0` for `E` and `F` (`qSerre_braidEi_braidEj`,
+`qSerre_braidFi_braidFj`; only `v ≠ 0`, `vᵢ - vᵢ⁻¹ ≠ 0`). `BraidAction/General.lean` assembles
+**`braidEquiv`**: for any node of any Cartan datum (arbitrary rank, field and root-datum lattice,
+`v ≠ 0`, `vᵢ - vᵢ⁻¹ ≠ 0`, `[-aᵢⱼ]ᵢ! ≠ 0`), `Tᵢ` is an algebra automorphism with explicit
+reversal-conjugate inverse as soon as the neighbor-first transformed Serre relations
+`S(Tᵢ Eₗ, Tᵢ Eₘ) = 0`, `l ≠ i` (`TransformedSerre`) hold. `BraidAction/TripleEdgeBraid.lean`
+instantiates it at the triple node of an exact `G₂` datum (`tripleEdgeBraidEquiv`, with the
+extra `vᵢ⁴ + 1 ≠ 0` of `TripleEdge.lean`).
+Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations in general (in
+particular at the simple node of `G₂`), the braid relations beyond the proved families
+(length six for `G₂`), and general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
@@ -1343,10 +1354,11 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   reparametrization, not an unqualified assertion for all continuous dominant paths.
   General crystal normality and Weyl braid relations also remain.
 - **Braid automorphisms `Tᵢ` in general** (M15): actual local-class and named Bₙ/Cₙ/F₄ actions
-  are proved, as are triple-edge Serre prerequisites and the diagonal relation
-  `[Tᵢ(Eⱼ), Tᵢ(Fⱼ)]` in every degree (`BraidAction/Diagonal.lean`). Remaining: degree-three
-  inverse recovery, both G₂ automorphisms and length-six equality, unsupported all-node
-  assembly and action faithfulness. The integrable-module construction ([Lus] 5.2) remains
+  are proved, as are the relations (b)–(d), inverse recovery and centre-first Serre relations in
+  every degree; `braidEquiv` reduces `Tᵢ` being an automorphism to the neighbor-first
+  transformed Serre relations, and the `G₂` triple-node automorphism is constructed.
+  Remaining: neighbor-first transformed Serre relations in general (the `G₂` simple node
+  first), the `G₂` length-six equality, all-node assembly and action faithfulness. The integrable-module construction ([Lus] 5.2) remains
   an alternative route; it is not an already-proved general action.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
