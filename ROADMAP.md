@@ -1271,13 +1271,26 @@ reversal-conjugate inverse as soon as the neighbor-first transformed Serre relat
 `S(Tᵢ Eₗ, Tᵢ Eₘ) = 0`, `l ≠ i` (`TransformedSerre`) hold. `BraidAction/TripleEdgeBraid.lean`
 instantiates it at the triple node of an exact `G₂` datum (`tripleEdgeBraidEquiv`, with the
 extra `vᵢ⁴ + 1 ≠ 0` of `TripleEdge.lean`).
+`BraidAction/NeighborSerreDegreeOne.lean` treats a node with `aᵢⱼ = -1` and arbitrary
+`aⱼᵢ = -s` (arbitrary ambient rank): with `p = vⱼ`, `X = Tᵢ(Eⱼ)`, one has
+`X Tᵢ(Eᵢ) - vᵢ⁻¹ Tᵢ(Eᵢ) X = Eⱼ`, so peeling the `p⁻ˢ` twisted commutator first gives
+`S_{s+1}(X, Tᵢ Eᵢ) = serreAux p p s X Eⱼ` (`degreeOne_qSerre_braidEj_braidEi_eq_serreAux`),
+a positive-part element; the negative relation follows by the Chevalley involution
+(`degreeOne_qSerre_braidFj_braidFi`). For an exact two-node datum, `degreeOneBraidEquiv`
+builds `Tᵢ` from `vᵢ - vᵢ⁻¹ ≠ 0` and the single `U⁺` identity `serreAux p p s X Eⱼ = 0`.
+`BraidAction/TripleEdgeOther.lean` proves that identity for `s = 3` by a 23-term certificate
+in the original Serre relations (`tripleEdgeOther_originalSerre_certificate`) and constructs
+the automorphism at the other (long) node of `G₂` (`tripleEdgeOtherBraidEquiv`), with the
+extra hypothesis `vᵢ² + 1 ≠ 0` (equivalently `p⁶ + 1 ≠ 0`) cancelled from the certificate;
+necessity is not claimed. The identity is not proved for general `s` (it is the Serre relation
+for `s = 1` and follows from the certificate of `DoubleEdgeOther.lean` for `s = 2`).
 `BraidAction/GeneralRelations.lean`: `braidHom` has the generator formulas
 (`braidHom_hasBraidGeneratorImages`), hence agrees with every earlier local construction
 (`braidHom_eq`) and satisfies the constructor-independent length-two (`braidEquiv_comm`) and
 simple-edge length-three (`braidEquiv_braid_three`) relations.
-Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations in general (in
-particular at the simple node of `G₂`), the braid relations beyond the proved families
-(length six for `G₂`), and general canonical bases.
+Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations in general
+(both `G₂` nodes are done, under extra nonvanishing hypotheses), the braid relations beyond
+the proved families (length six for `G₂`), and general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
@@ -1360,10 +1373,13 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
 - **Braid automorphisms `Tᵢ` in general** (M15): actual local-class and named Bₙ/Cₙ/F₄ actions
   are proved, as are the relations (b)–(d), inverse recovery and centre-first Serre relations in
   every degree; `braidEquiv` reduces `Tᵢ` being an automorphism to the neighbor-first
-  transformed Serre relations, and the `G₂` triple-node automorphism is constructed.
-  Remaining: neighbor-first transformed Serre relations in general (the `G₂` simple node
-  first), the `G₂` length-six equality, all-node assembly and action faithfulness. The integrable-module construction ([Lus] 5.2) remains
-  an alternative route; it is not an already-proved general action.
+  transformed Serre relations, and the automorphisms at both `G₂` nodes are constructed
+  (`tripleEdgeBraidEquiv`, `tripleEdgeOtherBraidEquiv`; extra hypotheses `vᵢ⁴ + 1 ≠ 0`,
+  resp. `vᵢ² + 1 ≠ 0`). At a node with `aᵢⱼ = -1` the neighbor-first relation is reduced to a
+  single `U⁺` identity for every reverse entry (`NeighborSerreDegreeOne.lean`).
+  Remaining: neighbor-first transformed Serre relations in general, the `G₂` length-six
+  equality, all-node assembly and action faithfulness. The integrable-module construction
+  ([Lus] 5.2) remains an alternative route; it is not an already-proved general action.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
