@@ -1396,6 +1396,21 @@ two-node datum with `aⱼᵢ = -1` (uniformly `A₂`, `B₂`, `G₂` and the Kac
 with no extra hypothesis for `r ≤ 2` (`shortNodeBraidEquiv_of_negA_le_two`) or when `v` is not a
 root of unity (`shortNodeBraidEquiv_of_not_root`); for `G₂` it is `tripleEdgeBraidEquiv`
 (`shortNodeBraidEquiv_eq_tripleEdgeBraidEquiv`).
+`BraidAction/NeighborSerreGeneral.lean` proves the neighbor-first relations for **every** pair
+of Cartan entries `r = -aᵢⱼ`, `s = -aⱼᵢ` (`twoNode_qSerre_braidEj_braidEi`,
+`twoNode_qSerre_braidFj_braidFi`, arbitrary ambient rank, including `aᵢⱼ = 0`), assuming `v ≠ 0`,
+`vᵢ - vᵢ⁻¹ ≠ 0` and `[(s+1) r - 2]ᵢ! ≠ 0`. The positive-part identity
+`serreAux vⱼ vⱼ s (X r) (X (r-1)) = 0` (`twoNode_serreAux_top`, abstractly
+`TwoNode.serreAux_top_eq_zero`) comes from applying `ad Eᵢ` exactly `(s+1) r - 2` times to
+`S_{s+1}(Eⱼ, Eᵢ)`: after the `s = 1` step, each further twisted commutator with `Eⱼ` is carried
+to the same twisted commutator with `X r` (`TwoNode.dd_step`, via the Gaussian twisted Leibniz
+rule `TwoNode.dd_mul`). The condition reduces to `[2r-2, r-1]ᵢ ≠ 0` for `s = 1` and `[s-1]ᵢ! ≠ 0`
+for `r = 1`. `BraidAction/TwoNodeGeneral.lean` assembles `twoNodeBraidEquiv` at either node of
+**every** exact two-node datum (both automorphisms for all rank-two Cartan data), with no
+hypothesis beyond `v ≠ 0` when `v` is not a root of unity (`twoNodeBraidEquiv_of_not_root`); it
+agrees by `rfl` with `shortNodeBraidEquiv`, `degreeOneBraidEquiv` (whose positive-part
+hypothesis is now `degreeOne_serreAux_braidEj_eq_zero`) and `tripleEdgeOtherBraidEquiv`. In
+higher rank, `TransformedSerre` still needs the pairs `(l, m)` of two nodes other than `i`.
 `BraidAction/TripleEdgeRelation.lean` proves the **length-six `G₂` relation**
 `Tᵢ Tⱼ Tᵢ Tⱼ Tᵢ Tⱼ = Tⱼ Tᵢ Tⱼ Tᵢ Tⱼ Tᵢ` for any algebra endomorphisms with Lusztig's generator
 formulas at the two nodes of an exact two-node datum with entries `(-3,-1)`
@@ -1408,9 +1423,10 @@ proof reduces to the fixed-point identities `TⱼTᵢTⱼTᵢTⱼ(Eᵢ) = Eᵢ`,
 of the twisted-commutator family and the degree-one identity at the long node; no
 normal-ordering certificate is used. Arbitrary field and root-datum lattice; the fixed-point
 identities hold in arbitrary ambient rank.
-Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations in general
-(both `G₂` nodes and the whole family `aⱼᵢ = -1` are done, under the stated nonvanishing
-hypotheses), all-node assembly beyond the proved families, and general canonical bases.
+Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations for pairs `(l, m)` of
+two nodes other than `i` in higher rank (all rank-two pairs `(j, i)` are done, under the stated
+nonvanishing hypotheses), all-node assembly beyond the proved families, and general canonical
+bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
