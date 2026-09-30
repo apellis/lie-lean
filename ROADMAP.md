@@ -1116,7 +1116,18 @@ scalars `ℝ`. Every path of `B(ν)` is the path of a finite presentation with r
 breakpoints (`exists_presentation_of_mem_component`), so `lrIsomorphismHypothesis` proves
 `LRIsomorphismHypothesis` and `nonempty_equiv_sigma_of_finiteDimensional` gives the
 **crystal-level Littlewood–Richardson decomposition** `B(λ) ⊗ B(μ) ≅ ⊔_η B(λ + η(1))`
-unconditionally in that setting. Remaining: braid relations/normality, and extension of the
+unconditionally in that setting. `Path/Levi.lean` proves **Levi restriction** (Littelmann's
+restriction rule): for injective `e : κ → ι` (a subdiagram `J`, any type) and any realization
+`Q` of the principal submatrix `A_J`, a restriction map `r : 𝔥* → 𝔥_J*` with
+`r(α_{e k}) = α_k^J`, `⟨r v, α_k^{J∨}⟩ = ⟨v, α_{e k}^∨⟩` exists (`exists_leviMap`, finite-
+dimensional `𝔥`); `π ↦ r ∘ π` intertwines `e_{e k}, f_{e k}` with the Levi root operators
+(`e_restrict`, `f_restrict`, `rootWord_restrict`) and maps each `J`-component bijectively onto
+the Levi component (`jComponent_bijOn`); for `J`-highest `π ∈ B(λ)` the Levi component is
+`B_J(r(π(1)))` (`componentIso_straightLine_restrict`, Theorem 7.1 for `Q`), and every
+`J`-component of `B(λ)` has a `J`-highest path (`exists_jHighest`). Combined:
+`LeviMap.exists_jHighest_componentIso`; for `J = {i}` each `i`-string is an `sl₂` path crystal.
+Remaining: Weyl braid relations for Kashiwara's `Sᵢ` on `B(λ)`; identification of the Levi path
+crystals with crystal bases (normality in Kashiwara's sense); and extension of the
 concrete `a`-chain description beyond the proved dominant-orbit supplied-path scope.
 Source-scope caution: the isomorphism theorem is proved for rational piecewise-linear paths
 (finitely many pieces, rational vertices), not for all continuous dominant paths of the
@@ -1444,6 +1455,22 @@ length-three relations of `GeneralRelations.lean` apply to it.
 `CartanMatrix.G₂` (node `0` short, `a₀₁ = -3`) `artinHom_G₂`/`artinAction_G₂` need only
 `v ≠ 0` not a root of unity, over any field, compatible Cartan datum and root-datum lattice.
 Faithfulness is not asserted.
+**PBW bases, rank two** (`PBW/RankTwoA2.lean`, `PBW/RankTwoRootVectors.lean`; [Jan] 8.21–8.24,
+[Lus] 40.1–40.2, all (check)). For an exact two-node `A₂` datum, the ordered monomials
+`Eᵢ^a Tᵢ(Eⱼ)^b Eⱼ^c` in the root vectors along `sᵢ sⱼ sᵢ` span `U⁺ = ⟨Eₗ⟩`
+(`span_a2PBWMono`, only `v ≠ 0`) and, for `v` not a root of unity, are linearly independent
+(`linearIndependent_a2PBWMono`), giving `a2PBWBasis`; `a2PBWMono_eq_rootVectors` and
+`a2PBWBasis_apply_braidEquiv` identify the basis vectors with monomials in `Eᵢ`, `Tᵢ(Eⱼ)`,
+`TᵢTⱼ(Eᵢ)` for the actual automorphisms. Proof (reconstructed): the straightening formulas are
+realised as operators on `k[ℕ³]` satisfying the Serre relations, giving a representation of `'f`
+that kills the Serre ideal and intertwines with left multiplication on the monomials; with
+`plusHom_eq_zero_iff` (`U⁺ ≅ 'f ⧸ J`) this gives independence, without the form or a dimension
+count. For `A₁ × A₁`, `A₂`, `B₂` and `G₂` every root vector `Tᵢ₁⋯Tᵢₖ₋₁(Eᵢₖ)` along the
+alternating reduced word of `w₀` lies in `U⁺`, with explicit formulas in the twisted commutators
+`X n` (`a1a1_rootVector_two`, `a2_rootVectors_mem_adjoin`, `b2_rootVectors_mem_adjoin`,
+`g2_rootVectors_mem_adjoin`); the `B₂` fixed point `TᵢTⱼTᵢ(Eⱼ) = Eⱼ` (`b2_rootVector_four`) is
+obtained structurally from the lowering identities. Remaining: spanning and independence for `B₂`
+and `G₂` (Levendorskii–Soibelman straightening), higher rank, and canonical bases.
 `BraidAction/BraidRelationsGeneral.lean`, `BraidAction/DoubleEdgeGeneral.lean` and
 `BraidAction/GeneralArtin.lean` prove braid relations for the general `Tᵢ` in arbitrary rank:
 length three at a simple edge when no third node meets both ends, with arbitrary Cartan entries
@@ -1550,7 +1577,10 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   (`lrIsomorphismHypothesis`), so the crystal-level Littlewood–Richardson decomposition
   `nonempty_equiv_sigma_of_finiteDimensional` is unconditional over `ℝ` with finite-dimensional
   Cartan space. The theorem is not claimed for arbitrary continuous dominant paths.
-  General crystal normality and Weyl braid relations remain.
+  Levi restriction is proved (`Path/Levi.lean`, `LeviMap.exists_jHighest_componentIso`): every
+  `J`-component of `B(λ)` is a Levi path crystal `B_J(μ)` through a `J`-highest path.
+  Remaining: identification of `B_J(μ)` with Kashiwara's crystal bases (normality in his sense)
+  and the Weyl braid relations for Kashiwara's `Sᵢ` on `B(λ)`.
 - **Braid automorphisms `Tᵢ` in general** (M15): **`braidEquivOfGeneric`**: Lusztig's `Tᵢ` is an
   algebra automorphism (explicit reversal-conjugate inverse) at every node of every Cartan
   datum, in arbitrary rank, over any field and root-datum lattice, under explicit q-factorial
@@ -1568,7 +1598,8 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
 - Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
-  `Hecke/KazhdanLusztig/Canonical.lean`),
+  `Hecke/KazhdanLusztig/Canonical.lean`; the PBW basis is proved for `A₂`, `a2PBWBasis`, and root
+  vectors lie in `U⁺` in all rank-two finite types),
   infinite-dimensional extensions of quantum `sl₂` classification, Humphreys O Thm. 7.6,
   and valid restricted extensions of the Hom dimension bound.
   Finite-dimensional exhaustion and parameter uniqueness are proved for both signs at generic
