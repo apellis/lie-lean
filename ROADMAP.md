@@ -1423,6 +1423,18 @@ proof reduces to the fixed-point identities `TⱼTᵢTⱼTᵢTⱼ(Eᵢ) = Eᵢ`,
 of the twisted-commutator family and the degree-one identity at the long node; no
 normal-ordering certificate is used. Arbitrary field and root-datum lattice; the fixed-point
 identities hold in arbitrary ambient rank.
+`BraidAction/GeneralSerre.lean` proves the remaining transformed Serre relations, between two
+distinct nodes `l, m ≠ i`: `S_{1-aₗₘ}(Tᵢ Eₗ, Tᵢ Eₘ) = 0` and the `F` analogue
+(`outer_qSerre_braidEj_braidEj`, `outer_qSerre_braidFj_braidFj`), in arbitrary rank, assuming
+only `v ≠ 0` and `[(1 - aₗₘ)(-aᵢₗ) + (-aᵢₘ)]ᵢ! ≠ 0`: the iteration lemma `TwoNode.dd_serreAux`,
+started at `Z = Eₘ`, carries the original Serre element `S_{1-aₗₘ}(Eₗ, Eₘ)` by `ad Eᵢ` to a
+nonzero multiple of `S_{1-aₗₘ}(X r, Y t)` (only the top term of the Leibniz expansion survives).
+Hence `TransformedSerre` holds at every node of every Cartan datum under the explicit
+q-factorial hypotheses `BraidSerreGeneric` (`transformedSerre_of_braidSerreGeneric`), and
+**`braidEquivOfGeneric`** is Lusztig's `Tᵢ` as an algebra automorphism at any node of any Cartan
+datum (arbitrary rank, field and root-datum lattice), with explicit reversal-conjugate inverse;
+`braidEquivOfNotRoot` needs only `v ≠ 0` not a root of unity. The length-two and simple-edge
+length-three relations of `GeneralRelations.lean` apply to it.
 `BraidAction/TripleEdgeArtin.lean` packages the **`G₂` braid group action**: the Artin group
 `TripleEdgeArtinGroup i j = ⟨i, j | ijijij = jijiji⟩` (no involution relators;
 `generator_sq_ne_one`) acts on `U` by algebra automorphisms via `braidEquiv` at both nodes
@@ -1432,10 +1444,9 @@ identities hold in arbitrary ambient rank.
 `CartanMatrix.G₂` (node `0` short, `a₀₁ = -3`) `artinHom_G₂`/`artinAction_G₂` need only
 `v ≠ 0` not a root of unity, over any field, compatible Cartan datum and root-datum lattice.
 Faithfulness is not asserted.
-Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations for pairs `(l, m)` of
-two nodes other than `i` in higher rank (all rank-two pairs `(j, i)` are done, under the stated
-nonvanishing hypotheses), all-node assembly beyond the proved families, and general canonical
-bases.
+Remaining for general `Tᵢ`: braid relations for these automorphisms beyond the cases covered by
+the constructor-independent `HasBraidGeneratorImages` results, the Artin-group action for
+arbitrary Cartan data, and general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
@@ -1524,18 +1535,16 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   `nonempty_equiv_sigma_of_finiteDimensional` is unconditional over `ℝ` with finite-dimensional
   Cartan space. The theorem is not claimed for arbitrary continuous dominant paths.
   General crystal normality and Weyl braid relations remain.
-- **Braid automorphisms `Tᵢ` in general** (M15): actual local-class and named Bₙ/Cₙ/F₄ actions
-  are proved, as are the relations (b)–(d), inverse recovery and centre-first Serre relations in
-  every degree; `braidEquiv` reduces `Tᵢ` being an automorphism to the neighbor-first
-  transformed Serre relations, and the automorphisms at both `G₂` nodes are constructed
-  (`tripleEdgeBraidEquiv`, `tripleEdgeOtherBraidEquiv`; extra hypotheses `vᵢ⁴ + 1 ≠ 0`,
-  resp. `vᵢ² + 1 ≠ 0`). At a node with `aᵢⱼ = -1` the neighbor-first relation is reduced to a
-  single `U⁺` identity for every reverse entry (`NeighborSerreDegreeOne.lean`).
-  The `G₂` length-six relation is proved (`HasBraidGeneratorImages.six_braid_of_triple_edge`,
-  `tripleEdgeBraidEquiv_braid_six`), and the named `G₂` braid group action is packaged
-  (`artinHom_G₂`, generic parameter). Remaining: neighbor-first transformed Serre relations in
-  general, all-node assembly and action faithfulness. The integrable-module construction
-  ([Lus] 5.2) remains an alternative route; it is not an already-proved general action.
+- **Braid automorphisms `Tᵢ` in general** (M15): **`braidEquivOfGeneric`**: Lusztig's `Tᵢ` is an
+  algebra automorphism (explicit reversal-conjugate inverse) at every node of every Cartan
+  datum, in arbitrary rank, over any field and root-datum lattice, under explicit q-factorial
+  nonvanishing hypotheses (`BraidSerreGeneric`); `braidEquivOfNotRoot` needs only `v ≠ 0` not a
+  root of unity. All defining relations are proved in every degree (`Diagonal`, `Recovery`,
+  `NeighborSerreGeneral`, `GeneralSerre`). Braid relations: length two and simple-edge length
+  three in general (`GeneralRelations.lean`), the named Bₙ/Cₙ/F₄ actions, and the `G₂`
+  length-six relation with the named `G₂` action (`artinHom_G₂`). Remaining: the braid relations
+  (lengths four and six) and the Artin-group action for arbitrary Cartan data, action
+  faithfulness, and canonical bases.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.

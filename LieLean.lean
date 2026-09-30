@@ -213,6 +213,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.NeighborSerreShort
 import LieLean.Algebra.QuantumGroup.BraidAction.TwoNodeBraid
 import LieLean.Algebra.QuantumGroup.BraidAction.NeighborSerreGeneral
 import LieLean.Algebra.QuantumGroup.BraidAction.TwoNodeGeneral
+import LieLean.Algebra.QuantumGroup.BraidAction.GeneralSerre
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.GabberKac
