@@ -669,8 +669,38 @@ commutator `UniversalEnvelopingAlgebra.toGr_commutator` (PBW symbols of central 
 (`exists_shiftedHarishChandra_eq`, `shiftedHarishChandra_range`) is a degree induction using
 Chevalley extension of the top component (`exists_invariant_cartanRestriction_eq`), the
 existing central lifts and HC invariance. Reconstructed arguments; Humphreys GSM 94 Thm. 1.10
-is cited with (check). Central-character separation (`χ_λ = χ_μ` iff `μ + ρ ∈ W(λ + ρ)`)
-is not yet derived; the translation theorem is not yet complete.
+is cited with (check).
+`KacMoody/HarishChandraLinkage.lean` proves **central-character separation** in finite type
+(Humphreys GSM 94 Thm. 1.10(b), cited with (check)):
+`VermaModule.centralCharacter_eq_iff : χ_Λ = χ_Λ' ↔ ∃ w ∈ W, w (Λ + ρ) = Λ' + ρ`, with the same
+hypotheses as `shiftedHarishChandraEquiv`, and the linkage corollary
+`VermaModule.exists_weyl_of_hom_ne_zero` (a nonzero `M(μ) → M(Λ)` forces `μ ∈ W·Λ`). It packages
+the Weyl action on `Sym(𝔥)` as `SymmetricAlgebra.pullbackDual` (`(w·p)(λ) = p(w λ)`, via the
+transpose `dualTranspose` on finite-dimensional `𝔥`), proves `mem_coreflectionInvariants_iff`
+(coreflection invariance = invariance under the whole `weylGroup`), and proves orbit separation
+by invariants for any finite group of linear automorphisms of `𝔥*` over an infinite field
+(`SymmetricAlgebra.exists_invariant_separating`: the product over the group of one affine linear
+form vanishing at one point and nowhere on the other orbit; the generic form exists because a
+vector space over an infinite field is not a finite union of proper subspaces). Reconstructed.
+`KacMoody/TranslationFacet.lean` proves **facet exclusion** for integral weights in finite type
+(Humphreys GSM 94 §7.5 / Jantzen II.7.7, cited with (check)):
+`IrreducibleModule.weylDot_add_eq_weylDot` — if `λ + ρ`, `μ + ρ` are antidominant integral, every
+simple wall of `λ + ρ` is a wall of `μ + ρ`, `ν = z (μ - λ)` is dominant, `ν'` is a weight of
+`L(ν)` and `w·λ + ν' = x·μ`, then `w·λ + ν' = w·μ` (and `weightSpace_weylDot_sub_ne_bot`: this
+weight occurs). Its root-datum core `Realization.apply_eq_of_add_eq_apply` is the norm argument
+for the `W`-invariant form of `Symmetrization.ofDiagonal` (the positive definite `diag(d) A` of
+`IsFiniteCartan`), with every comparison made in `ℤ`, so no order on `K` is needed.
+`KacMoody/TranslationVerma.lean` proves **translation of Verma modules**
+`translation_verma`: under the same hypotheses, for every `w ∈ W`, the `χ_μ`-block of
+`M(w·λ) ⊗ L(ν)` is isomorphic to `M(w·μ)` (Humphreys GSM 94 Thm. 7.6, Verma part, integral
+case, cited with (check)), over an algebraically closed field of characteristic zero with
+finite-dimensional Cartan. The proof combines the projected tensor-Verma filtration
+(`exists_centralTensorVermaFiltration`), linkage (`VermaModule.centralCharacter_eq_iff`), facet
+exclusion and multiplicity one of the extremal weight `w (μ - λ)`: exactly one step survives
+(`LieSubmodule.eq_bot_and_eq_last_of_single_step`). Remaining for Thm. 7.6: the dual-Verma
+statement (dual compatibility), non-integral `λ` with the integral Weyl group `W_[λ]`, and a
+packaged exact translation functor (the block is taken of `M ⊗ L(ν)` directly, which agrees
+with `pr_μ(L(ν) ⊗ pr_λ M)` for `M = M(w·λ)` but is not stated as a functor).
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -874,8 +904,9 @@ argument reconstructed. Tensor products (`Path/{Isomorphism,Decomposition,Charac
 `isHighestWeight_tensorPathCrystal_iff`, `multiplicity_tensorProduct`
 (`[L(λ)⊗L(μ) : L(ν)] = #{η ∈ B(μ) λ-dominant, λ + η(1) = ν}`),
 `card_isHighestWeight_tensorPathCrystal`, `setCharacter_eq_hsum`; the crystal isomorphism
-`nonempty_equiv_sigma` is *conditional* on `LRIsomorphismHypothesis` (instances of Littelmann's
-isomorphism theorem). `Path/DominantIsomorphism.lean` proves directly for continuous paths:
+`nonempty_equiv_sigma` takes `LRIsomorphismHypothesis` (instances of Littelmann's isomorphism
+theorem), which `lrIsomorphismHypothesis` now proves over `ℝ` (see `Path/LittelmannIsomorphism.lean`
+below). `Path/DominantIsomorphism.lean` proves directly for continuous paths:
 other-color lowering increases height; raising colors must occur in the lowering word;
 monochromatic cancellation; and `component_eq_fOrbit_of_subsingleton` for arbitrary dominant
 paths in rank at most one. `Path/CoupledStability.lean` additionally proves raising stability
@@ -1040,8 +1071,8 @@ and derived whole-component integrality. Only the sum of the two displacements m
 integral endpoint; the gluing consumer retains a supplied common denominator and compatibility.
 The rational-class/denominator-existence interface remains separate; the straight-path
 component isomorphism is Theorem 6.3 in `GluingLinking.lean`. Proposition 5.7 concerns
-highest-path uniqueness in the ORIGINAL endpoint fibre, not unrestricted highest-path uniqueness. `Path/GluingFibre.lean` proves strict
-source-chain growth under `rhoCheck` and positive-duration endpoint rigidity: production
+highest-path uniqueness in the ORIGINAL endpoint fibre, not unrestricted highest-path uniqueness.
+`Path/GluingFibre.lean` proves strict source-chain growth under `rhoCheck` and positive-duration endpoint rigidity: production
 right-source gluing data force the entire right path to be straight. With original cuts,
 straight left directions and the restored original right auxiliary, the original endpoint
 forces literal equality with `twoPieceGluing`. Finite-dimensional Cartan space is explicit;
@@ -1065,14 +1096,31 @@ for all words whenever `Λ ▷ μ` (no dominance). With `Λ`, `Λ + μ` dominant
 **Proposition 6.2** (`rationalConcat_eq_of_mem_component_of_endpoint`) and **Theorem 6.3**
 (`componentIso_straightLine_rationalConcat`: `B(π_{Λ+μ}) ≅ B(π_Λ * π_μ)`, `π_{Λ+μ} ↦ π_Λ * π_μ`)
 for real `Λ, μ` with a supplied common denominator, any GCM and finite-dimensional Cartan space.
-`π_Λ * π_μ` is the unit-speed `rationalConcat`, equal to `concat` for integral `Λ, μ`. Theorem 7.1
-(concatenations of more than two pieces, and LS paths `η` as in `LRIsomorphismHypothesis`) remains.
-These do not discharge `LRIsomorphismHypothesis`. Remaining:
-mixed-color dominant-path isomorphism and the crystal-level LR decomposition,
-braid relations/normality, and extension of the concrete `a`-chain description beyond the
-proved dominant-orbit supplied-path scope. Source-scope caution:
-Littelmann's Theorem 7.1 treats piecewise-linear rational paths modulo reparametrization in
-the symmetrizable setting, not all continuous paths in the repository's general interface.
+`π_Λ * π_μ` is the unit-speed `rationalConcat`, equal to `concat` for integral `Λ, μ`.
+`Path/Stretching.lean` proves [Lit] Lemma 2.4 for the stretched path `Nπ` (`fIter_stretch`,
+`eIter_stretch`: `N(f_α π) = f_α^N(Nπ)`, including vanishing), the stretched-word identity
+`rootWord_stretchWord`, the converse of the word criterion (`ComponentIso.exists_map`) and
+Lemma 2.5 b) (`componentIso_of_componentIso_stretch`). `Path/ConcatIsomorphism.lean` proves
+Lemma 2.9 with Remark 2.8 (`componentIso_concat_left`: `B(π₁) ≅ B(π₁')` gives
+`B(π₁ * π₂) ≅ B(π₁' * π₂)`, integrality derived) and **Theorem 7.1** for dominant
+concatenations of straight lines with integral vertices at arbitrary split times
+(`IsDominantConcat.componentIso`, by induction from Theorem 6.3 as in the source).
+`Path/LittelmannIsomorphism.lean` proves **Theorem 7.1** for rational piecewise-linear paths:
+`componentIso_straightLine_of_rationalPieces` gives `B(π_{Q(1)}) ≅ B(Q)` (`π_{Q(1)} ↦ Q`) for
+any path `Q` affine between real breakpoints `0 = b₀ < ⋯ < b_{m+1} = 1` with dominant vertices
+and an explicit common denominator `N` (`N Q(b_j)` integral): `NQ` has integral vertices and
+Lemma 2.5 b) descends. Hence any two such paths with the same endpoint have isomorphic
+components. Paths are literal, the pieces' durations are arbitrary (no quotient by
+reparametrization is needed); any GCM, no symmetrizability, finite-dimensional Cartan space,
+scalars `ℝ`. Every path of `B(ν)` is the path of a finite presentation with rational
+breakpoints (`exists_presentation_of_mem_component`), so `lrIsomorphismHypothesis` proves
+`LRIsomorphismHypothesis` and `nonempty_equiv_sigma_of_finiteDimensional` gives the
+**crystal-level Littlewood–Richardson decomposition** `B(λ) ⊗ B(μ) ≅ ⊔_η B(λ + η(1))`
+unconditionally in that setting. Remaining: braid relations/normality, and extension of the
+concrete `a`-chain description beyond the proved dominant-orbit supplied-path scope.
+Source-scope caution: the isomorphism theorem is proved for rational piecewise-linear paths
+(finitely many pieces, rational vertices), not for all continuous dominant paths of the
+repository's general interface.
 
 
 Abstract (Kashiwara) crystals for a Cartan datum: morphisms, the tensor product rule (signature
@@ -1217,7 +1265,7 @@ proved inverse identities supply the generator equalities. The scope is exactly 
 nodes with entries `(-2,-1)`, arbitrary field and root-datum lattice, `v ≠ 0`, and short-node
 quantum sum/difference nonzero; the other denominator follows from `qⱼ = qᵢ²`.
 Connected double-edge constructions and named-family assembly are supplied below.
-Triple-edge automorphisms and the length-six relation remain open.
+Triple-edge automorphisms and the length-six relation are supplied below.
 `BraidAction/DoublePathSerre.lean` proves both ordered positive/negative transformed Serre
 relations for a connected double-edge path, in arbitrary ambient rank. The forward relation
 uses entries `aᵢⱼ=-2`, `aⱼᵢ=-1`, `aⱼₗ=-1`, `aᵢₗ=0`, derives `qⱼ=qᵢ²`, and explicitly
@@ -1281,8 +1329,9 @@ pinned Mathlib Bₙ/Cₙ at every natural rank (including the rank-zero/one dege
 All graph fields and double-edge orientations are proved. Nonzero infinite-order parameters
 discharge the local scalar restrictions over any field, retaining arbitrary compatible Cartan
 data, positive symmetrizers and root-datum toral lattices. The named homomorphisms/actions
-carry every E/F/K generator formula. Triple edges/length six, unsupported local graphs and
-action faithfulness remain open; this is not unrestricted symmetrizable assembly.
+carry every E/F/K generator formula. Triple edges (`G₂`, including length six) are treated
+separately below; unsupported local graphs and action faithfulness remain open; this is not
+unrestricted symmetrizable assembly.
 `BraidAction/TripleEdge.lean` and `TripleExpansion.lean` prove actual cubic candidate expansions,
 the odd-degree Chevalley factor, and both centre-first quartic Serre relations. At entries
 (-3,-1), symmetrizer compatibility derives qⱼ = qᵢ³; an explicit eleven-term certificate in
@@ -1362,10 +1411,21 @@ hypothesis beyond `v ≠ 0` when `v` is not a root of unity (`twoNodeBraidEquiv_
 agrees by `rfl` with `shortNodeBraidEquiv`, `degreeOneBraidEquiv` (whose positive-part
 hypothesis is now `degreeOne_serreAux_braidEj_eq_zero`) and `tripleEdgeOtherBraidEquiv`. In
 higher rank, `TransformedSerre` still needs the pairs `(l, m)` of two nodes other than `i`.
+`BraidAction/TripleEdgeRelation.lean` proves the **length-six `G₂` relation**
+`Tᵢ Tⱼ Tᵢ Tⱼ Tᵢ Tⱼ = Tⱼ Tᵢ Tⱼ Tᵢ Tⱼ Tᵢ` for any algebra endomorphisms with Lusztig's generator
+formulas at the two nodes of an exact two-node datum with entries `(-3,-1)`
+(`HasBraidGeneratorImages.six_braid_of_triple_edge`), hence for `braidEquiv`
+(`braidEquiv_braid_six_of_triple_edge`) and for `tripleEdgeBraidEquiv`,
+`tripleEdgeOtherBraidEquiv` (`tripleEdgeBraidEquiv_braid_six`). The relation needs only `v ≠ 0`,
+`vᵢ - vᵢ⁻¹ ≠ 0` and `[3]ᵢ! ≠ 0` (the named automorphisms keep their own extra hypotheses). The
+proof reduces to the fixed-point identities `TⱼTᵢTⱼTᵢTⱼ(Eᵢ) = Eᵢ`, `TᵢTⱼTᵢTⱼTᵢ(Eⱼ) = Eⱼ` and their
+`F` analogues, each obtained structurally from the lowering identities `Hyp.stepE`/`Hyp.stepF`
+of the twisted-commutator family and the degree-one identity at the long node; no
+normal-ordering certificate is used. Arbitrary field and root-datum lattice; the fixed-point
+identities hold in arbitrary ambient rank.
 Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations in general
 (both `G₂` nodes and the whole family `aⱼᵢ = -1` are done, under the stated nonvanishing
-hypotheses), the braid relations beyond the proved families (length six for `G₂`), and general
-canonical bases.
+hypotheses), all-node assembly beyond the proved families, and general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
@@ -1438,16 +1498,22 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   dimension; these extensions remain open.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
-  (`shiftedHarishChandraEquiv`) are proved in finite type over characteristic-zero fields.
-  Central-character separation (linkage), facet exclusion and dual compatibility for
-  Humphreys Thm. 7.6 remain.
+  (`shiftedHarishChandraEquiv`) are proved in finite type over characteristic-zero fields, as
+  is central-character separation (`VermaModule.centralCharacter_eq_iff`: `χ_Λ = χ_Λ'` iff
+  `Λ' ∈ W·Λ`). Facet exclusion and the Verma part of Humphreys Thm. 7.6
+  (`translation_verma`: `pr_{χ_μ}(M(w·λ) ⊗ L(ν)) ≅ M(w·μ)`) are proved for integral weights in
+  finite type over algebraically closed characteristic-zero fields. Remaining for Thm. 7.6:
+  dual Verma modules, non-integral weights (`W_[λ]`), and a packaged translation functor.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
   linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
-  (`componentIso_straightLine_rationalConcat`). Next is Theorem 7.1 for `π_{ν₁} * ⋯ * π_{ν_s}`
-  and for `π_λ * η` with `η` an LS path, making `nonempty_equiv_sigma` unconditional. The classical target is rational PL paths modulo
-  reparametrization, not an unqualified assertion for all continuous dominant paths.
-  General crystal normality and Weyl braid relations also remain.
+  (`componentIso_straightLine_rationalConcat`), and Theorem 7.1 for rational piecewise-linear
+  dominant paths (`componentIso_straightLine_of_rationalPieces`, via stretching, Lemma 2.9 and
+  induction on the pieces). This discharges `LRIsomorphismHypothesis`
+  (`lrIsomorphismHypothesis`), so the crystal-level Littlewood–Richardson decomposition
+  `nonempty_equiv_sigma_of_finiteDimensional` is unconditional over `ℝ` with finite-dimensional
+  Cartan space. The theorem is not claimed for arbitrary continuous dominant paths.
+  General crystal normality and Weyl braid relations remain.
 - **Braid automorphisms `Tᵢ` in general** (M15): actual local-class and named Bₙ/Cₙ/F₄ actions
   are proved, as are the relations (b)–(d), inverse recovery and centre-first Serre relations in
   every degree; `braidEquiv` reduces `Tᵢ` being an automorphism to the neighbor-first
@@ -1455,8 +1521,9 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   (`tripleEdgeBraidEquiv`, `tripleEdgeOtherBraidEquiv`; extra hypotheses `vᵢ⁴ + 1 ≠ 0`,
   resp. `vᵢ² + 1 ≠ 0`). At a node with `aᵢⱼ = -1` the neighbor-first relation is reduced to a
   single `U⁺` identity for every reverse entry (`NeighborSerreDegreeOne.lean`).
-  Remaining: neighbor-first transformed Serre relations in general, the `G₂` length-six
-  equality, all-node assembly and action faithfulness. The integrable-module construction
+  The `G₂` length-six relation is proved (`HasBraidGeneratorImages.six_braid_of_triple_edge`,
+  `tripleEdgeBraidEquiv_braid_six`). Remaining: neighbor-first transformed Serre relations in
+  general, all-node assembly and action faithfulness. The integrable-module construction
   ([Lus] 5.2) remains an alternative route; it is not an already-proved general action.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
