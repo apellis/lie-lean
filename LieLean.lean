@@ -144,6 +144,7 @@ import LieLean.Algebra.Lie.KacMoody.ChevalleyOrbit
 import LieLean.Algebra.Lie.KacMoody.ChevalleySurjectivity
 import LieLean.Algebra.Lie.KacMoody.ChevalleyInjectivity
 import LieLean.Algebra.Lie.KacMoody.HarishChandraIsomorphism
+import LieLean.Algebra.Lie.KacMoody.HarishChandraLinkage
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
@@ -204,6 +205,8 @@ import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdgeOther
 import LieLean.Algebra.QuantumGroup.BraidAction.NeighborSerreDegreeOne
 import LieLean.Algebra.QuantumGroup.BraidAction.TripleExpansion
 import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
+import LieLean.Algebra.QuantumGroup.BraidAction.NeighborSerreShort
+import LieLean.Algebra.QuantumGroup.BraidAction.TwoNodeBraid
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.GabberKac
