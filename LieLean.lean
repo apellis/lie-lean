@@ -143,6 +143,7 @@ import LieLean.Algebra.Lie.KacMoody.TracePower
 import LieLean.Algebra.Lie.KacMoody.ChevalleyOrbit
 import LieLean.Algebra.Lie.KacMoody.ChevalleySurjectivity
 import LieLean.Algebra.Lie.KacMoody.ChevalleyInjectivity
+import LieLean.Algebra.Lie.KacMoody.HarishChandraIsomorphism
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
