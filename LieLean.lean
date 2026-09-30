@@ -177,6 +177,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.SimplyLaced
 import LieLean.Algebra.QuantumGroup.BraidAction.SimplyLacedRelations
 import LieLean.Algebra.QuantumGroup.BraidAction.Artin
 import LieLean.Algebra.QuantumGroup.BraidAction.DegreeTwo
+import LieLean.Algebra.QuantumGroup.BraidAction.Diagonal
 import LieLean.Algebra.QuantumGroup.BraidAction.HigherMixed
 import LieLean.Algebra.QuantumGroup.BraidAction.HigherSerre
 import LieLean.Algebra.QuantumGroup.BraidAction.HigherSerreReverse
