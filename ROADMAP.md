@@ -1329,8 +1329,8 @@ pinned Mathlib Bₙ/Cₙ at every natural rank (including the rank-zero/one dege
 All graph fields and double-edge orientations are proved. Nonzero infinite-order parameters
 discharge the local scalar restrictions over any field, retaining arbitrary compatible Cartan
 data, positive symmetrizers and root-datum toral lattices. The named homomorphisms/actions
-carry every E/F/K generator formula. Triple edges (`G₂`, including length six) are treated
-separately below; unsupported local graphs and action faithfulness remain open; this is not
+carry every E/F/K generator formula. Triple edges (`G₂`, including length six and the
+named action `artinHom_G₂`) are treated separately below; unsupported local graphs and action faithfulness remain open; this is not
 unrestricted symmetrizable assembly.
 `BraidAction/TripleEdge.lean` and `TripleExpansion.lean` prove actual cubic candidate expansions,
 the odd-degree Chevalley factor, and both centre-first quartic Serre relations. At entries
@@ -1423,6 +1423,15 @@ proof reduces to the fixed-point identities `TⱼTᵢTⱼTᵢTⱼ(Eᵢ) = Eᵢ`,
 of the twisted-commutator family and the degree-one identity at the long node; no
 normal-ordering certificate is used. Arbitrary field and root-datum lattice; the fixed-point
 identities hold in arbitrary ambient rank.
+`BraidAction/TripleEdgeArtin.lean` packages the **`G₂` braid group action**: the Artin group
+`TripleEdgeArtinGroup i j = ⟨i, j | ijijij = jijiji⟩` (no involution relators;
+`generator_sq_ne_one`) acts on `U` by algebra automorphisms via `braidEquiv` at both nodes
+(`tripleEdgeArtinHomOfBraid`), via the named `tripleEdgeBraidEquiv`/`tripleEdgeOtherBraidEquiv`
+(`tripleEdgeArtinHom`), and, for `v` not a root of unity, via `twoNodeBraidEquiv_of_not_root`
+(`tripleEdgeArtinHom_of_not_root`), with every E/F/K generator formula. For Mathlib's literal
+`CartanMatrix.G₂` (node `0` short, `a₀₁ = -3`) `artinHom_G₂`/`artinAction_G₂` need only
+`v ≠ 0` not a root of unity, over any field, compatible Cartan datum and root-datum lattice.
+Faithfulness is not asserted.
 Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations for pairs `(l, m)` of
 two nodes other than `i` in higher rank (all rank-two pairs `(j, i)` are done, under the stated
 nonvanishing hypotheses), all-node assembly beyond the proved families, and general canonical
@@ -1523,7 +1532,8 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   resp. `vᵢ² + 1 ≠ 0`). At a node with `aᵢⱼ = -1` the neighbor-first relation is reduced to a
   single `U⁺` identity for every reverse entry (`NeighborSerreDegreeOne.lean`).
   The `G₂` length-six relation is proved (`HasBraidGeneratorImages.six_braid_of_triple_edge`,
-  `tripleEdgeBraidEquiv_braid_six`). Remaining: neighbor-first transformed Serre relations in
+  `tripleEdgeBraidEquiv_braid_six`), and the named `G₂` braid group action is packaged
+  (`artinHom_G₂`, generic parameter). Remaining: neighbor-first transformed Serre relations in
   general, all-node assembly and action faithfulness. The integrable-module construction
   ([Lus] 5.2) remains an alternative route; it is not an already-proved general action.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared

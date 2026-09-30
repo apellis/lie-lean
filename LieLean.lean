@@ -204,6 +204,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.Families
 import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdge
 import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdgeBraid
 import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdgeOther
+import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdgeArtin
 import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdgeRelation
 import LieLean.Algebra.QuantumGroup.BraidAction.NeighborSerreDegreeOne
 import LieLean.Algebra.QuantumGroup.BraidAction.TripleExpansion
