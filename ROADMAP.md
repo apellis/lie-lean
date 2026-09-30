@@ -669,8 +669,20 @@ commutator `UniversalEnvelopingAlgebra.toGr_commutator` (PBW symbols of central 
 (`exists_shiftedHarishChandra_eq`, `shiftedHarishChandra_range`) is a degree induction using
 Chevalley extension of the top component (`exists_invariant_cartanRestriction_eq`), the
 existing central lifts and HC invariance. Reconstructed arguments; Humphreys GSM 94 Thm. 1.10
-is cited with (check). Central-character separation (`χ_λ = χ_μ` iff `μ + ρ ∈ W(λ + ρ)`)
-is not yet derived; the translation theorem is not yet complete.
+is cited with (check).
+`KacMoody/HarishChandraLinkage.lean` proves **central-character separation** in finite type
+(Humphreys GSM 94 Thm. 1.10(b), cited with (check)):
+`VermaModule.centralCharacter_eq_iff : χ_Λ = χ_Λ' ↔ ∃ w ∈ W, w (Λ + ρ) = Λ' + ρ`, with the same
+hypotheses as `shiftedHarishChandraEquiv`, and the linkage corollary
+`VermaModule.exists_weyl_of_hom_ne_zero` (a nonzero `M(μ) → M(Λ)` forces `μ ∈ W·Λ`). It packages
+the Weyl action on `Sym(𝔥)` as `SymmetricAlgebra.pullbackDual` (`(w·p)(λ) = p(w λ)`, via the
+transpose `dualTranspose` on finite-dimensional `𝔥`), proves `mem_coreflectionInvariants_iff`
+(coreflection invariance = invariance under the whole `weylGroup`), and proves orbit separation
+by invariants for any finite group of linear automorphisms of `𝔥*` over an infinite field
+(`SymmetricAlgebra.exists_invariant_separating`: the product over the group of one affine linear
+form vanishing at one point and nowhere on the other orbit; the generic form exists because a
+vector space over an infinite field is not a finite union of proper subspaces). Reconstructed.
+The translation theorem is not yet complete.
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -1348,9 +1360,27 @@ for `s = 1` and follows from the certificate of `DoubleEdgeOther.lean` for `s = 
 (`braidHom_hasBraidGeneratorImages`), hence agrees with every earlier local construction
 (`braidHom_eq`) and satisfies the constructor-independent length-two (`braidEquiv_comm`) and
 simple-edge length-three (`braidEquiv_braid_three`) relations.
+`BraidAction/NeighborSerreShort.lean` reduces, for arbitrary entries `r = -aᵢⱼ ≥ 1`,
+`s = -aⱼᵢ`, the neighbor-first element `S_{s+1}(Tᵢ Eⱼ, Tᵢ Eᵢ)` to the positive-part element
+`[r]!^{-(s+1)} [r] serreAux vⱼ vⱼ s (X r) (X (r-1))` (`twoNode_qSerre_braidEj_braidEi_eq`), and
+proves the family `aⱼᵢ = -1` for every `aᵢⱼ` in arbitrary ambient rank
+(`shortNode_qSerre_braidEj_braidEi`, `shortNode_qSerre_braidFj_braidFi`), assuming `v ≠ 0`,
+`vᵢ - vᵢ⁻¹ ≠ 0` and `[2r-2, r-1]ᵢ ≠ 0`. The positive-part q-commutation
+`X r X (r-1) = vᵢ^r X (r-1) X r` is obtained by applying the twisted derivation `ad Eᵢ`
+`2r-2` times to `S₂(Eⱼ, Eᵢ)`, with Gaussian-binomial coefficients; the surviving scalar `α`
+satisfies `α [r]ᵢ = [2r-2, r-1]ᵢ`. The extra hypothesis holds when `v` is not a root of unity
+and for `r ≤ 2`; for `G₂` it is equivalent to `vᵢ⁴ + 1 ≠ 0` given `[3]ᵢ! ≠ 0`, and it cannot be
+dropped from the positive-part identity (exact computation over `ℚ(ζ₈)`, not formalized: at
+`vᵢ⁴ = -1` the element `X 3 X 2 - vᵢ³ X 2 X 3` is not in the Serre ideal of the free algebra).
+`BraidAction/TwoNodeBraid.lean` assembles `shortNodeBraidEquiv` at the short node of any exact
+two-node datum with `aⱼᵢ = -1` (uniformly `A₂`, `B₂`, `G₂` and the Kac–Moody pairs `(-r,-1)`),
+with no extra hypothesis for `r ≤ 2` (`shortNodeBraidEquiv_of_negA_le_two`) or when `v` is not a
+root of unity (`shortNodeBraidEquiv_of_not_root`); for `G₂` it is `tripleEdgeBraidEquiv`
+(`shortNodeBraidEquiv_eq_tripleEdgeBraidEquiv`).
 Remaining for general `Tᵢ`: the neighbor-first transformed Serre relations in general
-(both `G₂` nodes are done, under extra nonvanishing hypotheses), the braid relations beyond
-the proved families (length six for `G₂`), and general canonical bases.
+(both `G₂` nodes and the whole family `aⱼᵢ = -1` are done, under the stated nonvanishing
+hypotheses), the braid relations beyond the proved families (length six for `G₂`), and general
+canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
@@ -1423,9 +1453,9 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   dimension; these extensions remain open.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
-  (`shiftedHarishChandraEquiv`) are proved in finite type over characteristic-zero fields.
-  Central-character separation (linkage), facet exclusion and dual compatibility for
-  Humphreys Thm. 7.6 remain.
+  (`shiftedHarishChandraEquiv`) are proved in finite type over characteristic-zero fields, as
+  is central-character separation (`VermaModule.centralCharacter_eq_iff`: `χ_Λ = χ_Λ'` iff
+  `Λ' ∈ W·Λ`). Facet exclusion and dual compatibility for Humphreys Thm. 7.6 remain.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
   linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
