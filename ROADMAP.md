@@ -32,7 +32,9 @@ Phase 2 references (see "Phase 2" below):
   and representation theory*, Progr. Math. 204 (Ch. 3: 𝔫-homology, BGG–Kempf resolution).
 - **[Kas]** M. Kashiwara, *On crystal bases*, CMS Conf. Proc. 16 (1995); **[Lit]** P. Littelmann,
   *Paths and root operators in representation theory*, Ann. of Math. **142** (1995), 499–525;
-  **[HK]** J. Hong, S.-J. Kang, *Introduction to quantum groups and crystal bases*, GSM 42.
+  **[HK]** J. Hong, S.-J. Kang, *Introduction to quantum groups and crystal bases*, GSM 42;
+  **[BBO05]** P. Biane, P. Bougerol, N. O'Connell, *Littelmann paths and Brownian paths*, Duke
+  Math. J. **130** (2005), 127–167 (arXiv:math/0403171).
 - **[Lus]** G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993; **[Jan]** J. C. Jantzen,
   *Lectures on quantum groups*, GSM 6.
 
@@ -697,10 +699,41 @@ case, cited with (check)), over an algebraically closed field of characteristic 
 finite-dimensional Cartan. The proof combines the projected tensor-Verma filtration
 (`exists_centralTensorVermaFiltration`), linkage (`VermaModule.centralCharacter_eq_iff`), facet
 exclusion and multiplicity one of the extremal weight `w (μ - λ)`: exactly one step survives
-(`LieSubmodule.eq_bot_and_eq_last_of_single_step`). Remaining for Thm. 7.6: the dual-Verma
-statement (dual compatibility), non-integral `λ` with the integral Weyl group `W_[λ]`, and a
-packaged exact translation functor (the block is taken of `M ⊗ L(ν)` directly, which agrees
-with `pr_μ(L(ν) ⊗ pr_λ M)` for `M = M(w·λ)` but is not stated as a functor).
+(`LieSubmodule.eq_bot_and_eq_last_of_single_step`).
+`KacMoody/TranslationFunctor.lean` packages translation `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ Z)` on
+full-central blocks as a functor (`centralTranslation`, `centralTranslationMap`, `_id`, `_comp`),
+proves it exact on short exact sequences with middle term in `𝒪` when `Z ∈ 𝒪`
+(`centralTranslationMap_shortExact`, algebraically closed field) and restates the Verma part as
+`T_λ^μ M(w·λ) ≅ M(w·μ)` (`translation_verma_equiv`).
+`KacMoody/RestrictedDual.lean` builds the duality functor of `𝒪`: `restrictedDual P V`, the sum
+of the weight spaces of the `σ`-twisted dual (so `V^∨ = ⨁ (V_μ)^*` for `V ∈ 𝒪`), with
+functoriality (`restrictedDualMap`, `restrictedDualEquiv`) and, for a finite-dimensional weight
+module with a nondegenerate symmetric contravariant form, `V^∨ ⊗ L ≅ (V ⊗ L)^∨`
+(`restrictedDualTensorEquiv`). `KacMoody/TranslationDuality.lean` proves that `σ` fixes
+`Z(U𝔤)` in finite type (`unop_envTranspose_center`, via `χ_Λ(σ z) = χ_Λ(z)` from the Shapovalov
+form and Harish-Chandra injectivity), hence `(pr_χ M)^∨ ≅ pr_χ(M^∨)` for `M ∈ 𝒪`
+(`restrictedDualCentralBlockEquiv`), that translation commutes with duality
+(`restrictedDualCentralTranslationEquiv`: `(T M)^∨ ≅ T(M^∨)` for `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ L(ν))`,
+`ν` dominant integral), and the **dual-Verma part** `translation_dualVerma`:
+`T_λ^μ M(w·λ)^∨ ≅ M(w·μ)^∨` (Humphreys GSM 94 Thm. 7.6 (check), integral weights, finite type,
+algebraically closed characteristic-zero field). `KacMoody/TranslationAdjunction.lean` proves
+**adjointness** (Humphreys GSM 94 §7.2 (check)): `translationAdjunction` gives a `K`-linear
+`Hom(pr_{χ₂}(pr_{χ₁} M ⊗ L), N) ≅ Hom(M, pr_{χ₁}(pr_{χ₂} N ⊗ L^*))` for `M ∈ 𝒪` in the block
+`χ₁`, `N` in the block `χ₂` and finite-dimensional `L ∈ 𝒪` (`L^* = Module.Dual K L`), via the
+Lie tensor–Hom adjunction (`tensorHomAdjunction`, `tensorDualEquivHom : N ⊗ L^* ≅ Hom_K(L, N)`)
+and block restriction (`homCentralBlockSourceEquiv`, `homCentralBlockTargetEquiv`);
+`translationAdjunction_irreducible` is the case `L = L(ν)`. The identification
+`L(ν)^* ≅ L(-w₀ν)` is not formalized; `T_μ^λ` is stated with `L(ν)^*`.
+`KacMoody/TranslationSimple.lean` proves the **dichotomy for simple modules**
+`translation_irreducible` (Humphreys GSM 94 Thm. 7.9 (check), first assertion): under the
+hypotheses of `translation_verma`, `T_λ^μ L(w·λ)` is zero or isomorphic to `L(w·μ)`. Proof:
+`L(x)` is a quotient of `M(x)` and embeds in `M(x)^∨` (`IrreducibleModule.toRestrictedDual`);
+`T` preserves surjections and injections (`centralTranslationMap_surjective/_injective`), so
+`T L(w·λ)` is a quotient of `M(w·μ)` embedding in `M(w·μ)^∨`; every map `M(y) → M(y)^{*σ}` is a
+scalar multiple of the Shapovalov map (`VermaModule.eq_smul_toTwistedDual`), whose kernel is
+`M'(y)` (`subsingleton_or_nonempty_equiv_irreducible`). Remaining for Thm. 7.6/7.9:
+non-integral `λ` with the integral Weyl group `W_[λ]`, and the upper-closure criterion deciding
+which alternative of Thm. 7.9 occurs (e.g. `T_λ^μ L(w·λ) ≠ 0` when `λ, μ` lie in the same facet).
 The translation-on-Verma target was retrieved from Garza/Boe notes §35.2, not the
 published theorem page; its exact primary-source hypotheses remain uncertified. Casimir
 eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
@@ -1136,10 +1169,20 @@ the `Sᵢ` to `W →* Perm B(λ)` (via `CoxeterSystem.lift`, `sᵢ ↦ Sᵢ`, `c
 relations for the pairs with `aᵢⱼaⱼᵢ ∈ {1,2,3}`; those with `mᵢⱼ = 1, 2, ∞` are proved, so the
 action is unconditional when no such pair exists (`pathBraidRelations_of_forall`).
 `LeviMap.iterate_reflection_eq_of_levi` reduces `(S_{e k} S_{e l})^m = 1` on `B(λ)` to the same
-relation on the Levi path crystals `B_J(μ)` (any subdiagram). Remaining: the braid relations
-of lengths 3, 4, 6 on the rank-two crystals `B_J(μ)` (`A₂`, `B₂`, `G₂`); identification of the
-Levi path crystals with crystal bases (normality in Kashiwara's sense); and extension of the
-concrete `a`-chain description beyond the proved dominant-orbit supplied-path scope.
+relation on the Levi path crystals `B_J(μ)` (any subdiagram). **`A₂` braid relation**
+(`Path/Pitman.lean`, `Crystal/BraidA2.lean`, `Path/BraidA2.lean`): string tops are Pitman
+transforms (`eIter_eq_pitman`, `top_apply`: `eᵢ^{εᵢ}π = π - (min_{[0,t]} hᵢ) αᵢ`); for
+`aᵢⱼ = aⱼᵢ = -1` the [BBO05] §2 identities (`runningMin_add_runningMin_eq`,
+`pitman_three_apply`, `minPairing_add_minPairing_eq`) give `PᵢPⱼPᵢ = PⱼPᵢPⱼ` and the `A₂`
+transition map of string coordinates, and `IsSeminormal.reflection_braid_three` turns these into
+`SᵢSⱼSᵢ = SⱼSᵢSⱼ` via the piecewise-linear identity `a2_braid_coordinates`
+(`LittelmannPath.reflection_braid_three`, `pathCrystal_reflection_braid_three`, any GCM, any
+rank). Hence `pathBraidRelations_of_simplyLaced`: `pathWeylAction` is unconditional whenever
+`aᵢⱼaⱼᵢ ∈ {0, 1} ∪ [4, ∞)` for all `i ≠ j` (all simply-laced types). Remaining: the braid
+relations of lengths 4 and 6 (`B₂`, `G₂`; the same route needs the corresponding transition maps
+and Pitman identities); identification of the Levi path crystals with crystal bases (normality
+in Kashiwara's sense); and extension of the concrete `a`-chain description beyond the proved
+dominant-orbit supplied-path scope.
 Source-scope caution: the isomorphism theorem is proved for rational piecewise-linear paths
 (finitely many pieces, rational vertices), not for all continuous dominant paths of the
 repository's general interface.
@@ -1589,8 +1632,12 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   is central-character separation (`VermaModule.centralCharacter_eq_iff`: `χ_Λ = χ_Λ'` iff
   `Λ' ∈ W·Λ`). Facet exclusion and the Verma part of Humphreys Thm. 7.6
   (`translation_verma`: `pr_{χ_μ}(M(w·λ) ⊗ L(ν)) ≅ M(w·μ)`) are proved for integral weights in
-  finite type over algebraically closed characteristic-zero fields. Remaining for Thm. 7.6:
-  dual Verma modules, non-integral weights (`W_[λ]`), and a packaged translation functor.
+  finite type over algebraically closed characteristic-zero fields, as are exactness of the
+  packaged translation functor (`centralTranslationMap_shortExact`), the duality functor
+  `M ↦ M^∨` with `(T M)^∨ ≅ T(M^∨)`, and the dual-Verma part (`translation_dualVerma`:
+  `T_λ^μ M(w·λ)^∨ ≅ M(w·μ)^∨`), adjointness of translation functors (`translationAdjunction`)
+  and the dichotomy `T_λ^μ L(w·λ) ∈ {0, L(w·μ)}` (`translation_irreducible`, Thm. 7.9 (check)).
+  Remaining: non-integral weights (`W_[λ]`) and the upper-closure criterion of Thm. 7.9.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
   linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
@@ -1604,9 +1651,11 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   `J`-component of `B(λ)` is a Levi path crystal `B_J(μ)` through a `J`-highest path.
   Kashiwara's `W`-action on `B(λ)` (`Realization.pathWeylAction`) is constructed from the braid
   relations of lengths 3, 4, 6, which reduce to rank-two Levi crystals
-  (`LeviMap.iterate_reflection_eq_of_levi`); length two (`reflection_comm`) and `mᵢⱼ = ∞` are
-  proved. Remaining: those rank-two relations (`A₂`, `B₂`, `G₂`) and identification of `B_J(μ)`
-  with Kashiwara's crystal bases (normality in his sense).
+  (`LeviMap.iterate_reflection_eq_of_levi`); lengths two (`reflection_comm`) and three (`A₂`,
+  `pathCrystal_reflection_braid_three`, via Pitman transforms and string coordinates) and
+  `mᵢⱼ = ∞` are proved, so the action is unconditional in the simply-laced case
+  (`pathBraidRelations_of_simplyLaced`). Remaining: the `B₂`, `G₂` relations and identification
+  of `B_J(μ)` with Kashiwara's crystal bases (normality in his sense).
 - **Braid automorphisms `Tᵢ` in general** (M15): **`braidEquivOfGeneric`**: Lusztig's `Tᵢ` is an
   algebra automorphism (explicit reversal-conjugate inverse) at every node of every Cartan
   datum, in arbitrary rank, over any field and root-datum lattice, under explicit q-factorial
