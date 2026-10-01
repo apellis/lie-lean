@@ -102,9 +102,10 @@ get a "(check)" mark. Mathlib reviewers will expect exact references before upst
 - State theorems faithfully: keep the source's hypotheses (field, characteristic, symmetrizability,
   finiteness) unless you prove a more general version; never weaken or silently alter a statement
   to make it compile. If a printed statement or proof is wrong, record the correction explicitly.
-- Completed results have no `sorry`, `admit`, or new `axiom`. Check headline declarations with
-  `scripts/check_axioms.sh Decl.name …`; the only acceptable axioms are `propext`,
-  `Classical.choice` and `Quot.sound`.
+- Completed results have no `sorry`, `admit`, or new `axiom`. The only acceptable axioms are
+  `propext`, `Classical.choice` and `Quot.sound`. `lake env lean -DwarningAsError=true
+  scripts/AxiomAudit.lean` checks this for every declaration of the library (CI runs it after
+  the build); `scripts/check_axioms.sh Decl.name …` prints the axioms of individual declarations.
 - Audit statements as well as proofs: non-vacuous hypotheses, correct quantifiers, no accidental
   specialization.
 
