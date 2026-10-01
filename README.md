@@ -58,25 +58,33 @@ Further proved results include:
   block decompositions and exact projections, and actual tensor-Verma standard filtrations.
   The unrestricted Kac–Moody Verma Hom uniqueness claim is false at critical level;
   it is not a completed general theorem.
-* **Harish–Chandra prerequisites and Chevalley surjectivity:** the actual HC projection,
-  arbitrary-weight dot-Weyl invariance and graded compatibility; invariant trace polynomials,
-  integer character inversion, and dominant-orbit spanning. In finite type over a
-  characteristic-zero field, every Weyl-invariant Cartan polynomial has an infinitesimally
-  invariant extension (`Matrix.Realization.KacMoodyAlgebra.chevalleyRestriction_surjective`).
-  Chevalley injectivity, the HC isomorphism and Humphreys' translation theorem remain open.
-* **Littelmann paths:** actual rational-piece gluing stability under all finite mixed
-  root-operator words, component integrality, pause-allowing transport, and a marked
-  concatenation–gluing component equivalence. Normalized original-endpoint-fibre rigidity
-  is proved; full Proposition 5.7, the straight-path component theorem and unconditional
-  crystal-level Littlewood–Richardson decomposition remain open.
-* **Quantum groups:** finite-dimensional generic quantum `sl₂` classification and parameter
-  uniqueness; actual named `Bₙ`, `Cₙ` and `F₄` Artin actions; triple-edge Serre prerequisites;
-  and rational rank-one balanced triples. G₂ automorphisms and length-six relations,
-  unrestricted all-node assembly, action faithfulness and general-rank global bases remain open.
+* **Chevalley restriction and Harish–Chandra:** the full restriction theorem
+  (`chevalleyRestriction_bijective`) and the Harish–Chandra isomorphism
+  (`shiftedHarishChandraEquiv`) in finite type over characteristic-zero fields, together with
+  central-character separation. For integral weights in finite type over algebraically closed
+  characteristic-zero fields: translation of Verma and dual Verma modules, exact translation
+  functors, adjunction, the zero-or-simple dichotomy and the same-facet case for simple modules.
+  Non-integral weights and the general upper-closure criterion remain open.
+* **Littelmann paths:** Proposition 5.7, the straight-path concatenation theorem, and the
+  isomorphism theorem for rational piecewise-linear dominant paths are proved. The crystal-level
+  Littlewood–Richardson decomposition is unconditional over `ℝ` with finite-dimensional Cartan
+  space (`nonempty_equiv_sigma_of_finiteDimensional`). Levi restriction and the simply-laced
+  Weyl-group action are proved. The `B₂`/`G₂` path-crystal braid relations and identification with
+  Kashiwara's crystal bases remain open; arbitrary continuous dominant paths are not covered.
+* **Quantum groups:** finite-dimensional generic quantum `sl₂` classification; Lusztig's `Tᵢ`
+  at every node under explicit nonvanishing hypotheses (in particular, nonzero parameter not a
+  root of unity); the `G₂` length-six relation; and Artin actions for every finite-type Cartan
+  datum and every simply-laced datum. Quantum PBW bases are proved in types `A₂` and `B₂`, with
+  reduced-word root vectors in `U⁺` under the roadmap's rank-two hypotheses. Root vectors along
+  every word have the prefix-reflected simple-root conjugation character
+  (`rootVector_conj_of_not_root`); this is not yet identification with root-lattice graded pieces.
+  General finite-type
+  PBW bases, braid relations outside `BraidOuterCondition`, faithfulness and general-rank global
+  bases remain open.
 
 These summaries do not replace the precise hypotheses and remaining dependencies in
-[`ROADMAP.md`](ROADMAP.md). In particular, the named quantum actions are not claimed faithful,
-and Chevalley surjectivity is not a claim of the full restriction isomorphism.
+[`ROADMAP.md`](ROADMAP.md). In particular, the quantum actions are not claimed faithful, and
+the finite-type and parameter hypotheses above are not claims in unrestricted generality.
 
 ## Building
 
