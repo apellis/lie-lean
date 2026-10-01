@@ -1176,10 +1176,11 @@ commute with the `Sᵢ` (`StrictHom.map_reflection`); commuting colours give `S�
 (`IsSeminormal.reflection_comm`); on paths, root operators of orthogonal colours commute
 (`rootStep_bind_comm`), so `LittelmannPath.reflection_comm` is the braid relation for
 `mᵢⱼ = 2`; `Sᵢ π_ν = π_{rᵢν}` (`reflection_straightLine`). `Realization.pathWeylAction` extends
-the `Sᵢ` to `W →* Perm B(λ)` (via `CoxeterSystem.lift`, `sᵢ ↦ Sᵢ`, `coe_wt_pathWeylAction`:
-`wt (w b) = w (wt b)`, `pathWeylAction_top`: `w π_λ = π_{wλ}`) given `PathBraidRelations`, the
-relations for the pairs with `aᵢⱼaⱼᵢ ∈ {1,2,3}`; those with `mᵢⱼ = 1, 2, ∞` are proved, so the
-action is unconditional when no such pair exists (`pathBraidRelations_of_forall`).
+the `Sᵢ` to `W →* Perm B(λ)` (`Path/WeylGroupAction.lean`; via `CoxeterSystem.lift`, `sᵢ ↦ Sᵢ`,
+`coe_wt_pathWeylAction`: `wt (w b) = w (wt b)`, `pathWeylAction_top`: `w π_λ = π_{wλ}`), using
+`PathBraidRelations`, the relations for the pairs with `aᵢⱼaⱼᵢ ∈ {1,2,3}` (proved below for every
+generalized Cartan matrix); those with `mᵢⱼ = 1, 2, ∞` are proved directly
+(`isLiftable_pathReflectionPerm`, `pathBraidRelations_of_forall`).
 `LeviMap.iterate_reflection_eq_of_levi` reduces `(S_{e k} S_{e l})^m = 1` on `B(λ)` to the same
 relation on the Levi path crystals `B_J(μ)` (any subdiagram). **`A₂` braid relation**
 (`Path/Pitman.lean`, `Crystal/BraidA2.lean`, `Path/BraidA2.lean`): string tops are Pitman
@@ -1189,11 +1190,25 @@ transforms (`eIter_eq_pitman`, `top_apply`: `eᵢ^{εᵢ}π = π - (min_{[0,t]} 
 transition map of string coordinates, and `IsSeminormal.reflection_braid_three` turns these into
 `SᵢSⱼSᵢ = SⱼSᵢSⱼ` via the piecewise-linear identity `a2_braid_coordinates`
 (`LittelmannPath.reflection_braid_three`, `pathCrystal_reflection_braid_three`, any GCM, any
-rank). Hence `pathBraidRelations_of_simplyLaced`: `pathWeylAction` is unconditional whenever
-`aᵢⱼaⱼᵢ ∈ {0, 1} ∪ [4, ∞)` for all `i ≠ j` (all simply-laced types). Remaining: the braid
-relations of lengths 4 and 6 (`B₂`, `G₂`; the same route needs the corresponding transition maps
-and Pitman identities); identification of the Levi path crystals with crystal bases (normality
-in Kashiwara's sense); and extension of the concrete `a`-chain description beyond the proved
+rank). Hence `pathBraidRelations_of_simplyLaced`: the braid relations hold whenever
+`aᵢⱼaⱼᵢ ∈ {0, 1} ∪ [4, ∞)` for all `i ≠ j` (all simply-laced types). **`B₂` and `G₂` braid
+relations by folding** (`Crystal/Folding.lean`, `Path/Folding.lean`, `Path/BraidFolding.lean`):
+a folding map `FoldMap` (colour map `ι' → ι` with orthogonal orbits, `ψ : 𝔥_Q* → 𝔥_R*` with
+`⟨ψ v, α_a^∨⟩ = ⟨v, α_{o a}^∨⟩`, `ψ(αₖ) = ∑_{orbit} α_a`; `FoldMap.ofSpan`) sends `eₖ, fₖ` to the
+products of the `e_a, f_a` over the orbit (`e_fold`, `f_fold`), `B(μ)` into `B(ψ μ)`
+(`fold_mem_component`, `fold_straightLine`) and `Sₖ` to the product of the `S_a`
+(`fold_reflection_of_orbit_eq_pair/_triple`, from the abstract
+`IsSeminormal.map_reflection_of_bind₂/₃`). Folding `A₃ → B₂` and `D₄ → G₂` and explicit braid
+moves in the simply-laced crystal (`braid_word_A3`, `braid_word_D4`) give
+`reflection_braid_four_of_B2` (`S₀S₁S₀S₁ = S₁S₀S₁S₀`, `a₀₁ = -1`, `a₁₀ = -2`) and
+`reflection_braid_six_of_G2` (`(S₀S₁)³ = (S₁S₀)³`, `a₁₀ = -3`) on every rank-two `B(μ)`; Levi
+restriction then gives **`pathBraidRelations`: all braid relations on `B(Λ)` for every
+generalized Cartan matrix**, so `pathWeylAction hA hΛ` (which no longer takes the braid
+relations as a hypothesis) is Kashiwara's Weyl group action on `B(Λ)` for every generalized
+Cartan matrix, over `ℝ` (argument reconstructed; it
+replaces, for lengths 4 and 6, the [BBO05]-style Pitman/string-coordinate computation used for
+`A₂`). Remaining: identification of the Levi path crystals with crystal bases (normality in
+Kashiwara's sense); and extension of the concrete `a`-chain description beyond the proved
 dominant-orbit supplied-path scope.
 Source-scope caution: the isomorphism theorem is proved for rational piecewise-linear paths
 (finitely many pieces, rational vertices), not for all continuous dominant paths of the
@@ -1715,9 +1730,10 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   relations of lengths 3, 4, 6, which reduce to rank-two Levi crystals
   (`LeviMap.iterate_reflection_eq_of_levi`); lengths two (`reflection_comm`) and three (`A₂`,
   `pathCrystal_reflection_braid_three`, via Pitman transforms and string coordinates) and
-  `mᵢⱼ = ∞` are proved, so the action is unconditional in the simply-laced case
-  (`pathBraidRelations_of_simplyLaced`). Remaining: the `B₂`, `G₂` relations and identification
-  of `B_J(μ)` with Kashiwara's crystal bases (normality in his sense).
+  `mᵢⱼ = ∞` are proved, and lengths four and six (`B₂`, `G₂`) by folding `A₃ → B₂`,
+  `D₄ → G₂` (`reflection_braid_four_of_B2`, `reflection_braid_six_of_G2`), so the action is
+  unconditional for every generalized Cartan matrix (`pathBraidRelations`, `pathWeylAction`).
+  Remaining: identification of `B_J(μ)` with Kashiwara's crystal bases (normality in his sense).
 - **Braid automorphisms `Tᵢ` in general** (M15): **`braidEquivOfGeneric`**: Lusztig's `Tᵢ` is an
   algebra automorphism (explicit reversal-conjugate inverse) at every node of every Cartan
   datum, in arbitrary rank, over any field and root-datum lattice, under explicit q-factorial

@@ -22,7 +22,7 @@ For two colours `i, j` with `⟨αⱼ, αᵢ^∨⟩ = ⟨αᵢ, αⱼ^∨⟩ = -
 * `LittelmannPath.reflection_braid_three`: `SᵢSⱼSᵢ = SⱼSᵢSⱼ` on integral paths.
 * `Matrix.Realization.pathBraidRelations_of_simplyLaced`: the braid relations on `B(Λ)` for
   every generalized Cartan matrix with `aᵢⱼaⱼᵢ ∈ {0, 1} ∪ [4, ∞)` for all `i ≠ j` (e.g. all
-  simply-laced types), so `Matrix.Realization.pathWeylAction` is unconditional there.
+  simply-laced types).
 
 ## References
 
@@ -161,8 +161,8 @@ theorem pathReflectionPerm_mul_pow_three (hΛ : P.IsDominantIntegral Λ) {i j : 
 
 /-- **Kashiwara's Weyl group action in the simply-laced case**: if `aᵢⱼaⱼᵢ ∈ {0, 1}` or
 `aᵢⱼaⱼᵢ ≥ 4` for all `i ≠ j` (for instance every simply-laced generalized Cartan matrix: types
-`A`, `D`, `E` and their affine and hyperbolic relatives), all braid relations hold on `B(Λ)`,
-so `pathWeylAction` gives an unconditional action of the Weyl group. -/
+`A`, `D`, `E` and their affine and hyperbolic relatives), all braid relations hold on `B(Λ)`
+(see `Matrix.Realization.pathBraidRelations` for arbitrary generalized Cartan matrices). -/
 theorem pathBraidRelations_of_simplyLaced (hΛ : P.IsDominantIntegral Λ)
     (h : ∀ i j, i ≠ j → A i j ≠ 0 → A i j * A j i = 1 ∨ 4 ≤ A i j * A j i) :
     P.PathBraidRelations hA hΛ := by
