@@ -13,3 +13,5 @@ jobs:
       - uses: leanprover/lean-action@v1
         with:
           use-mathlib-cache: true
+      - name: Axiom audit
+        run: lake env lean -DwarningAsError=true scripts/AxiomAudit.lean
