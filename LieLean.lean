@@ -152,6 +152,8 @@ import LieLean.Algebra.Lie.KacMoody.RestrictedDual
 import LieLean.Algebra.Lie.KacMoody.TranslationDuality
 import LieLean.Algebra.Lie.KacMoody.TranslationAdjunction
 import LieLean.Algebra.Lie.KacMoody.TranslationSimple
+import LieLean.Algebra.Lie.KacMoody.DualIrreducible
+import LieLean.Algebra.Lie.KacMoody.TranslationSameFacet
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
@@ -206,6 +208,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.OrthogonalGeneral
 import LieLean.Algebra.QuantumGroup.BraidAction.NextEdge
 import LieLean.Algebra.QuantumGroup.BraidAction.ThreeLocalArtin
 import LieLean.Algebra.QuantumGroup.BraidAction.Families
+import LieLean.Algebra.QuantumGroup.BraidAction.FiniteCartanArtin
 import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdge
 import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdgeBraid
 import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdgeOther
@@ -246,11 +249,13 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Bar
 import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
 import LieLean.Algebra.QuantumGroup.LusztigF.IntegralForm
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
+import LieLean.Algebra.QuantumGroup.PBW.KostantDimension
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoB2
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoRootVectors
 import LieLean.Algebra.QuantumGroup.PBW.RootVectors
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
+import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.Sl2
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Equivalence
