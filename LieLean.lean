@@ -253,6 +253,7 @@ import LieLean.Algebra.QuantumGroup.PBW.KostantDimension
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoB2
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoRootVectors
+import LieLean.Algebra.QuantumGroup.PBW.RootVectorWeights
 import LieLean.Algebra.QuantumGroup.PBW.RootVectors
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
 import LieLean.Algebra.QuantumGroup.PBW.WeightDimension

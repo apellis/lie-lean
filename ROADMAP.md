@@ -526,9 +526,10 @@ Translation}.lean`): Casimir block decomposition `IsCategoryO.isInternal_casimir
 actual restricted Lie-module maps and proves injectivity, surjectivity and kernel/image
 exactness for Casimir-block restriction. Injectivity and middle exactness use positive-finite
 modules; surjectivity is stated for category-O modules. These are actual morphism results,
-not just character equalities. Open: [HumO] Thm. 7.6, which needs integration of full-central
-projection with tensor-Verma standard filtrations, character classification, facet exclusion
-and dual compatibility.
+not just character equalities. The subsequent full-central projection, facet exclusion and
+translation results below prove the Verma and dual-Verma parts of [HumO] Thm. 7.6 for integral
+weights in finite type over algebraically closed characteristic-zero fields. Non-integral
+weights and the general upper-closure criterion remain open.
 `KacMoody/TensorVerma.lean` proves the actual left-regular enveloping tensor identity over
 any commutative ring, with a Hom-module inverse and both inverse laws. Its PBW specialization
 identifies `U(n₋) ⊗ Z_trivial` with `M(Λ) ⊗ Z`, equivariantly for `n₋`, and constructs
@@ -545,8 +546,9 @@ successive quotient image is equivalent to `M(Λ + μ)`, with factor count equal
 dimension of `Z_μ`. The coefficient module is finite-dimensional and Cartan-diagonalizable;
 the characteristic-zero field and finite-index realization are retained, without finite-type,
 dominance, integrality or algebraic-closure assumptions. Repeated weights and the zero module
-are included. These are reconstructed arguments, not certification of the primary-source
-translation theorem; character classification, facet exclusion and dual compatibility remain.
+are included. These are reconstructed arguments, not certification of a consulted primary-source
+proof. The later translation results below supply facet exclusion and dual compatibility in the
+stated integral, finite-type setting.
 `KacMoody/VermaCentralCharacter.lean` constructs the actual full-centre algebra character
 `Z(U(g)) →ₐ[K] K` of each Verma module and proves scalar action on every vector. Nonzero
 Verma morphisms force equal characters, and scalar action passes to their images and
@@ -1735,8 +1737,15 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
 - Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
   `Hecke/KazhdanLusztig/Canonical.lean`; the PBW basis is proved for `A₂` and `B₂`,
   `a2PBWBasis`, `b2PBWBasis`, and the root vectors along reduced words lie in `U⁺` in every rank
-  with rank-two subdiagrams of finite type, `rootVector_mem_adjoin_of_isReduced`),
-  infinite-dimensional extensions of quantum `sl₂` classification, Humphreys O Thm. 7.6,
+  with rank-two subdiagrams of finite type, `rootVector_mem_adjoin_of_isReduced`).
+  `PBW/RootVectorWeights.lean` proves the conjugation-character formula for actual braid root
+  vectors along every word (`rootVector_conj_of_not_root`), over any field at a nonzero parameter
+  not a root of unity. The finite-type reduced-word result combines it with existing `U⁺`
+  membership (`rootVector_mem_adjoin_and_adWeightSpace_of_isFiniteCartan`). Identification with
+  nonnegative root-lattice graded pieces, independence and spanning remain separate targets.
+  Other later targets:
+  infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
+  and the general upper-closure criterion of Humphreys O Thm. 7.9,
   and valid restricted extensions of the Hom dimension bound.
   Finite-dimensional exhaustion and parameter uniqueness are proved for both signs at generic
   parameter. The unrestricted Verma Hom dimension bound is false
