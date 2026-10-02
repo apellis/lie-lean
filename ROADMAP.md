@@ -1829,8 +1829,16 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   finite simply-laced, finite Coxeter, nonzero non-root-of-unity hypotheses are
   retained, without characteristic zero or transcendence on the quantum field.
   Negative monomials retain the Chevalley-conjugated braid convention and unchanged
-  word order. Ordered spanning in non-simply-laced type (braid lengths four and six)
-  and corresponding full bases at arbitrary non-root-of-unity parameters remain open.
+  word order. `PBW/RankTwoB2LocalSpan.lean` proves that the raw and normalized B₂
+  ordered monomials span the actual two-generator subalgebra at a double edge in
+  arbitrary ambient Cartan data, removing the exact-two-node hypothesis. It uses
+  the existing straightening operators through a two-letter free algebra and
+  retains the explicit nonzero parameter and denominator conditions
+  `vᵢ - vᵢ⁻¹ ≠ 0` and `[2]ᵢ! ≠ 0`, without characteristic-zero, transcendence,
+  non-root-of-unity or finite-type hypotheses. Reverse-orientation spanning and
+  length-four braid-span invariance are not yet asserted. General ordered spanning
+  in non-simply-laced type (braid lengths four and six) and corresponding full bases
+  at arbitrary non-root-of-unity parameters remain open.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,
