@@ -134,9 +134,13 @@ Further proved results include:
   root-vector membership proves the reverse inclusion, so the ordered span equals
   the positive algebra at every nonzero non-root-of-unity parameter over any field.
   No transcendence or characteristic-zero assumption on that field is used for
-  spanning. Linear independence and non-simply-laced spanning are not asserted.
-  Arbitrary non-root-of-unity PBW bases,
-  braid relations outside
+  spanning. `PBW/SimplyLacedBasis` combines this equality with the existing finite-Cartan
+  independence theorem to give actual positive and negative PBW bases in finite
+  simply-laced type at every nonzero non-root-of-unity parameter, over any quantum
+  coefficient field. Their ambient vectors and finite coordinate reconstructions are
+  explicit; negative vectors use the Chevalley-conjugated operators `C Tᵢ C⁻¹`, not
+  an asserted equality with the original operators. Non-simply-laced ordered spanning,
+  arbitrary-parameter full negative–toral–positive PBW bases, braid relations outside
   `BraidOuterCondition`, faithfulness and general-rank global bases remain open.
 
 These summaries do not replace the precise hypotheses and remaining dependencies in

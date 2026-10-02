@@ -1814,8 +1814,15 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   positive generator, hence inclusion of the positive algebra. Actual finite-type
   root-vector membership gives the reverse inclusion. The equality retains a finite
   Coxeter system and finite Cartan hypotheses; no transcendental basis argument is used.
-  Linear independence/bases at arbitrary non-root-of-unity parameters and ordered
-  spanning in non-simply-laced type (braid lengths four and six) remain open.
+  `PBW/SimplyLacedBasis.lean` combines that equality with the existing finite-Cartan
+  independence theorem (which already works at nonzero non-root-of-unity parameters)
+  to construct actual positive and Chevalley-conjugated negative PBW bases. Both
+  have exact ambient apply formulas and finite coordinate reconstruction, with no
+  characteristic-zero or transcendence requirement on the quantum coefficient field.
+  A longest reduced word and both bases are constructed without supplied spanning
+  or basis hypotheses. Finite Cartan type, simple lacing and finite Coxeter group
+  hypotheses remain explicit. Ordered spanning in non-simply-laced type (braid lengths
+  four and six) and arbitrary-parameter full negative–toral–positive PBW bases remain open.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,
