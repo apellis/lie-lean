@@ -93,7 +93,13 @@ Further proved results include:
   and constructs `finiteTypePBWBasis`: the actual ordered braid-root monomials form a basis of
   `U⁺` for every longest reduced word in finite type, over a characteristic-zero field at a
   transcendental parameter. `exists_finiteTypePBWBasis` also supplies a longest reduced word
-  and its basis. Arbitrary non-root-of-unity spanning/bases, braid relations outside
+  and its basis. `PBW/NegativeBasis` restricts the actual coefficient-linear Chevalley
+  involution to `U⁺ ≃ₐ U⁻` and constructs a negative basis with finite-support coordinate
+  reconstruction. Its ordered `F`-root monomials use the explicit conjugated operators
+  `C Tᵢ C⁻¹`, not an asserted equality with the original braid operators on `F`.
+  Negative independence retains the nonzero non-root-of-unity hypotheses; the negative
+  basis retains characteristic zero and transcendence. Full negative/toral/positive PBW
+  multiplication and arbitrary non-root-of-unity spanning/bases, braid relations outside
   `BraidOuterCondition`, faithfulness and general-rank global bases remain open.
 
 These summaries do not replace the precise hypotheses and remaining dependencies in
