@@ -114,8 +114,14 @@ Further proved results include:
   `PBW/RankTwoA2BraidSpan` identifies the actual recursive PBW monomials of `iji`
   with these local monomials and proves equal ordered spans for `iji` and `jij`.
   The operators must have Lusztig's generator images, and `vᵢ - vᵢ⁻¹ ≠ 0` is explicit;
-  actual non-root-of-unity braid automorphisms satisfy these hypotheses. This does not
-  yet propagate the braid move through arbitrary word prefixes and suffixes.
+  actual non-root-of-unity braid automorphisms satisfy these hypotheses.
+  `PBW/RankTwoA2ContextSpan` factors actual recursive PBW spans under word append
+  and propagates this A₂ braid move through arbitrary prefixes and suffixes.
+  Suffix transport requires equality of the full local composite automorphisms;
+  the specialization to actual non-root-of-unity operators obtains it from the
+  existing braid action and retains `D.BraidOuterCondition`. No reducedness or
+  finite-type assumption is needed for this local contextual result. General
+  longest-word ordered spanning remains open.
   Arbitrary non-root-of-unity PBW bases,
   braid relations outside
   `BraidOuterCondition`, faithfulness and general-rank global bases remain open.
