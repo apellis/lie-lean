@@ -88,10 +88,13 @@ Further proved results include:
   Cartan-product bounds explicit. In a characteristic-zero classical realization, reduced
   longest-word prefix roots enumerate the positive roots without repetitions; their exponent
   fibers are equivalent to the existing Kostant partition fibers (`PBW/RootEnumeration`,
-  `PBW/KostantCounting`), using proved finite-type root multiplicity one. These counting results
-  do not yet identify quantum graded-piece bases. Spanning and general finite-type PBW bases,
-  braid relations outside `BraidOuterCondition`, faithfulness and general-rank global
-  bases remain open.
+  `PBW/KostantCounting`), using proved finite-type root multiplicity one.
+  `PBW/GenericBasis` identifies the natural-degree fibers, proves degreewise and global spanning,
+  and constructs `finiteTypePBWBasis`: the actual ordered braid-root monomials form a basis of
+  `U⁺` for every longest reduced word in finite type, over a characteristic-zero field at a
+  transcendental parameter. `exists_finiteTypePBWBasis` also supplies a longest reduced word
+  and its basis. Arbitrary non-root-of-unity spanning/bases, braid relations outside
+  `BraidOuterCondition`, faithfulness and general-rank global bases remain open.
 
 These summaries do not replace the precise hypotheses and remaining dependencies in
 [`ROADMAP.md`](ROADMAP.md). In particular, the quantum actions are not claimed faithful, and
