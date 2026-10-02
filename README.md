@@ -98,8 +98,12 @@ Further proved results include:
   reconstruction. Its ordered `F`-root monomials use the explicit conjugated operators
   `C Tᵢ C⁻¹`, not an asserted equality with the original braid operators on `F`.
   Negative independence retains the nonzero non-root-of-unity hypotheses; the negative
-  basis retains characteristic zero and transcendence. Full negative/toral/positive PBW
-  multiplication and arbitrary non-root-of-unity spanning/bases, braid relations outside
+  basis retains characteristic zero and transcendence. `PBW/TriangularBasis` identifies
+  the actual negative–toral–positive multiplication with a linear equivalence for every
+  nonzero non-root-of-unity parameter. Tensoring the three bases gives the full finite-type
+  PBW basis and finite-support reconstruction at characteristic zero and transcendence,
+  with the same conjugated negative convention. Arbitrary non-root-of-unity PBW bases,
+  braid relations outside
   `BraidOuterCondition`, faithfulness and general-rank global bases remain open.
 
 These summaries do not replace the precise hypotheses and remaining dependencies in

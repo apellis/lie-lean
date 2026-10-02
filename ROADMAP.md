@@ -1771,9 +1771,15 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   monomials using the explicit conjugated operators `C Tᵢ C⁻¹`, and constructs the negative
   PBW basis with ambient finite-support reconstruction and existence without a supplied word.
   Negative independence only requires the nonzero non-root-of-unity parameter; the basis
-  retains characteristic zero and transcendence. The full negative/toral/positive multiplication
-  basis still needs the quotient-tensor identification with the actual generated subalgebras.
-  Arbitrary non-root-of-unity spanning/bases remain open.
+  retains characteristic zero and transcendence. `PBW/TriangularBasis.lean` now identifies
+  the quotient tensor factors with the actual generated subalgebras and proves actual
+  negative–toral–positive multiplication is a linear equivalence, requiring only a nonzero
+  non-root-of-unity parameter. `finiteTypeFullPBWBasis` tensors the negative, toral and positive
+  bases; its vectors are precisely negative monomial times `K_μ` times positive monomial.
+  It gives finite-support reconstruction, and `exists_finiteTypeFullPBWBasis` supplies the
+  longest reduced word internally. The full basis retains finite type, characteristic zero
+  and transcendence, and the explicit Chevalley-conjugated negative braid convention.
+  Arbitrary non-root-of-unity PBW spanning/bases remain open.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,
