@@ -1766,7 +1766,14 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   the ordered braid-root monomials as vectors; `exists_finiteTypePBWBasis` supplies a longest
   reduced word and its basis without a supplied enumeration or basis premise. Counting retains
   the nonzero non-root-of-unity hypotheses; spanning and the basis additionally require
-  characteristic zero and transcendence. Arbitrary non-root-of-unity spanning/bases remain open.
+  characteristic zero and transcendence. `PBW/NegativeBasis.lean` proves the actual Chevalley
+  restriction `U⁺ ≃ₐ U⁻` (without parameter restrictions), intertwines root vectors and ordered
+  monomials using the explicit conjugated operators `C Tᵢ C⁻¹`, and constructs the negative
+  PBW basis with ambient finite-support reconstruction and existence without a supplied word.
+  Negative independence only requires the nonzero non-root-of-unity parameter; the basis
+  retains characteristic zero and transcendence. The full negative/toral/positive multiplication
+  basis still needs the quotient-tensor identification with the actual generated subalgebras.
+  Arbitrary non-root-of-unity spanning/bases remain open.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,
