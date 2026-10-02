@@ -77,7 +77,11 @@ Further proved results include:
   datum and every simply-laced datum. Quantum PBW bases are proved in types `A₂` and `B₂`, with
   reduced-word root vectors in `U⁺` under the roadmap's rank-two hypotheses. Root vectors along
   every word have the prefix-reflected simple-root conjugation character
-  (`rootVector_conj_of_not_root`); this is not yet identification with root-lattice graded pieces.
+  (`rootVector_conj_of_not_root`). In finite type, actual root vectors and their ordered monomials
+  belong to the corresponding nonnegative root-lattice graded pieces
+  (`rootVector_mem_plusWeightSpace_of_isFiniteCartan`,
+  `pbwMonomial_mem_plusWeightSpace_of_isFiniteCartan`); character independence and prefix-root
+  nonnegativity are proved, not added as hypotheses.
   Ordered root-vector monomials along every reduced word are linearly independent in finite type
   (`linearIndependent_pbwMonomial_of_isFiniteCartan`), over any field at a nonzero parameter not a
   root of unity. The more general reduced-word theorem keeps `BraidOuterCondition` and rank-two

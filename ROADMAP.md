@@ -1741,15 +1741,22 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   `PBW/RootVectorWeights.lean` proves the conjugation-character formula for actual braid root
   vectors along every word (`rootVector_conj_of_not_root`), over any field at a nonzero parameter
   not a root of unity. The finite-type reduced-word result combines it with existing `U⁺`
-  membership (`rootVector_mem_adjoin_and_adWeightSpace_of_isFiniteCartan`). Identification with
-  nonnegative root-lattice graded pieces remains a separate target. `PBW/Monomials.lean` defines
+  membership (`rootVector_mem_adjoin_and_adWeightSpace_of_isFiniteCartan`).
+  `PBW/RootVectorGrading.lean` identifies actual finite-type root vectors and ordered monomials
+  with the existing nonnegative root-lattice pieces (`rootVector_mem_plusWeightSpace_of_isFiniteCartan`,
+  `pbwMonomial_mem_plusWeightSpace_of_isFiniteCartan`). Integer character independence follows
+  from the Cartan determinant; prefix-root nonnegativity follows from character separation and
+  nonvanishing. No independent-roots, characteristic-zero or transcendence premise is added.
+  `PBW/Monomials.lean` defines
   ordered root-vector monomials and proves their product formula and an independence criterion;
   `PBW/Independence.lean` discharges the criterion using the triangular decomposition, giving
   `linearIndependent_pbwMonomial_of_isReduced` under `BraidOuterCondition` and rank-two
   Cartan-product bounds, and `linearIndependent_pbwMonomial_of_isFiniteCartan` in finite type.
   These independence results need a nonzero, non-root-of-unity parameter, not transcendence or
   characteristic zero. Positive-root enumeration, spanning and the general PBW basis remain open;
-  the dimension-based spanning route has the separate transcendental-parameter hypothesis.
+  longest-word prefix-root enumeration must match the realization and multiplicities used by
+  Kostant partitions. The dimension-based spanning route separately assumes characteristic zero
+  and a transcendental parameter.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,
