@@ -120,8 +120,14 @@ Further proved results include:
   Suffix transport requires equality of the full local composite automorphisms;
   the specialization to actual non-root-of-unity operators obtains it from the
   existing braid action and retains `D.BraidOuterCondition`. No reducedness or
-  finite-type assumption is needed for this local contextual result. General
-  longest-word ordered spanning remains open.
+  finite-type assumption is needed for this local contextual result.
+  `PBW/RankTwoCommutingContextSpan` supplies the commuting-node move and its arbitrary
+  word-context version, using equality of the full braid automorphisms.
+  `PBW/SimplyLacedSpanInvariance` combines both moves with Matsumoto's theorem:
+  at nonzero non-root-of-unity parameters, reduced words for the same Coxeter-group
+  element have equal actual ordered PBW spans in simply-laced type. Simply-lacedness
+  discharges the outer-node condition; finite type is not required. This proves
+  reduced-word span independence, not longest-word spanning or linear independence.
   Arbitrary non-root-of-unity PBW bases,
   braid relations outside
   `BraidOuterCondition`, faithfulness and general-rank global bases remain open.

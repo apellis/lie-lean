@@ -1801,7 +1801,14 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   needs only the local span equality; suffix transport additionally requires equality
   of the local composite automorphisms. The actual non-root-of-unity specialization
   discharges this via the existing braid action, retaining `D.BraidOuterCondition`.
-  This does not establish longest-word ordered spanning or the other braid lengths. Straightening
+  `PBW/RankTwoCommutingContextSpan.lean` proves the actual commuting-node length-two
+  ordered-span equality and arbitrary-context transport via full automorphism equality.
+  `PBW/SimplyLacedSpanInvariance.lean` uses the actual Coxeter braid-move and Matsumoto
+  APIs to prove reduced-word span independence for any Coxeter system of the given
+  simply-laced Cartan matrix, at nonzero non-root-of-unity parameters. The existing
+  simply-laced theorem discharges `D.BraidOuterCondition`; finite type is not needed.
+  This does not establish longest-word ordered spanning, positive-part exhaustion,
+  linear independence, or braid-span invariance for lengths four and six. Straightening
   or a parameter-uniform dimension argument, and hence arbitrary non-root-of-unity PBW
   spanning/bases, remain open.
   Other later targets:
