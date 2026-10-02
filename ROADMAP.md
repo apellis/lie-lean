@@ -1742,7 +1742,14 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   vectors along every word (`rootVector_conj_of_not_root`), over any field at a nonzero parameter
   not a root of unity. The finite-type reduced-word result combines it with existing `U⁺`
   membership (`rootVector_mem_adjoin_and_adWeightSpace_of_isFiniteCartan`). Identification with
-  nonnegative root-lattice graded pieces, independence and spanning remain separate targets.
+  nonnegative root-lattice graded pieces remains a separate target. `PBW/Monomials.lean` defines
+  ordered root-vector monomials and proves their product formula and an independence criterion;
+  `PBW/Independence.lean` discharges the criterion using the triangular decomposition, giving
+  `linearIndependent_pbwMonomial_of_isReduced` under `BraidOuterCondition` and rank-two
+  Cartan-product bounds, and `linearIndependent_pbwMonomial_of_isFiniteCartan` in finite type.
+  These independence results need a nonzero, non-root-of-unity parameter, not transcendence or
+  characteristic zero. Positive-root enumeration, spanning and the general PBW basis remain open;
+  the dimension-based spanning route has the separate transcendental-parameter hypothesis.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,
