@@ -139,9 +139,16 @@ Further proved results include:
   simply-laced type at every nonzero non-root-of-unity parameter, over any quantum
   coefficient field. Their ambient vectors and finite coordinate reconstructions are
   explicit; negative vectors use the Chevalley-conjugated operators `C Tᵢ C⁻¹`, not
-  an asserted equality with the original operators. Non-simply-laced ordered spanning,
-  arbitrary-parameter full negative–toral–positive PBW bases, braid relations outside
-  `BraidOuterCondition`, faithfulness and general-rank global bases remain open.
+  an asserted equality with the original operators. `PBW/SimplyLacedTriangularBasis`
+  tensors these bases with the toral basis through the actual multiplication
+  equivalence, giving the full negative–toral–positive PBW basis under the same
+  finite simply-laced and nonzero non-root-of-unity hypotheses. Its exact vectors
+  are negative monomial times `K_μ` times positive monomial; finite reconstruction
+  and existence without a supplied longest word are proved. The quantum field
+  still needs neither characteristic zero nor transcendence. Non-simply-laced
+  ordered spanning and corresponding full bases at arbitrary non-root-of-unity
+  parameters, braid relations outside `BraidOuterCondition`, faithfulness and
+  general-rank global bases remain open.
 
 These summaries do not replace the precise hypotheses and remaining dependencies in
 [`ROADMAP.md`](ROADMAP.md). In particular, the quantum actions are not claimed faithful, and
