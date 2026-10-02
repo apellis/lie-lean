@@ -254,6 +254,7 @@ import LieLean.Algebra.QuantumGroup.PBW.KostantDimension
 import LieLean.Algebra.QuantumGroup.PBW.Monomials
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2BraidSpan
+import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2ContextSpan
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2LocalSpan
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoB2
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoRootVectors

@@ -1796,7 +1796,12 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   `iji` and `jij` have equal ordered spans (`span_pbwMonomial_a2_braid`). This step
   requires actual Lusztig generator images and `vᵢ - vᵢ⁻¹ ≠ 0`, the denominator
   condition in the third-root-vector formula; the non-root-of-unity operators qualify.
-  This is not yet an arbitrary contextual braid-move or longest-word spanning theorem. Straightening
+  `PBW/RankTwoA2ContextSpan.lean` factors actual recursive ordered spans under append
+  and proves A₂ braid-span equality in arbitrary prefix/suffix context. Prefix transport
+  needs only the local span equality; suffix transport additionally requires equality
+  of the local composite automorphisms. The actual non-root-of-unity specialization
+  discharges this via the existing braid action, retaining `D.BraidOuterCondition`.
+  This does not establish longest-word ordered spanning or the other braid lengths. Straightening
   or a parameter-uniform dimension argument, and hence arbitrary non-root-of-unity PBW
   spanning/bases, remain open.
   Other later targets:
