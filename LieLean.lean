@@ -262,6 +262,7 @@ import LieLean.Algebra.QuantumGroup.PBW.RankTwoRootVectors
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorWeights
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorGrading
 import LieLean.Algebra.QuantumGroup.PBW.SimplyLacedSpanInvariance
+import LieLean.Algebra.QuantumGroup.PBW.SimplyLacedLongestSpan
 import LieLean.Algebra.QuantumGroup.PBW.RootEnumeration
 import LieLean.Algebra.QuantumGroup.PBW.KostantCounting
 import LieLean.Algebra.QuantumGroup.PBW.GenericBasis

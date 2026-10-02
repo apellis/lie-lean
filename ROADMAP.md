@@ -1807,10 +1807,15 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   APIs to prove reduced-word span independence for any Coxeter system of the given
   simply-laced Cartan matrix, at nonzero non-root-of-unity parameters. The existing
   simply-laced theorem discharges `D.BraidOuterCondition`; finite type is not needed.
-  This does not establish longest-word ordered spanning, positive-part exhaustion,
-  linear independence, or braid-span invariance for lengths four and six. Straightening
-  or a parameter-uniform dimension argument, and hence arbitrary non-root-of-unity PBW
-  spanning/bases, remain open.
+  `PBW/SimplyLacedLongestSpan.lean` now proves actual longest-word ordered spanning
+  in finite simply-laced Cartan type at nonzero non-root-of-unity parameters over
+  arbitrary fields. Longest-element descents, reduced-word span independence, and
+  incrementing the first exponent give stability under left multiplication by every
+  positive generator, hence inclusion of the positive algebra. Actual finite-type
+  root-vector membership gives the reverse inclusion. The equality retains a finite
+  Coxeter system and finite Cartan hypotheses; no transcendental basis argument is used.
+  Linear independence/bases at arbitrary non-root-of-unity parameters and ordered
+  spanning in non-simply-laced type (braid lengths four and six) remain open.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,

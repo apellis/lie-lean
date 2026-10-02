@@ -128,6 +128,13 @@ Further proved results include:
   element have equal actual ordered PBW spans in simply-laced type. Simply-lacedness
   discharges the outer-node condition; finite type is not required. This proves
   reduced-word span independence, not longest-word spanning or linear independence.
+  `PBW/SimplyLacedLongestSpan` supplies the next step: for a finite Coxeter system,
+  the longest-word span is stable under left multiplication by each positive generator
+  and contains the positive algebra. In finite simply-laced Cartan type, actual
+  root-vector membership proves the reverse inclusion, so the ordered span equals
+  the positive algebra at every nonzero non-root-of-unity parameter over any field.
+  No transcendence or characteristic-zero assumption on that field is used for
+  spanning. Linear independence and non-simply-laced spanning are not asserted.
   Arbitrary non-root-of-unity PBW bases,
   braid relations outside
   `BraidOuterCondition`, faithfulness and general-rank global bases remain open.
