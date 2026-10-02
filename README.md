@@ -78,8 +78,11 @@ Further proved results include:
   reduced-word root vectors in `U⁺` under the roadmap's rank-two hypotheses. Root vectors along
   every word have the prefix-reflected simple-root conjugation character
   (`rootVector_conj_of_not_root`); this is not yet identification with root-lattice graded pieces.
-  General finite-type
-  PBW bases, braid relations outside `BraidOuterCondition`, faithfulness and general-rank global
+  Ordered root-vector monomials along every reduced word are linearly independent in finite type
+  (`linearIndependent_pbwMonomial_of_isFiniteCartan`), over any field at a nonzero parameter not a
+  root of unity. The more general reduced-word theorem keeps `BraidOuterCondition` and rank-two
+  Cartan-product bounds explicit. Spanning and general finite-type PBW bases,
+  braid relations outside `BraidOuterCondition`, faithfulness and general-rank global
   bases remain open.
 
 These summaries do not replace the precise hypotheses and remaining dependencies in

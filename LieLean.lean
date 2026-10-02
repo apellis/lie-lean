@@ -249,7 +249,9 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Bar
 import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
 import LieLean.Algebra.QuantumGroup.LusztigF.IntegralForm
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
+import LieLean.Algebra.QuantumGroup.PBW.Independence
 import LieLean.Algebra.QuantumGroup.PBW.KostantDimension
+import LieLean.Algebra.QuantumGroup.PBW.Monomials
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoB2
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoRootVectors
