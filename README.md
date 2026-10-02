@@ -107,6 +107,10 @@ Further proved results include:
   any coefficient field at a nonzero non-root-of-unity parameter. The auxiliary classical
   realization remains characteristic zero. This is not ordered-monomial spanning:
   straightening or a parameter-uniform dimension argument is still required.
+  `PBW/RankTwoA2LocalSpan` proves local ordered spanning for a simple edge inside an
+  arbitrary ambient Cartan datum, removing the exact-two-node assumption from this
+  spanning step. Both edge orientations span the same two-generator subalgebra, using
+  only a nonzero parameter. This does not establish general longest-word spanning.
   Arbitrary non-root-of-unity PBW bases,
   braid relations outside
   `BraidOuterCondition`, faithfulness and general-rank global bases remain open.

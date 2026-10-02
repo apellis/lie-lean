@@ -1785,7 +1785,13 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   to a nonzero scalar multiple of it. Thus these actual root vectors generate `U⁺` as
   an algebra at every nonzero non-root-of-unity parameter over an arbitrary coefficient
   field (with a characteristic-zero auxiliary classical realization). Algebra generation
-  does not show the ordered-monomial span is closed under multiplication. Straightening
+  does not show the ordered-monomial span is closed under multiplication.
+  `PBW/RankTwoA2LocalSpan.lean` supplies a local straightening ingredient: quadratic
+  Serre relations in any ambient algebra imply that ordered twisted-commutator monomials
+  span its two-generator subalgebra. Applied to any simple edge, `span_a2PBWMono_pair`
+  removes the exact-two-node ambient restriction and requires only `v ≠ 0`;
+  `span_a2PBWMono_pair_reverse` identifies the spans for the two edge orientations.
+  This is not yet a general reduced-word braid-move or longest-word spanning theorem. Straightening
   or a parameter-uniform dimension argument, and hence arbitrary non-root-of-unity PBW
   spanning/bases, remain open.
   Other later targets:
