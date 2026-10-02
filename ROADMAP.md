@@ -1568,12 +1568,14 @@ words of weight `ν`). Proof: the quantum Gabber–Kac dimension count now also 
 classical Serre products), and classically `K(ν) + dim Z_ν = #{words of weight ν}` through
 `y ↦ y(f) v_Λ ∈ M(Λ)` and `𝒮 ≅ U(𝔫₋)` (`LusztigF.kostantPartition_add_finrank_serreSpan`,
 `finrank_serreSpan_one`: field independence). Hence a family of `K(ν)` elements of `U⁺_ν` is
-linearly independent iff it spans (`linearIndependent_iff_span_eq_plusWeightSpace`). Remaining
-for the finite-type PBW basis: the weights of the root vectors (`T_w` maps `U⁺_{αᵢ}` to
-`U⁺_{wαᵢ}`), the bijection between the root vectors along a reduced word of `w₀` and the positive
-roots (so that ordered monomials of weight `ν` number `K(ν)`), and then either spanning
-(Levendorskii–Soibelman straightening) or independence (Lusztig's form, [Lus] 38.2 (check));
-spanning and independence for `G₂` (six root vectors, operators on `k[ℕ⁶]`); canonical bases.
+linearly independent iff it spans (`linearIndependent_iff_span_eq_plusWeightSpace`). The
+finite-type root weights, longest-word positive-root enumeration and actual monomial independence
+are now proved. `PBW/GenericBasis.lean` combines these with natural-degree Kostant counting to
+prove degreewise and global spanning and construct the genuine ordered-monomial basis of `U⁺`
+at a transcendental parameter in characteristic zero. This includes type `G₂` under those
+parameter hypotheses, without a separate six-variable operator model. Still open: spanning and
+bases at arbitrary non-root-of-unity parameters (e.g. via Levendorskii–Soibelman straightening),
+the separate explicit `G₂` operator model, and canonical bases.
 `BraidAction/BraidRelationsGeneral.lean`, `BraidAction/DoubleEdgeGeneral.lean` and
 `BraidAction/GeneralArtin.lean` prove braid relations for the general `Tᵢ` in arbitrary rank:
 length three at a simple edge when no third node meets both ends, with arbitrary Cartan entries
@@ -1758,10 +1760,13 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   characteristic-zero realization. `PBW/KostantCounting.lean` proves an equivalence with the
   existing Kostant root indices using finite-type multiplicity one, a weight-preserving exponent
   fiber equivalence, and Kostant cardinality for realized signed quantum prefix-degree sums.
-  Still open: identify the natural-degree fibers of actual quantum PBW monomials with these
-  realized fibers, apply independence and graded dimensions degreewise, and assemble spanning.
-  The dimension-based spanning route separately assumes characteristic zero and a transcendental
-  parameter; arbitrary non-root-of-unity spanning and the general PBW basis remain open.
+  `PBW/GenericBasis.lean` identifies the actual natural-degree fibers with the realized fibers,
+  proves their Kostant cardinalities, and applies independence and graded dimensions to prove
+  degreewise and global spanning. `finiteTypePBWBasis` is a genuine basis of `U⁺` with exactly
+  the ordered braid-root monomials as vectors; `exists_finiteTypePBWBasis` supplies a longest
+  reduced word and its basis without a supplied enumeration or basis premise. Counting retains
+  the nonzero non-root-of-unity hypotheses; spanning and the basis additionally require
+  characteristic zero and transcendence. Arbitrary non-root-of-unity spanning/bases remain open.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,
