@@ -1779,7 +1779,15 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   It gives finite-support reconstruction, and `exists_finiteTypeFullPBWBasis` supplies the
   longest reduced word internally. The full basis retains finite type, characteristic zero
   and transcendence, and the explicit Chevalley-conjugated negative braid convention.
-  Arbitrary non-root-of-unity PBW spanning/bases remain open.
+  `PBW/RootVectorGeneration.lean` proves simple-degree scalar proportionality to `Eᵢ`
+  directly from the word grading, without parameter restrictions. Longest-word root
+  enumeration and braid nonvanishing then identify, for each `Eᵢ`, a root vector equal
+  to a nonzero scalar multiple of it. Thus these actual root vectors generate `U⁺` as
+  an algebra at every nonzero non-root-of-unity parameter over an arbitrary coefficient
+  field (with a characteristic-zero auxiliary classical realization). Algebra generation
+  does not show the ordered-monomial span is closed under multiplication. Straightening
+  or a parameter-uniform dimension argument, and hence arbitrary non-root-of-unity PBW
+  spanning/bases, remain open.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,

@@ -102,7 +102,12 @@ Further proved results include:
   the actual negative–toral–positive multiplication with a linear equivalence for every
   nonzero non-root-of-unity parameter. Tensoring the three bases gives the full finite-type
   PBW basis and finite-support reconstruction at characteristic zero and transcendence,
-  with the same conjugated negative convention. Arbitrary non-root-of-unity PBW bases,
+  with the same conjugated negative convention. `PBW/RootVectorGeneration` proves that
+  the actual root vectors of any longest reduced word generate `U⁺` as an algebra over
+  any coefficient field at a nonzero non-root-of-unity parameter. The auxiliary classical
+  realization remains characteristic zero. This is not ordered-monomial spanning:
+  straightening or a parameter-uniform dimension argument is still required.
+  Arbitrary non-root-of-unity PBW bases,
   braid relations outside
   `BraidOuterCondition`, faithfulness and general-rank global bases remain open.
 
