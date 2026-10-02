@@ -1821,8 +1821,16 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   characteristic-zero or transcendence requirement on the quantum coefficient field.
   A longest reduced word and both bases are constructed without supplied spanning
   or basis hypotheses. Finite Cartan type, simple lacing and finite Coxeter group
-  hypotheses remain explicit. Ordered spanning in non-simply-laced type (braid lengths
-  four and six) and arbitrary-parameter full negative–toral–positive PBW bases remain open.
+  hypotheses remain explicit. `PBW/SimplyLacedTriangularBasis.lean` tensors these
+  actual bases with the toral basis and maps through the existing actual triangular
+  multiplication equivalence to give the full negative–toral–positive basis, with
+  exact ambient vectors and finite-support reconstruction of every quantum-group
+  element. Existence constructs the longest reduced word internally. The same
+  finite simply-laced, finite Coxeter, nonzero non-root-of-unity hypotheses are
+  retained, without characteristic zero or transcendence on the quantum field.
+  Negative monomials retain the Chevalley-conjugated braid convention and unchanged
+  word order. Ordered spanning in non-simply-laced type (braid lengths four and six)
+  and corresponding full bases at arbitrary non-root-of-unity parameters remain open.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,
