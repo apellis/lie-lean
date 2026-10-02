@@ -111,6 +111,11 @@ Further proved results include:
   arbitrary ambient Cartan datum, removing the exact-two-node assumption from this
   spanning step. Both edge orientations span the same two-generator subalgebra, using
   only a nonzero parameter. This does not establish general longest-word spanning.
+  `PBW/RankTwoA2BraidSpan` identifies the actual recursive PBW monomials of `iji`
+  with these local monomials and proves equal ordered spans for `iji` and `jij`.
+  The operators must have Lusztig's generator images, and `vᵢ - vᵢ⁻¹ ≠ 0` is explicit;
+  actual non-root-of-unity braid automorphisms satisfy these hypotheses. This does not
+  yet propagate the braid move through arbitrary word prefixes and suffixes.
   Arbitrary non-root-of-unity PBW bases,
   braid relations outside
   `BraidOuterCondition`, faithfulness and general-rank global bases remain open.

@@ -1791,7 +1791,12 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   span its two-generator subalgebra. Applied to any simple edge, `span_a2PBWMono_pair`
   removes the exact-two-node ambient restriction and requires only `v ≠ 0`;
   `span_a2PBWMono_pair_reverse` identifies the spans for the two edge orientations.
-  This is not yet a general reduced-word braid-move or longest-word spanning theorem. Straightening
+  `PBW/RankTwoA2BraidSpan.lean` then identifies the actual recursive
+  `CoxeterSystem.pbwMonomial` along `iji` with the local monomials and proves that
+  `iji` and `jij` have equal ordered spans (`span_pbwMonomial_a2_braid`). This step
+  requires actual Lusztig generator images and `vᵢ - vᵢ⁻¹ ≠ 0`, the denominator
+  condition in the third-root-vector formula; the non-root-of-unity operators qualify.
+  This is not yet an arbitrary contextual braid-move or longest-word spanning theorem. Straightening
   or a parameter-uniform dimension argument, and hence arbitrary non-root-of-unity PBW
   spanning/bases, remain open.
   Other later targets:
