@@ -85,7 +85,11 @@ Further proved results include:
   Ordered root-vector monomials along every reduced word are linearly independent in finite type
   (`linearIndependent_pbwMonomial_of_isFiniteCartan`), over any field at a nonzero parameter not a
   root of unity. The more general reduced-word theorem keeps `BraidOuterCondition` and rank-two
-  Cartan-product bounds explicit. Spanning and general finite-type PBW bases,
+  Cartan-product bounds explicit. In a characteristic-zero classical realization, reduced
+  longest-word prefix roots enumerate the positive roots without repetitions; their exponent
+  fibers are equivalent to the existing Kostant partition fibers (`PBW/RootEnumeration`,
+  `PBW/KostantCounting`), using proved finite-type root multiplicity one. These counting results
+  do not yet identify quantum graded-piece bases. Spanning and general finite-type PBW bases,
   braid relations outside `BraidOuterCondition`, faithfulness and general-rank global
   bases remain open.
 

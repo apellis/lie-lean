@@ -1753,10 +1753,15 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   `linearIndependent_pbwMonomial_of_isReduced` under `BraidOuterCondition` and rank-two
   Cartan-product bounds, and `linearIndependent_pbwMonomial_of_isFiniteCartan` in finite type.
   These independence results need a nonzero, non-root-of-unity parameter, not transcendence or
-  characteristic zero. Positive-root enumeration, spanning and the general PBW basis remain open;
-  longest-word prefix-root enumeration must match the realization and multiplicities used by
-  Kostant partitions. The dimension-based spanning route separately assumes characteristic zero
-  and a transcendental parameter.
+  characteristic zero. `PBW/RootEnumeration.lean` proves reduced-word prefix-root enumeration
+  without repetitions and all-positive-root enumeration for longest words in the classical
+  characteristic-zero realization. `PBW/KostantCounting.lean` proves an equivalence with the
+  existing Kostant root indices using finite-type multiplicity one, a weight-preserving exponent
+  fiber equivalence, and Kostant cardinality for realized signed quantum prefix-degree sums.
+  Still open: identify the natural-degree fibers of actual quantum PBW monomials with these
+  realized fibers, apply independence and graded dimensions degreewise, and assemble spanning.
+  The dimension-based spanning route separately assumes characteristic zero and a transcendental
+  parameter; arbitrary non-root-of-unity spanning and the general PBW basis remain open.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,
