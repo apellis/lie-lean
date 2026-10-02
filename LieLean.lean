@@ -262,6 +262,7 @@ import LieLean.Algebra.QuantumGroup.PBW.KostantCounting
 import LieLean.Algebra.QuantumGroup.PBW.GenericBasis
 import LieLean.Algebra.QuantumGroup.PBW.NegativeBasis
 import LieLean.Algebra.QuantumGroup.PBW.TriangularBasis
+import LieLean.Algebra.QuantumGroup.PBW.RootVectorGeneration
 import LieLean.Algebra.QuantumGroup.PBW.RootVectors
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
 import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
