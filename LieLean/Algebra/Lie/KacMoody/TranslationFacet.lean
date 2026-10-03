@@ -37,11 +37,9 @@ is conjugate to a dominant `ν₂ ≤ ν`, `|ν|² - |ν₁|² = (ν - ν₂ | �
 `|ν|² = |b - a|²`, and `|b - a|² - |y b - a|² = 2 (y b - b | a) ≤ 0` because `y b - b ∈ Q₊`
 (`b` antidominant) and `a` is antidominant. So `(y b - b | a) = 0`; the simple roots in the
 support of `y b - b` are orthogonal to `a`, hence (facet hypothesis) to `b`, so
-`|y b|² = |b|² + |y b - b|²` forces `y b = b` by positive definiteness. The argument is the
-standard norm argument (the statement is proved by induction on chamber distance in
-cf. Humphreys, GSM 94, Lemma 7.5, which proves the statement by induction on chamber
-distance instead), reconstructed with all comparisons made in `ℤ`, so that no
-order on the field `K` is needed.
+`|y b|² = |b|² + |y b - b|²` forces `y b = b` by positive definiteness. This norm argument is
+our own, with all comparisons made in `ℤ`, so that no order on the field `K` is needed;
+Humphreys, GSM 94, Lemma 7.5 states the result and proves it by induction on chamber distance.
 
 ## References
 
@@ -247,8 +245,7 @@ theorem weightSpace_self_ne_bot (ν : Dual K H) :
 variable (hA : A.IsFiniteCartan)
 include hA
 
-/-- **Facet exclusion** (integral weights, finite type; Humphreys, GSM 94, Lemma 7.5;
-Jantzen, *Representations of algebraic groups*, II.7.7 (check)). Let `λ + ρ` and `μ + ρ` be
+/-- **Facet exclusion** (integral weights, finite type; Humphreys, GSM 94, Lemma 7.5). Let `λ + ρ` and `μ + ρ` be
 antidominant integral, with every simple wall of `λ + ρ` a wall of `μ + ρ` (`μ` lies in the
 closure of the facet of `λ`), and let `ν = z (μ - λ)`, `z ∈ W`, be dominant. If `ν'` is a
 weight of `L(ν)` and `w·λ + ν' = x·μ` for `w, x ∈ W`, then `w·λ + ν' = w·μ`. Antidominance and

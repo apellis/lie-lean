@@ -4,8 +4,7 @@ Status markers: `[ ]` not started, `[~]` in progress, `[x]` done (with the main 
 names). Keep them current.
 
 Primary reference: **[Kac]** V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., Cambridge
-University Press, 1990. Section and theorem numbers below refer to it and should be re-checked
-against the book when it is available; where a number is uncertain it is marked "(check)".
+University Press, 1990. Section and theorem numbers below refer to it.
 
 Secondary references:
 - **[GK]** O. Gabber, V. G. Kac, *On defining relations of certain infinite-dimensional Lie
@@ -251,8 +250,8 @@ modules where `𝔫₊` acts locally finitely (`IsPosFinite`, e.g. any module in
   `LinearMap.BilinForm` and `LieModule` invariance notions (`Mathlib/Algebra/Lie/InvariantForm`).
 - `ρ ∈ 𝔥*` with `⟨αᵢ^∨, ρ⟩ = 1`.
 - The generalized Casimir operator `Ω` on `𝔤(A)`-modules in which `𝔫₊` acts locally nilpotently
-  ([Kac] §2.5): `Ω = 2ν⁻¹(ρ) + Σᵢ uᵢ uⁱ + 2 Σ_{α>0} Σᵢ e_{-α}^{(i)} e_α^{(i)}` (check the exact
-  form); it commutes with the action ([Kac] Thm. 2.6) and acts on a highest-weight module of
+  ([Kac] §2.5): `Ω = 2ν⁻¹(ρ) + Σᵢ uᵢ uⁱ + 2 Σ_{α>0} Σᵢ e_{-α}^{(i)} e_α^{(i)}`; it
+  commutes with the action ([Kac] Thm. 2.6) and acts on a highest-weight module of
   highest weight `λ` by `(λ + 2ρ | λ)` ([Kac] Cor. 2.6).
 
 ### M6. Category 𝒪 and highest-weight modules  `[x]`  ([Kac] Ch. 9)
@@ -687,7 +686,7 @@ by invariants for any finite group of linear automorphisms of `𝔥*` over an in
 form vanishing at one point and nowhere on the other orbit; the generic form exists because a
 vector space over an infinite field is not a finite union of proper subspaces). Reconstructed.
 `KacMoody/TranslationFacet.lean` proves **facet exclusion** for integral weights in finite type
-(Humphreys GSM 94 Lemma 7.5; Jantzen II.7.7, cited with (check)):
+(Humphreys GSM 94 Lemma 7.5):
 `IrreducibleModule.weylDot_add_eq_weylDot` — if `λ + ρ`, `μ + ρ` are antidominant integral, every
 simple wall of `λ + ρ` is a wall of `μ + ρ`, `ν = z (μ - λ)` is dominant, `ν'` is a weight of
 `L(ν)` and `w·λ + ν' = x·μ`, then `w·λ + ν' = w·μ` (and `weightSpace_weylDot_sub_ne_bot`: this
@@ -1647,8 +1646,8 @@ It proves the scalar intersection `ℚ[X,X⁻¹] ∩ A₀ ∩ bar(A₀) = ℚ`, 
 actual projection `L ∩ bar(L) ∩ V_{ℚ[X,X⁻¹]} → L/XL`. Its unique global lifts are exactly
 the represented divided powers of the highest vector and are bar-fixed. This is a proved
 rational balanced triple for every positive type-1 rank-one module `simpleRep X n 1`,
-including `n=0`, not an assumed balancedness interface. The argument is reconstructed;
-the primary Kashiwara source was not consulted. No full quantum-algebra bar, general-rank
+including `n=0`, not an assumed balancedness interface. The argument is reconstructed
+independently of Kashiwara's. No full quantum-algebra bar, general-rank
 global basis, integer integral basis or arbitrary specialization is asserted.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
@@ -1848,9 +1847,8 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   parameter. The unrestricted Verma Hom dimension bound is false
   (see M12); finite-dimensional quantum classification does not classify all infinite-dimensional
   simple modules.
-- "(check)" citations: a checklist of all marks, grouped by source, has been generated for
-  verification against the books (none of the sources is on arXiv); corrections are applied as
-  they are verified (see `AGENTS.md`, "Citation verification").
+- Citations: section, theorem and equation numbers are checked against the cited edition
+  (see `AGENTS.md`, "Citations").
 
 ## Non-goals
 

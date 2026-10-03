@@ -27,7 +27,7 @@ zero and `v ∈ k` transcendental over `ℚ` (Lusztig's case is `k = ℚ(v)`), `
    (`QuantumGroup.IrreducibleModule.finrank_weightSpace_eq`).
 
 The [Lus] numbers above were checked against the book; [Jan] treats finite type only.
-We could not consult the proofs in [Lus] or [Jan]; the following argument is our own
+The following argument is our own
 reconstruction, for arbitrary symmetrizable Cartan data, reusing the specialization machinery
 of the quantum Gabber–Kac theorem (`LieLean.Algebra.QuantumGroup.GabberKac`).
 

@@ -31,8 +31,8 @@ include the boundary indices `x` for which `sx` is not minimal, unlike the sign 
 
 V. Deodhar, *On some geometric aspects of Bruhat orderings II. The parabolic analogue of
 Kazhdan–Lusztig polynomials*, J. Algebra **111** (1987), 483–506.
-The proofs are reconstructed by projecting the ordinary multiplication theorem; the source
-was not consulted. Nonminimal ordinary canonical elements vanish in the sign quotient,
+The proofs are our own, by projecting the ordinary multiplication theorem. Nonminimal
+ordinary canonical elements vanish in the sign quotient,
 while sign parabolic μ-coefficients on minimal representatives equal the ordinary ones.
 -/
 

@@ -22,8 +22,8 @@ uniqueness applied to the eigenvalue defect. No finiteness of J or W_J is used.
 ## References
 
 V. Deodhar, *On some geometric aspects of Bruhat orderings II. The parabolic analogue of
-Kazhdan–Lusztig polynomials*, J. Algebra 111 (1987), 483–506. Source not consulted;
-the argument here is reconstructed in the normalization q = v² and C'_s = v⁻¹(T_s + 1).
+Kazhdan–Lusztig polynomials*, J. Algebra 111 (1987), 483–506. The argument here is
+our own, in the normalization q = v² and C'_s = v⁻¹(T_s + 1).
 -/
 open LaurentPolynomial CoxeterSystem
 namespace CoxeterSystem
@@ -462,7 +462,7 @@ local notation "hχ" => isBarCompatible_ind (cs.parabolicCoxeterSystem J)
 
 /-- Arbitrary-J spherical/index C'_s ascent recursion. No finiteness or recursion hypothesis.
 The proof uses the standard boundary action, normalized coordinates and canonical uniqueness.
-Reconstructed proof in Deodhar's normalization; original source not consulted. -/
+Our own proof, in Deodhar's normalization. -/
 theorem index_klBasis_simple_smul_ascent (i : B) (w : cs.minCosetReps J)
     (hw : cs.length w < cs.length (cs.simple i * w))
     (hsw : cs.simple i * w ∈ cs.minCosetReps J) :

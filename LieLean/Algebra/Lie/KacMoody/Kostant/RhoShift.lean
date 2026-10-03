@@ -17,7 +17,7 @@ Laplacian on `𝔫₋`-chains (`KacMoody/Kostant/Identity.lean`).
 
 ## Proof
 
-We could not consult the sources for this step and reconstructed the argument. Let `v₀` be the
+The following argument for this step is our own. Let `v₀` be the
 highest-weight vector of the Verma module `M(0)`. The Casimir operator `Ω` acts on `M(0)` by
 `(0 + 2ρ | 0) = 0` ([Kac] Cor. 2.6). Expanding `Ω (y v₀)` with `Ω = 2ν⁻¹(ρ) + Ω₀ + 2Ω₊`, the
 first two terms give `(-2(ρ|β) + (β|β)) y v₀`, and in `Ω₊ (y v₀) = ∑_α ∑ₖ e_{-α} [e_α, y] v₀` only
