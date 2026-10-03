@@ -407,5 +407,7 @@ import LieLean.RepresentationTheory.Crystal.WeylAction
 import LieLean.RepresentationTheory.Crystal.WeylGroupAction
 import LieLean.RepresentationTheory.Crystal.BraidA2
 import LieLean.RepresentationTheory.Crystal.Folding
+import LieLean.RepresentationTheory.Crystal.Levi
+import LieLean.RepresentationTheory.Crystal.Path.Normal
 import LieLean.RingTheory.MvPolynomial.EulerIdentity
 import LieLean.RingTheory.MvPolynomial.LowestWeight

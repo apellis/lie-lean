@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.LinearAlgebra.Matrix.Cartan.BraidOuter
+import LieLean.LinearAlgebra.Matrix.Cartan.Generalized
 
 /-!
 # Rank-two and rank-three subdiagrams of finite-type Cartan matrices
@@ -21,6 +22,8 @@ relations holds in finite type (`Matrix.IsFiniteCartan.braidOuterCondition`).
 * `Matrix.IsFiniteCartan.mul_le_three`: `aᵢⱼ aⱼᵢ ≤ 3` for `i ≠ j`.
 * `Matrix.IsFiniteCartan.det_three_pos`: the principal `3 × 3` minors of `A` are positive.
 * `Matrix.IsFiniteCartan.braidOuterCondition`: `A.IsFiniteCartan → A.BraidOuterCondition`.
+* `Matrix.IsGeneralizedCartan.isFiniteCartan_of_mul_le_three`: conversely, a generalized Cartan
+  matrix of rank two with `aᵢⱼ aⱼᵢ ≤ 3` is of finite type.
 
 ## References
 
@@ -161,3 +164,82 @@ theorem braidOuterCondition (hA : A.IsFiniteCartan) : A.BraidOuterCondition wher
       nlinarith
 
 end Matrix.IsFiniteCartan
+
+namespace Matrix.IsGeneralizedCartan
+
+variable {ι : Type*} [Fintype ι] [DecidableEq ι] {A : Matrix ι ι ℤ}
+
+/-- Conversely, a generalized Cartan matrix on two indices `i ≠ j` with `aᵢⱼ aⱼᵢ ≤ 3` (types
+`A₁ × A₁`, `A₂`, `B₂`, `G₂`) is of finite type: `diag(d) A` is positive definite for
+`d = (-aⱼᵢ, -aᵢⱼ)`, or `d = (1, 1)` if `aᵢⱼ = 0`. -/
+theorem isFiniteCartan_of_mul_le_three (hA : A.IsGeneralizedCartan) {i j : ι} (hij : i ≠ j)
+    (huniv : ∀ k, k = i ∨ k = j) (h3 : A i j * A j i ≤ 3) : A.IsFiniteCartan := by
+  refine ⟨hA.diag, hA.offDiag_nonpos, hA.zero_comm, ?_⟩
+  have hsum : ∀ f : ι → ℤ, ∑ k, f k = f i + f j := fun f =>
+    Fintype.sum_eq_add i j hij fun k hk => (huniv k).elim (fun h => absurd h hk.1)
+      (fun h => absurd h hk.2)
+  have hji : j ≠ i := Ne.symm hij
+  have ha := hA.offDiag_nonpos i j hij
+  have hb := hA.offDiag_nonpos j i hji
+  have hii := hA.diag i
+  have hjj := hA.diag j
+  set di : ℤ := if A i j = 0 then 1 else -A j i with hdi
+  set dj : ℤ := if A i j = 0 then 1 else -A i j with hdj
+  have hsym : di * A i j = dj * A j i := by
+    by_cases h0 : A i j = 0
+    · simp [hdi, hdj, h0, (hA.zero_comm i j).mp h0]
+    · simp only [hdi, hdj, h0, ↓reduceIte]; ring
+  have hdi0 : 0 < di := by
+    by_cases h0 : A i j = 0
+    · simp [hdi, h0]
+    · have : A j i ≠ 0 := fun h => h0 ((hA.zero_comm i j).mpr h)
+      simp only [hdi, h0, ↓reduceIte]; omega
+  have hdj0 : 0 < dj := by
+    by_cases h0 : A i j = 0
+    · simp [hdj, h0]
+    · simp only [hdj, h0, ↓reduceIte]; omega
+  refine ⟨fun k => if k = i then di else dj, fun k => by dsimp only; split_ifs <;> assumption, ?_⟩
+  rw [posDef_iff_dotProduct_mulVec]
+  refine ⟨?_, fun v hv => ?_⟩
+  · ext k l
+    rcases huniv k with rfl | rfl <;> rcases huniv l with rfl | rfl <;>
+      simp [diagonal_mul, hji, hsym]
+  · have hv' : v i ≠ 0 ∨ v j ≠ 0 := by
+      by_contra h
+      simp only [not_or, not_not] at h
+      exact hv (funext fun k => by rcases huniv k with rfl | rfl <;> simp [h.1, h.2])
+    simp only [dotProduct, mulVec, hsum, diagonal_mul, star_trivial, ↓reduceIte, hji,
+      hii, hjj]
+    set x := v i
+    set y := v j
+    by_cases h0 : A i j = 0
+    · have h0' : A j i = 0 := (hA.zero_comm i j).mp h0
+      simp only [hdi, hdj, h0, h0', ↓reduceIte]
+      rcases hv' with h | h
+      · nlinarith [sq_pos_of_ne_zero h, sq_nonneg y]
+      · nlinarith [sq_pos_of_ne_zero h, sq_nonneg x]
+    · have h0' : A j i ≠ 0 := fun h => h0 ((hA.zero_comm i j).mpr h)
+      simp only [hdi, hdj, h0, ↓reduceIte]
+      set p := -A i j with hp
+      set q := -A j i with hq
+      have hp1 : 1 ≤ p := by omega
+      have hq1 : 1 ≤ q := by omega
+      have hpq : p * q ≤ 3 := by rw [hp, hq]; linarith [h3]
+      have key : 2 * q * (x * (q * 2 * x + q * A i j * y) + y * (p * A j i * x + p * 2 * y)) =
+          (2 * q * x - p * q * y) ^ 2 + p * q * (4 - p * q) * y ^ 2 := by
+        rw [show A i j = -p by omega, show A j i = -q by omega]; ring
+      have hq0 : (0 : ℤ) < q := by omega
+      by_cases hy : y = 0
+      · have hx : x ≠ 0 := hv'.resolve_right (not_not.mpr hy)
+        rw [hy]
+        simp only [mul_zero, zero_mul, add_zero]
+        nlinarith [sq_pos_of_ne_zero hx]
+      · have hpq1 : 1 ≤ p * q := by nlinarith
+        have h1 : 3 ≤ p * q * (4 - p * q) := by
+          nlinarith [mul_nonneg (sub_nonneg.mpr hpq1) (sub_nonneg.mpr hpq)]
+        have h2 : 0 < 2 * q * (x * (q * 2 * x + q * A i j * y) +
+            y * (p * A j i * x + p * 2 * y)) := by
+          rw [key]; nlinarith [sq_pos_of_ne_zero hy, sq_nonneg (2 * q * x - p * q * y)]
+        nlinarith
+
+end Matrix.IsGeneralizedCartan

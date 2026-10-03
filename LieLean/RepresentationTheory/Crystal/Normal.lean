@@ -11,8 +11,9 @@ import LieLean.RepresentationTheory.Crystal.Tensor
 A crystal is *seminormal* if `εᵢ(b) = max {n ≥ 0 | ẽᵢⁿ b ≠ 0}` and
 `φᵢ(b) = max {n ≥ 0 | f̃ᵢⁿ b ≠ 0}` for all `i` and `b` ([Kas] §7.6, [HK] §4.5, where it is
 called *semiregular*).
-(A crystal is *normal* if moreover it is a disjoint union of crystals of integrable highest
-weight modules for all Levi subalgebras of finite type; normality is not treated here.)
+(A crystal is *normal* if moreover its restrictions to the Levi subalgebras of finite type are
+crystals of integrable modules; normality relative to the path model is `Crystal.IsNormal` in
+`LieLean.RepresentationTheory.Crystal.Path.Normal`.)
 
 ## Main definitions
 

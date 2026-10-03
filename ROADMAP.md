@@ -924,7 +924,7 @@ Garland–Lepowsky theorem (Kostant's theorem in finite type): for `Λ` dominant
 `H_k(𝔫₋, L(Λ)) ≅ ⊕_{w ∈ W, ℓ(w) = k} K_{w(Λ+ρ)-ρ}` as `𝔥`-modules; the Euler characteristic
 recovers the Weyl–Kac formula.
 
-### M14. Crystals  `[~]`  ([Kas], [Lit], [HK])
+### M14. Crystals  `[x]`  ([Kas], [Lit], [HK])
 
 Done (`LieLean/RepresentationTheory/Crystal/`): `CartanDatum`, `Crystal` (Kashiwara's axioms,
 `ε, φ` valued in `WithBot ℤ`), `StrictHom`, `Crystal.Equiv`; tensor product (Kashiwara's
@@ -1207,8 +1207,26 @@ generalized Cartan matrix**, so `pathWeylAction hA hΛ` (which no longer takes t
 relations as a hypothesis) is Kashiwara's Weyl group action on `B(Λ)` for every generalized
 Cartan matrix, over `ℝ` (argument reconstructed; it
 replaces, for lengths 4 and 6, the [BBO05]-style Pitman/string-coordinate computation used for
-`A₂`). Remaining: identification of the Levi path crystals with crystal bases (normality in
-Kashiwara's sense); and extension of the concrete `a`-chain description beyond the proved
+`A₂`). **Normal crystals and Kashiwara's Weyl group action** (`Crystal/Levi.lean`,
+`Path/Normal.lean`): Levi morphisms `Crystal.IsLeviHom` along a colour map `e : κ → ι` (sending
+`ẽₖ, f̃ₖ` to `ẽ_{e k}, f̃_{e k}` and preserving `⟨wt, α^∨⟩`; between seminormal crystals they
+preserve `ε, φ` and intertwine the `Sᵢ`, `IsLeviHom.map_reflection`; tensor products
+`IsLeviHom.tensor`). `Crystal.IsNormal` is normality **relative to the path model**: seminormal,
+and for every `J` with `A_J` of finite type (`Matrix.IsFiniteCartan`) every element lies in the
+image of an injective Levi morphism from a path crystal `B_J(ν)` of the standard realization of
+`A_J` (`Crystal.leviPathCrystal`). Kashiwara's definition ([Kas94] §1.5, [Kas] §7.6) asks for
+the crystal of the crystal base of an integrable `U_q(𝔤_J)`-module; the two agree by the
+identification of `B_J(ν)` with crystal-base crystals (Kashiwara, Joseph), which is not
+formalized (the library has no crystal bases of `U_q`-modules). `IsNormal.reflectionPerm_mul_pow`
+(the Coxeter relations `(SᵢSⱼ)^{mᵢⱼ} = 1`, [Kas94] Thm. 7.2.2, transported along Levi morphisms
+from `pathBraidRelations` on the rank-two Levi path crystals; rank-two finite type from
+`Matrix.IsGeneralizedCartan.isFiniteCartan_of_mul_le_three`), `IsNormal.weylAction`
+(`W →* Perm B`, `sᵢ ↦ Sᵢ`, unique by `eq_weylAction`, `coe_wt_weylAction`; [Kas] Thm. 11.1);
+`Realization.isNormal_pathCrystal` (Levi restriction, `LeviMap.exists_leviHom_pathCrystal`) with
+`weylAction_isNormal_pathCrystal` (`= pathWeylAction`); `IsNormal.sum`, `IsNormal.sigma`,
+`IsNormal.tensor` (via Littelmann's decomposition of `B_J(ν₁) ⊗ B_J(ν₂)`). Any generalized
+Cartan matrix, over `ℝ`; Kashiwara assumes symmetrizable data. Extensions beyond the M14
+specification that remain open: the concrete `a`-chain description beyond the proved
 dominant-orbit supplied-path scope.
 Source-scope caution: the isomorphism theorem is proved for rational piecewise-linear paths
 (finitely many pieces, rational vertices), not for all continuous dominant paths of the
@@ -1693,8 +1711,9 @@ integral; Lusztig's canonical basis / Kashiwara's global basis if reachable.
 ## Status and open threads
 
 The declarations listed as proved are on `master`; the explicit remaining items below are not
-completion claims. M1–M9's main targets, M10, M11 and M13 are complete at their stated scope;
-M12, M14 and M15 remain in progress. Current completed steps and continuation threads are:
+completion claims. M1–M9's main targets, M10, M11, M13 and M14 (with normal crystals relative
+to the path model) are complete at their stated scope; M12 and M15 remain in progress. Current
+completed steps and continuation threads are:
 
 - **BGG exactness in degrees ≥ 1** (M12): proved for symmetrizable GCM and finite-dimensional
   Cartan space by `ker_bggDiff_eq_range`, using actual lowering powers modulo boundaries
@@ -1733,7 +1752,11 @@ M12, M14 and M15 remain in progress. Current completed steps and continuation th
   `mᵢⱼ = ∞` are proved, and lengths four and six (`B₂`, `G₂`) by folding `A₃ → B₂`,
   `D₄ → G₂` (`reflection_braid_four_of_B2`, `reflection_braid_six_of_G2`), so the action is
   unconditional for every generalized Cartan matrix (`pathBraidRelations`, `pathWeylAction`).
-  Remaining: identification of `B_J(μ)` with Kashiwara's crystal bases (normality in his sense).
+  Normal crystals are defined relative to the path model (`Crystal.IsNormal`); `B(λ)`, disjoint
+  unions and tensor products of normal crystals are normal, and Kashiwara's Weyl group action
+  exists on every normal crystal (`Crystal.IsNormal.weylAction`). Not formalized: the
+  identification of `B_J(μ)` with crystals of crystal bases of `U_q(𝔤_J)`-modules (the library
+  has no crystal bases of `U_q`-modules).
 - **Braid automorphisms `Tᵢ` in general** (M15): **`braidEquivOfGeneric`**: Lusztig's `Tᵢ` is an
   algebra automorphism (explicit reversal-conjugate inverse) at every node of every Cartan
   datum, in arbitrary rank, over any field and root-datum lattice, under explicit q-factorial
@@ -1899,7 +1922,8 @@ beyond what the general Kac–Moody results give.
   `LieSubmodule.Quotient.nonempty_lieModuleEquiv_of_surjective` (`KacMoody/CompositionSeries.lean`).
 - `LieLean/GroupTheory/Coxeter/{Exchange,Deletion,Bruhat,GeometricRepresentation,Parabolic,
   Parabolic/CoxeterSystem,Matsumoto,Longest,RankTwoParabolic}.lean`; `IsAlgClosed.exists_orderOf_eq`;
-  `Matrix.IsFiniteCartan.mul_le_three`, `det_three_pos`, `braidOuterCondition`
+  `Matrix.IsFiniteCartan.mul_le_three`, `det_three_pos`, `braidOuterCondition`,
+  `Matrix.IsGeneralizedCartan.isFiniteCartan_of_mul_le_three`
   (`LinearAlgebra/Matrix/Cartan/FiniteRankTwo.lean`).
 - Strong exchange condition (`LieLean/GroupTheory/Coxeter/Exchange.lean`, Mathlib lacks it);
   Iwahori–Hecke algebra and bar involution (`GroupTheory/Coxeter/Hecke/{Basic,Bar}.lean`).
