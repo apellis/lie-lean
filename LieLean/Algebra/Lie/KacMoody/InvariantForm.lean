@@ -12,7 +12,7 @@ import LieLean.Algebra.Lie.KacMoody.InvariantFormAux
 Let `A` be a symmetrizable matrix with a symmetrization `A = diag(ε) B`, and `(𝔥, Π, Π^∨)` a
 realization of `A` over a field `K` of characteristic zero. The Kac–Moody algebra
 `𝔤(A) = 𝔤̃(A)/𝔯` carries a nondegenerate symmetric invariant bilinear form extending the form
-`Matrix.Realization.bilinForm` on `𝔥` ([Kac] Thm. 2.2 (check)). It is induced by the invariant
+`Matrix.Realization.bilinForm` on `𝔥` ([Kac] Thm. 2.2). It is induced by the invariant
 form `Matrix.Realization.AuxLieAlgebra.invFormAux` on `𝔤̃(A)`, whose radical is `𝔯`; see
 `LieLean/Algebra/Lie/KacMoody/InvariantFormAux.lean` for the construction and the proofs.
 
@@ -24,7 +24,7 @@ form `Matrix.Realization.AuxLieAlgebra.invFormAux` on `𝔤̃(A)`, whose radical
 
 ## Main results
 
-[Kac] Thm. 2.2 (check):
+[Kac] Thm. 2.2:
 * `Matrix.Realization.KacMoodyAlgebra.isSymm_invForm`,
   `Matrix.Realization.KacMoodyAlgebra.nondegenerate_invForm`: the form is symmetric and
   nondegenerate.
@@ -77,7 +77,7 @@ lemma maxIdeal_le_ker_liftQ_flip :
   ext y
   exact invFormAux_eq_zero_of_mem_maxIdeal P S hr y
 
-/-- The nondegenerate symmetric invariant bilinear form on `𝔤(A)` ([Kac] Thm. 2.2 (check)),
+/-- The nondegenerate symmetric invariant bilinear form on `𝔤(A)` ([Kac] Thm. 2.2),
 induced by `Matrix.Realization.AuxLieAlgebra.invFormAux`. -/
 def invForm : LinearMap.BilinForm K P.KacMoodyAlgebra :=
   (AuxLieAlgebra.maxIdeal P).toSubmodule.liftQ _ (maxIdeal_le_ker_liftQ_flip P S)
@@ -93,8 +93,8 @@ theorem isSymm_invForm : (invForm P S).IsSymm := by
   simp only [invForm_π]
   exact (AuxLieAlgebra.isSymm_invFormAux P S).eq x y
 
-/-- The form on `𝔤(A)` is invariant: `([x, y] | z) = (x | [y, z])` ([Kac] Thm. 2.2 a)
-(check)). -/
+/-- The form on `𝔤(A)` is invariant: `([x, y] | z) = (x | [y, z])`
+([Kac] Thm. 2.2 a)). -/
 theorem invForm_lie (x y z : P.KacMoodyAlgebra) :
     invForm P S ⁅x, y⁆ z = invForm P S x ⁅y, z⁆ := by
   obtain ⟨x, rfl⟩ := π_surjective P x
@@ -107,7 +107,7 @@ theorem lieInvariant_invForm : (invForm P S).lieInvariant P.KacMoodyAlgebra := b
   intro x y z
   rw [← lie_skew, map_neg, LinearMap.neg_apply, invForm_lie]
 
-/-- The form on `𝔤(A)` is nondegenerate ([Kac] Thm. 2.2 (check)). -/
+/-- The form on `𝔤(A)` is nondegenerate ([Kac] Thm. 2.2). -/
 theorem nondegenerate_invForm : (invForm P S).Nondegenerate := by
   refine (LinearMap.IsRefl.nondegenerate_iff_separatingLeft
     (isSymm_invForm P S).isRefl).mpr fun x hx ↦ ?_
@@ -118,11 +118,11 @@ theorem nondegenerate_invForm : (invForm P S).Nondegenerate := by
   exact hx _
 
 /-- The form on `𝔤(A)` restricts to the form `Matrix.Realization.bilinForm` on `𝔥`
-([Kac] Thm. 2.2 b) (check)). -/
+([Kac] Thm. 2.2 b)). -/
 @[simp] theorem invForm_h_h (a b : H) : invForm P S (h P a) (h P b) = P.bilinForm S a b := by
   rw [← π_h, ← π_h, invForm_π, AuxLieAlgebra.invFormAux_h_h]
 
-/-- `(𝔤_α | 𝔤_β) = 0` unless `α + β = 0` ([Kac] Thm. 2.2 c) (check)). -/
+/-- `(𝔤_α | 𝔤_β) = 0` unless `α + β = 0` ([Kac] Thm. 2.2 c)). -/
 theorem invForm_eq_zero {μ ν : Dual K H} {x y : P.KacMoodyAlgebra} (hx : x ∈ rootSpace P μ)
     (hy : y ∈ rootSpace P ν) (hμν : μ + ν ≠ 0) : invForm P S x y = 0 := by
   rw [rootSpace_eq_map] at hx hy
@@ -130,7 +130,7 @@ theorem invForm_eq_zero {μ ν : Dual K H} {x y : P.KacMoodyAlgebra} (hx : x ∈
   obtain ⟨y, hy, rfl⟩ := hy
   exact AuxLieAlgebra.invFormAux_eq_zero P S hx hy hμν
 
-/-- `[x, y] = (x | y) ν⁻¹(α)` for `x ∈ 𝔤_α` and `y ∈ 𝔤_{-α}` ([Kac] Thm. 2.2 e) (check)). -/
+/-- `[x, y] = (x | y) ν⁻¹(α)` for `x ∈ 𝔤_α` and `y ∈ 𝔤_{-α}` ([Kac] Thm. 2.2 e)). -/
 theorem lie_eq_invForm_smul {μ : Dual K H} {x y : P.KacMoodyAlgebra} (hx : x ∈ rootSpace P μ)
     (hy : y ∈ rootSpace P (-μ)) : ⁅x, y⁆ = invForm P S x y • h P ((P.toDual S).symm μ) := by
   rw [rootSpace_eq_map] at hx hy
@@ -140,13 +140,13 @@ theorem lie_eq_invForm_smul {μ : Dual K H} {x y : P.KacMoodyAlgebra} (hx : x �
   rw [← LieHom.map_lie, AuxLieAlgebra.lie_eq_invFormAux_smul P S μ x hx y hy, map_smul, π_h,
     invForm_π]
 
-/-- `(eᵢ | fⱼ) = δᵢⱼ εᵢ` ([Kac] §2.2 (check)). -/
+/-- `(eᵢ | fⱼ) = δᵢⱼ εᵢ` ([Kac] §2.2). -/
 theorem invForm_e_f (i j : ι) :
     invForm P S (e P i) (f P j) = if i = j then (S.ε i : K) else 0 := by
   rw [← π_e, ← π_f, invForm_π, AuxLieAlgebra.invFormAux_e_f]
 
 /-- The form pairs `𝔤_α` and `𝔤_{-α}` nondegenerately: if `x ∈ 𝔤_α` is orthogonal to `𝔤_{-α}`
-then `x = 0` ([Kac] Thm. 2.2 d) (check)). -/
+then `x = 0` ([Kac] Thm. 2.2 d)). -/
 theorem eq_zero_of_invForm_rootSpace_eq_zero {μ : Dual K H} {x : P.KacMoodyAlgebra}
     (hx : x ∈ rootSpace P μ) (hx0 : ∀ y ∈ rootSpace P (-μ), invForm P S x y = 0) : x = 0 := by
   refine (nondegenerate_invForm P S).1 x fun y ↦ ?_
@@ -203,7 +203,7 @@ theorem finrank_rootSpace_neg_eq {μ : Dual K H} (hμ : μ ∈ P.posWeights) :
   omega
 
 /-- The invariant form identifies `𝔤_{-α}` with the dual of `𝔤_α` for `α ∈ Q₊ \ {0}`
-([Kac] Thm. 2.2 d) (check)). -/
+([Kac] Thm. 2.2 d)). -/
 def rootSpacePairingEquiv {μ : Dual K H} (hμ : μ ∈ P.posWeights) :
     rootSpace P (-μ) ≃ₗ[K] Dual K (rootSpace P μ) :=
   have := finiteDimensional_rootSpace P hμ

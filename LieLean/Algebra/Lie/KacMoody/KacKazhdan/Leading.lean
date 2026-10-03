@@ -18,7 +18,8 @@ degree at most `p` (`wordFn_mem_polyLE`), and its homogeneous component of degre
 `∏_k m_k! ∏ᵢ λ(t_{kᵢ})` if the multisets `{kᵢ}` and `{lᵢ}` agree (`m_k` being the multiplicity
 of `k`), and zero otherwise (`Matrix.Realization.KacMoodyAlgebra.PairedRootVectors.hasTop_wordFn`).
 
-This is the key computation for the leading term of the Shapovalov determinant ([KK] §3 (check)).
+This is the key computation for the leading term of the Shapovalov determinant ([KK];
+cf. [Kum] Thm. 2.3.4, proof, Step 2 (3)).
 The proof is by induction: moving `x_{k₁}` to the right, the commutators `[x_{k₁}, x_{kᵢ}] ∈ 𝔫₊`
 and `[x_{k₁}, y_{lⱼ}] ∈ 𝔫₊ ∪ 𝔫₋` (for `α_{k₁} ≠ α_{lⱼ}`) lower the degree bound, and only the
 commutators `[x_{k₁}, y_{lⱼ}] = t_{k₁}` with `lⱼ = k₁` contribute to the top component. To run the
@@ -40,6 +41,8 @@ reconstruction.
 
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. 34 (1979), 97–108.
+* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
+  Math. 204, Birkhäuser 2002, §2.3.
 -/
 
 open Module LieModule Module.Dual MvPolynomial

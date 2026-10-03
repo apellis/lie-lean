@@ -462,7 +462,7 @@ theorem geometricRepresentation_simple (i : B) :
 omit K
 
 /-- The order of `sᵢ sⱼ` is exactly `mᵢⱼ` (with `orderOf = 0` meaning infinite order, matching
-the convention `mᵢⱼ = 0` for `mᵢⱼ = ∞`) ([HumC] §5.3–5.4, [Bou] Ch. V §4.3 (check)). -/
+the convention `mᵢⱼ = 0` for `mᵢⱼ = ∞`) ([HumC] §5.3–5.4, [Bou] Ch. V §4.3, Prop. 4). -/
 theorem orderOf_simple_mul_simple (i j : B) : orderOf (cs.simple i * cs.simple j) = M i j := by
   by_cases hij : i = j
   · subst hij
@@ -515,7 +515,7 @@ private theorem nodup_take_leftInvSeq_alternatingWord (a b : B) {k : ℕ}
     omega
 
 /-- Alternating words `⋯ sᵢ sⱼ` of length at most `mᵢⱼ` are reduced (a standard consequence of
-the fact that `sᵢ sⱼ` has order `mᵢⱼ`, cf. [HumC] §5.4 (check)). -/
+the fact that `sᵢ sⱼ` has order `mᵢⱼ`, cf. [HumC] §5.3 Prop.). -/
 theorem isReduced_alternatingWord (i j : B) {k : ℕ} (hk : M i j = 0 ∨ k ≤ M i j) :
     cs.IsReduced (alternatingWord i j k) := by
   rcases Nat.eq_zero_or_pos k with rfl | hk0

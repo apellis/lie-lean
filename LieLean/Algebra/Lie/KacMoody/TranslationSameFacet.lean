@@ -14,7 +14,7 @@ Let `λ + ρ`, `μ + ρ` be antidominant integral with the same simple walls (`�
 same facet), `ν = z(μ - λ)` dominant, and `T = T_λ^μ = pr_{χ_μ}(pr_{χ_λ}(−) ⊗ L(ν))`,
 `T' = T_μ^λ = pr_{χ_λ}(pr_{χ_μ}(−) ⊗ L(ν)^*)` its adjoint (`translationAdjunction`). Then
 (finite type, algebraically closed field of characteristic zero; Humphreys, GSM 94, Theorem 7.9
-(check) and §7.8 (check)):
+and §7.8):
 
 * `translation_irreducible_of_sameFacet`: `T L(w·λ) ≅ L(w·μ)`;
 * `translation_translation_verma_of_sameFacet`: `T' T M(w·λ) ≅ M(w·λ)`;
@@ -92,7 +92,7 @@ variable {ι H : Type*} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [Char
 local notation "𝔤" => KacMoodyAlgebra P
 
 include hA in
-/-- The Verma part of Humphreys, GSM 94, Thm. 7.6 (check) with the roles of `λ` and `μ`
+/-- The Verma part of Humphreys, GSM 94, Thm. 7.6 with the roles of `λ` and `μ`
 exchanged, when `λ` and `μ` lie in the same facet: translation back by the dual `L(ν)^*`
 (realized as `L(ν')`, `ν'` dominant in `W(-ν)`) sends `M(w·μ)` to `M(w·λ)`. -/
 theorem exists_translation_verma_back {lam μ ν : Dual K H}
@@ -117,7 +117,7 @@ theorem exists_translation_verma_back {lam μ ν : Dual K H}
     translation_verma_equiv P hA hμ hlam hfacet' hν' hzz hzν' w⟩
 
 include hA in
-/-- **Translation of simple modules within a facet** (Humphreys, GSM 94, Theorem 7.9 (check),
+/-- **Translation of simple modules within a facet** (Humphreys, GSM 94, Theorem 7.9(a),
 case `λ`, `μ` in the same facet; integral weights, finite type, algebraically closed field of
 characteristic zero): with the hypotheses of `translation_verma` and the reverse wall
 inclusion, `T_λ^μ L(w·λ) ≅ L(w·μ)`. -/
@@ -169,7 +169,7 @@ theorem translation_irreducible_of_sameFacet {lam μ ν : Dual K H}
 
 include hA in
 /-- **`T_μ^λ T_λ^μ M(w·λ) ≅ M(w·λ)`** when `λ` and `μ` lie in the same facet (Humphreys, GSM 94,
-§7.8 (check)), with `T_μ^λ = pr_{χ_λ}(pr_{χ_μ}(−) ⊗ L(ν)^*)` the adjoint of
+§7.8), with `T_μ^λ = pr_{χ_λ}(pr_{χ_μ}(−) ⊗ L(ν)^*)` the adjoint of
 `T_λ^μ = pr_{χ_μ}(pr_{χ_λ}(−) ⊗ L(ν))`. -/
 theorem translation_translation_verma_of_sameFacet {lam μ ν : Dual K H}
     (hlam : ∀ i, ∃ n : ℕ, (lam + P.rho) (P.coroot i) = -n)
@@ -200,7 +200,7 @@ theorem translation_translation_verma_of_sameFacet {lam μ ν : Dual K H}
 
 include hA in
 /-- **`T_μ^λ T_λ^μ L(w·λ) ≅ L(w·λ)`** when `λ` and `μ` lie in the same facet (Humphreys, GSM 94,
-§7.8 and Theorem 7.9 (check)). -/
+§7.8 and Theorem 7.9). -/
 theorem translation_translation_irreducible_of_sameFacet {lam μ ν : Dual K H}
     (hlam : ∀ i, ∃ n : ℕ, (lam + P.rho) (P.coroot i) = -n)
     (hμ : ∀ i, ∃ n : ℕ, (μ + P.rho) (P.coroot i) = -n)

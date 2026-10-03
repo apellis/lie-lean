@@ -56,9 +56,9 @@ Cartan subalgebra `𝔥` on the complex of `𝔫₋`.
 
 ## References
 
-* C. A. Weibel, *An introduction to homological algebra*, CUP 1994, §7.7 (check).
+* C. A. Weibel, *An introduction to homological algebra*, CUP 1994, §7.7.
 * H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent. Math.
-  **34** (1976), 37–76, §2 (check).
+  **34** (1976), 37–76, §1, pp. 41–42.
 * The recursive characterization and the inductive proof of `d ∘ d = 0` are standard (they are
   the homological Cartan formulas `θ(x) = -(d ε(x) + ε(x) d)`); the argument here was
   reconstructed by us.
@@ -300,7 +300,7 @@ variable (R L M) in
 /-- The **Chevalley–Eilenberg differential** `d` on `⋀L ⊗ M`, determined by `d(1 ⊗ m) = 0` and
 `d(y ∧ c) = -θ(y) c - y ∧ d c`. Explicitly, `d(x₁ ∧ ⋯ ∧ x_k ⊗ m)` is
 `∑ᵢ (-1)ⁱ x₁ ∧ ⋯ x̂ᵢ ⋯ ∧ x_k ⊗ xᵢ m + ∑_{i < j} (-1)^{i+j} [xᵢ, xⱼ] ∧ x₁ ∧ ⋯ x̂ᵢ ⋯ x̂ⱼ ⋯ ∧ x_k ⊗ m`
-([Weibel, §7.7] (check), for the right module structure `m · x = -x m`). -/
+([Weibel, §7.7], for the right module structure `m · x = -x m`). -/
 def diff : Module.End R E := TensorProduct.lift (diffFold R L M)
 
 lemma diffFold_algebraMap (r : R) : diffFold R L M (algebraMap R _ r) = 0 := by

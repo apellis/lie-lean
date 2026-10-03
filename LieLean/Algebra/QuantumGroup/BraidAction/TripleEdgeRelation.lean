@@ -43,7 +43,8 @@ With `Z = Y Eᵢ - q⁻¹ Eᵢ Y = Tⱼ(X 2)` the root vectors move along the ch
 
 ## References
 
-The statement is [Lus] 39.4.3 (check), [Jan] 8.18–8.20 (check); the reduction to fixed points
+The statement is [Lus] 39.4.3, [Jan] 8.17, Remark (proved there by citing
+[Lus] 39.2.2); the reduction to fixed points (as in [Jan] 8.16–8.17)
 follows the standard argument. The chain computation is our own reconstruction.
 -/
 

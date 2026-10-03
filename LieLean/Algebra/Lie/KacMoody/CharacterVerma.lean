@@ -14,7 +14,7 @@ take a basis of each (finite-dimensional) root space `𝔤_{-α}`, indexed by `F
 By the Poincaré–Birkhoff–Witt theorem the ordered monomials in this basis form a basis of `U(𝔫₋)`;
 transported to the Verma module `M(Λ)` via `U(𝔫₋) ≃ M(Λ)`, `u ↦ u v_Λ`, they form a basis of
 `M(Λ)` consisting of weight vectors. Counting the basis vectors of weight `Λ - β` gives
-([Kac] (9.7.2) (check))
+([Kac] (9.7.2), (10.5.2))
 `dim M(Λ)_{Λ - β} = K(β)`,
 where `K(β)` is Kostant's partition function: the number of ways to write `β` as a sum of positive
 roots, where each root `α` comes in `dim 𝔤_{-α}` "colours". (By the Chevalley involution,
@@ -34,11 +34,11 @@ roots, where each root `α` comes in `dim 𝔤_{-α}` "colours". (By the Chevall
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.finrank_weightSpace_sub`:
   `dim M(Λ)_{Λ - β} = K(β)`.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.coeffAt_character`: the coefficient of
-  `e^{Λ - β}` in `ch M(Λ)` is `K(β)` ([Kac] (9.7.2) (check)).
+  `e^{Λ - β}` in `ch M(Λ)` is `K(β)` ([Kac] (9.7.2), (10.5.2)).
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.7.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.7, §10.5.
 -/
 
 open Module LieModule UniversalEnvelopingAlgebra
@@ -101,7 +101,7 @@ lemma _root_.iSupIndep.of_map {R M N κ : Type*} [Ring R] [AddCommGroup M] [Modu
   exact hg (this.trans (map_zero g).symm)
 
 open Classical in
-/-- The root space decomposition `𝔫₋ = ⊕_{α ∈ Q₊ \ 0} 𝔤_{-α}` ([Kac] §1.3 (check)). -/
+/-- The root space decomposition `𝔫₋ = ⊕_{α ∈ Q₊ \ 0} 𝔤_{-α}` ([Kac] §1.3). -/
 theorem isInternal_nNegRootSpace : DirectSum.IsInternal (nNegRootSpace P) := by
   refine DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top ?_ ?_
   · refine iSupIndep.of_map (nNegIncl_injective P) ?_
@@ -157,7 +157,7 @@ lemma nNegBasis_mem (x : NegRootIndex P) :
 def negRootWt (s : NegRootIndex P →₀ ℕ) : Dual K H := s.sum fun x n ↦ n • x.root
 
 /-- **Kostant's partition function** `K(β)`: the number of ways of writing `β` as a sum of
-positive roots, where each positive root `α` comes in `dim 𝔤_{-α}` colours ([Kac] §9.7 (check);
+positive roots, where each positive root `α` comes in `dim 𝔤_{-α}` colours ([Kac] (10.5.1);
 `dim 𝔤_{-α} = dim 𝔤_α` is the multiplicity of `α`). -/
 def kostantPartition (β : Dual K H) : ℕ :=
   Nat.card {s : NegRootIndex P →₀ ℕ // negRootWt P s = β}
@@ -225,14 +225,14 @@ theorem finrank_weightSpace (μ : Dual K H) :
   rw [weightSpace_eq_span, finrank, rank_span_set hli, ← Nat.card.eq_1,
     Nat.card_image_of_injective B.injective]
 
-/-- **The character of a Verma module** ([Kac] (9.7.2) (check)): `dim M(Λ)_{Λ - β} = K(β)`,
+/-- **The character of a Verma module** ([Kac] (9.7.2), (10.5.2)): `dim M(Λ)_{Λ - β} = K(β)`,
 Kostant's partition function. -/
 theorem finrank_weightSpace_sub (β : Dual K H) :
     finrank K (weightSpace P Λ (Λ - β)) = kostantPartition P β := by
   rw [finrank_weightSpace, kostantPartition]
   exact Nat.card_congr (Equiv.subtypeEquivRight fun s ↦ sub_right_inj)
 
-/-- **The character of a Verma module** ([Kac] (9.7.2) (check)): the coefficient of `e^{Λ - β}`
+/-- **The character of a Verma module** ([Kac] (9.7.2), (10.5.2)): the coefficient of `e^{Λ - β}`
 in `ch M(Λ)` is Kostant's partition function `K(β)`; that is,
 `ch M(Λ) = e^Λ ∑_β K(β) e^{-β} = e^Λ ∏_{α > 0} (1 - e^{-α})^{-mult α}`. -/
 theorem coeffAt_character (β : Dual K H) :

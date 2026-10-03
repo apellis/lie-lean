@@ -15,7 +15,7 @@ Let `A` be a generalized Cartan matrix with a realization over a conditionally c
 field (i.e. over `ℝ`), and `λ, μ` dominant integral weights. By Littelmann's tensor product rule
 for concatenations (`LittelmannPath.e_concat_eq_tensor`), the concatenation `(η₁, η₂) ↦ η₁ * η₂`
 identifies the tensor product crystal `B(λ) ⊗ B(μ)` with the set `B(λ) * B(μ)` of concatenated
-paths, a subcrystal of the crystal of all paths ([Lit95] §10 (check)). We describe its highest
+paths, a subcrystal of the crystal of all paths ([Lit95] Lemma 2.7). We describe its highest
 weight elements and relate their number to the tensor product multiplicities of integrable
 modules.
 
@@ -38,12 +38,12 @@ modules.
 * `Matrix.Realization.exists_isHighestWeight_fWord_tensorPathCrystal`: every element of
   `B(λ) ⊗ B(μ)` is `f_{i₁} ⋯ f_{iₖ} (π_λ ⊗ η)` for some such `η`.
 * `Matrix.Realization.multiplicity_tensorProduct`: **the Littlewood–Richardson rule for tensor
-  product multiplicities** ([Lit94], [Lit95] §10 (check)): for symmetrizable `A`,
+  product multiplicities** ([Lit94], [Lit95] §10): for symmetrizable `A`,
   `[L(λ) ⊗ L(μ) : L(ν)] = #{η ∈ B(μ) λ-dominant | λ + η(1) = ν}`.
 * `Matrix.Realization.card_isHighestWeight_tensorPathCrystal`: the number of highest weight
   elements of weight `ν` in `B(λ) ⊗ B(μ)` is `[L(λ) ⊗ L(μ) : L(ν)]`.
 * `Matrix.Realization.nonempty_equiv_sigma`: **the crystal-level decomposition**
-  `B(λ) ⊗ B(μ) ≅ ⊔_{η ∈ B(μ) λ-dominant} B(λ + η(1))` ([Lit95] §10 (check)), *assuming*
+  `B(λ) ⊗ B(μ) ≅ ⊔_{η ∈ B(μ) λ-dominant} B(λ + η(1))` ([Lit95] §10), *assuming*
   Littelmann's isomorphism theorem for the dominant paths `π_λ * η`
   (`Matrix.Realization.LRIsomorphismHypothesis`: `B(π_{λ + η(1)}) ≅ B(π_λ * η)`), which is not
   proved here (see `LieLean.RepresentationTheory.Crystal.Path.Isomorphism`).
@@ -69,7 +69,7 @@ namespace Crystal
 variable {ι X : Type*} [AddCommGroup X] {D : CartanDatum ι X} {α : Type*} {B : α → Type*}
   (C : ∀ a, Crystal D (B a)) {B' : Type*} {C' : Crystal D B'}
 
-/-- The disjoint union `⊔_a B_a` of a family of crystals ([Kas] §7.2 (check)). -/
+/-- The disjoint union `⊔_a B_a` of a family of crystals (cf. [Kas] §7.6, (8.8)). -/
 def sigma : Crystal D (Σ a, B a) where
   wt b := (C b.1).wt b.2
   ε i b := (C b.1).ε i b.2
@@ -214,7 +214,7 @@ noncomputable abbrev tensorPathCrystal :=
   (P.pathCrystal hA hΛ₁).tensor (P.pathCrystal hA hΛ₂)
 
 /-- Concatenation `η₁ ⊗ η₂ ↦ η₁ * η₂` is a strict morphism from `B(λ) ⊗ B(μ)` to the crystal of
-all paths ([Lit95] §2 (check)): this is Littelmann's tensor product rule for concatenations of
+all paths ([Lit95] §2): this is Littelmann's tensor product rule for concatenations of
 integral paths (`LittelmannPath.e_concat_eq_tensor`, `LittelmannPath.f_concat_eq_tensor`). -/
 noncomputable def concatHom :
     Crystal.StrictHom (tensorPathCrystal hA hΛ₁ hΛ₂) (crystal (P.pathSpace hA)) where
@@ -249,7 +249,7 @@ lemma concatHom_injective : Function.Injective (concatHom hA hΛ₁ hΛ₂) := f
   obtain ⟨h₁, h₂⟩ := concat_injective h
   exact Prod.ext (Subtype.ext h₁) (Subtype.ext h₂)
 
-/-- **`B(λ) ⊗ B(μ) ≅ B(λ) * B(μ)`** ([Lit95] §10 (check)): concatenation identifies the tensor
+/-- **`B(λ) ⊗ B(μ) ≅ B(λ) * B(μ)`** ([Lit95] Lemma 2.7): concatenation identifies the tensor
 product crystal with the subcrystal of concatenated paths `η₁ * η₂`. -/
 noncomputable def tensorPathCrystalEquiv :
     Crystal.Equiv (tensorPathCrystal hA hΛ₁ hΛ₂)
@@ -262,7 +262,7 @@ lemma neg_one_sub_shiftLevel (j : ι) :
   rw [shiftLevel]
   ring
 
-/-- **The highest weight elements of `B(λ) ⊗ B(μ)`** ([Lit95] §10 (check)): `η₁ ⊗ η₂` is of
+/-- **The highest weight elements of `B(λ) ⊗ B(μ)`** ([Lit95] §10): `η₁ ⊗ η₂` is of
 highest weight iff `η₁ = π_λ` and `η₂` is `λ`-dominant (no `hⱼ` of `η₂` reaches
 `-1 - ⟨λ, αⱼ^∨⟩`; equivalently, `εⱼ(η₂) ≤ ⟨λ, αⱼ^∨⟩` for all `j`). By the tensor product rule,
 `ẽᵢ(η₁ ⊗ η₂) = 0` iff `εᵢ(η₂) ≤ φᵢ(η₁)` and `ẽᵢ η₁ = 0`, and `π_λ` is the only highest weight
@@ -436,8 +436,8 @@ theorem sumIrreducibleCharacter_lrMultiplicities :
     rw [hbμ.2]
     exact hU.mem_toFinset.mpr hμ
 
-/-- **Littelmann's Littlewood–Richardson rule for tensor product multiplicities** ([Lit94] Thm.
-(check), [Lit95] §10 (check)): for a symmetrizable generalized Cartan matrix and dominant integral
+/-- **Littelmann's Littlewood–Richardson rule for tensor product multiplicities** ([Lit94],
+[Lit95] §10): for a symmetrizable generalized Cartan matrix and dominant integral
 weights `λ, μ`, the multiplicity of `L(ν)` in `L(λ) ⊗ L(μ)` (a direct sum of irreducible modules
 `L(ν)`, `KacMoodyAlgebra.IrreducibleModule.exists_isInternal_tensorProduct`) is the number of
 `λ`-dominant paths `η ∈ B(μ)` with `λ + η(1) = ν`. This follows from the character identity
@@ -511,7 +511,7 @@ def LRIsomorphismHypothesis : Prop :=
       (isDominantIntegral_add_wt hA hΛ₁ hΛ₂ η.1 η.2).mem_integralWeights⟩)
     ((straightLine (P.pathSpace hA) ⟨Λ₁, hΛ₁.mem_integralWeights⟩).concat η.1.1)
 
-/-- **The crystal-level Littlewood–Richardson decomposition** ([Lit95] §10 (check)), assuming the
+/-- **The crystal-level Littlewood–Richardson decomposition** ([Lit95] §10), assuming the
 isomorphism theorem for the paths `π_λ * η` (`Matrix.Realization.LRIsomorphismHypothesis`):
 `B(λ) ⊗ B(μ) ≅ ⊔_{η ∈ B(μ) λ-dominant} B(λ + η(1))`, with `π_λ ⊗ η ↦ π_{λ + η(1)}`.
 

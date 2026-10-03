@@ -11,7 +11,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 
 Let `M(Λ)` be the Verma module over the Kac–Moody algebra `𝔤 = 𝔤(A)`. As a consequence of the
 Poincaré–Birkhoff–Witt theorem, the map `U(𝔫₋) → M(Λ)`, `u ↦ u • v_Λ`, is a linear isomorphism
-([Kac] §9.2 (check)). In particular `v_Λ ≠ 0` and `dim M(Λ)_Λ = 1`.
+([Kac] §9.2). In particular `v_Λ ≠ 0` and `dim M(Λ)_Λ = 1`.
 
 ## Main definitions
 
@@ -34,7 +34,7 @@ By PBW (`UniversalEnvelopingAlgebra.tensorEquivOfIsCompl`), multiplication
 `χ : U(𝔟) → K` be the algebra morphism extending the character `borelChar Λ` of `𝔟`. For
 `b ∈ U(𝔟)` we have `b - χ(b) ∈ J(Λ)`, which gives surjectivity. The map
 `ψ = (id ⊗ χ) ∘ (mult)⁻¹ : U(𝔤) → U(𝔫₋)` vanishes on `J(Λ)` and is a left inverse of
-`U(𝔫₋) → U(𝔤)`, which gives injectivity. The argument is the standard one ([Kac] §9.2 (check)),
+`U(𝔫₋) → U(𝔤)`, which gives injectivity. The argument is the standard one ([Kac] §9.2),
 written out here in detail.
 
 ## References
@@ -200,7 +200,7 @@ lemma envNNegToVerma_surjective : Function.Surjective (envNNegToVerma P Λ) := b
     obtain ⟨u', hu'⟩ := ht'
     exact ⟨u + u', by rw [map_add, hu, hu', map_add, map_add]⟩
 
-/-- **PBW for Verma modules** ([Kac] §9.2 (check)): the map `U(𝔫₋) → M(Λ)`, `u ↦ u • v_Λ`, is
+/-- **PBW for Verma modules** ([Kac] §9.2): the map `U(𝔫₋) → M(Λ)`, `u ↦ u • v_Λ`, is
 a linear isomorphism. -/
 def equivEnvNNeg : UniversalEnvelopingAlgebra K (nNeg P) ≃ₗ[K] VermaModule P Λ :=
   LinearEquiv.ofBijective (envNNegToVerma P Λ)
@@ -211,7 +211,7 @@ def equivEnvNNeg : UniversalEnvelopingAlgebra K (nNeg P) ≃ₗ[K] VermaModule P
   envNNegToVerma_apply P Λ u
 
 /-- The isomorphism `U(𝔫₋) ≃ M(Λ)` is `U(𝔫₋)`-linear, so `M(Λ)` is a free `U(𝔫₋)`-module of
-rank one with basis `v_Λ` ([Kac] §9.2 (check)). -/
+rank one with basis `v_Λ` ([Kac] §9.2). -/
 theorem equivEnvNNeg_mul (u u' : UniversalEnvelopingAlgebra K (nNeg P)) :
     equivEnvNNeg P Λ (u * u') = mapN u • equivEnvNNeg P Λ u' := by
   simp [mul_smul]
@@ -219,7 +219,7 @@ theorem equivEnvNNeg_mul (u u' : UniversalEnvelopingAlgebra K (nNeg P)) :
 instance : Nontrivial (UniversalEnvelopingAlgebra K (nNeg P)) :=
   (UniversalEnvelopingAlgebra.lift K (0 : nNeg P →ₗ⁅K⁆ K)).toRingHom.domain_nontrivial
 
-/-- The highest-weight vector of `M(Λ)` is nonzero ([Kac] §9.2 (check)). -/
+/-- The highest-weight vector of `M(Λ)` is nonzero ([Kac] §9.2). -/
 theorem hwv_ne_zero : hwv P Λ ≠ 0 := by
   have : equivEnvNNeg P Λ 1 = hwv P Λ := by simp
   rw [← this, ne_eq, LinearEquiv.map_eq_zero_iff]
@@ -227,7 +227,7 @@ theorem hwv_ne_zero : hwv P Λ ≠ 0 := by
 
 instance : Nontrivial (VermaModule P Λ) := ⟨⟨_, _, hwv_ne_zero P Λ⟩⟩
 
-/-- `dim M(Λ)_Λ = 1` ([Kac] §9.2 (check)). -/
+/-- `dim M(Λ)_Λ = 1` ([Kac] §9.2). -/
 theorem finrank_weightSpace_self : finrank K (weightSpace P Λ Λ) = 1 := by
   rw [weightSpace_self, finrank_span_singleton (hwv_ne_zero P Λ)]
 

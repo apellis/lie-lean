@@ -25,7 +25,7 @@ import LieLean.Algebra.QuantumGroup.GabberKac
 The descent arguments are reconstructed from ideal generation and the quotient universal
 property. The relation-level input is `LusztigF/Bar.lean`; the radical identification is the
 repository's quantum Gabber–Kac theorem ([Lus], *Introduction to quantum groups*,
-Theorem 33.1.3 (check)). No crystal lattice, balancedness, or global basis is claimed.
+Theorem 33.1.3 (a)). No crystal lattice, balancedness, or global basis is claimed.
 -/
 
 noncomputable section

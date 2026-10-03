@@ -36,7 +36,7 @@ step survives and the block is `M(w·μ)`.
 ## References
 
 * Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*, GSM 94,
-  Theorem 7.6 (check). Humphreys treats arbitrary `λ` with the integral Weyl group `W_[λ]`;
+  Theorem 7.6. Humphreys treats arbitrary `λ` with the integral Weyl group `W_[λ]`;
   here all weights are integral, so `W_[λ] = W`. The argument is the standard one,
   reconstructed; the tensor factor is written on the right.
 -/
@@ -136,7 +136,7 @@ local notation "𝔤" => KacMoodyAlgebra P
 
 include hA in
 /-- **Translation of Verma modules** (integral weights, finite type; Humphreys, GSM 94,
-Theorem 7.6 (check)). Let `λ + ρ`, `μ + ρ` be antidominant integral with every simple wall of
+Theorem 7.6). Let `λ + ρ`, `μ + ρ` be antidominant integral with every simple wall of
 `λ + ρ` a wall of `μ + ρ`, and `ν = z (μ - λ)` dominant. Then for every `w ∈ W` the
 `χ_μ`-block of `M(w·λ) ⊗ L(ν)` is isomorphic to `M(w·μ)`. -/
 theorem translation_verma {lam μ ν : Dual K H}

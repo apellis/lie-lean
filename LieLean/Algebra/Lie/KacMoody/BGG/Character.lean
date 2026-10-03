@@ -13,8 +13,8 @@ Let `A` be a symmetrizable generalized Cartan matrix, `𝔤 = 𝔤(A)` over a fi
 characteristic zero, and `Λ` a dominant integral weight. The BGG resolution of `L(Λ)` has terms
 `C_k = ⊕_{ℓ(w) = k} M(w · Λ)`, so its Euler characteristic is
 `∑_{w ∈ W} (-1)^{ℓ(w)} ch M(w · Λ)`. We show that this (in general infinite) sum is summable in
-the algebra `ℰ` of formal characters and equals `ch L(Λ)` ([HumO] §6.3 (check); [Kac] §10.4 (check);
-[Kum] §9.1 (check)). This is a reformulation of the Weyl–Kac character formula
+the algebra `ℰ` of formal characters and equals `ch L(Λ)` ([HumO] §2.4, §6.1; [Kac] §10.4;
+[Kum] Thm. 2.2.1, Thm. 9.1.3). This is a reformulation of the Weyl–Kac character formula
 (`Matrix.Realization.KacMoodyAlgebra.IrreducibleModule.exp_rho_mul_denominator_mul_character`)
 using `ch M(λ) = e^λ ∏_{α > 0} (1 - e^{-α})^{-mult α}`.
 
@@ -35,10 +35,10 @@ using `ch M(λ) = e^λ ∏_{α > 0} (1 - e^{-α})^{-mult α}`.
 ## References
 
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, AMS 2008, §6.3 (check).
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §10.4 (check).
+  GSM 94, AMS 2008, §2.4, §6.1.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §10.4.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002, §9.1 (check).
+  Math. 204, Birkhäuser 2002, Thm. 2.2.1, Thm. 9.1.3.
 -/
 
 open Module LieModule HahnSeries
@@ -55,7 +55,7 @@ variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K] [
 include hΛ
 
 omit [DecidableEq ι] in
-/-- `Λ - w · Λ ∈ Q₊` for `Λ` dominant integral ([Kac] Prop. 3.12 (check)). -/
+/-- `Λ - w · Λ ∈ Q₊` for `Λ` dominant integral ([Kac] Prop. 3.12 (d)). -/
 lemma exists_sub_weylDot_eq_rootOf (w : P.weylGroup hA) :
     ∃ k : ι → ℤ, 0 ≤ k ∧ Λ - P.weylDot hA w Λ = P.rootOf k := by
   obtain ⟨k, hk, hwk⟩ := P.exists_sub_apply_eq_rootOf hA (fun i ↦ by
@@ -127,7 +127,7 @@ lemma hsum_dotExpFamily :
 variable [FiniteDimensional K H] (hS : A.IsSymmetrizable)
 
 include hS in
-/-- **The Euler characteristic of the BGG resolution** ([HumO] §6.3 (check); [Kum] §9.1 (check)):
+/-- **The Euler characteristic of the BGG resolution** ([HumO] §2.4, §6.1; [Kum] Thm. 2.2.1):
 for a symmetrizable generalized Cartan matrix and `Λ` dominant integral,
 `∑_{w ∈ W} (-1)^{ℓ(w)} ch M(w · Λ) = ch L(Λ)` in the algebra `ℰ` of formal characters, where
 `w · Λ = w(Λ + ρ) - ρ`. This is equivalent to the Weyl–Kac character formula. -/

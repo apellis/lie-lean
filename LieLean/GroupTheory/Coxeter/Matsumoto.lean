@@ -176,7 +176,7 @@ theorem IsReduced.isLeftDescent_cons {c : B} {η : List B} (h : cs.IsReduced (c 
   simp only [length_cons]
   omega
 
-/-- The key step of Matsumoto's theorem ([BB] proof of Thm. 3.3.1 (check)): if
+/-- The key step of Matsumoto's theorem ([BB] proof of Thm. 3.3.1(ii)): if
 `a ≠ b` are both left descents of `w`, then `mₐᵦ < ∞` and `w` has reduced words
 `a ⋯ γ` and `b ⋯ γ` that differ by one braid move (they begin with the two alternating words of
 length `mₐᵦ`). -/

@@ -40,7 +40,7 @@ have dimension `#{(S, j) | |S| = k, γ S + ν j = μ}`, and when there are finit
 ## References
 
 * H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent. Math.
-  **34** (1976), 37–76, §3 (check). The Euler–Poincaré argument is standard; we reconstructed the
+  **34** (1976), 37–76, Lemma 9.2. The Euler–Poincaré argument is standard; we reconstructed the
   details.
 -/
 

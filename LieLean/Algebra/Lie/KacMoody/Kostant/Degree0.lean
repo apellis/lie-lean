@@ -11,7 +11,7 @@ import LieLean.Algebra.Lie.KacMoody.CharacterFormula
 
 For any weight `Λ` (not necessarily dominant integral), `H_0(𝔫₋, L(Λ)) = L(Λ) / 𝔫₋ L(Λ)` is
 one-dimensional, of weight `Λ`: this is the degree-zero case `ℓ(w) = 0 ⟺ w = 1` of the
-Garland–Lepowsky theorem ([GL] Thm. 8.6 (check); [Kum] Thm. 3.2.7 (check)), and holds for all
+Garland–Lepowsky theorem ([GL] Thm. 8.6; [Kum] Thm. 3.2.7), and holds for all
 `Λ`.
 
 ## Proof

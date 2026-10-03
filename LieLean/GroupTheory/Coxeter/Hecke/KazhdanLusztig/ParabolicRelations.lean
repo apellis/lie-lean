@@ -13,11 +13,14 @@ import LieLean.GroupTheory.Coxeter.Longest
 We relate Deodhar's parabolic Kazhdan–Lusztig polynomials `P^J_{d',d}`
 (`IwahoriHeckeAlgebra.parabolicKLPoly`, for the modules `𝓗 ⊗_{𝓗_J} sgn` and `𝓗 ⊗_{𝓗_J} ind`)
 to the ordinary Kazhdan–Lusztig polynomials `P_{y,w}` (`IwahoriHeckeAlgebra.klPoly`), following
-[Deo] Prop. 3.4 (check):
+[Deo] Prop. 3.4, Rem. 3.8 and [Soe] Prop. 3.8 (Deodhar states the index-module formula for
+his `u = -1` and the sign-module formula for his `u = q`, because his invariant elements have
+the shape of Kazhdan–Lusztig's `C_w`; see
+`LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Parabolic`):
 
 * **The sign module, any `J`** (`parabolicKLPoly_sgn`): for `d', d ∈ W^J`,
   ```
-    P^{J,-1}_{d',d} = Σ_{z ∈ W_J, d'z ≤ d} (-1)^{ℓ(z)} P_{d'z, d}.
+    P^J_{d',d} = Σ_{z ∈ W_J, d'z ≤ d} (-1)^{ℓ(z)} P_{d'z, d}.
   ```
   Proof: the projection `𝓗 → 𝓗 ⊗_{𝓗_J} sgn`, `h ↦ h ⊗ 1`, commutes with the bar involutions,
   so the image of `C'_d` is bar invariant; since `T_{d'z} ⊗ 1 = (-1)^{ℓ(z)} m_{d'}`, its
@@ -26,7 +29,7 @@ to the ordinary Kazhdan–Lusztig polynomials `P_{y,w}` (`IwahoriHeckeAlgebra.kl
 * **The index module, `W_J` finite** (`parabolicKLPoly_ind`): with `w_J` the longest element of
   `W_J`,
   ```
-    P^{J,q}_{d',d} = P_{d' w_J, d w_J}.
+    P^J_{d',d} = P_{d' w_J, d w_J}.
   ```
   Proof: `T_s C'_{w_J} = q C'_{w_J}` for `s ∈ J`, so `h ⊗ 1 ↦ h C'_{w_J}` is a well defined map
   `𝓗 ⊗_{𝓗_J} ind → 𝓗` commuting with the bar involutions (`parabolicLift`). Since
@@ -50,7 +53,7 @@ We did not consult [Deo]; the arguments above are reconstructions of the standar
 * [Deo] V. Deodhar, *On some geometric aspects of Bruhat orderings II. The parabolic analogue of
   Kazhdan–Lusztig polynomials*, J. Algebra **111** (1987), 483–506.
 * [Soe] W. Soergel, *Kazhdan–Lusztig-Polynome und eine Kombinatorik für Kipp-Moduln*,
-  Represent. Theory **1** (1997), 37–68, Prop. 3.4 (check).
+  Represent. Theory **1** (1997), 37–68, Prop. 3.8.
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184.
 -/
@@ -176,7 +179,8 @@ theorem repr_mk_klBasis_sgn [DecidableEq W] (d' : cs.minCosetReps J) (d : W) :
   · rw [mul_zero, map_zero, mul_zero]
 
 variable (J) in
-/-- **Deodhar's formula for the sign module** ([Deo] Prop. 3.4 (check)): the image `C'_d ⊗ 1` of
+/-- **Deodhar's formula for the sign module** ([Soe] proof of Prop. 3.8; cf. [Deo] Rem. 3.8):
+the image `C'_d ⊗ 1` of
 the Kazhdan–Lusztig basis element `C'_d`, `d ∈ W^J`, in `𝓗 ⊗_{𝓗_J} sgn` is the parabolic
 Kazhdan–Lusztig basis element `C^J_d`. -/
 theorem mk_klBasis_eq_parabolicKLBasis_sgn (d : cs.minCosetReps J) :
@@ -210,9 +214,9 @@ theorem mk_klBasis_eq_parabolicKLBasis_sgn (d : cs.minCosetReps J) :
       coeff_klPoly_eq_zero cs hyd (by omega), mul_zero]
 
 variable (J) in
-/-- **Deodhar's formula for the sign module** ([Deo] Prop. 3.4 (check), [Soe] Prop. 3.4
-(check)): for `d', d ∈ W^J`,
-`P^{J,-1}_{d',d} = Σ_{z ∈ W_J, d'z ≤ d} (-1)^{ℓ(z)} P_{d'z,d}`, where the sum runs over the
+/-- **Deodhar's formula for the sign module** ([Deo] Rem. 3.8, stated there for `u = q`;
+[Soe] Prop. 3.8(2)): for `d', d ∈ W^J`,
+`P^J_{d',d} = Σ_{z ∈ W_J, d'z ≤ d} (-1)^{ℓ(z)} P_{d'z,d}`, where the sum runs over the
 `y = d'z ≤ d` with `y^J = d'` and `z = y_J`. -/
 theorem parabolicKLPoly_sgn [DecidableEq W] (d' d : cs.minCosetReps J) :
     parabolicKLPoly (isBarCompatible_sgn (cs.parabolicCoxeterSystem J)) d' d =
@@ -267,7 +271,8 @@ variable [Finite (cs.parabolicSubgroup J)]
 
 local notation "w_J" => cs.parabolicLongestElement J
 
-/-- `P_{z, w_J} = 1` for `z ∈ W_J` ([KL] (2.3.g) (check)). -/
+/-- `P_{z, w_J} = 1` for `z ∈ W_J` (by repeated use of [KL] (2.3.g), as in
+[KL] Lemma 2.6(vi), the case `W` finite, `J = S`). -/
 theorem klPoly_parabolicLongestElement_of_mem {z : W} (hz : z ∈ cs.parabolicSubgroup J) :
     klPoly cs z (w_J) = 1 := by
   have key : ∀ ω : List B, (∀ i ∈ ω, i ∈ J) → klPoly cs (cs.wordProd ω) (w_J) =
@@ -377,7 +382,8 @@ theorem toFinsupp_parabolicLift_apply (m : InducedModule (ind (cs.parabolicCoxet
   · intro h
     rw [Finsupp.notMem_support_iff.mp h, zero_smul, map_zero, map_zero, Finsupp.zero_apply]
 
-/-- **Deodhar's comparison for the index module** ([Deo] Prop. 3.4 (check)): for `W_J` finite,
+/-- **Deodhar's comparison for the index module** ([Soe] proof of Prop. 3.8(1); cf. [Deo]
+Prop. 3.4): for `W_J` finite,
 the image of the parabolic Kazhdan–Lusztig basis element `C^J_d` of `𝓗 ⊗_{𝓗_J} ind` under
 `h ⊗ 1 ↦ h C'_{w_J}` is `C'_{d w_J}`. -/
 theorem parabolicLift_parabolicKLBasis (d : cs.minCosetReps J) :
@@ -418,9 +424,9 @@ theorem parabolicLift_parabolicKLBasis (d : cs.minCosetReps J) :
       push_cast at hk
       omega)
 
-/-- **Deodhar's formula for the index module** ([Deo] Prop. 3.4 (check), [Soe] Prop. 3.4
-(check)): if `W_J` is finite with longest element `w_J`, then for `d', d ∈ W^J`,
-`P^{J,q}_{d',d} = P_{d' w_J, d w_J}`. -/
+/-- **Deodhar's formula for the index module** ([Deo] Prop. 3.4, stated there for `u = -1`;
+[Soe] Prop. 3.8(1)): if `W_J` is finite with longest element `w_J`, then for `d', d ∈ W^J`,
+`P^J_{d',d} = P_{d' w_J, d w_J}`. -/
 theorem parabolicKLPoly_ind (d' d : cs.minCosetReps J) :
     parabolicKLPoly (isBarCompatible_ind (cs.parabolicCoxeterSystem J)) d' d =
       klPoly cs (d' * w_J) (d * w_J) := by

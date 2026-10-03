@@ -17,7 +17,7 @@ module `Z` in `𝒪` and `c, c' ∈ K` we define
 
 which lies in `𝒪` by `KacMoody/TensorProduct.lean`. With `Z = L(ν)` for a dominant integral `ν`
 and `c = (λ + 2ρ | λ)`, `c' = (μ + 2ρ | μ)`, this is the Kac–Moody version of the translation
-functor `T_λ^μ = pr_μ (L(ν) ⊗ pr_λ (-))` of [HumO] §7.1 (check). (In [HumO], `𝔤` is finite
+functor `T_λ^μ = pr_μ (L(ν) ⊗ pr_λ (-))` of [HumO] §7.1. (In [HumO], `𝔤` is finite
 dimensional, `ν` is the dominant `W`-conjugate of `μ - λ`, `L(ν)` is finite-dimensional, and
 `pr_λ` is the projection onto a block for the action of the centre `Z(𝔤)`; here `L(ν)` is in
 general infinite-dimensional but lies in `𝒪`, only the Casimir operator is available, so the
@@ -26,9 +26,10 @@ blocks are unions of linkage classes, and we leave `ν` as a parameter: in Kac�
 
 We prove that `T` is exact in the sense of characters: if `ch V = ch V' + ch V''` (for instance
 for a short exact sequence `0 → V' → V → V'' → 0`), then `ch T V = ch T V' + ch T V''`
-([HumO] §7.1 (check)). On Verma modules we only record the character form of [HumO] Thm. 3.6
-(check): `R · ch (Z ⊗ M(λ)) = e^λ ch Z`, i.e. `Z ⊗ M(λ)` has the character of
-`⊕_ξ M(λ + ξ)^{dim Z_ξ}`. The computation of `T_λ^μ M(w·λ)` ([HumO] Thm. 7.6 (check)) needs
+([HumO] §7.1). On Verma modules we only record the character form of [HumO] Thm. 3.6
+(there for finite-dimensional `Z`; Exercise 3.6 (a)): `R · ch (Z ⊗ M(λ)) = e^λ ch Z`,
+i.e. `Z ⊗ M(λ)` has the character of
+`⊕_ξ M(λ + ξ)^{dim Z_ξ}`. The computation of `T_λ^μ M(w·λ)` ([HumO] Thm. 7.6) needs
 the finer linkage principle (blocks for the full centre, or the Kac–Kazhdan criterion) and is not
 attempted.
 
@@ -87,7 +88,8 @@ theorem IsCategoryO.character_eq_add_iff (hV : IsCategoryO P V) (hV' : IsCategor
   · simp only [IsCategoryO.coeffAt_multiplicities, CharacterRing.coeffAt, HahnSeries.coeff_add]
     exact_mod_cast h μ
 
-/-- **Tensoring a Verma module** ([HumO] Thm. 3.6 (check), character form): for `Z` in `𝒪`,
+/-- **Tensoring a Verma module** ([HumO] Thm. 3.6, character form; there `Z` is
+finite-dimensional): for `Z` in `𝒪`,
 `R · ch (Z ⊗ M(λ)) = e^λ ch Z`, where `R = ∏_{α > 0} (1 - e^{-α})^{mult α}` is the denominator;
 thus `Z ⊗ M(λ)` has the character of `⊕_ξ M(λ + ξ)^{dim Z_ξ}`. -/
 theorem IsCategoryO.denominator_mul_character_tensorProduct_verma (hZ : IsCategoryO P Z)
@@ -123,7 +125,7 @@ theorem character_casimirBlock_eq_add (hV : IsCategoryO P V) (hV' : IsCategoryO 
 
 /-- The *translation functor* `T V = (Z ⊗ V^c)^{c'}` on `𝒪`, for a module `Z` in `𝒪` and
 `c, c' ∈ K`. For `Z = L(ν)` with `ν` dominant integral, `c = (λ + 2ρ | λ)` and
-`c' = (μ + 2ρ | μ)` this is the translation functor `T_λ^μ` of [HumO] §7.1 (check), with Casimir
+`c' = (μ + 2ρ | μ)` this is the translation functor `T_λ^μ` of [HumO] §7.1, with Casimir
 blocks in place of blocks for the centre of `U(𝔤)` (see the module docstring). -/
 def translation (hZ : IsCategoryO P Z) (hV : IsCategoryO P V) (c c' : K) :
     LieSubmodule K P.KacMoodyAlgebra (Z ⊗[K] hB.casimirBlock hA hV.isPosFinite c) :=
@@ -134,7 +136,7 @@ theorem isCategoryO_translation (hZ : IsCategoryO P Z) (hV : IsCategoryO P V) (c
     IsCategoryO P (hB.translation hA hZ hV c c') :=
   (hZ.tensorProduct (hV.lieSubmodule _)).lieSubmodule _
 
-/-- **Exactness of translation functors** ([HumO] §7.1 (check)), on characters: if
+/-- **Exactness of translation functors** ([HumO] §7.1), on characters: if
 `ch V = ch V' + ch V''`, e.g. for a short exact sequence `0 → V' → V → V'' → 0` in `𝒪`, then
 `ch T V = ch T V' + ch T V''` for `T V = (Z ⊗ V^c)^{c'}`. -/
 theorem character_translation_eq_add (hZ : IsCategoryO P Z) (hV : IsCategoryO P V)
@@ -154,7 +156,7 @@ theorem character_translation_eq_add (hZ : IsCategoryO P Z) (hV : IsCategoryO P 
   exact hB.character_casimirBlock_eq_add hA (hZ.tensorProduct (hV.lieSubmodule _))
     (hZ.tensorProduct (hV'.lieSubmodule _)) (hZ.tensorProduct (hV''.lieSubmodule _)) h2 c'
 
-/-- **Exactness of translation functors** ([HumO] §7.1 (check)), on characters, for the short
+/-- **Exactness of translation functors** ([HumO] §7.1), on characters, for the short
 exact sequence `0 → N → V → V / N → 0`: `ch T V = ch T N + ch T (V / N)`. -/
 theorem character_translation_eq_add_quotient (hZ : IsCategoryO P Z) (hV : IsCategoryO P V)
     (N : LieSubmodule K P.KacMoodyAlgebra V) (c c' : K) :

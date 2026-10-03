@@ -47,7 +47,7 @@ of `𝒪` is identified with a subgroup of `ℰ` (as an abelian group). With thi
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.finrank_weightSpace_eq_finsum`:
   `dim V_ξ = ∑_μ [V : L(μ)] dim L(μ)_ξ`.
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.character_eq_sumIrreducibleCharacter`:
-  `ch V = ∑_μ [V : L(μ)] ch L(μ)` ([Kac] §9.6 (check); [HumO] §1.14–1.15 (check)).
+  `ch V = ∑_μ [V : L(μ)] ch L(μ)` ([Kac] Prop. 9.7; [HumO] §1.14–1.15).
 * `Matrix.Realization.KacMoodyAlgebra.sumIrreducibleCharacter_injective`: the `ch L(μ)` are
   linearly independent (also for infinite combinations).
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.character_eq_iff`,
@@ -74,7 +74,7 @@ written out by us.
 
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.6–9.7.
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, §1.2–1.3, §1.14–1.15 (check).
+  GSM 94, §1.2–1.3, §1.14–1.16.
 -/
 
 open Module LieModule HahnSeries
@@ -228,7 +228,7 @@ lemma finite_support_multiplicity_mul (ξ : Dual K H) :
   exact List.mem_toFinset.mpr (List.count_pos_iff.mp (Nat.pos_of_ne_zero
     (left_ne_zero_of_mul hμ)))
 
-/-- **Weight multiplicities from composition multiplicities** ([Kac] §9.6 (check)):
+/-- **Weight multiplicities from composition multiplicities** ([Kac] Prop. 9.7):
 `dim V_ξ = ∑_μ [V : L(μ)] dim L(μ)_ξ` for a module `V` in `𝒪`. -/
 theorem finrank_weightSpace_eq_finsum (ξ : Dual K H) :
     finrank K (weightSpace P V ξ) =
@@ -270,8 +270,8 @@ def multiplicities : P.CharacterRing ℤ :=
 @[simp] lemma coeffAt_multiplicities (μ : Dual K H) :
     hV.multiplicities.coeffAt μ = hV.multiplicity μ := rfl
 
-/-- **The character of a module in `𝒪` in terms of irreducible characters** ([Kac] §9.6
-(check); [HumO] §1.15 (check)): `ch V = ∑_μ [V : L(μ)] ch L(μ)` in `ℰ`, the sum being a
+/-- **The character of a module in `𝒪` in terms of irreducible characters** ([Kac] Prop. 9.7;
+[HumO] §1.15): `ch V = ∑_μ [V : L(μ)] ch L(μ)` in `ℰ`, the sum being a
 summable family (`irreducibleCharacterFamily`). -/
 theorem character_eq_sumIrreducibleCharacter :
     hV.character = sumIrreducibleCharacter P hV.multiplicities := by
@@ -333,14 +333,14 @@ end IrreducibleModule
 
 namespace VermaModule
 
-/-- `[M(λ) : L(μ)] ≠ 0` implies `μ ≤ λ` ([Kac] §9.2 (check); [HumO] §1.3 (check)). -/
+/-- `[M(λ) : L(μ)] ≠ 0` implies `μ ≤ λ` ([Kac] §9.2; [HumO] §1.16 (1)). -/
 theorem mem_cone_of_multiplicity_ne_zero {Λ μ : Dual K H}
     (h : (isCategoryO P Λ).multiplicity μ ≠ 0) : μ ∈ cone P Λ := by
   obtain ⟨x, hx, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot
     ((isCategoryO P Λ).weightSpace_ne_bot_of_multiplicity_ne_zero h)
   exact exists_eq_sub_of_mem_weightSpace P Λ LieModuleHom.id Function.surjective_id hx hx0
 
-/-- `[M(λ) : L(λ)] = 1` ([Kac] §9.2–9.3 (check); [HumO] §1.3 (check)). -/
+/-- `[M(λ) : L(λ)] = 1` ([Kac] §9.2–9.3; [HumO] §1.16 (1)). -/
 theorem multiplicity_self (Λ : Dual K H) : (isCategoryO P Λ).multiplicity Λ = 1 := by
   have h := (isCategoryO P Λ).finrank_weightSpace_eq_finsum Λ
   rw [finrank_weightSpace_self, finsum_eq_single _ Λ fun μ hμ ↦ ?_,

@@ -44,7 +44,7 @@ argument); uniqueness then shows that it is the unique element of `W^J` in the c
 ## References
 
 * [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, Springer 2005, §2.4.
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §1.10, §5.5.
+* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §1.10, §5.5, §5.12.
 -/
 
 open List
@@ -97,7 +97,7 @@ theorem mem_parabolicSubgroup_iff {w : W} :
 
 /-- Every element of `W_J` has a reduced word with letters in `J`; in particular, the length
 function of `W_J` with respect to `{sᵢ : i ∈ J}` is the restriction of that of `W`
-([HumC] §5.5 Thm. (check), [BB] §2.4 (check)). -/
+([HumC] §5.5 Thm., [BB] Prop. 2.4.1(ii)). -/
 theorem exists_isReduced_of_mem_parabolicSubgroup {w : W} (hw : w ∈ cs.parabolicSubgroup J) :
     ∃ ω : List B, cs.IsReduced ω ∧ (∀ i ∈ ω, i ∈ J) ∧ π ω = w := by
   obtain ⟨ω, hω, rfl⟩ := mem_parabolicSubgroup_iff.mp hw
@@ -201,7 +201,7 @@ private theorem eq_of_min {u₀ u : W}
   rw [IsRightDescent, h2, h1]
   exact Nat.add_lt_add_left hdesc _
 
-/-- **Length additivity** ([BB] Prop. 2.4.4 (check), [HumC] §1.10 Prop. (c) (check)): if
+/-- **Length additivity** ([BB] Prop. 2.4.4, [HumC] §1.10 Prop. (c), §5.12): if
 `u ∈ W^J` and `v ∈ W_J`, then `ℓ(u v) = ℓ(u) + ℓ(v)`. -/
 theorem length_mul_of_mem_minCosetReps {u v : W} (hu : u ∈ cs.minCosetReps J)
     (hv : v ∈ cs.parabolicSubgroup J) : ℓ (u * v) = ℓ u + ℓ v := by
@@ -219,7 +219,8 @@ theorem eq_of_mem_minCosetReps {u u' : W} (hu : u ∈ cs.minCosetReps J)
     rw [length_mul_of_mem_minCosetReps hu hx]; omega
   exact (eq_of_min hu₀ hu' h).symm
 
-/-- **The parabolic decomposition** ([BB] Prop. 2.4.4, [HumC] §1.10 (check)): every `w ∈ W` can be
+/-- **The parabolic decomposition** ([BB] Prop. 2.4.4, [HumC] §1.10 Prop. (c), §5.12): every
+`w ∈ W` can be
 written as `w = u v` with `u ∈ W^J` and `v ∈ W_J`. -/
 theorem exists_mem_minCosetReps_mul_eq (J : Set B) (w : W) :
     ∃ u ∈ cs.minCosetReps J, ∃ v ∈ cs.parabolicSubgroup J, u * v = w := by
@@ -271,7 +272,7 @@ theorem minCosetRep_mul_parabolicComponent (w : W) :
     cs.minCosetRep J w * cs.parabolicComponent J w = w := by
   rw [parabolicComponent, mul_inv_cancel_left]
 
-/-- `ℓ(w) = ℓ(w^J) + ℓ(w_J)` ([BB] Prop. 2.4.4 (check)). -/
+/-- `ℓ(w) = ℓ(w^J) + ℓ(w_J)` ([BB] Prop. 2.4.4(ii)). -/
 theorem length_eq_length_minCosetRep_add (w : W) :
     ℓ w = ℓ (cs.minCosetRep J w) + ℓ (cs.parabolicComponent J w) := by
   conv_lhs => rw [← minCosetRep_mul_parabolicComponent (cs := cs) (J := J) w]

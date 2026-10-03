@@ -24,9 +24,9 @@ identities of `LieLean.RepresentationTheory.Crystal.Path.Pitman`.
 ## References
 
 * [Lit98] P. Littelmann, *Cones, crystals, and patterns*, Transform. Groups **3** (1998),
-  145–179, §1–2 (string parametrizations and the `A₂` transition map) (check).
+  145–179, §1–2 (string parametrizations and the `A₂` transition map).
 * [Kas94] M. Kashiwara, *Crystal bases of modified quantized enveloping algebra*, Duke Math. J.
-  **73** (1994), 383–413, §7 (check).
+  **73** (1994), 383–413, §7.
 
 The argument is reconstructed.
 -/
@@ -204,7 +204,7 @@ lemma coroot_wt_top (hij : D.coroot i (D.root j) = -1) :
   simp only [nsmul_eq_mul, mul_neg, mul_one]
   ring
 
-/-- **The braid relation of length three** ([Kas94] §7 (check), reconstructed): if
+/-- **The braid relation of length three** ([Kas94] §7, reconstructed): if
 `⟨αⱼ, αᵢ^∨⟩ = ⟨αᵢ, αⱼ^∨⟩ = -1` and, on a stable set `S`, the string tops along `(i, j, i)` and
 `(j, i, j)` agree and the string coordinates satisfy the `A₂` transition rule
 `c₁ = max(a₃, a₂ - a₁)` in both directions, then `SᵢSⱼSᵢ = SⱼSᵢSⱼ` on `S`. -/

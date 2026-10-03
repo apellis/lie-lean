@@ -38,11 +38,12 @@ the identification of `B_J(μ)` with the crystal base of the irreducible `U_q(�
 ## References
 
 * P. Littelmann, *A Littlewood–Richardson rule for symmetrizable Kac–Moody algebras*,
-  Invent. Math. 116 (1994), 329–346, restriction rule (check).
+  Invent. Math. 116 (1994), 329–346, branching rule (Introduction, §6.3).
 * P. Littelmann, *Paths and root operators in representation theory*, Ann. of Math. (2) 142
-  (1995), 499–525, Theorem 7.1 (the isomorphism theorem, applied to the Levi datum).
+  (1995), 499–525, Theorem 7.1 (the isomorphism theorem, applied to the Levi datum), and the
+  restriction rule (Introduction, p. 501; proof in §10).
 * M. Kashiwara, *Crystal bases of modified quantized enveloping algebra*, Duke Math. J. 73
-  (1994), 383–413, §1.5 (normal crystals) (check).
+  (1994), 383–413, §1.5 (normal crystals).
 
 The arguments are reconstructed: the Levi path crystal is the path crystal of an auxiliary
 realization of `A_J`, reached by a linear restriction map, and Theorem 7.1 is applied there.
@@ -347,7 +348,7 @@ theorem Presentation.exists_denominator (σ : Presentation P hA) :
 `j ∈ J`), the Levi component of the restricted path `r ∘ π` is isomorphic to the highest-weight
 Levi path crystal `B_J(μ)`, `μ = r(π(1))`, with `π_μ ↦ r ∘ π`. Together with `jComponent_bijOn`,
 the `J`-component of `π` in `B(λ)` is a copy of `B_J(μ)`. This is Littelmann's restriction rule
-([Lit94] (check); [Lit95] Theorem 7.1 applied to the Levi datum); reconstructed. -/
+([Lit94], branching rule; [Lit95] Theorem 7.1 applied to the Levi datum); reconstructed. -/
 theorem LeviMap.componentIso_straightLine_restrict [FiniteDimensional ℝ H']
     (L : LeviMap P e Q) {Λ : Dual ℝ H} (hΛ : P.IsDominantIntegral Λ)
     {π : LittelmannPath (P.pathSpace hA)}
@@ -498,7 +499,7 @@ theorem jComponent_eq_of_mem {x y : LittelmannPath (P.pathSpace hA)}
     fun hz => trans _ _ _ (mem_jComponent_comm.mp h) hz⟩
 
 /-- **The restriction of `B(λ)` to a subdiagram is a disjoint union of Levi highest-weight
-crystals** (normality of `B(λ)` along `J`; Littelmann's restriction rule, [Lit94] (check),
+crystals** (normality of `B(λ)` along `J`; Littelmann's restriction rule, [Lit94] branching rule,
 [Lit95] Theorem 7.1 for the Levi datum; reconstructed): every `J`-component of `B(λ)` equals the
 `J`-component of a `J`-highest path `y ∈ B(λ)`, restriction maps it bijectively onto the Levi
 component of `r ∘ y`, and that Levi component is isomorphic to `B_J(μ)`, `μ = r(y(1))`,

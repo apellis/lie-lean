@@ -10,7 +10,7 @@ import Mathlib.RingTheory.HahnSeries.Multiplication
 # The algebra `ℰ` of formal characters
 
 Let `P` be a realization of a matrix `A` over a field `K` of characteristic zero, with Cartan
-space `𝔥 = H`, and let `Q₊ = {∑ kᵢ αᵢ | kᵢ ∈ ℤ≥0} ⊂ 𝔥*`. Kac ([Kac] §9.7 (check)) defines the
+space `𝔥 = H`, and let `Q₊ = {∑ kᵢ αᵢ | kᵢ ∈ ℤ≥0} ⊂ 𝔥*`. Kac ([Kac] §9.7) defines the
 algebra `ℰ` of formal series `∑_{λ ∈ 𝔥*} c_λ e^λ` whose support lies in a finite union of cones
 `D(Λ) = Λ - Q₊`, with the product `e^λ e^μ = e^{λ + μ}`, i.e. the convolution product
 `(c d)_μ = ∑_ν c_ν d_{μ - ν}`.
@@ -183,7 +183,7 @@ open WeightOrd
 
 variable [CharZero K]
 
-/-- The algebra `ℰ` of formal characters ([Kac] §9.7 (check)) with coefficients in `R`: formal
+/-- The algebra `ℰ` of formal characters ([Kac] §9.7) with coefficients in `R`: formal
 series `∑_{λ ∈ 𝔥*} c_λ e^λ` whose support lies in a finite union of cones `Λ - Q₊`, with the
 convolution product. It is realized as the ring of Hahn series on `P.WeightOrd`; see
 `Matrix.Realization.WeightOrd.isPWO_iff`. -/

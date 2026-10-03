@@ -29,8 +29,8 @@ become `(ad αᵢ^∨) uₐ = (2a - k - 1 - d) uₐ` and `(ad eᵢ) uₐ = -(a +
 locally nilpotent on `U(𝔤)`, the `𝔰𝔩₂`-lemma `IsSl2Triple.eq_zero_of_toEnd_e_pow_eq_zero` gives
 `u₀ = 0`, i.e. `y ∈ fᵢ M(λ)`. If `y = fᵢʲ x` with `1 ≤ j < k`, then `eᵢ y = 0` forces
 `fᵢ eᵢ x = j (k - j) x`, so `x ∈ fᵢ M(λ)`; by induction `y ∈ fᵢᵏ M(λ)`. The argument was
-reconstructed by us; it is the Kac–Moody version of the `𝔰𝔩₂`-projectivity of Verma modules used
-in [HumO] §4 (check) and [Kum] §2.? (check).
+reconstructed by us; it is the Kac–Moody version of the `𝔰𝔩₂`-projectivity of Verma modules
+([HumO] Prop. 3.8 (a), for `𝔰𝔩₂`) used in [Kum] Thm. 9.2.9 (d) (as completeness, Def. 9.2.7).
 
 ## Main results
 
@@ -42,9 +42,9 @@ in [HumO] §4 (check) and [Kum] §2.? (check).
 ## References
 
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, AMS 2008, §4.4 (check).
+  GSM 94, AMS 2008, Prop. 3.8 (a).
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002 (check).
+  Math. 204, Birkhäuser 2002, §9.2.
 -/
 
 open Module LieModule

@@ -62,8 +62,8 @@ namespace IsCategoryO
 
 variable [CharZero K] {P V} {Λ : Dual K H}
 
-/-- Every quotient of the Verma module `M(Λ)` lies in the category `𝒪` ([Kac] §9.2–9.3
-(check)). -/
+/-- Every quotient of the Verma module `M(Λ)` lies in the category `𝒪`
+([Kac] §9.2). -/
 theorem of_surjective (φ : VermaModule P Λ →ₗ⁅K,P.KacMoodyAlgebra⁆ V)
     (hφ : Function.Surjective φ) : IsCategoryO P V := by
   have hmap : ∀ μ, (VermaModule.weightSpace P Λ μ).map (φ : VermaModule P Λ →ₗ[K] V) ≤
@@ -93,11 +93,11 @@ end IsCategoryO
 
 variable [CharZero K]
 
-/-- The Verma module `M(Λ)` lies in the category `𝒪` ([Kac] §9.2 (check)). -/
+/-- The Verma module `M(Λ)` lies in the category `𝒪` ([Kac] §9.2). -/
 theorem VermaModule.isCategoryO (Λ : Dual K H) : IsCategoryO P (VermaModule P Λ) :=
   .of_surjective LieModuleHom.id Function.surjective_id
 
-/-- The irreducible module `L(Λ)` lies in the category `𝒪` ([Kac] §9.3 (check)). -/
+/-- The irreducible module `L(Λ)` lies in the category `𝒪` ([Kac] §9.3). -/
 theorem IrreducibleModule.isCategoryO (Λ : Dual K H) : IsCategoryO P (IrreducibleModule P Λ) :=
   .of_surjective (LieSubmodule.Quotient.mk' _) (LieSubmodule.Quotient.surjective_mk' _)
 

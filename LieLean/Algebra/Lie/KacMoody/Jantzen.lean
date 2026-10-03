@@ -13,7 +13,8 @@ Let `A` be symmetrizable and `𝔤 = 𝔤(A)` over a field `K` of characteristic
 and consider the line `λ(t) = λ₀ + t δ`. All Verma modules `M(λ(t))` have the same underlying
 space `U(𝔫₋)` (`u ↦ u v_{λ(t)}`), and the action of `𝔤` and the Shapovalov forms `B_{λ(t)}` depend
 polynomially on `t` (`KacMoody/KacKazhdan/Families.lean`). The **Jantzen filtration**
-([HumO] §5.3 (check); [Jantzen, *Moduln mit einem höchsten Gewicht*] (check)) is
+([HumO] §5.3, §5.7; [Jantzen, *Moduln mit einem höchsten Gewicht*] 5.3, numbered as in
+[HumO] §5.7) is
 `M(λ₀)^i = {f(0) v_{λ₀} | f a polynomial family in U(𝔫₋) with B_{λ(t)}(f(t) v_{λ(t)}, w v_{λ(t)})
 divisible by tⁱ for all w ∈ U(𝔫₋)}`.
 It is a decreasing filtration of `M(λ₀)` by submodules with `M(λ₀)^0 = M(λ₀)` and
@@ -41,7 +42,7 @@ formula is proved in `KacMoody/Jantzen/SumFormula.lean`.
 ## References
 
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, §5.3 (check).
+  GSM 94, §5.3, §5.7.
 -/
 
 open Module LieModule Module.Dual Polynomial UniversalEnvelopingAlgebra
@@ -317,7 +318,7 @@ lemma actEnv_mem_jantzenEnv {i : ℕ} (x : P.KacMoodyAlgebra) {u : 𝒰⁻}
 variable (P Λ₀ δ)
 
 /-- **The Jantzen filtration** `M(λ₀)^i` of the Verma module `M(λ₀)` along the line
-`λ(t) = λ₀ + t δ` ([HumO] §5.3 (check)). -/
+`λ(t) = λ₀ + t δ` ([HumO] §5.3, §5.7, there with `δ = ρ`). -/
 def jantzen (i : ℕ) : LieSubmodule K P.KacMoodyAlgebra (VermaModule P Λ₀) where
   toSubmodule := (jantzenEnv P Λ₀ δ i).map (equivEnvNNeg P Λ₀).toLinearMap
   lie_mem := by
@@ -347,7 +348,7 @@ theorem jantzen_zero : jantzen P Λ₀ δ 0 = ⊤ := by
   exact ⟨_, const_mem_lineFam _, rfl, fun w ↦ dvdXPow_zero_pairAt S Λ₀ δ (const_mem_lineFam _) w⟩
 
 include S in
-/-- **`M(λ₀)^1` is the maximal proper submodule `M'(λ₀)`** ([HumO] §5.3 (check)). -/
+/-- **`M(λ₀)^1` is the maximal proper submodule `M'(λ₀)`** ([HumO] §5.3). -/
 theorem jantzen_one : jantzen P Λ₀ δ 1 = maxSubmodule P Λ₀ := by
   ext m
   rw [mem_jantzen]

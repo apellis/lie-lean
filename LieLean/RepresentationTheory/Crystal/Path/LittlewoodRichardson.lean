@@ -16,7 +16,7 @@ complete ordered field (i.e. over `ℝ`), and `λ, μ` dominant integral weights
 **Littlewood–Richardson rule**
 `ch L(λ) · ch L(μ) = ∑_{π ∈ B(μ) λ-dominant} ch L(λ + π(1))`
 in the algebra `ℰ` of formal characters; for integrable modules this is the decomposition of
-`L(λ) ⊗ L(μ)` ([Lit94] Thm., [Lit95] §10 (check)).
+`L(λ) ⊗ L(μ)` ([Lit94] Thm., [Lit95] §10).
 
 ## Proof
 
@@ -151,7 +151,7 @@ lemma lrFamily_apply
       (IrreducibleModule.isCategoryO P (Λ₁ + (b.1.wt : Dual K H))).character else 0 :=
   rfl
 
-/-- **Littelmann's Littlewood–Richardson rule** ([Lit94] Thm. (check), [Lit95] §10 (check)): for
+/-- **Littelmann's Littlewood–Richardson rule** ([Lit94], [Lit95] §10): for
 a symmetrizable generalized Cartan matrix and dominant integral weights `λ, μ`,
 `ch L(λ) · ch L(μ) = ∑_{π ∈ B(μ) λ-dominant} ch L(λ + π(1))` in `ℰ`, where `π ∈ B(μ)` is
 `λ`-dominant if no `hⱼ` reaches `-1 - ⟨λ, αⱼ^∨⟩` (equivalently, `λ + π(t)` is dominant for all

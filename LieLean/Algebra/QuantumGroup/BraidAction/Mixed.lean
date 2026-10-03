@@ -9,7 +9,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction
 # Lusztig's braid group automorphisms `Tᵢ`: the images of `Eⱼ`, `Fⱼ`, `j ≠ i`
 
 Continuing `QuantumGroup/BraidAction.lean`, for `j ≠ i`, `r = -aᵢⱼ` and `q = vᵢ = v^{dᵢ}` we define
-([Jan] 8.14 (check), [Lus] 37.1.3 (check), variant `T''_{i,1}`)
+([Jan] 8.14, [Lus] 37.1.3, variant `T''_{i,1}`)
 * `Tᵢ(Eⱼ) = Σ_{s=0}^{r} (-1)^s q^{-s} Eᵢ^{(r-s)} Eⱼ Eᵢ^{(s)}`,
 * `Tᵢ(Fⱼ) = Σ_{s=0}^{r} (-1)^s q^{s} Fᵢ^{(s)} Fⱼ Fᵢ^{(r-s)}`.
 For computations it is convenient to write them through the rescaled Serre elements
@@ -124,26 +124,26 @@ lemma one_sub_cartanMatrix_toNat {i j : I} (hij : i ≠ j) :
 
 variable (R v) in
 /-- `Tᵢ(Eⱼ) = [r]ᵢ!⁻¹ Σ_t (-1)^t [r t]ᵢ vᵢ^{-t} Eᵢ^{r-t} Eⱼ Eᵢ^t` (`r = -aᵢⱼ`), which equals
-`Σ_s (-1)^s vᵢ^{-s} Eᵢ^{(r-s)} Eⱼ Eᵢ^{(s)}` ([Jan] 8.14 (check)) by `braidEj_eq_sum`. -/
+`Σ_s (-1)^s vᵢ^{-s} Eᵢ^{(r-s)} Eⱼ Eᵢ^{(s)}` ([Jan] 8.14) by `braidEj_eq_sum`. -/
 def braidEj (i j : I) : QuantumGroup R v :=
   (qFactorial (v ^ D.d i) (negA D i j))⁻¹ •
     serreAux (v ^ D.d i) (v ^ D.d i)⁻¹ (negA D i j) (E R v i) (E R v j)
 
 variable (R v) in
 /-- `Tᵢ(Fⱼ) = (-1)^r vᵢ^r [r]ᵢ!⁻¹ Σ_t (-1)^t [r t]ᵢ vᵢ^{-t} Fᵢ^{r-t} Fⱼ Fᵢ^t` (`r = -aᵢⱼ`), which
-equals `Σ_s (-1)^s vᵢ^{s} Fᵢ^{(s)} Fⱼ Fᵢ^{(r-s)}` ([Jan] 8.14 (check)) by `braidFj_eq_sum`. -/
+equals `Σ_s (-1)^s vᵢ^{s} Fᵢ^{(s)} Fⱼ Fᵢ^{(r-s)}` ([Jan] 8.14) by `braidFj_eq_sum`. -/
 def braidFj (i j : I) : QuantumGroup R v :=
   ((qFactorial (v ^ D.d i) (negA D i j))⁻¹ * (-1) ^ negA D i j * (v ^ D.d i) ^ negA D i j) •
     serreAux (v ^ D.d i) (v ^ D.d i)⁻¹ (negA D i j) (F R v i) (F R v j)
 
-/-- The divided-power formula for `Tᵢ(Eⱼ)` ([Jan] 8.14 (check)). -/
+/-- The divided-power formula for `Tᵢ(Eⱼ)` ([Jan] 8.14). -/
 theorem braidEj_eq_sum {i j : I} (hr : qFactorial (v ^ D.d i) (negA D i j) ≠ 0) :
     braidEj R v i j = ∑ s ∈ range (negA D i j + 1), ((-1 : k) ^ s * (v ^ D.d i)⁻¹ ^ s) •
       (qDivPow (v ^ D.d i) (negA D i j - s) (E R v i) * E R v j *
         qDivPow (v ^ D.d i) s (E R v i)) :=
   (sum_qDivPow_eq_serreAux_left hr _ _).symm
 
-/-- The divided-power formula for `Tᵢ(Fⱼ)` ([Jan] 8.14 (check)). -/
+/-- The divided-power formula for `Tᵢ(Fⱼ)` ([Jan] 8.14). -/
 theorem braidFj_eq_sum (hv : v ≠ 0) {i j : I} (hr : qFactorial (v ^ D.d i) (negA D i j) ≠ 0) :
     braidFj R v i j = ∑ s ∈ range (negA D i j + 1), ((-1 : k) ^ s * (v ^ D.d i) ^ s) •
       (qDivPow (v ^ D.d i) s (F R v i) * F R v j *

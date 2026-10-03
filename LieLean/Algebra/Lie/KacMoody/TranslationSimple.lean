@@ -10,7 +10,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationDuality
 
 Under the hypotheses of `translation_verma` (integral weights, finite type, algebraically closed
 field of characteristic zero), the translation `T_λ^μ L(w·λ)` of a simple module is either zero
-or isomorphic to `L(w·μ)` (Humphreys, GSM 94, Theorem 7.9 (check), first assertion).
+or isomorphic to `L(w·μ)` (Humphreys, GSM 94, Proposition 7.7).
 
 The argument (Humphreys' proof, reconstructed): `L(x)` is a quotient of `M(x)` and a submodule
 of `M(x)^∨`. Since `T_λ^μ` is exact, `T_λ^μ L(w·λ)` is a quotient of `T_λ^μ M(w·λ) ≅ M(w·μ)`
@@ -164,7 +164,7 @@ theorem VermaModule.eq_smul_toTwistedDual (y : Dual K H)
 
 omit [LieModule K P.KacMoodyAlgebra X] in
 /-- A module which is a quotient of `M(y)` and embeds into `M(y)^∨` is zero or isomorphic to
-`L(y)` (the argument of Humphreys, GSM 94, Theorem 7.9 (check)). -/
+`L(y)` (the argument of Humphreys, GSM 94, Proposition 7.7). -/
 theorem subsingleton_or_nonempty_equiv_irreducible {y : Dual K H}
     (p : VermaModule P y →ₗ⁅K,𝔤⁆ X) (hp : Function.Surjective p)
     (i : X →ₗ⁅K,𝔤⁆ restrictedDual P (VermaModule P y)) (hi : Function.Injective i) :
@@ -209,8 +209,8 @@ variable {ι H : Type*} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [Char
   {A : Matrix ι ι ℤ} (P : Realization A K H) (hA : A.IsFiniteCartan)
 
 include hA in
-/-- **Translation of simple modules, dichotomy** (Humphreys, GSM 94, Theorem 7.9 (check), first
-assertion; integral weights, finite type, algebraically closed field of characteristic zero).
+/-- **Translation of simple modules, dichotomy** (Humphreys, GSM 94, Proposition 7.7;
+integral weights, finite type, algebraically closed field of characteristic zero).
 Under the hypotheses of `translation_verma`, with `T_λ^μ = pr_{χ_μ}(pr_{χ_λ}(−) ⊗ L(ν))`, the
 module `T_λ^μ L(w·λ)` is either zero or isomorphic to `L(w·μ)`. -/
 theorem translation_irreducible {lam μ ν : Dual K H}

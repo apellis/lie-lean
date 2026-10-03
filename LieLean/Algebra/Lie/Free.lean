@@ -28,7 +28,7 @@ Additions to `Mathlib.Algebra.Lie.Free`.
 
 ## References
 
-* N. Bourbaki, *Lie groups and Lie algebras*, Ch. II, §3.1 (check).
+* N. Bourbaki, *Lie groups and Lie algebras*, Ch. II, §3.1.
 -/
 
 namespace FreeLieAlgebra

@@ -9,7 +9,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Basic
 /-!
 # The twisted coproduct `r : 'f → 'f ⊗ 'f`
 
-Following [Lus] 1.2.2 (check), `'f ⊗ 'f` carries the *twisted* multiplication
+Following [Lus] 1.2.2, `'f ⊗ 'f` carries the *twisted* multiplication
 `(x₁ ⊗ x₂)(x₁' ⊗ x₂') = v^{|x₂|·|x₁'|} x₁x₁' ⊗ x₂x₂'` (`x₂, x₁'` homogeneous), and
 `r : 'f → 'f ⊗ 'f` is the unique algebra homomorphism for this multiplication with
 `r(θᵢ) = θᵢ ⊗ 1 + 1 ⊗ θᵢ`.
@@ -23,7 +23,7 @@ letting `'f` act on `'f ⊗ 'f` by `θᵢ ↦` twisted left multiplication by `�
 the twisted product. This construction is our own; it is equivalent to Lusztig's definition.
 
 We also prove the compatibilities of `r` with the counit, the twists and the skew derivations that
-are needed for Lusztig's bilinear form ([Lus] 1.2.3, 1.2.13 (check)).
+are needed for Lusztig's bilinear form ([Lus] 1.2.3, 1.2.13).
 
 ## Main definitions
 
@@ -105,7 +105,7 @@ def twistedMulAux :
     (fun a b b' ↦ by rw [map_add, LinearMap.comp_add])
     (fun c a b ↦ by rw [map_smul, LinearMap.comp_smul])
 
-/-- Lusztig's twisted multiplication on `'f ⊗ 'f` ([Lus] 1.2.2 (check)): for homogeneous `x₂`,
+/-- Lusztig's twisted multiplication on `'f ⊗ 'f` ([Lus] 1.2.2): for homogeneous `x₂`,
 `x₁'`, `(x₁ ⊗ x₂)(x₁' ⊗ x₂') = v^{|x₂|·|x₁'|} x₁x₁' ⊗ x₂x₂'`. -/
 def twistedMul :
     LusztigF k I ⊗[k] LusztigF k I →ₗ[k] LusztigF k I ⊗[k] LusztigF k I →ₗ[k]
@@ -120,7 +120,7 @@ lemma twistedMul_tmul_tmul_θ (a c d : LusztigF k I) (i : I) :
     twistedMul D v (a ⊗ₜ θ k i) (c ⊗ₜ d) = (a * twist D v i c) ⊗ₜ (θ k i * d) := by
   simp [twistedMul_tmul, twistAct_θ]
 
-/-- The twisted multiplication on homogeneous elements ([Lus] 1.2.2 (check)):
+/-- The twisted multiplication on homogeneous elements ([Lus] 1.2.2):
 `(x₁ ⊗ x₂)(x₁' ⊗ x₂') = v^{|x₂|·|x₁'|} x₁x₁' ⊗ x₂x₂'`. -/
 theorem twistedMul_tmul_tmul (hv : v ≠ 0) {β γ : I →₀ ℕ} {x₂ x₁' : LusztigF k I}
     (h₂ : x₂ ∈ weightSpace k β) (h₁ : x₁' ∈ weightSpace k γ) (x₁ x₂' : LusztigF k I) :
@@ -187,7 +187,7 @@ theorem twistedMul_assoc (X Y Z : LusztigF k I ⊗[k] LusztigF k I) :
 def rEnd : LusztigF k I →ₐ[k] Module.End k (LusztigF k I ⊗[k] LusztigF k I) :=
   FreeAlgebra.lift k fun i ↦ twistedMul D v (θ k i ⊗ₜ 1 + 1 ⊗ₜ θ k i)
 
-/-- Lusztig's twisted coproduct `r : 'f → 'f ⊗ 'f` ([Lus] 1.2.2 (check)), `r(x) = x · (1 ⊗ 1)`
+/-- Lusztig's twisted coproduct `r : 'f → 'f ⊗ 'f` ([Lus] 1.2.2), `r(x) = x · (1 ⊗ 1)`
 for the action `rEnd`; see `comul_θ` and `comul_mul`. -/
 def comul : LusztigF k I →ₗ[k] LusztigF k I ⊗[k] LusztigF k I :=
   LinearMap.applyₗ (1 ⊗ₜ 1) ∘ₗ (rEnd D v).toLinearMap
@@ -235,7 +235,7 @@ lemma twistedMul_comul (x : LusztigF k I) : twistedMul D v (comul D v x) = rEnd 
     rw [Module.End.mul_apply, twistedMul_assoc]
   | add a b ha hb => simp only [map_add, ha, hb]
 
-/-- `r` is multiplicative for the twisted multiplication ([Lus] 1.2.2 (check)). -/
+/-- `r` is multiplicative for the twisted multiplication ([Lus] 1.2.2). -/
 theorem comul_mul (x y : LusztigF k I) :
     comul D v (x * y) = twistedMul D v (comul D v x) (comul D v y) := by
   rw [twistedMul_comul, comul_apply, map_mul, Module.End.mul_apply, ← comul_apply]
@@ -326,7 +326,7 @@ theorem comul_twist (j : I) (x : LusztigF k I) :
       | add X Y hX hY => simp only [map_add, smul_add, hX, hY]
     rw [map_add, e1, e2, smul_add]
 
-/-- `(1 ⊗ rⱼ) ∘ r = r ∘ rⱼ` (a form of [Lus] 1.2.13 (check)). -/
+/-- `(1 ⊗ rⱼ) ∘ r = r ∘ rⱼ` (from [Lus] 1.2.13 and coassociativity, 1.2.2). -/
 theorem lTensor_rDeriv_comul [DecidableEq I] (j : I) (x : LusztigF k I) :
     (rDeriv D v j).lTensor _ (comul D v x) = comul D v (rDeriv D v j x) := by
   induction x using induction_left with
@@ -361,7 +361,7 @@ theorem lTensor_rDeriv_comul [DecidableEq I] (j : I) (x : LusztigF k I) :
     · subst h; rw [comul_twist]
     · simp
 
-/-- `(ε ∘ rᵢ ⊗ 1) ∘ r = ᵢr` (a form of [Lus] 1.2.13 (check)). -/
+/-- `(ε ∘ rᵢ ⊗ 1) ∘ r = ᵢr` (a form of [Lus] 1.2.13). -/
 theorem lid_rTensor_counit_rDeriv_comul [DecidableEq I] (i : I) (y : LusztigF k I) :
     TensorProduct.lid k _ (((counit (k := k) (I := I)).toLinearMap ∘ₗ rDeriv D v i).rTensor _
       (comul D v y)) = lDeriv D v i y := by

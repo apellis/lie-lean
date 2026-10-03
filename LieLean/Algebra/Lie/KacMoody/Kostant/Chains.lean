@@ -13,7 +13,7 @@ Let `𝔤 = 𝔤(A)` be a Kac–Moody algebra with Cartan subalgebra `𝔥` and 
 nilpotent subalgebra, and let `V` be a `𝔤`-module. We study the Chevalley–Eilenberg complex
 `C_•(𝔫₋, V) = ⋀^•𝔫₋ ⊗ V` computing the homology `H_•(𝔫₋, V)`. Since `[𝔥, 𝔫₋] ⊆ 𝔫₋`, each `a ∈ 𝔥`
 acts on the complex by the derivation `θ(a)` extending `ad a` on `⋀𝔫₋` and the action of `a` on
-`V`, and these operators commute with the differential ([GL] §3 (check), [Kum] §3.1 (check)).
+`V`, and these operators commute with the differential ([GL] Prop. 1.4, [Kum] §3.1).
 We package this as a `LieModule.ChevalleyEilenberg.DerivAction` and deduce, from the general
 results of `LieLean.Algebra.Lie.Homology.Weights`, that when `V` is the sum of its weight spaces
 (e.g. `V` in the category `𝒪`) the complex, its cycles, boundaries and homology decompose into
@@ -95,7 +95,7 @@ theorem iSup_nNegChainWeightSpace (hV : ⨆ ν, weightSpaceOfMap V (h P) ν = �
   (nNegDerivAction P V).iSup_chainWeightSpace (iSup_weightSpaceOf_adNNeg P) hV
 
 /-- If `V` is the sum of its weight spaces, then `H_k(𝔫₋, V) = ⊕_μ H_k(𝔫₋, V)_μ`
-([GL] §3 (check)). -/
+(cf. [GL] Lemma 9.2). -/
 theorem iSup_nNegHomologyWeightSpace (hV : ⨆ ν, weightSpaceOfMap V (h P) ν = ⊤) (k : ℕ) :
     ⨆ μ, (nNegDerivAction P V).homologyWeightSpace k μ = homology K (nNeg P) V k :=
   (nNegDerivAction P V).iSup_homologyWeightSpace (iSup_weightSpaceOf_adNNeg P) hV k

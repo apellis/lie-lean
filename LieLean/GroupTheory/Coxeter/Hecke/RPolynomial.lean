@@ -18,7 +18,8 @@ Let `𝓗 = 𝓗_q(W)` be the Iwahori–Hecke algebra with `q` a unit (normaliza
 ```
 Thus `R_{y,w} = ε_y ε_w q^{ℓ(w)} · [T_y] T_{w⁻¹}⁻¹` (`IwahoriHeckeAlgebra.rPoly`). We prove:
 
-* the recursion ([HumC] §7.5 Prop. (check), [KL] (2.0.b) (check)): if `ℓ(ws) > ℓ(w)`, then
+* the recursion ([BB] Thm. 5.1.1(iii), [KL] (2.0.b), [BB] Thm. 5.1.1(iii)): if
+  `ℓ(ws) > ℓ(w)`, then
   `R_{y,ws} = R_{ys,w}` if `ℓ(ys) < ℓ(y)`, and `R_{y,ws} = (q - 1) R_{y,w} + q R_{ys,w}` otherwise
   (`rPoly_mul_simple`);
 * `R_{y,1} = δ_{y,1}`, `R_{w,w} = 1` (`rPoly_one_right`, `rPoly_self`);
@@ -48,7 +49,7 @@ Thus `R_{y,w} = ε_y ε_w q^{ℓ(w)} · [T_y] T_{w⁻¹}⁻¹` (`IwahoriHeckeAlg
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184, §2.
 * [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §7.4–7.5.
-* [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, §5.1.
+* [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, §5.1, §6.1.
 -/
 
 open Finsupp
@@ -102,7 +103,7 @@ the bar involution). -/
 noncomputable def invCoeff (y w : W) : R := toFinsupp cs q (TInv cs hq w⁻¹) y
 
 /-- The `R`-polynomial `R_{y,w}` (evaluated at `q`), defined by
-`T_{w⁻¹}⁻¹ = ε_w q_w⁻¹ Σ_y ε_y R_{y,w} T_y` ([KL] (2.0.a), [HumC] §7.4 (check)). -/
+`T_{w⁻¹}⁻¹ = ε_w q_w⁻¹ Σ_y ε_y R_{y,w} T_y` ([KL] (2.0.a), [BB] §6.1). -/
 noncomputable def rPoly (y w : W) : R := (-1) ^ (ℓ y + ℓ w) * q ^ ℓ w * invCoeff cs hq y w
 
 theorem invCoeff_eq_rPoly (y w : W) :
@@ -116,7 +117,7 @@ theorem invCoeff_eq_rPoly (y w : W) :
     (-invCoeff cs hq y w) * h2
 
 /-- The expansion `T_{w⁻¹}⁻¹ = Σ_y ε_y ε_w q^{-ℓ(w)} R_{y,w} T_y`, coefficientwise
-([KL] (2.0.a), [HumC] §7.4 (check)). -/
+([KL] (2.0.a), [BB] §6.1). -/
 theorem toFinsupp_TInv_inv_apply (y w : W) :
     toFinsupp cs q (TInv cs hq w⁻¹) y =
       (-1) ^ (ℓ y + ℓ w) * hq.unit⁻¹.1 ^ ℓ w * rPoly cs hq y w :=
@@ -145,7 +146,8 @@ theorem invCoeff_mul_simple {w : W} {i : B} (hlt : ℓ w < ℓ (w * s i)) (y : W
   · linear_combination (toFinsupp cs q (TInv cs hq w⁻¹) y) * e
   · linear_combination (toFinsupp cs q (TInv cs hq w⁻¹) (y * s i)) * e
 
-/-- The recursion for `R`-polynomials ([HumC] §7.5 Prop. (check), [KL] (2.0.b) (check)): if
+/-- The recursion for `R`-polynomials ([BB] Thm. 5.1.1(iii), [KL] (2.0.b),
+[BB] Thm. 5.1.1(iii)): if
 `ℓ(ws) > ℓ(w)`, then `R_{y,ws} = R_{ys,w}` if `ℓ(ys) < ℓ(y)` and
 `R_{y,ws} = (q - 1) R_{y,w} + q R_{ys,w}` otherwise. -/
 theorem rPoly_mul_simple {w : W} {i : B} (hlt : ℓ w < ℓ (w * s i)) (y : W) :
@@ -165,7 +167,7 @@ theorem rPoly_mul_simple {w : W} {i : B} (hlt : ℓ w < ℓ (w * s i)) (y : W) :
     rw [hy']
     linear_combination (-(-1) ^ (ℓ y + ℓ w) * q ^ ℓ w * invCoeff cs hq y w) * e
 
-/-- The recursion for `R`-polynomials along a right descent ([HumC] §7.5 Prop. (check)): if
+/-- The recursion for `R`-polynomials along a right descent ([BB] Thm. 5.1.1(iii)): if
 `ℓ(ws) < ℓ(w)`, then `R_{y,w} = R_{ys,ws}` if `ℓ(ys) < ℓ(y)` and
 `R_{y,w} = (q - 1) R_{y,ws} + q R_{ys,ws}` otherwise. -/
 theorem rPoly_of_length_mul_simple_lt {w : W} {i : B} (hlt : ℓ (w * s i) < ℓ w) (y : W) :
@@ -191,7 +193,7 @@ theorem invCoeff_self (w : W) : invCoeff cs hq w w = hq.unit⁻¹.1 ^ ℓ w := b
     rw [invCoeff_mul_simple cs hq hlt, CoxeterSystem.simple_mul_simple_cancel_right,
       ite_eq_left (by omega), ih, hw, pow_succ, mul_comm]
 
-/-- `R_{w,w} = 1` ([HumC] §7.5 (check)). -/
+/-- `R_{w,w} = 1` ([BB] Thm. 5.1.1(ii)). -/
 theorem rPoly_self (w : W) : rPoly cs hq w w = 1 := by
   have e : hq.unit⁻¹.1 * q = 1 := hq.val_inv_mul
   rw [rPoly, invCoeff_self, ← two_mul, pow_mul, neg_one_sq, one_pow, one_mul, ← mul_pow,
@@ -274,8 +276,8 @@ theorem exists_sublist_of_invCoeff_ne_zero {ω : List B} (hω : cs.IsReduced ω)
   exact ⟨ω', hω', rfl⟩
 
 /-- If `R_{y,w} ≠ 0`, then `y` is the product of a subword of any reduced word of `w` (by the
-subword property, [BB] Thm. 2.2.2, this means `y ≤ w` in the Bruhat order; [HumC] §7.5
-(check)). -/
+subword property, [BB] Thm. 2.2.2, this means `y ≤ w` in the Bruhat order; cf. [BB]
+Thm. 5.1.1(i)). -/
 theorem exists_sublist_of_rPoly_ne_zero {ω : List B} (hω : cs.IsReduced ω) {y : W}
     (hy : rPoly cs hq y (cs.wordProd ω) ≠ 0) : ∃ ω', ω'.Sublist ω ∧ cs.wordProd ω' = y := by
   refine exists_sublist_of_invCoeff_ne_zero cs hq hω fun h ↦ hy ?_
@@ -297,7 +299,8 @@ theorem eq_of_rPoly_ne_zero_of_length_eq {y w : W} (hy : rPoly cs hq y w ≠ 0)
 end Triangular
 
 /-- `R_{y,w}` is the value at `q` of a polynomial with integer coefficients of degree at most
-`ℓ(w) - ℓ(y)`, which is `0` if `ℓ(y) > ℓ(w)` ([HumC] §7.5 (check); the polynomial depends only on
+`ℓ(w) - ℓ(y)`, which is `0` if `ℓ(y) > ℓ(w)` ([BB] Thm. 5.1.1, Prop. 5.1.3; the polynomial
+depends only on
 `(W, S)`, since it is produced by the recursion `rPoly_mul_simple`). -/
 theorem exists_rPoly_eq_aeval_natDegree_le (y w : W) :
     ∃ p : Polynomial ℤ, rPoly cs hq y w = Polynomial.aeval q p ∧
@@ -336,7 +339,7 @@ theorem exists_rPoly_eq_aeval_natDegree_le (y w : W) :
         simp [hp0 (by omega), hp0' (by omega)]
 
 /-- `R_{y,w}` is the value at `q` of a polynomial with integer coefficients
-([HumC] §7.5 (check)). -/
+([BB] Thm. 5.1.1). -/
 theorem exists_rPoly_eq_aeval (y w : W) :
     ∃ p : Polynomial ℤ, rPoly cs hq y w = Polynomial.aeval q p :=
   (exists_rPoly_eq_aeval_natDegree_le cs hq y w).imp fun _ h ↦ h.1
@@ -346,7 +349,7 @@ section Bar
 variable (σ : R →+* R) (hσ : σ q * q = 1)
 
 /-- The expansion of `T̄_w` in the standard basis in terms of `R`-polynomials:
-`T̄_w = Σ_y ε_y ε_w σ(q)^{ℓ(w)} R_{y,w} T_y` ([KL] (2.0.a), [HumC] §7.4 (check)). -/
+`T̄_w = Σ_y ε_y ε_w σ(q)^{ℓ(w)} R_{y,w} T_y` ([KL] (2.0.a), [BB] §6.1). -/
 theorem toFinsupp_bar_T_apply (y w : W) :
     toFinsupp cs q (bar cs σ hσ (T cs q w)) y = (-1) ^ (ℓ y + ℓ w) * σ q ^ ℓ w *
       rPoly cs (isUnit_of_mul_eq_one' σ hσ) y w := by

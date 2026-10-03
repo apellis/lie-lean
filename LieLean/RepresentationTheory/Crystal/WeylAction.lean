@@ -8,7 +8,7 @@ import LieLean.RepresentationTheory.Crystal.Normal
 /-!
 # Kashiwara's action of the simple reflections on a seminormal crystal
 
-For a seminormal crystal `B` and `i ∈ I`, Kashiwara ([Kas] §7.7 (check), [Kas94] §7 (check))
+For a seminormal crystal `B` and `i ∈ I`, Kashiwara ([Kas] (11.1), [Kas94] §7)
 defines `Sᵢ : B → B` by
 `Sᵢ b = f̃ᵢ^{⟨wt b, αᵢ^∨⟩} b` if `⟨wt b, αᵢ^∨⟩ ≥ 0` and `Sᵢ b = ẽᵢ^{-⟨wt b, αᵢ^∨⟩} b` otherwise:
 it reverses each `i`-string. We prove that `Sᵢ` is an involution with `wt (Sᵢ b) = rᵢ (wt b)`,
@@ -17,7 +17,7 @@ equals the number of elements of weight `rᵢ μ`, the crystal analogue of the `
 characters of integrable modules.
 
 For *normal* crystals the `Sᵢ` satisfy the braid relations and so define an action of the Weyl
-group ([Kas94] Thm. 7.2.2 (check)); this is **not** proved here (the proof needs the
+group ([Kas94] Thm. 7.2.2); this is **not** proved here (the proof needs the
 realizability of normal crystals by integrable modules), and for merely seminormal crystals it can
 fail. Only the individual involutions `Sᵢ` are constructed.
 
@@ -46,7 +46,7 @@ namespace Crystal
 variable {ι X : Type*} [AddCommGroup X] {D : CartanDatum ι X} {B : Type*}
   (C : Crystal D B) {i : ι} {b : B}
 
-/-- Kashiwara's map `Sᵢ` ([Kas] §7.7 (check), [Kas94] §7 (check)):
+/-- Kashiwara's map `Sᵢ` ([Kas] (11.1), [Kas94] §7):
 `Sᵢ b = f̃ᵢ^{⟨wt b, αᵢ^∨⟩} b` if `⟨wt b, αᵢ^∨⟩ ≥ 0` and `Sᵢ b = ẽᵢ^{-⟨wt b, αᵢ^∨⟩} b` otherwise.
 For a seminormal crystal these iterates are never `0`; in general we use the junk value `b`
 when they are. -/
@@ -84,7 +84,7 @@ lemma eIter_reflection (hC : C.IsSeminormal) (h : D.coroot i (C.wt b) < 0) :
   simp only [reflection, not_le.mpr h, ↓reduceIte]
   rw [← Option.some_get hs, Option.getD_some]
 
-/-- `wt (Sᵢ b) = rᵢ (wt b)` ([Kas] §7.7 (check)). -/
+/-- `wt (Sᵢ b) = rᵢ (wt b)` ([Kas] (11.2)). -/
 theorem wt_reflection (hC : C.IsSeminormal) (i : ι) (b : B) :
     C.wt (C.reflection i b) = D.reflection i (C.wt b) := by
   rw [D.reflection_apply]
@@ -97,7 +97,7 @@ lemma coroot_wt_reflection (hC : C.IsSeminormal) (i : ι) (b : B) :
     D.coroot i (C.wt (C.reflection i b)) = -D.coroot i (C.wt b) := by
   rw [hC.wt_reflection, D.coroot_reflection]
 
-/-- `Sᵢ² = id` ([Kas] §7.7 (check)). -/
+/-- `Sᵢ² = id` ([Kas] §11). -/
 theorem reflection_reflection (hC : C.IsSeminormal) (i : ι) (b : B) :
     C.reflection i (C.reflection i b) = b := by
   have hk := hC.coroot_wt_reflection i b
@@ -157,7 +157,7 @@ def weightEquiv (hC : C.IsSeminormal) (i : ι) (μ : X) :
 
 /-- In a seminormal crystal, the number of elements of weight `rᵢ μ` equals the number of
 elements of weight `μ` (both may be infinite, in which case `Nat.card` is `0`): the crystal
-analogue of the `W`-invariance of weight multiplicities ([Kas] §7.7 (check)). -/
+analogue of the `W`-invariance of weight multiplicities ([Kas] §11, via `Sᵢ`). -/
 theorem card_wt_reflection (hC : C.IsSeminormal) (i : ι) (μ : X) :
     Nat.card {b // C.wt b = D.reflection i μ} = Nat.card {b // C.wt b = μ} :=
   (Nat.card_congr (hC.weightEquiv i μ)).symm

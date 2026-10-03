@@ -10,7 +10,7 @@ import LieLean.Algebra.QuantumGroup.Triangular
 
 Let `U = U_q(𝔤)` be the quantized enveloping algebra of a root datum `(Y, …)` of type `(I, ·)`
 (`QuantumGroup R v`) and let `X = Hom(Y, ℤ)` be the weight lattice. For a `U`-module `M` and
-`Λ ∈ X` the weight space ([Lus] 3.4.1 (check), [Jan] 5.1 (check)) is
+`Λ ∈ X` the weight space ([Lus] 3.4.1, [Jan] 5.1) is
 `M^Λ = {m ∈ M | K_μ m = v^{⟨μ, Λ⟩} m for all μ ∈ Y}`.
 Here a `U`-module is a `k`-vector space `M` with `[Module U M]` and `[IsScalarTower k U M]`.
 
@@ -21,7 +21,7 @@ Here a `U`-module is a `k`-vector space `M` with `[Module U M]` and `[IsScalarTo
   `M^Λ`.
 * `LusztigCartanDatum.RootDatum.rootSum`: the element `Σᵢ νᵢ i' ∈ X` of `ν ∈ ℕ[I]`.
 * `LusztigCartanDatum.RootDatum.IsXRegular`: the simple roots `i' ∈ X` are linearly independent
-  ([Lus] 2.2.2 (check)).
+  ([Lus] 2.2.2).
 
 ## Main results
 
@@ -57,7 +57,7 @@ lemma rootSum_add (ν ν' : I →₀ ℕ) : R.rootSum (ν + ν') = R.rootSum ν 
   simp [rootSum]
 
 /-- A root datum is `X`-regular if the simple roots `i' ∈ X = Hom(Y, ℤ)` are linearly independent
-([Lus] 2.2.2 (check)). -/
+([Lus] 2.2.2). -/
 def IsXRegular : Prop := LinearIndependent ℤ R.root
 
 /-- For an `X`-regular root datum, `ν ↦ Σᵢ νᵢ i'` is injective on `ℕ[I]`: if `ν ≠ ν'`, some
@@ -89,7 +89,7 @@ variable (M : Type*) [AddCommGroup M] [Module k M] [Module (QuantumGroup R v) M]
   [IsScalarTower k (QuantumGroup R v) M]
 
 /-- The weight space `M^Λ = {m | K_μ m = v^{⟨μ, Λ⟩} m for all μ ∈ Y}` of a `U`-module `M`, for
-`Λ ∈ X = Hom(Y, ℤ)` ([Lus] 3.4.1 (check), [Jan] 5.1 (check)). -/
+`Λ ∈ X = Hom(Y, ℤ)` ([Lus] 3.4.1, [Jan] 5.1). -/
 def weightSpace (Λ : Y →+ ℤ) : Submodule k M where
   carrier := {m | ∀ μ, K R v μ • m = v ^ Λ μ • m}
   add_mem' {a b} ha hb μ := by simp [smul_add, ha μ, hb μ]

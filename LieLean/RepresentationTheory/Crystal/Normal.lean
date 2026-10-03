@@ -9,7 +9,8 @@ import LieLean.RepresentationTheory.Crystal.Tensor
 # Seminormal crystals
 
 A crystal is *seminormal* if `εᵢ(b) = max {n ≥ 0 | ẽᵢⁿ b ≠ 0}` and
-`φᵢ(b) = max {n ≥ 0 | f̃ᵢⁿ b ≠ 0}` for all `i` and `b` ([Kas] §7.6 (check), [HK] §4.5 (check)).
+`φᵢ(b) = max {n ≥ 0 | f̃ᵢⁿ b ≠ 0}` for all `i` and `b` ([Kas] §7.6, [HK] §4.5, where it is
+called *semiregular*).
 (A crystal is *normal* if moreover it is a disjoint union of crystals of integrable highest
 weight modules for all Levi subalgebras of finite type; normality is not treated here.)
 
@@ -37,7 +38,7 @@ namespace Crystal
 variable {ι X : Type*} [AddCommGroup X] {D : CartanDatum ι X} {B B₁ B₂ : Type*}
   (C : Crystal D B) {i : ι} {b : B}
 
-/-- A crystal is seminormal ([Kas] §7.6 (check), [HK] §4.5 (check)) if for all `i` and `b`,
+/-- A crystal is seminormal ([Kas] §7.6, [HK] §4.5) if for all `i` and `b`,
 `εᵢ(b) = max {n ≥ 0 | ẽᵢⁿ b ≠ 0}` and `φᵢ(b) = max {n ≥ 0 | f̃ᵢⁿ b ≠ 0}`. We state this as:
 `ẽᵢⁿ b ≠ 0 ↔ n ≤ εᵢ(b)` and `f̃ᵢⁿ b ≠ 0 ↔ n ≤ φᵢ(b)` for all `n ∈ ℕ`; see
 `Crystal.isSeminormal_iff_isGreatest` for the equivalence with the formulation by maxima. -/
@@ -88,7 +89,7 @@ private lemma natCast_le_iff_isGreatest {x : WithBot ℤ} {s : Set ℕ} (h0 : 0 
   · rintro ⟨n, rfl, hn, hn'⟩ m
     exact ⟨fun hm ↦ by exact_mod_cast hn' hm, fun hm ↦ hs m n (by exact_mod_cast hm) hn⟩
 
-/-- Seminormality in the form of [Kas] §7.6 (check): `εᵢ(b) = max {n ≥ 0 | ẽᵢⁿ b ≠ 0}` and
+/-- Seminormality in the form of [Kas] §7.6: `εᵢ(b) = max {n ≥ 0 | ẽᵢⁿ b ≠ 0}` and
 `φᵢ(b) = max {n ≥ 0 | f̃ᵢⁿ b ≠ 0}` (in particular these maxima exist). -/
 theorem isSeminormal_iff_isGreatest : C.IsSeminormal ↔ ∀ i b,
     (∃ n : ℕ, C.ε i b = n ∧ IsGreatest {m | (C.eIter i m b).isSome} n) ∧
@@ -199,7 +200,8 @@ lemma isSome_fIter_iff (hC : C.IsSeminormal) (n : ℕ) :
 
 variable {C₁ : Crystal D B₁} {C₂ : Crystal D B₂}
 
-/-- The tensor product of two seminormal crystals is seminormal ([Kas] §7.6 (check)). -/
+/-- The tensor product of two seminormal crystals is seminormal (for seminormality see [Kas]
+§7.6). -/
 theorem tensor (h₁ : C₁.IsSeminormal) (h₂ : C₂.IsSeminormal) : (C₁.tensor C₂).IsSeminormal := by
   rw [isSeminormal_iff]
   rintro i ⟨b₁, b₂⟩

@@ -34,8 +34,8 @@ and `𝔲ᵢ⁻ ⊆ 𝔫₋` the subalgebra of `LieLean.Algebra.Lie.KacMoody.BGG
 
 ## References
 
-* J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §17.3
-  (check) (PBW for complementary subalgebras).
+* J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §17.3,
+  Corollary D (PBW for complementary subalgebras).
 -/
 
 open Module LieModule

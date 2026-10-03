@@ -12,7 +12,7 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.Weights
 
 Let `A` be a symmetrizable generalized Cartan matrix, `𝔤 = 𝔤(A)` over a field `K` of
 characteristic zero and `Λ` a dominant integral weight. The **Garland–Lepowsky theorem**
-([GL] Thm. 8.6 (check); [Kum] Thm. 3.2.7 (check); Kostant's theorem in finite type) states that
+([GL] Thm. 8.6; [Kum] Thm. 3.2.7; Kostant's theorem in finite type) states that
 
   `H_k(𝔫₋, L(Λ)) ≅ ⊕_{w ∈ W, ℓ(w) = k} K_{w(Λ + ρ) - ρ}` as `𝔥`-modules,
 
@@ -37,9 +37,9 @@ multiplicities then follow from the Euler characteristic and the Weyl–Kac char
 ## References
 
 * [GL] H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent.
-  Math. **34** (1976), 37–76, Thm. 8.6 (check).
+  Math. **34** (1976), 37–76, Thm. 8.6.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002, Thm. 3.2.7 (check).
+  Math. 204, Birkhäuser 2002, Thm. 3.2.7.
 * B. Kostant, *Lie algebra cohomology and the generalized Borel–Weil theorem*, Ann. of Math.
   **74** (1961), 329–387 (finite type).
 -/
@@ -82,8 +82,8 @@ theorem exists_weylGroup_of_homologyWeightSpace_ne_bot (S : A.Symmetrization) {k
 
 include hA hS hΛ
 
-/-- **The Garland–Lepowsky theorem, dimension part** ([GL] Thm. 8.6 (check); [Kum] Thm. 3.2.7
-(check)): `dim H_{ℓ(w)}(𝔫₋, L(Λ))_{w(Λ + ρ) - ρ} = 1` for every `w ∈ W`. -/
+/-- **The Garland–Lepowsky theorem, dimension part** ([GL] Thm. 8.6; [Kum]
+Thm. 3.2.7): `dim H_{ℓ(w)}(𝔫₋, L(Λ))_{w(Λ + ρ) - ρ} = 1` for every `w ∈ W`. -/
 theorem finrank_homologyWeightSpace_eq_one (w : P.weylGroup hA) :
     finrank K ((nNegDerivAction P (IrreducibleModule P Λ)).homologyWeightSpace
       ((P.coxeterSystem hA).length w) ((w : Dual K H ≃ₗ[K] Dual K H) (Λ + P.rho) - P.rho)) = 1 :=
@@ -91,7 +91,7 @@ theorem finrank_homologyWeightSpace_eq_one (w : P.weylGroup hA) :
   finrank_homologyWeightSpace_eq_one_of_weights hA hS hΛ
     (fun _ _ h ↦ exists_weylGroup_of_homologyWeightSpace_ne_bot hA hΛ S h) w
 
-/-- **The Garland–Lepowsky theorem** ([GL] Thm. 8.6 (check); [Kum] Thm. 3.2.7 (check); Kostant's
+/-- **The Garland–Lepowsky theorem** ([GL] Thm. 8.6; [Kum] Thm. 3.2.7; Kostant's
 theorem in finite type): for `A` symmetrizable and `Λ` dominant integral,
 `H_k(𝔫₋, L(Λ))_μ ≠ 0` iff `μ = w(Λ + ρ) - ρ` for some `w ∈ W` with `ℓ(w) = k`; the nonzero
 weight spaces are one-dimensional (`finrank_homologyWeightSpace_eq_one`). -/

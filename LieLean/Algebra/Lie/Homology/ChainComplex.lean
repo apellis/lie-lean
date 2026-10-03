@@ -29,7 +29,7 @@ functorial in `M`.
 
 ## References
 
-* C. A. Weibel, *An introduction to homological algebra*, CUP 1994, §7.7 (check).
+* C. A. Weibel, *An introduction to homological algebra*, CUP 1994, §7.7.
 -/
 
 open CategoryTheory TensorProduct ExteriorAlgebra

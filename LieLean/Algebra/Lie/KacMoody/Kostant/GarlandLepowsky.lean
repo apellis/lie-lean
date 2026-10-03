@@ -11,7 +11,7 @@ import LieLean.Algebra.Lie.KacMoody.CharacterFormula
 
 Let `A` be a symmetrizable generalized Cartan matrix, `𝔤 = 𝔤(A)` over a field `K` of
 characteristic zero, and `Λ` a dominant integral weight. The **Garland–Lepowsky theorem**
-([GL] Thm. 8.6 (check); [Kum] Thm. 3.2.7 (check); Kostant's theorem in finite type) states that
+([GL] Thm. 8.6; [Kum] Thm. 3.2.7; Kostant's theorem in finite type) states that
 `H_k(𝔫₋, L(Λ)) ≅ ⊕_{w ∈ W, ℓ(w) = k} K_{w(Λ + ρ) - ρ}` as `𝔥`-modules.
 
 Its standard proof has two steps:
@@ -27,7 +27,7 @@ This file proves step 2 unconditionally in the form of the identity
 characteristic of `𝔫₋`-homology recovers the Weyl–Kac character formula), and deduces the
 multiplicity statement of the Garland–Lepowsky theorem **from step 1, taken as a hypothesis**
 (`finrank_homologyWeightSpace_eq_one_of_weights`). Step 1 (the Casimir / Laplacian argument
-of [GL] §§5–8 (check)) is proved in `LieLean.Algebra.Lie.KacMoody.Kostant.Theorem`, which contains
+of [GL] Props. 7.9, 8.3) is proved in `LieLean.Algebra.Lie.KacMoody.Kostant.Theorem`, which contains
 the unconditional theorem.
 
 ## Main results
@@ -92,7 +92,7 @@ variable [FiniteDimensional K H] (hA : A.IsGeneralizedCartan) (hS : A.IsSymmetri
 include hA hS hΛ
 
 /-- **The Euler characteristic of `𝔫₋`-homology recovers the Weyl–Kac character formula**
-([GL] §8 (check)): for `Λ` dominant integral,
+(cf. [GL] §9): for `Λ` dominant integral,
 `e^ρ ∑_k (-1)^k ch H_k(𝔫₋, L(Λ)) = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(Λ + ρ)}` in `ℰ`. -/
 theorem exp_rho_mul_hsum_homologyEulerFamily :
     exp P ℤ P.rho * (isCategoryO P Λ).homologyEulerFamily.hsum =
@@ -131,7 +131,7 @@ theorem sum_neg_one_pow_finrank_homology_eq_zero {μ : Dual K H}
     coeffAt_exp_rho_mul_denominator_mul_character_eq_zero hA hS hΛ hμ]
 
 /-- **The Garland–Lepowsky theorem, multiplicity part, from the weight restriction**
-([GL] Thm. 8.6 (check); [Kum] Thm. 3.2.7 (check)): if every weight of `H_k(𝔫₋, L(Λ))` is of the
+([GL] Thm. 8.6; [Kum] Thm. 3.2.7): if every weight of `H_k(𝔫₋, L(Λ))` is of the
 form `w(Λ + ρ) - ρ` with `ℓ(w) = k` (hypothesis `hW`, the Casimir step of the proof, which is not
 formalized here), then `dim H_{ℓ(w)}(𝔫₋, L(Λ))_{w(Λ + ρ) - ρ} = 1` for every `w ∈ W`. Together with
 `hW` this is the full statement `H_k(𝔫₋, L(Λ)) ≅ ⊕_{ℓ(w) = k} K_{w(Λ + ρ) - ρ}`. -/

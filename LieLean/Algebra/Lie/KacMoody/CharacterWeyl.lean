@@ -12,8 +12,8 @@ import LieLean.Algebra.Lie.KacMoody.HighestWeight
 The Weyl group `W` does not act on the algebra `ℰ` of formal characters (it does not preserve
 the cones `Λ - Q₊`), but it acts on the coefficient functions `𝔥* → R`, and it makes sense to ask
 whether an element `c ∈ ℰ` is `W`-invariant: `c_{w μ} = c_μ` for all `w ∈ W` and `μ ∈ 𝔥*`. The
-character of an integrable module in the category `𝒪` is `W`-invariant ([Kac] Prop. 3.7 (b),
-§10.1 (check)); in particular so is the character of `L(Λ)` for dominant integral `Λ`.
+character of an integrable module in the category `𝒪` is `W`-invariant ([Kac] Prop. 3.7 (a),
+§10.1); in particular so is the character of `L(Λ)` for dominant integral `Λ`.
 
 ## Main definitions
 
@@ -54,14 +54,14 @@ variable {P} {V : Type*} [AddCommGroup V] [Module K V] [LieRingModule P.KacMoody
   [LieModule K P.KacMoodyAlgebra V]
 
 /-- The character of an integrable module in the category `𝒪` is `W`-invariant
-([Kac] Prop. 3.7 (b) (check)). -/
+([Kac] Prop. 3.7 (a)). -/
 theorem IsCategoryO.isWeylInvariant_character (hV : IsCategoryO P V) (hI : IsIntegrable P V) :
     hV.character.IsWeylInvariant P hA := fun w hw μ ↦ by
   simp only [IsCategoryO.coeffAt_character, finrank]
   rw [rank_weightSpace_weylGroup hA hI hw μ]
 
 /-- The character of the irreducible module `L(Λ)` with dominant integral highest weight `Λ` is
-`W`-invariant ([Kac] §10.1 (check)). -/
+`W`-invariant ([Kac] §10.1). -/
 theorem IrreducibleModule.isWeylInvariant_character {Λ : Dual K H}
     (hΛ : P.IsDominantIntegral Λ) :
     (IrreducibleModule.isCategoryO P Λ).character.IsWeylInvariant P hA :=

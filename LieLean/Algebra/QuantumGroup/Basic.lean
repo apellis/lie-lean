@@ -12,14 +12,15 @@ import LieLean.Algebra.QuantumGroup.QBinomial
 # The quantized enveloping algebra `U_q(𝔤)`
 
 Let `(I, ·)` be a Cartan datum with Cartan matrix `aᵢⱼ = 2 (i·j)/(i·i)` and `dᵢ = (i·i)/2`, and
-let `(Y, …)` be a root datum of type `(I, ·)` ([Lus] 2.2.1 (check)): an abelian group `Y` (the
+let `(Y, …)` be a root datum of type `(I, ·)` (after [Lus] 2.2.1, which asks for
+free `Y`, `X` of finite rank in perfect duality): an abelian group `Y` (the
 coweight lattice) with elements `i ∈ Y` (the simple coroots,
 `LusztigCartanDatum.RootDatum.coroot`) and homomorphisms `⟨·, j'⟩ : Y → ℤ` (the simple roots,
 `LusztigCartanDatum.RootDatum.root`) such that
 `⟨i, j'⟩ = aᵢⱼ`. Let `k` be a field and `v ∈ k`, `vᵢ = v^{dᵢ}`, `K̃ᵢ = K_{dᵢ i}`.
 
-Following [Lus] 3.1.1 (check), `U = U_q(𝔤)` is the associative `k`-algebra with generators `Eᵢ`,
-`Fᵢ` (`i ∈ I`) and `K_μ` (`μ ∈ Y`) and relations
+Following [Lus] 3.1.1 and Cor. 33.1.5, `U = U_q(𝔤)` is the associative `k`-algebra with generators
+`Eᵢ`, `Fᵢ` (`i ∈ I`) and `K_μ` (`μ ∈ Y`) and relations
 * (a) `K_0 = 1`, `K_μ K_ν = K_{μ+ν}`;
 * (b) `K_μ Eᵢ = v^{⟨μ, i'⟩} Eᵢ K_μ`;
 * (c) `K_μ Fᵢ = v^{-⟨μ, i'⟩} Fᵢ K_μ`;
@@ -27,7 +28,7 @@ Following [Lus] 3.1.1 (check), `U = U_q(𝔤)` is the associative `k`-algebra wi
 * (e) the quantum Serre relations `Σ_{r=0}^{1-aᵢⱼ} (-1)^r [1-aᵢⱼ, r]ᵢ Eᵢ^{1-aᵢⱼ-r} Eⱼ Eᵢ^r = 0`
   and likewise for `F`, for `i ≠ j`.
 
-We state the Serre relations in the binomial form of [Jan] 4.3 (R6) (check), which makes sense for
+We state the Serre relations in the binomial form of [Jan] 4.3 (R5)–(R6), which makes sense for
 every `v`; when `[1 - aᵢⱼ]ᵢ! ≠ 0` (e.g. `v` not a root of unity) it is equivalent to Lusztig's
 divided-power form `Σ_{r+s=1-aᵢⱼ} (-1)^r Eᵢ^{(s)} Eⱼ Eᵢ^{(r)} = 0`
 (`QuantumGroup.qSerreDiv_eq`). The algebra is constructed as a quotient (`RingQuot`) of the free
@@ -56,10 +57,10 @@ noncomputable section
 
 variable {I : Type*}
 
-/-- A root datum of type `(I, ·)` in the sense of [Lus] 2.2.1 (check), recorded through the
+/-- A root datum of type `(I, ·)` after [Lus] 2.2.1, recorded through the
 coweight lattice `Y`: elements `coroot i ∈ Y` and homomorphisms `root j : Y →+ ℤ` with
 `⟨i, j'⟩ = root j (coroot i) = aᵢⱼ`. (Lusztig's `X` is the dual lattice, which we do not
-need.) -/
+need; nor do we require `Y` to be free of finite rank.) -/
 structure LusztigCartanDatum.RootDatum (D : LusztigCartanDatum I) (Y : Type*) [AddCommGroup Y] where
   /-- The simple coroots `i ∈ Y`. -/
   coroot : I → Y
@@ -98,7 +99,7 @@ section Relations
 
 variable {A : Type*} [Ring A] [Algebra k A]
 
-/-- The defining relations (b)–(d) of `U` ([Lus] 3.1.1 (check)), i.e. all relations except the
+/-- The defining relations (b)–(d) of `U` ([Lus] 3.1.1), i.e. all relations except the
 quantum Serre relations, for elements `eᵢ, fᵢ` and a family `κ : Y → A` with
 `κ(μ + ν) = κ(μ) κ(ν)`, `κ(0) = 1` (encoded as a monoid homomorphism `Multiplicative Y →* A`). -/
 structure PreRelations (e f : I → A) (κ : Multiplicative Y →* A) : Prop where
@@ -107,8 +108,8 @@ structure PreRelations (e f : I → A) (κ : Multiplicative Y →* A) : Prop whe
   E_mul_F : ∀ i j, e i * f j - f j * e i = if i = j then
     (v ^ D.d i - (v ^ D.d i)⁻¹)⁻¹ • (κ (.ofAdd (ktilde R i)) - κ (.ofAdd (-ktilde R i))) else 0
 
-/-- The defining relations (b)–(e) of `U` ([Lus] 3.1.1 (check), Serre relations in the binomial
-form of [Jan] 4.3 (check)). -/
+/-- The defining relations (b)–(e) of `U` ([Lus] 3.1.1, Cor. 33.1.5; Serre relations in the
+binomial form of [Jan] 4.3). -/
 structure Relations (e f : I → A) (κ : Multiplicative Y →* A) : Prop
     extends PreRelations R v e f κ where
   serre_E : ∀ i j, i ≠ j → qSerre (v ^ D.d i) (1 - D.cartanMatrix i j).toNat (e i) (e j) = 0
@@ -145,7 +146,7 @@ end QuantumGroup
 
 open QuantumGroup in
 /-- The quantized enveloping algebra `U = U_q(𝔤)` of a root datum `R` of type `(I, ·)` over a
-field `k`, at the parameter `v ∈ k` ([Lus] 3.1.1 (check)). -/
+field `k`, at the parameter `v ∈ k` (cf. [Lus] 3.1.1, Cor. 33.1.5, where `k = ℚ(v)`). -/
 def QuantumGroup {k Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
     (R : D.RootDatum Y) (v : k) : Type _ :=
   RingQuot (Rel R v)

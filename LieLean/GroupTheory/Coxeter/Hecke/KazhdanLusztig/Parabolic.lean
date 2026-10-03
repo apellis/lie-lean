@@ -22,7 +22,7 @@ induced module `𝓜 = 𝓗 ⊗_{𝓗_J} χ` (`IwahoriHeckeAlgebra.InducedModule
 ```
   \overline{h ⊗ 1} = h̄ ⊗ 1,   so that   \overline{h m} = h̄ m̄,   m̄_1 = m_1.
 ```
-The two cases of interest are Deodhar's modules ([Deo] §2 (check)): `χ = ind` (`T_s ↦ q`, `u = q`
+The two cases of interest are Deodhar's modules ([Deo] §2): `χ = ind` (`T_s ↦ q`, `u = q`
 in Deodhar's notation) and `χ = sgn` (`T_s ↦ -1`, `u = -1`); both are bar compatible
 (`isBarCompatible_ind`, `isBarCompatible_sgn`).
 
@@ -42,9 +42,12 @@ the coefficients have the Kazhdan–Lusztig shape
   deg P^J_{d',d} ≤ (ℓ(d) - ℓ(d') - 1)/2  (d' < d)
 ```
 with **parabolic Kazhdan–Lusztig polynomials** `P^J_{d',d} ∈ ℤ[q]` (`parabolicKLPoly`). For
-`χ = ind` these are Deodhar's `P^{J,q}_{d',d}` (Soergel's `m_{d',d}` up to normalization), for
-`χ = sgn` Deodhar's `P^{J,-1}_{d',d}` (Soergel's `n_{d',d}`) ([Deo] Prop. 3.4 (check), [Soe] §3
-(check)). The relations with ordinary Kazhdan–Lusztig polynomials are in
+`χ = ind` these are Soergel's `m_{d',d}` and for `χ = sgn` Soergel's `n_{d',d}`, up to
+normalization. Deodhar's invariant elements ([Deo] Prop. 3.2) have the shape of
+Kazhdan–Lusztig's `C_w`, not `C'_w`, which exchanges the two cases: our polynomials for `χ = ind`
+are Deodhar's for `u = -1`, those for `χ = sgn` are Deodhar's for `u = q` ([Deo] Prop. 3.4,
+Rem. 3.8; [Soe] Def. 3.3, Rem. 3.5(1)). The relations with ordinary Kazhdan–Lusztig
+polynomials are in
 `LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.ParabolicRelations`.
 
 The normalization is the Kazhdan–Lusztig one (coefficients in `v⁻¹ ℤ[v⁻¹]`); Soergel's `v ℤ[v]`
@@ -288,7 +291,7 @@ theorem inducedIdeal_le_comap_barL (hχ : ∀ x, χ (barL _ x) = invert (χ x)) 
 
 variable {χ}
 
-/-- The **bar involution of the induced module** `𝓗 ⊗_{𝓗_J} χ` ([Deo] §2 (check)):
+/-- The **bar involution of the induced module** `𝓗 ⊗_{𝓗_J} χ` ([Deo] §2):
 `\overline{h ⊗ 1} = h̄ ⊗ 1`. It is semilinear over the bar involution of `𝓗`
 (`parabolicBar_smul_hecke`). -/
 noncomputable def parabolicBar (hχ : IsBarCompatible (cs.parabolicCoxeterSystem J) χ) :
@@ -386,7 +389,7 @@ theorem repr_parabolicBar_basis_self (d : cs.minCosetReps J) :
       exact hyd (hle.eq_of_length_le (by omega))
     · rw [mul_zero]
 
-/-- **Triangularity of the bar involution of the induced module** ([Deo] §2 (check)): if `m_{d'}`
+/-- **Triangularity of the bar involution of the induced module** ([Deo] §2): if `m_{d'}`
 occurs in `m̄_d`, then `d' ≤ d`. -/
 theorem bruhatLE_of_repr_parabolicBar_basis_ne_zero {d d' : cs.minCosetReps J}
     (h : (inducedBasis χ).repr (parabolicBar hχ (inducedBasis χ d)) d' ≠ 0) :
@@ -484,7 +487,7 @@ theorem isBarTriangular :
     fun _ h ↦ (Set.mem_Iio.mp h).le
 
 /-- The **parabolic Kazhdan–Lusztig basis** element `C^J_d` of the induced module
-`𝓗 ⊗_{𝓗_J} χ` ([Deo] Prop. 3.2 (check), [Soe] Thm. 3.5 (check)): the unique bar-invariant
+`𝓗 ⊗_{𝓗_J} χ` ([Soe] Thm. 3.1; cf. [Deo] Prop. 3.2): the unique bar-invariant
 element of `m̃_d + Σ_{d' < d} v⁻¹ ℤ[v⁻¹] m̃_{d'}`, `m̃_d = v^{-ℓ(d)} m_d`
 (`existsUnique_parabolicKLBasis`). -/
 noncomputable def parabolicKLBasis (d : cs.minCosetReps J) : InducedModule χ :=
@@ -534,8 +537,8 @@ theorem eq_parabolicKLBasis {d : cs.minCosetReps J} {C : InducedModule χ}
   · rw [normalizedBasis_repr_apply]
     exact hneg d' h
 
-/-- **Existence and uniqueness of the parabolic Kazhdan–Lusztig basis** ([Deo] Prop. 3.2
-(check), [Soe] Thm. 3.5 (check), in the normalization of [KL]): for `d ∈ W^J` there is a unique
+/-- **Existence and uniqueness of the parabolic Kazhdan–Lusztig basis** ([Soe] Thm. 3.1,
+in the normalization of [KL]; cf. [Deo] Prop. 3.2): for `d ∈ W^J` there is a unique
 bar-invariant `C ∈ 𝓗 ⊗_{𝓗_J} χ` with `C ∈ m̃_d + Σ_{d' ≠ d} v⁻¹ ℤ[v⁻¹] m̃_{d'}`, where
 `m̃_d = v^{-ℓ(d)} m_d`. It is `C^J_d`; its coefficients vanish outside `{d' ≤ d}`
 (`bruhatLE_of_repr_parabolicKLBasis_ne_zero`). -/
@@ -562,9 +565,10 @@ theorem exists_parabolicKLPoly (d' d : cs.minCosetReps J) :
   convert h3 using 1
   ring
 
-/-- The **parabolic Kazhdan–Lusztig polynomial** `P^J_{d',d} ∈ ℤ[q]` ([Deo] §3 (check)):
+/-- The **parabolic Kazhdan–Lusztig polynomial** `P^J_{d',d} ∈ ℤ[q]` ([Deo] §3):
 `C^J_d = v^{-ℓ(d)} Σ_{d' ≤ d} P^J_{d',d}(q) m_{d'}` (`repr_parabolicKLBasis`). For `χ = ind`
-these are Deodhar's `P^{J,q}`, for `χ = sgn` Deodhar's `P^{J,-1}`. -/
+these are Deodhar's `P^J` for `u = -1`, for `χ = sgn` those for `u = q` (see the module
+docstring). -/
 noncomputable def parabolicKLPoly (d' d : cs.minCosetReps J) : ℤ[X] :=
   (exists_parabolicKLPoly hχ d' d).choose
 
@@ -580,14 +584,14 @@ theorem coeff_parabolicKLPoly (d' d : cs.minCosetReps J) (k : ℕ) :
       ((inducedBasis χ).repr (parabolicKLBasis hχ d) d').coeff (-(ℓ d : ℤ) + 2 * k) :=
   (exists_parabolicKLPoly hχ d' d).choose_spec.2 k
 
-/-- `P^J_{d,d} = 1` ([Deo] §3 (check)). -/
+/-- `P^J_{d,d} = 1` ([Deo] §3). -/
 @[simp]
 theorem parabolicKLPoly_self (d : cs.minCosetReps J) : parabolicKLPoly hχ d d = 1 := by
   refine T_mul_aeval_T_two_injective (-(ℓ d : ℤ)) ?_
   simp only
   rw [← repr_parabolicKLBasis, repr_parabolicKLBasis_self, map_one, mul_one]
 
-/-- `P^J_{d',d} = 0` unless `d' ≤ d` in the Bruhat order ([Deo] §3 (check)). -/
+/-- `P^J_{d',d} = 0` unless `d' ≤ d` in the Bruhat order ([Deo] §3). -/
 theorem parabolicKLPoly_eq_zero_of_not_bruhatLE {d' d : cs.minCosetReps J}
     (h : ¬cs.BruhatLE d' d) : parabolicKLPoly hχ d' d = 0 := by
   refine T_mul_aeval_T_two_injective (-(ℓ d : ℤ)) ?_
@@ -607,7 +611,7 @@ theorem coeff_parabolicKLPoly_eq_zero {d' d : cs.minCosetReps J} (h : d' ≠ d) 
   have := isNeg_repr_parabolicKLBasis hχ h (-(ℓ d : ℤ) + 2 * k + ℓ d') (by omega)
   rwa [coeff_T_mul, add_sub_cancel_right] at this
 
-/-- **The degree bound for parabolic Kazhdan–Lusztig polynomials** ([Deo] §3 (check)): for
+/-- **The degree bound for parabolic Kazhdan–Lusztig polynomials** ([Deo] §3): for
 `d' < d`, `deg P^J_{d',d} ≤ (ℓ(d) - ℓ(d') - 1)/2`, i.e. `2 deg P^J_{d',d} + ℓ(d') < ℓ(d)`. -/
 theorem two_mul_natDegree_parabolicKLPoly_add_length_lt {d' d : cs.minCosetReps J}
     (hle : cs.BruhatLE d' d) (hne : d' ≠ d) :

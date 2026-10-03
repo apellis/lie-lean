@@ -14,7 +14,7 @@ up to isomorphism.
 
 ## Convention
 
-We use **Kashiwara's convention** ([Kas] §7.3 (check), [HK] Def. 4.5.3 / Thm. 4.4.1 (check)),
+We use **Kashiwara's convention** ([Kas] §7.3, [HK] Def. 4.5.3 / Thm. 4.4.1),
 not the "anti-Kashiwara" convention of Bump–Schilling (which is obtained by swapping the two
 tensor factors). For `b₁ ∈ B₁`, `b₂ ∈ B₂`, writing `b₁ ⊗ b₂` for the pair `(b₁, b₂)`:
 
@@ -96,7 +96,7 @@ private lemma tensor_f_eq_some_iff (i : ι) (b₁ : B₁) (b₂ : B₂) (c₁ : 
       simp [h', (C₂.f_eq_some_iff i b₂' c₂).mpr hb₂]
 
 /-- The tensor product `B₁ ⊗ B₂` of two crystals, with Kashiwara's tensor product rule
-([Kas] §7.3 (check), [HK] Def. 4.5.3 (check)); see the module docstring for the formulas. The
+([Kas] §7.3, [HK] Def. 4.5.3); see the module docstring for the formulas. The
 element `b₁ ⊗ b₂` is the pair `(b₁, b₂)`. The verification of the crystal axioms is our own. -/
 def tensor : Crystal D (B₁ × B₂) where
   wt b := C₁.wt b.1 + C₂.wt b.2
@@ -230,8 +230,8 @@ private lemma assoc_f_cond₂ (x₁ x₂ x₃ : WithBot ℤ) (w₁ w₂ : ℤ) :
 
 variable (C₁ C₂ C₃) in
 /-- The tensor product of crystals is associative: `(b₁ ⊗ b₂) ⊗ b₃ ↦ b₁ ⊗ (b₂ ⊗ b₃)` is an
-isomorphism of crystals `(B₁ ⊗ B₂) ⊗ B₃ ≅ B₁ ⊗ (B₂ ⊗ B₃)` ([Kas] §7.3 (check), [HK]
-Thm. 4.4.3 (check)). -/
+isomorphism of crystals `(B₁ ⊗ B₂) ⊗ B₃ ≅ B₁ ⊗ (B₂ ⊗ B₃)` ([Kas] Lemma 7.1).
+-/
 def tensorAssoc : Equiv ((C₁.tensor C₂).tensor C₃) (C₁.tensor (C₂.tensor C₃)) where
   toEquiv := _root_.Equiv.prodAssoc B₁ B₂ B₃
   wt_map b := by simp [add_assoc]
@@ -269,7 +269,7 @@ def tensorAssoc : Equiv ((C₁.tensor C₂).tensor C₃) (C₁.tensor (C₂.tens
 /-! ### The crystals `T_λ` -/
 
 variable (D) in
-/-- `T_λ ⊗ T_μ ≅ T_{λ + μ}` ([Kas] §7.3 (check)). -/
+/-- `T_λ ⊗ T_μ ≅ T_{λ + μ}` ([Kas] (7.11)). -/
 def tensorT (μ ν : X) : Equiv ((T D μ).tensor (T D ν)) (T D (μ + ν)) where
   toEquiv := _root_.Equiv.prodPUnit Unit
   wt_map _ := rfl

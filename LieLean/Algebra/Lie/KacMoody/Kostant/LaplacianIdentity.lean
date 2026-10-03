@@ -28,9 +28,10 @@ identity (`coe_rhoShiftSum`), `∑_{0<α<β} ∑ₖ [e_{-α}, [e_α, y]] = (2(ρ
 ## References
 
 * B. Kostant, *Lie algebra cohomology and the generalized Borel–Weil theorem*, Ann. of Math.
-  **74** (1961), 329–387, §4 (check).
+  **74** (1961), 329–387 (cf. §4, Thm. 4.4).
 * [GL] H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent.
-  Math. **34** (1976), 37–76, §§5–8 (check).
+  Math. **34** (1976), 37–76 (a Casimir argument, §7 and Appendix, in place of Kostant's
+  Laplacian).
 * The computation above is reconstructed by us; the sources were not consulted.
 -/
 

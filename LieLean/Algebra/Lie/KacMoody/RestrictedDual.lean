@@ -12,8 +12,8 @@ import Mathlib.LinearAlgebra.Dual.Lemmas
 
 For a `𝔤(A)`-module `V`, the *restricted twisted dual* `V^∨` is the sum of the weight spaces of
 the twisted dual `V^{*σ}` (the full dual with `⁅x, φ⁆ = φ ∘ σ(x)`, `σ` the transpose
-antiinvolution). For `V` in category `𝒪` this is the duality functor of Humphreys, GSM 94, §3.2
-(check): `V^∨ = ⨁_μ (V_μ)^*`. It is a contravariant functor of `V`.
+antiinvolution). For `V` in category `𝒪` this is the duality functor of Humphreys, GSM 94,
+§3.2: `V^∨ = ⨁_μ (V_μ)^*`. It is a contravariant functor of `V`.
 
 ## Main definitions
 
@@ -22,7 +22,7 @@ antiinvolution). For `V` in category `𝒪` this is the duality functor of Humph
 * `Matrix.Realization.KacMoodyAlgebra.restrictedDualMap`, `restrictedDualEquiv`: functoriality.
 * `Matrix.Realization.KacMoodyAlgebra.restrictedDualTensorEquiv`: for a finite-dimensional
   weight module `L` with a nondegenerate symmetric contravariant form,
-  `V^∨ ⊗ L ≅ (V ⊗ L)^∨` (Humphreys, GSM 94, §3.2 (check), with `L^∨ ≅ L`).
+  `V^∨ ⊗ L ≅ (V ⊗ L)^∨` (Humphreys, GSM 94, §3.2, Exercise, with `L^∨ ≅ L`).
 
 ## Main results
 
@@ -164,7 +164,7 @@ lemma tmul_mem_iSup_weightSpaceOfMap {v : V} {w : W}
 variable (V) in
 /-- The restricted twisted dual `V^∨`: the sum of the weight spaces of the twisted dual
 `V^{*σ}`. For `V` in category `𝒪`, `V^∨ = ⨁_μ (V_μ)^*` with `x φ = φ ∘ σ(x)`
-(Humphreys, GSM 94, §3.2 (check)). -/
+(Humphreys, GSM 94, §3.2). -/
 def restrictedDual : LieSubmodule K 𝔤 (TwistedDual P V) where
   toSubmodule := ⨆ μ, weightSpaceOfMap (TwistedDual P V) (h P) μ
   lie_mem {x φ} hφ := by
@@ -340,7 +340,7 @@ include hB in
 variable (V) in
 /-- **Duality commutes with tensoring by a self-dual finite-dimensional module**: if `L` is a
 finite-dimensional weight module with a nondegenerate symmetric contravariant form, then
-`V^∨ ⊗ L ≅ (V ⊗ L)^∨` (Humphreys, GSM 94, §3.2 (check); `L^∨ ≅ L` via the form). -/
+`V^∨ ⊗ L ≅ (V ⊗ L)^∨` (Humphreys, GSM 94, §3.2, Exercise; `L^∨ ≅ L` via the form). -/
 def restrictedDualTensorEquiv (hL : ⨆ μ, weightSpaceOfMap L (h P) μ = ⊤) :
     restrictedDual P V ⊗[K] L ≃ₗ⁅K,𝔤⁆ restrictedDual P (V ⊗[K] L) := by
   classical

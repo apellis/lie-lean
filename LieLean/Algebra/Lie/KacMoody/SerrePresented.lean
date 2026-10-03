@@ -51,7 +51,7 @@ The splitting of ideals `I ⊆ 𝔯` as `(I ∩ 𝔫̃₋) ⊕ (I ∩ 𝔫̃₊)
   `[𝔯̂₊, 𝔯̂₋] = 0`.
 * `Matrix.Realization.SerrePresentedAlgebra.rootSpace_eq_map`: `𝔤̂_μ` is the image of `𝔤̃_μ`.
 * `Matrix.Realization.SerrePresentedAlgebra.exists_ad_e_pow_eq_zero`, `exists_ad_f_pow_eq_zero`:
-  `ad eᵢ` and `ad fᵢ` are locally nilpotent on `𝔤̂(A)` ([Kac] Lemma 3.5 (check)).
+  `ad eᵢ` and `ad fᵢ` are locally nilpotent on `𝔤̂(A)` ([Kac] proof of Lemma 3.5).
 * `Matrix.Realization.SerrePresentedAlgebra.exists_nat_of_lie_e_eq_zero`: if `x ≠ 0` has weight
   `μ` and `[eᵢ, x] = 0`, then `⟨μ, αᵢ^∨⟩ ∈ ℕ`.
 
@@ -456,7 +456,7 @@ lemma chevalleyInvolution_surjective : Function.Surjective (chevalleyInvolution 
 
 /-! ### Integrability of the adjoint representation -/
 
-/-- `ad eᵢ` is locally nilpotent on `𝔤̂(A)` ([Kac] Lemma 3.5 (check)). This holds for any square
+/-- `ad eᵢ` is locally nilpotent on `𝔤̂(A)` ([Kac] proof of Lemma 3.5). This holds for any square
 matrix `A`, since the Serre relations are imposed. -/
 theorem exists_ad_e_pow_eq_zero (i : ι) (x : P.SerrePresentedAlgebra) :
     ∃ n : ℕ, (ad K _ (e P i) ^ n) x = 0 := by
@@ -478,7 +478,7 @@ theorem exists_ad_e_pow_eq_zero (i : ι) (x : P.SerrePresentedAlgebra) :
     · exact ⟨1, by rw [hsucc, lie_e_f_of_ne P hij]; simp⟩
   · exact ⟨2, by rw [hsucc, hsucc, hhe, lie_neg, lie_smul, lie_self]; simp⟩
 
-/-- `ad fᵢ` is locally nilpotent on `𝔤̂(A)` ([Kac] Lemma 3.5 (check)). -/
+/-- `ad fᵢ` is locally nilpotent on `𝔤̂(A)` ([Kac] proof of Lemma 3.5). -/
 theorem exists_ad_f_pow_eq_zero (i : ι) (x : P.SerrePresentedAlgebra) :
     ∃ n : ℕ, (ad K _ (f P i) ^ n) x = 0 := by
   have htop : LieSubalgebra.engel K (e P i) = ⊤ :=
@@ -725,7 +725,7 @@ theorem isSl2Triple (i : ι) : IsSl2Triple (h P (P.coroot i)) (e P i) (f P i) wh
 
 include hA in
 /-- If `x ≠ 0` has weight `μ` and `[eᵢ, x] = 0`, then `⟨μ, αᵢ^∨⟩ ∈ ℕ`: this follows from the local
-nilpotency of `ad fᵢ` and `𝔰𝔩₂`-theory ([Kac] §3.6 (check)). -/
+nilpotency of `ad fᵢ` and `𝔰𝔩₂`-theory ([Kac] Lemma 3.2 (a)). -/
 theorem exists_nat_of_lie_e_eq_zero (i : ι) {μ : Dual K H} {x : P.SerrePresentedAlgebra}
     (hx : x ∈ rootSpace P μ) (hx0 : x ≠ 0) (hex : ⁅e P i, x⁆ = 0) :
     ∃ n : ℕ, μ (P.coroot i) = n :=

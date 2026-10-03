@@ -40,11 +40,12 @@ formula for `Ω`. Inductively, if `c` has weight `μ` and `□ c = s(μ) c`, the
 ## References
 
 * B. Kostant, *Lie algebra cohomology and the generalized Borel–Weil theorem*, Ann. of Math.
-  **74** (1961), 329–387, §4 (check).
+  **74** (1961), 329–387, Thm. 4.4, Thm. 5.7, Cor. 5.7 (semisimple `𝔤`).
 * [GL] H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent.
-  Math. **34** (1976), 37–76, §§5–8 (check).
+  Math. **34** (1976), 37–76, Prop. 7.9, Lemma A.1 (vanishing off the Casimir sphere, by a
+  Casimir argument in place of Kostant's Laplacian).
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002, §3.2 (check).
+  Math. 204, Birkhäuser 2002, proof of Thm. 3.2.7, Thm. 3.4.2, Cor. 3.4.11.
 * The arguments above are reconstructed by us; the sources were not consulted.
 -/
 
@@ -228,7 +229,7 @@ lemma kostantLaplacian_wedge_eq (hA : A.IsGeneralizedCartan) (hV : IsPosFinite P
   exact (wedge_smul_add_eq _ _ _ _ _ _ (DerivAction.mem_chainWeightSpace.mp hc _)).trans
     (congrArg (· • _) (scalar_sub κ i.root μ).symm)
 
-/-- **Kostant's Laplacian acts by scalars on weight spaces** (reconstructed; [GL] §§5–8 (check)):
+/-- **Kostant's Laplacian acts by scalars on weight spaces** (reconstructed; cf. [GL] Appendix):
 if `V` is in the category `𝒪` and the Casimir operator acts on `V` by the scalar `κ`, then `□`
 acts on the weight-`μ` chains by `½(κ - (μ + 2ρ|μ))`. -/
 theorem kostantLaplacian_eq_smul (hA : A.IsGeneralizedCartan) (hV : IsCategoryO P V) {κ : K}
@@ -242,9 +243,11 @@ theorem kostantLaplacian_eq_smul (hA : A.IsGeneralizedCartan) (hV : IsCategoryO 
     (fun j ↦ hB.kostantLaplacian_one_tmul V hV.isPosFinite (hV.weightBasis_mem j) (hΩ _))
     (hB.kostantLaplacian_wedge_eq V hA hV.isPosFinite κ) hc
 
-/-- **Vanishing of `𝔫₋`-homology off the Casimir sphere** (reconstructed; [GL] §§5–8 (check),
-[Kum] §3.2 (check)): if `V` is in the category `𝒪` and the Casimir operator acts on `V` by the
-scalar `κ`, then `H_k(𝔫₋, V)_μ = 0` unless `(μ + 2ρ|μ) = κ`. -/
+/-- **Vanishing of `𝔫₋`-homology off the Casimir sphere** (reconstructed; [GL] Prop. 7.9,
+[Kum] Cor. 3.4.11 and proof of Thm. 3.2.7, for `V = L(Λ)`): if `V` is in the category `𝒪`
+and the Casimir operator acts on `V` by the
+scalar `κ`, then `H_k(𝔫₋, V)_μ = 0` unless `(μ + 2ρ|μ) = κ`. ([GL] state this for `V = L(Λ)`,
+`Λ` dominant integral, and prove it with the Casimir operator, not Kostant's Laplacian.) -/
 theorem homologyWeightSpace_eq_bot (hA : A.IsGeneralizedCartan) (hV : IsCategoryO P V) {κ : K}
     (hΩ : ∀ v, hB.casimir V hV.isPosFinite v = κ • v) (k : ℕ) {μ : Dual K H}
     (hμ : P.dualBilinForm S (μ + 2 • P.rho) μ ≠ κ) :

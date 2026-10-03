@@ -20,7 +20,7 @@ with the Lie module structure `x (v ⊗ w) = x v ⊗ w + v ⊗ x w` (Mathlib's
 * if `V, W` lie in `𝒪`, so does `V ⊗ W`, and `ch (V ⊗ W) = ch V · ch W` in `ℰ`;
 * if moreover `V, W` are integrable, so is `V ⊗ W`; hence, for `A` a symmetrizable generalized
   Cartan matrix, `V ⊗ W` is a direct sum of modules `L(Λ'')`, `Λ''` dominant integral
-  ([Kac] §10.7 (check)), with multiplicities determined by `ch V · ch W`.
+  ([Kac] §10.7), with multiplicities determined by `ch V · ch W`.
 
 ## Main definitions
 
@@ -32,14 +32,14 @@ with the Lie module structure `x (v ⊗ w) = x v ⊗ w + v ⊗ x w` (Mathlib's
 * `Matrix.Realization.KacMoodyAlgebra.weightSpace_tensorProduct`:
   `(V ⊗ W)_ξ = ⨆_μ V_μ ⊗ W_{ξ - μ}`.
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.tensorProduct`: `𝒪` is closed under tensor
-  products ([Kac] §9.1 (check)).
+  products ([Kac] §9.1).
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.character_tensorProduct`:
-  `ch (V ⊗ W) = ch V · ch W` ([Kac] §9.7 (check)).
+  `ch (V ⊗ W) = ch V · ch W` ([Kum] Def. 2.1.1 (d)).
 * `Matrix.Realization.KacMoodyAlgebra.IsIntegrable.tensorProduct`: tensor products of integrable
-  modules are integrable ([Kac] §3.6 (check)).
+  modules are integrable (integrability as in [Kac] §3.6).
 * `Matrix.Realization.KacMoodyAlgebra.IrreducibleModule.exists_isInternal_tensorProduct`:
   `L(Λ) ⊗ L(Λ')` is a direct sum of modules `L(Λ'')`, `Λ''` dominant integral, for `Λ, Λ'`
-  dominant integral ([Kac] §10.7 (check)).
+  dominant integral ([Kac] §10.7).
 
 ## Proof
 
@@ -56,6 +56,8 @@ for the commuting operators `eᵢ ⊗ 1` and `1 ⊗ eᵢ`.
 
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.6, §9.1, §9.7,
   §10.7.
+* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
+  Math. 204, Birkhäuser 2002, §2.1.
 -/
 
 open Module LieModule TensorProduct
@@ -248,7 +250,7 @@ theorem character_eq_hsum_weightFamily (hV : IsCategoryO P V) :
 variable (hV : IsCategoryO P V) (hW : IsCategoryO P W)
 
 include hV hW in
-/-- **`𝒪` is closed under tensor products** ([Kac] §9.1 (check)): if `V` and `W` lie in `𝒪`, so
+/-- **`𝒪` is closed under tensor products** ([Kac] §9.1): if `V` and `W` lie in `𝒪`, so
 does `V ⊗ W`. -/
 theorem tensorProduct : IsCategoryO P (V ⊗[K] W) := by
   have hb := tensorWeightBasis_mem hV.iSup_weightSpaceOfMap_eq_top hW.iSup_weightSpaceOfMap_eq_top
@@ -288,7 +290,7 @@ theorem tensorProduct : IsCategoryO P (V ⊗[K] W) := by
     rw [← hp, hμ, hν, map_add]
     abel
 
-/-- **Characters are multiplicative** ([Kac] §9.7 (check)): `ch (V ⊗ W) = ch V · ch W` for `V, W`
+/-- **Characters are multiplicative** ([Kum] Def. 2.1.1 (d)): `ch (V ⊗ W) = ch V · ch W` for `V, W`
 in `𝒪`. -/
 theorem character_tensorProduct :
     (hV.tensorProduct hW).character = hV.character * hW.character := by
@@ -350,7 +352,7 @@ theorem exists_pow_toEnd_tensorProduct_eq_zero (x : P.KacMoodyAlgebra)
   | add x y hx hy => exact add_mem hx hy
 
 omit [CharZero K] in
-/-- **Tensor products of integrable modules are integrable** ([Kac] §3.6 (check)). -/
+/-- **Tensor products of integrable modules are integrable** (integrability as in [Kac] §3.6). -/
 theorem IsIntegrable.tensorProduct (hV : IsIntegrable P V) (hW : IsIntegrable P W) :
     IsIntegrable P (V ⊗[K] W) where
   isHDiagonalizable := hV.isHDiagonalizable.tensorProduct hW.isHDiagonalizable
@@ -360,7 +362,7 @@ theorem IsIntegrable.tensorProduct (hV : IsIntegrable P V) (hW : IsIntegrable P 
     exists_pow_toEnd_tensorProduct_eq_zero _ (hV.exists_pow_f_eq_zero i) (hW.exists_pow_f_eq_zero i)
 
 open scoped Classical in
-/-- **Tensor products of integrable highest-weight modules** ([Kac] §10.7 (check)): for `A` a
+/-- **Tensor products of integrable highest-weight modules** ([Kac] §10.7): for `A` a
 symmetrizable generalized Cartan matrix, `K` of characteristic zero and `Λ, Λ'` dominant integral,
 `L(Λ) ⊗ L(Λ')` is the internal direct sum of a family of submodules, each isomorphic to some
 `L(Λ'')` with `Λ''` dominant integral. The multiplicities are determined by

@@ -26,7 +26,7 @@ crystal from Kashiwara's reflections `Sᵢ` (`Crystal.reflection`).
 ## References
 
 * [Kas94] M. Kashiwara, *Crystal bases of modified quantized enveloping algebra*, Duke Math. J.
-  **73** (1994), 383–413, §7 (check).
+  **73** (1994), 383–413, §7.
 -/
 
 namespace Crystal
@@ -152,7 +152,7 @@ lemma stringMap_reflection (hC : C.IsSeminormal) (i : ι) (b : B) :
   · exact hC.fIter_reflection h
   · exact hC.eIter_reflection (not_le.mp h)
 
-/-- **The braid relation of length two** ([Kas94] §7 (check)): if the operators of colours
+/-- **The braid relation of length two** ([Kas94] §7): if the operators of colours
 `i, j` commute and `⟨αⱼ, αᵢ^∨⟩ = ⟨αᵢ, αⱼ^∨⟩ = 0`, then `Sᵢ Sⱼ = Sⱼ Sᵢ`. -/
 theorem reflection_comm (hC : C.IsSeminormal) (h : C.OperatorsCommute i j)
     (hij : D.coroot i (D.root j) = 0) (hji : D.coroot j (D.root i) = 0) (b : B) :

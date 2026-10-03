@@ -66,6 +66,7 @@ write-up.)
   **142** (1995), 499–525.
 * [Lit94] P. Littelmann, *A Littlewood–Richardson rule for symmetrizable Kac–Moody algebras*,
   Invent. Math. **116** (1994), 329–346.
+* [Kas] M. Kashiwara, *On crystal bases*, CMS Conf. Proc. 16 (1995).
 -/
 
 open Module Set HahnSeries
@@ -139,7 +140,7 @@ lemma card_wt_reflection_of_isSeminormal {B : Type*} (C : Crystal (P.cartanDatum
 omit [DecidableEq ι] [IsStrictOrderedRing K] [TopologicalSpace K] [OrderTopology K] in
 /-- The weight multiplicities of a seminormal crystal over the Cartan datum of a realization are
 invariant under the Weyl group (possibly infinite multiplicities being counted as `0`); a
-bijection is given by Kashiwara's action of the simple reflections ([Kas] §7 (check)). -/
+bijection is given by Kashiwara's action of the simple reflections ([Kas] §11). -/
 theorem card_wt_weylGroup_of_isSeminormal {B : Type*} (C : Crystal (P.cartanDatum hA) B)
     (hC : C.IsSeminormal) {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA)
     (μ : Dual K H) :
@@ -324,7 +325,7 @@ lemma coeffAt_setCharacter (μ : Dual K H) : (setCharacter hC).coeffAt μ = setM
 
 open Classical in
 /-- **Littelmann's generalized Brauer–Klimyk formula for admissible sets of paths** ([Lit95] §9
-(check); our write-up): for dominant integral `ν`, the coefficient of `e^κ` in
+for `ν = 0`; our write-up): for dominant integral `ν`, the coefficient of `e^κ` in
 `(∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(ν + ρ)}) · ch C` is the signed count of pairs `(w, π) ∈ W × C` with
 `π` `ν`-dominant (no `hⱼ` reaches `-1 - ⟨ν, αⱼ^∨⟩`) and `w(ν + π(1) + ρ) = κ`. The proof is that
 of `Matrix.Realization.coeffAt_weylAltSum_mul_pathCharacter`. -/
@@ -488,7 +489,7 @@ lemma hwFamily_apply (b : C) :
       (IrreducibleModule.isCategoryO P (b.1.wt : Dual K H)).character else 0 :=
   rfl
 
-/-- **Littelmann's character formula for arbitrary path crystals** ([Lit95] §9 (check); our
+/-- **Littelmann's character formula for arbitrary path crystals** (generalizing [Lit95] §§9–10; our
 write-up): for a symmetrizable generalized Cartan matrix and an admissible set `C` of paths (e.g.
 a union of connected components of `B(λ) * B(μ)`),
 `ch C = ∑_{π ∈ C highest weight} ch L(π(1))` in `ℰ`, the sum over the paths `π ∈ C` with all

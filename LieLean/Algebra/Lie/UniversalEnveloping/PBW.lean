@@ -671,7 +671,7 @@ basis `b` indexed by a linearly ordered type `σ`, then the ordered monomials `p
 form an `R`-basis of the universal enveloping algebra.
 
 See Humphreys, *Introduction to Lie algebras and representation theory*, §17.3, Theorem and
-Corollary C, proved in §17.4 (check) (stated there over a field; the proof works over any
+Corollary C, proved in §17.4 (stated there over a field; the proof works over any
 commutative ring for free modules), and Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7,
 Theorem 1. -/
 def pbwBasis : Basis (σ →₀ ℕ) R (UniversalEnvelopingAlgebra R L) :=
@@ -704,7 +704,7 @@ theorem ι_injective_of_basis (b : Basis σ R L) :
 
 variable (R L) in
 /-- **Corollary of PBW**: if `L` is free as an `R`-module then the canonical map `ι : L → U(L)`
-is injective. See Humphreys, §17.3, Corollary B (check). -/
+is injective. See Humphreys, §17.3, Corollary B. -/
 theorem ι_injective [Module.Free R L] :
     Function.Injective (ι R : L → UniversalEnvelopingAlgebra R L) := by
   let b := Module.Free.chooseBasis R L

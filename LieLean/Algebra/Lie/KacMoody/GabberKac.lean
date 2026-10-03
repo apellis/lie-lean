@@ -22,7 +22,7 @@ isomorphism.
 
 ## Proof
 
-The argument is reconstructed from [Kac] §9.11 (check) and [GK], in a module-theoretic form; the
+The argument is reconstructed from [Kac] §9.11 and [GK], in a module-theoretic form; the
 individual steps are in `KacMoody/SerrePresented/*.lean`. Let `𝔯̂ = 𝔯/𝔰 = 𝔯̂₋ ⊕ 𝔯̂₊ ⊆ 𝔤̂(A)` be
 the kernel of `𝔤̂(A) → 𝔤(A)`. By the Chevalley involution it suffices to show `𝔯̂₋ = 0`
 (`Matrix.Realization.SerrePresentedAlgebra.radical_eq_bot_iff`). Since `𝔯̂₋` is an ideal
@@ -58,7 +58,7 @@ So let `β = ∑ kⱼ αⱼ ∈ Q₊ \ {0}` and suppose that `(𝔯̂₋)_{-γ} 
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.5, §9.11 (check).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.5, §9.11.
 * [GK] O. Gabber, V. G. Kac, *On defining relations of certain infinite-dimensional Lie
   algebras*, Bull. Amer. Math. Soc. (N.S.) **5** (1981), 185–189.
 -/
@@ -98,7 +98,7 @@ lemma dualBilinForm_rootOf_right (μ : Dual K H) (k : ι → ℤ) :
 omit [DecidableEq ι] in
 /-- For `β = ∑ kᵢ αᵢ ∈ Q₊ \ {0}` with `⟨β, αᵢ^∨⟩ ≤ 0` for all `i`, we have `(β | β) ≠ 2 (ρ | β)`,
 in the form `(-β + 2ρ | -β) ≠ 0`. This is the final step of the proof of the Gabber–Kac theorem
-([Kac] §9.11 (check), [GK]; reconstructed argument). -/
+([Kac] §9.11, [GK]; reconstructed argument). -/
 theorem dualBilinForm_neg_rootOf_add_two_rho_ne_zero {k : ι → ℤ} (hk : k ∈ posCone ι)
     (hle : ∀ i, ∑ j, A i j * k j ≤ 0) :
     P.dualBilinForm S (-P.rootOf k + 2 • P.rho) (-P.rootOf k) ≠ 0 := by
@@ -205,7 +205,7 @@ variable [FiniteDimensional K H] {S : A.Symmetrization}
 
 variable {P} in
 /-- The Casimir operator vanishes on `E = ⊕ᵢ M(-αᵢ)`: it acts on `M(-αᵢ)` by
-`(-αᵢ + 2ρ | -αᵢ) = 0` ([Kac] Cor. 2.6 (check)). -/
+`(-αᵢ + 2ρ | -αᵢ) = 0` ([Kac] Cor. 2.6). -/
 theorem IsStandardForm.casimir_vermaSum_eq_zero (hB : IsStandardForm P S B)
     (hA : A.IsGeneralizedCartan) (v : VermaSum P) :
     hB.casimir (VermaSum P) (isCategoryO_vermaSum P).isPosFinite v = 0 := by
@@ -232,7 +232,7 @@ variable [CharZero K] (hA : A.IsGeneralizedCartan)
 include hA in
 /-- The inductive step of the proof of the Gabber–Kac theorem: if `𝔯̂₋` has no nonzero weight
 vectors of weight `-γ` with `ht γ < ht β`, then it has none of weight `-β`
-([Kac] §9.11 (check), [GK]; reconstructed argument, see the module docstring). -/
+([Kac] §9.11, [GK]; reconstructed argument, see the module docstring). -/
 theorem radicalNeg_inf_rootSpace_eq_bot_of_minimal (S : A.Symmetrization) {k : ι → ℤ}
     (hk : k ∈ posCone ι)
     (hmin : ∀ l ∈ posCone ι, height l < height k →
@@ -258,7 +258,7 @@ theorem radicalNeg_inf_rootSpace_eq_bot_of_minimal (S : A.Symmetrization) {k : �
   exact hsT h2
 
 include hA in
-/-- For a symmetrizable generalized Cartan matrix, `𝔯̂₋ = 0` ([Kac] §9.11 (check), [GK];
+/-- For a symmetrizable generalized Cartan matrix, `𝔯̂₋ = 0` ([Kac] §9.11, [GK];
 reconstructed argument). -/
 theorem radicalNeg_eq_bot (hS : A.IsSymmetrizable) : radicalNeg P = ⊥ := by
   obtain ⟨S⟩ := isSymmetrizable_iff_nonempty_symmetrization.mp hS

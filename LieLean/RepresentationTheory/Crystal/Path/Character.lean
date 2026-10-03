@@ -10,8 +10,8 @@ import LieLean.RepresentationTheory.Crystal.Path.RootOperators
 
 For a Littelmann path `π`, let `B(π)` be the connected component of `π` in the crystal of all
 paths, i.e. the smallest set of paths containing `π` and stable under all root operators `eᵢ`,
-`fᵢ` ([Lit95] §2 (check)). For a dominant weight `λ` and the straight line path `π_λ(t) = tλ`,
-Littelmann's theorem ([Lit95] Thm. 9.1 (check), [Lit94]) states that the character of
+`fᵢ` ([Lit95] §2). For a dominant weight `λ` and the straight line path `π_λ(t) = tλ`,
+Littelmann's theorem ([Lit95] Thm. 9.1, [Lit94]) states that the character of
 `B(λ) := B(π_λ)` is the character of the irreducible integrable highest-weight module `L(λ)`.
 
 ## Main definitions
@@ -41,7 +41,7 @@ Littelmann's theorem ([Lit95] Thm. 9.1 (check), [Lit94]) states that the charact
 ## What remains
 
 Littelmann's theorem that for `π` with image in the dominant chamber (e.g. `π = π_λ`) the set
-`{f_{i₁} ⋯ f_{iₖ} π}` is stable under all `eⱼ` ([Lit95] §5–7 (check); in [Lit94] via
+`{f_{i₁} ⋯ f_{iₖ} π}` is stable under all `eⱼ` ([Lit95] §7, Cor. 1 c); in [Lit94] via
 Lakshmibai–Seshadri paths) is not proved here; it is the hypothesis of
 `LittelmannPath.component_eq_fOrbit`. Nor is the character formula `ch B(λ) = ch L(λ)`.
 
@@ -64,7 +64,7 @@ variable {ι X : Type*} [AddCommGroup X] {𝕜 : Type*} [Field 𝕜] [Conditiona
 /-! ### Straight line paths -/
 
 variable (S) in
-/-- The straight line path `π_λ(t) = tλ` ([Lit95] §1 (check)). -/
+/-- The straight line path `π_λ(t) = tλ` ([Lit95] §1). -/
 def straightLine (μ : X) : LittelmannPath S where
   toFun t := max 0 (min 1 t) • S.embed μ
   wt := μ
@@ -223,7 +223,7 @@ lemma φ_straightLine (hμ : 0 ≤ D.coroot i μ) : φ i (straightLine S μ) = D
 /-! ### Connected components -/
 
 /-- The connected component `B(π)` of a path `π` in the path crystal: the smallest set of paths
-containing `π` and stable under all root operators ([Lit95] §2 (check)). -/
+containing `π` and stable under all root operators ([Lit95] §2). -/
 def component (π : LittelmannPath S) : Set (LittelmannPath S) := (crystal S).closure {π}
 
 variable (π : LittelmannPath S)
@@ -290,7 +290,7 @@ theorem fIter_straightLine {k : ℕ} (hk : (k : ℤ) ≤ D.coroot i μ) :
     exact f_stringPath hk
 
 /-- The straight line path `π_{rᵢ λ}` lies in the connected component of `π_λ`
-([Lit95] §5 (check)); for `⟨λ, αᵢ^∨⟩ = n ≥ 0` it is `fᵢ^n π_λ`. -/
+(for dominant `λ`: [Lit95] §4, Cor. 3); for `⟨λ, αᵢ^∨⟩ = n ≥ 0` it is `fᵢ^n π_λ`. -/
 theorem straightLine_reflection_mem_component (μ : X) (i : ι) :
     straightLine S (D.reflection i μ) ∈ (straightLine S μ).component := by
   have key : ∀ ν : X, 0 ≤ D.coroot i ν →
@@ -341,8 +341,8 @@ lemma fOrbit_subset_component : π.fOrbit ⊆ π.component := by
     exact π.isStable_component.f_mem i ρ π' (ih hρ) hf
 
 /-- If the set `{f_{i₁} ⋯ f_{iₖ} π}` is stable under all `eⱼ`, then it is the connected component
-`B(π)`. (Littelmann proves the hypothesis for paths `π` in the dominant chamber, [Lit95] §5–7
-(check); this is not formalized here.) -/
+`B(π)`. (Littelmann proves the hypothesis for paths `π` in the dominant chamber, [Lit95] §7,
+Cor. 1 c); this is not formalized here.) -/
 theorem component_eq_fOrbit
     (h : ∀ π' ∈ π.fOrbit, ∀ j π'', e j π' = some π'' → π'' ∈ π.fOrbit) :
     π.component = π.fOrbit := by

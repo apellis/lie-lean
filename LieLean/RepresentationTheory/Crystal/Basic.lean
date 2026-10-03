@@ -11,7 +11,7 @@ import Mathlib.LinearAlgebra.Reflection
 /-!
 # Abstract crystals
 
-We define Kashiwara's abstract crystals ([Kas] §7.2 (check), [HK] Def. 4.5.1 (check)) over a
+We define Kashiwara's abstract crystals ([Kas] §7.2, [HK] Def. 4.5.1) over a
 Cartan datum, their morphisms, and the basic examples.
 
 ## Main definitions
@@ -31,7 +31,7 @@ Cartan datum, their morphisms, and the basic examples.
 ## Main results
 
 * `Crystal.wt_f`, `Crystal.ε_f`, `Crystal.φ_e`, `Crystal.φ_f`, `Crystal.f_eq_none_of_φ_eq_bot`:
-  the axioms of [HK] Def. 4.5.1 (check) that are not fields of `Crystal` (they follow from the
+  the axioms of [HK] Def. 4.5.1 that are not fields of `Crystal` (they follow from the
   others).
 * `Crystal.fIter_eq_some_iff`: `f̃ᵢⁿ b = b' ↔ ẽᵢⁿ b' = b`.
 
@@ -50,12 +50,14 @@ Kac–Moody algebra the simple roots are not stable under the reflections).
 
 * [Kas] M. Kashiwara, *On crystal bases*, CMS Conf. Proc. 16 (1995).
 * [HK] J. Hong, S.-J. Kang, *Introduction to quantum groups and crystal bases*, GSM 42, Ch. 4.
+* [Kas94] M. Kashiwara, *Crystal bases of modified quantized enveloping algebra*, Duke Math. J.
+  **73** (1994), 383–413.
 -/
 
 /-- A Cartan datum: a weight lattice `X` (any additive commutative group) with simple roots
 `αᵢ ∈ X` and simple coroots given as linear forms `⟨·, αᵢ^∨⟩ : X → ℤ`, such that
 `⟨αᵢ, αᵢ^∨⟩ = 2`. This is the part of a Cartan datum `(A, Π, Π^∨, P, P^∨)` of [HK] Def. 2.1.1
-(check) used by the theory of abstract crystals; the associated matrix
+used by the theory of abstract crystals; the associated matrix
 `CartanDatum.cartanMatrix` is `aᵢⱼ = ⟨αⱼ, αᵢ^∨⟩`, the convention of
 `Matrix.Realization`. -/
 structure CartanDatum (ι X : Type*) [AddCommGroup X] where
@@ -92,7 +94,7 @@ lemma reflection_apply (i : ι) (μ : X) :
 
 end CartanDatum
 
-/-- An abstract crystal ([Kas] §7.2 (check), [HK] Def. 4.5.1 (check)) over the Cartan datum `D`,
+/-- An abstract crystal ([Kas] §7.2, [HK] Def. 4.5.1) over the Cartan datum `D`,
 on the type `B`: a weight map `wt : B → X`, maps `εᵢ, φᵢ : B → ℤ ⊔ {-∞}` and the Kashiwara
 operators `ẽᵢ, f̃ᵢ : B → B ⊔ {0}` (with `0` modelled by `none`), such that
 
@@ -294,7 +296,7 @@ lemma φ_fIter {n : ℕ} (h : C.fIter i n b = some b') : C.φ i b = C.φ i b' + 
 
 variable (C₁ : Crystal D B₁) (C₂ : Crystal D B₂) (C₃ : Crystal D B₃)
 
-/-- A morphism of crystals ([Kas] §7.2 (check), [HK] Def. 4.5.6 (check)): a map
+/-- A morphism of crystals ([Kas] §7.2, [HK] Def. 4.5.5): a map
 `ψ : B₁ → B₂ ⊔ {0}` (with `0` modelled by `none`) such that for `b ∈ B₁` with `ψ(b) ∈ B₂`,
 `wt`, `εᵢ` and `φᵢ` are preserved, and such that if `b, ẽᵢ b ∈ B₁` both have nonzero image then
 `ψ(ẽᵢ b) = ẽᵢ ψ(b)`, and likewise for `f̃ᵢ`. Morphisms in this sense are not closed under
@@ -310,8 +312,8 @@ structure Hom where
   f_map : ∀ i b b' c c', C₁.f i b = some b' → toFun b = some c → toFun b' = some c' →
     C₂.f i c = some c'
 
-/-- A strict morphism of crystals never taking the value `0` ([Kas] §7.2 (check), [HK]
-Def. 4.5.6 (check)): a map `ψ : B₁ → B₂` preserving `wt` and the `εᵢ` and commuting with all the
+/-- A strict morphism of crystals never taking the value `0` ([Kas] §7.6, [HK]
+Def. 4.5.6 (1)): a map `ψ : B₁ → B₂` preserving `wt` and the `εᵢ` and commuting with all the
 `ẽᵢ` and `f̃ᵢ` (the `φᵢ` are then preserved as well, `Crystal.StrictHom.φ_map`). -/
 structure StrictHom where
   /-- The underlying map `B₁ → B₂`. -/
@@ -471,7 +473,7 @@ end Equiv
 
 variable (D)
 
-/-- The crystal `T_λ = {t_λ}` ([Kas] Example 7.3 (check), [HK] Example 4.5.4 (check)):
+/-- The crystal `T_λ = {t_λ}` ([Kas] Example 7.3, [HK] Example 4.5.2 (2)):
 `wt t_λ = λ`, `εᵢ(t_λ) = φᵢ(t_λ) = -∞`, `ẽᵢ t_λ = f̃ᵢ t_λ = 0`. -/
 def T (μ : X) : Crystal D Unit where
   wt _ := μ
@@ -485,7 +487,7 @@ def T (μ : X) : Crystal D Unit where
   ε_e _ _ _ h := by simp at h
   e_eq_none_of_φ_eq_bot _ _ _ := rfl
 
-/-- The crystal `C = {c}` ([Kas] Example 7.3 (check), [HK] Example 4.5.4 (check)): `wt c = 0`,
+/-- The crystal `C = {c}` ([Kas94] Example 1.5.3 (1)): `wt c = 0`,
 `εᵢ(c) = φᵢ(c) = 0`, `ẽᵢ c = f̃ᵢ c = 0`. -/
 def trivial : Crystal D Unit where
   wt _ := 0
@@ -501,8 +503,8 @@ def trivial : Crystal D Unit where
 
 variable [DecidableEq ι]
 
-/-- The elementary crystal `Bᵢ = {bᵢ(n) | n ∈ ℤ}` ([Kas] Example 7.4 (check), [HK]
-Example 4.5.5 (check)), with `bᵢ(n)` modelled by `n : ℤ`: `wt bᵢ(n) = n αᵢ`, `φᵢ(bᵢ(n)) = n`,
+/-- The elementary crystal `Bᵢ = {bᵢ(n) | n ∈ ℤ}` ([Kas] Example 7.4, [HK]
+Example 4.5.2 (3)), with `bᵢ(n)` modelled by `n : ℤ`: `wt bᵢ(n) = n αᵢ`, `φᵢ(bᵢ(n)) = n`,
 `εᵢ(bᵢ(n)) = -n`, `εⱼ = φⱼ = -∞` for `j ≠ i`, `ẽᵢ bᵢ(n) = bᵢ(n + 1)`, `f̃ᵢ bᵢ(n) = bᵢ(n - 1)` and
 `ẽⱼ = f̃ⱼ = 0` for `j ≠ i`. -/
 def elementary (i : ι) : Crystal D ℤ where

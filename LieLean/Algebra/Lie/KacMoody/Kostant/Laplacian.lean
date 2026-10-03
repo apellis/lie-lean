@@ -17,7 +17,8 @@ multiplication by `y ∈ L` and `θ(y)` the action of `y`. In the same way, give
 
 there is a unique operator `δ` on `⋀L ⊗ M` with `δ(1 ⊗ m) = δ₀ m` and
 `δ ∘ ε(y) = -G(y) - ε(y) ∘ δ` (`LieModule.ChevalleyEilenberg.coDiff`). This is the shape of
-Kostant's "adjoint" `∂` of the differential ([Kostant 1961, §2 (check)]): for `𝔫₋`-homology,
+Kostant's coboundary operator, transported to `⋀𝔫₋ ⊗ V` ([Kostant 1961, Prop. 3.13, Lemma 4.1];
+the `𝔫₋`-homology differential corresponds to its adjoint `d*`, Lemma 4.2): for `𝔫₋`-homology,
 `δ₀ m = -∑ f_a ⊗ e_a m` and `G(y) = ½ ∑ ε(f_a) ε(π[e_a, y])` (see
 `LieLean.Algebra.Lie.KacMoody.Kostant.Identity`).
 
@@ -47,7 +48,7 @@ a cycle `c` of degree `k` by an invertible scalar, then `c` is a boundary, since
 ## References
 
 * B. Kostant, *Lie algebra cohomology and the generalized Borel–Weil theorem*, Ann. of Math.
-  **74** (1961), 329–387 (check).
+  **74** (1961), 329–387.
 * The recursive definition and the commutation rules are reconstructed by us, in the style of
   `LieLean.Algebra.Lie.Homology.ChevalleyEilenberg`.
 -/
