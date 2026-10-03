@@ -43,7 +43,7 @@ algebra map `'f → k[X]`, `θᵢ ↦ X`, `θⱼ ↦ 0` (`j ≠ i`), kills the S
   monomials in the root vectors along a reduced word.
 
 Proofs adapted from the ungated `m15-pbw` branch (3473bfd); the arguments are
-reconstructed. The printed sources have not been consulted.
+reconstructed.
 
 ## References
 
@@ -241,14 +241,12 @@ theorem pbwMonomial_mem_adjoin_of_isReduced {ω : List I} (hω : cs.IsReduced ω
   pbwMonomial_mem _ _ (fun n hn ↦ rootVector_mem_adjoin_of_not_root hD hfin hv' hω n hn) c
 
 include hD hfin in
-/-- **Linear independence of the PBW monomials** ([Jan] Lemma 8.21 b),
-opposite order, [Lus] 40.2.1):
-for `v ≠ 0` not a
-root of unity and a reduced word `ω = i₁ ⋯ iₙ` of a Coxeter group with the Coxeter matrix of the
-Cartan datum, the ordered monomials `E_{β₁}^{c₁} ⋯ E_{βₙ}^{cₙ}` in the root vectors
-`E_{β_m} = T_{i₁} ⋯ T_{i_{m-1}}(E_{i_m})` are linearly independent. The hypotheses on the Cartan
-datum (`BraidOuterCondition` and `aᵢⱼ aⱼᵢ ≤ 3`) are those under which the root vectors along
-reduced words are known to lie in `U⁺`; they hold in finite type. -/
+/-- **Linear independence of the PBW monomials** ([Jan] Lemma 8.21 b), opposite order,
+[Lus] 40.2.1): for `v ≠ 0` not a root of unity and a reduced word `ω = i₁ ⋯ iₙ` of a Coxeter group
+with the Coxeter matrix of the Cartan datum, the ordered monomials `E_{β₁}^{c₁} ⋯ E_{βₙ}^{cₙ}` in
+the root vectors `E_{β_m} = T_{i₁} ⋯ T_{i_{m-1}}(E_{i_m})` are linearly independent. The hypotheses
+on the Cartan datum (`BraidOuterCondition` and `aᵢⱼ aⱼᵢ ≤ 3`) are those under which the root vectors
+along reduced words are known to lie in `U⁺`; they hold in finite type. -/
 theorem linearIndependent_pbwMonomial_of_isReduced {ω : List I} (hω : cs.IsReduced ω) :
     LinearIndependent k (pbwMonomial (braidEquivOfNotRoot R hv') (E R v) ω) := by
   refine linearIndependent_pbwMonomial
@@ -264,11 +262,10 @@ theorem linearIndependent_pbwMonomial_of_isReduced {ω : List I} (hω : cs.IsRed
 
 end Reduced
 
-/-- **Linear independence of the PBW monomials in finite type**
-([Jan] Lemma 8.21 b), opposite order, [Lus] 40.2.1):
-for a Cartan datum of finite type, `v ≠ 0` not a root of unity and a reduced word `ω` of a
-Coxeter group with the Coxeter matrix of the datum (e.g. the Weyl group of a realization), the
-ordered monomials in the root vectors along `ω` are linearly independent. -/
+/-- **Linear independence of the PBW monomials in finite type** ([Jan] Lemma 8.21 b), opposite
+order, [Lus] 40.2.1): for a Cartan datum of finite type, `v ≠ 0` not a root of unity and a reduced
+word `ω` of a Coxeter group with the Coxeter matrix of the datum (e.g. the Weyl group of a
+realization), the ordered monomials in the root vectors along `ω` are linearly independent. -/
 theorem linearIndependent_pbwMonomial_of_isFiniteCartan [Fintype I]
     (hA : D.cartanMatrix.IsFiniteCartan) {W : Type*} [Group W]
     {cs : CoxeterSystem D.cartanMatrix.coxeterMatrix W} {ω : List I} (hω : cs.IsReduced ω) :

@@ -16,10 +16,10 @@ import LieLean.Algebra.QuantumGroup.BraidAction.PathSerre
 
 ## Scope and references
 
-Reconstructed from the defining presentation and existing recovery identities;
-no primary source was consulted. Centre edges are zero or mutual simple edges,
-distinct neighbours are orthogonal, and neighbour/non-neighbour edges are zero
-or mutual simple edges. Edges between two non-neighbours are unrestricted.
+Reconstructed from the defining presentation and existing recovery identities.
+Centre edges are zero or mutual simple edges, distinct neighbours are orthogonal,
+and neighbour/non-neighbour edges are zero or mutual simple edges. Edges between two
+non-neighbours are unrestricted.
 This includes the classical finite-type simply-laced diagrams, but does not
 cover triangles through the chosen node or establish braid-group relations.
 Neither finite rank nor characteristic zero is assumed. Both parameter sum

@@ -11,11 +11,11 @@ import LieLean.Algebra.Lie.KacMoody.Character
 
 Let `V` be a module over the Kac–Moody algebra `𝔤 = 𝔤(A)` in the category `𝒪`, and let
 `λ ∈ 𝔥*`. Modules in `𝒪` need not have finite composition series, but they have *local
-composition series* ([Kac] Lemma 9.6): a filtration by submodules
-`0 = V₀ ⊆ V₁ ⊆ ⋯ ⊆ V_t = V` and a subset `J ⊆ {1, …, t}` such that `V_j / V_{j-1} ≅ L(λ_j)` with
-`λ_j ≥ λ` for `j ∈ J`, and `(V_j / V_{j-1})_μ = 0` for all `μ ≥ λ` when `j ∉ J`. Here `μ ≥ λ`
-means `μ - λ ∈ Q₊`, i.e. `λ ∈ cone P μ`. The number of `j ∈ J` with `λ_j = μ` is the
-multiplicity `[V : L(μ)]`; it does not depend on the local composition series, nor on `λ ≤ μ`.
+composition series* ([Kac] Lemma 9.6): a filtration by submodules `0 = V₀ ⊆ V₁ ⊆ ⋯ ⊆ V_t = V` and a
+subset `J ⊆ {1, …, t}` such that `V_j / V_{j-1} ≅ L(λ_j)` with `λ_j ≥ λ` for `j ∈ J`, and
+`(V_j / V_{j-1})_μ = 0` for all `μ ≥ λ` when `j ∉ J`. Here `μ ≥ λ` means `μ - λ ∈ Q₊`, i.e.
+`λ ∈ cone P μ`. The number of `j ∈ J` with `λ_j = μ` is the multiplicity `[V : L(μ)]`; it does not
+depend on the local composition series, nor on `λ ≤ μ`.
 
 ## Design
 
@@ -42,8 +42,7 @@ module `LieSubmodule.Subquotient V_{j-1} V_j`.
 
 The multiplicities `[V : L(μ)]` are in `KacMoody/CompositionSeries/Multiplicity.lean`, and
 the Casimir step of the proof of [Kac] Prop. 9.8 in `KacMoody/CompositionSeries/Casimir.lean`
-(Prop. 9.8 itself, a character identity, in
-`KacMoody/CompositionSeries/Character.lean`).
+(Prop. 9.8 itself, a character identity, in `KacMoody/CompositionSeries/Character.lean`).
 
 ## Proofs
 

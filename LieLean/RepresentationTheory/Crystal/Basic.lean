@@ -57,9 +57,8 @@ Kac–Moody algebra the simple roots are not stable under the reflections).
 /-- A Cartan datum: a weight lattice `X` (any additive commutative group) with simple roots
 `αᵢ ∈ X` and simple coroots given as linear forms `⟨·, αᵢ^∨⟩ : X → ℤ`, such that
 `⟨αᵢ, αᵢ^∨⟩ = 2`. This is the part of a Cartan datum `(A, Π, Π^∨, P, P^∨)` of [HK] Def. 2.1.1
-used by the theory of abstract crystals; the associated matrix
-`CartanDatum.cartanMatrix` is `aᵢⱼ = ⟨αⱼ, αᵢ^∨⟩`, the convention of
-`Matrix.Realization`. -/
+used by the theory of abstract crystals; the associated matrix `CartanDatum.cartanMatrix` is
+`aᵢⱼ = ⟨αⱼ, αᵢ^∨⟩`, the convention of `Matrix.Realization`. -/
 structure CartanDatum (ι X : Type*) [AddCommGroup X] where
   /-- The simple roots `αᵢ`. -/
   root : ι → X
@@ -296,11 +295,11 @@ lemma φ_fIter {n : ℕ} (h : C.fIter i n b = some b') : C.φ i b = C.φ i b' + 
 
 variable (C₁ : Crystal D B₁) (C₂ : Crystal D B₂) (C₃ : Crystal D B₃)
 
-/-- A morphism of crystals ([Kas] §7.2, [HK] Def. 4.5.5): a map
-`ψ : B₁ → B₂ ⊔ {0}` (with `0` modelled by `none`) such that for `b ∈ B₁` with `ψ(b) ∈ B₂`,
-`wt`, `εᵢ` and `φᵢ` are preserved, and such that if `b, ẽᵢ b ∈ B₁` both have nonzero image then
-`ψ(ẽᵢ b) = ẽᵢ ψ(b)`, and likewise for `f̃ᵢ`. Morphisms in this sense are not closed under
-composition in general; see `Crystal.StrictHom` for the better behaved strict morphisms. -/
+/-- A morphism of crystals ([Kas] §7.2, [HK] Def. 4.5.5): a map `ψ : B₁ → B₂ ⊔ {0}` (with `0`
+modelled by `none`) such that for `b ∈ B₁` with `ψ(b) ∈ B₂`, `wt`, `εᵢ` and `φᵢ` are preserved, and
+such that if `b, ẽᵢ b ∈ B₁` both have nonzero image then `ψ(ẽᵢ b) = ẽᵢ ψ(b)`, and likewise for
+`f̃ᵢ`. Morphisms in this sense are not closed under composition in general; see `Crystal.StrictHom`
+for the better behaved strict morphisms. -/
 structure Hom where
   /-- The underlying map `B₁ → B₂ ⊔ {0}`. -/
   toFun : B₁ → Option B₂
@@ -487,8 +486,8 @@ def T (μ : X) : Crystal D Unit where
   ε_e _ _ _ h := by simp at h
   e_eq_none_of_φ_eq_bot _ _ _ := rfl
 
-/-- The crystal `C = {c}` ([Kas94] Example 1.5.3 (1)): `wt c = 0`,
-`εᵢ(c) = φᵢ(c) = 0`, `ẽᵢ c = f̃ᵢ c = 0`. -/
+/-- The crystal `C = {c}` ([Kas94] Example 1.5.3 (1)): `wt c = 0`, `εᵢ(c) = φᵢ(c) = 0`,
+`ẽᵢ c = f̃ᵢ c = 0`. -/
 def trivial : Crystal D Unit where
   wt _ := 0
   ε _ _ := 0
@@ -503,10 +502,9 @@ def trivial : Crystal D Unit where
 
 variable [DecidableEq ι]
 
-/-- The elementary crystal `Bᵢ = {bᵢ(n) | n ∈ ℤ}` ([Kas] Example 7.4, [HK]
-Example 4.5.2 (3)), with `bᵢ(n)` modelled by `n : ℤ`: `wt bᵢ(n) = n αᵢ`, `φᵢ(bᵢ(n)) = n`,
-`εᵢ(bᵢ(n)) = -n`, `εⱼ = φⱼ = -∞` for `j ≠ i`, `ẽᵢ bᵢ(n) = bᵢ(n + 1)`, `f̃ᵢ bᵢ(n) = bᵢ(n - 1)` and
-`ẽⱼ = f̃ⱼ = 0` for `j ≠ i`. -/
+/-- The elementary crystal `Bᵢ = {bᵢ(n) | n ∈ ℤ}` ([Kas] Example 7.4, [HK] Example 4.5.2 (3)), with
+`bᵢ(n)` modelled by `n : ℤ`: `wt bᵢ(n) = n αᵢ`, `φᵢ(bᵢ(n)) = n`, `εᵢ(bᵢ(n)) = -n`, `εⱼ = φⱼ = -∞`
+for `j ≠ i`, `ẽᵢ bᵢ(n) = bᵢ(n + 1)`, `f̃ᵢ bᵢ(n) = bᵢ(n - 1)` and `ẽⱼ = f̃ⱼ = 0` for `j ≠ i`. -/
 def elementary (i : ι) : Crystal D ℤ where
   wt n := n • D.root i
   ε j n := if j = i then ((-n : ℤ) : WithBot ℤ) else ⊥

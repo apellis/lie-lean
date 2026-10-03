@@ -22,7 +22,7 @@ exactness of the Chevalley–Eilenberg differentials.
 ## References
 
 These elementary consequences are reconstructed directly from the definitions in
-`LieLean.Algebra.Lie.Homology.Complex`; no external source was consulted.
+`LieLean.Algebra.Lie.Homology.Complex`.
 -/
 
 namespace LieModule.ChevalleyEilenberg

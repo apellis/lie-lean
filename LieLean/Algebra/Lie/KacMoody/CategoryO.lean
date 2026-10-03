@@ -62,8 +62,7 @@ namespace IsCategoryO
 
 variable [CharZero K] {P V} {Λ : Dual K H}
 
-/-- Every quotient of the Verma module `M(Λ)` lies in the category `𝒪`
-([Kac] §9.2). -/
+/-- Every quotient of the Verma module `M(Λ)` lies in the category `𝒪` ([Kac] §9.2). -/
 theorem of_surjective (φ : VermaModule P Λ →ₗ⁅K,P.KacMoodyAlgebra⁆ V)
     (hφ : Function.Surjective φ) : IsCategoryO P V := by
   have hmap : ∀ μ, (VermaModule.weightSpace P Λ μ).map (φ : VermaModule P Λ →ₗ[K] V) ≤

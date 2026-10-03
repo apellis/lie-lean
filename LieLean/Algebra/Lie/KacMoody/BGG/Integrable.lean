@@ -21,7 +21,7 @@ import LieLean.Algebra.Lie.KacMoody.BGG.Syzygy
 
 Heckenberger–Kolb, *On the Bernstein–Gelfand–Gelfand resolution for Kac–Moody
 algebras and quantized enveloping algebras*, arXiv:math/0605460, §3.1, Lemma 3.3 and
-Proposition 3.4 (consulted). The proof implements their ascent/descent argument directly
+Proposition 3.4. The proof implements their ascent/descent argument directly
 on finitely supported vectors, without claiming that homology embeds into the direct sum
 of rank-one quotients.
 -/
@@ -176,7 +176,7 @@ theorem exists_pow_ascent_boundary (k : ℕ) (i : ι) (x : BGGTerm P hA Λ k) :
 
 /-- Each simple lowering operator acts locally nilpotently on every actual
 positive-degree BGG cycle modulo actual incoming boundaries. This is the lowering-operator
-part of Heckenberger–Kolb, arXiv:math/0605460, Proposition 3.4 (consulted), using Lemma 3.3.
+part of Heckenberger–Kolb, arXiv:math/0605460, Proposition 3.4, using Lemma 3.3.
 No exactness, symmetrizability, or coinvariant-detection hypothesis is used. -/
 theorem exists_pow_mem_range_of_cycle (k : ℕ) (i : ι)
     (x : BGGTerm P hA Λ (k + 1)) (hx : bggDiff P hA hΛ k x = 0) :

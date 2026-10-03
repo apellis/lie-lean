@@ -21,8 +21,8 @@ the sum on the right over positive roots `α` (with multiplicity) and `n ≥ 1` 
 `VermaModule.finsum_finrank_jantzen_inf_weightSpace_eq_sum_verma`). In terms of
 formal characters this is the **Jantzen sum formula**
 `∑_{i ≥ 1} ch M(λ₀)^i = ∑_{α > 0} ∑_{n ≥ 1, 2 (λ₀ + ρ | α) = n (α | α)} mult α · ch M(λ₀ - n α)`
-([HumO] §5.3 for finite type; [Kum] Thm. 2.3.4, [KK] for the determinant;
-see [Kum] Thm. 2.3.4 and, for the sum formula itself, [Kum] Cor. 2.3.5).
+([HumO] §5.3 for finite type; [KK] and [Kum] Thm. 2.3.4 for the determinant; [Kum] Cor. 2.3.5
+for the sum formula itself).
 
 ## Main results
 
@@ -44,8 +44,6 @@ order of vanishing at `t = 0` of `D_η(λ₀ + t δ)`, which by the Kac–Kazhda
   GSM 94, §5.3.
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. **34** (1979), 97–108.
-* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002, §2.3.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
   Math. 204, Birkhäuser 2002, Thm. 2.3.4, Cor. 2.3.5.
 -/

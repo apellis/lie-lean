@@ -15,7 +15,7 @@ External-generator certificates and actual quotient-map relations.
 ## References
 Reconstructed from the repository's NonterminalDouble, TerminalDouble,
 TerminalDoubleOther, DoubleEdgeRelation, SimplyLacedRelations and Artin sources.
-No external primary source consulted. No rank-two exhaustion is imposed.
+No rank-two exhaustion is imposed.
 -/
 noncomputable section
 namespace QuantumGroup

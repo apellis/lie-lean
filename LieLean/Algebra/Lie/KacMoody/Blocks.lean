@@ -468,9 +468,9 @@ abbrev casimirBlock (c : K) : LieSubmodule K P.KacMoodyAlgebra V :=
   (isStandardForm_invForm P S).casimirBlock hA hV.isPosFinite c
 
 open scoped Classical in
-/-- **Casimir block decomposition** ([HumO] §1.12; cf. [Kac] §9.9): for a
-symmetrizable generalized Cartan matrix `A` with symmetrization `S` and `K` of characteristic zero,
-a module `V` in `𝒪` is the internal direct sum of its Casimir blocks `V^c`, `c ∈ K`. -/
+/-- **Casimir block decomposition** ([HumO] §1.12; cf. [Kac] §9.9): for a symmetrizable generalized
+Cartan matrix `A` with symmetrization `S` and `K` of characteristic zero, a module `V` in `𝒪` is the
+internal direct sum of its Casimir blocks `V^c`, `c ∈ K`. -/
 theorem isInternal_casimirBlock :
     DirectSum.IsInternal fun c ↦ (hV.casimirBlock S hA c).toSubmodule :=
   (isStandardForm_invForm P S).isInternal_casimirBlock hA hV

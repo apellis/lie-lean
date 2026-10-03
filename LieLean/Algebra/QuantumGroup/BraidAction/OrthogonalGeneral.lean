@@ -16,8 +16,8 @@ with arbitrary outgoing Cartan degrees and arbitrary common neighbours.
 The published nonterminal-double maps instantiate the theorem.
 
 ## References
-Reconstructed from the inspected repository definitions `serreAux`, `braidEj`,
-`braidFj`, `SimplyLacedRelations` and `HigherDoubleRelation`. No primary source consulted.
+Reconstructed from the repository definitions `serreAux`, `braidEj`, `braidFj`,
+`SimplyLacedRelations` and `HigherDoubleRelation`.
 This does not construct maps at currently unsupported nodes or prove length three.
 -/
 noncomputable section

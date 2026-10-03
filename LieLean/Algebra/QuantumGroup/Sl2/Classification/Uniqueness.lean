@@ -17,7 +17,6 @@ import LieLean.Algebra.QuantumGroup.Sl2.Classification.Equivalence
 
 The argument is reconstructed from the explicit operators in `Sl2.SimpleModule`: dimension
 fixes the string length, and the one-dimensional raising kernel fixes the highest eigenvalue.
-No external source was consulted.
 -/
 
 namespace QuantumGroup.Sl2

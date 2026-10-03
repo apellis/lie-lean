@@ -36,8 +36,8 @@ This proves surjectivity, not injectivity, a Chevalley isomorphism, or any HC th
 
 Etingof, MIT 18.757 (Fall 2023), Lecture 10, Theorem 10.1(ii), surjectivity proof:
 https://ocw.mit.edu/courses/18-757-representations-of-lie-groups-fall-2023/mit18_757_f23_lec10.pdf
-The interpolation proof is reconstructed, not transcribed;
-it preserves the source's dominant powers → averaging → invariant extension route.
+The interpolation proof is reconstructed, not transcribed; it preserves the source's dominant
+powers → averaging → invariant extension route.
 -/
 
 noncomputable section

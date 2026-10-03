@@ -17,8 +17,8 @@ adjacent pair, with no restriction on the other nodes of the datum.
 ## References
 
 Reconstructed directly from the defining presentation and the lowering commutator in
-`BraidAction/Coupled.lean`; no external source was consulted. No braid automorphism,
-faithful module action, finite type, or rank-one specialization is assumed.
+`BraidAction/Coupled.lean`. No braid automorphism, faithful module action, finite type, or
+rank-one specialization is assumed.
 -/
 
 noncomputable section

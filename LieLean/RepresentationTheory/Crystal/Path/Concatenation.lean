@@ -53,8 +53,8 @@ section Concat
 
 variable (π₁ π₂ : LittelmannPath S)
 
-/-- The concatenation `π₁ * π₂` ([Lit95] §1): `π₁(2t)` for `t ≤ 1/2` and
-`π₁(1) + π₂(2t - 1)` for `t ≥ 1/2`. -/
+/-- The concatenation `π₁ * π₂` ([Lit95] §1): `π₁(2t)` for `t ≤ 1/2` and `π₁(1) + π₂(2t - 1)` for
+`t ≥ 1/2`. -/
 noncomputable def concat : LittelmannPath S where
   toFun t := if t ≤ 2⁻¹ then π₁ (2 * t) else π₁ 1 + π₂ (2 * t - 1)
   wt := π₁.wt + π₂.wt

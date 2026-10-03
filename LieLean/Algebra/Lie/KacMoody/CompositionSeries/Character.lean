@@ -31,10 +31,10 @@ used in the proof of the Weyl–Kac character formula ([Kac] §10.4).
 Since the support of `R` lies in `-Q₊`, `(R · ch V)_ξ` only depends on the `dim V_β`, `β ≥ ξ`;
 by a local composition series for `ξ` it equals `∑_{j ∈ J} (R · ch L(λ_j))_ξ`, where
 `ξ ≤ λ_j ≤ Λ` and `(λ_j + 2ρ | λ_j) = (Λ + 2ρ | Λ)` ([Kac] §9.8, proof of Prop. 9.8). So it suffices
-to treat `V = L(μ)`, and we show `(R · ch L(μ))_ξ = 0` if `ξ ≤ μ` and
-`(ξ + 2ρ | ξ) ≠ (μ + 2ρ | μ)` by induction on the height of `μ - ξ`: decomposing `M(μ)` in the
-same way, `0 = (e^μ)_ξ = (R · ch M(μ))_ξ = (R · ch L(μ))_ξ + ∑ (R · ch L(λ_j))_ξ`, where `L(μ)`
-occurs exactly once (as `dim M(μ)_μ = 1`) and the other `λ_j` satisfy `ξ ≤ λ_j < μ` and
+to treat `V = L(μ)`, and we show `(R · ch L(μ))_ξ = 0` if `ξ ≤ μ` and `(ξ + 2ρ | ξ) ≠ (μ + 2ρ | μ)`
+by induction on the height of `μ - ξ`: decomposing `M(μ)` in the same way,
+`0 = (e^μ)_ξ = (R · ch M(μ))_ξ = (R · ch L(μ))_ξ + ∑ (R · ch L(λ_j))_ξ`, where `L(μ)` occurs exactly
+once (as `dim M(μ)_μ = 1`) and the other `λ_j` satisfy `ξ ≤ λ_j < μ` and
 `(λ_j + 2ρ | λ_j) = (μ + 2ρ | μ)`, so their terms vanish by induction. This is the argument of
 [Kac] §9.8 in the language of `ℰ`, written out by us.
 

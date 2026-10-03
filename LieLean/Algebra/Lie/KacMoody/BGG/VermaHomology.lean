@@ -26,8 +26,7 @@ No BGG exactness or irreducible-module homology computation is used.
 
 ## References
 
-Reconstructed from the existing PBW module equivalence and CE functoriality. No external
-source consulted for this reduction.
+Reconstructed from the existing PBW module equivalence and CE functoriality.
 -/
 
 noncomputable section

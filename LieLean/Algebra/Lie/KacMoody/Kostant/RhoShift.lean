@@ -17,13 +17,13 @@ Laplacian on `𝔫₋`-chains (`KacMoody/Kostant/Identity.lean`).
 
 ## Proof
 
-The following argument for this step is our own. Let `v₀` be the
-highest-weight vector of the Verma module `M(0)`. The Casimir operator `Ω` acts on `M(0)` by
-`(0 + 2ρ | 0) = 0` ([Kac] Cor. 2.6). Expanding `Ω (y v₀)` with `Ω = 2ν⁻¹(ρ) + Ω₀ + 2Ω₊`, the
-first two terms give `(-2(ρ|β) + (β|β)) y v₀`, and in `Ω₊ (y v₀) = ∑_α ∑ₖ e_{-α} [e_α, y] v₀` only
-the roots `0 < α < β` contribute. Writing `e_{-α}[e_α, y] v₀ = [e_{-α}, [e_α, y]] v₀ +
-[e_α, y] e_{-α} v₀`, the antisymmetry of [Kac] Lemma 2.4 under `α ↦ β - α` identifies the sum of
-the second terms with minus the whole sum, so `2 Ω₊ (y v₀) = ∑_{0<α<β} ∑ₖ [e_{-α}, [e_α, y]] v₀`.
+The following argument for this step is our own. Let `v₀` be the highest-weight vector of the Verma
+module `M(0)`. The Casimir operator `Ω` acts on `M(0)` by `(0 + 2ρ | 0) = 0` ([Kac] Cor. 2.6).
+Expanding `Ω (y v₀)` with `Ω = 2ν⁻¹(ρ) + Ω₀ + 2Ω₊`, the first two terms give
+`(-2(ρ|β) + (β|β)) y v₀`, and in `Ω₊ (y v₀) = ∑_α ∑ₖ e_{-α} [e_α, y] v₀` only the roots `0 < α < β`
+contribute. Writing `e_{-α}[e_α, y] v₀ = [e_{-α}, [e_α, y]] v₀ + [e_α, y] e_{-α} v₀`, the
+antisymmetry of [Kac] Lemma 2.4 under `α ↦ β - α` identifies the sum of the second terms with minus
+the whole sum, so `2 Ω₊ (y v₀) = ∑_{0<α<β} ∑ₖ [e_{-α}, [e_α, y]] v₀`.
 Finally `x ↦ x v₀` is injective on `𝔫₋` (PBW).
 
 ## Main definitions

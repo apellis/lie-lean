@@ -25,10 +25,8 @@ at `v = 1` ([GP] 8.1.2, Remark 8.1.5).
 
 ## References
 
-* [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
-  Invent. Math. **53** (1979), 165–184.
 * [GP] M. Geck, G. Pfeiffer, *Characters of finite Coxeter groups and Iwahori–Hecke algebras*,
-  LMS Monographs 21, OUP 2000.
+  LMS Monographs 21, OUP 2000, §8.1.
 -/
 
 open Module

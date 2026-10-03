@@ -26,10 +26,9 @@ zero and `v ∈ k` transcendental over `ℚ` (Lusztig's case is `k = ℚ(v)`), `
    characteristic zero) with the same highest weight
    (`QuantumGroup.IrreducibleModule.finrank_weightSpace_eq`).
 
-The [Lus] numbers above were checked against the book; [Jan] treats finite type only.
-The following argument is our own
-reconstruction, for arbitrary symmetrizable Cartan data, reusing the specialization machinery
-of the quantum Gabber–Kac theorem (`LieLean.Algebra.QuantumGroup.GabberKac`).
+[Jan] treats finite type only. The following argument is our own reconstruction, for arbitrary
+symmetrizable Cartan data, reusing the specialization machinery of the quantum Gabber–Kac
+theorem (`LieLean.Algebra.QuantumGroup.GabberKac`).
 
 ## Proof
 
@@ -262,9 +261,8 @@ theorem maxSubmodule_eq_fPowSubmodule [Finite I] (hv : Transcendental ℚ v) (hR
 end VermaModule
 
 /-- **`L̃_q(Λ) ≅ L_q(Λ)`** ([Lus] 3.5.6, 6.2.3 (a); [Jan] 5.15, finite type): for
-`v` transcendental
-over `ℚ`, an `X`-regular root datum with finitely many simple roots and `Λ` dominant, the
-surjection `L̃_q(Λ) = M_q(Λ) ⧸ Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ → L_q(Λ)` is injective. -/
+`v` transcendental over `ℚ`, an `X`-regular root datum with finitely many simple roots and `Λ`
+dominant, the surjection `L̃_q(Λ) = M_q(Λ) ⧸ Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ → L_q(Λ)` is injective. -/
 theorem FPowQuotient.toIrreducibleModule_injective [Finite I] (hv : Transcendental ℚ v)
     (hR : R.IsXRegular) (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (hΛ : ∀ i, 0 ≤ Λ (R.coroot i)) :
     Function.Injective (FPowQuotient.toIrreducibleModule hR hv' hΛ) := by
@@ -288,10 +286,9 @@ def FPowQuotient.equivIrreducibleModule [Finite I] (hv : Transcendental ℚ v) (
 
 /-- **The characters of `L_q(Λ)` are classical** ([Lus] 6.2.3 (a), 33.1.3 (d); [Jan] 5.15
 (finite type)). Let `(I, ·)` be a Cartan datum with `I` finite, `R` an `X`-regular root
-datum, `v ∈ k`
-transcendental over `ℚ` (`k` of characteristic zero) and `Λ` dominant. Let `L(Λ')` be the
-irreducible highest-weight module of the Kac–Moody algebra `𝔤(A)` of the Cartan matrix `A` of the
-datum, for any realization `P` of `A` over any field `K` of characteristic zero, with
+datum, `v ∈ k` transcendental over `ℚ` (`k` of characteristic zero) and `Λ` dominant. Let `L(Λ')` be
+the irreducible highest-weight module of the Kac–Moody algebra `𝔤(A)` of the Cartan matrix `A` of
+the datum, for any realization `P` of `A` over any field `K` of characteristic zero, with
 `⟨Λ', αᵢ^∨⟩ = ⟨i, Λ⟩`. Then for every `ν ∈ ℕ[I]`,
 `dim L_q(Λ)^{Λ - Σ νᵢ i'} = dim L(Λ')_{Λ' - Σ νᵢ αᵢ}`. -/
 theorem IrreducibleModule.finrank_weightSpace_eq [Fintype I] (hv : Transcendental ℚ v)

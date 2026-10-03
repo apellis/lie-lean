@@ -61,7 +61,7 @@ reconstructed.)
 ## References
 
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.3, §2.2, §3.7, §4.9,
-  §4.9, §5.1, §5.6, Prop. 5.10 (stated over `ℂ`).
+  §5.1, §5.6, Prop. 5.10 (stated over `ℂ`).
 -/
 
 open Module LieModule LieAlgebra

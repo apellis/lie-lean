@@ -16,7 +16,7 @@ braid candidates transport the established positive Serre relation to negative i
 
 ## References
 
-Reconstructed directly from the presentation; no external primary source was consulted.
+Reconstructed directly from the presentation.
 -/
 
 noncomputable section

@@ -100,9 +100,8 @@ lemma nonneg_of_apply_root_eq_add {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ 
     omega
 
 /-- **Proof of [Kac] Lemma 3.10, (3.10.3)**: if `u ∈ W` maps the simple root `αⱼ` to the
-simple root `αᵢ`,
-then `u rⱼ u⁻¹ = rᵢ`. The argument (reconstructed, see the module docstring) shows that
-`rᵢ u rⱼ u⁻¹` fixes all simple roots. -/
+simple root `αᵢ`, then `u rⱼ u⁻¹ = rᵢ`. The argument (reconstructed, see the module docstring) shows
+that `rᵢ u rⱼ u⁻¹` fixes all simple roots. -/
 theorem mul_reflection_mul_inv_eq {u : Dual K H ≃ₗ[K] Dual K H} (hu : u ∈ P.weylGroup hA)
     {i j : ι} (h : u (P.root j) = P.root i) :
     u * P.reflection hA j * u⁻¹ = P.reflection hA i := by

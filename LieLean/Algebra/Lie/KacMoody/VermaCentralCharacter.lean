@@ -25,7 +25,7 @@ import LieLean.Algebra.Lie.KacMoody.VermaHom
 The actual centre `Subalgebra.center K U(g)` acts by scalars on every Verma module.
 The scalar is constructed from the one-dimensional top weight space and cyclicity,
 not assumed. It defines a `K`-algebra character. Nonzero Verma morphisms force equality
-of these characters. Arguments reconstructed; no printed source was consulted.
+of these characters. Arguments reconstructed.
 This does not construct central block projections or a Harish-Chandra isomorphism.
 -/
 

@@ -27,8 +27,8 @@ for every simply-laced graph. No finiteness or characteristic restriction is use
 
 ## References
 
-Reconstructed directly from the defining quantum Serre relations; no external
-source was consulted. No rank restriction or assumed braid automorphism is used.
+Reconstructed directly from the defining quantum Serre relations. No rank restriction or
+assumed braid automorphism is used.
 -/
 
 noncomputable section

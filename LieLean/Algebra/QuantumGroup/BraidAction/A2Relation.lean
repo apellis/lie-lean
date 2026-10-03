@@ -16,8 +16,8 @@ import LieLean.Algebra.QuantumGroup.BraidAction.A2
 ## References
 
 Reconstructed from the quotient presentation and the proved coupled recovery identities.
-No external primary source was consulted. The field and root datum lattice are arbitrary;
-the index type has exactly two distinct nodes with mutual Cartan entries `-1`.
+The field and root datum lattice are arbitrary; the index type has exactly two distinct nodes
+with mutual Cartan entries `-1`.
 -/
 
 namespace LusztigCartanDatum

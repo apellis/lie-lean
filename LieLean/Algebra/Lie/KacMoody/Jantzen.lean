@@ -13,8 +13,7 @@ Let `A` be symmetrizable and `𝔤 = 𝔤(A)` over a field `K` of characteristic
 and consider the line `λ(t) = λ₀ + t δ`. All Verma modules `M(λ(t))` have the same underlying
 space `U(𝔫₋)` (`u ↦ u v_{λ(t)}`), and the action of `𝔤` and the Shapovalov forms `B_{λ(t)}` depend
 polynomially on `t` (`KacMoody/KacKazhdan/Families.lean`). The **Jantzen filtration**
-([HumO] §5.3, §5.7; [Jantzen, *Moduln mit einem höchsten Gewicht*] 5.3, numbered as in
-[HumO] §5.7) is
+([HumO] §5.3, §5.7, citing Jantzen, *Moduln mit einem höchsten Gewicht*, 5.3) is
 `M(λ₀)^i = {f(0) v_{λ₀} | f a polynomial family in U(𝔫₋) with B_{λ(t)}(f(t) v_{λ(t)}, w v_{λ(t)})
 divisible by tⁱ for all w ∈ U(𝔫₋)}`.
 It is a decreasing filtration of `M(λ₀)` by submodules with `M(λ₀)^0 = M(λ₀)` and

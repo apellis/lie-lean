@@ -12,7 +12,7 @@ import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
 
 Reconstructed finite-Weyl-orbit descent, followed by the Ore/uniformity argument.
 Classical context: Humphreys, Representations of semisimple Lie algebras in the
-BGG category O, Theorem 4.2. No printed proof was consulted for this construction.
+BGG category O, Theorem 4.2.
 -/
 
 open Module LieModule

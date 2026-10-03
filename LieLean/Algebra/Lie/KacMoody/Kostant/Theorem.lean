@@ -84,8 +84,8 @@ theorem exists_weylGroup_of_homologyWeightSpace_ne_bot (S : A.Symmetrization) {k
 
 include hA hS hΛ
 
-/-- **The Garland–Lepowsky theorem, dimension part** ([GL] Thm. 8.6; [Kum]
-Thm. 3.2.7): `dim H_{ℓ(w)}(𝔫₋, L(Λ))_{w(Λ + ρ) - ρ} = 1` for every `w ∈ W`. -/
+/-- **The Garland–Lepowsky theorem, dimension part** ([GL] Thm. 8.6; [Kum] Thm. 3.2.7):
+`dim H_{ℓ(w)}(𝔫₋, L(Λ))_{w(Λ + ρ) - ρ} = 1` for every `w ∈ W`. -/
 theorem finrank_homologyWeightSpace_eq_one (w : P.weylGroup hA) :
     finrank K ((nNegDerivAction P (IrreducibleModule P Λ)).homologyWeightSpace
       ((P.coxeterSystem hA).length w) ((w : Dual K H ≃ₗ[K] Dual K H) (Λ + P.rho) - P.rho)) = 1 :=

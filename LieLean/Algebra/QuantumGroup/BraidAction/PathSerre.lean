@@ -16,9 +16,8 @@ relations missing from the whole-star braid construction.
 
 ## References
 
-Reconstructed directly from the defining Serre polynomials; no primary source
-was consulted. This is a dependency of the simply-laced braid automorphism theorem,
-not an assertion of the full theorem.
+Reconstructed directly from the defining Serre polynomials. This is a dependency of the
+simply-laced braid automorphism theorem, not an assertion of the full theorem.
 -/
 
 noncomputable section

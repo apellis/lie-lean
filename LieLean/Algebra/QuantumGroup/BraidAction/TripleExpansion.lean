@@ -12,7 +12,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.TripleEdge
 The negative candidate's odd-degree sign and the expanded third quantum factorial.
 
 ## References
-Reconstructed from the original quotient presentation; no external primary source consulted.
+Reconstructed from the original quotient presentation.
 -/
 
 noncomputable section

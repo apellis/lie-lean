@@ -12,7 +12,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.DoubleEdge
 Neighbor-first cubic relations and the second exact-two-node automorphism.
 
 ## References
-Reconstructed from the defining presentation; no primary source consulted.
+Reconstructed from the defining presentation.
 -/
 
 noncomputable section

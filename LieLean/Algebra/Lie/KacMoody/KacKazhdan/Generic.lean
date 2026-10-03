@@ -33,10 +33,10 @@ line `λ₀ + t δ`, the order formula gives
 for the Shapovalov determinants `D_β` (`VermaModule.natTrailingDegree_eq_mul_of_generic`). This is
 the step in the proof of the Kac–Kazhdan determinant formula that identifies the multiplicity of
 a non-isotropic hyperplane `H_γ` in `D_β` as `P(β - γ)` times a constant (cf. [KK];
-[Kum] Thm. 2.3.4, proof, Step 4 and its conclusion;
-[Jantzen, *Kontravariante Formen auf induzierten Darstellungen halbeinfacher Lie-Algebren*,
-Math. Ann. 226 (1977), 53–65], where such a filtration is used for the parabolic determinant
-([HumO] §9.17, Remark); the argument here was reconstructed by us).
+[Kum] Thm. 2.3.4, proof, Step 4 and its conclusion; [Jantzen, *Kontravariante Formen auf induzierten
+Darstellungen halbeinfacher Lie-Algebren*, Math. Ann. 226 (1977), 53–65], where such a filtration is
+used for the parabolic determinant ([HumO] §9.17, Remark); the argument here was reconstructed by
+us).
 
 ## Main results
 

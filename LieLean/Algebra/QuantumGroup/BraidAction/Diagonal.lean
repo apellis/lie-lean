@@ -47,8 +47,7 @@ relations (`BraidDiagonal.Hyp`); `QuantumGroup.braidDiagonal_hyp` checks them in
 ## References
 
 This is our own computation. The relation is part of the statement that `Tᵢ` is an algebra
-automorphism ([Lus] §37.1, [Jan] Ch. 8), whose published proofs proceed
-differently; the argument here was not checked against them.
+automorphism ([Lus] §37.1, [Jan] Ch. 8), whose published proofs proceed differently.
 
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §37.1.
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 8.

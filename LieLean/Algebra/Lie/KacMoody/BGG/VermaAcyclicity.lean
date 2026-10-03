@@ -20,7 +20,7 @@ This does not assert exactness of the positive-degree BGG differential.
 ## References
 
 Reconstructed by transport through `homologyEquivLeftRegular` from the proved regular
-CE acyclicity. No additional external source consulted.
+CE acyclicity.
 -/
 
 namespace Matrix.Realization.KacMoodyAlgebra.VermaModule

@@ -273,8 +273,7 @@ variable (hA : A.IsGeneralizedCartan)
 include hA
 
 /-- `L̃(Λ)` is integrable ([Kac] §10.1, remark before Lemma 10.1). This holds for
-every `n : ι → ℕ`; it is of
-interest when `nᵢ = ⟨Λ, αᵢ^∨⟩`. -/
+every `n : ι → ℕ`; it is of interest when `nᵢ = ⟨Λ, αᵢ^∨⟩`. -/
 theorem isIntegrable : IsIntegrable P (FPowQuotient P Λ n) :=
   isIntegrable_of_surjective hA (LieSubmodule.Quotient.mk' _)
     (LieSubmodule.Quotient.surjective_mk' _) fun i ↦ ⟨n i + 1, toEnd_f_pow_hwv P Λ n i⟩

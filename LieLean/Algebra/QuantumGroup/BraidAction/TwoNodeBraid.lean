@@ -35,7 +35,7 @@ two Serre relations (see `BraidAction/NeighborSerreShort.lean`).
 
 ## References
 
-Reconstructed from the quotient presentation; no primary source was consulted.
+Reconstructed from the quotient presentation.
 -/
 
 noncomputable section

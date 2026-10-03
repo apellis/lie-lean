@@ -28,8 +28,7 @@ by its Cartan projection. It is independent of the highest weight.
 Reconstructed proof of the standard PBW projection/evaluation argument; for finite-dimensional
 semisimple `𝔤` over `ℂ` it is J. E. Humphreys, *Representations of semisimple Lie algebras in
 the BGG category 𝒪*, GSM 94, §1.7.
-No isomorphism,
-character classification, or finite-type character separation is assumed or claimed.
+No isomorphism, character classification, or finite-type character separation is assumed or claimed.
 -/
 
 open Module LieModule TensorProduct

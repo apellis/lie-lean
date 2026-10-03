@@ -102,8 +102,7 @@ theorem IsLeftInversion.exists_mul_wordProd_eq {ω : List B} {t : W}
   refine ⟨j, hj, ?_⟩
   rw [← getD_leftInvSeq_mul_wordProd, List.getD_eq_getElem]
 
-/-- **The exchange condition**, right-handed version ([BB] Thm. 1.4.3,
-[HumC] §5.8). -/
+/-- **The exchange condition**, right-handed version ([BB] Thm. 1.4.3, [HumC] §5.8). -/
 theorem IsRightDescent.exists_wordProd_mul_eq {ω : List B} {i : B}
     (h : cs.IsRightDescent (π ω) i) : ∃ j < ω.length, π ω * s i = π (ω.eraseIdx j) :=
   IsRightInversion.exists_wordProd_mul_eq cs

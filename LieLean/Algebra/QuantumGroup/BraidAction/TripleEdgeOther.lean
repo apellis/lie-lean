@@ -40,7 +40,7 @@ is not treated here.
 ## References
 
 Reconstructed from the quotient presentation; the certificate was found by exact linear algebra
-over `ℚ(p)`. No primary source was consulted.
+over `ℚ(p)`.
 -/
 
 noncomputable section

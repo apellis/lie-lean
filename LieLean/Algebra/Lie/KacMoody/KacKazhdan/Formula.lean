@@ -11,8 +11,7 @@ import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Exponents
 Let `A` be a symmetrizable generalized Cartan matrix, `𝔤 = 𝔤(A)` over an algebraically closed
 field `K` of characteristic zero, and `D_β(λ)` the determinant of the Shapovalov form on the weight
 space `M(λ)_{λ-β}` of the Verma module, with respect to the PBW basis (which does not depend on
-`λ`; `VermaModule.shapovalovDet`). The **Kac–Kazhdan determinant formula** ([KK];
-see [Kum] Thm. 2.3.4;
+`λ`; `VermaModule.shapovalovDet`). The **Kac–Kazhdan determinant formula** ([KK]; see
 [Kum] Thm. 2.3.4) states that, up to a nonzero constant,
 
 `D_β(λ) = ∏_{α ∈ Δ₊} ∏_{n ≥ 1} ((λ + ρ | α) - n (α | α)/2)^{mult α · P(β - n α)}`,
@@ -46,11 +45,10 @@ scalar by these multiplicities (`Module.Dual.exists_prod_pow_eq_C_mul_prod_pow`)
 factors `ψ_{n α_x} = 2 n ((λ + ρ | α_x) - n (α_x | α_x)/2)` gives the formula.
 
 This is the argument of [KK], as presented in [Kum] Thm. 2.3.4 (proof), in the form given by
-Jantzen for finite-dimensional `𝔤`
-(via the Jantzen filtration and a comparison of leading terms); we reconstructed the details
-ourselves. We work over an algebraically closed field (Kac and Kazhdan work over `ℂ`); this is used
-only to see that the zeros of `D_β` lying on finitely many hyperplanes forces `D_β` to be a
-product of their equations.
+Jantzen for finite-dimensional `𝔤` (via the Jantzen filtration and a comparison of leading terms);
+we reconstructed the details ourselves. We work over an algebraically closed field (Kac and Kazhdan
+work over `ℂ`); this is used only to see that the zeros of `D_β` lying on finitely many hyperplanes
+forces `D_β` to be a product of their equations.
 
 ## Main results
 
@@ -67,8 +65,6 @@ product of their equations.
 
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. 34 (1979), 97–108.
-* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002, §2.3.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
   Math. 204, Birkhäuser 2002, Prop. 2.3.2, Thm. 2.3.4.
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
@@ -160,9 +156,8 @@ theorem exponent_self_eq_kkMult {η : ι → ℤ} (F : (ι → ℤ) → MvPolyno
 
 include hA in
 /-- **The Kac–Kazhdan determinant formula**, grouped by weights ([KK]; cf. [Kum]
-Thm. 2.3.4). Over an
-algebraically closed field of characteristic zero, for `η ∈ Q` there is `c ≠ 0` with
-`D_η(λ) = c ∏_{0 < γ ≤ η} (2 (λ + ρ | γ) - (γ | γ))^{d(γ) P(η - γ)}` for all `λ`, where
+Thm. 2.3.4). Over an algebraically closed field of characteristic zero, for `η ∈ Q` there is `c ≠ 0`
+with `D_η(λ) = c ∏_{0 < γ ≤ η} (2 (λ + ρ | γ) - (γ | γ))^{d(γ) P(η - γ)}` for all `λ`, where
 `d(γ) = kkMult η γ` is the number of pairs `(x, n)`, `n ≥ 1`, with `n α_x = γ`. -/
 theorem exists_shapovalovDet_eq_prod_kkIdx [IsAlgClosed K] (η : ι → ℤ) :
     ∃ c : K, c ≠ 0 ∧ ∀ Λ : Dual K H, shapovalovDet P (P.rootOf η) Λ =
@@ -276,7 +271,7 @@ theorem exists_shapovalovDet_eq_prod_kkPairs [IsAlgClosed K] (η : ι → ℤ) :
   field_simp
 
 include hA in
-/-- **The Kac–Kazhdan determinant formula** ([KK]; [Kum] Thm. 2.3.4; [Kum] Thm. 2.3.4). Let `A` be
+/-- **The Kac–Kazhdan determinant formula** ([KK]; [Kum] Thm. 2.3.4). Let `A` be
 a symmetrizable generalized Cartan matrix and `K` algebraically closed of characteristic zero.
 For every `β ∈ 𝔥*` there is `c ≠ 0` such that for all `λ ∈ 𝔥*` the determinant of the Shapovalov
 form on `M(λ)_{λ-β}` with respect to the PBW basis is
@@ -324,10 +319,9 @@ theorem shapovalovDet_eq [IsAlgClosed K] (β : Dual K H) :
     simp only [hP, pow_zero, finprod_one]
 
 include hA in
-/-- **The Kac–Kazhdan criterion** ([KK]; via [Kum] Thm. 2.3.4
-and Prop. 2.3.2; cf. [Kum] Thm. 2.3.4). Let `A` be a symmetrizable
-generalized Cartan matrix and `K` algebraically closed of characteristic zero. The maximal
-proper submodule `M'(λ)` of `M(λ)` has a nonzero vector of weight `λ - η` (equivalently, the
+/-- **The Kac–Kazhdan criterion** ([KK]; via [Kum] Thm. 2.3.4 and Prop. 2.3.2). Let `A` be a
+symmetrizable generalized Cartan matrix and `K` algebraically closed of characteristic zero. The
+maximal proper submodule `M'(λ)` of `M(λ)` has a nonzero vector of weight `λ - η` (equivalently, the
 Shapovalov form on `M(λ)_{λ-η}` is degenerate) iff `2 (λ + ρ | α) = n (α | α)` for some positive
 root `α` and `n ≥ 1` with `n α ≤ η`. Here `α = α_x` for an index `x` of the root vector basis of
 `𝔫₋`, and `x.coeff` are the coordinates of `α_x` in the basis of simple roots. -/

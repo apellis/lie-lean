@@ -143,9 +143,8 @@ theorem isCompl_corootCompl : IsCompl (LinearMap.range P.corootMap) P.corootComp
 /-! ### The elements `ρ` and `ρ^∨` -/
 
 /-- An element `ρ ∈ 𝔥*` with `⟨ρ, αᵢ^∨⟩ = 1` for all `i` ([Kac] §10.8; [Kac] §2.5 has
-`⟨ρ, αᵢ^∨⟩ = aᵢᵢ/2`, which is `1` when `aᵢᵢ = 2`). It exists since
-the simple coroots are linearly independent; it is unique only up to the annihilator of the coroots,
-and this is a chosen one. -/
+`⟨ρ, αᵢ^∨⟩ = aᵢᵢ/2`, which is `1` when `aᵢᵢ = 2`). It exists since the simple coroots are linearly
+independent; it is unique only up to the annihilator of the coroots, and this is a chosen one. -/
 def rho : Dual K H := ∑ i, LinearMap.proj i ∘ₗ P.corootCoord
 
 @[simp] theorem rho_coroot (i : ι) : P.rho (P.coroot i) = 1 := by

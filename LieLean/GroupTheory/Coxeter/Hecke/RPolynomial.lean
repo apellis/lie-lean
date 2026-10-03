@@ -18,10 +18,8 @@ Let `𝓗 = 𝓗_q(W)` be the Iwahori–Hecke algebra with `q` a unit (normaliza
 ```
 Thus `R_{y,w} = ε_y ε_w q^{ℓ(w)} · [T_y] T_{w⁻¹}⁻¹` (`IwahoriHeckeAlgebra.rPoly`). We prove:
 
-* the recursion ([BB] Thm. 5.1.1(iii), [KL] (2.0.b), [BB] Thm. 5.1.1(iii)): if
-  `ℓ(ws) > ℓ(w)`, then
-  `R_{y,ws} = R_{ys,w}` if `ℓ(ys) < ℓ(y)`, and `R_{y,ws} = (q - 1) R_{y,w} + q R_{ys,w}` otherwise
-  (`rPoly_mul_simple`);
+* the recursion ([BB] Thm. 5.1.1(iii), [KL] (2.0.b)): if `ℓ(ws) > ℓ(w)`, then `R_{y,ws} = R_{ys,w}`
+  if `ℓ(ys) < ℓ(y)`, and `R_{y,ws} = (q - 1) R_{y,w} + q R_{ys,w}` otherwise (`rPoly_mul_simple`);
 * `R_{y,1} = δ_{y,1}`, `R_{w,w} = 1` (`rPoly_one_right`, `rPoly_self`);
 * triangularity without the Bruhat order: if `R_{y,w} ≠ 0` then for every reduced word `ω` of `w`,
   `y` is the product of a subword of `ω` (`exists_sublist_of_rPoly_ne_zero`); in particular
@@ -145,8 +143,7 @@ theorem invCoeff_mul_simple {w : W} {i : B} (hlt : ℓ w < ℓ (w * s i)) (y : W
   · linear_combination (toFinsupp cs q (TInv cs hq w⁻¹) y) * e
   · linear_combination (toFinsupp cs q (TInv cs hq w⁻¹) (y * s i)) * e
 
-/-- The recursion for `R`-polynomials ([BB] Thm. 5.1.1(iii), [KL] (2.0.b),
-[BB] Thm. 5.1.1(iii)): if
+/-- The recursion for `R`-polynomials ([BB] Thm. 5.1.1(iii), [KL] (2.0.b)): if
 `ℓ(ws) > ℓ(w)`, then `R_{y,ws} = R_{ys,w}` if `ℓ(ys) < ℓ(y)` and
 `R_{y,ws} = (q - 1) R_{y,w} + q R_{ys,w}` otherwise. -/
 theorem rPoly_mul_simple {w : W} {i : B} (hlt : ℓ w < ℓ (w * s i)) (y : W) :
@@ -299,8 +296,7 @@ end Triangular
 
 /-- `R_{y,w}` is the value at `q` of a polynomial with integer coefficients of degree at most
 `ℓ(w) - ℓ(y)`, which is `0` if `ℓ(y) > ℓ(w)` ([BB] Thm. 5.1.1, Prop. 5.1.3; the polynomial
-depends only on
-`(W, S)`, since it is produced by the recursion `rPoly_mul_simple`). -/
+depends only on `(W, S)`, since it is produced by the recursion `rPoly_mul_simple`). -/
 theorem exists_rPoly_eq_aeval_natDegree_le (y w : W) :
     ∃ p : Polynomial ℤ, rPoly cs hq y w = Polynomial.aeval q p ∧
       p.natDegree ≤ ℓ w - ℓ y ∧ (ℓ w < ℓ y → p = 0) := by

@@ -50,9 +50,9 @@ Highestness is used only through integrality of the component
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
-(1995), Proposition 5.7 and its proof, printed p. 516; Lemma 4.3 (p. 510) and
-Corollary 3 (p. 512). The printed pages 512–516 were consulted. The argument above is
-the printed one with the reconstructed modifications recorded in the implementation notes.
+(1995), Proposition 5.7 and its proof, p. 516; Lemma 4.3 (p. 510) and Corollary 3 (p. 512). The
+argument above is the printed one with the reconstructed modifications recorded in the
+implementation notes.
 -/
 
 open Module Set LittelmannPath

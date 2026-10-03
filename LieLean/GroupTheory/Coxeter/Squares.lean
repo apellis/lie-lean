@@ -243,8 +243,8 @@ theorem exists_middle_pair {a d : W} (h : cs.BruhatLE a d) (hl : ℓ d = ℓ a +
       · exact ⟨bruhatCovBy_simple_mul_of_not_isLeftDescent ha, h₂, by omega⟩
       · exact ⟨⟨h₁, by omega⟩, hsd⟩
 
-/-- **Squares in the Bruhat order** ([BGG] Lemma 10.3): if `a ≤ d` and
-`ℓ(d) = ℓ(a) + 2`, the set `{x | a ⋖ x ⋖ d}` has exactly two elements. -/
+/-- **Squares in the Bruhat order** ([BGG] Lemma 10.3): if `a ≤ d` and `ℓ(d) = ℓ(a) + 2`, the set
+`{x | a ⋖ x ⋖ d}` has exactly two elements. -/
 theorem ncard_middle_eq_two {a d : W} (h : cs.BruhatLE a d) (hl : ℓ d = ℓ a + 2) :
     {x | cs.BruhatCovBy a x ∧ cs.BruhatCovBy x d}.ncard = 2 := by
   obtain ⟨b, c, hbc, hmid⟩ := exists_middle_pair h hl
@@ -261,8 +261,8 @@ open Classical in
 /-- A sign function `ε : W → W → ZMod 2` on the arrows `b ⋖ d` of the Bruhat order such that
 every square anticommutes (`CoxeterSystem.bruhatSign_square`), following the inductive
 construction in the proof of [BGG] Lemma 10.4 (§11): for `d ≠ 1` let `s` be a (chosen) left
-descent of `d`; then
-`ε(s d, d) = 0` and `ε(b, d) = ε(s b, b) + ε(s b, s d) + 1` for the other `b` with `ℓ(b) < ℓ(d)`.
+descent of `d`; then `ε(s d, d) = 0` and `ε(b, d) = ε(s b, b) + ε(s b, s d) + 1` for the other `b`
+with `ℓ(b) < ℓ(d)`.
 (The values for pairs which are not arrows are irrelevant.) -/
 noncomputable def bruhatSign (b d : W) : ZMod 2 :=
   if h : ∃ i, cs.IsLeftDescent d i then
@@ -287,9 +287,8 @@ private lemma bruhatSign_spec {d : W} (hd : d ≠ 1) :
   · rw [bruhatSign.eq_1, dite_eq_left h, ite_eq_left rfl]
   · rw [bruhatSign.eq_1, dite_eq_left h, ite_eq_right hb, dite_eq_left hl]
 
-/-- **The BGG signs** ([BGG] Lemma 10.4, [HumO] §6.8): for every square
-`a ⋖ b ⋖ d`, `a ⋖ c ⋖ d` with `b ≠ c` of the Bruhat order,
-`ε(a, b) + ε(b, d) + ε(a, c) + ε(c, d) = 1` in `ZMod 2`. -/
+/-- **The BGG signs** ([BGG] Lemma 10.4, [HumO] §6.8): for every square `a ⋖ b ⋖ d`, `a ⋖ c ⋖ d`
+with `b ≠ c` of the Bruhat order, `ε(a, b) + ε(b, d) + ε(a, c) + ε(c, d) = 1` in `ZMod 2`. -/
 theorem bruhatSign_square {a b c d : W} (hab : cs.BruhatCovBy a b) (hbd : cs.BruhatCovBy b d)
     (hac : cs.BruhatCovBy a c) (hcd : cs.BruhatCovBy c d) (hbc : b ≠ c) :
     cs.bruhatSign a b + cs.bruhatSign b d + cs.bruhatSign a c + cs.bruhatSign c d = 1 := by

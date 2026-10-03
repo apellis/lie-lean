@@ -26,10 +26,9 @@ count (`QuantumGroup.finrank_plusWeightSpace`) this gives, for `v` transcendenta
 `dim U⁺_ν = K(ν)` (`QuantumGroup.finrank_plusWeightSpace_eq_kostantPartition`),
 
 the dimension formula behind the PBW theorem ([Jan] 5.19 a) and 8.24, Remark 3, both for finite
-type; [Lus] 40.2.1–40.2.2), with
-`K` computed for any realization over any field of characteristic zero (`dim Z_ν` does not depend
-on the field, `LusztigF.finrank_serreSpan_one`). Consequently a family of `K(ν)` elements of
-`U⁺_ν` is linearly independent iff it spans `U⁺_ν`
+type; [Lus] 40.2.1–40.2.2), with `K` computed for any realization over any field of characteristic
+zero (`dim Z_ν` does not depend on the field, `LusztigF.finrank_serreSpan_one`). Consequently a
+family of `K(ν)` elements of `U⁺_ν` is linearly independent iff it spans `U⁺_ν`
 (`QuantumGroup.linearIndependent_iff_span_eq_plusWeightSpace`).
 
 ## Main definitions / results
@@ -250,7 +249,7 @@ open LusztigF
 variable {k : Type*} [Field k] [CharZero k] {I Y : Type*} [Fintype I] [AddCommGroup Y]
   [DecidableEq I] {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
 
-/-- **`dim U⁺_ν` is Kostant's partition function** ([Lus] 33.1.3 with [Kac] (9.7.2),):
+/-- **`dim U⁺_ν` is Kostant's partition function** ([Lus] 33.1.3 with [Kac] (9.7.2)):
 for `v` transcendental over `ℚ`, the weight space `U⁺_ν` has dimension `K(ν)`, the number of ways
 of writing `ν` as a sum of positive roots of the Kac–Moody algebra of the Cartan matrix, counted
 with multiplicities (computed for the standard realization over `ℚ`). -/
@@ -275,9 +274,8 @@ theorem finrank_plusWeightSpace_eq_kostantPartition' (hv : Transcendental ℚ v)
   omega
 
 /-- **The PBW criterion** (cf. [Jan] 5.19 a), finite type): for `v` transcendental over `ℚ`,
-a family of
-`K(ν)` elements of `U⁺_ν` (e.g. the ordered monomials of weight `ν` in the root vectors) is
-linearly independent iff it spans `U⁺_ν`. -/
+a family of `K(ν)` elements of `U⁺_ν` (e.g. the ordered monomials of weight `ν` in the root vectors)
+is linearly independent iff it spans `U⁺_ν`. -/
 theorem linearIndependent_iff_span_eq_plusWeightSpace (hv : Transcendental ℚ v) {K H : Type*}
     [Field K] [CharZero K] [AddCommGroup H] [Module K H] (P : Realization D.cartanMatrix K H)
     (ν : I →₀ ℕ) {ι : Type*} [Fintype ι] (b : ι → QuantumGroup R v)

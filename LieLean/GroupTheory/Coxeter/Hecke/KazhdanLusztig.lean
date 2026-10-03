@@ -575,8 +575,8 @@ theorem existsUnique_klBasis (w : W) : ∃! C : 𝓗, barL cs C = C ∧
 /-! ### The recursion formulas -/
 
 /-- The coefficient `μ(y, w)` of `q^{(ℓ(w) - ℓ(y) - 1)/2}` in `P_{y,w}` (`0` if `ℓ(w) - ℓ(y)` is
-even or `ℓ(y) ≥ ℓ(w)`) ([KL] Def. 1.2, which moreover
-sets `μ(w, y) = μ(y, w)`; `klMu` is not symmetrized). -/
+even or `ℓ(y) ≥ ℓ(w)`) ([KL] Def. 1.2, which moreover sets `μ(w, y) = μ(y, w)`; `klMu` is not
+symmetrized). -/
 noncomputable def klMu (y w : W) : ℤ := muCoeff (klPoly cs y w) (ℓ w - ℓ y)
 
 /-- `C'_1 = 1`. -/

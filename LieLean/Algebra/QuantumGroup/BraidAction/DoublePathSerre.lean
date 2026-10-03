@@ -16,9 +16,8 @@ edge and an untouched node. The forward relation covers a connected three-node
 B/C path, not merely the rank-two diagram.
 
 ## References
-Consulted the repository's `PathSerre`, `HigherSerreReverse`, `HigherMixed`,
-`DoubleEdge`, `DoubleEdgeOther`, and `DoubleEdgeRelation` source and M15 roadmap.
-No external primary source consulted. The degree-seven polynomial certificate is
+Builds on the repository's `PathSerre`, `HigherSerreReverse`, `HigherMixed`, `DoubleEdge`,
+`DoubleEdgeOther` and `DoubleEdgeRelation`. The degree-seven polynomial certificate is
 reconstructed by exact rational-function elimination and checked by Lean.
 -/
 noncomputable section

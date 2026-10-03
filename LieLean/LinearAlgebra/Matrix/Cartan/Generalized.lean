@@ -367,8 +367,8 @@ lemma linearIndependent_stdRoot [DecidableEq ι] : LinearIndependent K (stdRoot 
 
 /-- The standard realization of `A` on `Kⁿ × (ker A)*` (cf. [Kac] proof of Prop. 1.1, in
 coordinate-free form, with roots and coroots exchanged):
-`αᵢ^∨ = (eᵢ, 0)` and `αⱼ (v, f) = (v A)ⱼ + f (p eⱼ)`, where `p` is a
-projection of `Kⁿ` onto `ker A`. -/
+`αᵢ^∨ = (eᵢ, 0)` and `αⱼ (v, f) = (v A)ⱼ + f (p eⱼ)`, where `p` is a projection of `Kⁿ` onto
+`ker A`. -/
 noncomputable def std [DecidableEq ι] : Realization A K (StdSpace A K) where
   coroot i := (Pi.single i 1, 0)
   root := stdRoot A K

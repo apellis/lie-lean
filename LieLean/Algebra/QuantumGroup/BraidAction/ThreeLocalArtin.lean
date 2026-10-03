@@ -12,9 +12,9 @@ import LieLean.Algebra.QuantumGroup.BraidAction.NextEdge
 Constructor-independent simple-edge braid relations and actual local-map consumers.
 
 ## References
-Reconstructed from the inspected quotient presentation and degree-one recovery proofs;
-no primary source was consulted. The degree-five external certificate uses only the
-original two simple-edge Serre relations and orthogonal outer-node commutation.
+Reconstructed from the quotient presentation and degree-one recovery proofs. The degree-five
+external certificate uses only the original two simple-edge Serre relations and orthogonal
+outer-node commutation.
 -/
 noncomputable section
 namespace QuantumGroup

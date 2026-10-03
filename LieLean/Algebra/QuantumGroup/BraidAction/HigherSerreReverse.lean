@@ -14,7 +14,7 @@ Serre relation at mutual Cartan entries `(-2,-1)`. The parameter is `q_j = q_i^2
 Only `v ≠ 0` is needed; no quantum sum or difference is cancelled.
 
 ## References
-Reconstructed from the defining quotient presentation; no external source consulted.
+Reconstructed from the defining quotient presentation.
 These are automorphism prerequisites, not an automorphism or length-four braid relation.
 -/
 

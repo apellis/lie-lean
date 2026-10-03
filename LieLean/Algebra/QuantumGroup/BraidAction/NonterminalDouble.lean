@@ -20,7 +20,7 @@ All scalar cancellations are explicit. Higher-rank braid relations are not prove
 
 ## References
 Reconstructed by exact rational-function elimination from the defining Serre
-relations; no external primary source consulted. Lean checks the certificate.
+relations. Lean checks the certificate.
 -/
 noncomputable section
 namespace QuantumGroup

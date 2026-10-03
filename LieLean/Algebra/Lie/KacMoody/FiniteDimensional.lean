@@ -177,8 +177,7 @@ theorem exists_isInternal_irreducibleModule_of_finiteDimensional :
 variable (V) in
 /-- **Weyl's theorem** for `𝔤(A)`, `A` of finite type ([Hum] §6.3, Thm., stated there over an
 algebraically closed field): over a field of characteristic zero, every submodule of a
-finite-dimensional `𝔤(A)`-module has a complementary
-submodule. -/
+finite-dimensional `𝔤(A)`-module has a complementary submodule. -/
 theorem complementedLattice_of_finiteDimensional :
     ComplementedLattice (LieSubmodule K P.KacMoodyAlgebra V) :=
   IsCategoryO.complementedLattice hA.isGeneralizedCartan hA.isSymmetrizable

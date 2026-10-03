@@ -21,8 +21,8 @@ restriction, not for central character classification. No finite-type, integrali
 dominance, Harish-Chandra, linkage or Humphreys Theorem 7.6 claim is made.
 
 ## References
-Arguments reconstructed from the inspected Mathlib quotient API and the repository's
-full-central exactness and tensor-Verma filtration results. No printed source consulted.
+Arguments reconstructed from the Mathlib quotient API and the repository's full-central exactness
+and tensor-Verma filtration results.
 -/
 
 open Module LieModule TensorProduct

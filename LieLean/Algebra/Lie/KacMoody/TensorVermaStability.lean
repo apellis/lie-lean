@@ -23,7 +23,7 @@ import LieLean.Algebra.Lie.KacMoody.HighestWeight
 ## References
 
 All arguments below are reconstructed from the existing tensor identity, PBW and the
-Verma universal property, not certified against a newly consulted printed source.
+Verma universal property.
 The finite-dimensional weight-compatible Borel flag and its assembled standard filtration
 are not constructed here. No character identity replaces a module map, and no Casimir
 block is identified with a full-central-character block.

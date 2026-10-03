@@ -25,8 +25,7 @@ full automorphism or a length-four braid relation.
 
 ## References
 
-Reconstructed from the defining quotient relations and the repository's `T''` convention;
-no external primary source was consulted.
+Reconstructed from the defining quotient relations and the repository's `T''` convention.
 -/
 
 noncomputable section

@@ -32,11 +32,14 @@ we obtain Littelmann's crystal `B(Λ)`, the connected component of the straight 
 * `Matrix.Realization.straightLine_mem_pathCrystal`: the straight line paths `π_{wΛ}`, `w ∈ W`,
   lie in `B(Λ)`.
 * `Matrix.Realization.finite_wt_pathCrystal`: *if* the set of paths `f_{i₁} ⋯ f_{iₖ} π_Λ` is stable
-  under all `eⱼ` (Littelmann's theorem, not formalized here), then each weight occurs only
-  finitely often in `B(Λ)`, and all weights lie in `Λ - Q₊`
-  (`Matrix.Realization.exists_wt_eq_pathCrystal`).
+  under all `eⱼ`, then each weight occurs only finitely often in `B(Λ)`, and all weights lie in
+  `Λ - Q₊` (`Matrix.Realization.exists_wt_eq_pathCrystal`). This hypothesis is Littelmann's
+  stability theorem, proved as `Matrix.Realization.fOrbitStable` in
+  `LieLean.RepresentationTheory.Crystal.Path.Stability`.
 
-Littelmann's character formula `ch B(Λ) = ch L(Λ)` ([Lit95] Thm. 9.1) is not proved.
+Littelmann's character formula `ch B(Λ) = ch L(Λ)` ([Lit95] Thm. 9.1) is
+`Matrix.Realization.pathCharacter_eq_character` (symmetrizable `A`), in
+`LieLean.RepresentationTheory.Crystal.Path.CharacterFormula`.
 
 ## References
 
@@ -186,8 +189,9 @@ theorem straightLine_mem_pathCrystal (hΛ : P.IsDominantIntegral Λ)
     (LittelmannPath.straightLine_reflection_mem_component _ i)
 
 /-- The stability hypothesis of Littelmann's theorem for `B(Λ)`: the set of paths
-`f_{i₁} ⋯ f_{iₖ} π_Λ` is stable under all root operators `eⱼ` ([Lit95] §4, Cor. 2 and 3; not
-formalized here). -/
+`f_{i₁} ⋯ f_{iₖ} π_Λ` is stable under all root operators `eⱼ` ([Lit95] §4, Cor. 2 and 3). It is
+proved as `Matrix.Realization.fOrbitStable` in
+`LieLean.RepresentationTheory.Crystal.Path.Stability`. -/
 def FOrbitStable (hΛ : P.IsDominantIntegral Λ) : Prop :=
   ∀ π' ∈ (LittelmannPath.straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).fOrbit,
     ∀ j π'', LittelmannPath.e j π' = some π'' →

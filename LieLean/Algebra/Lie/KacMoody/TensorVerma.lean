@@ -30,8 +30,8 @@ remain to be constructed.
 ## References
 
 The argument is reconstructed from the enveloping universal property and existing PBW APIs.
-No external primary source was consulted: this is not a certification of Humphreys
-Theorem 3.6 or 7.6, and no Casimir/full-central-character block identification is made.
+It is not a proof of Humphreys Theorem 3.6 or 7.6, and no Casimir/full-central-character
+block identification is made.
 -/
 
 open TensorProduct LieModule

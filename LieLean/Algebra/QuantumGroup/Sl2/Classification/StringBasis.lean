@@ -15,8 +15,7 @@ import LieLean.Algebra.QuantumGroup.Sl2.Classification
 
 ## References
 
-Jantzen, *Lectures on quantum groups*, Ch. 2. The arguments are reconstructed;
-precise theorem numbering has not been checked against the source.
+Jantzen, *Lectures on quantum groups*, Ch. 2. The arguments are reconstructed.
 -/
 
 noncomputable section

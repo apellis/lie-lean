@@ -28,10 +28,9 @@ We prove that `T` is exact in the sense of characters: if `ch V = ch V' + ch V''
 for a short exact sequence `0 → V' → V → V'' → 0`), then `ch T V = ch T V' + ch T V''`
 ([HumO] §7.1). On Verma modules we only record the character form of [HumO] Thm. 3.6
 (there for finite-dimensional `Z`; Exercise 3.6 (a)): `R · ch (Z ⊗ M(λ)) = e^λ ch Z`,
-i.e. `Z ⊗ M(λ)` has the character of
-`⊕_ξ M(λ + ξ)^{dim Z_ξ}`. The computation of `T_λ^μ M(w·λ)` ([HumO] Thm. 7.6) needs
-the finer linkage principle (blocks for the full centre, or the Kac–Kazhdan criterion) and is not
-attempted.
+i.e. `Z ⊗ M(λ)` has the character of `⊕_ξ M(λ + ξ)^{dim Z_ξ}`. The computation of `T_λ^μ M(w·λ)`
+([HumO] Thm. 7.6) needs the finer linkage principle (blocks for the full centre, or the Kac–Kazhdan
+criterion) and is not attempted.
 
 ## Main definitions
 
@@ -89,9 +88,9 @@ theorem IsCategoryO.character_eq_add_iff (hV : IsCategoryO P V) (hV' : IsCategor
     exact_mod_cast h μ
 
 /-- **Tensoring a Verma module** ([HumO] Thm. 3.6, character form; there `Z` is
-finite-dimensional): for `Z` in `𝒪`,
-`R · ch (Z ⊗ M(λ)) = e^λ ch Z`, where `R = ∏_{α > 0} (1 - e^{-α})^{mult α}` is the denominator;
-thus `Z ⊗ M(λ)` has the character of `⊕_ξ M(λ + ξ)^{dim Z_ξ}`. -/
+finite-dimensional): for `Z` in `𝒪`, `R · ch (Z ⊗ M(λ)) = e^λ ch Z`, where
+`R = ∏_{α > 0} (1 - e^{-α})^{mult α}` is the denominator; thus `Z ⊗ M(λ)` has the character of
+`⊕_ξ M(λ + ξ)^{dim Z_ξ}`. -/
 theorem IsCategoryO.denominator_mul_character_tensorProduct_verma (hZ : IsCategoryO P Z)
     (Λ : Dual K H) :
     denominator P * (hZ.tensorProduct (VermaModule.isCategoryO P Λ)).character =
@@ -136,9 +135,9 @@ theorem isCategoryO_translation (hZ : IsCategoryO P Z) (hV : IsCategoryO P V) (c
     IsCategoryO P (hB.translation hA hZ hV c c') :=
   (hZ.tensorProduct (hV.lieSubmodule _)).lieSubmodule _
 
-/-- **Exactness of translation functors** ([HumO] §7.1), on characters: if
-`ch V = ch V' + ch V''`, e.g. for a short exact sequence `0 → V' → V → V'' → 0` in `𝒪`, then
-`ch T V = ch T V' + ch T V''` for `T V = (Z ⊗ V^c)^{c'}`. -/
+/-- **Exactness of translation functors** ([HumO] §7.1), on characters: if `ch V = ch V' + ch V''`,
+e.g. for a short exact sequence `0 → V' → V → V'' → 0` in `𝒪`, then `ch T V = ch T V' + ch T V''`
+for `T V = (Z ⊗ V^c)^{c'}`. -/
 theorem character_translation_eq_add (hZ : IsCategoryO P Z) (hV : IsCategoryO P V)
     (hV' : IsCategoryO P V') (hV'' : IsCategoryO P V'')
     (h : hV.character = hV'.character + hV''.character) (c c' : K) :

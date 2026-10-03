@@ -19,7 +19,7 @@ import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Inverse
 ## References
 
 The proofs are reconstructed from the right-descent eigenvalue relation and the alternating
-sum `parabolicKLPoly_sgn`; no external source was consulted. No finiteness is assumed.
+sum `parabolicKLPoly_sgn`. No finiteness is assumed.
 -/
 
 open LaurentPolynomial Polynomial CoxeterSystem

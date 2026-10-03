@@ -13,7 +13,7 @@ Original-Serre certificates for neighbour/untouched pairs and a broader quotient
 
 ## References
 Reconstructed from the defining Serre polynomials and the repository's PathSerre,
-SimplyLaced and OrthogonalGeneral. No external primary source consulted.
+SimplyLaced and OrthogonalGeneral.
 -/
 noncomputable section
 namespace QuantumGroup

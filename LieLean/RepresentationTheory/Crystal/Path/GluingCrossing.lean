@@ -21,8 +21,8 @@ coarsenings are kept separate. No output chains or stability are hypotheses.
 
 ## References
 Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
-(1995), Definition 5.3 and Proposition 5.6, pp. 514–516. Proofs
-reconstructed in the literal finite-source encoding.
+(1995), Definition 5.3 and Proposition 5.6, pp. 514–516. Proofs reconstructed in the literal
+finite-source encoding.
 -/
 
 open Module Set LittelmannPath LittelmannPath.FiniteConstruction

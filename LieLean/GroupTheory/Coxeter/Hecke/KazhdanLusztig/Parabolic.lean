@@ -51,8 +51,8 @@ polynomials are in
 `LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.ParabolicRelations`.
 
 The normalization is the Kazhdan–Lusztig one (coefficients in `v⁻¹ ℤ[v⁻¹]`); Soergel's `v ℤ[v]`
-normalization [Soe] differs by `v ↦ v⁻¹`. We did not consult [Deo]; the construction via
-Lusztig's lemma and the grading argument are our own write-up of the standard argument.
+normalization [Soe] differs by `v ↦ v⁻¹`. The construction via Lusztig's lemma and the grading
+argument are our own write-up of the standard argument.
 
 ## Main definitions
 

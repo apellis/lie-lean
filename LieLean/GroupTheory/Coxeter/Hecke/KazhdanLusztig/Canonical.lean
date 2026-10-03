@@ -22,7 +22,7 @@ element
 (`Module.Basis.IsBarTriangular.existsUnique_canonical`). This is the abstract form of the
 existence and uniqueness of the Kazhdan–Lusztig basis ([KL] Thm. 1.1), of Deodhar's parabolic
 Kazhdan–Lusztig bases ([Deo] §2–3), and of Lusztig's canonical bases ([Lus] Lemma 24.2.1,
-[Du] Thm. 1.2 (check)).
+[Du]).
 
 If moreover the matrix of `ψ` is *graded* by a function `ℓ : I → ℤ` — the coefficient of `b_j` in
 `ψ(b_i)` is supported in degrees `n` with `|n| ≤ ℓ(i) - ℓ(j)` and `n ≡ ℓ(i) - ℓ(j) (mod 2)`
@@ -69,7 +69,8 @@ by us.)
 * [Deo] V. Deodhar, *On some geometric aspects of Bruhat orderings II. The parabolic analogue of
   Kazhdan–Lusztig polynomials*, J. Algebra **111** (1987), 483–506.
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §24.2.
-* [Du] J. Du, *IC bases and quantum linear groups*, Proc. Sympos. Pure Math. **56** (1994).
+* [Du] J. Du, *IC bases and quantum linear groups*, Proc. Sympos. Pure Math. **56**, Part 2
+  (1994), 135–148.
 -/
 
 open Module Polynomial

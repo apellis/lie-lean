@@ -27,11 +27,11 @@ import LieLean.Algebra.Lie.KacMoody.HarishChandraInvariance
 ## References
 
 Reconstructed from the production triangular PBW decomposition and pinned Mathlib's
-homogeneous polynomial components; no new printed source was consulted. The PBW
-source provenance is inherited from `UniversalEnveloping/{PBW,Filtration,Graded,
-TensorDecomposition}`. The invariant-lift consumer uses the production symmetrization
-construction documented against Etingof, MIT 18.757 (Fall 2023), Lecture 13, §13.3,
-proof of Theorem 13.5. No Chevalley restriction or HC image result is assumed or claimed.
+homogeneous polynomial components. The PBW source provenance is inherited from
+`UniversalEnveloping/{PBW,Filtration,Graded, TensorDecomposition}`. The invariant-lift consumer uses
+the production symmetrization construction documented against Etingof, MIT 18.757 (Fall 2023),
+Lecture 13, §13.3, proof of Theorem 13.5. No Chevalley restriction or HC image result is assumed or
+claimed.
 
 The field is characteristic zero, its universe is `K : Type`, and no Cartan-dimension
 assumption is added beyond the supplied `Realization`, including its `finrank_add_rank`.

@@ -226,8 +226,7 @@ lemma chevalleyInvolution_serreE (i j : ι) :
 
 variable [CharZero K]
 
-/-- A weight vector `x ∈ 𝔫̃₊` with `[fₖ, x] = 0` for all `k` lies in `𝔯`
-([Kac] Lemma 1.5). -/
+/-- A weight vector `x ∈ 𝔫̃₊` with `[fₖ, x] = 0` for all `k` lies in `𝔯` ([Kac] Lemma 1.5). -/
 theorem mem_maxIdeal_of_lie_f_eq_zero {μ : Dual K H} {x : P.AuxLieAlgebra}
     (hx : x ∈ rootSpace P μ)
     (hxe : x ∈ LinearMap.range (eHom P : FreeLieAlgebra K ι →ₗ[K] P.AuxLieAlgebra))

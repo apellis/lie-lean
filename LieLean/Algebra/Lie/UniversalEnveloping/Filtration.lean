@@ -256,8 +256,7 @@ theorem linearIndependent_pbwMonomial_subtype (b : Basis σ R L) (n : ℕ) :
 
 /-- **PBW, filtered version**: the ordered monomials `pbwMonomial R b s` with `|s| ≤ n` form a
 basis of the `n`-th filtered piece `Fₙ` of `U(L)`. See Humphreys, §17.3 (proof of
-Corollary C), and Bourbaki,
-Ch. I, §2.7, Theorem 1 and Cor. 3 (with its proof). -/
+Corollary C), and Bourbaki, Ch. I, §2.7, Theorem 1 and Cor. 3 (with its proof). -/
 def filtrationBasis (b : Basis σ R L) (n : ℕ) :
     Basis {s : σ →₀ ℕ // s.degree ≤ n} R (filtration R L n) :=
   (Basis.span (linearIndependent_pbwMonomial_subtype b n)).map

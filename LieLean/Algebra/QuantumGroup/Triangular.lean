@@ -17,8 +17,8 @@ Lusztig's algebra `'f` maps to `U = U_q(𝔤)` in two ways, `x ↦ x⁺` (`θᵢ
 (`θᵢ ↦ Fᵢ`) ([Lus] 3.1.1); both kill the quantum Serre elements, hence the two-sided
 ideal they generate. The group algebra `k[Y]` maps to `U` by `e^μ ↦ K_μ`. We show that `U` is
 spanned by the products `y⁻ K_μ x⁺` of monomials `x, y` and `μ ∈ Y`, i.e. the multiplication map
-`U⁻ ⊗ U⁰ ⊗ U⁺ → U` is surjective ([Jan] 4.21, [Lus] 3.2). The injectivity
-of this map (the other half of the triangular decomposition) is not proved here.
+`U⁻ ⊗ U⁰ ⊗ U⁺ → U` is surjective ([Jan] 4.21, [Lus] 3.2). The injectivity of this map (the other
+half of the triangular decomposition) is not proved here.
 
 ## Main definitions
 
