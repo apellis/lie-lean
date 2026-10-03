@@ -18,7 +18,7 @@ and construct `LSGeneralClass.lsData` for any integral weight, without dominance
 ## References
 
 Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
-(1995), pp. 509–510, Lemma 4.1. proofs reconstructed.
+(1995), pp. 509–510, Lemma 4.1. Proofs reconstructed.
 -/
 
 open Module

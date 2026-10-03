@@ -18,7 +18,8 @@ All roots below are actual Weyl translates of simple roots, not arbitrary direct
 
 Littelmann, *Paths and root operators in representation theory*, §4, pp. 509–510:
 the descending relation has positive real roots and negative initial coroot pairing;
-Remark 4.2 identifies dominant-orbit distance with minimal-representative length difference. Arguments here are reconstructed from reduced words.
+Remark 4.2 identifies dominant-orbit distance with minimal-representative length difference.
+Arguments here are reconstructed from reduced words.
 -/
 
 open Module

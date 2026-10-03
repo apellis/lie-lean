@@ -30,7 +30,8 @@ support, not component stability or the isomorphism theorem.
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
 (1995), 499–525, §4 pp. 509–510 (Lemma 4.1, Corollary 1 and a-chain definition),
-§5 pp. 513–516 (Remark 5.1, Definition 5.3, Lemma 5.5 and Proposition 5.7). Proofs reconstructed.
+§5 pp. 513–516 (Remark 5.1, Definition 5.3, Lemma 5.5 and Proposition 5.7).
+Proofs reconstructed.
 -/
 
 open Module

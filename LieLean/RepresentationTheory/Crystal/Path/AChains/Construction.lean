@@ -27,8 +27,7 @@ No reparametrization quotient or component/crystal isomorphism is claimed.
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142 (1995),
-499–525, Section 4, pp. 509–510, Remark 4.2 and the cumulative affine formula
-.
+499–525, Section 4, pp. 509–510, Remark 4.2 and the cumulative affine formula.
 The proof is reconstructed using the source-oriented chain bridge in `Path.AChains`.
 -/
 

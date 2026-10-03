@@ -16,8 +16,8 @@ The new final direction is supplied by an actual source chain, not an assumed LS
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
-(1995), Remark 5.4, p. 514, used in Proposition 5.6, pp. 515–516.
-proofs reconstructed. Neither integral class needs dominance. This is a reconstruction
+(1995), Remark 5.4, p. 514, used in Proposition 5.6, pp. 515–516. Proofs
+reconstructed. Neither integral class needs dominance. This is a reconstruction
 input to the crossing-seam case, not the full root-operator stability theorem.
 -/
 

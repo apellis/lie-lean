@@ -17,8 +17,8 @@ left pairing. The strict output uses the actual source power and a distinct coar
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
-(1995), Definition 5.3 and Proposition 5.6, pp. 514–516.
-proofs reconstructed in the literal finite-source encoding.
+(1995), Definition 5.3 and Proposition 5.6, pp. 514–516. Proofs
+reconstructed in the literal finite-source encoding.
 -/
 
 open Module Set LittelmannPath LittelmannPath.FiniteConstruction
