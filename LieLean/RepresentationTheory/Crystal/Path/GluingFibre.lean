@@ -19,11 +19,11 @@ be that auxiliary weight. The weight may lie outside the Tits cone.
 ## References
 
 Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
-(1995), Proposition 5.7, printed p. 516, final three lines of its proof.
-The proof below reconstructs the omitted positive-root-cone
-rigidity argument using the separating functional rhoCheck. Finite-dimensional
-Cartan space is explicit. This is a necessary lemma, NOT highest-path uniqueness
-or an isomorphism theorem. No output integrality or word relation is assumed.
+(1995), Proposition 5.7, p. 516, final three lines of its proof.
+The proof below reconstructs the omitted positive-root-cone rigidity argument using the separating
+functional rhoCheck. Finite-dimensional Cartan space is explicit. This is a necessary lemma, NOT
+highest-path uniqueness or an isomorphism theorem. No output integrality or word relation is
+assumed.
 -/
 
 open Module Set LittelmannPath LittelmannPath.FiniteConstruction

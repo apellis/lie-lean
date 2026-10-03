@@ -20,8 +20,8 @@ with `w G ≡ 0 mod Xⁱ` (`Matrix.jantzenSpace`). Then `V⁰ ⊇ V¹ ⊇ ⋯` a
 `∑_{i ≥ 1} dim Vⁱ = ord_X det G`, the order of vanishing of `det G` at `0`
 (`Matrix.sum_finrank_jantzenSpace`). Applied to the Gram matrix of a contravariant form on a
 one-parameter family of modules this is the basic identity behind the Jantzen filtration and the
-Jantzen sum formula ([HumO] §5.6; [Jantzen, *Moduln mit einem höchsten Gewicht*, Lemma
-5.1], numbered as in [HumO] §5.6).
+Jantzen sum formula ([HumO] §5.6, citing Jantzen, *Moduln mit einem höchsten Gewicht*,
+Lemma 5.1).
 
 The proof uses the Smith normal form over the principal ideal domain `K[X]`: with bases `(bⱼ)`,
 `(cⱼ)` of `K[X]ⁿ` such that `cⱼ G = aⱼ bⱼ`, one has `Vⁱ = span {cⱼ(0) | ord aⱼ ≥ i}` and

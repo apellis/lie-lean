@@ -38,9 +38,9 @@ That `W_J` is itself a Coxeter group with Coxeter matrix `M` restricted to `J` i
 ## Implementation notes
 
 This is [BB] Prop. 2.4.4, Cor. 2.4.5(i), with a different proof: `w^J` is first taken to be an
-element of minimal length in `w W_J`, and
-length additivity is proved for it with the strong exchange condition (our reconstruction of the
-argument); uniqueness then shows that it is the unique element of `W^J` in the coset.
+element of minimal length in `w W_J`, and length additivity is proved for it with the strong
+exchange condition (our reconstruction of the argument); uniqueness then shows that it is the unique
+element of `W^J` in the coset.
 
 ## References
 
@@ -221,8 +221,7 @@ theorem eq_of_mem_minCosetReps {u u' : W} (hu : u ∈ cs.minCosetReps J)
   exact (eq_of_min hu₀ hu' h).symm
 
 /-- **The parabolic decomposition** ([BB] Prop. 2.4.4, [HumC] §1.10 Prop. (c), §5.12): every
-`w ∈ W` can be
-written as `w = u v` with `u ∈ W^J` and `v ∈ W_J`. -/
+`w ∈ W` can be written as `w = u v` with `u ∈ W^J` and `v ∈ W_J`. -/
 theorem exists_mem_minCosetReps_mul_eq (J : Set B) (w : W) :
     ∃ u ∈ cs.minCosetReps J, ∃ v ∈ cs.parabolicSubgroup J, u * v = w := by
   obtain ⟨u, hu, hmin⟩ := exists_min_length cs J w

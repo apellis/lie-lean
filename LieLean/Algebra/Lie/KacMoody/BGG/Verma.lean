@@ -40,8 +40,7 @@ then `M(w' · Λ)` embeds into `M(w · Λ)` ([HumO] Thm. 4.6, Thm. 5.1 (a), §5.
   `finrank_hom_simple_mul`: this space of homomorphisms is one-dimensional.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_injective_of_bruhatLE`: **Verma's
   theorem** ([HumO] Thm. 4.6, Thm. 5.1 (a), §5.2): for `Λ` dominant integral and
-  `w ≤ w'` in the Bruhat
-  order, there is an embedding `M(w' · Λ) ↪ M(w · Λ)`.
+  `w ≤ w'` in the Bruhat order, there is an embedding `M(w' · Λ) ↪ M(w · Λ)`.
 
 ## Proofs
 
@@ -379,9 +378,8 @@ theorem finrank_hom_simple_mul {w : P.weylGroup hA} {i : ι}
   exact finrank_hom_reflection P hA hn0 hn
 
 /-- **Verma's theorem**, "Bruhat ⇒ embedding" ([HumO] Thm. 4.6, Thm. 5.1 (a), §5.2;
-[Kum] Thm. 9.2.3 (a)): for
-`Λ` dominant integral and `w ≤ w'` in the Bruhat order of `W`, there is an injective morphism of
-`𝔤(A)`-modules `M(w' · Λ) → M(w · Λ)`. -/
+[Kum] Thm. 9.2.3 (a)): for `Λ` dominant integral and `w ≤ w'` in the Bruhat order of `W`, there is
+an injective morphism of `𝔤(A)`-modules `M(w' · Λ) → M(w · Λ)`. -/
 theorem exists_injective_of_bruhatLE {w w' : P.weylGroup hA}
     (h : (P.coxeterSystem hA).BruhatLE w w') :
     ∃ φ : VermaModule P (P.weylDot hA w' Λ) →ₗ⁅K,P.KacMoodyAlgebra⁆

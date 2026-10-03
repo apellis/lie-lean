@@ -21,7 +21,7 @@ the corresponding quantum factorial to be nonzero. No such identification is nee
 for the quotient identities proved here.
 
 ## References
-Reconstructed directly from the quotient presentation; no external source consulted.
+Reconstructed directly from the quotient presentation.
 These are defining-relation prerequisites, not an automorphism construction.
 -/
 

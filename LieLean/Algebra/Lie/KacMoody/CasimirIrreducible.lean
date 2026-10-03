@@ -37,13 +37,13 @@ irreducible. Consequently, for `Λ` dominant integral the canonical surjection
 Let `N ≠ 0` be a submodule of an integrable quotient `V` of `M(Λ)`. Since `N` lies in `𝒪`, it
 contains a nonzero vector `w` of some weight `μ` killed by all the `eᵢ`; as `V` is integrable,
 `μ` and `Λ` are dominant integral ([Kac] (3.2.4), as in the proof of Lemma 10.1), and
-`μ = Λ - β` with `β ∈ Q₊`. The
-Casimir operator acts on `V` by `(Λ + 2ρ | Λ)` and on `w` by `(μ + 2ρ | μ)`, so these agree. But
+`μ = Λ - β` with `β ∈ Q₊`. The Casimir operator acts on `V` by `(Λ + 2ρ | Λ)` and on `w` by
+`(μ + 2ρ | μ)`, so these agree. But
 `(Λ + 2ρ | Λ) - (μ + 2ρ | μ) = (β | Λ + μ + 2ρ) = ∑ᵢ kᵢ (⟨Λ + μ, αᵢ^∨⟩ + 2) / εᵢ` for
-`β = ∑ᵢ kᵢ αᵢ`, which is positive unless `β = 0`. Hence `μ = Λ`, `w` is a multiple of the image
-of `v_Λ`, and `N = V`. [Kac] derives Cor. 10.4 from the character formula; the argument above is
-the standard direct one via the Casimir operator (compare the proof of [Kac] Thm. 10.7),
-written out by us.
+`β = ∑ᵢ kᵢ αᵢ`, which is positive unless `β = 0`. Hence `μ = Λ`, `w` is a multiple of the image of
+`v_Λ`, and `N = V`. [Kac] derives Cor. 10.4 from the character formula; the argument above is the
+standard direct one via the Casimir operator (compare the proof of [Kac] Thm. 10.7), written out by
+us.
 
 ## References
 

@@ -19,8 +19,8 @@ import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulSupport
 ## References
 
 The proof is reconstructed from the existing CE recursion, contraction identity and PBW
-leading-action theorem. No external source was consulted. The finite set restricts exterior
-support only; no finiteness of the basis index type is assumed.
+leading-action theorem. The finite set restricts exterior support only; no finiteness of the
+basis index type is assumed.
 -/
 
 noncomputable section

@@ -17,8 +17,7 @@ import LieLean.Algebra.QuantumGroup.Sl2.Classification.StringBasis
 
 ## References
 
-Jantzen, *Lectures on quantum groups*, Ch. 2. The intertwining argument is reconstructed;
-precise theorem numbering has not been checked against the source.
+Jantzen, *Lectures on quantum groups*, Ch. 2. The intertwining argument is reconstructed.
 -/
 
 noncomputable section

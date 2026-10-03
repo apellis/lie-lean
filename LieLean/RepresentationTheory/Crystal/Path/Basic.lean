@@ -20,12 +20,11 @@ these functions.
 ## Conventions
 
 Littelmann considers piecewise linear paths `[0,1] ∩ ℚ → ℚ ⊗ X` ([Lit95] §1) modulo
-reparametrization. We work instead with
-*parametrized* paths `π : 𝕜 → V` (constant outside `[0,1]`) and only require continuity of the
-functions `hᵢ`; no quotient is needed, because the root operators are defined pointwise in the
-time parameter (`π ↦ π - c(t) αᵢ` for an explicit continuous function `c`) and are exactly inverse
-to each other on parametrized paths. Piecewise linear paths form a subclass stable under the root
-operators; we do not need this.
+reparametrization. We work instead with *parametrized* paths `π : 𝕜 → V` (constant outside `[0,1]`)
+and only require continuity of the functions `hᵢ`; no quotient is needed, because the root operators
+are defined pointwise in the time parameter (`π ↦ π - c(t) αᵢ` for an explicit continuous function
+`c`) and are exactly inverse to each other on parametrized paths. Piecewise linear paths form a
+subclass stable under the root operators; we do not need this.
 
 The real span of the weight lattice is an auxiliary vector space `V` containing `X`, on which the
 coroots extend to linear forms (`CartanDatum.PathSpace`). Instead of `ℝ` we allow any

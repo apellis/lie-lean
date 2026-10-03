@@ -25,9 +25,8 @@ on `π` and `π'`. This is the form in which Littelmann proves Theorem 6.3: the 
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
-(1995), proof of Theorem 6.3, pp. 517–518 (the equivalences (6.1) and (6.2)). The printed
-pages were consulted; the crystal-isomorphism packaging (including `ε`, via seminormality)
-is reconstructed.
+(1995), proof of Theorem 6.3, pp. 517–518 (the equivalences (6.1) and (6.2)). The
+crystal-isomorphism packaging (including `ε`, via seminormality) is reconstructed.
 -/
 
 open Set

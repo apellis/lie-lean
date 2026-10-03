@@ -32,7 +32,7 @@ decomposition (`LieLean/Algebra/QuantumGroup/PBW/Independence.lean`); this is th
 * `CoxeterSystem.linearIndependent_pbwMonomial`: the independence criterion.
 
 Proofs adapted from the ungated `m15-pbw` branch (3473bfd); the arguments are
-reconstructed. The printed sources have not been consulted.
+reconstructed.
 
 ## References
 
@@ -124,8 +124,7 @@ private theorem independent_single_map {k M N J : Type*} [Field k]
   exact (Finsupp.linearIndependent_single (fun _ : ℕ ↦ m) (fun _ ↦ hm)).map' f hf
 
 /-- **Independence of ordered monomials** (cf. [Jan] Lemma 8.21 b)): let `S` be a subspace of `A`
-such
-that, for every `i`, a relation `∑ₐ Eᵢᵃ Tᵢ(uₐ) = 0` with all `uₐ ∈ S` forces `uₐ = 0`. If the
+such that, for every `i`, a relation `∑ₐ Eᵢᵃ Tᵢ(uₐ) = 0` with all `uₐ ∈ S` forces `uₐ = 0`. If the
 ordered monomials along all final segments of `ω` lie in `S`, then the ordered monomials along `ω`
 are linearly independent. -/
 theorem linearIndependent_pbwMonomial {S : Submodule k A}

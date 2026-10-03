@@ -374,9 +374,8 @@ theorem IsCategoryO.hsum_chainEulerFamily :
   exact hV.coeff_hsum_eulerFamily _ _ μ
 
 /-- **The Euler characteristic of `𝔫₋`-homology** ([GL] Lemma 9.2; cf. [Kum] proof of
-Cor. 3.2.8, for `V = L(Λ)`): for
-`V` in the category `𝒪`, `∑_k (-1)^k ch H_k(𝔫₋, V) = R · ch V` in `ℰ`, where
-`R = ∏_{α > 0} (1 - e^{-α})^{mult α}` is the denominator. -/
+Cor. 3.2.8, for `V = L(Λ)`): for `V` in the category `𝒪`, `∑_k (-1)^k ch H_k(𝔫₋, V) = R · ch V` in
+`ℰ`, where `R = ∏_{α > 0} (1 - e^{-α})^{mult α}` is the denominator. -/
 theorem IsCategoryO.hsum_homologyEulerFamily :
     hV.homologyEulerFamily.hsum = denominator P * hV.character := by
   ext μ

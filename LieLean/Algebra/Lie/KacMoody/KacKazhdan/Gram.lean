@@ -285,8 +285,7 @@ lemma deg_pbwWord (s t : NegRootIndex P →₀ ℕ) :
   omega
 
 /-- **The degree estimate for the Shapovalov form** ([KK]; [Kum] Thm. 2.3.4, proof, Step 2 (1)):
-`B_λ(e_s v_λ, e'_t v_λ)` is
-a polynomial function of `λ` of degree at most `min(|s|, |t|)`. -/
+`B_λ(e_s v_λ, e'_t v_λ)` is a polynomial function of `λ` of degree at most `min(|s|, |t|)`. -/
 theorem contravariantForm_pbw_mem_polyLE (s t : NegRootIndex P →₀ ℕ) :
     (fun Λ ↦ contravariantForm P Λ (pbwBasisVerma P Λ s) (pbwDualVerma P S Λ t)) ∈
       polyLE K H (min s.degree t.degree) := by
@@ -301,8 +300,8 @@ def pbwTopPoly (s : NegRootIndex P →₀ ℕ) : MvPolynomial (PolyIdx K H) K :=
     ∏ x ∈ s.support, linPoly K H ((P.toDual S).symm x.root) ^ s x
 
 /-- **The leading term of the Shapovalov form** ([KK]; [Kum] Thm. 2.3.4, proof, Step 2,
-(2)–(3)): for `|s| = |t|`, the component
-of degree `|s|` of `λ ↦ B_λ(e_s v_λ, e'_t v_λ)` is `δ_{st} ∏_x s(x)! ∏_x (λ | α_x)^{s(x)}`. -/
+(2)–(3)): for `|s| = |t|`, the component of degree `|s|` of `λ ↦ B_λ(e_s v_λ, e'_t v_λ)` is
+`δ_{st} ∏_x s(x)! ∏_x (λ | α_x)^{s(x)}`. -/
 theorem contravariantForm_pbw_hasTop (s t : NegRootIndex P →₀ ℕ) (hst : s.degree = t.degree) :
     HasTop s.degree (if s = t then pbwTopPoly P S s else 0)
       (fun Λ ↦ contravariantForm P Λ (pbwBasisVerma P Λ s) (pbwDualVerma P S Λ t)) := by

@@ -250,10 +250,9 @@ include h in
 are complementary and free, then multiplication `U(L₁) ⊗[R] U(L₂) → U(L)`, `u ⊗ v ↦ u * v`, is
 bijective.
 
-See Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, Corollary 6, and
-Humphreys, *Introduction to Lie algebras and representation theory*, §17.3 (Corollary D treats
-`U(L₁) → U(L)` over a field). The proof
-here is reconstructed from the PBW basis. -/
+See Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, Corollary 6, and Humphreys, *Introduction
+to Lie algebras and representation theory*, §17.3 (Corollary D treats `U(L₁) → U(L)` over a field).
+The proof here is reconstructed from the PBW basis. -/
 theorem mulMap_bijective_of_isCompl : Function.Bijective (mulMap L₁ L₂) := by
   let : LinearOrder (Free.ChooseBasisIndex R L₁) := IsWellOrder.linearOrder WellOrderingRel
   let : LinearOrder (Free.ChooseBasisIndex R L₂) := IsWellOrder.linearOrder WellOrderingRel

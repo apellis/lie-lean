@@ -18,8 +18,8 @@ import Mathlib.GroupTheory.PresentedGroup
 
 ## References and scope
 
-Reconstructed from Mathlib's `PresentedGroup` universal property and the inspected
-`SimplyLaced` / `SimplyLacedRelations` proofs; no external primary source consulted.
+Reconstructed from Mathlib's `PresentedGroup` universal property and the `SimplyLaced` /
+`SimplyLacedRelations` proofs.
 No involution relators are imposed. The action need not be faithful.
 The Cartan diagram is triangle-free and simply laced, including finite ADE types;
 no finiteness or bound on vertex valency is required. Higher Cartan edge multiplicities

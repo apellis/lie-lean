@@ -22,12 +22,12 @@ weights of `H_k(𝔫₋, L(Λ))`.
 
 ## Proof
 
-The following argument is our own; it avoids positivity of
-the (in general indefinite) form. Write `φ = ν + ρ - ⟨m⟩`; then `λ - φ ∈ Q₊` and we argue by
-induction on its height. The key point is that for a simple reflection `rᵢ` the pair `(ν, m)` can
-be replaced by `(rᵢ ν, rᵢ ⋆ m)`, where `rᵢ ⋆ m` removes `αᵢ` from `m`, applies `rᵢ` to the other
-roots (which `rᵢ` permutes, with multiplicities, [Kac] Lemma 3.7, Prop. 3.7 (b)) and adds `αᵢ`
-if it did not occur (`reflectMset`); then `ρ - ⟨rᵢ ⋆ m⟩ = rᵢ (ρ - ⟨m⟩)`, so the new `φ` is `rᵢ φ`.
+The following argument is our own; it avoids positivity of the (in general indefinite) form. Write
+`φ = ν + ρ - ⟨m⟩`; then `λ - φ ∈ Q₊` and we argue by induction on its height. The key point is that
+for a simple reflection `rᵢ` the pair `(ν, m)` can be replaced by `(rᵢ ν, rᵢ ⋆ m)`, where `rᵢ ⋆ m`
+removes `αᵢ` from `m`, applies `rᵢ` to the other roots (which `rᵢ` permutes, with multiplicities,
+[Kac] Lemma 3.7, Prop. 3.7 (b)) and adds `αᵢ` if it did not occur (`reflectMset`); then
+`ρ - ⟨rᵢ ⋆ m⟩ = rᵢ (ρ - ⟨m⟩)`, so the new `φ` is `rᵢ φ`.
 * If `⟨φ, αⱼ^∨⟩ ≥ 0` for all `j`, write `λ - φ = β = ∑ cⱼ αⱼ`; then
   `(λ|λ) - (φ|φ) = (λ + φ | β) = ∑ cⱼ ⟨λ + φ, αⱼ^∨⟩ / εⱼ`, a sum of nonnegative rationals which
   are positive unless `cⱼ = 0`. Hence `φ = λ`, and then `ν = Λ`, `m = 0`, and `w = 1` works.
@@ -592,8 +592,7 @@ variable {P} {Λ : Dual K H}
 
 omit [FiniteDimensional K H] in
 include hA in
-/-- The weights of `L(Λ)`, `Λ` dominant integral, are permuted by `W`
-([Kac] Prop. 10.1). -/
+/-- The weights of `L(Λ)`, `Λ` dominant integral, are permuted by `W` ([Kac] Prop. 10.1). -/
 lemma reflection_mem_weights (hΛ : P.IsDominantIntegral Λ) {ν : Dual K H}
     (hν : weightSpace P (IrreducibleModule P Λ) ν ≠ ⊥) (i : ι) :
     weightSpace P (IrreducibleModule P Λ) (P.reflection hA i ν) ≠ ⊥ := by

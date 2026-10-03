@@ -27,7 +27,7 @@ No freeness, crystal lattice, balancedness, or basis is assumed or concluded.
 ## References
 
 Construction and proofs reconstructed from the divided-power definition and the universal
-property of algebra generation; no primary source consulted for this extension.
+property of algebra generation.
 -/
 
 noncomputable section

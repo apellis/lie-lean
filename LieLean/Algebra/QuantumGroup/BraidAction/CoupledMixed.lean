@@ -18,7 +18,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.Isolated
 ## References
 
 Reconstructed directly from the quantum group presentation and the degree-one
-lowering identity in `BraidAction/Coupled.lean`; no external source was consulted.
+lowering identity in `BraidAction/Coupled.lean`.
 This is an additional defining relation, not a construction of a braid automorphism.
 -/
 

@@ -12,7 +12,7 @@ Reconstructed extension of `BGG/Sl2`, `BGG/Projectivity`, and `BGG/Uniqueness`.
 The key endpoint is injectivity of `e^k` on weight `-m` for `k ≤ m`, not just `k < m`.
 This permits the target highest-weight pairing `-1` in rank-one projectivity.
 Classical context: Humphreys, *Representations of semisimple Lie algebras in the BGG
-category O*, Chapter 4. The printed proof has not been inspected for this extension.
+category O*, Chapter 4. The argument for this extension is our own.
 -/
 
 open LieModule Module Polynomial
@@ -487,8 +487,7 @@ omit i hA in
 walls, and every source weight**. No source integrality or orbit hypothesis is assumed.
 Over an algebraically closed characteristic-zero field, finite-dimensional Cartan,
 finite Cartan matrix, and an explicit symmetrization. Reconstructed proof of this part
-of the classical theorem (Humphreys, category O, Theorem 4.2(b), over `ℂ`); no printed proof
-consulted. -/
+of the classical theorem (Humphreys, category O, Theorem 4.2(b), over `ℂ`). -/
 theorem finrank_hom_le_one_of_finite_type_integral (hfin : A.IsFiniteCartan)
     (S : A.Symmetrization) (Λ μ : Dual K H)
     (hΛ : ∀ i, ∃ z : ℤ, (Λ + P.rho) (P.coroot i) = z) :

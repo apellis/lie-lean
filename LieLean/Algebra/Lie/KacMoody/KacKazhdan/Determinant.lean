@@ -15,7 +15,7 @@ Let `A` be a symmetrizable matrix and `𝔤 = 𝔤(A)` over a field `K` of chara
 `s` runs over the finite set `T_β` of multisets of indices of the root vector basis `nNegBasis` of
 `𝔫₋` of total weight `β` (Kostant partitions); this basis is independent of `λ` via
 `U(𝔫₋) ≃ M(λ)`. Let `D_β(λ)` be the determinant of the Shapovalov form on `M(λ)_{λ-β}` in this
-basis. We prove ([KK]; [Kum] Thm. 2.3.4, proof, Step 2; cf. [Kum] proof of Thm. 2.3.4, Step 2):
+basis. We prove ([KK]; [Kum] Thm. 2.3.4, proof, Step 2):
 
 `D_β` is a polynomial function of `λ` of degree `N = ∑_{s ∈ T_β} |s|`, whose homogeneous component
 of degree `N` is `c ∏_{s ∈ T_β} ∏_x (λ | α_x)^{s(x)}` for a nonzero constant `c`. Counting Kostant
@@ -60,8 +60,6 @@ matrix expressing the basis `(e'_t)` in the basis `(e_s)` of `U(𝔫₋)`.
 
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. 34 (1979), 97–108.
-* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002, §2.3.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
   Math. 204, Birkhäuser 2002, §2.3.
 -/
@@ -374,13 +372,12 @@ theorem hasTop_det_of_contravariantForm :
     ext s t
     simp [(hp s t).2]
 
-/-- **The leading term of the Shapovalov determinant** ([KK]; [Kum] Thm. 2.3.4,
-proof, Step 2). Let `A` be
-symmetrizable, and let `D_β(λ)` be the determinant of the Shapovalov form on `M(λ)_{λ-β}` with
-respect to the PBW basis `(e_s v_λ)_{s ∈ T_β}` (independent of `λ` via `U(𝔫₋) ≃ M(λ)`). Then
+/-- **The leading term of the Shapovalov determinant** ([KK]; [Kum] Thm. 2.3.4, proof, Step 2). Let
+`A` be symmetrizable, and let `D_β(λ)` be the determinant of the Shapovalov form on `M(λ)_{λ-β}`
+with respect to the PBW basis `(e_s v_λ)_{s ∈ T_β}` (independent of `λ` via `U(𝔫₋) ≃ M(λ)`). Then
 `D_β` is a polynomial function of `λ` of degree at most `N = ∑_{s ∈ T_β} |s|`, whose homogeneous
-component of degree `N` is `c ∏_{s ∈ T_β} ∏_x (λ | α_x)^{s(x)}` for some nonzero constant `c`.
-Here `x` runs over the root vector basis of `𝔫₋`, `α_x` is the positive root of `x`, and
+component of degree `N` is `c ∏_{s ∈ T_β} ∏_x (λ | α_x)^{s(x)}` for some nonzero constant `c`. Here
+`x` runs over the root vector basis of `𝔫₋`, `α_x` is the positive root of `x`, and
 `(λ | α) = λ(ν⁻¹ α)`. -/
 theorem hasTop_det_pbwWeightBasis :
     ∃ c : K, c ≠ 0 ∧ HasTop (∑ s ∈ partitions P β, s.degree)
@@ -411,13 +408,11 @@ determinant on `M(λ)_{λ - β}`. -/
 def kkExponent (β : Dual K H) (x : NegRootIndex P) : ℕ :=
   ∑ᶠ n : ℕ, kostantPartition P (β - (n + 1) • x.root)
 
-/-- **The leading term of the Shapovalov determinant** ([KK]; [Kum] Thm. 2.3.4,
-proof, Step 2; cf. [Kum] proof of
-Thm. 2.3.4, Step 2).
-Let `A` be symmetrizable, and let `D_β(λ)` be the determinant of the Shapovalov form on
-`M(λ)_{λ-β}` with respect to the PBW basis (independent of `λ` via `U(𝔫₋) ≃ M(λ)`). Then `D_β` is
-a polynomial function of `λ` of degree at most `N = ∑_x ∑_{n ≥ 1} P(β - n α_x)`, whose homogeneous
-component of degree `N` is
+/-- **The leading term of the Shapovalov determinant** ([KK]; [Kum] Thm. 2.3.4, proof, Step 2). Let
+`A` be symmetrizable, and let `D_β(λ)` be the determinant of the Shapovalov form on `M(λ)_{λ-β}`
+with respect to the PBW basis (independent of `λ` via `U(𝔫₋) ≃ M(λ)`). Then `D_β` is a polynomial
+function of `λ` of degree at most `N = ∑_x ∑_{n ≥ 1} P(β - n α_x)`, whose homogeneous component of
+degree `N` is
 `c ∏_x ∏_{n ≥ 1} (λ | α_x)^{P(β - n α_x)} = c ∏_{α > 0} ∏_{n ≥ 1} (λ | α)^{mult α · P(β - n α)}`
 for a nonzero constant `c`. Here `x` runs over the root vector basis `nNegBasis` of `𝔫₋`, in which
 each positive root `α` occurs `mult α = dim 𝔤_{-α}` times, `P` is Kostant's partition function,
@@ -436,9 +431,9 @@ theorem hasTop_det_pbwWeightBasis_kkExponent :
 
 include S in
 /-- **The degree of the Shapovalov determinant** ([KK]; [Kum] Thm. 2.3.4, proof,
-Step 2): `D_β` is a polynomial
-function of `λ` of degree exactly `∑_x ∑_{n ≥ 1} P(β - n α_x) = ∑_{α > 0} ∑_{n ≥ 1} mult α ·
-P(β - n α)`; in particular it is not identically zero. -/
+Step 2): `D_β` is a polynomial function of `λ` of degree exactly
+`∑_x ∑_{n ≥ 1} P(β - n α_x) = ∑_{α > 0} ∑_{n ≥ 1} mult α · P(β - n α)`; in particular it is not
+identically zero. -/
 theorem exists_totalDegree_det_pbwWeightBasis :
     ∃ p : MvPolynomial (PolyIdx K H) K,
       p.totalDegree = ∑ᶠ x : NegRootIndex P, kkExponent P β x ∧

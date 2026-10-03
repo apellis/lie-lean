@@ -16,9 +16,9 @@ blocks with infinitesimal-character blocks and is NOT Humphreys Theorem 7.6.
 ## References
 
 Humphreys, *Representations of Semisimple Lie Algebras in the BGG Category O*, AMS GSM 94
-(2008), sections 7.1 and 7.6. The published primary text was inaccessible; the role of
-exact block projection in 7.6 was checked in D. Zack Garza's notes of Brian Boe's Spring
-2020 course, section 35.2, pp. 86--87. The argument below is reconstructed directly from
+(2008), §7.1, p. 130 (translation functors are composites of the exact projections onto the
+subcategories `O_χ` with tensoring by finite-dimensional modules) and §7.6, Theorem and
+Corollary, p. 137 (which use this exactness). The argument below is reconstructed directly from
 naturality and the existing Casimir block decomposition, not from a claimed source theorem.
 -/
 

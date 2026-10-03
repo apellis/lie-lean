@@ -20,8 +20,8 @@ import LieLean.Algebra.Lie.UniversalEnveloping.Filtration
 ## References
 
 The argument is reconstructed directly from the existing CE recursion and PBW filtration.
-No external source was consulted. All statements allow arbitrary commutative base rings
-and arbitrary Lie algebras, with no finite-dimensionality hypothesis.
+All statements allow arbitrary commutative base rings and arbitrary Lie algebras, with no
+finite-dimensionality hypothesis.
 -/
 
 noncomputable section

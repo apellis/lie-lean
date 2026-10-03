@@ -245,9 +245,9 @@ theorem kostantLaplacian_eq_smul (hA : A.IsGeneralizedCartan) (hV : IsCategoryO 
 
 /-- **Vanishing of `𝔫₋`-homology off the Casimir sphere** (reconstructed; [GL] Prop. 7.9,
 [Kum] Cor. 3.4.11 and proof of Thm. 3.2.7, for `V = L(Λ)`): if `V` is in the category `𝒪`
-and the Casimir operator acts on `V` by the
-scalar `κ`, then `H_k(𝔫₋, V)_μ = 0` unless `(μ + 2ρ|μ) = κ`. ([GL] state this for `V = L(Λ)`,
-`Λ` dominant integral, and prove it with the Casimir operator, not Kostant's Laplacian.) -/
+and the Casimir operator acts on `V` by the scalar `κ`, then `H_k(𝔫₋, V)_μ = 0` unless
+`(μ + 2ρ|μ) = κ`. ([GL] state this for `V = L(Λ)`, `Λ` dominant integral, and prove it with the
+Casimir operator, not Kostant's Laplacian.) -/
 theorem homologyWeightSpace_eq_bot (hA : A.IsGeneralizedCartan) (hV : IsCategoryO P V) {κ : K}
     (hΩ : ∀ v, hB.casimir V hV.isPosFinite v = κ • v) (k : ℕ) {μ : Dual K H}
     (hμ : P.dualBilinForm S (μ + 2 • P.rho) μ ≠ κ) :

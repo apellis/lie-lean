@@ -57,10 +57,10 @@ noncomputable section
 
 variable {I : Type*}
 
-/-- A root datum of type `(I, ·)` after [Lus] 2.2.1, recorded through the
-coweight lattice `Y`: elements `coroot i ∈ Y` and homomorphisms `root j : Y →+ ℤ` with
-`⟨i, j'⟩ = root j (coroot i) = aᵢⱼ`. (Lusztig's `X` is the dual lattice, which we do not
-need; nor do we require `Y` to be free of finite rank.) -/
+/-- A root datum of type `(I, ·)` after [Lus] 2.2.1, recorded through the coweight lattice `Y`:
+elements `coroot i ∈ Y` and homomorphisms `root j : Y →+ ℤ` with
+`⟨i, j'⟩ = root j (coroot i) = aᵢⱼ`. (Lusztig's `X` is the dual lattice, which we do not need; nor
+do we require `Y` to be free of finite rank.) -/
 structure LusztigCartanDatum.RootDatum (D : LusztigCartanDatum I) (Y : Type*) [AddCommGroup Y] where
   /-- The simple coroots `i ∈ Y`. -/
   coroot : I → Y

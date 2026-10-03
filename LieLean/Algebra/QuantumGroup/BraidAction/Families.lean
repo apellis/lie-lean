@@ -22,7 +22,7 @@ triple-edge relations nor faithfulness of the quantum action is asserted.
 
 ## References
 Reconstructed from the pinned matrix definitions and the repository's proved
-local-class Artin theorem. No external primary source was consulted.
+local-class Artin theorem.
 -/
 
 namespace QuantumGroup

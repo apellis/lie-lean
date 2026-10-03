@@ -319,8 +319,7 @@ theorem contravariantForm_lie_left (x : P.KacMoodyAlgebra) (u w : VermaModule P 
   rfl
 
 /-- **Uniqueness** of the contravariant form: a contravariant bilinear form `B'` on `M(Λ)` is
-`B'(v_Λ, v_Λ) B` ([HumO] Prop. 3.14 (b), for semisimple `𝔤`;
-cf. [Kac] Prop. 9.4 for `L(Λ)`). -/
+`B'(v_Λ, v_Λ) B` ([HumO] Prop. 3.14 (b), for semisimple `𝔤`; cf. [Kac] Prop. 9.4 for `L(Λ)`). -/
 theorem eq_smul_contravariantForm (B : LinearMap.BilinForm K (VermaModule P Λ))
     (hB : ∀ x u w, B ⁅x, u⁆ w = B u ⁅transpose P x, w⁆) :
     B = B (hwv P Λ) (hwv P Λ) • contravariantForm P Λ := by
@@ -349,8 +348,7 @@ theorem isSymm_contravariantForm : (contravariantForm P Λ).IsSymm := by
   exact ⟨fun u w ↦ LinearMap.congr_fun₂ this w u⟩
 
 /-- The contravariant form on `M(Λ)` is the unique bilinear form `B` with `B(v_Λ, v_Λ) = 1` and
-`B(x u, w) = B(u, σ(x) w)` for `x ∈ 𝔤(A)` ([Kac] §9.4;
-uniqueness: cf. [HumO] Prop. 3.14 (b)). -/
+`B(x u, w) = B(u, σ(x) w)` for `x ∈ 𝔤(A)` ([Kac] §9.4; uniqueness: cf. [HumO] Prop. 3.14 (b)). -/
 theorem existsUnique_contravariantForm :
     ∃! B : LinearMap.BilinForm K (VermaModule P Λ),
       (∀ x u w, B ⁅x, u⁆ w = B u ⁅transpose P x, w⁆) ∧ B (hwv P Λ) (hwv P Λ) = 1 :=
@@ -483,8 +481,7 @@ abbrev weightSpaceForm (μ : Dual K H) : LinearMap.BilinForm K (weightSpace P Λ
   (contravariantForm P Λ).restrict (weightSpace P Λ μ)
 
 /-- The restriction of the contravariant form to `M(Λ)_μ` is nondegenerate iff `M'(Λ)` has no
-nonzero vector of weight `μ`, i.e. iff `dim L(Λ)_μ = dim M(Λ)_μ`
-(cf. [Kum] Prop. 2.3.2). -/
+nonzero vector of weight `μ`, i.e. iff `dim L(Λ)_μ = dim M(Λ)_μ` (cf. [Kum] Prop. 2.3.2). -/
 theorem nondegenerate_weightSpaceForm_iff (μ : Dual K H) :
     (weightSpaceForm P Λ μ).Nondegenerate ↔
       (maxSubmodule P Λ).toSubmodule ⊓ weightSpace P Λ μ = ⊥ := by

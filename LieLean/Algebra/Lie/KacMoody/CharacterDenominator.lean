@@ -12,12 +12,12 @@ import Mathlib.RingTheory.HahnSeries.Summable
 # The Kac–Moody denominator and the character of a Verma module
 
 Let `𝔤 = 𝔤(A)` be the Kac–Moody algebra of a realization `P` over a field `K` of characteristic
-zero. The *denominator* ([Kac] §10.2) is the element
-`R = ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α}` of the algebra `ℰ` of formal characters. Choosing a basis
-of `𝔫₋` consisting of root vectors (`Matrix.Realization.KacMoodyAlgebra.nNegBasis`, indexed by
-`NegRootIndex`: the index `(α, j)` contributes the factor `1 - e^{-α}`), the product expands as
-`R = ∑_S (-1)^{|S|} e^{-wt S}`, the sum running over the finite sets `S` of indices, with
-`wt S = ∑_{(α, j) ∈ S} α`. This is how we define `R`, as a summable family of Hahn series.
+zero. The *denominator* ([Kac] §10.2) is the element `R = ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α}` of the
+algebra `ℰ` of formal characters. Choosing a basis of `𝔫₋` consisting of root vectors
+(`Matrix.Realization.KacMoodyAlgebra.nNegBasis`, indexed by `NegRootIndex`: the index `(α, j)`
+contributes the factor `1 - e^{-α}`), the product expands as `R = ∑_S (-1)^{|S|} e^{-wt S}`, the sum
+running over the finite sets `S` of indices, with `wt S = ∑_{(α, j) ∈ S} α`. This is how we define
+`R`, as a summable family of Hahn series.
 
 We prove `R · ch M(Λ) = e^Λ`, i.e. `ch M(Λ) = e^Λ ∏_{α ∈ Δ₊} (1 - e^{-α})^{-mult α}`
 ([Kac] (9.7.2)). The proof combines the computation `dim M(Λ)_{Λ - β} = K(β)`

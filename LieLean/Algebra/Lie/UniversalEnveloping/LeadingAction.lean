@@ -18,7 +18,6 @@ complex with a polynomial Koszul complex, not that entire chain-level identifica
 ## References
 
 Reconstructed from the proved PBW properties `PBW.rho_sub_mem` and `PBW.phi_lift`.
-No additional external source consulted.
 -/
 
 open Module MvPolynomial Finsupp

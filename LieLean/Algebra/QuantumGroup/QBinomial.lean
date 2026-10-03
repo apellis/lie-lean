@@ -275,8 +275,7 @@ variable {B : Type*} [Ring B] [Algebra k B]
 
 variable (v) in
 /-- The quantum Serre element `Σ_{r=0}^{m} (-1)^r [m r]_v a^{m-r} b a^r` ([Jan] 4.3 (R6));
-up to the factor `[m]_v!` this is Lusztig's divided-power form `qSerreDiv`
-(`qSerreDiv_eq`). -/
+up to the factor `[m]_v!` this is Lusztig's divided-power form `qSerreDiv` (`qSerreDiv_eq`). -/
 def qSerre (m : ℕ) (a b : B) : B :=
   ∑ r ∈ range (m + 1), ((-1) ^ r * qBinomial v m r) • (a ^ (m - r) * b * a ^ r)
 
@@ -478,8 +477,7 @@ theorem serreAux_add_right (hv : v ≠ 0) {u w : B} (hwu : w * u = v ^ 2 • (u 
 /-- The additivity of quantum Serre elements: if `w u = v² u w`, `w b = v⁻ᵐ b w` and
 `u b' = vᵐ b' u`, then `S(u + w, b + b') = S(u, b) + S(w, b')` for the Serre element `S` of
 degree `m + 1`. It replaces the form computation of [Lus] 1.4.4–1.4.6 and is the core of
-[Jan] Lemma 4.10;
-the proof (via the factorization of `S` into twisted commutators) is our own. -/
+[Jan] Lemma 4.10; the proof (via the factorization of `S` into twisted commutators) is our own. -/
 theorem qSerre_add (hv : v ≠ 0) {u w b b' : B} {m : ℕ} (hwu : w * u = v ^ 2 • (u * w))
     (hb : w * b = v⁻¹ ^ m • (b * w)) (hb' : u * b' = v ^ m • (b' * u)) :
     qSerre v (m + 1) (u + w) (b + b') = qSerre v (m + 1) u b + qSerre v (m + 1) w b' := by

@@ -27,7 +27,7 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.Weights
 ## Scope and references
 
 The arguments below are reconstructed from the existing formalized Weyl-group,
-Kac–Kazhdan, and BGG uniqueness theorems, not transcribed from a consulted textbook.
+Kac–Kazhdan, and BGG uniqueness theorems, not transcribed from a textbook.
 In particular, neither a dominant representative nor a shared dot orbit is assumed.
 The imported `finiteDimensional_hom` instance ensures that the finrank statement is
 an actual dimension bound, not an infinite-dimensional finrank convention.

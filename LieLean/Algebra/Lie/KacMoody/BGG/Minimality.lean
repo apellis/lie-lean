@@ -49,7 +49,7 @@ the general dimension-shifting equivalence.
 
 Arguments reconstructed from the definitions and existing repository proofs. Context:
 Garland-Lepowsky, Invent. Math. 34 (1976), 37-76, and Kumar, Kac-Moody groups,
-Ch. 3 / §9.1 (precise theorem numbering not consulted for this checkpoint).
+Ch. 3 / §9.1.
 -/
 
 open Module LieModule CoxeterSystem DirectSum

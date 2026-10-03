@@ -22,7 +22,7 @@ filtrations, spectral sequences, or an assumption of exactness of the original c
 
 ## References
 
-Reconstructed finite descending-filtration argument; no external reference consulted.
+Reconstructed finite descending-filtration argument.
 -/
 
 namespace FilteredLinearMap

@@ -158,9 +158,9 @@ theorem maxSubmodule_eq_fPowSubmodule :
       exact hx)
   rwa [LieSubmodule.Quotient.mk'_apply, LieSubmodule.Quotient.mk_eq_zero'] at this
 
-/-- **Exactness of the BGG resolution at `C₀ = M(Λ)`** ([HumO] Thm. 2.6,
-[Kac] Cor. 10.4): for a symmetrizable generalized Cartan matrix and `Λ` dominant integral,
-the image of `⊕ᵢ M(rᵢ · Λ) → M(Λ)` is the kernel of the augmentation `M(Λ) → L(Λ)`. -/
+/-- **Exactness of the BGG resolution at `C₀ = M(Λ)`** ([HumO] Thm. 2.6, [Kac] Cor. 10.4): for a
+symmetrizable generalized Cartan matrix and `Λ` dominant integral, the image of
+`⊕ᵢ M(rᵢ · Λ) → M(Λ)` is the kernel of the augmentation `M(Λ) → L(Λ)`. -/
 theorem range_bggDiffOne : (bggDiffOne P hA hΛ).range = (bggAug P (Λ := Λ)).ker := by
   rw [ker_bggAug, maxSubmodule_eq_fPowSubmodule P hA hΛ hS,
     range_bggDiffOne_eq_fPowSubmodule]

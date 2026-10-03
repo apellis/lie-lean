@@ -93,8 +93,7 @@ theorem isSymm_invForm : (invForm P S).IsSymm := by
   simp only [invForm_π]
   exact (AuxLieAlgebra.isSymm_invFormAux P S).eq x y
 
-/-- The form on `𝔤(A)` is invariant: `([x, y] | z) = (x | [y, z])`
-([Kac] Thm. 2.2 a)). -/
+/-- The form on `𝔤(A)` is invariant: `([x, y] | z) = (x | [y, z])` ([Kac] Thm. 2.2 a)). -/
 theorem invForm_lie (x y z : P.KacMoodyAlgebra) :
     invForm P S ⁅x, y⁆ z = invForm P S x ⁅y, z⁆ := by
   obtain ⟨x, rfl⟩ := π_surjective P x

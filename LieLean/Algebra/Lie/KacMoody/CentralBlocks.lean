@@ -18,7 +18,7 @@ EVERY element of the full enveloping centre, indexed by algebra characters.
 Naturality, reflection under injections, left exactness, independence and scalar-action
 identification. Category O implies local finiteness of the full centre; over an algebraically
 closed field this proves surjective lifting and actual short exactness of block restriction.
-These are reconstructed arguments; no primary source was consulted.
+These are reconstructed arguments.
 No assertion about Harish-Chandra, linkage classification, or Casimir blocks is made.
 -/
 

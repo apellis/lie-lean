@@ -13,9 +13,9 @@ generalized Cartan matrix such that `D A` is symmetric positive definite for som
 `D = diag(d)` with positive integer entries. This is the characterization of finite type by
 symmetrizability and positive definiteness ([Kac] Prop. 4.9; Kac's definition of finite type,
 [Kac] Thm. 4.3 (Fin), equivalently positivity of all principal minors ([Kac] Prop. 4.7 (a)),
-is equivalent for indecomposable
-symmetrizable matrices). Mathlib shows that the Cartan matrix of a finite crystallographic root
-system is of this kind (`RootPairing.Base.cartanMatrix_isFiniteCartan`).
+is equivalent for indecomposable symmetrizable matrices). Mathlib shows that the Cartan matrix of a
+finite crystallographic root system is of this kind
+(`RootPairing.Base.cartanMatrix_isFiniteCartan`).
 
 Let `(𝔥, Π, Π^∨)` be a realization of `A` over a field `K` of characteristic zero. We prove:
 

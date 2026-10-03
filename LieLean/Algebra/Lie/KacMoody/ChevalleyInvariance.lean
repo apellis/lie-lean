@@ -144,8 +144,8 @@ local notation "𝔤" => KacMoodyAlgebra P
 
 /-- Homogeneous infinitesimal adjoint invariants restrict to ordinary reflection invariants.
 This is the homogeneous symmetric-symbol direction of Etingof, Lecture 10, Thm. 10.1(i)
-in the symbol form of Remark 10.2(1),
-reconstructed via the independently proved central lift and graded HC identities. -/
+in the symbol form of Remark 10.2(1), reconstructed via the independently proved central lift and
+graded HC identities. -/
 theorem cartanRestriction_reflection_of_invariant_homogeneous
     (hA : A.IsGeneralizedCartan) (n : ℕ)
     (p : SymmetricAlgebra.homogeneousSubmodule (K := K) (M := 𝔤) n)

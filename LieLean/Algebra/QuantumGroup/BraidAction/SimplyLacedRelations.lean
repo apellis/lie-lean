@@ -16,10 +16,9 @@ quantum-group quotient, not merely on the two distinguished generators.
 
 ## References and scope
 
-Reconstructed from the inspected quotient presentation and recovery identities;
-no external primary source was consulted. All local Cartan and parameter hypotheses
-of `simplyLacedBraidEquiv` are retained. No finiteness, characteristic-zero or coroot
-spanning assumption is imposed. Triangles through either centre are excluded.
+Reconstructed from the quotient presentation and recovery identities. All local Cartan and
+parameter hypotheses of `simplyLacedBraidEquiv` are retained. No finiteness, characteristic-zero
+or coroot spanning assumption is imposed. Triangles through either centre are excluded.
 -/
 
 noncomputable section

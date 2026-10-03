@@ -17,8 +17,8 @@ import LieLean.Algebra.QuantumGroup.BraidAction.SimplyLaced
 * `terminalDoubleOtherBraidEquiv`: algebra automorphism with both compositions proved.
 
 ## References and scope
-Reconstructed from the quotient presentation and repository recovery identities;
-no primary source consulted. Arbitrary field, rank and root-datum lattice.
+Reconstructed from the quotient presentation and repository recovery identities.
+Arbitrary field, rank and root-datum lattice.
 The centre has entries `a_ij = -1`, `a_ji = -2`; thus `q_i = q_j²`, derived
 from symmetrization. All other centre edges are zero. Neighbour-to-untouched
 edges are zero or mutual simple. Untouched-to-untouched entries are unrestricted.

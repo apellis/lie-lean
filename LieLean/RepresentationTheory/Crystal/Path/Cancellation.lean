@@ -180,9 +180,8 @@ noncomputable def reflectAfter (η : LittelmannPath S) (i : ι) (c : ℤ) :
 
 /-- Littelmann's reflection of the part of a path after its first hitting time of `hᵢ = c`
 (a time-reversed variant of the involution of [Lit95] §9): if `hᵢ > c` on `[0, t₀)` and
-`hᵢ(t₀) = c ≤ -1`, then
-`reflectAfter η i c` is a path agreeing with `η` on `[0, t₀]`, of weight `rᵢ(wt η) + c αᵢ`, and
-`reflectAfter · i c` is an involution on such paths. -/
+`hᵢ(t₀) = c ≤ -1`, then `reflectAfter η i c` is a path agreeing with `η` on `[0, t₀]`, of weight
+`rᵢ(wt η) + c αᵢ`, and `reflectAfter · i c` is an involution on such paths. -/
 theorem FirstHit.reflectAfter (h : η.FirstHit i t₀ c) (hc : c ≤ -1) :
     ∃ η', reflectAfter η i c = some η' ∧ (∀ t ∈ Icc 0 t₀, η' t = η t) ∧
       η'.wt = D.reflection i η.wt + c • D.root i ∧
@@ -339,13 +338,12 @@ theorem hitIndex_eq_of_eqOn (h : (η.hitSet c).Nonempty)
   congr 1
 
 /-- **Littelmann's cancelling involution** (a time-reversed variant of [Lit95] §9): let
-`cⱼ ≤ -1`
-be integers and `η` a path some of whose `hⱼ` reaches `cⱼ`; let `τ` be the first such time and
-`i` a chosen index with `hᵢ(τ) = cᵢ`. Then `η' = reflectAfter η i cᵢ` agrees with `η` up to `τ`
-(so it has the same `τ` and `i`), has weight `rᵢ(wt η) + cᵢ αᵢ`, lies in the component of `η`,
-and `reflectAfter η' i cᵢ = η`. For `c = -1` this is the involution of the path-model Weyl
-character formula (`wt η' + ρ = rᵢ(wt η + ρ)`); for `cⱼ = -1 - ⟨λ, αⱼ^∨⟩` it is the involution of
-the Littlewood–Richardson rule. -/
+`cⱼ ≤ -1` be integers and `η` a path some of whose `hⱼ` reaches `cⱼ`; let `τ` be the first such time
+and `i` a chosen index with `hᵢ(τ) = cᵢ`. Then `η' = reflectAfter η i cᵢ` agrees with `η` up to `τ`
+(so it has the same `τ` and `i`), has weight `rᵢ(wt η) + cᵢ αᵢ`, lies in the component of `η`, and
+`reflectAfter η' i cᵢ = η`. For `c = -1` this is the involution of the path-model Weyl character
+formula (`wt η' + ρ = rᵢ(wt η + ρ)`); for `cⱼ = -1 - ⟨λ, αⱼ^∨⟩` it is the involution of the
+Littlewood–Richardson rule. -/
 theorem exists_reflectAfter_hitIndex (hc : ∀ j, c j ≤ -1) (h : (η.hitSet c).Nonempty) :
     ∃ η', reflectAfter η (hitIndex h) (c (hitIndex h)) = some η' ∧ η' ∈ η.component ∧
       ∃ h' : (η'.hitSet c).Nonempty, hitIndex h' = hitIndex h ∧

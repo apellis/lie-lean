@@ -20,7 +20,7 @@ relation, faithful action, or coroot-span assumption is used.
 
 ## References
 Reconstructed from the original presentation and the published image formulas.
-No external primary source consulted. The toral lattice is arbitrary.
+The toral lattice is arbitrary.
 -/
 
 noncomputable section

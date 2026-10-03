@@ -23,7 +23,7 @@ import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Parabolic
 ## References
 
 These statements and proofs are reconstructed from the polynomial normalization in
-`KazhdanLusztig.Parabolic` and the definition `muCoeff`; no external source was consulted.
+`KazhdanLusztig.Parabolic` and the definition `muCoeff`.
 No finiteness hypothesis on the Coxeter group or its parabolic subgroup is needed.
 -/
 

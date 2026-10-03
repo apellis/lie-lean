@@ -125,8 +125,8 @@ variable (V : Type*) [AddCommGroup V] [Module K V] [LieRingModule P.KacMoodyAlge
 abbrev weightSpace (μ : Dual K H) : Submodule K V :=
   weightSpaceOfMap V (h P) μ
 
-/-- A `𝔤(A)`-module is `𝔥`-diagonalizable if it is the sum of its weight spaces ([Kac] §3.6
-); the sum is then direct by `LieModule.iSupIndep_weightSpaceOfMap`. -/
+/-- A `𝔤(A)`-module is `𝔥`-diagonalizable if it is the sum of its weight spaces ([Kac] §3.6);
+the sum is then direct by `LieModule.iSupIndep_weightSpaceOfMap`. -/
 def IsHDiagonalizable : Prop :=
   ⨆ μ, weightSpace P V μ = ⊤
 

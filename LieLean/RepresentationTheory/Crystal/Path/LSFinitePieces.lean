@@ -28,7 +28,7 @@ The path type already requires an integral endpoint and continuous simple-coroot
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142 (1995),
-499–525, Section 4, printed pp. 509–510, definitions around Lemma 4.3. The finite affine
+499–525, Section 4, pp. 509–510, definitions around Lemma 4.3. The finite affine
 formula follows the source. The proofs of the local-to-finite bridge are reconstructed.
 Here chains are the repository's position chains, not a newly established comparison with
 all source time-times-coroot a-chains. No reparametrization quotient or crystal isomorphism

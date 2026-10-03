@@ -50,8 +50,7 @@ namespace Matrix.Realization
 variable {ι K H : Type*} [Fintype ι] [Field K] [AddCommGroup H] [Module K H]
   {A : Matrix ι ι ℤ} (P : Realization A K H)
 
-/-- The lattice of integral weights `{λ ∈ 𝔥* | ⟨λ, αᵢ^∨⟩ ∈ ℤ for all i}`
-([Kac] §10.1). -/
+/-- The lattice of integral weights `{λ ∈ 𝔥* | ⟨λ, αᵢ^∨⟩ ∈ ℤ for all i}` ([Kac] §10.1). -/
 def integralWeights : AddSubgroup (Dual K H) where
   carrier := {μ | ∀ i, ∃ n : ℤ, μ (P.coroot i) = n}
   add_mem' {μ ν} hμ hν i := by

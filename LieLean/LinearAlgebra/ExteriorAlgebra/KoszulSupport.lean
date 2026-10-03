@@ -18,7 +18,7 @@ assumption. This does not yet identify any CE associated-graded quotient.
 
 ## References
 
-Reconstructed from Mathlib's spanning theorem for exterior powers; no external source consulted.
+Reconstructed from Mathlib's spanning theorem for exterior powers.
 -/
 
 open scoped TensorProduct

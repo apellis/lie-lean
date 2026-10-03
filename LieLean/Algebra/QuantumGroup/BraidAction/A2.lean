@@ -22,8 +22,8 @@ reduce to the coupled lowering commutator and its coefficient-correct Chevalley 
 ## References
 
 Reconstructed from the quotient presentation and the published coupled relation proofs.
-No external primary source was consulted. The index type has exactly the two distinct
-nodes `i,j`, both Cartan entries are `-1`, and the root datum lattice is arbitrary.
+The index type has exactly the two distinct nodes `i,j`, both Cartan entries are `-1`, and the
+root datum lattice is arbitrary.
 -/
 
 noncomputable section

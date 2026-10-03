@@ -53,8 +53,7 @@ lattice for LS paths in Littelmann's normalization).
    (`LittelmannPath.component_straightLine_eq_fOrbit`).
 
 Steps 1–3 follow the strategy of [Lit94] §§3–4 (cf. [Lit95] §4); the formulation with
-positions, the handling of
-continuous parametrized paths and the proofs are our reconstruction.
+positions, the handling of continuous parametrized paths and the proofs are our reconstruction.
 
 ## Main definitions
 
@@ -121,8 +120,8 @@ variable (S : D.PathSpace 𝕜 V) in
 order of `W/W_λ` (so `y` is closer to `λ`), where `β` is a real root with coroot `c = β^∨`
 (seen as a linear form on `V`). The axioms are the properties of the Bruhat order used in the
 proof that the root operators preserve Lakshmibai–Seshadri paths (`[Lit94] §4`, `[Lit95] §4`);
-they are verified for realizations in `LieLean.RepresentationTheory.Crystal.Path.
-Stability`. Signs refer to `⟨x, αᵢ^∨⟩`: e.g. `0 < ⟨x, αᵢ^∨⟩` means `sᵢ x > x`. -/
+they are verified for realizations in `LieLean.RepresentationTheory.Crystal.Path.Stability`.
+Signs refer to `⟨x, αᵢ^∨⟩`: e.g. `0 < ⟨x, αᵢ^∨⟩` means `sᵢ x > x`. -/
 structure LSData where
   /-- The set of possible directions (the orbit `Wλ`). -/
   O : Set X

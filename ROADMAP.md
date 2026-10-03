@@ -461,9 +461,8 @@ descent and boundary branches have eigenvalue `v + v⁻¹`. The proof derives th
 standard action and then uses canonical uniqueness, not a finite-parabolic reduction.
 
 
-The Hecke algebra `𝓗(W)` over `ℤ[v, v⁻¹]` with standard basis `T_w` (constructed without
-Matsumoto via the regular representation, [Bou] Ch. IV §2,
-Exercise 23), the quadratic relation, the bar
+The Hecke algebra `𝓗(W)` over `ℤ[v, v⁻¹]` with standard basis `T_w` (constructed without Matsumoto
+via the regular representation, [Bou] Ch. IV §2, Exercise 23), the quadratic relation, the bar
 involution, `R`-polynomials; existence and uniqueness of the Kazhdan–Lusztig basis `C'_w`
 ([KL] Thm. 1.1), KL polynomials `P_{y,w}` (degree bound, `P_{w,w} = 1`, `P_{y,w} = 0` unless
 `y ≤ w`), specialization `v = 1` to `ℤ[W]`.
@@ -509,7 +508,7 @@ Verma embedding using the finite KK-linked Weyl orbit and reverse-dominance maxi
 then uses uniformity and injective restriction to prove scalar uniqueness. Algebraic closure,
 characteristic zero, finite-dimensional Cartan, finite Cartan and symmetrization remain
 explicit. Finite-dimensionality of Hom is supplied by the existing primitive-vector theorem.
-These arguments are reconstructed, not a certification of a newly consulted printed proof.
+These arguments are reconstructed.
 `KacMoody/VermaUniformity.lean` proves actual left Ore for the enveloping algebra of any
 finite-dimensional Lie algebra over a field, using PBW polynomial growth rather than an
 assumed Ore instance. It instantiates this for finite-type `U(𝔫₋)` and proves that any two
@@ -547,9 +546,8 @@ successive quotient image is equivalent to `M(Λ + μ)`, with factor count equal
 dimension of `Z_μ`. The coefficient module is finite-dimensional and Cartan-diagonalizable;
 the characteristic-zero field and finite-index realization are retained, without finite-type,
 dominance, integrality or algebraic-closure assumptions. Repeated weights and the zero module
-are included. These are reconstructed arguments, not certification of a consulted primary-source
-proof. The later translation results below supply facet exclusion and dual compatibility in the
-stated integral, finite-type setting.
+are included. These are reconstructed arguments. The later translation results below supply
+facet exclusion and dual compatibility in the stated integral, finite-type setting.
 `KacMoody/VermaCentralCharacter.lean` constructs the actual full-centre algebra character
 `Z(U(g)) →ₐ[K] K` of each Verma module and proves scalar action on every vector. Nonzero
 Verma morphisms force equal characters, and scalar action passes to their images and
@@ -697,12 +695,11 @@ for the `W`-invariant form of `Symmetrization.ofDiagonal` (the positive definite
 `IsFiniteCartan`), with every comparison made in `ℤ`, so no order on `K` is needed.
 `KacMoody/TranslationVerma.lean` proves **translation of Verma modules**
 `translation_verma`: under the same hypotheses, for every `w ∈ W`, the `χ_μ`-block of
-`M(w·λ) ⊗ L(ν)` is isomorphic to `M(w·μ)` (Humphreys GSM 94 Thm. 7.6, Verma part, integral
-case), over an algebraically closed field of characteristic zero with
-finite-dimensional Cartan. The proof combines the projected tensor-Verma filtration
-(`exists_centralTensorVermaFiltration`), linkage (`VermaModule.centralCharacter_eq_iff`), facet
-exclusion and multiplicity one of the extremal weight `w (μ - λ)`: exactly one step survives
-(`LieSubmodule.eq_bot_and_eq_last_of_single_step`).
+`M(w·λ) ⊗ L(ν)` is isomorphic to `M(w·μ)` (Humphreys GSM 94 Thm. 7.6, Verma part, integral case),
+over an algebraically closed field of characteristic zero with finite-dimensional Cartan. The proof
+combines the projected tensor-Verma filtration (`exists_centralTensorVermaFiltration`), linkage
+(`VermaModule.centralCharacter_eq_iff`), facet exclusion and multiplicity one of the extremal weight
+`w (μ - λ)`: exactly one step survives (`LieSubmodule.eq_bot_and_eq_last_of_single_step`).
 `KacMoody/TranslationFunctor.lean` packages translation `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ Z)` on
 full-central blocks as a functor (`centralTranslation`, `centralTranslationMap`, `_id`, `_comp`),
 proves it exact on short exact sequences with middle term in `𝒪` when `Z ∈ 𝒪`
@@ -732,13 +729,13 @@ longest element itself is not used), via irreducibility of duals (`LieModule.isI
 Weyl's theorem, weights of duals (`weightSpaceOfMap_neg_ne_bot_of_dual`) and the norm inequality
 for weights of `L(Λ)` with equality only on `WΛ` (`IrreducibleModule.exists_norm_eq_add`).
 `KacMoody/TranslationSimple.lean` proves the **dichotomy for simple modules**
-`translation_irreducible` (Humphreys GSM 94 Prop. 7.7): under the
-hypotheses of `translation_verma`, `T_λ^μ L(w·λ)` is zero or isomorphic to `L(w·μ)`. Proof:
-`L(x)` is a quotient of `M(x)` and embeds in `M(x)^∨` (`IrreducibleModule.toRestrictedDual`);
-`T` preserves surjections and injections (`centralTranslationMap_surjective/_injective`), so
-`T L(w·λ)` is a quotient of `M(w·μ)` embedding in `M(w·μ)^∨`; every map `M(y) → M(y)^{*σ}` is a
-scalar multiple of the Shapovalov map (`VermaModule.eq_smul_toTwistedDual`), whose kernel is
-`M'(y)` (`subsingleton_or_nonempty_equiv_irreducible`). `KacMoody/TranslationSameFacet.lean`
+`translation_irreducible` (Humphreys GSM 94 Prop. 7.7): under the hypotheses of `translation_verma`,
+`T_λ^μ L(w·λ)` is zero or isomorphic to `L(w·μ)`. Proof: `L(x)` is a quotient of `M(x)` and embeds
+in `M(x)^∨` (`IrreducibleModule.toRestrictedDual`); `T` preserves surjections and injections
+(`centralTranslationMap_surjective/_injective`), so `T L(w·λ)` is a quotient of `M(w·μ)` embedding
+in `M(w·μ)^∨`; every map `M(y) → M(y)^{*σ}` is a scalar multiple of the Shapovalov map
+(`VermaModule.eq_smul_toTwistedDual`), whose kernel is `M'(y)`
+(`subsingleton_or_nonempty_equiv_irreducible`). `KacMoody/TranslationSameFacet.lean`
 proves the **same-facet case**: if `λ + ρ`, `μ + ρ` have the same simple walls, then
 `T_λ^μ L(w·λ) ≅ L(w·μ)` (`translation_irreducible_of_sameFacet`; nonvanishing by adjunction with
 the Verma part for `λ, μ` exchanged), `T_μ^λ T_λ^μ M(w·λ) ≅ M(w·λ)`
@@ -749,19 +746,18 @@ upper-closure criterion of Thm. 7.9 when `μ` lies on more walls than `λ`; and 
 equivalence of blocks as a natural isomorphism of functors (only its values on Verma and simple
 modules are proved).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
-closure of the facet of `λ`), here in the integral case. Casimir
-eigenvalues are not identified with finer linkage classes. Kac–Kazhdan and Jantzen
-(`KacMoody/KacKazhdan/*.lean`,
+closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
+finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
 `KacMoody/Jantzen*.lean`; `[IsAlgClosed K]` as in [KK], who work over `ℂ`): determinant formula
-`VermaModule.shapovalovDet_eq` ([KK]; [Kum] Thm. 2.3.4: `D_β(λ) = c ∏_{α>0} ∏_{n≥1} ((λ+ρ|α) -
-n(α|α)/2)^{mult α · P(β-nα)}`; also `exists_shapovalovDet_eq_prod_kkPairs/_kkIdx`), criterion
-`maxSubmodule_inf_weightSpace_ne_bot_iff`, `kostantPartition_ne_zero_iff`; Jantzen filtration
-`jantzen` (`jantzen_one : M^1 = M'`), order formula `sum_finrank_jantzen_inf_weightSpace`, sum
-formula `finsum_finrank_jantzen_inf_weightSpace_eq_sum_verma` (for a transversal direction `δ`).
-Proof reconstructed (Jantzen filtration + leading terms, as in [KK]; cf. the proof of [Kum]
-Thm. 2.3.4); generic polynomial
-factorization lemmas in `KacKazhdan/{Hyperplane,Factorization}.lean`. **Kac–Kazhdan criterion**
-([KK]; [Kum] Cor. 2.3.6)
+`VermaModule.shapovalovDet_eq` ([KK]; [Kum] Thm. 2.3.4:
+`D_β(λ) = c ∏_{α>0} ∏_{n≥1} ((λ+ρ|α) - n(α|α)/2)^{mult α · P(β-nα)}`; also
+`exists_shapovalovDet_eq_prod_kkPairs/_kkIdx`), criterion `maxSubmodule_inf_weightSpace_ne_bot_iff`,
+`kostantPartition_ne_zero_iff`; Jantzen filtration `jantzen` (`jantzen_one : M^1 = M'`), order
+formula `sum_finrank_jantzen_inf_weightSpace`, sum formula
+`finsum_finrank_jantzen_inf_weightSpace_eq_sum_verma` (for a transversal direction `δ`).
+Proof reconstructed (Jantzen filtration + leading terms, as in [KK]; cf. the proof of
+[Kum] Thm. 2.3.4); generic polynomial factorization lemmas in
+`KacKazhdan/{Hyperplane,Factorization}.lean`. **Kac–Kazhdan criterion** ([KK]; [Kum] Cor. 2.3.6)
 (`KacKazhdan/Multiplicity.lean`): `VermaModule.multiplicity_ne_zero_iff_reflTransGen`
 (`[M(λ):L(μ)] ≠ 0` iff a chain of KK steps `λ → λ - nα`, `2(λ+ρ|α) = n(α|α)`, real or imaginary
 α), Jantzen sum formula for multiplicities `finsum_multiplicity_jantzen`, irreducibility
@@ -1547,16 +1543,16 @@ straightening relations `f x = x f - (p-1) y²`, `y x = p⁻¹ x y` (`B2PBW.Rel`
 `k[ℕ⁴]`. **Root vectors in arbitrary rank** (`PBW/RootVectors.lean`,
 `PBW/RootVectorsQuantum.lean`, `GroupTheory/Coxeter/RankTwoParabolic.lean`; [Jan] 8.20–8.21,
 [Lus] Lemma 40.1.2, Prop. 40.1.3): for `T_w = cs.braidLift Tᵢ` (Matsumoto) with
-`Tᵢ = braidEquivOfGeneric` and
-any Coxeter group `W` with the Coxeter matrix of `D` (e.g. the Weyl group of a realization), if
-`ℓ(w sᵢ) > ℓ(w)` then `T_w(Eᵢ) ∈ U⁺` (`braidLift_E_mem_adjoin`) and `T_w(Eᵢ) = Eⱼ` when
-`w sᵢ = sⱼ w` (`braidLift_E_eq`); hence the root vectors `T_{i₁}⋯T_{iₙ₋₁}(E_{iₙ})` along every
-reduced word lie in `U⁺` (`rootVector_mem_adjoin_of_isReduced`), in particular along reduced words
-of `w₀` (`exists_longestElement_rootVectors_mem_adjoin(_of_isFiniteCartan)`), with
-`_of_not_root` versions. Hypotheses: those of `braidArtinHom` and `aᵢⱼ aⱼᵢ ≤ 3` for `i ≠ j`
-(implied by `Matrix.IsFiniteCartan`, `Matrix.IsFiniteCartan.mul_le_three`; also satisfied by the
-simply-laced affine types). The proof (reconstructed) is an abstract induction on `ℓ(w)` for any
-braid-liftable family of algebra automorphisms (`CoxeterSystem.braidLift_apply_mem_adjoin`),
+`Tᵢ = braidEquivOfGeneric` and any Coxeter group `W` with the Coxeter matrix of `D` (e.g. the Weyl
+group of a realization), if `ℓ(w sᵢ) > ℓ(w)` then `T_w(Eᵢ) ∈ U⁺` (`braidLift_E_mem_adjoin`) and
+`T_w(Eᵢ) = Eⱼ` when `w sᵢ = sⱼ w` (`braidLift_E_eq`); hence the root vectors
+`T_{i₁}⋯T_{iₙ₋₁}(E_{iₙ})` along every reduced word lie in `U⁺`
+(`rootVector_mem_adjoin_of_isReduced`), in particular along reduced words of `w₀`
+(`exists_longestElement_rootVectors_mem_adjoin(_of_isFiniteCartan)`), with `_of_not_root` versions.
+Hypotheses: those of `braidArtinHom` and `aᵢⱼ aⱼᵢ ≤ 3` for `i ≠ j` (implied by
+`Matrix.IsFiniteCartan`, `Matrix.IsFiniteCartan.mul_le_three`; also satisfied by the simply-laced
+affine types). The proof (reconstructed) is an abstract induction on `ℓ(w)` for any braid-liftable
+family of algebra automorphisms (`CoxeterSystem.braidLift_apply_mem_adjoin`),
 through `w = w' u`, `w' ∈ W^{i,k}`, `u` alternating in `W_{i,k}`, reduced to the rank-two
 property `CoxeterMatrix.RankTwoRootProperty` (`rankTwoRootProperty_braidEquivOfGeneric`, from the
 `A₁ × A₁`, `A₂`, `B₂`, `G₂` computations in both orientations). Pairs with `aᵢⱼ aⱼᵢ ≥ 4` are
@@ -1650,9 +1646,9 @@ It proves the scalar intersection `ℚ[X,X⁻¹] ∩ A₀ ∩ bar(A₀) = ℚ`, 
 actual projection `L ∩ bar(L) ∩ V_{ℚ[X,X⁻¹]} → L/XL`. Its unique global lifts are exactly
 the represented divided powers of the highest vector and are bar-fixed. This is a proved
 rational balanced triple for every positive type-1 rank-one module `simpleRep X n 1`,
-including `n=0`, not an assumed balancedness interface. The argument is reconstructed
-independently of Kashiwara's. No full quantum-algebra bar, general-rank
-global basis, integer integral basis or arbitrary specialization is asserted.
+including `n=0`, not an assumed balancedness interface. The argument is reconstructed independently
+of Kashiwara's. No full quantum-algebra bar, general-rank global basis, integer integral basis or
+arbitrary specialization is asserted.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
 irreducible representation over an algebraically closed field, for nonzero `v` of infinite

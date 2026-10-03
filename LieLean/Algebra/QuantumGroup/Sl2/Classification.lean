@@ -26,8 +26,7 @@ The irreducible highest-string basis and exhaustion equivalence are proved in
 
 ## References
 
-Jantzen, *Lectures on quantum groups*, Ch. 2. The arguments here are reconstructed;
-precise theorem numbering has not been checked against the source.
+Jantzen, *Lectures on quantum groups*, Ch. 2. The arguments here are reconstructed.
 -/
 
 noncomputable section

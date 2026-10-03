@@ -58,11 +58,10 @@ for general dominant paths. A characters-only argument cannot work: the characte
 connected component of `B(λ) ⊗ B(μ)` is `∑ ch L(ν)` over the highest weight elements it contains
 (`Matrix.Realization.setCharacter_component_concat_eq_hsum`), whatever their number, so the
 characters do not see whether two highest weight elements lie in the same component. A natural
-route is a theory of Lakshmibai–Seshadri type paths
-"of shape `π`" for an arbitrary
-dominant path `π` (pieces of `π` twisted by Weyl group elements, with chain conditions),
-generalizing `LittelmannPath.LSData`; in finite type an alternative is the Pitman transform
-`P_{w₀}` of [BBO], which requires the braid relations for Pitman transforms.
+route is a theory of Lakshmibai–Seshadri type paths "of shape `π`" for an arbitrary dominant path
+`π` (pieces of `π` twisted by Weyl group elements, with chain conditions), generalizing
+`LittelmannPath.LSData`; in finite type an alternative is the Pitman transform `P_{w₀}` of [BBO],
+which requires the braid relations for Pitman transforms.
 Littelmann's own proof ([Lit95] §§5–7) takes a different route: gluing of L-S paths (§5),
 linking chains based on the continuity of the root operators (§§3, 6), and induction on
 concatenations of straight line paths (§7).

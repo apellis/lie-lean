@@ -36,8 +36,7 @@ these ordered monomials form an `R`-basis of `U(L)`.
 We follow Humphreys, *Introduction to Lie algebras and representation theory*, §17.4
 (Lemmas A–C; the Notes to §17 say the treatment follows Bourbaki). Humphreys writes `i` for the
 canonical map `L → U(L)` and `Ω` for the index set of the basis; here they are `ι` and `σ`.
-Let `S = R[z_i : i ∈ σ]`
-be the polynomial ring.
+Let `S = R[z_i : i ∈ σ]` be the polynomial ring.
 We construct a representation `ρ` of `L` on `S` such that, writing `X_i = ρ (b i)`,
 
 * (A) `X_i z^s = z_i z^s` whenever `i ≤ j` for every `j` occurring in `s`;

@@ -271,8 +271,8 @@ def multiplicities : P.CharacterRing ℤ :=
     hV.multiplicities.coeffAt μ = hV.multiplicity μ := rfl
 
 /-- **The character of a module in `𝒪` in terms of irreducible characters** ([Kac] Prop. 9.7;
-[HumO] §1.15): `ch V = ∑_μ [V : L(μ)] ch L(μ)` in `ℰ`, the sum being a
-summable family (`irreducibleCharacterFamily`). -/
+[HumO] §1.15): `ch V = ∑_μ [V : L(μ)] ch L(μ)` in `ℰ`, the sum being a summable family
+(`irreducibleCharacterFamily`). -/
 theorem character_eq_sumIrreducibleCharacter :
     hV.character = sumIrreducibleCharacter P hV.multiplicities := by
   ext ξ

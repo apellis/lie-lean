@@ -17,10 +17,9 @@ import Mathlib.Topology.Algebra.Module.FiniteDimension
 ## References
 
 Kac, *Infinite dimensional Lie algebras*, third edition, Proposition 3.12(f).
-The proof is our own. A negative perturbation
-by `rho` bounds the coroots vanishing at the point. The stabilizer injects into tuples
-of these coroots: injectivity is proved on the entire dual using chamber uniqueness
-and a small strictly dominant perturbation, not assumed on a smaller span.
+The proof is our own. A negative perturbation by `rho` bounds the coroots vanishing at the point.
+The stabilizer injects into tuples of these coroots: injectivity is proved on the entire dual using
+chamber uniqueness and a small strictly dominant perturbation, not assumed on a smaller span.
 -/
 
 open Module Filter Topology

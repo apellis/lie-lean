@@ -23,7 +23,7 @@ action with both node automorphisms. The simple-side automorphism (outgoing `-1`
 reverse `-2`) still needs its neighbor-first cubic transformed Serre relation.
 
 ## References
-Reconstructed directly from the quotient presentation; no primary source consulted.
+Reconstructed directly from the quotient presentation.
 -/
 
 noncomputable section

@@ -22,8 +22,8 @@ characteristic zero, and let `M(λ)` be the Verma module of highest weight `λ �
   free `U(𝔫₋)`-module of rank one and `U(𝔫₋)` is a domain.
 * If `⟨λ + ρ, αᵢ^∨⟩ = n` is a positive integer, then `fᵢⁿ v_λ` is a primitive vector of weight
   `rᵢ · λ = rᵢ(λ + ρ) - ρ = λ - n αᵢ`, which gives an embedding `M(rᵢ · λ) ↪ M(λ)`, and
-  `Hom(M(rᵢ · λ), M(λ))` is one-dimensional ([HumO] Prop. 1.4 and §4.2;
-  cf. [Kac] (3.2.4), Exercise 9.1).
+  `Hom(M(rᵢ · λ), M(λ))` is one-dimensional ([HumO] Prop. 1.4 and §4.2; cf. [Kac] (3.2.4),
+  Exercise 9.1).
 
 ## Main definitions
 
@@ -177,9 +177,9 @@ lemma map_smul_eq_smul {Λ μ : Dual K H}
     (u : 𝓤) (m : VermaModule P μ) : φ (u • m) = u • φ m := by
   rw [map_smul_eq_rep, rep_apply]
 
-/-- **Morphisms of Verma modules are injective** ([HumO] Thm. 4.2 (a);
-[Kac] Exercise 9.1): every nonzero morphism of `𝔤(A)`-modules `M(μ) → M(λ)` is injective. Indeed
-`M(λ) ≅ U(𝔫₋)` as a `U(𝔫₋)`-module (`VermaModule.equivEnvNNeg`) and `U(𝔫₋)` is a domain
+/-- **Morphisms of Verma modules are injective** ([HumO] Thm. 4.2 (a); [Kac] Exercise 9.1): every
+nonzero morphism of `𝔤(A)`-modules `M(μ) → M(λ)` is injective. Indeed `M(λ) ≅ U(𝔫₋)` as a
+`U(𝔫₋)`-module (`VermaModule.equivEnvNNeg`) and `U(𝔫₋)` is a domain
 (`UniversalEnvelopingAlgebra.instIsDomain`). -/
 theorem injective_of_ne_zero {Λ μ : Dual K H}
     {φ : VermaModule P μ →ₗ⁅K,P.KacMoodyAlgebra⁆ VermaModule P Λ} (hφ : φ ≠ 0) :
@@ -295,8 +295,7 @@ theorem toEnd_f_pow_hwv_mem_primitiveVectors {Λ : Dual K H} {i : ι} {n : ℕ} 
   exact mem_primitiveVectors.mpr ⟨toEnd_f_pow_mem_weightSpace i (hwv_mem_weightSpace P Λ) _,
     lie_e_fPowHwv P Λ hA hm⟩
 
-/-- **The embedding `M(rᵢ · λ) ↪ M(λ)`** ([HumO] Prop. 1.4, §4.2;
-cf. [Kac] (3.2.4), Exercise 9.1):
+/-- **The embedding `M(rᵢ · λ) ↪ M(λ)`** ([HumO] Prop. 1.4, §4.2; cf. [Kac] (3.2.4), Exercise 9.1):
 if `⟨λ + ρ, αᵢ^∨⟩ = n` is a positive integer, there is an injective morphism of `𝔤(A)`-modules
 `M(rᵢ · λ) → M(λ)`, where `rᵢ · λ = rᵢ(λ + ρ) - ρ = λ - n αᵢ`, sending `v_{rᵢ · λ}` to
 `fᵢⁿ v_λ`. -/
