@@ -57,22 +57,17 @@ lake build LieLean.Algebra.Lie.Foo   # a single module
 
 ## Citations
 
-Every section, theorem, equation and page number cited in this repository has been checked against
-the cited edition (Kac's 3rd edition, Lusztig's 1993 edition, and so on, as listed in each file's
-references).
-
-- Write a locator only after reading it in the source. Without the source, cite the work without a
-  locator, prove the result, or ask the maintainer; never cite a number from memory.
+- Cite section, theorem, equation and page numbers of the edition listed in the file's references,
+  and only numbers you have checked there; otherwise cite the work without a locator.
 - Give the most precise item ("Prop. 3.12 (d)", "proof of Thm. 9.11"); use "cf." when the source
   states a closely related but different result.
 - When the source states a result under narrower hypotheses than the Lean statement (over `ℂ`, in
   finite type, for symmetrizable `A`), say so in the docstring. Kac and Kumar work over `ℂ`,
   Lusztig over `ℚ(v)`, Jantzen's *Lectures on quantum groups* in finite type throughout.
-- Paraphrase; do not copy text from the sources.
 - Kac–Kazhdan, Adv. Math. 34 (1979), is cited together with Kumar's account (§2.3), which proves
-  and credits its results; the paper's own theorem numbers are not used.
-- A proof note saying "reconstructed" or "our own" means the Lean proof was written independently
-  of the source's argument.
+  and credits its results.
+- A proof note saying "reconstructed" or "our own" means the Lean proof does not follow the
+  source's argument.
 
 ## Layout and naming (Mathlib-ready)
 
