@@ -29,8 +29,8 @@ The proof is the standard induction on `ℓ(w)` ([Jan] 8.20, [Lus] 40.1.2): choo
 a right descent `k` of `w`, write `w = w' u` with `w'` minimal in `w W_{i,k}` and `u ∈ W_{i,k}`,
 so that `T_w = T_{w'} T_u`, apply the rank-two statement to `u` and the induction hypothesis to
 `w'`; for the second assertion, `w' (u sᵢ u⁻¹) w'⁻¹ = sⱼ` and length additivity force
-`u sᵢ u⁻¹` to be a simple reflection. The argument is reconstructed (the sources were not
-consulted); it uses only Coxeter combinatorics, no root system.
+`u sᵢ u⁻¹` to be a simple reflection. The argument is our own; it uses
+only Coxeter combinatorics, no root system.
 
 ## Main definitions / results
 

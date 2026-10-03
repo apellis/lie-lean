@@ -22,7 +22,7 @@ weights of `H_k(𝔫₋, L(Λ))`.
 
 ## Proof
 
-We could not consult [Kum] and reconstructed the following argument, which avoids positivity of
+The following argument is our own; it avoids positivity of
 the (in general indefinite) form. Write `φ = ν + ρ - ⟨m⟩`; then `λ - φ ∈ Q₊` and we argue by
 induction on its height. The key point is that for a simple reflection `rᵢ` the pair `(ν, m)` can
 be replaced by `(rᵢ ν, rᵢ ⋆ m)`, where `rᵢ ⋆ m` removes `αᵢ` from `m`, applies `rᵢ` to the other

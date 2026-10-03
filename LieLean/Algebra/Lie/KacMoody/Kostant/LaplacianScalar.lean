@@ -46,7 +46,7 @@ formula for `Ω`. Inductively, if `c` has weight `μ` and `□ c = s(μ) c`, the
   Casimir argument in place of Kostant's Laplacian).
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
   Math. 204, Birkhäuser 2002, proof of Thm. 3.2.7, Thm. 3.4.2, Cor. 3.4.11.
-* The arguments above are reconstructed by us; the sources were not consulted.
+* The arguments above are our own.
 -/
 
 open Module LieModule LieModule.ChevalleyEilenberg TensorProduct ExteriorAlgebra

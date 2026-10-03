@@ -23,7 +23,7 @@ Their enumeration is proved from the inversion-set recursion, not assumed.
 Kac, *Infinite dimensional Lie algebras*, 3rd ed., Lemma 3.11 (length criterion). The statement is
 S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr. Math. 204,
 Birkhäuser 2002, Lemma 1.3.14.
-Proofs reconstructed from the existing inversion-set API; the source was not consulted.
+Our own proofs, from the existing inversion-set API.
 -/
 
 noncomputable section

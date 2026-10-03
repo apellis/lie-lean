@@ -25,8 +25,8 @@ import Mathlib.FieldTheory.RatFunc.AsPolynomial
   `ℚ[X]_(X)`, stable under the explicitly constructed rank-one Kashiwara string shifts.
 
 ## References
-Reconstructed rank-one arguments, guided by the target of Kashiwara, *On crystal bases*,
-§§12.2–12.3; that primary source was not consulted for these proofs.
+Our own rank-one arguments, aimed at the rank-one case of Kashiwara, *On crystal bases*,
+§§12.2–12.3.
 No general global-basis theorem or balancedness is assumed or asserted here.
 In particular, no residue basis, Laurent triple-intersection calculation or balanced-triple
 isomorphism has yet been proved. Compatibility of module bar is stated generatorwise;

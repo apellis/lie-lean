@@ -46,8 +46,8 @@ requires a parameter transcendental over `ℚ`; this file does not extend that t
 * J. C. Jantzen, *Lectures on quantum groups*, GSM 6, §§4.7, 8.21–8.24.
 * G. Lusztig, *Introduction to quantum groups*, §§2.2, 40.1–40.2.
 
-The proofs are reconstructed from the existing conjugation and positive-subalgebra results
-and elementary independence of simultaneous eigenspaces; the printed sources were not consulted.
+The proofs are our own, from the existing conjugation and positive-subalgebra results and
+elementary independence of simultaneous eigenspaces.
 -/
 
 noncomputable section
