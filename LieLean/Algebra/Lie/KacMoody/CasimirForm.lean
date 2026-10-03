@@ -14,7 +14,7 @@ import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
 
 Let `A` be a symmetrizable generalized Cartan matrix with a symmetrization `S`, realization
 `(𝔥, Π, Π^∨)` over a field `K` of characteristic zero, and let `(·|·)` be the standard form on
-`𝔥` ([Kac] §2.1, `Matrix.Realization.bilinForm`). By [Kac] Thm. 2.2 (check) there is a symmetric
+`𝔥` ([Kac] §2.1, `Matrix.Realization.bilinForm`). By [Kac] Thm. 2.2 there is a symmetric
 invariant bilinear form `(·|·)` on `𝔤(A)` extending it, for which `𝔤_α ⊥ 𝔤_β` unless
 `α + β = 0` and which pairs `𝔤_α` and `𝔤_{-α}` nondegenerately. In this file we record exactly
 these properties as a hypothesis `KacMoodyAlgebra.IsStandardForm P S B` on a bilinear form `B`,
@@ -25,7 +25,7 @@ From these properties we derive that `𝔤_μ` and `𝔤_{-μ}` are nondegenerat
 `μ ∈ 𝔥*` (for `μ = 0` this is the nondegeneracy of the form on `𝔥`), so that every basis
 `{e_μ^{(k)}}` of `𝔤_μ` has a dual basis `{e_{-μ}^{(k)}}` of `𝔤_{-μ}`:
 `(e_μ^{(k)} | e_{-μ}^{(l)}) = δₖₗ`. We fix such dual bases (`rootSpaceBasis`,
-`IsStandardForm.dualBasis`) and prove the identity of [Kac] Lemma 2.4 (check), which is the heart of
+`IsStandardForm.dualBasis`) and prove the identity of [Kac] Lemma 2.4, which is the heart of
 the proof that the Casimir operator commutes with `𝔤(A)`: for `z ∈ 𝔤_γ`,
 `∑ₖ [e_{-μ}^{(k)}, z] ⊗ e_μ^{(k)} = ∑ₖ e_{-(μ-γ)}^{(k)} ⊗ [z, e_{μ-γ}^{(k)}]`
 (`IsStandardForm.casimirSum_lie_left`, stated after applying an arbitrary bilinear map).
@@ -33,7 +33,7 @@ the proof that the Casimir operator commutes with `𝔤(A)`: for `z ∈ 𝔤_γ`
 ## Main definitions
 
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm`: the properties of the invariant form of
-  [Kac] Thm. 2.2 (check) used for the Casimir operator.
+  [Kac] Thm. 2.2 used for the Casimir operator.
 * `Matrix.Realization.KacMoodyAlgebra.rootSpaceBasis`: a chosen basis of `𝔤_μ`.
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.dualBasis`: the dual basis of `𝔤_{-μ}`.
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.casimirSum`: `∑ₖ Φ(e_{-μ}^{(k)}, e_μ^{(k)})`.
@@ -41,16 +41,16 @@ the proof that the Casimir operator commutes with `𝔤(A)`: for `z ∈ 𝔤_γ`
 ## Main results
 
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.lie_eq_smul`: `[x, y] = (x|y) ν⁻¹(α)` for
-  `x ∈ 𝔤_α`, `y ∈ 𝔤_{-α}` ([Kac] Thm. 2.2 e) (check)).
+  `x ∈ 𝔤_α`, `y ∈ 𝔤_{-α}` ([Kac] Thm. 2.2 e)).
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.eq_zero_of_forall`: `𝔤_μ` and `𝔤_{-μ}` are
   nondegenerately paired for every `μ`.
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.sum_smul_basis`,
   `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.sum_smul_dualBasis`: expansion in dual bases.
-* `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.casimirSum_lie_left`: [Kac] Lemma 2.4 (check).
+* `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.casimirSum_lie_left`: [Kac] Lemma 2.4.
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.casimirSum_eq_of_basis`: the sums do not depend
   on the chosen dual bases.
 * `Matrix.Realization.KacMoodyAlgebra.isStandardForm_invForm`: the invariant form
-  `KacMoodyAlgebra.invForm` of [Kac] Thm. 2.2 (check) is a standard form.
+  `KacMoodyAlgebra.invForm` of [Kac] Thm. 2.2 is a standard form.
 
 ## References
 
@@ -67,7 +67,7 @@ variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [AddCommGroup 
   {A : Matrix ι ι ℤ} (P : Realization A K H)
 
 /-- A bilinear form `B` on `𝔤(A)` is a *standard form* for the symmetrization `S` if it has the
-properties of the invariant form of [Kac] Thm. 2.2 (check) that are used to construct the Casimir
+properties of the invariant form of [Kac] Thm. 2.2 that are used to construct the Casimir
 operator: it is symmetric and invariant, it restricts to the standard form
 `Matrix.Realization.bilinForm` of [Kac] (2.1.2)–(2.1.3) on `𝔥`, `(𝔤_μ | 𝔤_ν) = 0` unless
 `μ + ν = 0`, and for `α ∈ Q₊ \ {0}` it pairs `𝔤_α` and `𝔤_{-α}` nondegenerately. -/
@@ -119,7 +119,7 @@ lemma lie_left (x y z : P.KacMoodyAlgebra) : B ⁅x, y⁆ z = B x ⁅y, z⁆ := 
   rw [← lie_skew, map_neg, LinearMap.neg_apply, hB.lieInvariant y x z, neg_neg]
 
 /-- For every `μ ∈ 𝔥*`, an element of `𝔤_μ` orthogonal to `𝔤_{-μ}` is zero: `𝔤_μ` and `𝔤_{-μ}`
-are nondegenerately paired ([Kac] Thm. 2.2 (check)). -/
+are nondegenerately paired ([Kac] Thm. 2.2). -/
 theorem eq_zero_of_forall {μ : Dual K H} {x : P.KacMoodyAlgebra} (hx : x ∈ rootSpace P μ)
     (hx0 : ∀ y ∈ rootSpace P (-μ), B x y = 0) : x = 0 := by
   by_cases hμ : rootSpace P μ = ⊥
@@ -137,7 +137,7 @@ theorem eq_zero_of_forall {μ : Dual K H} {x : P.KacMoodyAlgebra} (hx : x ∈ ro
     rw [ha, map_zero]
   · exact hB.eq_zero_of_pos hpos hx hx0
 
-/-- [Kac] Thm. 2.2 e) (check): `[x, y] = (x|y) ν⁻¹(μ)` for `x ∈ 𝔤_μ` and `y ∈ 𝔤_{-μ}`. -/
+/-- [Kac] Thm. 2.2 e): `[x, y] = (x|y) ν⁻¹(μ)` for `x ∈ 𝔤_μ` and `y ∈ 𝔤_{-μ}`. -/
 theorem lie_eq_smul {μ : Dual K H} {x y : P.KacMoodyAlgebra} (hx : x ∈ rootSpace P μ)
     (hy : y ∈ rootSpace P (-μ)) : ⁅x, y⁆ = B x y • h P ((P.toDual S).symm μ) := by
   have hxy : ⁅x, y⁆ ∈ rootSpace P 0 := by
@@ -259,7 +259,7 @@ lemma exists_ne_zero_of_casimirSum_ne_zero {M : Type*} [AddCommMonoid M]
   obtain ⟨k, -, hk⟩ := Finset.exists_ne_zero_of_sum_ne_zero hΦ
   exact ⟨_, hB.dualBasis_mem μ k, _, rootSpaceBasis_mem P μ k, hk⟩
 
-/-- [Kac] Lemma 2.4 (check): for `z ∈ 𝔤_γ`,
+/-- [Kac] Lemma 2.4: for `z ∈ 𝔤_γ`,
 `∑ₖ [e_{-μ}^{(k)}, z] ⊗ e_μ^{(k)} = ∑ₖ e_{-(μ-γ)}^{(k)} ⊗ [z, e_{μ-γ}^{(k)}]`, stated after applying
 an arbitrary bilinear map `Ψ`. Both sides are computed by expanding in dual bases; the coefficients
 agree by invariance and symmetry of the form. -/
@@ -333,7 +333,7 @@ theorem casimirSum_eq_of_basis {M : Type*} [AddCommGroup M] [Module K M]
 
 end IsStandardForm
 
-/-- The invariant form `KacMoodyAlgebra.invForm` of [Kac] Thm. 2.2 (check) is a standard form. -/
+/-- The invariant form `KacMoodyAlgebra.invForm` of [Kac] Thm. 2.2 is a standard form. -/
 theorem isStandardForm_invForm (S : A.Symmetrization) :
     IsStandardForm P S (invForm P S) where
   isSymm := isSymm_invForm P S

@@ -33,8 +33,8 @@ injective. Over a field every subalgebra has such a complement.
 ## References
 
 * J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §17.3,
-  Corollary D (check).
-* N. Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7 (check).
+  Corollary D.
+* N. Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, Cor. 5.
 -/
 
 open Finsupp Module
@@ -138,7 +138,7 @@ include h in
 /-- **Corollary of PBW**: if a Lie subalgebra `L'` of `L` and a complementary submodule `V` are
 free `R`-modules, then `U(L)` is a free left `U(L')`-module (for the action through
 `U(L') → U(L)`). See Humphreys, *Introduction to Lie algebras and representation theory*, §17.3,
-Corollary D (check), stated there over a field; the basis is `pbwBasisOfIsCompl`. -/
+Corollary D, stated there over a field; the basis is `pbwBasisOfIsCompl`. -/
 theorem free_of_isCompl :
     Module.Free (UniversalEnvelopingAlgebra R L') (UniversalEnvelopingAlgebra R L) :=
   let : LinearOrder (Free.ChooseBasisIndex R V) := IsWellOrder.linearOrder WellOrderingRel
@@ -146,7 +146,7 @@ theorem free_of_isCompl :
 
 include h in
 /-- **Corollary of PBW**: if a Lie subalgebra `L'` of `L` and a complementary submodule are free
-`R`-modules, then `U(L') → U(L)` is injective. See Humphreys, §17.3, Corollary D (check). -/
+`R`-modules, then `U(L') → U(L)` is injective. See Humphreys, §17.3, Corollary D. -/
 theorem map_incl_injective_of_isCompl_submodule : Function.Injective (map L'.incl) := by
   let : LinearOrder (Free.ChooseBasisIndex R V) := IsWellOrder.linearOrder WellOrderingRel
   set B := pbwBasisOfIsCompl h (Free.chooseBasis R V)
@@ -164,7 +164,7 @@ variable {K L : Type*} [Field K] [LieRing L] [LieAlgebra K L] (L' : LieSubalgebr
 
 /-- **Corollary of PBW**: over a field, `U(L)` is a free `U(L')`-module for every Lie subalgebra
 `L'` of `L`. See Humphreys, *Introduction to Lie algebras and representation theory*, §17.3,
-Corollary D (check). -/
+Corollary D. -/
 instance instFreeLieSubalgebra :
     Module.Free (UniversalEnvelopingAlgebra K L') (UniversalEnvelopingAlgebra K L) :=
   let ⟨_, h⟩ := L'.toSubmodule.exists_isCompl
@@ -172,7 +172,7 @@ instance instFreeLieSubalgebra :
 
 /-- **Corollary of PBW**: over a field, `U(L') → U(L)` is injective for every Lie subalgebra `L'`
 of `L`. See Humphreys, *Introduction to Lie algebras and representation theory*, §17.3,
-Corollary D (check). -/
+Corollary D. -/
 theorem map_incl_injective : Function.Injective (map L'.incl) :=
   let ⟨_, h⟩ := L'.toSubmodule.exists_isCompl
   map_incl_injective_of_isCompl_submodule h

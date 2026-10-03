@@ -50,7 +50,7 @@ theorem coeff_character (μ : X) : C.character.coeff μ = Nat.card {b // C.wt b 
   rw [Finset.sum_boole, Nat.card_eq_fintype_card, Fintype.card_subtype]
 
 /-- The character of a tensor product of finite crystals is the product of the characters
-([Kas] §7.3 (check)). -/
+(immediate from `wt(b₁ ⊗ b₂) = wt b₁ + wt b₂`, [Kas] §7.3). -/
 theorem character_tensor [Fintype B₁] [Fintype B₂] (C₁ : Crystal D B₁) (C₂ : Crystal D B₂) :
     (C₁.tensor C₂).character = C₁.character * C₂.character := by
   simp only [character, Finset.sum_mul_sum, single_mul_single, mul_one, tensor_wt]
@@ -63,7 +63,7 @@ theorem Equiv.character_eq [Fintype B₁] [Fintype B₂] {C₁ : Crystal D B₁}
   exact Fintype.sum_equiv ψ.toEquiv _ _ fun b ↦ by simp
 
 /-- The character of a finite seminormal crystal is invariant under the simple reflections:
-`rᵢ (ch B) = ch B`, where `rᵢ` acts on `ℤ[X]` through its action on `X` ([Kas] §7.7 (check)). -/
+`rᵢ (ch B) = ch B`, where `rᵢ` acts on `ℤ[X]` through its action on `X` ([Kas] §11, via `Sᵢ`). -/
 theorem IsSeminormal.mapDomain_reflection_character {C : Crystal D B} (hC : C.IsSeminormal)
     (i : ι) :
     mapDomainRingEquiv ℤ (D.reflection i).toAddEquiv C.character = C.character := by

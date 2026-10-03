@@ -21,7 +21,7 @@ These are classical combinatorial results, not quantum spanning or specializatio
 
 ## References
 
-Kac, *Infinite dimensional Lie algebras*, 3rd ed., Lemma 3.11 and §9.7 (check).
+Kac, *Infinite dimensional Lie algebras*, 3rd ed., Lemma 3.11, §9.7 and §10.5.
 Proofs reconstructed using the existing root enumeration and root-multiplicity theorems.
 -/
 

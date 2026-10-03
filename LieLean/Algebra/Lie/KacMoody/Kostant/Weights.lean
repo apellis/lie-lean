@@ -58,11 +58,11 @@ occur (`reflectMset`); then `ρ - ⟨rᵢ ⋆ m⟩ = rᵢ (ρ - ⟨m⟩)`, so th
 ## References
 
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002, §3.2 (check).
+  Math. 204, Birkhäuser 2002, §3.2.
 * [GL] H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent.
-  Math. **34** (1976), 37–76, §5 (check).
+  Math. **34** (1976), 37–76, Prop. 2.13, Prop. 8.3.
 * B. Kostant, *Lie algebra cohomology and the generalized Borel–Weil theorem*, Ann. of Math.
-  **74** (1961), 329–387, §5 (check) (finite type, via positivity).
+  **74** (1961), 329–387, Lemma 5.12 (finite type, via positivity).
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.7, §3.11.
 -/
 
@@ -97,7 +97,7 @@ theorem dualBilinForm_reflection (i : ι) (μ μ' : Dual K H) :
   ring
 
 omit [DecidableEq ι] in
-/-- The Weyl group preserves the form: `(w μ | w μ') = (μ | μ')` ([Kac] §3.8 (check)). -/
+/-- The Weyl group preserves the form: `(w μ | w μ') = (μ | μ')` ([Kac] Prop. 3.9). -/
 theorem dualBilinForm_weylGroup {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA)
     (μ μ' : Dual K H) : P.dualBilinForm S (w μ) (w μ') = P.dualBilinForm S μ μ' := by
   refine P.weylGroup_induction hA (p := fun w ↦ ∀ μ μ',
@@ -497,7 +497,7 @@ theorem exists_weylGroup_of_dualBilinForm_eq_aux (N : ℕ) :
       exact Finsupp.mem_support_iff.mp hα
 
 include S hΛ hrefl hle in
-/-- **Kostant's lemma** (combinatorial form; [Kum] Lemma 3.2.? (check), Kostant 1961 §5 (check)
+/-- **Kostant's lemma** (combinatorial form; [Kum] Lemmas 3.2.4, 3.2.6, Kostant 1961 §5
 in finite type; reconstructed for Kac–Moody algebras): let `Λ` be dominant integral, `Pw` a
 `W`-invariant set of weights `≤ Λ` (e.g. the weights of `L(Λ)`), `ν ∈ Pw` and `m` a multiset of
 positive roots within the root multiplicities. If `φ = ν + ρ - ⟨m⟩` satisfies
@@ -592,8 +592,8 @@ variable {P} {Λ : Dual K H}
 
 omit [FiniteDimensional K H] in
 include hA in
-/-- The weights of `L(Λ)`, `Λ` dominant integral, are permuted by `W` ([Kac] Prop. 3.7
-(check)). -/
+/-- The weights of `L(Λ)`, `Λ` dominant integral, are permuted by `W`
+([Kac] Prop. 10.1). -/
 lemma reflection_mem_weights (hΛ : P.IsDominantIntegral Λ) {ν : Dual K H}
     (hν : weightSpace P (IrreducibleModule P Λ) ν ≠ ⊥) (i : ι) :
     weightSpace P (IrreducibleModule P Λ) (P.reflection hA i ν) ≠ ⊥ := by
@@ -611,8 +611,8 @@ lemma exists_eq_sub_of_weightSpace_ne_bot {ν : Dual K H}
   exact VermaModule.exists_eq_sub_of_mem_weightSpace P Λ (LieSubmodule.Quotient.mk' _)
     (LieSubmodule.Quotient.surjective_mk' _) hx hx0
 
-/-- **Kostant's lemma for `𝔫₋`-homology** ([Kum] Lemma 3.2.? (check); Kostant 1961, §5
-(check), in finite type): if `H_k(𝔫₋, L(Λ))_μ ≠ 0`, `Λ` dominant integral, and
+/-- **Kostant's lemma for `𝔫₋`-homology** ([Kum] Lemmas 3.2.4, 3.2.6; Kostant 1961, §5
+in finite type): if `H_k(𝔫₋, L(Λ))_μ ≠ 0`, `Λ` dominant integral, and
 `(μ + ρ | μ + ρ) = (Λ + ρ | Λ + ρ)`, then `μ = w(Λ + ρ) - ρ` for some `w ∈ W` of length `k`.
 (The weights of `C_k(𝔫₋, L(Λ))` are `ν - (β₁ + ⋯ + β_k)` with `ν` a weight of `L(Λ)` and the `βⱼ`
 roots of distinct elements of a basis of root vectors of `𝔫₋`;

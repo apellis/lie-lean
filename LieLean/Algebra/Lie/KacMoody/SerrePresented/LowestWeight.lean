@@ -14,7 +14,7 @@ weight `-β`, `β = ∑ kⱼ αⱼ ∈ Q₊ \ {0}`, such that `𝔯̂₋` has no
 with `ht γ < ht β`. Then `[eᵢ, x] = 0` for all `i` (by minimality, since `[eᵢ, x] ∈ 𝔯̂` has weight
 `αᵢ - β`), hence by `𝔰𝔩₂`-theory in the integrable algebra `𝔤̂` we get `⟨β, αᵢ^∨⟩ ≤ 0`, i.e.
 `∑ⱼ aᵢⱼ kⱼ ≤ 0` for all `i`. This is the first step of the proof of the Gabber–Kac theorem
-([Kac] §9.11 (check), [GK]); the argument is reconstructed.
+([Kac] §9.11, [GK]); the argument is reconstructed.
 
 ## Main results
 
@@ -25,7 +25,7 @@ with `ht γ < ht β`. Then `[eᵢ, x] = 0` for all `i` (by minimality, since `[e
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.11 (check).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.11.
 * [GK] O. Gabber, V. G. Kac, *On defining relations of certain infinite-dimensional Lie
   algebras*, Bull. Amer. Math. Soc. (N.S.) **5** (1981), 185–189.
 -/
@@ -96,7 +96,7 @@ lemma sub_single_mem_posCone_or {k : ι → ℤ} (hk : k ∈ posCone ι) (i : ι
 include hA in
 /-- Let `x ∈ 𝔯̂₋` be a weight vector of weight `-β`, `β = ∑ kⱼ αⱼ ∈ Q₊ \ {0}`, such that `𝔯̂₋` has
 no nonzero weight vectors of weight `-γ` with `ht γ < ht β`. Then `[eᵢ, x] = 0` for all `i`
-([Kac] §9.11 (check); reconstructed argument). -/
+(cf. the proof of [Kac] Thm. 9.11; reconstructed argument). -/
 theorem lie_e_eq_zero_of_minimal {k : ι → ℤ} (hk : k ∈ posCone ι)
     (hmin : ∀ l ∈ posCone ι, height l < height k →
       (radicalNeg P).toSubmodule ⊓ rootSpace P (-P.rootOf l) = ⊥)
@@ -129,7 +129,7 @@ theorem lie_e_eq_zero_of_minimal {k : ι → ℤ} (hk : k ∈ posCone ι)
 
 include hA in
 /-- Under the hypotheses of `lie_e_eq_zero_of_minimal`, if `x ≠ 0` then `⟨β, αᵢ^∨⟩ ≤ 0` for all
-`i`, i.e. `∑ⱼ aᵢⱼ kⱼ ≤ 0` ([Kac] §9.11 (check); reconstructed argument). -/
+`i`, i.e. `∑ⱼ aᵢⱼ kⱼ ≤ 0` ([Kac] §9.11; reconstructed argument). -/
 theorem sum_mul_le_zero_of_minimal {k : ι → ℤ} (hk : k ∈ posCone ι)
     (hmin : ∀ l ∈ posCone ι, height l < height k →
       (radicalNeg P).toSubmodule ⊓ rootSpace P (-P.rootOf l) = ⊥)

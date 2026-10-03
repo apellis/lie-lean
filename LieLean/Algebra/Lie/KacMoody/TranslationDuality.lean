@@ -17,11 +17,11 @@ translation functors commute with duality, and hence translate dual Verma module
 ## Main results
 
 * `unop_envTranspose_center`: `σ(z) = z` for `z` central (finite type; Humphreys, GSM 94, §3.2
-  (check)).
+  and the Exercise in §1.10).
 * `restrictedDualCentralBlockEquiv`: `(pr_χ M)^∨ ≅ pr_χ (M^∨)` for `M` in `𝒪`.
 * `restrictedDualCentralTranslationEquiv`: `(T M)^∨ ≅ T (M^∨)` for
   `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ L(ν))`, `ν` dominant integral, `M` in `𝒪`.
-* `translation_dualVerma`: `T_λ^μ M(w·λ)^∨ ≅ M(w·μ)^∨` (Humphreys, GSM 94, Theorem 7.6 (check),
+* `translation_dualVerma`: `T_λ^μ M(w·λ)^∨ ≅ M(w·μ)^∨` (Humphreys, GSM 94, Theorem 7.6,
   dual Verma part, integral weights, finite type).
 
 The argument (reconstructed): for `z` central, `χ_Λ(σ z) = χ_Λ(z)` by contravariance of the
@@ -115,7 +115,7 @@ theorem centralBlock_centralBlock_eq_top (χ : 𝓩 →ₐ[K] K) :
 variable [FiniteDimensional K H] (hA : A.IsFiniteCartan)
 
 include hA in
-/-- **`σ` fixes the centre** of `U(𝔤)` in finite type (Humphreys, GSM 94, §3.2 (check)).
+/-- **`σ` fixes the centre** of `U(𝔤)` in finite type (Humphreys, GSM 94, §3.2).
 Reconstructed: `χ_Λ(σ z) = χ_Λ(z)` for all `Λ`, and the Harish-Chandra homomorphism is
 injective. -/
 theorem unop_envTranspose_center (z : 𝓩) : (envTranspose P (z : 𝓤)).unop = z := by
@@ -267,7 +267,7 @@ def restrictedDualTensorIrreducibleEquiv {ν : Dual K H} (hν : P.IsDominantInte
     (IrreducibleModule.isCategoryO P ν).iSup_weightSpaceOfMap_eq_top
 
 include hA in
-/-- **Translation commutes with duality** (Humphreys, GSM 94, Ch. 7 (check)): for `M` in `𝒪`,
+/-- **Translation commutes with duality** (Humphreys, GSM 94, Proposition 7.1): for `M` in `𝒪`,
 `ν` dominant integral and `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ L(ν))`, `(T M)^∨ ≅ T (M^∨)`. -/
 def restrictedDualCentralTranslationEquiv {ν : Dual K H} (hν : P.IsDominantIntegral ν)
     (hV : IsCategoryO P V) (χ₁ χ₂ : 𝓩 →ₐ[K] K) :
@@ -289,7 +289,7 @@ variable {ι : Type*} [Fintype ι] [DecidableEq ι] {K : Type} [Field K] [CharZe
   {A : Matrix ι ι ℤ} (P : Realization A K H) (hA : A.IsFiniteCartan)
 
 include hA in
-/-- **Translation of dual Verma modules** (Humphreys, GSM 94, Theorem 7.6 (check), dual Verma
+/-- **Translation of dual Verma modules** (Humphreys, GSM 94, Theorem 7.6, dual Verma
 part, integral weights, finite type): with `T_λ^μ = pr_{χ_μ}(pr_{χ_λ}(−) ⊗ L(ν))` and the
 hypotheses of `translation_verma`, `T_λ^μ M(w·λ)^∨ ≅ M(w·μ)^∨` for every `w ∈ W`, where
 `M^∨ = restrictedDual P M` is the duality functor of category `𝒪`. -/

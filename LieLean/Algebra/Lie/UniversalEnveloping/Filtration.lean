@@ -33,8 +33,8 @@ of the algebra `U(L)`).
 
 ## References
 
-* J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §17.3 (check).
-* N. Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.6–2.7 (check).
+* J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §17.3.
+* N. Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.6–2.7.
 -/
 
 open MvPolynomial Finsupp Module
@@ -149,7 +149,7 @@ theorem commutator_mem_filtration_of_mem_one {g u : UniversalEnvelopingAlgebra R
 /-- **Commutators drop the filtration degree**: if `a ∈ Fₘ` and `u ∈ Fₙ` then
 `a * u - u * a ∈ F_{m + n - 1}`. Consequently the associated graded algebra of `U(L)` is
 commutative. See Humphreys, *Introduction to Lie algebras and representation theory*, §17.3
-(check), and Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.6 (check). -/
+and Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.6. -/
 theorem commutator_mem_filtration {m n : ℕ} {a u : UniversalEnvelopingAlgebra R L}
     (ha : a ∈ filtration R L m) (hu : u ∈ filtration R L n) :
     a * u - u * a ∈ filtration R L (m + n - 1) := by
@@ -202,8 +202,8 @@ theorem pbwMonomial_mem_filtration (v : σ → L) (s : σ →₀ ℕ) :
 open PBW in
 /-- **PBW, filtered version**: the PBW isomorphism `U(L) ≃ₗ[R] R[X_i : i ∈ σ]` attached to an
 ordered basis of `L` maps `Fₙ` onto the polynomials of total degree at most `n`. See Humphreys,
-*Introduction to Lie algebras and representation theory*, §17.4 (check); the statement is part of
-the proof of Theorem C there (Lemma A (b)). -/
+*Introduction to Lie algebras and representation theory*, §17.3; the statement is part of
+the proof of Corollary C there (via Corollary A). -/
 theorem map_pbwEquiv_filtration (b : Basis σ R L) (n : ℕ) :
     (filtration R L n).map (pbwEquiv b : _ →ₗ[R] MvPolynomial σ R) = restrictTotalDegree σ R n := by
   apply le_antisymm
@@ -255,8 +255,9 @@ theorem linearIndependent_pbwMonomial_subtype (b : Basis σ R L) (n : ℕ) :
   simp
 
 /-- **PBW, filtered version**: the ordered monomials `pbwMonomial R b s` with `|s| ≤ n` form a
-basis of the `n`-th filtered piece `Fₙ` of `U(L)`. See Humphreys, §17.4 (check), and Bourbaki,
-Ch. I, §2.7, Theorem 1 (check). -/
+basis of the `n`-th filtered piece `Fₙ` of `U(L)`. See Humphreys, §17.3 (proof of
+Corollary C), and Bourbaki,
+Ch. I, §2.7, Theorem 1 and Cor. 3 (with its proof). -/
 def filtrationBasis (b : Basis σ R L) (n : ℕ) :
     Basis {s : σ →₀ ℕ // s.degree ≤ n} R (filtration R L n) :=
   (Basis.span (linearIndependent_pbwMonomial_subtype b n)).map

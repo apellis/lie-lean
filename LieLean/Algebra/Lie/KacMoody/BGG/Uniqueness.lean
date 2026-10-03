@@ -13,8 +13,8 @@ Let `𝔤 = 𝔤(A)` be the Kac–Moody algebra of a generalized Cartan matrix o
 characteristic zero and `Λ` a dominant integral weight. We prove that
 `dim Hom(M(w' · Λ), M(w · Λ)) ≤ 1` for all `w, w' ∈ W`, with equality if `w ≤ w'` in the Bruhat
 order (by Verma's theorem, `VermaModule.exists_injective_of_bruhatLE`). This is the uniqueness
-statement used to define the maps of the BGG resolution ([HumO] Thm. 4.2 (b) (check), for
-finite-dimensional semisimple `𝔤`; [Kum] §9.1 (check) in Kac–Moody generality). Humphreys' proof
+statement used to define the maps of the BGG resolution ([HumO] Thm. 4.2 (b), for
+finite-dimensional semisimple `𝔤`; [Kum] Thm. 9.2.3 in Kac–Moody generality). Humphreys' proof
 uses that `U(𝔫₋)` is an Ore domain, which fails for general Kac–Moody algebras; we give a different
 argument, reconstructed by us, based on the `𝔰𝔩₂`-projectivity of Verma modules
 (`LieLean.Algebra.Lie.KacMoody.BGG.Projectivity`).
@@ -43,9 +43,9 @@ induction on `ℓ(w)`: for a left descent `s` of `w`,
 ## References
 
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, AMS 2008, §4.2 (check).
+  GSM 94, AMS 2008, §4.2.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002, §9.1 (check).
+  Math. 204, Birkhäuser 2002, Thm. 9.2.3.
 -/
 
 open Module LieModule CoxeterSystem
@@ -69,7 +69,7 @@ instance finiteDimensional_hom (Λ μ : Dual K H) :
   LinearEquiv.finiteDimensional (homEquiv P (VermaModule P Λ) μ).symm
 
 include hA in
-/-- **Verma's lemma, bijective form** (reconstructed by us; cf. [HumO] Lemma 4.6 (check)): if
+/-- **Verma's lemma, bijective form** (reconstructed by us; cf. [HumO] Prop. 4.5 (b)): if
 `⟨λ, αᵢ^∨⟩ ∈ ℕ` and `⟨μ + ρ, αᵢ^∨⟩ = n` is a positive integer, then
 `dim Hom(M(rᵢ · μ), M(rᵢ · λ)) = dim Hom(M(μ), M(λ))`. -/
 theorem finrank_hom_reflection_reflection {Λ μ : Dual K H} {i : ι} {d n : ℕ}
@@ -147,7 +147,7 @@ theorem finrank_hom_weylDot_self (w : P.weylGroup hA) :
   exact ih _ (by omega) w' rfl
 
 /-- **Uniqueness of homomorphisms between Verma modules in the BGG resolution**
-([HumO] Thm. 4.2 (b) (check), for finite-dimensional semisimple Lie algebras; here for any
+([HumO] Thm. 4.2 (b), for finite-dimensional semisimple Lie algebras; here for any
 Kac–Moody algebra, by a different argument reconstructed by us): for `Λ` dominant integral and
 `w, w' ∈ W`, `dim Hom(M(w' · Λ), M(w · Λ)) ≤ 1`. -/
 theorem finrank_hom_weylDot_le_one (w w' : P.weylGroup hA) :

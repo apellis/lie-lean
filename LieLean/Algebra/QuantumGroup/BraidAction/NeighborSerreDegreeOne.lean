@@ -39,7 +39,7 @@ an equivalent normalization) inside `DoubleEdgeOther.lean`, and for `s = 3` in
 ## References
 
 Reconstructed from the quotient presentation (the statement that `Tᵢ` is an automorphism is
-[Lus] Thm. 37.1.2 (check), [Jan] Thm. 8.16 (check), proved there differently).
+[Lus] Prop. 37.1.2, [Jan] Prop. 8.13, proved there differently).
 -/
 
 noncomputable section

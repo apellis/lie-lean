@@ -35,7 +35,8 @@ Nullstellensatz.)
 ## References
 
 The statement is a standard consequence of the Nullstellensatz; the elementary argument above was
-reconstructed by us for the Kac–Kazhdan determinant formula ([KK] §3 (check)).
+reconstructed by us for the Kac–Kazhdan determinant formula ([KK]; cf. Step 3 of the proof of
+Thm. 2.3.4 in S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*).
 -/
 
 open Polynomial

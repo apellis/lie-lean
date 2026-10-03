@@ -8,8 +8,8 @@ import LieLean.Algebra.QuantumGroup.Sl2.SimpleModule
 /-!
 # Lusztig's braid group automorphisms `Tᵢ`: the rank-one part
 
-We use the variant `Tᵢ = T''_{i,1}` of [Lus] 37.1.3 (check), which is the automorphism `Tᵢ` of
-[Jan] 8.14 (check):
+We use the variant `Tᵢ = T''_{i,1}` of [Lus] 37.1.3, which is the automorphism `Tᵢ` of
+[Jan] 8.14:
 * `Tᵢ(K_μ) = K_{sᵢ(μ)}`, `sᵢ(μ) = μ - ⟨μ, i'⟩ i`;
 * `Tᵢ(Eᵢ) = -Fᵢ K̃ᵢ`, `Tᵢ(Fᵢ) = -K̃ᵢ⁻¹ Eᵢ`;
 * `Tᵢ(Eⱼ) = Σ_{s=0}^{r} (-1)^s vᵢ^{-s} Eᵢ^{(r-s)} Eⱼ Eᵢ^{(s)}`,
@@ -251,7 +251,7 @@ theorem rankOneBraidInv_relations :
   serre_E i j h := absurd (Subsingleton.elim i j) h
   serre_F i j h := absurd (Subsingleton.elim i j) h
 
-/-- Lusztig's automorphism `Tᵢ = T''_{i,1}` ([Lus] 37.1.3 (check), [Jan] 8.14 (check)) of a
+/-- Lusztig's automorphism `Tᵢ = T''_{i,1}` ([Lus] 37.1.3, [Jan] 8.14) of a
 quantum group of rank one (e.g. `U_v(𝔰𝔩₂)`): `E ↦ -F K̃`, `F ↦ -K̃⁻¹ E`, `K_μ ↦ K_{s(μ)}`. -/
 def rankOneBraid : QuantumGroup R₁ v →ₐ[k] QuantumGroup R₁ v := lift (rankOneBraid_relations R₁)
 
@@ -307,7 +307,7 @@ theorem rankOneBraid_comp_rankOneBraidInv :
       K_mul_K_neg, mul_one]
   · simp
 
-/-- **Lusztig's automorphism `Tᵢ` in rank one** ([Lus] 37.1.3 (check), [Jan] 8.14 (check)), as an
+/-- **Lusztig's automorphism `Tᵢ` in rank one** ([Lus] 37.1.3, [Jan] 8.14), as an
 algebra automorphism of `U`, with inverse `E ↦ -K̃⁻¹ F`, `F ↦ -E K̃`, `K_μ ↦ K_{s(μ)}`. -/
 def rankOneBraidEquiv : QuantumGroup R₁ v ≃ₐ[k] QuantumGroup R₁ v :=
   AlgEquiv.ofAlgHom (rankOneBraid R₁) (rankOneBraidInv R₁) (rankOneBraid_comp_rankOneBraidInv R₁)
@@ -319,7 +319,7 @@ def rankOneBraidEquiv : QuantumGroup R₁ v ≃ₐ[k] QuantumGroup R₁ v :=
   ring
 
 /-- Lusztig's automorphism `T` of `U_v(𝔰𝔩₂)`: `E ↦ -F K`, `F ↦ -K⁻¹ E`, `K ↦ K⁻¹`
-([Jan] 8.14 (check)). -/
+([Jan] 8.14). -/
 def Sl2.braidEquiv : Sl2 v ≃ₐ[k] Sl2 v := rankOneBraidEquiv sl2RootDatum
 
 end RankOne

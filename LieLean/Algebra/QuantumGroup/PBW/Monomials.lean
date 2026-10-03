@@ -22,7 +22,7 @@ containing the monomials along all final segments of `ω`, and for every `i` a r
 `∑ₐ Eᵢᵃ Tᵢ(uₐ) = 0` with `uₐ ∈ S` forces all `uₐ = 0`, then the ordered monomials along `ω` are
 linearly independent. For `U_v(𝔤)` and `S = U⁺` the hypothesis follows from the triangular
 decomposition (`LieLean/Algebra/QuantumGroup/PBW/Independence.lean`); this is the argument of
-[Jan] 8.24 (check).
+[Jan] Lemma 8.21 b), with the factors in the opposite order.
 
 ## Main definitions / results
 
@@ -36,8 +36,8 @@ reconstructed. The printed sources have not been consulted.
 
 ## References
 
-* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, 8.21–8.24 (check).
-* [Lus] G. Lusztig, *Introduction to quantum groups*, 40.2 (check).
+* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, 8.21–8.24.
+* [Lus] G. Lusztig, *Introduction to quantum groups*, 40.2.
 -/
 
 namespace CoxeterSystem
@@ -49,8 +49,8 @@ section Semiring
 variable [CommSemiring k] [Semiring A] [Algebra k A] (T : B → A ≃ₐ[k] A) (E : B → A)
 
 /-- The ordered monomial `E_{β₁}^{c₁} ⋯ E_{βₙ}^{cₙ}` in the root vectors
-`E_{β_m} = T_{i₁} ⋯ T_{i_{m-1}}(E_{i_m})` along the word `ω = i₁ ⋯ iₙ` ([Jan] 8.24 (check),
-[Lus] 40.2 (check).1), defined by `M(i ω, c) = Eᵢ^{c₁} Tᵢ(M(ω, c'))`. -/
+`E_{β_m} = T_{i₁} ⋯ T_{i_{m-1}}(E_{i_m})` along the word `ω = i₁ ⋯ iₙ` ([Jan] 8.21, 8.22(3),
+[Lus] 40.2.1), defined by `M(i ω, c) = Eᵢ^{c₁} Tᵢ(M(ω, c'))`. -/
 def pbwMonomial : (ω : List B) → (Fin ω.length → ℕ) → A
   | [], _ => 1
   | i :: ω, c => E i ^ c ⟨0, Nat.succ_pos _⟩ * T i (pbwMonomial ω fun n ↦ c n.succ)
@@ -123,7 +123,8 @@ private theorem independent_single_map {k M N J : Type*} [Field k]
       (f ∘ fun ix : Σ _ : ℕ, J ↦ Finsupp.single ix.1 (m ix.2)) := by
   exact (Finsupp.linearIndependent_single (fun _ : ℕ ↦ m) (fun _ ↦ hm)).map' f hf
 
-/-- **Independence of ordered monomials** ([Jan] 8.24 (check)): let `S` be a subspace of `A` such
+/-- **Independence of ordered monomials** (cf. [Jan] Lemma 8.21 b)): let `S` be a subspace of `A`
+such
 that, for every `i`, a relation `∑ₐ Eᵢᵃ Tᵢ(uₐ) = 0` with all `uₐ ∈ S` forces `uₐ = 0`. If the
 ordered monomials along all final segments of `ω` lie in `S`, then the ordered monomials along `ω`
 are linearly independent. -/

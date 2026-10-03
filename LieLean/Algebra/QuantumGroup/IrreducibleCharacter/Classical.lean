@@ -24,7 +24,7 @@ is the irreducible highest-weight module of the Kac–Moody algebra `𝔤(A)`.
   classical Serre elements `sᵢⱼ` and of the words `a θᵢ^{nᵢ+1}` of weight `ν`
   (`LusztigF.mem_tildeSpan_of_toIrreducible_eq_zero`); this is the associative presentation
   `L(Λ) ≅ 𝒮 ⧸ Σᵢ 𝒮 θᵢ^{nᵢ+1}` of `Matrix.Realization.KacMoodyAlgebra.serreAssocQuotientEquiv`
-  ([Kac] Thm. 9.11 and Cor. 10.4 (check)), taken weight by weight.
+  ([Kac] Thm. 9.11 and Cor. 10.4), taken weight by weight.
 
 ## Main definitions
 
@@ -41,7 +41,7 @@ is the irreducible highest-weight module of the Kac–Moody algebra `𝔤(A)`.
 ## References
 
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.4, Thm. 9.11,
-  Cor. 10.4 (check).
+  Cor. 10.4.
 -/
 
 noncomputable section
@@ -235,7 +235,7 @@ theorem shapovalovRank_classicalCoeff (n : I → ℕ) (ν : I →₀ ℕ) :
 /-- **The classical kernel, with the relations `θᵢ^{nᵢ+1}`.** If `y ∈ K⟨θ⟩` has weight `ν` and
 `Y(y) = 0` in `L(Λ)`, then `y` is a combination of Serre products `a sᵢⱼ b` and words
 `a θᵢ^{nᵢ+1}` of weight `ν`. This is the presentation `L(Λ) ≅ 𝒮 ⧸ Σᵢ 𝒮 θᵢ^{nᵢ+1}`
-([Kac] Thm. 9.11, Cor. 10.4 (check)), weight by weight. -/
+([Kac] Thm. 9.11, Cor. 10.4), weight by weight. -/
 theorem mem_tildeSpan_of_toIrreducible_eq_zero {ν : I →₀ ℕ} {y : LusztigF K I}
     (hy : y ∈ weightSpace K ν) (hY : toIrreducible D P hn y = 0) :
     y ∈ tildeSpan D (fun _ ↦ (1 : K)) n ν := by

@@ -11,7 +11,7 @@ import LieLean.Algebra.Lie.KacMoody.HighestWeight
 
 Let `A` be a symmetrizable generalized Cartan matrix with symmetrization `S`, realization
 `(𝔥, Π, Π^∨)` over a field `K` of characteristic zero, and let `B = (·|·)` be a standard invariant
-form on `𝔤 = 𝔤(A)` (`KacMoodyAlgebra.IsStandardForm`, [Kac] Thm. 2.2 (check)). Let `V` be a
+form on `𝔤 = 𝔤(A)` (`KacMoodyAlgebra.IsStandardForm`, [Kac] Thm. 2.2). Let `V` be a
 `𝔤`-module such that for every `v ∈ V`, only finitely many positive root spaces `𝔤_α` act
 nontrivially on `v` (`KacMoodyAlgebra.IsPosFinite`); every module in the category `𝒪` has this
 property. Following [Kac] §2.5 the *generalized Casimir operator* on `V` is
@@ -37,17 +37,17 @@ Kac's Ch. 2 only assumes `A` symmetrizable, with `ρ` normalized by `⟨ρ, α�
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.isPosFinite`: modules in `𝒪` satisfy the
   finiteness condition.
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.casimir_lie`: `Ω` commutes with the action of
-  `𝔤(A)` ([Kac] Thm. 2.6 (check)).
+  `𝔤(A)` ([Kac] Thm. 2.6).
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.casimir_apply_of_lie_e_eq_zero`: on a vector
-  `v` of weight `λ` killed by all the `eᵢ`, `Ω v = (λ + 2ρ | λ) v` ([Kac] Cor. 2.6 (check)).
+  `v` of weight `λ` killed by all the `eᵢ`, `Ω v = (λ + 2ρ | λ) v` ([Kac] Cor. 2.6).
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.casimir_eq_smul_of_surjective`: `Ω` acts on
-  any quotient of the Verma module `M(λ)` by the scalar `(λ + 2ρ | λ)` ([Kac] Cor. 2.6 (check)).
+  any quotient of the Verma module `M(λ)` by the scalar `(λ + 2ρ | λ)` ([Kac] Cor. 2.6).
 
 ## Proof
 
 For `z ∈ 𝔤_γ` and `μ ∈ 𝔥*` write `R_μ(z) = ∑ₖ e_{-μ}^{(k)} [z, e_μ^{(k)}]` and
 `L_μ(z) = ∑ₖ [z, e_{-μ}^{(k)}] e_μ^{(k)}`. Then `[z, ∑ₖ e_{-μ}^{(k)} e_μ^{(k)}] = L_μ(z) + R_μ(z)`,
-and [Kac] Lemma 2.4 (check) gives `L_μ(z) = -R_{μ-γ}(z)`. For `z = eᵢ` the sum over `μ > 0` of
+and [Kac] Lemma 2.4 gives `L_μ(z) = -R_{μ-γ}(z)`. For `z = eᵢ` the sum over `μ > 0` of
 `R_μ - R_{μ-αᵢ}` telescopes to `-R_0` (the `R_μ` vanish unless `𝔤_μ ≠ 0`, and `μ - αᵢ` with
 `μ > 0` is either `0`, positive, or not a weight); for `z = fᵢ` one uses `L_μ - L_{μ-αᵢ}` instead.
 The remaining terms in `𝔥` are computed with the dual bases of `𝔥`, and cancel since
@@ -70,7 +70,7 @@ variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [AddCommGroup 
   [LieModule K P.KacMoodyAlgebra V]
 
 variable (P) in
-/-- A `𝔤(A)`-module `V` satisfies the finiteness condition of [Kac] §2.5 (check) if for every
+/-- A `𝔤(A)`-module `V` satisfies the finiteness condition of [Kac] §2.5 if for every
 `v ∈ V`, `𝔤_α v = 0` for all but finitely many `α ∈ Q₊ \ {0}`. Modules in the category `𝒪` have
 this property (`IsCategoryO.isPosFinite`). -/
 def IsPosFinite : Prop :=
@@ -103,7 +103,7 @@ theorem IsCategoryO.finite_setOf_weightSpace_add_ne_bot [CharZero K] (hV : IsCat
   exact hk i
 
 variable {V} in
-/-- Modules in the category `𝒪` satisfy the finiteness condition of [Kac] §2.5 (check). -/
+/-- Modules in the category `𝒪` satisfy the finiteness condition of [Kac] §2.5. -/
 theorem IsCategoryO.isPosFinite [CharZero K] (hV : IsCategoryO P V) : IsPosFinite P V := by
   intro v
   have hv : v ∈ ⨆ μ, weightSpace P V μ := by rw [hV.iSup_weightSpaceOfMap_eq_top]; trivial
@@ -263,7 +263,7 @@ lemma finite_casimirTerm (hV : IsPosFinite P V) (v : V) :
   (hV v).subset fun _ ⟨hμ, hne⟩ ↦ ⟨hμ, hB.exists_of_casimirTerm_ne_zero hne⟩
 
 variable (V) in
-/-- The generalized Casimir operator ([Kac] §2.5 (check))
+/-- The generalized Casimir operator ([Kac] §2.5)
 `Ω = 2 ν⁻¹(ρ) + ∑ⱼ u^j u_j + 2 ∑_{α > 0} ∑ₖ e_{-α}^{(k)} e_α^{(k)}` on a module `V` satisfying the
 finiteness condition `IsPosFinite`. -/
 def casimir (hV : IsPosFinite P V) : Module.End K V where
@@ -307,7 +307,7 @@ lemma lie_casimirTerm (z : P.KacMoodyAlgebra) (μ : Dual K H) (v : V) :
     lie_add]
   abel
 
-/-- [Kac] Lemma 2.4 (check), in the form `L_μ(z) = -R_{μ-γ}(z)` for `z ∈ 𝔤_γ`. -/
+/-- [Kac] Lemma 2.4, in the form `L_μ(z) = -R_{μ-γ}(z)` for `z ∈ 𝔤_γ`. -/
 lemma casimirSum_lie_left_lie {γ : Dual K H} {z : P.KacMoodyAlgebra} (hz : z ∈ rootSpace P γ)
     (μ : Dual K H) (v : V) :
     hB.casimirSum (fun y x ↦ ⁅⁅z, y⁆, ⁅x, v⁆⁆) μ =
@@ -405,7 +405,7 @@ lemma lie_finsum_casimirTerm_sub (hV : IsPosFinite P V) (z : P.KacMoodyAlgebra) 
   refine (hB.finite_casimirTerm hV v).subset fun μ ⟨hμ, hne⟩ ↦ ⟨hμ, fun h0 ↦ hne ?_⟩
   simp only [h0, lie_zero]
 
-/-- `Ω` commutes with `eᵢ` ([Kac] Thm. 2.6 (check)). -/
+/-- `Ω` commutes with `eᵢ` ([Kac] Thm. 2.6). -/
 theorem casimir_lie_e (hA : A.IsGeneralizedCartan) (hV : IsPosFinite P V) (i : ι) (v : V) :
     hB.casimir V hV ⁅e P i, v⁆ = ⁅e P i, hB.casimir V hV v⁆ := by
   have hz : e P i ∈ rootSpace P (P.root i) := fun a ↦ lie_h_e P a i
@@ -429,7 +429,7 @@ theorem casimir_lie_e (hA : A.IsGeneralizedCartan) (hV : IsPosFinite P V) (i : �
   simp only [casimir_apply, lie_add, lie_smul]
   linear_combination (norm := module) -(2 : K) • hρ - h0 - (2 : K) • hsum + hL + hRL
 
-/-- `Ω` commutes with `fᵢ` ([Kac] Thm. 2.6 (check)). -/
+/-- `Ω` commutes with `fᵢ` ([Kac] Thm. 2.6). -/
 theorem casimir_lie_f (hA : A.IsGeneralizedCartan) (hV : IsPosFinite P V) (i : ι) (v : V) :
     hB.casimir V hV ⁅f P i, v⁆ = ⁅f P i, hB.casimir V hV v⁆ := by
   have hz : f P i ∈ rootSpace P (-P.root i) := fun a ↦ by
@@ -459,7 +459,7 @@ omit [CharZero K] [FiniteDimensional K H] hB in
 lemma h_mem_rootSpace_zero (a : H) : h P a ∈ rootSpace P 0 := fun b ↦ by
   rw [lie_h_h, LinearMap.zero_apply, zero_smul]
 
-/-- `Ω` commutes with `𝔥` ([Kac] Thm. 2.6 (check)). -/
+/-- `Ω` commutes with `𝔥` ([Kac] Thm. 2.6). -/
 theorem casimir_lie_h (hV : IsPosFinite P V) (a : H) (v : V) :
     hB.casimir V hV ⁅h P a, v⁆ = ⁅h P a, hB.casimir V hV v⁆ := by
   have hz := h_mem_rootSpace_zero (P := P) a
@@ -475,7 +475,7 @@ theorem casimir_lie_h (hV : IsPosFinite P V) (a : H) (v : V) :
   simp only [casimir_apply, lie_add, lie_smul]
   linear_combination (norm := module) -(2 : K) • hρ - h0 - (2 : K) • hsum
 
-/-- **The Casimir operator commutes with `𝔤(A)`** ([Kac] Thm. 2.6 (check)): for a module `V`
+/-- **The Casimir operator commutes with `𝔤(A)`** ([Kac] Thm. 2.6): for a module `V`
 satisfying the finiteness condition `IsPosFinite`, `Ω [x, v] = [x, Ω v]`. -/
 theorem casimir_lie (hA : A.IsGeneralizedCartan) (hV : IsPosFinite P V) (x : P.KacMoodyAlgebra)
     (v : V) : hB.casimir V hV ⁅x, v⁆ = ⁅x, hB.casimir V hV v⁆ := by
@@ -491,7 +491,7 @@ theorem casimir_lie (hA : A.IsGeneralizedCartan) (hV : IsPosFinite P V) (x : P.K
 
 /-! ### The Casimir operator on highest-weight modules -/
 
-/-- **[Kac] Cor. 2.6 (check)**: if `v ∈ V` has weight `Λ` and is killed by all the `eᵢ`, then
+/-- **[Kac] Cor. 2.6**: if `v ∈ V` has weight `Λ` and is killed by all the `eᵢ`, then
 `Ω v = (Λ + 2ρ | Λ) v`. -/
 theorem casimir_apply_of_lie_e_eq_zero (hV : IsPosFinite P V) {Λ : Dual K H} {v : V}
     (hv : v ∈ weightSpace P V Λ) (he : ∀ i, ⁅e P i, v⁆ = 0) :
@@ -518,7 +518,7 @@ theorem casimir_apply_of_lie_e_eq_zero (hV : IsPosFinite P V) {Λ : Dual K H} {v
     LinearMap.smul_apply, hsymm]
   module
 
-/-- **[Kac] Cor. 2.6 (check)**: the Casimir operator acts on every quotient `V` of the Verma
+/-- **[Kac] Cor. 2.6**: the Casimir operator acts on every quotient `V` of the Verma
 module `M(Λ)` by the scalar `(Λ + 2ρ | Λ)`. -/
 theorem casimir_eq_smul_of_surjective (hA : A.IsGeneralizedCartan) (hV : IsPosFinite P V)
     {Λ : Dual K H} (φ : VermaModule P Λ →ₗ⁅K,P.KacMoodyAlgebra⁆ V) (hφ : Function.Surjective φ)

@@ -9,7 +9,7 @@ import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
 /-!
 # Cartan data in the sense of Lusztig
 
-A *Cartan datum* ([Lus] 1.1.1 (check)) is a set `I` together with a symmetric bilinear form
+A *Cartan datum* ([Lus] 1.1.1, where `I` is finite) is a set `I` with a symmetric bilinear form
 `ν, ν' ↦ ν · ν'` on `ℤ[I]` with values in `ℤ` such that `i · i ∈ {2, 4, 6, …}` for `i ∈ I` and
 `2 (i · j)/(i · i) ∈ {0, -1, -2, …}` for `i ≠ j`. We record the form through its values
 `i · j` on the basis `I`.
@@ -41,7 +41,7 @@ denominators in `dᵢ ∝ 1/εᵢ` (`LusztigCartanDatum.ofSymmetrization`).
 
 open Finset
 
-/-- A Cartan datum in the sense of Lusztig ([Lus] 1.1.1 (check)): a symmetric `ℤ`-valued
+/-- A Cartan datum in the sense of Lusztig ([Lus] 1.1.1): a symmetric `ℤ`-valued
 bilinear form on `ℤ[I]`, given by its values `dot i j = i · j` on the basis, such that
 `i · i` is even and positive, and `2 (i · j)/(i · i)` is a nonpositive integer for `i ≠ j`. -/
 structure LusztigCartanDatum (I : Type*) where
@@ -57,7 +57,7 @@ namespace LusztigCartanDatum
 
 variable {I : Type*} (D : LusztigCartanDatum I)
 
-/-- `dᵢ = (i · i)/2`, a positive integer ([Lus] 1.1.1 (check)); `vᵢ = v^{dᵢ}`. -/
+/-- `dᵢ = (i · i)/2`, a positive integer ([Lus] 1.1.1, 1.1.2); `vᵢ = v^{dᵢ}`. -/
 def d (i : I) : ℕ := (D.dot i i / 2).toNat
 
 lemma two_mul_d (i : I) : 2 * (D.d i : ℤ) = D.dot i i := by
@@ -72,7 +72,7 @@ lemma d_pos (i : I) : 0 < D.d i := by
   omega
 
 /-- The generalized Cartan matrix `aᵢⱼ = 2 (i · j)/(i · i)` of the Cartan datum
-([Lus] 2.1.1 (check)). -/
+([Lus] 2.2.1). -/
 def cartanMatrix : Matrix I I ℤ := Matrix.of fun i j ↦ 2 * D.dot i j / D.dot i i
 
 /-- `dᵢ aᵢⱼ = i · j`. -/

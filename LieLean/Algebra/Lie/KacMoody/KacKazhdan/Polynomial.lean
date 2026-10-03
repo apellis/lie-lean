@@ -37,7 +37,11 @@ polynomial function of the highest weight.
 ## References
 
 Elementary commutative algebra, used for the leading term of the Shapovalov determinant
-([KK] §3 (check), [Kac] §9.4 (check)).
+([KK]; Step 2 of the proof of Thm. 2.3.4 in S. Kumar, *Kac–Moody groups, their flag
+varieties and representation theory*; [Kum] Thm. 2.3.4, Step 2 of the proof).
+
+* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
+  Math. 204, Birkhäuser 2002.
 -/
 
 open Module

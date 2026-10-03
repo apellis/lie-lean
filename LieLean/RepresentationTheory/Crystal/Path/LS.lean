@@ -119,8 +119,8 @@ variable (S : D.PathSpace 𝕜 V) in
 `λ`, `O` is the orbit `Wλ` and `Step x y c` means that `y = s_β x` is covered by `x` in the Bruhat
 order of `W/W_λ` (so `y` is closer to `λ`), where `β` is a real root with coroot `c = β^∨`
 (seen as a linear form on `V`). The axioms are the properties of the Bruhat order used in the
-proof that the root operators preserve Lakshmibai–Seshadri paths (`[Lit94] §4`, `[Lit95] §4`
-(check)); they are verified for realizations in `LieLean.RepresentationTheory.Crystal.Path.
+proof that the root operators preserve Lakshmibai–Seshadri paths (`[Lit94] §4`, `[Lit95] §4`);
+they are verified for realizations in `LieLean.RepresentationTheory.Crystal.Path.
 Stability`. Signs refer to `⟨x, αᵢ^∨⟩`: e.g. `0 < ⟨x, αᵢ^∨⟩` means `sᵢ x > x`. -/
 structure LSData where
   /-- The set of possible directions (the orbit `Wλ`). -/
@@ -533,7 +533,7 @@ variable {ι X : Type*} [AddCommGroup X] {𝕜 : Type*} [Field 𝕜] [Conditiona
   [IsStrictOrderedRing 𝕜] [TopologicalSpace 𝕜] [OrderTopology 𝕜] {D : CartanDatum ι X}
   {V : Type*} [AddCommGroup V] [Module 𝕜 V] {S : D.PathSpace 𝕜 V}
 
-/-- A (parametrized) Lakshmibai–Seshadri path for the data `L` ([Lit94] §2, [Lit95] §4 (check)):
+/-- A (parametrized) Lakshmibai–Seshadri path for the data `L` ([Lit94] §2, [Lit95] §4):
 `η` is piecewise linear with directions in `O` (locally on both sides of every time `t`), and at
 every time `t ∈ (0,1)` its left direction `x` and right direction `y` are joined by a chain of
 Bruhat steps `x → ⋯ → y` whose coroots `β^∨` satisfy `⟨η(t), β^∨⟩ ∈ ℤ`. For the data of a
@@ -585,7 +585,7 @@ lemma exists_last_minimizer {g : 𝕜 → 𝕜} (hg : Continuous g) {a b : 𝕜}
 
 omit [OrderTopology 𝕜] in
 /-- On a Lakshmibai–Seshadri path, a strict local minimum from the right (weak from the left) of
-`hᵢ` at a time `w ∈ (0,1)` is attained at an integer value ([Lit94] Lemma 4.5 (check)). -/
+`hᵢ` at a time `w ∈ (0,1)` is attained at an integer value ([Lit95] Lemma 4.5(d)). -/
 theorem IsLS.exists_int_of_isMin (hη : IsLS L η) {a b w : 𝕜} (hw : w ∈ Ioo (0 : 𝕜) 1)
     (haw : a < w) (hwb : w < b) (hmin : ∀ s ∈ Icc a b, η.pairing i w ≤ η.pairing i s)
     (hlt : ∀ s ∈ Ioc w b, η.pairing i w < η.pairing i s) : ∃ n : ℤ, η.pairing i w = n := by
@@ -611,8 +611,8 @@ theorem IsLS.exists_int_minPairing (hη : IsLS L η) (i : ι) :
   · exact ⟨_, by rw [h1, pairing_one]⟩
   exact hη.exists_int_of_isMin ⟨h0, h1⟩ h0 h1 hmin hlt
 
-/-- The shape of `hᵢ` on a Lakshmibai–Seshadri path with `fᵢ η ≠ 0` ([Lit94] §4, [Lit95] §1
-(check); reconstructed): with `m = mᵢ`, let `p` be the last time with `hᵢ(p) = m` and `q > p` the
+/-- The shape of `hᵢ` on a Lakshmibai–Seshadri path with `fᵢ η ≠ 0` ([Lit94] §4, [Lit95]
+Prop. 4.7; reconstructed): with `m = mᵢ`, let `p` be the last time with `hᵢ(p) = m` and `q > p` the
 first time with `hᵢ(q) = m + 1`. Then `hᵢ` is strictly increasing on `[p, q]` and `hᵢ ≥ m + 1` on
 `[q, 1]`; this uses that local minima of `hᵢ` are integers. -/
 theorem IsLS.exists_f_times (hη : IsLS L η) (i : ι)
@@ -686,7 +686,7 @@ theorem IsLS.exists_f_times (hη : IsLS L η) (i : ι)
   omega
 
 /-- **The root operators `fᵢ` preserve Lakshmibai–Seshadri paths** ([Lit94] §4, [Lit95] §4
-(check)). With `p < q` as in `LittelmannPath.IsLS.exists_f_times`, `fᵢ η` is `η` on `[0, p]`,
+Cor. 2). With `p < q` as in `LittelmannPath.IsLS.exists_f_times`, `fᵢ η` is `η` on `[0, p]`,
 `sᵢ η + mᵢ αᵢ` on `[p, q]` and `η - αᵢ` on `[q, 1]`; the chain conditions at `p`, inside
 `(p, q)` and at `q` are provided by `LSData.Chain.reflection`,
 `LSData.Chain.reflection_of_not_int` and `LSData.step_simple`. (Our reconstruction.) -/
@@ -825,7 +825,7 @@ theorem IsLS.f (hη : IsLS L η) {η' : LittelmannPath S} (hf : LittelmannPath.f
     exact hc.sub_embed (D.root i)
 
 /-- **The root operators `eᵢ` preserve Lakshmibai–Seshadri paths** ([Lit94] §4, [Lit95] §4
-(check)): by time reversal, `eᵢ η = (fᵢ η^∨)^∨`, and time reversal exchanges the data `L` with
+Cor. 2): by time reversal, `eᵢ η = (fᵢ η^∨)^∨`, and time reversal exchanges the data `L` with
 its dual. -/
 theorem IsLS.e (hη : IsLS L η) {η' : LittelmannPath S} (he : LittelmannPath.e i η = some η') :
     IsLS L η' := by
@@ -932,7 +932,7 @@ variable {ι X : Type*} [AddCommGroup X] {𝕜 : Type*} [Field 𝕜] [Conditiona
 theorem isStable_setOf_isLS : (crystal S).IsStable {η | IsLS L η} :=
   ⟨fun _ _ _ hη he ↦ IsLS.e hη he, fun _ _ _ hη hf ↦ IsLS.f hη hf⟩
 
-/-- **Littelmann's theorem on `B(λ)`** ([Lit94] §4–5, [Lit95] §4–5 (check); reconstructed in the
+/-- **Littelmann's theorem on `B(λ)`** ([Lit94] §4–5, [Lit95] §4, Cor. 2 and 3; reconstructed in the
 abstract setting of `LSData`). Let `λ ∈ O` be the only direction with all `⟨λ, αᵢ^∨⟩ ≥ 0`, let no
 step start at `λ`, and let `g` be a linear form with `g(αᵢ) = 1` and `g ≤ g(λ)` on `O`. Then the
 connected component `B(π_λ)` of the straight line path consists of Lakshmibai–Seshadri paths, and

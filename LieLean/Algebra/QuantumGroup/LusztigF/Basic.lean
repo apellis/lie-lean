@@ -14,14 +14,14 @@ import LieLean.Algebra.QuantumGroup.CartanDatum
 
 Let `(I, ·)` be a Cartan datum, `k` a field and `v ∈ k` (Lusztig takes `k = ℚ(v)`; the
 downstream specialization is `k = RatFunc ℚ`, `v = RatFunc.X`). Lusztig's algebra `'f`
-([Lus] 1.2.1 (check)) is the free associative `k`-algebra on generators `θᵢ`, `i ∈ I`; we take
+([Lus] 1.2.1) is the free associative `k`-algebra on generators `θᵢ`, `i ∈ I`; we take
 it to be `FreeAlgebra k I` (`LusztigF k I` is an abbreviation). It is graded by `ℕ[I]`, modelled
 as `I →₀ ℕ`: `'f_ν` is spanned by the monomials `θ_{i₁} ⋯ θ_{iₙ}` with `i₁ + ⋯ + iₙ = ν`.
 
 For `i ∈ I` we define
 * the twist `σᵢ = twist D v i`, the algebra automorphism `θⱼ ↦ v^{i·j} θⱼ`, so that
   `σᵢ(x) = v^{i·|x|} x` for homogeneous `x`;
-* the skew derivations `rᵢ` and `ᵢr` of [Lus] 1.2.13 (check), characterized by `rᵢ(θⱼ) = δᵢⱼ`,
+* the skew derivations `rᵢ` and `ᵢr` of [Lus] 1.2.13, characterized by `rᵢ(θⱼ) = δᵢⱼ`,
   `ᵢr(θⱼ) = δᵢⱼ` and
   `rᵢ(xy) = x rᵢ(y) + v^{|y|·i} rᵢ(x) y = x rᵢ(y) + rᵢ(x) σᵢ(y)`,
   `ᵢr(xy) = ᵢr(x) y + v^{|x|·i} x ᵢr(y) = ᵢr(x) y + σᵢ(x) ᵢr(y)`.
@@ -55,7 +55,7 @@ open Finset
 
 variable {k I : Type*} [Field k]
 
-/-- Lusztig's algebra `'f` ([Lus] 1.2.1 (check)): the free associative `k`-algebra with `1` on
+/-- Lusztig's algebra `'f` ([Lus] 1.2.1): the free associative `k`-algebra with `1` on
 generators `θᵢ`, `i ∈ I`. -/
 abbrev LusztigF (k I : Type*) [Field k] := FreeAlgebra k I
 
@@ -144,7 +144,7 @@ lemma length_eq_sum_wordWeight (w : List I) : w.length = (wordWeight w).sum fun 
     simp [add_comm]
 
 variable (k) in
-/-- The weight space `'f_ν`, spanned by the monomials of weight `ν` ([Lus] 1.2.1 (check)). -/
+/-- The weight space `'f_ν`, spanned by the monomials of weight `ν` ([Lus] 1.2.1). -/
 def weightSpace (ν : I →₀ ℕ) : Submodule k (LusztigF k I) :=
   Submodule.span k (monomial k '' {w | wordWeight w = ν})
 
@@ -351,12 +351,12 @@ def entry01 : Matrix (Fin 2) (Fin 2) (LusztigF k I) →ₗ[k] LusztigF k I where
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
-/-- Lusztig's skew derivation `rᵢ : 'f → 'f` ([Lus] 1.2.13 (check)): `rᵢ(θⱼ) = δᵢⱼ` and
+/-- Lusztig's skew derivation `rᵢ : 'f → 'f` ([Lus] 1.2.13): `rᵢ(θⱼ) = δᵢⱼ` and
 `rᵢ(xy) = x rᵢ(y) + v^{|y|·i} rᵢ(x) y` (`rDeriv_mul`). -/
 def rDeriv (i : I) : LusztigF k I →ₗ[k] LusztigF k I :=
   entry01 ∘ₗ (rMat D v i).toLinearMap
 
-/-- Lusztig's skew derivation `ᵢr : 'f → 'f` ([Lus] 1.2.13 (check)): `ᵢr(θⱼ) = δᵢⱼ` and
+/-- Lusztig's skew derivation `ᵢr : 'f → 'f` ([Lus] 1.2.13): `ᵢr(θⱼ) = δᵢⱼ` and
 `ᵢr(xy) = ᵢr(x) y + v^{|x|·i} x ᵢr(y)` (`lDeriv_mul`). -/
 def lDeriv (i : I) : LusztigF k I →ₗ[k] LusztigF k I :=
   entry01 ∘ₗ (lMat D v i).toLinearMap

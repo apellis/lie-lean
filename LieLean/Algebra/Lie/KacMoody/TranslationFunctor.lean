@@ -22,11 +22,11 @@ by restriction of `(pr_{χ₁} f) ⊗ id_Z`. (It uses full-central blocks; the o
 
 * `centralTranslationMap_id`, `centralTranslationMap_comp`: functoriality.
 * `centralTranslationMap_shortExact`: over an algebraically closed field, translation preserves
-  short exact sequences whose middle term is in `𝒪`, when `Z` is in `𝒪` (Humphreys, GSM 94, §7.1
-  (check)).
+  short exact sequences whose middle term is in `𝒪`, when `Z` is in `𝒪` (Humphreys, GSM 94,
+  §7.1).
 * `translation_verma_equiv`: the translation `T_λ^μ = pr_{χ_μ}(pr_{χ_λ}(−) ⊗ L(ν))` sends
   `M(w·λ)` to `M(w·μ)` under the facet hypotheses of `translation_verma` (Humphreys, GSM 94,
-  Theorem 7.6 (check), Verma part, integral weights, finite type).
+  Theorem 7.6, Verma part, integral weights, finite type).
 
 Exactness combines exactness of block restriction (`IsCategoryO.shortExact_centralBlockMap`)
 with exactness of `− ⊗ Z` over a field. The tensor factor is written on the right.
@@ -100,7 +100,7 @@ theorem exact_iff_ker_eq_range (f : U →ₗ⁅K,𝔤⁆ V) (g : V →ₗ⁅K,�
     simpa only [LieModuleHom.mem_ker, LieModuleHom.mem_range, eq_iff_iff, Set.mem_range] using this
 
 variable (Z) in
-/-- **Translation is exact** (Humphreys, GSM 94, §7.1 (check)): over an algebraically closed
+/-- **Translation is exact** (Humphreys, GSM 94, §7.1): over an algebraically closed
 field, translation preserves short exact sequences whose middle term is in `𝒪`, for `Z` in
 `𝒪`. -/
 theorem centralTranslationMap_shortExact [CharZero K] [IsAlgClosed K] (hV : IsCategoryO P V)
@@ -169,7 +169,7 @@ variable {K : Type} [Field K] [CharZero K] [IsAlgClosed K] {H : Type*} [AddCommG
   (hA : A.IsFiniteCartan)
 
 include hA in
-/-- **Translation functors on Verma modules** (Humphreys, GSM 94, Theorem 7.6 (check), Verma
+/-- **Translation functors on Verma modules** (Humphreys, GSM 94, Theorem 7.6, Verma
 part, integral weights, finite type): with `T_λ^μ = pr_{χ_μ}(pr_{χ_λ}(−) ⊗ L(ν))` and the
 hypotheses of `translation_verma`, `T_λ^μ M(w·λ) ≅ M(w·μ)` for every `w ∈ W`. -/
 theorem translation_verma_equiv {lam μ ν : Dual K H}

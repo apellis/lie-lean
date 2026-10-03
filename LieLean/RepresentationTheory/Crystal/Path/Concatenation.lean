@@ -9,7 +9,7 @@ import LieLean.RepresentationTheory.Crystal.Path.RootOperators
 # Concatenation of Littelmann paths and the tensor product rule
 
 The concatenation `π₁ * π₂` of two paths runs through `π₁` and then through `π₂` translated by
-`π₁(1)`. Littelmann ([Lit95] §2 (check), [Lit94]) observed that on integral paths the root
+`π₁(1)`. Littelmann ([Lit95] §2, [Lit94]) observed that on integral paths the root
 operators act on concatenations by Kashiwara's tensor product rule: `π₁ ⊗ π₂ ↦ π₁ * π₂` intertwines
 the root operators of the tensor product crystal with those of the path crystal.
 
@@ -53,7 +53,7 @@ section Concat
 
 variable (π₁ π₂ : LittelmannPath S)
 
-/-- The concatenation `π₁ * π₂` ([Lit95] §1 (check)): `π₁(2t)` for `t ≤ 1/2` and
+/-- The concatenation `π₁ * π₂` ([Lit95] §1): `π₁(2t)` for `t ≤ 1/2` and
 `π₁(1) + π₂(2t - 1)` for `t ≥ 1/2`. -/
 noncomputable def concat : LittelmannPath S where
   toFun t := if t ≤ 2⁻¹ then π₁ (2 * t) else π₁ 1 + π₂ (2 * t - 1)
@@ -164,7 +164,8 @@ theorem rev_concat : (π₁.concat π₂).rev = π₂.rev.concat π₁.rev := by
     norm_num
     abel
 
-/-- A path is integral if all the minima `mᵢ = min hᵢ` are integers ([Lit95] §2 (check)). -/
+/-- A path is integral if all the minima `mᵢ = min hᵢ` are integers (cf. the integrality
+property, [Lit95] 2.6). -/
 def IsIntegral (π : LittelmannPath S) : Prop := ∀ i, ∃ n : ℤ, π.minPairing i = n
 
 lemma exists_minPairing_rev_eq {π : LittelmannPath S} (h : ∃ n : ℤ, π.minPairing i = n) :
@@ -222,7 +223,7 @@ private lemma ε_le_φ_iff {n₁ n₂ : ℤ} (h₁ : π₁.minPairing i = n₁) 
   · have : n₁ ≤ D.coroot i π₁.wt + n₂ := by exact_mod_cast h
     linarith
 
-/-- Kashiwara's tensor product rule for `eᵢ` on concatenations ([Lit95] §2 (check)): if the minima
+/-- Kashiwara's tensor product rule for `eᵢ` on concatenations ([Lit95] §2): if the minima
 `mᵢ(π₁)` and `mᵢ(π₂)` are integers, then `eᵢ (π₁ * π₂) = (eᵢ π₁) * π₂` if `εᵢ(π₂) ≤ φᵢ(π₁)` and
 `eᵢ (π₁ * π₂) = π₁ * (eᵢ π₂)` otherwise. -/
 theorem e_concat (h₁ : ∃ n : ℤ, π₁.minPairing i = n) (h₂ : ∃ n : ℤ, π₂.minPairing i = n) :
@@ -285,7 +286,7 @@ theorem e_concat (h₁ : ∃ n : ℤ, π₁.minPairing i = n) (h₂ : ∃ n : �
       rw [this]
       module
 
-/-- Kashiwara's tensor product rule for `fᵢ` on concatenations ([Lit95] §2 (check)): if the minima
+/-- Kashiwara's tensor product rule for `fᵢ` on concatenations ([Lit95] §2): if the minima
 `mᵢ(π₁)` and `mᵢ(π₂)` are integers, then `fᵢ (π₁ * π₂) = (fᵢ π₁) * π₂` if `εᵢ(π₂) < φᵢ(π₁)` and
 `fᵢ (π₁ * π₂) = π₁ * (fᵢ π₂)` otherwise. -/
 theorem f_concat (h₁ : ∃ n : ℤ, π₁.minPairing i = n) (h₂ : ∃ n : ℤ, π₂.minPairing i = n) :
@@ -300,7 +301,7 @@ theorem f_concat (h₁ : ∃ n : ℤ, π₁.minPairing i = n) (h₂ : ∃ n : �
     simp only [f, Option.map_map, Function.comp_def, rev_concat, rev_rev]
 
 /-- For integral paths, `(π₁, π₂) ↦ π₁ * π₂` intertwines `eᵢ` on the tensor product of path
-crystals with `eᵢ` on paths ([Lit95] §2 (check)). -/
+crystals with `eᵢ` on paths ([Lit95] §2). -/
 theorem e_concat_eq_tensor (h₁ : π₁.IsIntegral) (h₂ : π₂.IsIntegral) (i : ι) :
     e i (π₁.concat π₂) =
       (((crystal S).tensor (crystal S)).e i (π₁, π₂)).map fun p ↦ p.1.concat p.2 := by
@@ -309,7 +310,7 @@ theorem e_concat_eq_tensor (h₁ : π₁.IsIntegral) (h₂ : π₂.IsIntegral) (
   split_ifs <;> simp [Option.map_map, Function.comp_def]
 
 /-- For integral paths, `(π₁, π₂) ↦ π₁ * π₂` intertwines `fᵢ` on the tensor product of path
-crystals with `fᵢ` on paths ([Lit95] §2 (check)). -/
+crystals with `fᵢ` on paths ([Lit95] §2). -/
 theorem f_concat_eq_tensor (h₁ : π₁.IsIntegral) (h₂ : π₂.IsIntegral) (i : ι) :
     f i (π₁.concat π₂) =
       (((crystal S).tensor (crystal S)).f i (π₁, π₂)).map fun p ↦ p.1.concat p.2 := by

@@ -11,7 +11,7 @@ import LieLean.Algebra.Lie.KacMoody.Jantzen
 Let `A` be symmetrizable and `M(λ₀)^i` the Jantzen filtration of `M(λ₀)` along the line
 `λ(t) = λ₀ + t δ` (`KacMoody/Jantzen.lean`). Let `D_β(λ)` be the determinant of the Shapovalov
 form on `M(λ)_{λ-β}` in the PBW basis, and suppose `t ↦ D_β(λ(t))` is not identically zero. Then
-([HumO] §5.6 (check); [Jantzen] (check))
+([HumO] §5.6–5.7; [Jan79] 5.1, 5.3)
 
 `∑_{i ≥ 1} dim M(λ₀)^i_{λ₀-β} = ord_{t=0} D_β(λ₀ + t δ)`
 
@@ -31,7 +31,9 @@ form along the line, a matrix of polynomials in `t`, and the formula is
 ## References
 
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, §5.6 (check).
+  GSM 94, §5.6–5.7.
+* [Jan79] J. C. Jantzen, *Moduln mit einem höchsten Gewicht*, Lecture Notes in Math. 750,
+  Springer 1979, 5.1, 5.3 (numbering as cited in [HumO] §5.6–5.7; not consulted directly).
 -/
 
 open Module LieModule Module.Dual Polynomial UniversalEnvelopingAlgebra
@@ -245,7 +247,7 @@ theorem finrank_jantzen_inf_weightSpace (Λ₀ δ β : Dual K H) (i : ℕ) :
     (Submodule.equivMapOfInjective _ (coordMap_injective Λ₀ β) _)).symm
 
 include S in
-/-- **The Jantzen order formula** ([HumO] §5.6 (check); [Jantzen] (check)): if
+/-- **The Jantzen order formula** ([HumO] §5.6–5.7; [Jan79] 5.1, 5.3): if
 `d(t) = D_β(λ₀ + t δ)` is a nonzero polynomial in `t` (`D_β` the Shapovalov determinant on
 `M(λ)_{λ-β}` in the PBW basis) with order of vanishing `N` at `t = 0`, then
 `∑_{i = 1}^{N} dim M(λ₀)^i_{λ₀-β} = N` (and `M(λ₀)^i_{λ₀-β} = 0` for `i > N`, see

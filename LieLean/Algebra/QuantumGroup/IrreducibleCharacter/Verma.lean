@@ -11,7 +11,7 @@ import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Classical
 
 Let `U = U_q(𝔤)` for a root datum `R` of type `(I, ·)` over a field `k` of characteristic zero,
 `v ∈ k` not a root of unity, and `Λ ∈ X = Hom(Y, ℤ)`. On the quantum Verma module
-`M_q(Λ) = U⁻ v_Λ` the raising operators act by ([Jan] 4.7, 5.5 (check), [Lus] 3.4 (check))
+`M_q(Λ) = U⁻ v_Λ` the raising operators act by ([Jan] 4.3 (R4), 5.5, 5.12(8), [Lus] 3.4.2, 3.4.5)
 `Eᵢ Fⱼ y⁻ v_Λ = Fⱼ Eᵢ y⁻ v_Λ + δᵢⱼ [⟨i, Λ⟩ - ⟨μ, αᵢ^∨⟩]_{vᵢ} y⁻ v_Λ` for `y ∈ 'f_μ`, i.e.
 `Eᵢ (y⁻ v_Λ) = (Eᵢ y)⁻ v_Λ` for the Verma-type operator `Eᵢ = LusztigF.vermaOp i cᵢ` with the
 coefficients `cᵢ(μ) = [⟨i, Λ⟩ - ⟨μ, αᵢ^∨⟩]_{vᵢ}` (`QuantumGroup.qCoeff`,
@@ -47,8 +47,8 @@ The arguments are standard; the formulation through `'f` is ours.
 
 ## References
 
-* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 4–5 (check).
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.4 (check).
+* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 4–5.
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.4.
 -/
 
 noncomputable section

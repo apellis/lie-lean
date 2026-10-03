@@ -12,7 +12,7 @@ import LieLean.Algebra.Lie.KacMoody.VermaPBW
 # Formal characters of modules in the category `𝒪`
 
 Let `V` be a module over the Kac–Moody algebra `𝔤 = 𝔤(A)` lying in the category `𝒪`. Its formal
-character ([Kac] §9.7 (check)) is the element `ch V = ∑_μ (dim V_μ) e^μ` of the algebra `ℰ`
+character ([Kac] §9.7) is the element `ch V = ∑_μ (dim V_μ) e^μ` of the algebra `ℰ`
 (`Matrix.Realization.CharacterRing`).
 
 ## Main definitions
@@ -162,7 +162,7 @@ theorem of_equiv (hV : IsCategoryO P V) (e : V ≃ₗ⁅K,P.KacMoodyAlgebra⁆ W
 variable [CharZero K]
 
 /-- The formal character `ch V = ∑_μ (dim V_μ) e^μ ∈ ℰ` of a module `V` in the category `𝒪`
-([Kac] §9.7 (check)). -/
+([Kac] §9.7). -/
 def character (hV : IsCategoryO P V) : P.CharacterRing ℤ :=
   ofFun P (fun μ ↦ (finrank K (weightSpaceOfMap V (h P) μ) : ℤ)) (by
     obtain ⟨s, hs⟩ := hV.exists_finset
@@ -173,7 +173,7 @@ def character (hV : IsCategoryO P V) : P.CharacterRing ℤ :=
     hV.character.coeffAt μ = finrank K (weightSpaceOfMap V (h P) μ) := rfl
 
 /-- **Additivity of characters**: `ch V = ch N + ch (V/N)` for a submodule `N` of a module `V` in
-the category `𝒪` ([Kac] §9.7 (check)). -/
+the category `𝒪` ([Kac] §9.7). -/
 theorem character_eq_add (hV : IsCategoryO P V) (N : LieSubmodule K P.KacMoodyAlgebra V)
     (hN : IsCategoryO P N) (hQ : IsCategoryO P (V ⧸ N)) :
     hV.character = hN.character + hQ.character := by
@@ -233,12 +233,12 @@ lemma map_shiftEquiv_weightSpace (Λ Λ' β : Dual K H) :
   simp only [Set.mem_image, Set.mem_ofPred_eq, sub_right_inj, Function.comp_apply,
     LinearEquiv.coe_coe, shiftEquiv_fWord]
 
-/-- `dim M(Λ)_{Λ - β}` does not depend on `Λ` ([Kac] §9.7 (check)). -/
+/-- `dim M(Λ)_{Λ - β}` does not depend on `Λ` ([Kac] §9.7). -/
 theorem finrank_weightSpace_sub_eq (Λ Λ' β : Dual K H) :
     finrank K (weightSpace P Λ (Λ - β)) = finrank K (weightSpace P Λ' (Λ' - β)) := by
   rw [← map_shiftEquiv_weightSpace P Λ Λ' β, LinearEquiv.finrank_map_eq]
 
-/-- The character of a Verma module: `ch M(Λ) = e^Λ ch M(0)` ([Kac] §9.7 (check)). -/
+/-- The character of a Verma module: `ch M(Λ) = e^Λ ch M(0)` ([Kac] §9.7). -/
 theorem character_eq (Λ : Dual K H) :
     (isCategoryO P Λ).character = exp P ℤ Λ * (isCategoryO P 0).character := by
   ext μ

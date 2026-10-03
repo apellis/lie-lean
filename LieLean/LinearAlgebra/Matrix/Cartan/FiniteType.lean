@@ -11,8 +11,9 @@ import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupExchange
 Let `A` be a Cartan matrix of finite type in the sense of Mathlib's `Matrix.IsFiniteCartan`: a
 generalized Cartan matrix such that `D A` is symmetric positive definite for some diagonal matrix
 `D = diag(d)` with positive integer entries. This is the characterization of finite type by
-symmetrizability and positive definiteness ([Kac] Prop. 4.9 (check); Kac's definition by
-positivity of principal minors, [Kac] Thm. 4.3 (check), is equivalent for indecomposable
+symmetrizability and positive definiteness ([Kac] Prop. 4.9; Kac's definition of finite type,
+[Kac] Thm. 4.3 (Fin), equivalently positivity of all principal minors ([Kac] Prop. 4.7 (a)),
+is equivalent for indecomposable
 symmetrizable matrices). Mathlib shows that the Cartan matrix of a finite crystallographic root
 system is of this kind (`RootPairing.Base.cartanMatrix_isFiniteCartan`).
 
@@ -27,7 +28,7 @@ Let `(𝔥, Π, Π^∨)` be a realization of `A` over a field `K` of characteris
   root lattice and has `q(w αᵢ) = q(αᵢ) = 2 dᵢ`, so the set of real roots is finite.
 * Since `W` acts faithfully on the simple roots
   (`Matrix.Realization.eq_one_of_forall_apply_root_eq`), `w ↦ (w αᵢ)ᵢ` embeds `W` in the finite
-  set of maps from `ι` to the real roots; hence `W` is finite ([Kac] Prop. 4.9 (check)).
+  set of maps from `ι` to the real roots; hence `W` is finite ([Kac] Prop. 4.9).
 
 The argument is the standard one; we reconstructed it rather than following a specific printed
 proof.
@@ -110,8 +111,7 @@ theorem exists_apply_rootOf_eq_rootOf_and_quadForm_eq {w : Dual K H ≃ₗ[K] Du
 
 omit hd
 
-/-- For a Cartan matrix of finite type, the set of real roots is finite ([Kac] Prop. 4.9
-(check)). -/
+/-- For a Cartan matrix of finite type, the set of real roots is finite ([Kac] Prop. 4.9). -/
 theorem finite_realRoots (hA : A.IsFiniteCartan) :
     (P.realRoots hA.isGeneralizedCartan).Finite := by
   obtain ⟨d, -, hpos⟩ := hA.exists_posDef
@@ -127,7 +127,7 @@ theorem finite_realRoots (hA : A.IsFiniteCartan) :
 
 variable [CharZero K]
 
-/-- For a Cartan matrix of finite type, the Weyl group is finite ([Kac] Prop. 4.9 (check)). The
+/-- For a Cartan matrix of finite type, the Weyl group is finite ([Kac] Prop. 4.9). The
 map `w ↦ (w αᵢ)ᵢ` is injective (`Matrix.Realization.eq_one_of_forall_apply_root_eq`) with values
 in the finite set of maps from `ι` to the real roots. -/
 theorem finite_weylGroup (hA : A.IsFiniteCartan) :

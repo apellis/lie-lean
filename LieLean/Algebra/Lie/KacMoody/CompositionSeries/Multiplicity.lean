@@ -10,8 +10,8 @@ import LieLean.Algebra.Lie.KacMoody.CompositionSeries
 
 Let `V` be a module in the category `𝒪` over the Kac–Moody algebra `𝔤(A)`. For `μ ∈ 𝔥*`, the
 multiplicity `[V : L(μ)]` is the number of factors `L(μ)` in a local composition series of `V`
-for some `ν ≤ μ` ([Kac] Lemma 9.6 (check)); it does not depend on the local composition series
-nor on `ν` ([Kac] §9.6 (check)).
+for some `ν ≤ μ` ([Kac] Lemma 9.6); it does not depend on the local composition series
+nor on `ν` ([Kac] §9.6).
 
 ## Main definitions
 
@@ -28,7 +28,7 @@ nor on `ν` ([Kac] §9.6 (check)).
 * `Matrix.Realization.KacMoodyAlgebra.IsLocalCompositionSeries.count_factorWeights_eq`,
   `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.count_factorWeights_eq_multiplicity`: the
   number of factors `L(μ)` in a local composition series for `ν ≤ μ` is `[V : L(μ)]`, independently
-  of the series and of `ν` ([Kac] §9.6 (check)).
+  of the series and of `ν` ([Kac] §9.6).
 
 ## Proof
 
@@ -62,7 +62,7 @@ variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K] [
 namespace IrreducibleModule
 
 variable (P) in
-/-- `dim L(μ)_μ = 1` ([Kac] §9.3 (check)). -/
+/-- `dim L(μ)_μ = 1` ([Kac] §9.3). -/
 theorem finrank_weightSpace_self (μ : Dual K H) :
     finrank K (weightSpace P (IrreducibleModule P μ) μ) = 1 := by
   rw [weightSpace, ← map_weightSpaceOfMap_quotient P _
@@ -72,7 +72,7 @@ theorem finrank_weightSpace_self (μ : Dual K H) :
   exact finrank_span_singleton (hwv_ne_zero P μ)
 
 omit [CharZero K] in
-/-- The weights of `L(μ)` are `≤ μ` ([Kac] §9.2–9.3 (check)). -/
+/-- The weights of `L(μ)` are `≤ μ` ([Kac] §9.2–9.3). -/
 theorem mem_cone_of_weightSpace_ne_bot {μ ξ : Dual K H}
     (hξ : weightSpace P (IrreducibleModule P μ) ξ ≠ ⊥) : ξ ∈ cone P μ := by
   obtain ⟨x, hx, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hξ
@@ -121,7 +121,7 @@ theorem finrank_inf_weightSpace_eq (hξ : ν ∈ cone P ξ)
 
 omit [CharZero K] in
 /-- Along a local composition series for `ν` from `0` to `V`, `dim V_ξ = ∑_{j ∈ J} dim L(λ_j)_ξ`
-for every `ξ ≥ ν` ([Kac] §9.6 (check)). -/
+for every `ξ ≥ ν` (cf. [Kac] §9.6 and the proof of Prop. 9.7). -/
 theorem finrank_weightSpace_eq (hξ : ν ∈ cone P ξ)
     {l : List (LieSubmodule K P.KacMoodyAlgebra V × Option (Dual K H))}
     (hl : IsLocalCompositionSeries P ν ⊥ l ⊤) :
@@ -221,7 +221,7 @@ lemma sum_map_finrank_weightSpace_filter {μ ξ : Dual K H}
   exact (Multiset.mem_filter.mp hμ').2
     (mem_cone_trans hξ (IrreducibleModule.mem_cone_of_finrank_weightSpace_ne_zero hne))
 
-/-- **Independence of the multiplicities** ([Kac] §9.6 (check)): the number of factors `L(μ)` in
+/-- **Independence of the multiplicities** ([Kac] §9.6): the number of factors `L(μ)` in
 a local composition series of `V` for `ν ≤ μ` does not depend on the series nor on `ν`. -/
 theorem IsLocalCompositionSeries.count_factorWeights_eq [DecidableEq (Dual K H)]
     (hV : IsCategoryO P V) {ν ν' μ : Dual K H} (hν : ν ∈ cone P μ) (hν' : ν' ∈ cone P μ)
@@ -249,14 +249,14 @@ namespace IsCategoryO
 
 open scoped Classical in
 /-- The multiplicity `[V : L(μ)]` of `L(μ)` in a module `V` in the category `𝒪`: the number of
-factors isomorphic to `L(μ)` in a local composition series of `V` for `μ` ([Kac] §9.6 (check)).
+factors isomorphic to `L(μ)` in a local composition series of `V` for `μ` ([Kac] §9.6).
 By `IsCategoryO.count_factorWeights_eq_multiplicity`, any local composition series for any
 `ν ≤ μ` gives the same number. -/
 def multiplicity (hV : IsCategoryO P V) (μ : Dual K H) : ℕ :=
   (factorWeights (hV.exists_isLocalCompositionSeries μ).choose).count μ
 
 /-- The multiplicity `[V : L(μ)]` is the number of factors `L(μ)` in any local composition series
-of `V` for any `ν ≤ μ` ([Kac] §9.6 (check)). -/
+of `V` for any `ν ≤ μ` ([Kac] §9.6). -/
 theorem count_factorWeights_eq_multiplicity [DecidableEq (Dual K H)] (hV : IsCategoryO P V)
     {ν μ : Dual K H} (hν : ν ∈ cone P μ)
     {l : List (LieSubmodule K P.KacMoodyAlgebra V × Option (Dual K H))}

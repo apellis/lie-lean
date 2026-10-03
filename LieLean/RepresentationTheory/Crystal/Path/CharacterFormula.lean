@@ -21,7 +21,7 @@ prove the path-model Weyl character formula
 for every generalized Cartan matrix, and deduce `ch B(λ) = ch L(λ)` for symmetrizable `A` from the
 Weyl–Kac character formula.
 
-## Proof of the character formula ([Lit95] §9 (check); our write-up)
+## Proof of the character formula ([Lit95] §9; our write-up)
 
 By the `W`-invariance of the weight multiplicities of `B(λ)`
 (`Matrix.Realization.card_wt_weylGroup_pathCrystal`), the coefficient of `e^μ` on the left is
@@ -49,7 +49,7 @@ For symmetrizable `A`, the left side is `e^ρ R ch B(λ)` by the denominator ide
 * `Matrix.Realization.weylAltSum_rho_mul_pathCharacter`: the path-model Weyl character formula
   (any generalized Cartan matrix).
 * `Matrix.Realization.pathCharacter_eq_character`: **Littelmann's character formula**
-  `ch B(λ) = ch L(λ)` for symmetrizable `A` ([Lit95] Thm. 9.1 (check), [Lit94]).
+  `ch B(λ) = ch L(λ)` for symmetrizable `A` ([Lit95] Thm. 9.1, [Lit94]).
 
 ## References
 
@@ -287,7 +287,7 @@ lemma coeffAt_pathCharacter (μ : Dual K H) :
   Crystal.coeffAt_formalCharacterOfCones _ _ μ
 
 open Classical in
-/-- **Littelmann's generalized Brauer–Klimyk formula** ([Lit94] §5–6, [Lit95] §9 (check); our
+/-- **Littelmann's generalized Brauer–Klimyk formula** ([Lit94] §5–6, [Lit95] §9 for `ν = 0`; our
 write-up): for dominant integral `ν` and `λ`, the coefficient of `e^κ` in
 `(∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(ν + ρ)}) · ch B(λ)` is the signed count of pairs `(w, π)`,
 `π ∈ B(λ)` `ν`-dominant (no `hⱼ` reaches `-1 - ⟨ν, αⱼ^∨⟩`), with `w(ν + π(1) + ρ) = κ`. That
@@ -413,8 +413,9 @@ theorem coeffAt_weylAltSum_mul_pathCharacter {ν : Dual K H} (hν : P.IsDominant
   · rw [Function.mem_support] at hp
     exact (hmemS p).mpr (by by_contra h; exact hp (ite_eq_right fun h' : _ ∧ _ ↦ h h'.2))
 
-/-- **Littelmann's path-model Weyl character formula** ([Lit95] Thm. 9.1 (check), in the form of
-the Weyl character formula): for any generalized Cartan matrix and dominant integral `λ`,
+/-- **Littelmann's path-model Weyl character formula** ([Lit95] Thm. 9.1, in the form of
+the Weyl character formula, there for symmetrizable `A`): for any generalized Cartan matrix and
+dominant integral `λ`,
 `(∑_{w ∈ W} (-1)^{ℓ(w)} e^{wρ}) · ch B(λ) = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(λ + ρ)}` in `ℰ`. This is
 the case `ν = 0` of `Matrix.Realization.coeffAt_weylAltSum_mul_pathCharacter`: `π_λ` is the only
 dominant path of `B(λ)`. -/
@@ -471,7 +472,7 @@ theorem weylAltSum_rho_mul_pathCharacter :
     rw [hb, zero_add] at h2
     exact h2
 
-/-- **Littelmann's character formula** ([Lit95] Thm. 9.1 (check), [Lit94]): for a symmetrizable
+/-- **Littelmann's character formula** ([Lit95] Thm. 9.1, [Lit94]): for a symmetrizable
 generalized Cartan matrix and a dominant integral weight `λ`, the character of the path crystal
 `B(λ)` is the character of the irreducible highest-weight module `L(λ)`:
 `∑_{π ∈ B(λ)} e^{π(1)} = ch L(λ)`. By `Matrix.Realization.weylAltSum_rho_mul_pathCharacter`,

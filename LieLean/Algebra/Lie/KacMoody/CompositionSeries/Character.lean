@@ -13,8 +13,8 @@ Let `A` be a symmetrizable generalized Cartan matrix, `R = ∏_{α > 0} (1 - e^{
 denominator, and `V` a quotient of the Verma module `M(Λ)`. Writing `R · ch V = ∑_λ c_λ e^λ`
 (`c_λ ∈ ℤ`), we show that `c_λ ≠ 0` only if `λ ≤ Λ` and `(λ + 2ρ | λ) = (Λ + 2ρ | Λ)`, i.e.
 `|λ + ρ|² = |Λ + ρ|²`. Since `R · ch M(λ) = e^λ`, this says that `ch V` is a (possibly infinite)
-integral combination of the `ch M(λ)` with such `λ` ([Kac] Prop. 9.8 (check)); it is the form
-used in the proof of the Weyl–Kac character formula ([Kac] §10.4 (check)).
+integral combination of the `ch M(λ)` with such `λ` ([Kac] Prop. 9.8); it is the form
+used in the proof of the Weyl–Kac character formula ([Kac] §10.4).
 
 ## Main results
 
@@ -30,13 +30,13 @@ used in the proof of the Weyl–Kac character formula ([Kac] §10.4 (check)).
 
 Since the support of `R` lies in `-Q₊`, `(R · ch V)_ξ` only depends on the `dim V_β`, `β ≥ ξ`;
 by a local composition series for `ξ` it equals `∑_{j ∈ J} (R · ch L(λ_j))_ξ`, where
-`ξ ≤ λ_j ≤ Λ` and `(λ_j + 2ρ | λ_j) = (Λ + 2ρ | Λ)` ([Kac] Prop. 9.8 (check)). So it suffices to
-treat `V = L(μ)`, and we show `(R · ch L(μ))_ξ = 0` if `ξ ≤ μ` and
+`ξ ≤ λ_j ≤ Λ` and `(λ_j + 2ρ | λ_j) = (Λ + 2ρ | Λ)` ([Kac] §9.8, proof of Prop. 9.8). So it suffices
+to treat `V = L(μ)`, and we show `(R · ch L(μ))_ξ = 0` if `ξ ≤ μ` and
 `(ξ + 2ρ | ξ) ≠ (μ + 2ρ | μ)` by induction on the height of `μ - ξ`: decomposing `M(μ)` in the
 same way, `0 = (e^μ)_ξ = (R · ch M(μ))_ξ = (R · ch L(μ))_ξ + ∑ (R · ch L(λ_j))_ξ`, where `L(μ)`
 occurs exactly once (as `dim M(μ)_μ = 1`) and the other `λ_j` satisfy `ξ ≤ λ_j < μ` and
 `(λ_j + 2ρ | λ_j) = (μ + 2ρ | μ)`, so their terms vanish by induction. This is the argument of
-[Kac] §9.8 (check) in the language of `ℰ`, written out by us.
+[Kac] §9.8 in the language of `ℰ`, written out by us.
 
 ## References
 
@@ -187,7 +187,7 @@ theorem coeffAt_denominator_mul_character_irreducibleModule_eq_zero {μ ξ : Dua
     one_smul] at hM
   exact hM.symm
 
-/-- **[Kac] Prop. 9.8 (check)**, character form: if `V` is a quotient of `M(Λ)` and the
+/-- **[Kac] Prop. 9.8**, character form: if `V` is a quotient of `M(Λ)` and the
 coefficient of `e^ξ` in `R · ch V` is nonzero, where `R = ∏_{α > 0} (1 - e^{-α})^{mult α}`, then
 `ξ ≤ Λ` and `(Λ + 2ρ | Λ) = (ξ + 2ρ | ξ)`. Equivalently (as `R · ch M(λ) = e^λ`),
 `ch V = ∑_λ c_λ ch M(λ)` with `c_λ ∈ ℤ` vanishing unless `λ ≤ Λ` and
@@ -215,7 +215,7 @@ theorem coeffAt_denominator_mul_character_ne_zero {Λ : Dual K H}
 
 end IsStandardForm
 
-/-- **[Kac] Prop. 9.8 (check)**, character form, for a symmetrizable generalized Cartan matrix
+/-- **[Kac] Prop. 9.8**, character form, for a symmetrizable generalized Cartan matrix
 `A` with symmetrization `S`: if `V` is a quotient of `M(Λ)` and the coefficient of `e^ξ` in
 `R · ch V` is nonzero, then `ξ ≤ Λ` and `(Λ + 2ρ | Λ) = (ξ + 2ρ | ξ)`. -/
 theorem coeffAt_denominator_mul_character_ne_zero (S : A.Symmetrization)

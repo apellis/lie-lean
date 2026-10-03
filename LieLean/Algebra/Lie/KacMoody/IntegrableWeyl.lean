@@ -13,10 +13,10 @@ import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
 
 Let `A` be a generalized Cartan matrix, `K` a field of characteristic zero and `V` an integrable
 module over the Kac–Moody algebra `𝔤(A)`. We show that `dim V_λ = dim V_{w λ}` for every weight
-`λ ∈ 𝔥*` and every element `w` of the Weyl group `W` ([Kac] Prop. 3.7 (b) (check)); in particular
+`λ ∈ 𝔥*` and every element `w` of the Weyl group `W` ([Kac] Prop. 3.7 (a)); in particular
 the set of weights of `V` is `W`-invariant, and so are the root multiplicities of `𝔤(A)`.
 We also show that the weights of an integrable module are integral: `⟨λ, αᵢ^∨⟩ ∈ ℤ`
-([Kac] Prop. 3.6 (check)).
+([Kac] Prop. 3.6).
 
 ## Proof
 
@@ -52,13 +52,13 @@ Hence `dim V_λ ≤ dim V_{rᵢ λ}`, and equality follows since `rᵢ` is an in
   `𝔰𝔩₂` facts above.
 * `Matrix.Realization.KacMoodyAlgebra.isSl2Triple`: `(αᵢ^∨, eᵢ, fᵢ)` is an `𝔰𝔩₂`-triple.
 * `Matrix.Realization.KacMoodyAlgebra.exists_int_of_weightSpace_ne_bot`: weights of integrable
-  modules are integral ([Kac] Prop. 3.6 (check)).
+  modules are integral ([Kac] Prop. 3.6).
 * `Matrix.Realization.KacMoodyAlgebra.rank_weightSpace_weylGroup`: `dim V_{w λ} = dim V_λ`
-  ([Kac] Prop. 3.7 (b) (check)).
+  ([Kac] Prop. 3.7 (a)).
 * `Matrix.Realization.KacMoodyAlgebra.weightSpace_weylGroup_eq_bot_iff`: the set of weights is
   `W`-invariant.
 * `Matrix.Realization.KacMoodyAlgebra.rank_rootSpace_weylGroup`: root multiplicities are
-  `W`-invariant ([Kac] Prop. 3.7 (b) (check)).
+  `W`-invariant ([Kac] Prop. 3.7 (b)).
 
 ## References
 
@@ -161,7 +161,7 @@ namespace KacMoodyAlgebra
 variable [CharZero K] (hA : A.IsGeneralizedCartan)
 include hA
 
-/-- `(αᵢ^∨, eᵢ, fᵢ)` is an `𝔰𝔩₂`-triple in `𝔤(A)` ([Kac] §3.6 (check)). -/
+/-- `(αᵢ^∨, eᵢ, fᵢ)` is an `𝔰𝔩₂`-triple in `𝔤(A)` ([Kac] §3.3). -/
 theorem isSl2Triple (i : ι) : IsSl2Triple (h P (P.coroot i)) (e P i) (f P i) where
   h_ne_zero := by
     rw [Ne, ← map_zero (h P), (h_injective P).eq_iff]
@@ -176,7 +176,7 @@ variable {P} {V : Type*} [AddCommGroup V] [Module K V] [LieRingModule P.KacMoody
   [LieModule K P.KacMoodyAlgebra V]
 
 /-- The weights of an integrable module are integral: if `V_λ ≠ 0` then `⟨λ, αᵢ^∨⟩ ∈ ℤ` for all
-`i` ([Kac] Prop. 3.6 (check)). -/
+`i` ([Kac] Prop. 3.6). -/
 theorem exists_int_of_weightSpace_ne_bot (hV : IsIntegrable P V) {μ : Dual K H}
     (hμ : weightSpace P V μ ≠ ⊥) (i : ι) : ∃ z : ℤ, μ (P.coroot i) = z := by
   obtain ⟨v, hv, hv0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hμ
@@ -216,7 +216,7 @@ theorem rank_weightSpace_le_reflection (hV : IsIntegrable P V) (i : ι) (μ : Du
     refine t.symm.eq_zero_of_pow_toEnd_f_eq_zero hk ?_ (congr_arg Subtype.val hv)
     rw [neg_lie, v.2 (P.coroot i), hz, Int.cast_neg, Int.cast_natCast, neg_smul, neg_neg]
 
-/-- For an integrable module, `dim V_{rᵢ λ} = dim V_λ` ([Kac] Prop. 3.7 (b) (check)). -/
+/-- For an integrable module, `dim V_{rᵢ λ} = dim V_λ` ([Kac] Prop. 3.7 (a)). -/
 theorem rank_weightSpace_reflection (hV : IsIntegrable P V) (i : ι) (μ : Dual K H) :
     Module.rank K (weightSpace P V (P.reflection hA i μ)) = Module.rank K (weightSpace P V μ) := by
   refine le_antisymm ?_ (rank_weightSpace_le_reflection hA hV i μ)
@@ -224,7 +224,7 @@ theorem rank_weightSpace_reflection (hV : IsIntegrable P V) (i : ι) (μ : Dual 
   rwa [reflection_reflection] at this
 
 /-- For an integrable module `V`, the weight multiplicities are `W`-invariant:
-`dim V_{w λ} = dim V_λ` for all `w ∈ W` ([Kac] Prop. 3.7 (b) (check)). -/
+`dim V_{w λ} = dim V_λ` for all `w ∈ W` ([Kac] Prop. 3.7 (a)). -/
 theorem rank_weightSpace_weylGroup (hV : IsIntegrable P V) {w : Dual K H ≃ₗ[K] Dual K H}
     (hw : w ∈ P.weylGroup hA) (μ : Dual K H) :
     Module.rank K (weightSpace P V (w μ)) = Module.rank K (weightSpace P V μ) := by
@@ -234,13 +234,13 @@ theorem rank_weightSpace_weylGroup (hV : IsIntegrable P V) {w : Dual K H ≃ₗ[
   rw [LinearEquiv.mul_apply, rank_weightSpace_reflection hA hV, ih]
 
 /-- For an integrable module `V`, the weight spaces `V_λ` and `V_{w λ}` (`w ∈ W`) are isomorphic
-([Kac] Prop. 3.7 (b) (check)). -/
+([Kac] Prop. 3.7 (a)). -/
 theorem nonempty_weightSpace_weylGroup_equiv (hV : IsIntegrable P V)
     {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA) (μ : Dual K H) :
     Nonempty (weightSpace P V (w μ) ≃ₗ[K] weightSpace P V μ) :=
   Module.nonempty_linearEquiv_iff_rank_eq.mpr (rank_weightSpace_weylGroup hA hV hw μ)
 
-/-- The set of weights of an integrable module is `W`-invariant ([Kac] Prop. 3.7 (b) (check)). -/
+/-- The set of weights of an integrable module is `W`-invariant ([Kac] Prop. 3.7 (a)). -/
 theorem weightSpace_weylGroup_eq_bot_iff (hV : IsIntegrable P V)
     {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA) (μ : Dual K H) :
     weightSpace P V (w μ) = ⊥ ↔ weightSpace P V μ = ⊥ := by
@@ -249,7 +249,7 @@ theorem weightSpace_weylGroup_eq_bot_iff (hV : IsIntegrable P V)
 end Module
 
 /-- The root multiplicities of `𝔤(A)` are `W`-invariant: `dim 𝔤_{w α} = dim 𝔤_α` for `w ∈ W`
-([Kac] Prop. 3.7 (b) (check)). -/
+([Kac] Prop. 3.7 (b)). -/
 theorem rank_rootSpace_weylGroup {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA)
     (μ : Dual K H) : Module.rank K (rootSpace P (w μ)) = Module.rank K (rootSpace P μ) :=
   rank_weightSpace_weylGroup hA (isIntegrable_adjoint P hA) hw μ

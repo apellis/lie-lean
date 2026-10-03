@@ -11,7 +11,7 @@ import LieLean.Algebra.Lie.KacMoody.Character
 
 Let `A` be a symmetrizable generalized Cartan matrix and `K` a field of characteristic zero. We
 show that every integrable `𝔤(A)`-module `V` in the category `𝒪` is a direct sum of irreducible
-modules `L(Λ)` with `Λ` dominant integral ([Kac] Thm. 10.7 (b) (check)). The main tool is the
+modules `L(Λ)` with `Λ` dominant integral ([Kac] Thm. 10.7 (b)). The main tool is the
 generalized Casimir operator `Ω` (`KacMoody/Casimir.lean`), which commutes with `𝔤(A)` and acts on
 a vector of weight `λ` killed by all the `eᵢ` by `c(λ) = (λ + 2ρ | λ)`; for dominant integral
 `Λ, μ` with `Λ - μ ∈ Q₊ \ {0}` one has `c(Λ) ≠ c(μ)` (`dualBilinForm_add_two_rho_ne`).
@@ -41,12 +41,12 @@ a vector of weight `λ` killed by all the `eᵢ` by `c(λ) = (λ + 2ρ | λ)`; f
   `𝒪` is the sum of its irreducible submodules, and every submodule has a complement.
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.exists_sSupIndep_irreducibleModule`,
   `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.exists_isInternal_irreducibleModule`:
-  **complete reducibility** ([Kac] Thm. 10.7 (b) (check)): an integrable module in `𝒪` is the
+  **complete reducibility** ([Kac] Thm. 10.7 (b)): an integrable module in `𝒪` is the
   internal direct sum of submodules isomorphic to modules `L(Λ)`, `Λ` dominant integral.
 
 ## Proof
 
-The argument is the standard one ([Kac] §10.7 (check); [Car] Ch. 19 (check)); we reconstructed it
+The argument is the standard one ([Kac] §10.7; cf. [Car] §19.2 for `Ω`); we reconstructed it
 and wrote it out as follows. Call `v ∈ V_μ` *primitive* if `eᵢ v = 0` for all `i`, and write
 `c(μ) = (μ + 2ρ | μ)`.
 
@@ -58,7 +58,7 @@ and wrote it out as follows. Call `v ∈ V_μ` *primitive* if `eᵢ v = 0` for a
    contradicting `μ - λ ∈ Q₊ \ {0}`.
 2. *Primitive vectors generate irreducible submodules.* Let `w ≠ 0` be primitive of weight `Λ`.
    Then `U = U(𝔤) w` is an integrable quotient of `M(Λ)`, hence irreducible
-   (`IsStandardForm.eq_bot_or_eq_top_of_isIntegrable`, [Kac] Cor. 10.4 (check)).
+   (`IsStandardForm.eq_bot_or_eq_top_of_isIntegrable`, [Kac] Cor. 10.4).
 3. *Irreducible submodules.* An irreducible submodule `N ⊆ V` contains a nonzero primitive vector
    `w` of some dominant integral weight `Λ`, so `N = U(𝔤) w` is the image of `φ : M(Λ) → V`. The
    kernel of `φ` is proper, hence contained in the maximal submodule `M'(Λ)`; and `φ(M'(Λ))` is a
@@ -140,7 +140,7 @@ namespace IsCategoryO
 
 include hA in
 /-- An irreducible submodule of an integrable module in `𝒪` is isomorphic to `L(Λ)` for some
-dominant integral weight `Λ` ([Kac] §10.7 (check)). -/
+dominant integral weight `Λ` ([Kac] Prop. 9.3 (b), Lemma 10.1). -/
 theorem exists_equiv_irreducibleModule_of_isAtom (hV : IsCategoryO P V) (hI : IsIntegrable P V)
     {N : LieSubmodule K P.KacMoodyAlgebra V} (hN : IsAtom N) :
     ∃ Λ, P.IsDominantIntegral Λ ∧
@@ -221,7 +221,7 @@ theorem map_casimir {W : Type*} [AddCommGroup W] [Module K W] [LieRingModule P.K
   rw [this]
   exact finsum_mem_congr rfl fun μ _ ↦ hterm μ
 
-/-- The Casimir operator as a morphism of `𝔤(A)`-modules ([Kac] Thm. 2.6 (check)). -/
+/-- The Casimir operator as a morphism of `𝔤(A)`-modules ([Kac] Thm. 2.6). -/
 def casimirHom (hV : IsPosFinite P V) : V →ₗ⁅K,P.KacMoodyAlgebra⁆ V :=
   { hB.casimir V hV with map_lie' := fun {x v} ↦ hB.casimir_lie hA hV x v }
 
@@ -230,7 +230,7 @@ def casimirHom (hV : IsPosFinite P V) : V →ₗ⁅K,P.KacMoodyAlgebra⁆ V :=
   rfl
 
 /-- If `v ∈ V_μ` and `eᵢ v ∈ N` for all `i`, then `Ω v - (μ + 2ρ | μ) v ∈ N`: the Casimir
-operator acts by `(μ + 2ρ | μ)` on the image of `v` in `V / N` ([Kac] Cor. 2.6 (check)). -/
+operator acts by `(μ + 2ρ | μ)` on the image of `v` in `V / N` ([Kac] Cor. 2.6). -/
 theorem casimir_sub_smul_mem (hV : IsCategoryO P V) (N : LieSubmodule K P.KacMoodyAlgebra V)
     {μ : Dual K H} {v : V} (hv : v ∈ weightSpace P V μ) (he : ∀ i, ⁅e P i, v⁆ ∈ N) :
     hB.casimir V hV.isPosFinite v - P.dualBilinForm S (μ + 2 • P.rho) μ • v ∈ N := by
@@ -394,7 +394,7 @@ variable (hS : A.IsSymmetrizable) (hV : IsCategoryO P V) (hI : IsIntegrable P V)
 include hS hA hV hI
 
 /-- An integrable module in `𝒪` is the sum of its irreducible submodules, for `A` symmetrizable
-([Kac] Thm. 10.7 (check)). -/
+([Kac] Thm. 10.7). -/
 theorem sSup_isAtom_eq_top : sSup {N : LieSubmodule K P.KacMoodyAlgebra V | IsAtom N} = ⊤ := by
   have hB := isStandardForm_invForm P (isSymmetrizable_iff_nonempty_symmetrization.mp hS).some
   rw [eq_top_iff, ← hB.lieSpan_primitive_eq_top hA hV hI, LieSubmodule.lieSpan_le]
@@ -406,11 +406,11 @@ theorem sSup_isAtom_eq_top : sSup {N : LieSubmodule K P.KacMoodyAlgebra V | IsAt
       (LieSubmodule.subset_lieSpan rfl)
 
 /-- Every submodule of an integrable module in `𝒪` has a complement, for `A` symmetrizable
-([Kac] Thm. 10.7 (check)). -/
+([Kac] Thm. 10.7). -/
 theorem complementedLattice : ComplementedLattice (LieSubmodule K P.KacMoodyAlgebra V) :=
   complementedLattice_of_sSup_atoms_eq_top (sSup_isAtom_eq_top hA hS hV hI)
 
-/-- **Complete reducibility** ([Kac] Thm. 10.7 (b) (check)): for `A` a symmetrizable generalized
+/-- **Complete reducibility** ([Kac] Thm. 10.7 (b)): for `A` a symmetrizable generalized
 Cartan matrix and `K` of characteristic zero, an integrable `𝔤(A)`-module in `𝒪` is the direct sum
 of an independent family of submodules, each isomorphic to `L(Λ)` for some dominant integral
 `Λ`. -/
@@ -423,7 +423,7 @@ theorem exists_sSupIndep_irreducibleModule :
   exact ⟨s, hs, htop, fun N hN ↦ exists_equiv_irreducibleModule_of_isAtom hA hV hI (hatom hN)⟩
 
 open scoped Classical in
-/-- **Complete reducibility** ([Kac] Thm. 10.7 (b) (check)): for `A` a symmetrizable generalized
+/-- **Complete reducibility** ([Kac] Thm. 10.7 (b)): for `A` a symmetrizable generalized
 Cartan matrix and `K` of characteristic zero, an integrable `𝔤(A)`-module `V` in `𝒪` is the
 internal direct sum of a family of submodules, each isomorphic to `L(Λ)` for some dominant
 integral `Λ`. -/

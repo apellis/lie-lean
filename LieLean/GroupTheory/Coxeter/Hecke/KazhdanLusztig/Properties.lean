@@ -16,11 +16,11 @@ of `LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig` (normalization of [KL]: `q
 ## Main results
 
 * `IwahoriHeckeAlgebra.T_simple_mul_klBasis`: if `sw < w`, then `T_s C'_w = q C'_w`
-  ([KL] (2.3.a) (check)).
+  ([KL] (2.3.c), stated there for the basis `C_w`).
 * `IwahoriHeckeAlgebra.klPoly_simple_mul_left`: if `sw < w`, then `P_{sx,w} = P_{x,w}` for all
-  `x` ([KL] (2.3.g) (check)).
+  `x` ([KL] (2.3.g)).
 * `IwahoriHeckeAlgebra.coeff_zero_klPoly`: `P_{y,w}(0) = 1` for `y ≤ w`;
-  in particular `P_{1,w}(0) = 1` (`coeff_zero_klPoly_one_left`) ([KL] §2 (check)).
+  in particular `P_{1,w}(0) = 1` (`coeff_zero_klPoly_one_left`) ([KL] Lemma 2.6(i)).
 * `IwahoriHeckeAlgebra.klMu_eq_one`: `μ(y, w) = 1` if `y ≤ w` and `ℓ(w) = ℓ(y) + 1`.
 * `IwahoriHeckeAlgebra.klPoly_eq_one_of_length_le_two`: `P_{y,w} = 1` for `y ≤ w` if
   `ℓ(w) ≤ 2`.
@@ -67,7 +67,7 @@ theorem length_lt_of_mem_descentsBelow {i : B} {v z : W} (hv : ℓ v < ℓ (s i 
   · omega
   · exact h
 
-/-- If `sw < w`, then `T_s C'_w = q C'_w` ([KL] (2.3.a) (check)). -/
+/-- If `sw < w`, then `T_s C'_w = q C'_w` ([KL] (2.3.c), there for `C_w`). -/
 theorem T_simple_mul_klBasis {i : B} {w : W} (hw : ℓ (s i * w) < ℓ w) :
     T cs _ (s i) * klBasis cs w =
       (LaurentPolynomial.T 2 : LaurentPolynomial ℤ) • klBasis cs w := by
@@ -87,7 +87,7 @@ theorem T_simple_mul_klBasis {i : B} {w : W} (hw : ℓ (s i * w) < ℓ w) :
   have := length_lt_of_mem_descentsBelow hv hz
   exact ih (ℓ z) (by omega) (mem_descentsBelow.mp hz).2 rfl
 
-/-- **Invariance of Kazhdan–Lusztig polynomials** ([KL] (2.3.g) (check)): if `sw < w`, then
+/-- **Invariance of Kazhdan–Lusztig polynomials** ([KL] (2.3.g)): if `sw < w`, then
 `P_{sx,w} = P_{x,w}` for all `x`. -/
 theorem klPoly_simple_mul_left {i : B} {w : W} (hw : ℓ (s i * w) < ℓ w) (x : W) :
     klPoly cs (s i * x) w = klPoly cs x w := by
@@ -109,7 +109,7 @@ theorem klPoly_simple_mul_left {i : B} {w : W} (hw : ℓ (s i * w) < ℓ w) (x :
     rw [CoxeterSystem.simple_mul_simple_cancel_left] at this
     exact this.symm
 
-/-- **The constant term of Kazhdan–Lusztig polynomials** ([KL] §2 (check)): `P_{y,w}(0) = 1` if
+/-- **The constant term of Kazhdan–Lusztig polynomials** ([KL] Lemma 2.6(i)): `P_{y,w}(0) = 1` if
 `y ≤ w` (recall that `P_{y,w} = 0` otherwise, `klPoly_eq_zero_of_not_bruhatLE`). -/
 theorem coeff_zero_klPoly {y w : W} (hyw : cs.BruhatLE y w) : (klPoly cs y w).coeff 0 = 1 := by
   classical
@@ -138,7 +138,7 @@ theorem coeff_zero_klPoly {y w : W} (hyw : cs.BruhatLE y w) : (klPoly cs y w).co
     rw [mul_assoc, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow_mul', ite_eq_right (by omega),
       mul_zero]
 
-/-- `P_{1,w}(0) = 1` ([KL] §2 (check)). -/
+/-- `P_{1,w}(0) = 1` ([KL] Lemma 2.6(i)). -/
 theorem coeff_zero_klPoly_one_left (w : W) : (klPoly cs 1 w).coeff 0 = 1 :=
   coeff_zero_klPoly cs (cs.one_bruhatLE w)
 

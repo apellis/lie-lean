@@ -38,7 +38,9 @@ affine hyperplane.
 
 ## References
 
-Elementary commutative algebra, used for the Kac–Kazhdan determinant formula ([KK] §3 (check)).
+Elementary commutative algebra, used for the Kac–Kazhdan determinant formula ([KK];
+cf. Steps 3–4 of the proof of Thm. 2.3.4 in S. Kumar, *Kac–Moody groups, their flag varieties
+and representation theory*).
 -/
 
 open Polynomial

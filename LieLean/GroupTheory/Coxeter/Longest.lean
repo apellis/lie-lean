@@ -104,7 +104,7 @@ variable [Finite W]
 private theorem exists_max_length : ∃ w₀ : W, ∀ w, ℓ w ≤ ℓ w₀ :=
   Finite.exists_max cs.length
 
-/-- The **longest element** `w₀` of a finite Coxeter group ([HumC] §1.8, §5.6 (check),
+/-- The **longest element** `w₀` of a finite Coxeter group ([HumC] §1.8, §5.6,
 [BB] §2.3). -/
 noncomputable def longestElement : W := (cs.exists_max_length).choose
 
@@ -120,7 +120,7 @@ theorem isRightInversion_longestElement {t : W} (ht : cs.IsReflection t) :
   have := ht.length_mul_left_ne cs.longestElement
   omega
 
-/-- `ℓ(w₀ u) = ℓ(w₀) - ℓ(u)` ([BB] Prop. 2.3.2 (check), [HumC] §1.8 (check)). -/
+/-- `ℓ(w₀ u) = ℓ(w₀) - ℓ(u)` ([BB] Cor. 2.3.3(i), [HumC] §1.8). -/
 theorem length_longestElement_mul (u : W) :
     ℓ (cs.longestElement * u) = ℓ cs.longestElement - ℓ u :=
   length_mul_of_forall_isRightInversion (fun _ ht ↦ cs.isRightInversion_longestElement ht) u
@@ -156,7 +156,7 @@ theorem isLeftDescent_longestElement (i : B) : cs.IsLeftDescent cs.longestElemen
   exact cs.isRightDescent_longestElement i
 
 /-- **Uniqueness of `w₀`**: `w₀` is the only element having every simple reflection as a right
-descent ([BB] Prop. 2.3.1 (check)). -/
+descent ([BB] Prop. 2.3.1(ii)). -/
 theorem eq_longestElement_iff_forall_isRightDescent {w : W} :
     w = cs.longestElement ↔ ∀ i, cs.IsRightDescent w i := by
   refine ⟨fun h i ↦ h ▸ cs.isRightDescent_longestElement i, fun h ↦ ?_⟩
@@ -185,14 +185,14 @@ theorem eq_longestElement_of_forall_length_le {w : W} (h : ∀ u, ℓ u ≤ ℓ 
   · omega
   · rw [isRightDescent_iff]; exact h'
 
-/-- `ℓ(w₀)` is the number of reflections ([BB] Prop. 2.3.2 (check)). -/
+/-- `ℓ(w₀)` is the number of reflections ([BB] Prop. 2.3.2(iv)). -/
 theorem length_longestElement_eq_ncard :
     ℓ cs.longestElement = {t | cs.IsReflection t}.ncard := by
   rw [← ncard_setOf_isRightInversion]
   congr 1
   exact Set.ext fun t ↦ ⟨fun h ↦ h.1, cs.isRightInversion_longestElement⟩
 
-/-- Every element is below `w₀` in the Bruhat order ([BB] Prop. 2.3.1 (check)). -/
+/-- Every element is below `w₀` in the Bruhat order ([BB] Prop. 2.3.1(i)). -/
 theorem bruhatLE_longestElement (w : W) : cs.BruhatLE w cs.longestElement := by
   obtain ⟨ω, hω, rfl⟩ := cs.exists_isReduced w
   obtain ⟨ω', hω', he⟩ := cs.exists_isReduced ((π ω)⁻¹ * cs.longestElement)
@@ -206,7 +206,7 @@ theorem bruhatLE_longestElement (w : W) : cs.BruhatLE w cs.longestElement := by
   have := hred.bruhatLE_of_sublist (sublist_append_left ω ω')
   rwa [wordProd_append, ← he, mul_inv_cancel_left] at this
 
-/-- Conjugation by `w₀` permutes the simple reflections ([BB] §2.3 (check)). -/
+/-- Conjugation by `w₀` permutes the simple reflections ([BB] §2.3). -/
 theorem exists_longestElement_mul_simple_mul_eq (i : B) :
     ∃ j, cs.longestElement * s i * cs.longestElement = s j := by
   rw [← length_eq_one_iff, mul_assoc, length_longestElement_mul]
@@ -226,7 +226,7 @@ theorem BruhatStep.longestElement_mul {u w : W} (h : cs.BruhatStep u w) :
     omega
 
 /-- `u ≤ w ↔ w₀ w ≤ w₀ u`: left multiplication by `w₀` is an antiautomorphism of the Bruhat order
-([BB] Prop. 2.3.4 (check)). -/
+([BB] Prop. 2.3.4(i)). -/
 theorem longestElement_mul_bruhatLE_longestElement_mul_iff {u w : W} :
     cs.BruhatLE (cs.longestElement * w) (cs.longestElement * u) ↔ cs.BruhatLE u w := by
   have key : ∀ {u w : W}, cs.BruhatLE u w →
@@ -239,7 +239,7 @@ theorem longestElement_mul_bruhatLE_longestElement_mul_iff {u w : W} :
   have := key h
   rwa [← mul_assoc, ← mul_assoc, longestElement_mul_self, one_mul, one_mul] at this
 
-/-- `u ≤ w ↔ w w₀ ≤ u w₀` ([BB] Prop. 2.3.4 (check)). -/
+/-- `u ≤ w ↔ w w₀ ≤ u w₀` ([BB] Prop. 2.3.4(i)). -/
 theorem mul_longestElement_bruhatLE_mul_longestElement_iff {u w : W} :
     cs.BruhatLE (w * cs.longestElement) (u * cs.longestElement) ↔ cs.BruhatLE u w := by
   rw [← bruhatLE_inv_iff, mul_inv_rev, mul_inv_rev, inv_longestElement,

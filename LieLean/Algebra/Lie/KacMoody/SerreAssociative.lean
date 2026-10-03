@@ -63,8 +63,8 @@ enveloping algebra. It is standard; the argument is written out here in full.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.2–1.3, §9.11
-  (check).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.2–1.3,
+  §9.11.
 -/
 
 open Finset LieAlgebra

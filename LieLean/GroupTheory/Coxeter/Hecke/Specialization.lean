@@ -19,14 +19,17 @@ Iwahori–Hecke algebra is the group algebra: `𝓗_1(W) ≃ R[W]`, `T_w ↦ w`
 ## Main definitions
 
 * `IwahoriHeckeAlgebra.map`: change of rings.
-* `IwahoriHeckeAlgebra.equivMonoidAlgebra`: `𝓗_1(W) ≃ₐ[R] R[W]` ([HumC] §7.1 (check)).
+* `IwahoriHeckeAlgebra.equivMonoidAlgebra`: `𝓗_1(W) ≃ₐ[R] R[W]` ([GP] Example 4.4.2).
 * `IwahoriHeckeAlgebra.specializeOne`: `𝓗_{v²}(W) → R[W]` over `R[v, v⁻¹]`, `v ↦ 1`, `T_w ↦ w`.
 
 ## References
 
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §7.1.
+* [GP] M. Geck, G. Pfeiffer, *Characters of finite Coxeter groups and Iwahori–Hecke algebras*,
+  LMS Monographs 21, OUP 2000, §4.4.
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184.
+* [GP] M. Geck, G. Pfeiffer, *Characters of finite Coxeter groups and Iwahori–Hecke algebras*,
+  LMS Monographs 21, OUP 2000.
 -/
 
 open Finsupp
@@ -119,7 +122,7 @@ theorem lift_THom_ofCoeff (x : W →₀ R) :
     rfl
 
 /-- The specialization `q = 1`: the Iwahori–Hecke algebra `𝓗_1(W)` is the group algebra
-`R[W]`, with `T_w ↦ w` ([HumC] §7.1 (check)). -/
+`R[W]`, with `T_w ↦ w` ([GP] Example 4.4.2). -/
 noncomputable def equivMonoidAlgebra : IwahoriHeckeAlgebra cs (1 : R) ≃ₐ[R] MonoidAlgebra R W :=
   (AlgEquiv.ofBijective (MonoidAlgebra.lift R (IwahoriHeckeAlgebra cs (1 : R)) W (THom cs)) <| by
     have h : ∀ x, MonoidAlgebra.lift R (IwahoriHeckeAlgebra cs (1 : R)) W (THom cs) x =
@@ -147,7 +150,7 @@ theorem eval₂_one_T_two : eval₂ (RingHom.id R) 1 (LaurentPolynomial.T 2 : R[
 
 /-- The specialization `v = 1` of the generic Iwahori–Hecke algebra `𝓗_{v²}(W)` over
 `R[v, v⁻¹]`: the ring homomorphism to the group algebra `R[W]` with `T_w ↦ w` and `v ↦ 1`
-([KL] §1 (check)). -/
+([GP] Remark 8.1.5). -/
 noncomputable def specializeOne :
     IwahoriHeckeAlgebra cs (LaurentPolynomial.T 2 : R[T;T⁻¹]) →+* MonoidAlgebra R W :=
   (equivMonoidAlgebra cs).toRingEquiv.toRingHom.comp

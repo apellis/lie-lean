@@ -35,7 +35,7 @@ transfers verbatim to the general automorphisms. The rank-two normal-ordering id
 ## References
 
 Reconstructed; see the files cited above. G. Lusztig, *Introduction to quantum groups*,
-39.4 (check), for the braid relations.
+39.4, for the braid relations.
 -/
 
 noncomputable section

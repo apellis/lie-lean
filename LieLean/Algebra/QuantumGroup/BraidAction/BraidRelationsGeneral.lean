@@ -48,7 +48,7 @@ A third node meeting both ends of a simple edge (a triangle) needs the rank-thre
 
 ## References
 
-Reconstructed. G. Lusztig, *Introduction to quantum groups*, 39.4 (check), for the statement.
+Reconstructed. G. Lusztig, *Introduction to quantum groups*, 39.4, for the statement.
 -/
 
 noncomputable section

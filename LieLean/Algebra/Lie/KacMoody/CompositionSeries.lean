@@ -11,7 +11,7 @@ import LieLean.Algebra.Lie.KacMoody.Character
 
 Let `V` be a module over the Kac–Moody algebra `𝔤 = 𝔤(A)` in the category `𝒪`, and let
 `λ ∈ 𝔥*`. Modules in `𝒪` need not have finite composition series, but they have *local
-composition series* ([Kac] Lemma 9.6 (check)): a filtration by submodules
+composition series* ([Kac] Lemma 9.6): a filtration by submodules
 `0 = V₀ ⊆ V₁ ⊆ ⋯ ⊆ V_t = V` and a subset `J ⊆ {1, …, t}` such that `V_j / V_{j-1} ≅ L(λ_j)` with
 `λ_j ≥ λ` for `j ∈ J`, and `(V_j / V_{j-1})_μ = 0` for all `μ ≥ λ` when `j ∉ J`. Here `μ ≥ λ`
 means `μ - λ ∈ Q₊`, i.e. `λ ∈ cone P μ`. The number of `j ∈ J` with `λ_j = μ` is the
@@ -35,18 +35,19 @@ module `LieSubmodule.Subquotient V_{j-1} V_j`.
 ## Main results
 
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.exists_isLocalCompositionSeries`: local
-  composition series exist ([Kac] Lemma 9.6 (check)).
+  composition series exist ([Kac] Lemma 9.6).
 * `Matrix.Realization.KacMoodyAlgebra.exists_subquotient_equiv_irreducibleModule`: a vector of
   weight `μ` that is primitive modulo a submodule `N₁` gives a subquotient `M₂ / M₁ ≅ L(μ)` with
   `N₁ ⊆ M₁`.
 
 The multiplicities `[V : L(μ)]` are in `KacMoody/CompositionSeries/Multiplicity.lean`, and
-[Kac] Prop. 9.8 (check) in `KacMoody/CompositionSeries/Casimir.lean` (character form in
+the Casimir step of the proof of [Kac] Prop. 9.8 in `KacMoody/CompositionSeries/Casimir.lean`
+(Prop. 9.8 itself, a character identity, in
 `KacMoody/CompositionSeries/Character.lean`).
 
 ## Proofs
 
-*Existence* ([Kac] Lemma 9.6 (check); written out by us). We prove more generally that for
+*Existence* ([Kac] Lemma 9.6; written out by us). We prove more generally that for
 submodules `N ⊆ M` of `V` there is a local composition series from `N` to `M`, by induction on
 `a(M) - a(N)`, where `a(M) = ∑_{μ ≥ λ} dim (M ∩ V_μ)` (a finite sum, since only finitely many
 weights of `V` are `≥ λ`); this is Kac's induction on `a(λ, M/N) = ∑_{μ ≥ λ} dim (M/N)_μ`. If
@@ -59,7 +60,7 @@ primitive vector, and there is a morphism `ψ : M(μ) → V/N` with `ψ(v_μ) = 
 `U/U' ≅ R/R' ≅ L(μ)`, and `w ∈ U \ U'`, so `a(U') < a(U)`; we conclude by applying the induction
 hypothesis to `N ⊆ U'` and to `U ⊆ M`.
 
-*Independence of the multiplicities* ([Kac] §9.6 (check); written out by us). Along a local
+*Independence of the multiplicities* ([Kac] §9.6; written out by us). Along a local
 composition series for `λ` from `0` to `V`, `dim V_ξ = ∑_{j ∈ J} dim L(λ_j)_ξ` for every `ξ ≥ λ`.
 For `μ ≥ λ`, restricting to `ξ ≥ μ` only the `λ_j ≥ μ` contribute, and the multiset of these
 `λ_j` is determined by the numbers `dim V_ξ`, `ξ ≥ μ`: if two multisets `s, s'` of weights
@@ -67,8 +68,8 @@ For `μ ≥ λ`, restricting to `ξ ≥ μ` only the `λ_j ≥ μ` contribute, a
 `λ'' ∈ s + s'` unless `λ'' = λ'`, and `dim L(λ')_{λ'} = 1`, so `λ'` occurs equally often in `s`
 and `s'`, and we remove it from both and induct.
 
-*[Kac] Prop. 9.8 (check)*. If `V` is a quotient of `M(Λ)`, the Casimir operator `Ω` acts on `V`,
-hence on `V/N` for every submodule `N`, by `(Λ + 2ρ | Λ)`
+*[Kac] §9.8, proof of Prop. 9.8*. If `V` is a quotient of `M(Λ)`, the Casimir operator `Ω`
+acts on `V`, hence on `V/N` for every submodule `N`, by `(Λ + 2ρ | Λ)`
 (`IsStandardForm.casimir_eq_smul_of_surjective`). A primitive vector `w` of weight `μ` modulo
 `N` gives a nonzero primitive vector of `V/N`, on which `Ω` acts by `(μ + 2ρ | μ)`
 (`IsStandardForm.casimir_apply_of_lie_e_eq_zero`); and `μ ≤ Λ` since `μ` is a weight of the
@@ -138,7 +139,7 @@ lemma mem_cone_trans {μ₁ μ₂ μ₃ : Dual K H} (h₁₂ : μ₁ ∈ cone P 
 
 variable (P) in
 /-- The condition on the factor `N₂ / N₁` of a local composition series for `ν ∈ 𝔥*`
-([Kac] Lemma 9.6 (check)): for `o = some μ`, `μ ≥ ν` and `N₂ / N₁ ≅ L(μ)`; for `o = none`, the
+([Kac] Lemma 9.6): for `o = some μ`, `μ ≥ ν` and `N₂ / N₁ ≅ L(μ)`; for `o = none`, the
 weight spaces `(N₂ / N₁)_μ` vanish for all `μ ≥ ν`. -/
 def IsLocalFactor (ν : Dual K H) (N₁ N₂ : LieSubmodule K P.KacMoodyAlgebra V) :
     Option (Dual K H) → Prop
@@ -148,7 +149,7 @@ def IsLocalFactor (ν : Dual K H) (N₁ N₂ : LieSubmodule K P.KacMoodyAlgebra 
 
 variable (P) in
 /-- `IsLocalCompositionSeries P ν N l M` says that the list `l = [(V₁, o₁), …, (V_t, o_t)]`
-describes a *local composition series* for `ν` from `N` to `M` ([Kac] Lemma 9.6 (check)): the
+describes a *local composition series* for `ν` from `N` to `M` ([Kac] Lemma 9.6): the
 filtration `N = V₀ ⊆ V₁ ⊆ ⋯ ⊆ V_t = M` has factors `V_j / V_{j-1}` satisfying
 `IsLocalFactor P ν V_{j-1} V_j o_j`, i.e. `V_j / V_{j-1} ≅ L(λ_j)` with `λ_j ≥ ν` if
 `o_j = some λ_j` (the indices `j ∈ J` of [Kac]), and `(V_j / V_{j-1})_μ = 0` for all `μ ≥ ν` if
@@ -328,7 +329,7 @@ namespace IsCategoryO
 variable (hV : IsCategoryO P V) (ν : Dual K H)
 
 /-- The number `a(ν, N) = ∑_{μ ≥ ν} dim (N ∩ V_μ)` for a submodule `N` of a module `V` in `𝒪`,
-used in the proof of [Kac] Lemma 9.6 (check). -/
+used in the proof of [Kac] Lemma 9.6. -/
 def finrankAbove (N : LieSubmodule K P.KacMoodyAlgebra V) : ℕ :=
   ∑ μ ∈ (hV.finite_setOf_mem_cone ν).toFinset, finrank K ↥(N.toSubmodule ⊓ weightSpace P V μ)
 
@@ -366,7 +367,7 @@ end IsCategoryO
 
 /-- Let `N₁ ≤ N₂` be submodules of `V` and let `w ∈ N₂ ∩ V_μ` be a primitive vector modulo `N₁`:
 `w ∉ N₁` and `eᵢ w ∈ N₁` for all `i`. Then there are submodules `N₁ ≤ M₁ ≤ M₂ ≤ N₂` with
-`w ∈ M₂ \ M₁` and `M₂ / M₁ ≅ L(μ)` (used in [Kac] Lemma 9.6 (check)). -/
+`w ∈ M₂ \ M₁` and `M₂ / M₁ ≅ L(μ)` (used in [Kac] Lemma 9.6). -/
 theorem exists_subquotient_equiv_irreducibleModule {N₁ N₂ : LieSubmodule K P.KacMoodyAlgebra V}
     (hN : N₁ ≤ N₂) {μ : Dual K H} {w : V} (hw : w ∈ weightSpace P V μ) (hw₂ : w ∈ N₂)
     (hw₁ : w ∉ N₁) (he : ∀ i, ⁅e P i, w⁆ ∈ N₁) :
@@ -447,7 +448,7 @@ variable (hV : IsCategoryO P V) {ν : Dual K H}
 include hV
 
 /-- If `N₂ ∩ V_μ ⊄ N₁` for some `μ ≥ ν`, there is a factor `L(μ')`, `μ' ≥ ν`, between `N₁` and
-`N₂` (the inductive step in [Kac] Lemma 9.6 (check)). -/
+`N₂` (the inductive step in [Kac] Lemma 9.6). -/
 theorem exists_isLocalFactor_some {N₁ N₂ : LieSubmodule K P.KacMoodyAlgebra V} (hN : N₁ ≤ N₂)
     {μ : Dual K H} (hνμ : ν ∈ cone P μ)
     (hμ : ¬ N₂.toSubmodule ⊓ weightSpace P V μ ≤ N₁.toSubmodule) :
@@ -512,7 +513,7 @@ theorem exists_isLocalCompositionSeries_of_le (ν : Dual K H)
   exact ⟨l₁ ++ (M₂, some μ') :: l₂, hl₁.append (IsLocalCompositionSeries.cons_iff.mpr
     ⟨h₁₂, hf, hl₂⟩)⟩
 
-/-- **[Kac] Lemma 9.6 (check)**: a module `V` in the category `𝒪` has a local composition series
+/-- **[Kac] Lemma 9.6**: a module `V` in the category `𝒪` has a local composition series
 for every `ν ∈ 𝔥*`: a filtration `0 = V₀ ⊆ V₁ ⊆ ⋯ ⊆ V_t = V` and a subset `J ⊆ {1, …, t}` such
 that `V_j / V_{j-1} ≅ L(λ_j)` with `λ_j ≥ ν` for `j ∈ J`, and `(V_j / V_{j-1})_μ = 0` for all
 `μ ≥ ν` if `j ∉ J`. -/

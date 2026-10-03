@@ -33,8 +33,8 @@ of unity.
 
 ## References
 
-* J. C. Jantzen, *Lectures on quantum groups*, GSM 6, §§4.7, 8.18, 8.21 (check).
-* G. Lusztig, *Introduction to quantum groups*, §37.1.2 (check).
+* J. C. Jantzen, *Lectures on quantum groups*, GSM 6, §§4.7, 8.18, 8.21.
+* G. Lusztig, *Introduction to quantum groups*, §§37.1.2–37.1.3.
 
 The proofs here are reconstructed from the generator relations.
 -/
@@ -47,7 +47,7 @@ variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) (v : k)
 
 /-- The character-`χ` weight space for conjugation by the torus; equivalently,
-`K_μ x = v^{χ(μ)} x K_μ`. See Jantzen §4.7 (check); reconstructed from the relations. -/
+`K_μ x = v^{χ(μ)} x K_μ`. See Jantzen §4.7; reconstructed from the relations. -/
 def adWeightSpace (χ : Y →+ ℤ) : Submodule k (QuantumGroup R v) where
   carrier := {x | ∀ μ, K R v μ * x = v ^ χ μ • (x * K R v μ)}
   add_mem' {a b} ha hb μ := by rw [mul_add, add_mul, ha μ, hb μ, smul_add]
@@ -67,7 +67,7 @@ lemma conj_eq_of_mem_adWeightSpace {χ : Y →+ ℤ} {x : QuantumGroup R v}
   rw [hx μ, smul_mul_assoc, mul_assoc, K_mul_K_neg, mul_one]
 
 /-- A braid generator sends weight `χ` to `sᵢχ = χ ∘ sᵢ`.
-See Jantzen §8.18 (check); reconstructed using only the torus generator formula. -/
+See Jantzen §8.18; reconstructed using only the torus generator formula. -/
 theorem HasBraidGeneratorImages.map_mem_adWeightSpace {i : I}
     {T : QuantumGroup R v →ₐ[k] QuantumGroup R v} (HT : HasBraidGeneratorImages i T)
     {χ : Y →+ ℤ} {x : QuantumGroup R v} (hx : x ∈ adWeightSpace R v χ) :
@@ -118,7 +118,7 @@ theorem word_braid_mem_adWeightSpace
       (hT i).map_mem_adWeightSpace ih
 
 /-- The weight of a root vector along any word is its prefix-reflected simple root.
-See Jantzen §§8.18, 8.21 (check); proof reconstructed by iteration. -/
+See Jantzen §§8.18, 8.21; proof reconstructed by iteration. -/
 theorem rootVector_mem_adWeightSpace
     (hT : ∀ i, HasBraidGeneratorImages i (T i).toAlgHom)
     (ω : List I) (n : ℕ) (hn : n < ω.length) :
@@ -141,7 +141,7 @@ theorem rootVector_mem_adWeightSpace_of_not_root (ω : List I) (n : ℕ)
 
 /-- **Root-vector conjugation formula** for the actual braid automorphisms:
 `K_μ E_β K_{-μ} = v^{β(μ)} E_β`, where `β = s_{i₁} ⋯ s_{iₙ}(α_{i_{n+1}})`.
-See Jantzen §§8.18, 8.21 (check); reconstructed from the generator relations. -/
+See Jantzen §§8.18, 8.21; reconstructed from the generator relations. -/
 theorem rootVector_conj_of_not_root (ω : List I) (n : ℕ) (hn : n < ω.length) (μ : Y) :
     K R v μ * CoxeterSystem.rootVector (braidEquivOfNotRoot R hv) (E R v) ω n hn *
         K R v (-μ) =
@@ -152,7 +152,7 @@ theorem rootVector_conj_of_not_root (ω : List I) (n : ℕ) (hn : n < ω.length)
 /-- **Finite-type reduced-word root vectors** lie in `U⁺` and have the prefix-reflected
 simple-root character. This combines the existing positivity theorem with the conjugation
 weight formula, not with an identification of root-lattice graded pieces.
-See Jantzen §§8.18, 8.21 (check); reconstructed from the two component results. -/
+See Jantzen §§8.18, 8.21; reconstructed from the two component results. -/
 theorem rootVector_mem_adjoin_and_adWeightSpace_of_isFiniteCartan [Fintype I]
     {W : Type*} [Group W] {cs : CoxeterSystem D.cartanMatrix.coxeterMatrix W}
     (hA : D.cartanMatrix.IsFiniteCartan) {ω : List I} (hω : cs.IsReduced ω)

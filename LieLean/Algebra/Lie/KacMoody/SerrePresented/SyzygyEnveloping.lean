@@ -53,7 +53,7 @@ weight spaces `U(𝔤̂)_{-γ}` with `ht γ ≥ ht β`, which meets `U(𝔤̂)_{
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.11 (check).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.11.
 * [GK] O. Gabber, V. G. Kac, *On defining relations of certain infinite-dimensional Lie
   algebras*, Bull. Amer. Math. Soc. (N.S.) **5** (1981), 185–189.
 -/

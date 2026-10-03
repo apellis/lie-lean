@@ -30,8 +30,8 @@ import Mathlib.GroupTheory.CosetCover
 ## References
 
 * Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*, GSM 94,
-  Theorem 1.10(b) (check).
-* Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §23.3 (check).
+  Theorem 1.10(b).
+* Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §23.3.
 The orbit separation uses the product over the group of a linear polynomial vanishing at one
 point and nowhere on the other orbit; the generic linear form exists because a vector space over
 an infinite field is not a finite union of proper subspaces. Reconstructed, not transcribed.
@@ -185,7 +185,7 @@ theorem mem_coreflectionInvariants_iff (hA : A.IsGeneralizedCartan) (f : Symmetr
 variable (hA : A.IsFiniteCartan)
 
 include hA in
-/-- **Central characters separate dot orbits** (Humphreys, GSM 94, Theorem 1.10(b) (check)).
+/-- **Central characters separate dot orbits** (Humphreys, GSM 94, Theorem 1.10(b)).
 In finite type over a characteristic-zero field, the full-centre characters of the Verma
 modules `M(Λ)` and `M(Λ')` agree iff `Λ' + ρ = w (Λ + ρ)` for some Weyl group element `w`. -/
 theorem VermaModule.centralCharacter_eq_iff (Λ Λ' : Dual K H) :

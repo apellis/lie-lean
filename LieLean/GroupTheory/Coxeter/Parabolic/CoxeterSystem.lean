@@ -275,7 +275,7 @@ theorem isReduced_map_val_iff {η : List J} :
   simpa using h1
 
 /-- **The standard parabolic subgroup `W_J` is a Coxeter group** with Coxeter matrix `M|_J` and
-simple reflections `sⱼ`, `j ∈ J` ([HumC] §5.5 Thm. (check), [BB] Prop. 2.4.1 (check)). -/
+simple reflections `sⱼ`, `j ∈ J` ([HumC] §5.5 Thm., [BB] Prop. 2.4.1(i)). -/
 noncomputable def parabolicCoxeterSystem :
     CoxeterSystem (M.restrict J) (cs.parabolicSubgroup J) :=
   ⟨(MulEquiv.subgroupCongr (cs.range_restrictHom J)).symm.trans
@@ -299,7 +299,7 @@ theorem coe_parabolicCoxeterSystem_wordProd (η : List J) :
   simp
 
 /-- The length function of `W_J` (as a Coxeter group) is the restriction of that of `W`
-([HumC] §5.5 (check)). -/
+([HumC] §5.5). -/
 theorem length_parabolicCoxeterSystem (w : cs.parabolicSubgroup J) :
     (cs.parabolicCoxeterSystem J).length w = ℓ (w : W) := by
   apply le_antisymm

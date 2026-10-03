@@ -33,7 +33,7 @@ which gives the centre-first Serre relation. The `F`-side is the same computatio
 ## References
 
 Reconstructed from the quotient presentation; this computation was not taken from a source
-(compare [Lus] §37.1 (check), [Jan] Ch. 8 (check)).
+(compare [Lus] §37.1, [Jan] Ch. 8).
 -/
 
 noncomputable section

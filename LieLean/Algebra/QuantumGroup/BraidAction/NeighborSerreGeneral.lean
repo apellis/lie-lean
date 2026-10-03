@@ -51,8 +51,8 @@ this is the condition of `NeighborSerreShort.lean`, and for `r = 1` it is `[s-1]
 ## References
 
 Reconstructed from the quotient presentation; this computation was not taken from a source
-(the statement that `Tᵢ` is an automorphism is [Lus] Thm. 37.1.2 (check), [Jan] Thm. 8.16
-(check), proved there differently).
+(the statement that `Tᵢ` is an automorphism is [Lus] Prop. 37.1.2, [Jan] Prop. 8.13,
+proved there differently).
 -/
 
 noncomputable section

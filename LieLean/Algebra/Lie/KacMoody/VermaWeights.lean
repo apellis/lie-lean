@@ -12,7 +12,7 @@ Let `M(Λ)` be the Verma module over the Kac–Moody algebra `𝔤(A)`. We show 
 by the vectors `f_{j₁} ⋯ f_{jₖ} v_Λ`; as `f_{j₁} ⋯ f_{jₖ} v_Λ` has weight
 `Λ - (α_{j₁} + ⋯ + α_{jₖ})`, this gives the weight space decomposition
 `M(Λ) = ⊕_{β ∈ Q₊} M(Λ)_{Λ - β}` with finite-dimensional weight spaces, and
-`M(Λ)_Λ = K v_Λ` ([Kac] §9.2 (check)).
+`M(Λ)_Λ = K v_Λ` ([Kac] §9.2).
 
 ## Main definitions
 
@@ -138,7 +138,7 @@ lemma lie_e_mem_fWordSpan (i : ι) :
     · exact lie_h_mem_fWordSpan P Λ _ _ (Submodule.subset_span ⟨w, rfl⟩)
     · rw [zero_lie]; exact zero_mem _
 
-/-- `M(Λ)` is spanned by the vectors `f_{j₁} ⋯ f_{jₖ} v_Λ` ([Kac] §9.2 (check)). -/
+/-- `M(Λ)` is spanned by the vectors `f_{j₁} ⋯ f_{jₖ} v_Λ` ([Kac] §9.2). -/
 theorem span_fWord_smul_eq_top : fWordSpan P Λ = ⊤ := by
   let N : LieSubmodule K P.KacMoodyAlgebra (VermaModule P Λ) :=
     { fWordSpan P Λ with
@@ -164,7 +164,7 @@ theorem weightSpace_eq_wordSpan (μ : Dual K H) : weightSpace P Λ μ = wordSpan
 omit [Fintype ι] in
 lemma counts_nonneg (w : List ι) : 0 ≤ AuxLieAlgebra.counts w := fun _ ↦ Int.natCast_nonneg _
 
-/-- `M(Λ) = ⨆_{β ∈ Q₊} M(Λ)_{Λ - β}` ([Kac] §9.2 (check)). -/
+/-- `M(Λ) = ⨆_{β ∈ Q₊} M(Λ)_{Λ - β}` ([Kac] §9.2). -/
 theorem iSup_weightSpace_eq_top :
     ⨆ (k : ι → ℤ) (_ : 0 ≤ k), weightSpace P Λ (Λ - P.rootOf k) = ⊤ := by
   rw [eq_top_iff, ← span_fWord_smul_eq_top, Submodule.span_le]
@@ -173,7 +173,7 @@ theorem iSup_weightSpace_eq_top :
   rw [AuxLieAlgebra.wordWt_eq_rootOf] at this
   exact Submodule.mem_iSup_of_mem _ (Submodule.mem_iSup_of_mem (counts_nonneg w) this)
 
-/-- `M(Λ)_μ = 0` unless `μ ∈ Λ - Q₊` ([Kac] §9.2 (check)). -/
+/-- `M(Λ)_μ = 0` unless `μ ∈ Λ - Q₊` ([Kac] §9.2). -/
 theorem weightSpace_eq_bot {μ : Dual K H} (hμ : ∀ k : ι → ℤ, 0 ≤ k → μ ≠ Λ - P.rootOf k) :
     weightSpace P Λ μ = ⊥ := by
   rw [weightSpace_eq_wordSpan, wordSpan, Submodule.span_eq_bot]
@@ -201,7 +201,7 @@ lemma finite_setOf_wordWt_eq (ν : Dual K H) : {w : List ι | wt w = ν}.Finite 
     ext w
     simpa using fun h ↦ hν ⟨w, h⟩
 
-/-- The weight spaces of `M(Λ)` are finite-dimensional ([Kac] §9.2 (check)). -/
+/-- The weight spaces of `M(Λ)` are finite-dimensional ([Kac] §9.2). -/
 theorem finiteDimensional_weightSpace (μ : Dual K H) :
     FiniteDimensional K (weightSpace P Λ μ) := by
   have hfin : (wordSpan P Λ μ).FG := by
@@ -212,7 +212,7 @@ theorem finiteDimensional_weightSpace (μ : Dual K H) :
   have : FiniteDimensional K (wordSpan P Λ μ) := Module.Finite.iff_fg.mpr hfin
   exact Submodule.finiteDimensional_of_le (weightSpace_le_wordSpan P Λ μ)
 
-/-- The highest weight space of `M(Λ)` is `M(Λ)_Λ = K v_Λ` ([Kac] §9.2 (check)). -/
+/-- The highest weight space of `M(Λ)` is `M(Λ)_Λ = K v_Λ` ([Kac] §9.2). -/
 theorem weightSpace_self : weightSpace P Λ Λ = K ∙ hwv P Λ := by
   refine le_antisymm ?_ ((Submodule.span_singleton_le_iff_mem _ _).mpr
     (hwv_mem_weightSpace P Λ))

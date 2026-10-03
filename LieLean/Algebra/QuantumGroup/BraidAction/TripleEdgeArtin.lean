@@ -37,7 +37,8 @@ Faithfulness of the action is not asserted.
 
 ## References
 
-The braid group action is [Lus] 39.4.3 (check), [Jan] 8.18 (check); the construction here is
+The braid group action is [Lus] 39.4.3, [Jan] 8.15–8.17 (the order-six case is quoted
+there from [Lus] 39.2.2); the construction here is
 reconstructed from the repository's automorphisms and length-six relation.
 -/
 

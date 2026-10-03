@@ -36,9 +36,9 @@ The braid relations of lengths `3, 4, 6` on the rank-two crystals `B_J(μ)` (typ
 ## References
 
 * [Kas94] M. Kashiwara, *Crystal bases of modified quantized enveloping algebra*, Duke Math. J.
-  **73** (1994), 383–413, §7 (check).
+  **73** (1994), 383–413, §7.
 * [Lit95] P. Littelmann, *Paths and root operators in representation theory*, Ann. of Math. (2)
-  **142** (1995), 499–525, §8 (check).
+  **142** (1995), 499–525, §8.
 
 The arguments are reconstructed.
 -/
@@ -286,8 +286,8 @@ theorem isLiftable_pathReflectionPerm (hΛ : P.IsDominantIntegral Λ)
   · exact h i j hij hA0 hM
 
 variable (P) in
-/-- **Kashiwara's action of the Weyl group on `B(Λ)`** ([Kas94] §7 (check), [Lit95] §8
-(check)): given the braid relations of lengths `3, 4, 6` (`PathBraidRelations`), the reflections
+/-- **Kashiwara's action of the Weyl group on `B(Λ)`** ([Kas94] §7, [Lit95] §8
+Thm. 8.1): given the braid relations of lengths `3, 4, 6` (`PathBraidRelations`), the reflections
 `Sᵢ` extend to a homomorphism `W →* Perm B(Λ)` with `sᵢ ↦ Sᵢ`. -/
 noncomputable def pathWeylAction (hΛ : P.IsDominantIntegral Λ)
     (h : P.PathBraidRelations hA hΛ) :

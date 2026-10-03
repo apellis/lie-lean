@@ -23,10 +23,10 @@ and only if `w αᵢ < 0`.
 ## Main results
 
 * `Matrix.Realization.apply_root_mem_negWeights_iff`: `w αᵢ < 0 ↔ ℓ(w rᵢ) < ℓ(w)`
-  ([Kac] Lemma 3.11 (b) (check)).
+  ([Kac] Lemma 3.11 (a)).
 * `Matrix.Realization.apply_root_mem_posWeights_iff`: `w αᵢ > 0 ↔ ℓ(w rᵢ) > ℓ(w)`.
 * `Matrix.Realization.KacMoodyAlgebra.ncard_inversionSet`: `ℓ(w) = |Δ₊ ∩ w⁻¹ Δ₋|`, and this set
-  is finite ([Kac] Lemma 3.11 (a) (check)).
+  is finite ([Kac] Exercise 3.6).
 
 ## References
 
@@ -53,7 +53,7 @@ lemma neg_mem_negWeights_iff {μ : Dual K H} : -μ ∈ P.negWeights ↔ μ ∈ P
 namespace KacMoodyAlgebra
 
 /-- The inversion set `Δ₊ ∩ w⁻¹ Δ₋` of `w`: the positive roots `α` of `𝔤(A)` with `w α < 0`
-([Kac] §3.11 (check)). -/
+(cf. [Kac] Exercise 3.6). -/
 def inversionSet (w : Dual K H ≃ₗ[K] Dual K H) : Set (Dual K H) :=
   {μ | μ ∈ roots P ∧ μ ∈ P.posWeights ∧ w μ ∈ P.negWeights}
 
@@ -65,7 +65,7 @@ end KacMoodyAlgebra
 
 variable [CharZero K]
 
-/-- [Kac] Lemma 3.11 (b) (check): `w αᵢ < 0` if and only if `ℓ(w rᵢ) < ℓ(w)`. -/
+/-- [Kac] Lemma 3.11 (a): `w αᵢ < 0` if and only if `ℓ(w rᵢ) < ℓ(w)`. -/
 theorem apply_root_mem_negWeights_iff {w : P.weylGroup hA} {i : ι} :
     (w : Dual K H ≃ₗ[K] Dual K H) (P.root i) ∈ P.negWeights ↔
       (P.coxeterSystem hA).IsRightDescent w i := by
@@ -78,7 +78,7 @@ theorem apply_root_mem_negWeights_iff {w : P.weylGroup hA} {i : ι} :
     rw [hk0, map_zero, neg_zero, LinearEquiv.map_eq_zero_iff] at h
     exact P.linearIndependent_root.ne_zero i h
 
-/-- [Kac] Lemma 3.11 (b) (check): `w αᵢ > 0` if and only if `ℓ(w rᵢ) > ℓ(w)`. -/
+/-- [Kac] Lemma 3.11 (a): `w αᵢ > 0` if and only if `ℓ(w rᵢ) > ℓ(w)`. -/
 theorem apply_root_mem_posWeights_iff {w : P.weylGroup hA} {i : ι} :
     (w : Dual K H ≃ₗ[K] Dual K H) (P.root i) ∈ P.posWeights ↔
       ¬(P.coxeterSystem hA).IsRightDescent w i := by
@@ -102,8 +102,8 @@ lemma root_mem_inversionSet_mul_reflection_iff {w : Dual K H ≃ₗ[K] Dual K H}
   rw [root_mem_inversionSet_iff, LinearEquiv.mul_apply, reflection_root_self, map_neg,
     neg_mem_negWeights_iff]
 
-/-- `rᵢ` maps `Δ₊ ∩ w⁻¹ Δ₋ \ {αᵢ}` onto `Δ₊ ∩ (w rᵢ)⁻¹ Δ₋ \ {αᵢ}` ([Kac] proof of Lemma 3.11
-(check)); this uses that `rᵢ` permutes `Δ₊ \ {αᵢ}` ([Kac] Lemma 3.7). -/
+/-- `rᵢ` maps `Δ₊ ∩ w⁻¹ Δ₋ \ {αᵢ}` onto `Δ₊ ∩ (w rᵢ)⁻¹ Δ₋ \ {αᵢ}`; this uses that `rᵢ` permutes
+`Δ₊ \ {αᵢ}` ([Kac] Lemma 3.7). -/
 lemma image_reflection_inversionSet_diff (w : Dual K H ≃ₗ[K] Dual K H) (i : ι) :
     P.reflection hA i '' (inversionSet P w \ {P.root i}) =
       inversionSet P (w * P.reflection hA i) \ {P.root i} := by
@@ -124,7 +124,7 @@ lemma image_reflection_inversionSet_diff (w : Dual K H ≃ₗ[K] Dual K H) (i : 
     refine ⟨P.reflection hA i μ, ⟨⟨apply_mem_roots P hA hr h1,
       reflection_mem_posWeights P hA h1 h2 hμ, h3⟩, hneg μ h2⟩, reflection_reflection _ _ _ _⟩
 
-/-- **[Kac] Lemma 3.11 (a) (check)**: the length `ℓ(w)` of `w ∈ W` equals the number of positive
+/-- **[Kac] Exercise 3.6**: the length `ℓ(w)` of `w ∈ W` equals the number of positive
 roots `α ∈ Δ₊` of `𝔤(A)` with `w α < 0`; in particular this set is finite. -/
 theorem finite_inversionSet_and_ncard_eq (w : P.weylGroup hA) :
     (inversionSet P (w : Dual K H ≃ₗ[K] Dual K H)).Finite ∧
@@ -161,12 +161,12 @@ theorem finite_inversionSet_and_ncard_eq (w : P.weylGroup hA) :
       rw [(P.coxeterSystem hA).not_isRightDescent_iff] at hd
       omega
 
-/-- **[Kac] Lemma 3.11 (a) (check)**: `ℓ(w) = |Δ₊ ∩ w⁻¹ Δ₋|`. -/
+/-- **[Kac] Exercise 3.6**: `ℓ(w) = |Δ₊ ∩ w⁻¹ Δ₋|`. -/
 theorem ncard_inversionSet (w : P.weylGroup hA) :
     (inversionSet P (w : Dual K H ≃ₗ[K] Dual K H)).ncard = (P.coxeterSystem hA).length w :=
   (finite_inversionSet_and_ncard_eq P hA w).2
 
-/-- The inversion set `Δ₊ ∩ w⁻¹ Δ₋` of `w ∈ W` is finite ([Kac] Lemma 3.11 (check)). -/
+/-- The inversion set `Δ₊ ∩ w⁻¹ Δ₋` of `w ∈ W` is finite (cf. [Kac] Exercise 3.6). -/
 theorem finite_inversionSet (w : P.weylGroup hA) :
     (inversionSet P (w : Dual K H ≃ₗ[K] Dual K H)).Finite :=
   (finite_inversionSet_and_ncard_eq P hA w).1

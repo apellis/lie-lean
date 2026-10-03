@@ -15,7 +15,7 @@ Iwahori–Hecke algebra `𝓗_{q'}(W)` over `S` with parameter `q'` the image of
 (`IwahoriHeckeAlgebra.baseChangeEquiv`). In particular, if `q` maps to `1` in `S`, then
 `S ⊗[R] 𝓗_q(W) ≃ S[W]` (`IwahoriHeckeAlgebra.baseChangeEquivMonoidAlgebra`); for
 `R = A[v, v⁻¹]`, `q = v²` and `S = A` with `v ↦ 1` this is the specialization `𝓗 ⊗ A ≃ A[W]`
-at `v = 1` ([KL] §1 (check)).
+at `v = 1` ([GP] 8.1.2, Remark 8.1.5).
 
 ## Main definitions
 
@@ -27,6 +27,8 @@ at `v = 1` ([KL] §1 (check)).
 
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184.
+* [GP] M. Geck, G. Pfeiffer, *Characters of finite Coxeter groups and Iwahori–Hecke algebras*,
+  LMS Monographs 21, OUP 2000.
 -/
 
 open Module
@@ -94,7 +96,7 @@ theorem baseChangeEquiv_tmul (a : S) (h : IwahoriHeckeAlgebra cs q) :
 
 /-- If `q` maps to `1` in the `R`-algebra `S`, then `S ⊗[R] 𝓗_q(W) ≃ₐ[S] S[W]`,
 `a ⊗ T_w ↦ a w`. For `R = A[v, v⁻¹]`, `q = v²` and `S = A` via `v ↦ 1`, this is the
-specialization of the generic Hecke algebra at `v = 1` ([KL] §1 (check)). -/
+specialization of the generic Hecke algebra at `v = 1` ([GP] Remark 8.1.5). -/
 noncomputable def baseChangeEquivMonoidAlgebra (hq : algebraMap R S q = 1) :
     S ⊗[R] IwahoriHeckeAlgebra cs q ≃ₐ[S] MonoidAlgebra S W :=
   ((baseChangeEquiv cs q S).trans (equivOfEq cs _ hq)).trans (equivMonoidAlgebra cs)

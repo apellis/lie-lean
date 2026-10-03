@@ -31,7 +31,7 @@ with no relation when `M i i' = 0` (that is, `m = ∞`). It surjects onto the Co
 
 ## References
 
-* E. Brieskorn, K. Saito, *Artin-Gruppen und Coxeter-Gruppen*, Invent. Math. 17 (1972) (check).
+* E. Brieskorn, K. Saito, *Artin-Gruppen und Coxeter-Gruppen*, Invent. Math. 17 (1972), 245–271.
 -/
 
 namespace CoxeterMatrix

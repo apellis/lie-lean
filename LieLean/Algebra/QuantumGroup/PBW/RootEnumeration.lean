@@ -20,7 +20,9 @@ Their enumeration is proved from the inversion-set recursion, not assumed.
 
 ## References
 
-Kac, *Infinite dimensional Lie algebras*, 3rd ed., Lemma 3.11 (check).
+Kac, *Infinite dimensional Lie algebras*, 3rd ed., Lemma 3.11 (length criterion). The statement is
+S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr. Math. 204,
+Birkhäuser 2002, Lemma 1.3.14.
 Proofs reconstructed from the existing inversion-set API; the source was not consulted.
 -/
 
@@ -70,7 +72,8 @@ private lemma not_descent_inv_tail {i : I} {ω : List I}
     hω.trans (congrArg Nat.succ ht.symm)
 
 /-- A reduced word lists exactly the positive roots made negative by its inverse.
-Reconstructed from Kac Lemma 3.11 (check), with no finite-type restriction. -/
+Reconstructed from Kac Lemma 3.11, with no finite-type restriction; the statement is Kumar
+Lemma 1.3.14. -/
 theorem prefixRoots_set {ω : List I} (hω : (P.coxeterSystem hA).IsReduced ω) :
     {μ | μ ∈ P.prefixRoots hA ω} =
       inversionSet P (((P.coxeterSystem hA).wordProd ω)⁻¹ : P.weylGroup hA) := by

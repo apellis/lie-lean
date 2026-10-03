@@ -13,7 +13,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Form
 Let `(I, ·)` be a Cartan datum with Cartan matrix `(aᵢⱼ)`, `k` a field of characteristic zero,
 `v ∈ k` nonzero with `vᵢ² ≠ 1` (`vᵢ = v^{dᵢ}`), and `n : I → ℤ` (the values `⟨Λ, αᵢ^∨⟩` of a
 highest weight). On a quantum Verma module `M(Λ) = U⁻ v_Λ` the raising operators act by
-([Lus] Prop. 3.1.6 (check), with our conventions for `rᵢ`, `ᵢr`):
+([Lus] Prop. 3.1.6 (b), with our conventions for `rᵢ`, `ᵢr`):
 `Eᵢ (y v_Λ) = ((vᵢ^{nᵢ} σᵢ⁻¹ ᵢr(y) - vᵢ^{-nᵢ} rᵢ(y)) / (vᵢ - vᵢ⁻¹)) v_Λ`, where `σᵢ` is the twist
 `θⱼ ↦ v^{i·j} θⱼ` of `'f`. We take this formula as the *definition* of an operator
 `LusztigF.vermaOpQ D v n i` on `'f` (no quantum group is needed) and prove:
@@ -46,7 +46,7 @@ reconstruction.
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §1.2, §3.1 (check).
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §1.2, §3.1.
 -/
 
 noncomputable section

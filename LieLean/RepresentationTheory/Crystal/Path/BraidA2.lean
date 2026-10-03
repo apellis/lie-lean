@@ -29,7 +29,7 @@ For two colours `i, j` with `⟨αⱼ, αᵢ^∨⟩ = ⟨αᵢ, αⱼ^∨⟩ = -
 * [BBO05] P. Biane, P. Bougerol, N. O'Connell, *Littelmann paths and Brownian paths*, Duke
   Math. J. **130** (2005), 127–167, §2.
 * [Kas94] M. Kashiwara, *Crystal bases of modified quantized enveloping algebra*, Duke Math. J.
-  **73** (1994), 383–413, §7 (check).
+  **73** (1994), 383–413, §7.
 -/
 
 open Set Module

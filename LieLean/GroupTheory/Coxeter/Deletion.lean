@@ -50,7 +50,7 @@ local prefix:100 "ris " => cs.rightInvSeq
 local prefix:100 "lis " => cs.leftInvSeq
 
 /-- A reflection `t` is a right inversion of `w` (`ℓ(w t) < ℓ(w)`) if and only if
-`η(w, t) = 1`, for any `w` ([BB] §1.4, proof of Thm. 1.4.3 (check); right-handed version). -/
+`η(w, t) = 1`, for any `w` ([BB] §1.4, proof of Thm. 1.4.3; right-handed version). -/
 theorem isRightInversion_iff_inversionParity_eq_one [DecidableEq W] {w t : W} :
     cs.IsRightInversion w t ↔ cs.inversionParity w t = 1 := by
   obtain ⟨ω, hω, rfl⟩ := cs.exists_isReduced w
@@ -102,21 +102,21 @@ theorem IsLeftInversion.exists_mul_wordProd_eq {ω : List B} {t : W}
   refine ⟨j, hj, ?_⟩
   rw [← getD_leftInvSeq_mul_wordProd, List.getD_eq_getElem]
 
-/-- **The exchange condition**, right-handed version ([BB] Thm. 1.5.1 (check), [HumC] §5.8
-(check)). -/
+/-- **The exchange condition**, right-handed version ([BB] Thm. 1.4.3,
+[HumC] §5.8). -/
 theorem IsRightDescent.exists_wordProd_mul_eq {ω : List B} {i : B}
     (h : cs.IsRightDescent (π ω) i) : ∃ j < ω.length, π ω * s i = π (ω.eraseIdx j) :=
   IsRightInversion.exists_wordProd_mul_eq cs
     ((cs.isRightInversion_simple_iff_isRightDescent _ _).mpr h)
 
-/-- **The exchange condition** ([BB] Thm. 1.5.1 (check), [HumC] §5.8 (check)). -/
+/-- **The exchange condition** ([BB] Thm. 1.4.3, [HumC] §5.8). -/
 theorem IsLeftDescent.exists_mul_wordProd_eq {ω : List B} {i : B}
     (h : cs.IsLeftDescent (π ω) i) : ∃ j < ω.length, s i * π ω = π (ω.eraseIdx j) :=
   IsLeftInversion.exists_mul_wordProd_eq cs
     ((cs.isLeftInversion_simple_iff_isLeftDescent _ _).mpr h)
 
 /-- **The deletion condition**: every word contains a reduced subword with the same product
-([HumC] §5.8 Cor. (check), [BB] Cor. 1.4.8 (check)). -/
+([HumC] §5.8 Cor., [BB] Cor. 1.4.8(i)). -/
 theorem exists_sublist_isReduced (ω : List B) :
     ∃ ω' : List B, ω' <+ ω ∧ cs.IsReduced ω' ∧ π ω' = π ω := by
   induction ω with
@@ -165,7 +165,7 @@ theorem isReduced_iff_nodup_leftInvSeq {ω : List B} : cs.IsReduced ω ↔ (lis 
   rw [← isReduced_reverse_iff, isReduced_iff_nodup_rightInvSeq, rightInvSeq_reverse,
     nodup_reverse]
 
-/-- The number of right inversions of `w` is `ℓ(w)` ([BB] Cor. 1.4.5 (check)). -/
+/-- The number of right inversions of `w` is `ℓ(w)` ([BB] Cor. 1.4.5). -/
 theorem ncard_setOf_isRightInversion (w : W) : {t | cs.IsRightInversion w t}.ncard = ℓ w := by
   classical
   obtain ⟨ω, hω, rfl⟩ := cs.exists_isReduced w
@@ -175,7 +175,7 @@ theorem ncard_setOf_isRightInversion (w : W) : {t | cs.IsRightInversion w t}.nca
   rw [this, Set.ncard_coe_finset, List.toFinset_card_of_nodup hω.nodup_rightInvSeq,
     length_rightInvSeq, hω.eq]
 
-/-- The number of left inversions of `w` is `ℓ(w)` ([BB] Cor. 1.4.5 (check)). -/
+/-- The number of left inversions of `w` is `ℓ(w)` ([BB] Cor. 1.4.5). -/
 theorem ncard_setOf_isLeftInversion (w : W) : {t | cs.IsLeftInversion w t}.ncard = ℓ w := by
   simp_rw [← isRightInversion_inv_iff, ncard_setOf_isRightInversion, length_inv]
 

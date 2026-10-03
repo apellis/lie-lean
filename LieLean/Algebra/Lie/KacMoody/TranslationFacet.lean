@@ -38,14 +38,15 @@ is conjugate to a dominant `ν₂ ≤ ν`, `|ν|² - |ν₁|² = (ν - ν₂ | �
 (`b` antidominant) and `a` is antidominant. So `(y b - b | a) = 0`; the simple roots in the
 support of `y b - b` are orthogonal to `a`, hence (facet hypothesis) to `b`, so
 `|y b|² = |b|² + |y b - b|²` forces `y b = b` by positive definiteness. The argument is the
-standard norm argument (Jantzen, *Representations of algebraic groups*, II.7.7 (check);
-Humphreys, GSM 94, §7.5 (check)), reconstructed with all comparisons made in `ℤ`, so that no
+standard norm argument (the statement is proved by induction on chamber distance in
+cf. Humphreys, GSM 94, Lemma 7.5, which proves the statement by induction on chamber
+distance instead), reconstructed with all comparisons made in `ℤ`, so that no
 order on the field `K` is needed.
 
 ## References
 
 * Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*, GSM 94,
-  §7.5 and Theorem 7.6 (check). Humphreys treats arbitrary `λ` with `W_[λ]`; here all weights
+  Lemma 7.5 and Theorem 7.6. Humphreys treats arbitrary `λ` with `W_[λ]`; here all weights
   are integral, so `W_[λ] = W`.
 -/
 
@@ -98,7 +99,7 @@ theorem dualBilinForm_ofDiagonal_rootOf (d : ι → ℤ) (hd : ∀ i, 0 < d i)
 /-- **Facet exclusion, root-datum form.** Let `A` be of finite type, `a`, `b` antidominant
 integral weights with every simple wall of `a` a wall of `b`, `ν = z (b - a)` for some `z ∈ W`,
 and `ν₁ = u ν₂` with `u ∈ W` and `ν₂` dominant integral, `ν - ν₂ ∈ Q₊`. If `a + ν₁ = y b` with
-`y ∈ W`, then `y b = b`. Reconstructed norm argument (Jantzen II.7.7 (check)). -/
+`y ∈ W`, then `y b = b`. Reconstructed norm argument; cf. Humphreys, GSM 94, Lemma 7.5. -/
 theorem apply_eq_of_add_eq_apply (hA : A.IsFiniteCartan) {a b : Dual K H}
     (ha : ∀ i, ∃ n : ℕ, a (P.coroot i) = -n) (hb : ∀ i, ∃ n : ℕ, b (P.coroot i) = -n)
     (hfacet : ∀ i, a (P.coroot i) = 0 → b (P.coroot i) = 0)
@@ -246,7 +247,7 @@ theorem weightSpace_self_ne_bot (ν : Dual K H) :
 variable (hA : A.IsFiniteCartan)
 include hA
 
-/-- **Facet exclusion** (integral weights, finite type; Humphreys, GSM 94, §7.5 (check);
+/-- **Facet exclusion** (integral weights, finite type; Humphreys, GSM 94, Lemma 7.5;
 Jantzen, *Representations of algebraic groups*, II.7.7 (check)). Let `λ + ρ` and `μ + ρ` be
 antidominant integral, with every simple wall of `λ + ρ` a wall of `μ + ρ` (`μ` lies in the
 closure of the facet of `λ`), and let `ν = z (μ - λ)`, `z ∈ W`, be dominant. If `ν'` is a

@@ -42,7 +42,7 @@ is the strong exchange condition (`LieLean.GroupTheory.Coxeter.Exchange`).
 The subword property is proved as in [BB] §2.2: the "only if" direction by the strong exchange
 and deletion conditions; for the "if" direction we use the elementary lemma
 `CoxeterSystem.BruhatLE.mul_simple_or` (`u ≤ w → u s ≤ w ∨ u s ≤ w s`, cf. [BB] §2.2 and
-[HumC] §5.9 (check)), whose proof we reconstructed from the strong exchange condition.
+[HumC] §5.9), whose proof we reconstructed from the strong exchange condition.
 
 ## References
 
@@ -126,7 +126,7 @@ theorem BruhatLE.inv {u w : W} (h : cs.BruhatLE u w) : cs.BruhatLE u⁻¹ w⁻¹
   | refl => rfl
   | tail _ hs ih => exact ih.trans hs.inv.bruhatLE
 
-/-- `u ≤ w ↔ u⁻¹ ≤ w⁻¹` ([BB] Cor. 2.2.5 (check)). -/
+/-- `u ≤ w ↔ u⁻¹ ≤ w⁻¹` ([BB] Cor. 2.2.5). -/
 @[simp]
 theorem bruhatLE_inv_iff {u w : W} : cs.BruhatLE u⁻¹ w⁻¹ ↔ cs.BruhatLE u w :=
   ⟨fun h ↦ by simpa using h.inv, BruhatLE.inv⟩
@@ -237,7 +237,7 @@ theorem isReflection_mul_simple_inv_mul {y z : W} (h : cs.IsReflection (y⁻¹ *
   rw [e]
   exact h.conj _
 
-/-- If `u ≤ w`, then `u sᵢ ≤ w` or `u sᵢ ≤ w sᵢ` (cf. [BB] §2.2, [HumC] §5.9 (check)). -/
+/-- If `u ≤ w`, then `u sᵢ ≤ w` or `u sᵢ ≤ w sᵢ` (cf. [BB] §2.2, [HumC] §5.9). -/
 theorem BruhatLE.mul_simple_or {u w : W} (h : cs.BruhatLE u w) (i : B) :
     cs.BruhatLE (u * s i) w ∨ cs.BruhatLE (u * s i) (w * s i) := by
   induction h with
@@ -302,7 +302,7 @@ theorem IsReduced.exists_sublist_of_bruhatLE {ω : List B} (hω : cs.IsReduced �
     obtain ⟨σ', hσ', hσ'r, hσ'e⟩ := cs.exists_sublist_isReduced (σ.eraseIdx j)
     exact ⟨σ', hσ'.trans ((eraseIdx_sublist _ _).trans hσ), hσ'r, hσ'e.trans hj.symm⟩
 
-/-- **The subword property** ([BB] Thm. 2.2.2, [HumC] §5.10 (check)): if `ω` is a reduced word
+/-- **The subword property** ([BB] Thm. 2.2.2, [HumC] §5.10): if `ω` is a reduced word
 for `w`, then `u ≤ w` in the Bruhat order if and only if `u` is the product of a subword of `ω`. -/
 theorem IsReduced.bruhatLE_iff {ω : List B} (hω : cs.IsReduced ω) {u : W} :
     cs.BruhatLE u (π ω) ↔ ∃ σ, σ <+ ω ∧ π σ = u :=
@@ -380,7 +380,7 @@ theorem BruhatLE.lifting_left {u w : W} {i : B} (h : cs.BruhatLE u w)
   exact ⟨by simpa using h1.inv, by simpa using h2.inv⟩
 
 /-- If `sᵢ` is a right descent of both `u` and `w`, then `u sᵢ ≤ w sᵢ ↔ u ≤ w`
-([BB] Prop. 2.2.7 (check), [HumC] §5.9 Prop. (check)). -/
+([BB] Ch. 2, Exercise 21, via Prop. 2.2.7). -/
 theorem mul_simple_bruhatLE_mul_simple_iff {u w : W} {i : B} (hu : cs.IsRightDescent u i)
     (hw : cs.IsRightDescent w i) : cs.BruhatLE (u * s i) (w * s i) ↔ cs.BruhatLE u w := by
   constructor
@@ -413,7 +413,7 @@ theorem simple_mul_bruhatLE_simple_mul_iff {u w : W} {i : B} (hu : cs.IsLeftDesc
   simp
 
 /-- If `sᵢ` is a right descent of `w`, then `y sᵢ ≤ w ↔ y ≤ w` (a consequence of the lifting
-property, cf. [BB] Prop. 2.2.7, [HumC] §7.4 (check)). -/
+property, cf. [BB] Prop. 2.2.7, [HumC] Prop. 5.9). -/
 theorem mul_simple_bruhatLE_iff_of_isRightDescent {y w : W} {i : B}
     (hw : cs.IsRightDescent w i) : cs.BruhatLE (y * s i) w ↔ cs.BruhatLE y w := by
   have key : ∀ y, cs.BruhatLE y w → cs.BruhatLE (y * s i) w := by
@@ -470,7 +470,7 @@ theorem BruhatLE.exists_bruhatStep_length_eq {u w : W} (h : cs.BruhatLE u w) (hn
       · rw [(cs.not_isRightDescent_iff).mp hv]; omega
   · exact ⟨w * s i, (h.lifting hi hu).1, hstep, by omega⟩
 
-/-- **The chain property** ([BB] Thm. 2.2.6, [HumC] §5.11 (check)): the Bruhat order is generated
+/-- **The chain property** ([BB] Thm. 2.2.6, [HumC] §5.11): the Bruhat order is generated
 by the Bruhat steps `v → w` with `ℓ(w) = ℓ(v) + 1`. Equivalently, if `u ≤ w` there is a chain
 `u = x₀ → x₁ → ⋯ → xₖ = w` with `ℓ(xⱼ) = ℓ(u) + j`. -/
 theorem bruhatLE_iff_reflTransGen {u w : W} :

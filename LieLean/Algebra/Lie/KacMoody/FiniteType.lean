@@ -14,7 +14,7 @@ Let `A` be a Cartan matrix of finite type (Mathlib's `Matrix.IsFiniteCartan`: `D
 positive definite for a positive diagonal integer matrix `D`), `K` a field of characteristic
 zero and `(𝔥, Π, Π^∨)` a realization of `A` with `𝔥` finite-dimensional. We prove that every root
 of `𝔤(A)` is real, that there are finitely many roots, each of multiplicity one, and hence that
-`𝔤(A)` is finite-dimensional and semisimple ([Kac] Prop. 4.9 and Prop. 5.10 (a) (check); Kac
+`𝔤(A)` is finite-dimensional and semisimple ([Kac] Prop. 4.9 and Thm. 5.6 (a); Kac
 states these for indecomposable `A`, which is not needed here).
 
 ## The argument
@@ -24,12 +24,12 @@ positive root. We show by induction on the height `∑ kⱼ` that `α` is real. 
 is clear. Otherwise, if `⟨α, αᵢ^∨⟩ = (A k)ᵢ ≤ 0` for all `i`, then
 `q(k) = ∑ᵢ kᵢ dᵢ (A k)ᵢ ≤ 0` since all `kᵢ ≥ 0`, contradicting positive definiteness. So
 `(A k)ᵢ > 0` for some `i`; then `rᵢ α = α - (A k)ᵢ αᵢ` is a root (roots are `W`-invariant), it is
-positive since `α ≠ αᵢ` ([Kac] Lemma 3.7 (check)), and it has smaller height. By induction
+positive since `α ≠ αᵢ` ([Kac] Lemma 3.7), and it has smaller height. By induction
 `rᵢ α` is real, hence so is `α = rᵢ (rᵢ α)`. Negative roots are the negatives of positive roots
 (via the Chevalley involution), and `-Δ^re = Δ^re`.
 
-This is the standard argument (cf. [Kac] §5.1–5.2 (check)); we reconstructed it rather than
-following a specific printed proof.
+This is the standard argument (cf. [Kac] Thm. 5.6 (a) and the proof of Prop. 5.10 (a)); we
+reconstructed it rather than following a specific printed proof.
 
 Since the set of real roots is finite (`Matrix.Realization.finite_realRoots`) and real roots have
 multiplicity one (`Matrix.Realization.KacMoodyAlgebra.rank_rootSpace_of_mem_realRoots`), the root
@@ -39,9 +39,9 @@ For semisimplicity we use Mathlib's criterion
 `LieAlgebra.InvariantForm.isSemisimple_of_nondegenerate` with the nondegenerate invariant form
 of [Kac] Thm. 2.2. It remains to see that `𝔤(A)` has no nonzero abelian ideals. A nonzero ideal
 `J` of `𝔤(A)` contains a nonzero `h ∈ 𝔥` (its preimage in `𝔤̃(A)` cannot meet `𝔥` trivially, by
-maximality of `𝔯`; [Kac] §1.3 (check)). Since `A` is nonsingular, the simple roots span `𝔥*`,
+maximality of `𝔯`; [Kac] §1.3). Since `A` is nonsingular, the simple roots span `𝔥*`,
 so `⟨αᵢ, h⟩ ≠ 0` for some `i`, and then `[h, [h, eᵢ]] = ⟨αᵢ, h⟩² eᵢ ≠ 0` with `h, [h, eᵢ] ∈ J`.
-(Kac instead uses [Kac] Prop. 1.7 (check) for indecomposable `A`; this argument was
+(Kac instead uses [Kac] Prop. 1.7 for indecomposable `A`; this argument was
 reconstructed.)
 
 ## Main results
@@ -133,7 +133,7 @@ lemma rootOf_mem_realRoots_of_height_lt (n : ℕ) : ∀ k : ι → ℤ, 0 ≤ k 
   exact P.apply_mem_realRoots hA' (P.reflection_mem_weylGroup hA' i) hreal
 
 /-- For `A` of finite type, every root of `𝔤(A)` is real: `Δ = Δ^re`
-([Kac] Prop. 5.10 (a) (check), `Δ^im = ∅`). -/
+([Kac] Thm. 5.6 (a), `Δ^im = ∅`). -/
 theorem roots_eq_realRoots : roots P = P.realRoots hA.isGeneralizedCartan := by
   refine subset_antisymm (fun μ hμ ↦ ?_) (realRoots_subset_roots P hA.isGeneralizedCartan)
   rcases mem_posWeights_or_mem_negWeights P hμ with ⟨k, ⟨hk, -⟩, rfl⟩ | ⟨k, ⟨hk, -⟩, rfl⟩
@@ -142,7 +142,7 @@ theorem roots_eq_realRoots : roots P = P.realRoots hA.isGeneralizedCartan := by
       (by simpa using neg_mem_roots P hμ)
     exact P.neg_mem_realRoots _ this
 
-/-- For `A` of finite type, `𝔤(A)` has finitely many roots ([Kac] Prop. 4.9 (check)). -/
+/-- For `A` of finite type, `𝔤(A)` has finitely many roots ([Kac] Prop. 4.9). -/
 theorem finite_roots : (roots P).Finite := by
   rw [roots_eq_realRoots P hA]
   exact P.finite_realRoots hA
@@ -154,7 +154,7 @@ theorem finrank_rootSpace_of_mem_roots {μ : Dual K H} (hμ : μ ∈ roots P) :
   exact finrank_eq_of_rank_eq (rank_rootSpace_of_mem_realRoots P hA.isGeneralizedCartan hμ)
 
 /-- For `A` of finite type (and `𝔥` finite-dimensional), `𝔤(A)` is finite-dimensional
-([Kac] Prop. 4.9 (check)). -/
+([Kac] Prop. 4.9). -/
 theorem finiteDimensional [FiniteDimensional K H] : FiniteDimensional K P.KacMoodyAlgebra := by
   set S := insert 0 (roots P)
   have hS : S.Finite := (finite_roots P hA).insert 0
@@ -178,7 +178,7 @@ theorem finiteDimensional [FiniteDimensional K H] : FiniteDimensional K P.KacMoo
   exact Module.finite_def.mpr (top_le_iff.mp htop ▸ hfg)
 
 omit hA in
-/-- A nonzero ideal of `𝔤(A)` meets `𝔥` nontrivially ([Kac] §1.3 (check)): its preimage in
+/-- A nonzero ideal of `𝔤(A)` meets `𝔥` nontrivially ([Kac] §1.3): its preimage in
 `𝔤̃(A)` would otherwise be an ideal meeting `𝔥` trivially, hence contained in `𝔯`. -/
 theorem exists_h_mem_of_ne_bot {J : LieIdeal K P.KacMoodyAlgebra} (hJ : J ≠ ⊥) :
     ∃ a : H, a ≠ 0 ∧ h P a ∈ J := by
@@ -220,7 +220,7 @@ theorem not_isLieAbelian_of_ne_bot [FiniteDimensional K H] {J : LieIdeal K P.Kac
   exact h2.elim (fun h ↦ hi (mul_self_eq_zero.mp h)) (e_ne_zero P i)
 
 /-- For `A` of finite type (and `𝔥` finite-dimensional), `𝔤(A)` is a semisimple Lie algebra
-([Kac] Prop. 4.9 (check)). The proof uses the nondegenerate invariant form of [Kac] Thm. 2.2 and
+([Kac] Prop. 4.9). The proof uses the nondegenerate invariant form of [Kac] Thm. 2.2 and
 the absence of nonzero abelian ideals (`not_isLieAbelian_of_ne_bot`). -/
 theorem isSemisimple [FiniteDimensional K H] : IsSemisimple K P.KacMoodyAlgebra := by
   have := finiteDimensional P hA

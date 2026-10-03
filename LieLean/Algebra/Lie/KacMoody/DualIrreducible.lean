@@ -14,7 +14,7 @@ import Mathlib.LinearAlgebra.Dual.Lemmas
 For `A` of finite type and `ν` dominant integral, the contragredient dual `L(ν)^*` (the module
 `Module.Dual K L(ν)` with `⁅x, f⁆ = -f ∘ x`) is isomorphic to `L(ν*)`, where `ν* = z(-ν)` is the
 dominant integral weight in the Weyl orbit of `-ν` (so `ν* = -w₀ν`, `w₀` the longest element;
-Humphreys, GSM 94, §7.2 (check); Humphreys, GTM 9, §21 Exercise (check)).
+Humphreys, GSM 94, §1.6 and §7.2; Humphreys, GTM 9, Exercise 21.6).
 
 ## Main results
 
@@ -255,7 +255,7 @@ theorem IrreducibleModule.exists_norm_eq_add {d : ι → ℤ} (hd : ∀ i, 0 < d
     exact (u.val.symm_apply_apply μ).symm
 
 include hA in
-/-- **The dual of `L(ν)`** (finite type; Humphreys, GSM 94, §7.2 (check)): for `ν` dominant
+/-- **The dual of `L(ν)`** (finite type; Humphreys, GSM 94, §1.6, cf. §7.2): for `ν` dominant
 integral there is `z ∈ W` with `z(-ν)` dominant integral and `L(ν)^* ≅ L(z(-ν))`. The weight
 `z(-ν)` is the dominant weight of the orbit `W(-ν)`, i.e. `-w₀ν`. -/
 theorem IrreducibleModule.exists_equiv_dual {ν : Dual K H} (hν : P.IsDominantIntegral ν) :
