@@ -49,11 +49,11 @@ of `U(L)`.
 
 ## References
 
-* N. Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7 (corollaries of Theorem 1).
+* N. Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, Corollaries 5 (a) and 6.
 * J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §17.3
   (Corollary D for the injectivity of `U(L₁) → U(L)`).
 
-The exact corollary numbers were not checked against the books; the argument is reconstructed
+The argument, that of the proof of Bourbaki's Corollary 6, is reconstructed
 from the PBW basis (`UniversalEnvelopingAlgebra.pbwBasis`).
 -/
 
@@ -250,9 +250,9 @@ include h in
 are complementary and free, then multiplication `U(L₁) ⊗[R] U(L₂) → U(L)`, `u ⊗ v ↦ u * v`, is
 bijective.
 
-See Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, corollaries of Theorem 1, and
+See Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, Corollary 6, and
 Humphreys, *Introduction to Lie algebras and representation theory*, §17.3 (Corollary D treats
-`U(L₁) → U(L)` over a field). The corollary numbers were not checked against the books; the proof
+`U(L₁) → U(L)` over a field). The proof
 here is reconstructed from the PBW basis. -/
 theorem mulMap_bijective_of_isCompl : Function.Bijective (mulMap L₁ L₂) := by
   let : LinearOrder (Free.ChooseBasisIndex R L₁) := IsWellOrder.linearOrder WellOrderingRel
@@ -281,7 +281,7 @@ include h in
 and both are free as modules, then the induced map `U(L₁) → U(L)` is injective.
 
 See Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, and Humphreys, *Introduction to Lie
-algebras and representation theory*, §17.3, Corollary D (numbering not checked against the book).
+algebras and representation theory*, §17.3, Corollary D.
 -/
 theorem map_incl_injective_of_isCompl : Function.Injective (map L₁.incl) := by
   let : LinearOrder (Free.ChooseBasisIndex R L₁) := IsWellOrder.linearOrder WellOrderingRel

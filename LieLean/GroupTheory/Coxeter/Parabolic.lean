@@ -37,7 +37,8 @@ That `W_J` is itself a Coxeter group with Coxeter matrix `M` restricted to `J` i
 
 ## Implementation notes
 
-We follow [BB] §2.4: `w^J` is first taken to be an element of minimal length in `w W_J`, and
+This is [BB] Prop. 2.4.4, Cor. 2.4.5(i), with a different proof: `w^J` is first taken to be an
+element of minimal length in `w W_J`, and
 length additivity is proved for it with the strong exchange condition (our reconstruction of the
 argument); uniqueness then shows that it is the unique element of `W^J` in the coset.
 

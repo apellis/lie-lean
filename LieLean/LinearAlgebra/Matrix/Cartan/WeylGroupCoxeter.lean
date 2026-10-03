@@ -20,7 +20,7 @@ element of the root lattice ([Kac] Lemma 3.11 (a)).
 The proof does not follow [Kac], which deduces the exchange condition from the equality
 `u rⱼ u⁻¹ = rᵢ` for `u αⱼ = αᵢ`, proved there using lifts of the `rᵢ` to automorphisms of
 `𝔤(A)`. Instead we use Tits' argument for the geometric representation of a Coxeter group
-([Hum] §5.3–5.4, [Bou] Ch. V §4.4), which works verbatim for the (non-symmetric) action of the
+([Hum] §5.3–5.4, [Bou] Ch. V §4.4–4.5), which works verbatim for the (non-symmetric) action of the
 Coxeter group of `(mᵢⱼ)` on `𝔥*`:
 
 1. The relations `(rᵢ rⱼ)^{mᵢⱼ} = 1` hold in `GL(𝔥*)`
@@ -52,7 +52,7 @@ Coxeter group of `(mᵢⱼ)` on `𝔥*`:
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.10–3.13.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.10, §3.11, §3.13.
 * [Hum] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §5.3–5.4.
 * [Bou] N. Bourbaki, *Lie groups and Lie algebras*, Ch. IV–VI, Ch. V §4.
 -/

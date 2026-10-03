@@ -38,7 +38,8 @@ matrices and perfect pairings) uses the transposed convention `⟨αᵢ, αⱼ^�
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.1.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.1, §2.1,
+  §2.3 (stated over `ℂ`).
 -/
 
 open Module
@@ -80,7 +81,8 @@ variable [Fintype ι] [DecidableEq ι]
 
 /-- A square integer matrix `A` is symmetrizable if there are positive integers `dᵢ` such that
 `diagonal d * A` is symmetric. See `Matrix.isSymmetrizable_iff_exists_eq_diagonal_mul` for the
-equivalent form `A = D B` used in [Kac] §2.1. -/
+equivalent form `A = D B` of [Kac] (2.3.1). [Kac] §2.1 allows any invertible complex diagonal
+`D`; for generalized Cartan matrices the two notions agree ([Kac] §2.3). -/
 def IsSymmetrizable (A : Matrix ι ι ℤ) : Prop :=
   ∃ d : ι → ℤ, (∀ i, 0 < d i) ∧ (diagonal d * A).IsSymm
 
@@ -99,7 +101,7 @@ lemma isSymmetrizable_iff_mul_eq_mul {A : Matrix ι ι ℤ} :
   simp only [transpose_apply, diagonal_mul]
   exact ⟨fun h i j ↦ (h j i), fun h i j ↦ h j i⟩
 
-/-- Symmetrizability in the form of [Kac] §2.1: `A = D B` with `D` a diagonal matrix with
+/-- Symmetrizability in the form of [Kac] (2.3.1): `A = D B` with `D` a diagonal matrix with
 positive (rational) entries and `B` a symmetric rational matrix. -/
 theorem isSymmetrizable_iff_exists_eq_diagonal_mul {A : Matrix ι ι ℤ} :
     A.IsSymmetrizable ↔ ∃ (ε : ι → ℚ) (B : Matrix ι ι ℚ), (∀ i, 0 < ε i) ∧ B.IsSymm ∧
@@ -363,8 +365,9 @@ lemma linearIndependent_stdRoot [DecidableEq ι] : LinearIndependent K (stdRoot 
   intro i
   exact congr_fun (congr_arg Subtype.val this) i
 
-/-- The standard realization of `A` on `Kⁿ × (ker A)*` ([Kac] proof of Prop. 1.1, in
-coordinate-free form): `αᵢ^∨ = (eᵢ, 0)` and `αⱼ (v, f) = (v A)ⱼ + f (p eⱼ)`, where `p` is a
+/-- The standard realization of `A` on `Kⁿ × (ker A)*` (cf. [Kac] proof of Prop. 1.1, in
+coordinate-free form, with roots and coroots exchanged):
+`αᵢ^∨ = (eᵢ, 0)` and `αⱼ (v, f) = (v A)ⱼ + f (p eⱼ)`, where `p` is a
 projection of `Kⁿ` onto `ker A`. -/
 noncomputable def std [DecidableEq ι] : Realization A K (StdSpace A K) where
   coroot i := (Pi.single i 1, 0)

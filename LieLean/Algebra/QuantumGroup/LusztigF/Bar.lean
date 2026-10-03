@@ -24,8 +24,9 @@ free algebra `'f`. It does not assert existence of a canonical/global basis or d
 
 ## References
 
-* Kashiwara, *Global crystal bases of quantum groups*, Duke Math. J. 69 (1993),
-  §1.2, equation (1.2.1): bar fixes root generators and inverts the parameter.
+* Kashiwara, *Global crystal bases of quantum groups*, Duke Math. J. 69 (1993).
+* Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, 1.2.10: bar on `'f` fixes the
+  generators `θᵢ` and inverts the parameter `v`.
 * Kashiwara, *On crystal bases*, CMS Conf. Proc. 16 (1995), §12.3 (bar and divided-power forms),
   Theorems 12.1–12.2 (global bases, NOT proved here).
 * Kashiwara, *Crystal bases and categorifications*, arXiv:1809.00114v2, §2, p. 2.
@@ -63,7 +64,8 @@ theorem barHom_involutive : Function.Involutive (barHom (K := K)) := by
   exact DFunLike.congr_fun h x
 
 /-- The coefficient-field bar involution, linear over `K`, not over `K(X)`.
-This constructs the coefficient operation required in Kashiwara, §2, p. 2. -/
+This constructs the coefficient operation required in Kashiwara, arXiv:1809.00114v2, §2,
+p. 2. -/
 def bar : RatFunc K ≃ₐ[K] RatFunc K :=
   AlgEquiv.ofAlgHom barHom barHom
     (by ext x; exact barHom_involutive x) (by ext x; exact barHom_involutive x)

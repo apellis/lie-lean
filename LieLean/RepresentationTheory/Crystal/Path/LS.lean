@@ -52,7 +52,8 @@ lattice for LS paths in Littelmann's normalization).
    nonnegative integer on `B(π_λ)`; induction on it gives `B(π_λ) = {f_{i₁} ⋯ f_{iₖ} π_λ}`
    (`LittelmannPath.component_straightLine_eq_fOrbit`).
 
-Steps 1–3 follow the strategy of [Lit94] §4; the formulation with positions, the handling of
+Steps 1–3 follow the strategy of [Lit94] §§3–4 (cf. [Lit95] §4); the formulation with
+positions, the handling of
 continuous parametrized paths and the proofs are our reconstruction.
 
 ## Main definitions
@@ -221,7 +222,8 @@ theorem Chain.exists_int (h : L.Chain p x y) :
 
 /-- Reflecting chains at a position `p` with `⟨p, αᵢ^∨⟩ ∈ ℤ`: a chain from `x` to `y` with
 `⟨y, αᵢ^∨⟩ > 0` gives a chain from `sᵢ x` to `sᵢ y` if `⟨x, αᵢ^∨⟩ > 0`, and a chain from `x` to
-`sᵢ y` if `⟨x, αᵢ^∨⟩ ≤ 0`. (Our reconstruction of the corresponding step in [Lit94] §4.) -/
+`sᵢ y` if `⟨x, αᵢ^∨⟩ ≤ 0`. (Our reconstruction of the corresponding step in [Lit94] §4;
+cf. [Lit95] Lemma 4.3 b) and the proof of Prop. 4.7.) -/
 theorem Chain.reflection (hp : ∃ n : ℤ, S.coroot i p = n) (h : L.Chain p x y) :
     x ∈ L.O →
       (0 < D.coroot i x → 0 < D.coroot i y →

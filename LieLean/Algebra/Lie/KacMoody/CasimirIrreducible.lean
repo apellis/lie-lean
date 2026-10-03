@@ -47,8 +47,8 @@ written out by us.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.5–2.6, §9.1,
-  §10.1–10.4.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2, §2.5–2.6, §3.2,
+  §9.1, §10.1–10.4, §10.7 (stated over `ℂ`).
 -/
 
 open Module LieModule

@@ -42,6 +42,8 @@ multiplicities then follow from the Euler characteristic and the Weyl–Kac char
   Math. 204, Birkhäuser 2002, Thm. 3.2.7.
 * B. Kostant, *Lie algebra cohomology and the generalized Borel–Weil theorem*, Ann. of Math.
   **74** (1961), 329–387 (finite type).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Cor. 2.6
+  (stated over `ℂ`).
 -/
 
 open Module LieModule LieModule.ChevalleyEilenberg

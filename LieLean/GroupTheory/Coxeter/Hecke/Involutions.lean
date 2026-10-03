@@ -46,7 +46,6 @@ Let `𝓗 = 𝓗_q(W)` be the Iwahori–Hecke algebra of a Coxeter system over a
   Invent. Math. **53** (1979), 165–184.
 * [GP] M. Geck, G. Pfeiffer, *Characters of finite Coxeter groups and Iwahori–Hecke algebras*,
   LMS Monographs 21, OUP 2000, Ch. 8.
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, Ch. 7.
 -/
 
 open MulOpposite

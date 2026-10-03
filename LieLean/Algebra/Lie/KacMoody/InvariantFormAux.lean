@@ -87,7 +87,8 @@ is nondegenerate on `𝔥`, so it lies in `𝔯`. Conversely if `r ∈ 𝔯 ∩ 
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.1–2.2
+  (stated over `ℂ`).
 -/
 
 open Module LieModule LieAlgebra

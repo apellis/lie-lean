@@ -19,8 +19,7 @@ import LieLean.LinearAlgebra.Matrix.Cartan.Symmetrizable
 ## References
 
 * V. G. Kac, *Infinite dimensional Lie algebras*, third edition, Proposition 3.12(e),
-  printed page 40. Consulted the Scribd transcription of the 1995 printing, document
-  681792652. The proof below uses the same maximum-on-a-finite-orbit argument.
+  printed page 40. The proof below uses the same maximum-on-a-finite-orbit argument.
 
 The ground field is any linearly ordered field, not just the real numbers. No
 symmetrizability or extra finite-dimensionality hypothesis is imposed.

@@ -34,8 +34,9 @@ these ordered monomials form an `R`-basis of `U(L)`.
 ## Proof
 
 We follow Humphreys, *Introduction to Lie algebras and representation theory*, §17.4
-(Lemmas A–D; the argument is due to Jacobson). Humphreys writes `σ` for the canonical map
-`L → U(L)`; here it is `ι`, and `σ` is the index type of the basis. Let `S = R[z_i : i ∈ σ]`
+(Lemmas A–C; the Notes to §17 say the treatment follows Bourbaki). Humphreys writes `i` for the
+canonical map `L → U(L)` and `Ω` for the index set of the basis; here they are `ι` and `σ`.
+Let `S = R[z_i : i ∈ σ]`
 be the polynomial ring.
 We construct a representation `ρ` of `L` on `S` such that, writing `X_i = ρ (b i)`,
 
@@ -673,7 +674,7 @@ form an `R`-basis of the universal enveloping algebra.
 See Humphreys, *Introduction to Lie algebras and representation theory*, §17.3, Theorem and
 Corollary C, proved in §17.4 (stated there over a field; the proof works over any
 commutative ring for free modules), and Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7,
-Theorem 1. -/
+Theorem 1 and Corollary 3. -/
 def pbwBasis : Basis (σ →₀ ℕ) R (UniversalEnvelopingAlgebra R L) :=
   (basisMonomials σ R).map (pbwEquiv b).symm
 

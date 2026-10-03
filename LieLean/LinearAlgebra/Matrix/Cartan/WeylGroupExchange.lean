@@ -33,7 +33,8 @@ roots, and `g = 1` by the faithfulness criterion `CoxeterSystem.eq_one_of_forall
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Lemma 3.10, §5.1.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Lemma 3.10, Lemma 3.11,
+  §5.1.
 * [Hum] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §5.4.
 -/
 

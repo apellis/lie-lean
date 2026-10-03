@@ -430,7 +430,8 @@ theorem raw_endpoint_integral (ha : StrictMono a) (ha0 : a 0 = 0)
 
 /-- The actual finite rational-PL path for arbitrary integral directions with source
 a-chains. Its endpoint is derived. No dominant-class hypothesis occurs. Compare
-Littelmann 1995, §4, pp. 509–510; this does not assert abstract `IsLS` or stability.
+Littelmann 1995, §4, pp. 509–511 (definitions on p. 510; Lemma 4.5 a) for the integral
+endpoint); this does not assert abstract `IsLS` or stability.
 Redundant equal directions are permitted (an explicit extension of the strict presentation). -/
 noncomputable def ofAChains (ha : StrictMono a) (ha0 : a 0 = 0)
     (ha1 : a (Fin.last (n + 1)) = 1)

@@ -79,7 +79,8 @@ a `w` (a preimage in `V_j ∩ V_μ` of the highest-weight vector), with `N = V_{
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.5–2.6, §9.2–9.8.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.5–2.6, §9.2–9.8
+  (stated over `ℂ`).
 -/
 
 open Module LieModule

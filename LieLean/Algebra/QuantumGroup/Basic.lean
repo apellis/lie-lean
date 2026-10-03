@@ -49,7 +49,7 @@ algebra on the generators.
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §2.2, §3.1.
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §2.2, §3.1, §33.1.
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 4.
 -/
 

@@ -487,7 +487,8 @@ omit i hA in
 walls, and every source weight**. No source integrality or orbit hypothesis is assumed.
 Over an algebraically closed characteristic-zero field, finite-dimensional Cartan,
 finite Cartan matrix, and an explicit symmetrization. Reconstructed proof of this part
-of the classical theorem (Humphreys, category O, Chapter 4); no printed proof consulted. -/
+of the classical theorem (Humphreys, category O, Theorem 4.2(b), over `ℂ`); no printed proof
+consulted. -/
 theorem finrank_hom_le_one_of_finite_type_integral (hfin : A.IsFiniteCartan)
     (S : A.Symmetrization) (Λ μ : Dual K H)
     (hΛ : ∀ i, ∃ z : ℤ, (Λ + P.rho) (P.coroot i) = z) :

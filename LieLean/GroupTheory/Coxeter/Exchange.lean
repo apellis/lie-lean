@@ -17,7 +17,7 @@ As a consequence we obtain the lemma on which the construction of the Iwahori–
 rests: if `ℓ(s w t) = ℓ(w)` and `ℓ(s w) = ℓ(w t)` for simple reflections `s, t`, then
 `s w = w t`.
 
-The proof is the one of [BB] §1.4 via the *reflection representation*: the simple reflections
+The proof is the one of [BB] §§1.3–1.4 via the *reflection representation*: the simple reflections
 act on `W × ZMod 2` by `s • (t, ε) = (s t s, ε + [t = s])`. These permutations satisfy the Coxeter
 relations (the key point is that the right inversion sequence of the word `(s s')^m`, for
 `m = m(s, s')`, is periodic of period `m`), so they define an action of `W`, and the second
@@ -134,7 +134,7 @@ theorem even_count_rightInvSeq_alternatingWord (i i' : B) (t : W) :
   exact ⟨_, rfl⟩
 
 /-- The permutation of `W × ZMod 2` attached to the simple reflection `s i`:
-`(t, ε) ↦ (s t s, ε + [t = s])` ([BB] §1.4). -/
+`(t, ε) ↦ (s t s, ε + [t = s])` ([BB] §1.3). -/
 def reflPerm (i : B) : Equiv.Perm (W × ZMod 2) :=
   Function.Involutive.toPerm
     (fun x ↦ (s i * x.1 * s i, x.2 + if x.1 = s i then 1 else 0)) <| by
@@ -196,7 +196,8 @@ theorem reflRep_wordProd (ω : List B) : cs.reflRep (π ω) = (ω.map cs.reflPer
   exact List.map_congr_left fun i _ ↦ cs.reflRep_simple i
 
 /-- `n(w, t) ∈ ZMod 2`: the parity of the number of occurrences of `t` in the right inversion
-sequence of any word for `w` ([BB] §1.4, where it is written multiplicatively as `η(w, t)`). -/
+sequence of any word for `w`. [BB] §1.3 count occurrences in left inversion sequences instead
+((1.13), (1.17)), so `(-1)^{n(w, t)}` is their `η(w⁻¹; t)` (compare `reflRep_apply` with (1.18)). -/
 def inversionParity (w t : W) : ZMod 2 := (cs.reflRep w (t, 0)).2
 
 theorem inversionParity_wordProd (ω : List B) (t : W) :

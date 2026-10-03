@@ -50,7 +50,6 @@ The right module structure is expressed as a module over the opposite algebra `�
 
 * [GP] M. Geck, G. Pfeiffer, *Characters of finite Coxeter groups and Iwahori–Hecke algebras*,
   LMS Monographs 21, OUP 2000, §2.1, §4.4.
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, Ch. 7.
 * V. Deodhar, *On some geometric aspects of Bruhat orderings II. The parabolic analogue of
   Kazhdan–Lusztig polynomials*, J. Algebra **111** (1987), 483–506.
 -/

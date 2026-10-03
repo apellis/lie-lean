@@ -16,7 +16,7 @@ We prove parts (a) and (b) of [Kac] Theorem 1.2 for the auxiliary Lie algebra `�
   them;
 * `𝔤̃(A) = 𝔫̃₋ ⊕ 𝔥 ⊕ 𝔫̃₊` as vector spaces.
 
-Following [Kac] §1.3 (proof of Thm. 1.2), for `λ ∈ 𝔥*` we construct a representation of `𝔤̃(A)`
+Following [Kac] §1.2 (proof of Thm. 1.2), for `λ ∈ 𝔥*` we construct a representation of `𝔤̃(A)`
 on the tensor algebra `T(V) = K⟨vᵢ : i ∈ ι⟩` (here the free associative algebra
 `FreeAlgebra K ι`): `fᵢ` acts by left multiplication by `vᵢ`, `h` acts on a word
 `v_{j₁} ⋯ v_{jₖ}` by the scalar
@@ -39,7 +39,8 @@ on the tensor algebra `T(V) = K⟨vᵢ : i ∈ ι⟩` (here the free associative
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Thm. 1.2 and §1.3.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.2 (Thm. 1.2
+  and its proof; stated over `ℂ`).
 -/
 
 open FreeLieAlgebra Module
@@ -203,7 +204,7 @@ noncomputable def tensorRepData : LiftData P (Module.End K T) where
     ring
 
 /-- The representation of `𝔤̃(A)` on the tensor algebra `T(V)` attached to `λ ∈ 𝔥*`
-([Kac] §1.3, proof of Thm. 1.2). -/
+([Kac] §1.2, proof of Thm. 1.2). -/
 noncomputable def tensorRep : P.AuxLieAlgebra →ₗ⁅K⁆ Module.End K T :=
   lift (tensorRepData P Λ)
 

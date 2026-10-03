@@ -35,7 +35,8 @@ polynomial of degree `≤ min(|s|, |t|)`, and for `|s| = |t|` its component of d
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2, §9.4.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2, §9.4
+  (stated over `ℂ`).
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. 34 (1979), 97–108.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.

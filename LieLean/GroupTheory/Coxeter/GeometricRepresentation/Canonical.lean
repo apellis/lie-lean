@@ -33,7 +33,7 @@ source's finite-dihedral direct calculation; its infinite analogue is q(n) = n.
 
 ## References
 
-Humphreys, *Reflection Groups and Coxeter Groups* (1990), §5.3, pp. 108–111,
+Humphreys, *Reflection Groups and Coxeter Groups* (1990), §5.3, pp. 108–110,
 §5.4 Theorem and Corollary, pp. 111–113. The actual source was consulted.
 The convention at infinity is B(αᵢ, αⱼ) = -1, with 0 encoding infinity here.
 -/

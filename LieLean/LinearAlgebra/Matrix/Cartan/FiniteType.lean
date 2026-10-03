@@ -44,7 +44,8 @@ proof.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §4.3, §4.9, §5.1.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.1, §4.3, §4.7,
+  §4.9, §5.1.
 -/
 
 open Module

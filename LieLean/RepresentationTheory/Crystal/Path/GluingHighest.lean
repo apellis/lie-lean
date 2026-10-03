@@ -85,7 +85,7 @@ theorem AChain.eq_of_mem_dominantChamber {x y : Dual ℝ H} {a : ℝ}
     rw [← hw] at this
     linarith
 
-/-- First-source straightness ([Lit95] Corollary 3, p. 512, as used on p. 516): if the
+/-- First-source straightness ([Lit95] proof of Corollary 3, p. 513, as used on p. 516): if the
 first direction of a finite source presentation is dominant, all directions equal it. -/
 theorem Presentation.directions_eq_of_mem_dominantChamber (σ : Presentation P hA)
     (h0 : (σ.x 0 : Dual ℝ H) ∈ P.dominantChamber) (j : Fin (σ.n + 1)) :

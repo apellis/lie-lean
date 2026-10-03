@@ -43,7 +43,6 @@ relation `(T_s⁻¹)² = (q⁻¹ - 1) T_s⁻¹ + q⁻¹`; multiplicativity then 
 
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184, §1.
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §7.4–7.7.
 -/
 
 open Finsupp

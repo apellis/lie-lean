@@ -65,7 +65,7 @@ Conversely, if `v ≠ 0` has weight `Λ`, is killed by `eᵢ` and `fᵢᵐ v = 0
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.4, §9.2, §10.1.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.2, §3.4, §9.2, §10.1.
 -/
 
 open Module LieModule LieAlgebra

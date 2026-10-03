@@ -55,7 +55,8 @@ The remaining terms in `𝔥` are computed with the dual bases of `𝔥`, and ca
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.4–2.6.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2, §2.4–2.6
+  (stated over `ℂ`).
 -/
 
 open Module LieModule

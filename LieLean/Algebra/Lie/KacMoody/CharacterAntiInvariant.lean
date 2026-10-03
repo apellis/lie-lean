@@ -52,7 +52,7 @@ coefficientwise form of Kac's argument `rᵢ(e^ρ R) = e^{ρ - αᵢ} (1 - e^{α
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.7, §10.2–10.4.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.7, §10.2, §10.4.
 -/
 
 open Module HahnSeries

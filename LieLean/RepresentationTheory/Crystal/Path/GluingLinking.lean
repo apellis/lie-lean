@@ -34,7 +34,8 @@ pp. 517–518; Corollary 3, p. 512. The printed pages were consulted. The links 
 parametrization of `LittelmannPath.IsLink` (with the factor `1 + 2c`), and integrality of the linked
 components is derived from the gluing results rather than assumed. Paths are compared
 literally, with the explicit pause clocks of `GluingPause.lean` standing in for the
-source's "modulo reparametrization".
+source's "modulo reparametrization". [Lit95] assumes a symmetrizable Kac–Moody algebra; here
+the generalized Cartan matrix need not be symmetrizable.
 -/
 
 open Module Set
