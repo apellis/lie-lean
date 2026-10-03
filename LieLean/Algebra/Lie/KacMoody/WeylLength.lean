@@ -11,9 +11,9 @@ import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
 
 Let `A` be a generalized Cartan matrix, `K` a field of characteristic zero and `W` the Weyl group,
 a Coxeter group with simple reflections the fundamental reflections `rᵢ`
-(`Matrix.Realization.coxeterSystem`), with length function `ℓ`. We prove [Kac] Lemma 3.11:
-`ℓ(w)` is the number of positive roots `α ∈ Δ₊` of `𝔤(A)` with `w α < 0`, and `ℓ(w rᵢ) < ℓ(w)` if
-and only if `w αᵢ < 0`.
+(`Matrix.Realization.coxeterSystem`), with length function `ℓ`. We prove [Kac] Exercise 3.6:
+`ℓ(w)` is the number of positive roots `α ∈ Δ₊` of `𝔤(A)` with `w α < 0`, and [Kac] Lemma 3.11 (a):
+`ℓ(w rᵢ) < ℓ(w)` if and only if `w αᵢ < 0`.
 
 ## Main definitions
 
@@ -30,7 +30,8 @@ and only if `w αᵢ < 0`.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Lemma 3.11.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Lemma 3.7, Lemma 3.11,
+  Exercise 3.6.
 -/
 
 open Module

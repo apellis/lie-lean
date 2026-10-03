@@ -68,7 +68,8 @@ we reconstructed it in the present setting.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.2–1.3, Thm. 9.11.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.2–1.3, Thm. 9.11
+  (stated over `ℂ`).
 * [Hum] J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9,
   §7.2, §18.
 * M. Geck, *On the construction of semisimple Lie algebras and Chevalley groups*, Proc. Amer.

@@ -35,7 +35,6 @@ through the multiplication formula `C'_s C'_v = C'_{sv} + Σ μ(z,v) C'_z`) and 
 
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184, §2.
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §7.9–7.12.
 -/
 
 open Finsupp

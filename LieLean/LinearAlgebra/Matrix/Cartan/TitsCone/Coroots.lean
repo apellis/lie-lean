@@ -40,7 +40,8 @@ realization* `(𝔥*, Π^∨, Π)` of `Aᵀ` (`Matrix.Realization.transpose`): i
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.1, §3.7, §5.1.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.1, §3.7, §5.1
+  (stated over `ℂ`).
 -/
 
 open Module

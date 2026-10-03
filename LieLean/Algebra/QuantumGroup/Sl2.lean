@@ -28,7 +28,7 @@ annihilated by `Eᵢ` (and by all `Eⱼ`, `j ≠ i`) when `⟨i, Λ⟩ ≥ 0` ([
 
 ## References
 
-* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 1–2, 5.
+* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 1–2, 4–5.
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.1.
 -/
 

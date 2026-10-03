@@ -39,7 +39,8 @@ root vectors `y ∈ 𝔤_{-β}`. This file provides the tools:
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2–2.4.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2–2.4
+  (stated over `ℂ`).
 * The lemmas are reconstructed by us for the proof of Kostant's identity.
 -/
 

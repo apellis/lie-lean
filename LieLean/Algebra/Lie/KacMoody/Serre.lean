@@ -33,7 +33,8 @@ identity `[f, (ad e)^{m+1} v] = -(m + 1)(λ + m) (ad e)^m v` for `v` with `[f, v
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.5, §3.3.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.5, §3.3
+  (stated over `ℂ`).
 -/
 
 open FreeLieAlgebra Module LieModule LieAlgebra

@@ -45,7 +45,8 @@ Casimir argument of [Hum] §6.3) was chosen by us; the statement is classical.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.6, §10.1, §10.7.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.6, §10.1, §10.7,
+  §10.10.
 * [Hum] J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §6.3,
   §7.2, §21.2.
 -/
@@ -174,8 +175,9 @@ theorem exists_isInternal_irreducibleModule_of_finiteDimensional :
     (isCategoryO_of_finiteDimensional hA) (isIntegrable_of_finiteDimensional hA)
 
 variable (V) in
-/-- **Weyl's theorem** for `𝔤(A)`, `A` of finite type ([Hum] §6.3, Thm.): over a field of
-characteristic zero, every submodule of a finite-dimensional `𝔤(A)`-module has a complementary
+/-- **Weyl's theorem** for `𝔤(A)`, `A` of finite type ([Hum] §6.3, Thm., stated there over an
+algebraically closed field): over a field of characteristic zero, every submodule of a
+finite-dimensional `𝔤(A)`-module has a complementary
 submodule. -/
 theorem complementedLattice_of_finiteDimensional :
     ComplementedLattice (LieSubmodule K P.KacMoodyAlgebra V) :=

@@ -48,7 +48,7 @@ symmetry `dᵢ aᵢⱼ = dⱼ aⱼᵢ`). This argument is our own (cf. [Jan] Lem
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.1.
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.1, §3.3.
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 4.
 -/
 

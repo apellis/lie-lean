@@ -33,7 +33,7 @@ character ([Kac] §9.7) is the element `ch V = ∑_μ (dim V_μ) e^μ` of the al
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.6–9.7.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.1, §9.7.
 -/
 
 open Module LieModule

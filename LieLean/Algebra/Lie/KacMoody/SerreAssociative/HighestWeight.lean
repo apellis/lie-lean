@@ -238,7 +238,8 @@ Thm. 9.11): for a symmetrizable generalized Cartan matrix `A` over a field of ch
 zero and `Λ` dominant integral, `nᵢ = ⟨Λ, αᵢ^∨⟩`, the irreducible highest-weight module `L(Λ)` is
 isomorphic to the quotient of the associative Serre algebra `𝒮` by the left ideal
 `∑ᵢ 𝒮 θᵢ^{nᵢ+1}`; the isomorphism sends `1` to `v_Λ` and intertwines left multiplication by `θᵢ`
-with the action of `fᵢ` (`serreAssocQuotientEquiv_mk_one`, `serreAssocQuotientEquiv_θ_smul`). -/
+with the action of `fᵢ` (`serreAssocQuotientEquiv_mk_one`, `serreAssocQuotientEquiv_θ_smul`).
+[Kac] states both results over `ℂ`. -/
 def serreAssocQuotientEquiv :
     (SerreAssocAlgebra K A ⧸ SerreAssocAlgebra.thetaPowLeftIdeal K A n) ≃ₗ[K]
       IrreducibleModule P Λ :=

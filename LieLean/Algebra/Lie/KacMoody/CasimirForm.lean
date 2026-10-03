@@ -54,7 +54,8 @@ the proof that the Casimir operator commutes with `𝔤(A)`: for `z ∈ 𝔤_γ`
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.1–2.4.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.3, §2.1–2.4
+  (stated over `ℂ`).
 -/
 
 open Module LieModule

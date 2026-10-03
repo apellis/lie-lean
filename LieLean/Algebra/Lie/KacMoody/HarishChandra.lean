@@ -25,10 +25,10 @@ by its Cartan projection. It is independent of the highest weight.
 
 ## Source status
 
-Reconstructed proof of the standard PBW projection/evaluation argument. Consulted Paul Garrett,
-*Harish-Chandra's homomorphism, Verma modules*, §8, definitions preceding Theorem 8.0.6,
-for the classical construction;
-those notes discuss sl₂ and sl₃, not the generality formalized here. No isomorphism,
+Reconstructed proof of the standard PBW projection/evaluation argument; for finite-dimensional
+semisimple `𝔤` over `ℂ` it is J. E. Humphreys, *Representations of semisimple Lie algebras in
+the BGG category 𝒪*, GSM 94, §1.7.
+No isomorphism,
 character classification, or finite-type character separation is assumed or claimed.
 -/
 

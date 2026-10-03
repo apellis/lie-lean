@@ -10,7 +10,7 @@ import Mathlib.Algebra.Polynomial.AlgebraMap
 # The `R`-polynomials of a Coxeter system
 
 Let `𝓗 = 𝓗_q(W)` be the Iwahori–Hecke algebra with `q` a unit (normalization
-`T_s² = (q - 1) T_s + q`). Following [KL] (2.0.a) and [HumC] §7.4–7.5, the `R`-polynomials
+`T_s² = (q - 1) T_s + q`). Following [KL] (2.0.a) and [BB] §6.1, the `R`-polynomials
 `R_{y,w}` are defined by the expansion of the inverse of `T_{w⁻¹}` (that is, of the image `T̄_w` of
 `T_w` under the bar involution) in the standard basis:
 ```
@@ -48,7 +48,6 @@ Thus `R_{y,w} = ε_y ε_w q^{ℓ(w)} · [T_y] T_{w⁻¹}⁻¹` (`IwahoriHeckeAlg
 
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184, §2.
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §7.4–7.5.
 * [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, §5.1, §6.1.
 -/
 

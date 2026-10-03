@@ -18,7 +18,7 @@ The complement `𝔥''` is chosen once and for all (`Matrix.Realization.corootCo
 
 ## Main definitions
 
-* `Matrix.Symmetrization`: a symmetrization `A = diag(ε) B` of `A` ([Kac] §2.1).
+* `Matrix.Symmetrization`: a symmetrization `A = diag(ε) B` of `A` ([Kac] (2.1.1), (2.3.1)).
 * `Matrix.Realization.corootCoord`: coordinates with respect to the simple coroots; its kernel
   `Matrix.Realization.corootCompl` is the chosen complement `𝔥''` of the span of the coroots.
 * `Matrix.Realization.bilinForm`: the symmetric bilinear form on `𝔥` of [Kac] (2.1.2)–(2.1.3).
@@ -44,7 +44,8 @@ The complement `𝔥''` is chosen once and for all (`Matrix.Realization.corootCo
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.1.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.1, §2.3
+  (stated over `ℂ`).
 -/
 
 open Module
@@ -55,7 +56,7 @@ namespace Matrix
 
 variable {ι : Type*}
 
-/-- A symmetrization of a square integer matrix `A` ([Kac] §2.1): positive rationals `εᵢ` such
+/-- A symmetrization of a square integer matrix `A` ([Kac] (2.3.1)): positive rationals `εᵢ` such
 that `A = diag(ε) B` with `B` symmetric, i.e. `εⱼ aᵢⱼ = εᵢ aⱼᵢ` for all `i, j`. The symmetric
 matrix `B` is `Matrix.Symmetrization.matrix`. -/
 structure Symmetrization (A : Matrix ι ι ℤ) where
@@ -325,7 +326,7 @@ theorem dualBilinForm_root_root (i j : ι) :
   linear_combination -this
 
 variable {P} in
-/-- `(αᵢ | αᵢ) = 2 / εᵢ` is a positive rational number ([Kac] §2.1). -/
+/-- `(αᵢ | αᵢ) = 2 / εᵢ` is a positive rational number ([Kac] (2.1.6), (2.3.3)). -/
 theorem dualBilinForm_root_self (hA : A.IsGeneralizedCartan) (i : ι) :
     P.dualBilinForm S (P.root i) (P.root i) = ((2 / S.ε i : ℚ) : K) := by
   rw [dualBilinForm_root_right, P.root_coroot, hA.diag]

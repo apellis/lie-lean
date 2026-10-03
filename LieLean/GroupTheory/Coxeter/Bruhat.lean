@@ -41,7 +41,7 @@ is the strong exchange condition (`LieLean.GroupTheory.Coxeter.Exchange`).
 
 The subword property is proved as in [BB] §2.2: the "only if" direction by the strong exchange
 and deletion conditions; for the "if" direction we use the elementary lemma
-`CoxeterSystem.BruhatLE.mul_simple_or` (`u ≤ w → u s ≤ w ∨ u s ≤ w s`, cf. [BB] §2.2 and
+`CoxeterSystem.BruhatLE.mul_simple_or` (`u ≤ w → u s ≤ w ∨ u s ≤ w s`, cf.
 [HumC] §5.9), whose proof we reconstructed from the strong exchange condition.
 
 ## References
@@ -437,7 +437,8 @@ theorem BruhatLE.eq_of_length_le {u w : W} (h : cs.BruhatLE u w) (hl : ℓ w ≤
 
 /-- If `u < w` in the Bruhat order, then there is `v` with `u ≤ v` and a Bruhat step `v → w` with
 `ℓ(v) + 1 = ℓ(w)`. This is the inductive step of the chain property ([BB] Thm. 2.2.6); the proof
-follows [BB] (induction on `ℓ(w)` using the lifting property). -/
+is ours (induction on `ℓ(w)` using the lifting property; [BB] derive Thm. 2.2.6 from Lemma 2.2.1
+and the subword property). -/
 theorem BruhatLE.exists_bruhatStep_length_eq {u w : W} (h : cs.BruhatLE u w) (hne : u ≠ w) :
     ∃ v, cs.BruhatLE u v ∧ cs.BruhatStep v w ∧ ℓ w = ℓ v + 1 := by
   induction hn : ℓ w using Nat.strong_induction_on generalizing u w with

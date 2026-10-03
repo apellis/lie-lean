@@ -62,7 +62,7 @@ Hence `dim V_λ ≤ dim V_{rᵢ λ}`, and equality follows since `rᵢ` is an in
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.6–3.7.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.3, §3.6–3.7.
 -/
 
 open Module LieModule LieAlgebra

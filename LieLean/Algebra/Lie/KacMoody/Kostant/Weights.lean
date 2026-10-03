@@ -26,8 +26,8 @@ The following argument is our own; it avoids positivity of
 the (in general indefinite) form. Write `φ = ν + ρ - ⟨m⟩`; then `λ - φ ∈ Q₊` and we argue by
 induction on its height. The key point is that for a simple reflection `rᵢ` the pair `(ν, m)` can
 be replaced by `(rᵢ ν, rᵢ ⋆ m)`, where `rᵢ ⋆ m` removes `αᵢ` from `m`, applies `rᵢ` to the other
-roots (which `rᵢ` permutes, with multiplicities, [Kac] Lemma 3.7) and adds `αᵢ` if it did not
-occur (`reflectMset`); then `ρ - ⟨rᵢ ⋆ m⟩ = rᵢ (ρ - ⟨m⟩)`, so the new `φ` is `rᵢ φ`.
+roots (which `rᵢ` permutes, with multiplicities, [Kac] Lemma 3.7, Prop. 3.7 (b)) and adds `αᵢ`
+if it did not occur (`reflectMset`); then `ρ - ⟨rᵢ ⋆ m⟩ = rᵢ (ρ - ⟨m⟩)`, so the new `φ` is `rᵢ φ`.
 * If `⟨φ, αⱼ^∨⟩ ≥ 0` for all `j`, write `λ - φ = β = ∑ cⱼ αⱼ`; then
   `(λ|λ) - (φ|φ) = (λ + φ | β) = ∑ cⱼ ⟨λ + φ, αⱼ^∨⟩ / εⱼ`, a sum of nonnegative rationals which
   are positive unless `cⱼ = 0`. Hence `φ = λ`, and then `ν = Λ`, `m = 0`, and `w = 1` works.
@@ -63,7 +63,7 @@ occur (`reflectMset`); then `ρ - ⟨rᵢ ⋆ m⟩ = rᵢ (ρ - ⟨m⟩)`, so th
   Math. **34** (1976), 37–76, Prop. 2.13, Prop. 8.3.
 * B. Kostant, *Lie algebra cohomology and the generalized Borel–Weil theorem*, Ann. of Math.
   **74** (1961), 329–387, Lemma 5.12 (finite type, via positivity).
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.7, §3.11.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.7, §3.9, §3.11, §10.1.
 -/
 
 open Module

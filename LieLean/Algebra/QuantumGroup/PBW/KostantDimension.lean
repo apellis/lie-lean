@@ -19,7 +19,7 @@ classical Serre ideal, and it maps the words of weight `ν` onto `M(Λ)_{Λ - ν
 
 `K(ν) + dim Z_ν = #{words of weight ν}`,
 
-where `K` is Kostant's partition function (`dim M(Λ)_{Λ - ν}`, [Kac] (9.7.2)) and `Z_ν` the span
+where `K` is Kostant's partition function (`dim M(Λ)_{Λ - ν}`, [Kac] (10.5.2)) and `Z_ν` the span
 of the classical Serre products of weight `ν`. Combined with the quantum Gabber–Kac dimension
 count (`QuantumGroup.finrank_plusWeightSpace`) this gives, for `v` transcendental over `ℚ`,
 
@@ -263,7 +263,7 @@ theorem finrank_plusWeightSpace_eq_kostantPartition (hv : Transcendental ℚ v) 
   omega
 
 /-- **`dim U⁺_ν` is Kostant's partition function, for any realization** ([Lus] 33.1.3 with [Kac]
-(9.7.2)): for `v` transcendental over `ℚ` and any realization `P` of the Cartan matrix
+(9.7.2), (10.5.2)): for `v` transcendental over `ℚ` and any realization `P` of the Cartan matrix
 over a field of characteristic zero, `dim U⁺_ν = K(ν)` computed for `P`. -/
 theorem finrank_plusWeightSpace_eq_kostantPartition' (hv : Transcendental ℚ v) {K H : Type*}
     [Field K] [CharZero K] [AddCommGroup H] [Module K H] (P : Realization D.cartanMatrix K H)

@@ -33,7 +33,7 @@ The quantum integers and binomial coefficients with respect to a unit of a commu
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §1.3.
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §33.1.
 -/
 
 noncomputable section

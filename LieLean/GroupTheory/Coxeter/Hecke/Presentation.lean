@@ -44,7 +44,6 @@ the free algebra `FreeAlgebra R B`), which only depends on `M` and `q`.
 
 ## References
 
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §7.1–7.3.
 * [GP] M. Geck, G. Pfeiffer, *Characters of finite Coxeter groups and Iwahori–Hecke algebras*,
   LMS Monographs 21, OUP 2000, §4.4.
 -/

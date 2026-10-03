@@ -81,9 +81,9 @@ and wrote it out as follows. Call `v ∈ V_μ` *primitive* if `eᵢ v = 0` for a
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.5, §9.3, §10.4,
-  §10.7.
-* [Car] R. W. Carter, *Lie algebras of finite and affine type*, CUP 2005, Ch. 19.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.5–2.6, §9.3, §10.1,
+  §10.4, §10.7 (stated over `ℂ`).
+* [Car] R. W. Carter, *Lie algebras of finite and affine type*, CUP 2005, §19.2.
 -/
 
 open Module LieModule

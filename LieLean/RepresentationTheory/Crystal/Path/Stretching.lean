@@ -26,7 +26,7 @@ descends to `B(π₁) ≅ B(π₂)` with `π₁ ↦ π₂` (Lemma 2.5 b)).
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. of Math. (2) 142
-(1995), no. 3, 499–525, §2, Lemmas 2.4 and 2.5, p. 504–505. The proofs here are
+(1995), no. 3, 499–525, §2, Lemmas 2.4 and 2.5, pp. 504–505. The proofs here are
 reconstructed from the closed root-operator formulas of the library.
 -/
 

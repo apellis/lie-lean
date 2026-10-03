@@ -19,7 +19,8 @@ factor `q^{-ℓ(w)}`:
   T̄_w ∈ q^{-ℓ(w)} T_w + Σ_{y < w} A[v, v⁻¹] T_y.
 ```
 We deduce the lemma behind the uniqueness of the Kazhdan–Lusztig basis ([KL] proof of Thm. 1.1,
-[Soe] proof of Thm. 2.1): with `H_y = v^{-ℓ(y)} T_y`, a bar-invariant element of
+[Soe] Behauptung 2.4, in the proof of Thm. 2.1, up to `v ↦ v⁻¹`): with `H_y = v^{-ℓ(y)} T_y`,
+a bar-invariant element of
 `Σ_y v⁻¹ A[v⁻¹] H_y` is `0`.
 
 ## Main results
@@ -134,8 +135,9 @@ theorem toFinsupp_barL_apply (h : 𝓗) (y : W) :
   rw [map_finsuppSum, map_finsuppSum, Finsupp.sum_apply]
   simp_rw [barL_smul, map_smul, Finsupp.smul_apply, smul_eq_mul]
 
-/-- **The uniqueness lemma for the Kazhdan–Lusztig basis** ([KL] proof of Thm. 1.1, [Soe] proof of
-Thm. 2.1): let `h ∈ 𝓗` be bar invariant and such that, for every `y`, the coefficient of
+/-- **The uniqueness lemma for the Kazhdan–Lusztig basis** ([KL] proof of Thm. 1.1, [Soe]
+Behauptung 2.4, up to `v ↦ v⁻¹`): let `h ∈ 𝓗` be bar invariant and such that, for every `y`, the
+coefficient of
 `H_y = v^{-ℓ(y)} T_y` in `h` lies in `v⁻¹ A[v⁻¹]` (i.e. the coefficient of `v^n` in `[T_y] h`
 vanishes for `n + ℓ(y) ≥ 0`). Then `h = 0`. -/
 theorem eq_zero_of_barL_eq_self {h : 𝓗} (hbar : barL cs h = h)

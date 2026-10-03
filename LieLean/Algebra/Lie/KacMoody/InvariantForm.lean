@@ -43,7 +43,7 @@ form `Matrix.Realization.AuxLieAlgebra.invFormAux` on `𝔤̃(A)`, whose radical
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2 (stated over `ℂ`).
 -/
 
 open Module LieModule LieAlgebra

@@ -67,7 +67,6 @@ delicate point: the `μ`-terms exactly cancel the top coefficients) is written o
 
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184, §1–2.
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §7.9–7.12.
 * [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, Ch. 5.
 * [Soe] W. Soergel, *Kazhdan–Lusztig-Polynome und eine Kombinatorik für Kipp-Moduln*,
   Represent. Theory **1** (1997), 37–68, §2.

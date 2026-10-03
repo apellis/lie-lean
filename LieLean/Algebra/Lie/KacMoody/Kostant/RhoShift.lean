@@ -39,7 +39,8 @@ Finally `x ↦ x v₀` is injective on `𝔫₋` (PBW).
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.4–2.6, §9.2.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.4–2.6, §9.2
+  (stated over `ℂ`).
 -/
 
 open Module LieModule

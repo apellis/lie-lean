@@ -58,7 +58,7 @@ The splitting of ideals `I ⊆ 𝔯` as `(I ∩ 𝔫̃₋) ⊕ (I ∩ 𝔫̃₊)
 ## References
 
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.2–1.3, §3.3–3.6,
-  §9.11.
+  §9.11 (stated over `ℂ`).
 * [GK] O. Gabber, V. G. Kac, *On defining relations of certain infinite-dimensional Lie
   algebras*, Bull. Amer. Math. Soc. (N.S.) **5** (1981), 185–189.
 -/
@@ -122,7 +122,8 @@ theorem weightSpaceOfMap_eq_map {L' : Type*} [LieRing L'] [LieAlgebra K L']
 
 variable [CharZero K]
 
-/-- An ideal `I ⊆ 𝔯` of `𝔤̃(A)` splits as `I = (I ∩ 𝔫̃₋) ⊕ (I ∩ 𝔫̃₊)` ([Kac] Thm. 1.2 (e)). -/
+/-- An ideal `I ⊆ 𝔯` of `𝔤̃(A)` splits as `I = (I ∩ 𝔫̃₋) ⊕ (I ∩ 𝔫̃₊)` (proof of [Kac]
+Thm. 1.2 (e), where this is stated for `I = 𝔯`). -/
 theorem toSubmodule_eq_inf_sup_inf {I : LieIdeal K P.AuxLieAlgebra} (hI : I ≤ maxIdeal P) :
     I.toSubmodule =
       I.toSubmodule ⊓ LinearMap.range (fHom P : FreeLieAlgebra K ι →ₗ[K] P.AuxLieAlgebra) ⊔
@@ -428,7 +429,8 @@ theorem rootSpace_pos_le [CharZero K] {μ : Dual K H} (hμ : μ ∈ P.posWeights
 
 /-! ### The Chevalley involution -/
 
-/-- The Chevalley involution of `𝔤̂(A)`: `eᵢ ↦ -fᵢ`, `fᵢ ↦ -eᵢ`, `h ↦ -h` ([Kac] (1.3.4)). -/
+/-- The Chevalley involution of `𝔤̂(A)`: `eᵢ ↦ -fᵢ`, `fᵢ ↦ -eᵢ`, `h ↦ -h`, induced
+from that of `𝔤̃(A)` ([Kac] Thm. 1.2 (c); cf. (1.3.4) for `𝔤(A)`). -/
 def chevalleyInvolution : P.SerrePresentedAlgebra →ₗ⁅K⁆ P.SerrePresentedAlgebra :=
   LieIdeal.lift _ ((π P).comp (AuxLieAlgebra.chevalleyInvolution P)) fun x hx ↦ by
     simp only [LieHom.mem_ker, LieHom.comp_apply]

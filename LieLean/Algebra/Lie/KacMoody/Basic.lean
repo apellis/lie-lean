@@ -34,7 +34,8 @@ ideal `𝔯` meeting `𝔥` trivially ([Kac] §1.3).
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.2–1.3, §3.3.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.2–1.3, §3.3
+  (stated over `ℂ`).
 -/
 
 open FreeLieAlgebra Module LieModule LieAlgebra

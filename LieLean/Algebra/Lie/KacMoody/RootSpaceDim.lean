@@ -31,7 +31,8 @@ For `α ∈ Q₊ \ {0}`, the root space `𝔤̃_α` is spanned by the iterated b
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Thm. 1.2.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Thm. 1.2, (1.3.3)
+  (stated over `ℂ`).
 -/
 
 open FreeLieAlgebra Module LieModule LieAlgebra
@@ -184,7 +185,8 @@ lemma eq_replicate_of_counts_eq {j : ι} {l : List ι} {i : ι} {n : ℕ}
   simp only [List.length_cons] at hlen
   omega
 
-/-- `𝔤̃_{k αᵢ} = 0` for `k ≥ 2` ([Kac] §1.3). -/
+/-- `𝔤̃_{k αᵢ} = 0` for `k ≥ 2` ([Kac] (1.3.3), stated there for `𝔤(A)`; the same
+argument applies to `𝔤̃(A)`). -/
 theorem rootSpace_nsmul_root_eq_bot (i : ι) {n : ℕ} (hn : 2 ≤ n) :
     rootSpace P (n • P.root i) = ⊥ := by
   have hw : n • P.root i = P.rootOf (n • Pi.single i 1) := by rw [map_nsmul, rootOf_single]
@@ -214,7 +216,8 @@ lemma e_ne_zero (i : ι) : e P i ≠ 0 := by
   simp only [FreeLieAlgebra.toFreeAlgebra_of] at this
   exact FreeAlgebra.ι_ne_zero i this
 
-/-- `𝔤̃_{αᵢ} = K eᵢ` ([Kac] §1.3). -/
+/-- `𝔤̃_{αᵢ} = K eᵢ` ([Kac] (1.3.3), stated there for `𝔤(A)`; the same argument
+applies to `𝔤̃(A)`). -/
 theorem rootSpace_root (i : ι) : rootSpace P (P.root i) = K ∙ e P i := by
   refine le_antisymm ?_ ((Submodule.span_singleton_le_iff_mem _ _).mpr (e_mem_rootSpace P i))
   have hw : P.root i = P.rootOf (Pi.single i 1) := by simp

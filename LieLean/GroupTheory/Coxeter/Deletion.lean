@@ -9,7 +9,7 @@ import LieLean.GroupTheory.Coxeter.Exchange
 # The strong exchange condition for arbitrary words; the deletion condition
 
 Let `cs : CoxeterSystem M W` be a Coxeter system. `LieLean.GroupTheory.Coxeter.Exchange` proves,
-via the reflection representation of [BB] §1.4, that for a *reduced* word `ω` the right inversions
+via the reflection representation of [BB] §1.3, that for a *reduced* word `ω` the right inversions
 of `π ω` are the entries of the right inversion sequence of `ω`. Here we extend this to arbitrary
 words: a reflection `t` is a right inversion of `π ω` if and only if it occurs an odd number of
 times in the right inversion sequence of `ω`. This gives the strong exchange condition in the

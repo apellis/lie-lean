@@ -40,7 +40,8 @@ via `Ω` (Lemma 9.8) are those of its proof in [Kac] §9.8, written out by us.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.5–2.6, §9.6–9.8.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2, §2.5–2.6,
+  §9.6–9.8 (stated over `ℂ`).
 -/
 
 open Module LieModule
