@@ -247,8 +247,9 @@ include hA
 
 /-- **Facet exclusion** (integral weights, finite type; Humphreys, GSM 94, Lemma 7.5).
 Let `λ + ρ` and `μ + ρ` be antidominant integral, with every simple wall of `λ + ρ` a wall of
-`μ + ρ` (`μ` lies in the closure of the facet of `λ`), and let `ν = z (μ - λ)`, `z ∈ W`, be dominant. If `ν'` is a
-weight of `L(ν)` and `w·λ + ν' = x·μ` for `w, x ∈ W`, then `w·λ + ν' = w·μ`. Antidominance and
+`μ + ρ` (`μ` lies in the closure of the facet of `λ`), and let `ν = z (μ - λ)`, `z ∈ W`, be
+dominant. If `ν'` is a weight of `L(ν)` and `w·λ + ν' = x·μ` for `w, x ∈ W`, then
+`w·λ + ν' = w·μ`. Antidominance and
 the facet condition are stated on simple coroots; for antidominant integral weights this is
 equivalent to the conditions on all positive coroots used in the source. -/
 theorem weylDot_add_eq_weylDot {lam μ ν : Dual K H}
