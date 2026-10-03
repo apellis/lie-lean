@@ -171,8 +171,9 @@ lemma list_sum_apply (L : List (Dual ℝ H)) (x : H) : L.sum x = (L.map fun f =>
   | cons f L ih => simp [ih]
 
 /-- The coroots of a realization of a nonsingular matrix span `𝔥`. -/
-theorem span_coroot_eq_top_of_det_ne_zero [DecidableEq ι] [Nonempty ι] (P : Realization A ℝ H)
-    (hdet : (A.map (Int.cast : ℤ → ℝ)).det ≠ 0) : Submodule.span ℝ (Set.range P.coroot) = ⊤ := by
+theorem span_coroot_eq_top_of_det_map_ne_zero [DecidableEq ι] [Nonempty ι]
+    (P : Realization A ℝ H) (hdet : (A.map (Int.cast : ℤ → ℝ)).det ≠ 0) :
+    Submodule.span ℝ (Set.range P.coroot) = ⊤ := by
   have hrank : (A.map (Int.cast : ℤ → ℝ)).rank = Fintype.card ι :=
     Matrix.rank_of_isUnit _ ((Matrix.isUnit_iff_isUnit_det _).mpr (isUnit_iff_ne_zero.mpr hdet))
   have hfin := P.finrank_add_rank

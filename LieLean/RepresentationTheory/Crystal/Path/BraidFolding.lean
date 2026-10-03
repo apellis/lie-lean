@@ -206,7 +206,7 @@ theorem reflection_braid_four_of_B2 {B : Matrix (Fin 2) (Fin 2) ℤ} {hB : B.IsG
   let R := Realization.std (CartanMatrix.A 3) ℝ
   have hR := CartanMatrix.isGeneralizedCartan_A_three
   let F : FoldMap Q R := FoldMap.ofSpan Q R
-    (span_coroot_eq_top_of_det_ne_zero R CartanMatrix.det_map_A_three_ne_zero)
+    (span_coroot_eq_top_of_det_map_ne_zero R CartanMatrix.det_map_A_three_ne_zero)
     ![0, 1, 0] ![[0, 2], [1]] (by decide) (by decide) (by decide)
     (fun a b h1 h2 => by fin_cases a <;> fin_cases b <;> simp_all [CartanMatrix.A]) (by
       intro b k
@@ -216,7 +216,7 @@ theorem reflection_braid_four_of_B2 {B : Matrix (Fin 2) (Fin 2) ℤ} {hB : B.IsG
     simp [h01, h10, hB.diag]
     norm_num
   have hinj := F.fold_injective (hA := hB) (hA' := hR)
-    (F.injective_of_span (span_coroot_eq_top_of_det_ne_zero Q hdetQ))
+    (F.injective_of_span (span_coroot_eq_top_of_det_map_ne_zero Q hdetQ))
   have hψ := F.isDominantIntegral hμ
   have hmem : F.fold (hA' := hR) π ∈
       (straightLine (R.pathSpace hR) ⟨F.toLinearMap μ, hψ.mem_integralWeights⟩).component := by
@@ -257,7 +257,7 @@ theorem reflection_braid_six_of_G2 {B : Matrix (Fin 2) (Fin 2) ℤ} {hB : B.IsGe
   let R := Realization.std (CartanMatrix.D 4) ℝ
   have hR := CartanMatrix.isGeneralizedCartan_D_four
   let F : FoldMap Q R := FoldMap.ofSpan Q R
-    (span_coroot_eq_top_of_det_ne_zero R CartanMatrix.det_map_D_four_ne_zero)
+    (span_coroot_eq_top_of_det_map_ne_zero R CartanMatrix.det_map_D_four_ne_zero)
     ![0, 1, 0, 0] ![[0, 2, 3], [1]] (by decide) (by decide) (by decide)
     (fun a b h1 h2 => by fin_cases a <;> fin_cases b <;> simp_all [CartanMatrix.D]) (by
       intro b k
@@ -267,7 +267,7 @@ theorem reflection_braid_six_of_G2 {B : Matrix (Fin 2) (Fin 2) ℤ} {hB : B.IsGe
     simp [h01, h10, hB.diag]
     norm_num
   have hinj := F.fold_injective (hA := hB) (hA' := hR)
-    (F.injective_of_span (span_coroot_eq_top_of_det_ne_zero Q hdetQ))
+    (F.injective_of_span (span_coroot_eq_top_of_det_map_ne_zero Q hdetQ))
   have hψ := F.isDominantIntegral hμ
   have hmem : F.fold (hA' := hR) π ∈
       (straightLine (R.pathSpace hR) ⟨F.toLinearMap μ, hψ.mem_integralWeights⟩).component := by
