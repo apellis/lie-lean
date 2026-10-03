@@ -7,7 +7,7 @@ import LieLean.RepresentationTheory.Crystal.Path.Levi
 import LieLean.RepresentationTheory.Crystal.WeylGroupAction
 
 /-!
-# Kashiwara's reflections on path crystals: braid relations and the Weyl group action
+# Kashiwara's reflections on path crystals: braid relations
 
 Kashiwara's reflections `Sᵢ` (`Crystal.reflection`) act on the crystal of Littelmann paths and
 on each `B(λ)`.
@@ -18,20 +18,23 @@ on each `B(λ)`.
 * `LittelmannPath.rootStep_bind_comm`: root operators of colours `i, j` with
   `⟨αⱼ, αᵢ^∨⟩ = ⟨αᵢ, αⱼ^∨⟩ = 0` commute on all paths; hence
   `LittelmannPath.reflection_comm`: `Sᵢ Sⱼ = Sⱼ Sᵢ` (the braid relation for `mᵢⱼ = 2`).
-* `Matrix.Realization.pathWeylAction`: for a realization of a generalized Cartan matrix over `ℝ`
-  and dominant integral `Λ`, the braid relations for the pairs with `mᵢⱼ ∈ {3, 4, 6}`
-  (`PathBraidRelations`) extend the `Sᵢ` to an action `W →* Perm B(Λ)` with `sᵢ ↦ Sᵢ`
-  (`pathWeylAction_simple`), `wt (w • b) = w (wt b)` (`coe_wt_pathWeylAction`) and
-  `w • π_Λ = π_{wΛ}` (`pathWeylAction_top`). The relations for `mᵢⱼ = 1, 2, ∞` are proved
-  (`isLiftable_pathReflectionPerm`), so the action is unconditional when no pair has
-  `aᵢⱼ aⱼᵢ ∈ {1, 2, 3}` (`pathBraidRelations_of_forall`), e.g. for `A₁ × ⋯ × A₁` and for
-  generalized Cartan matrices all of whose nonzero off-diagonal products are `≥ 4`.
+* `Matrix.Realization.PathBraidRelations`: for a realization of a generalized Cartan matrix over
+  `ℝ` and dominant integral `Λ`, the braid relations `(SᵢSⱼ)^{mᵢⱼ} = 1` on `B(Λ)` for the pairs
+  with `mᵢⱼ ∈ {3, 4, 6}`. With them the `Sᵢ` satisfy all Coxeter relations of the Weyl group
+  (`isLiftable_pathReflectionPerm`): the relations for `mᵢⱼ = 1, 2, ∞` are proved here. They are
+  vacuous when no pair has `aᵢⱼ aⱼᵢ ∈ {1, 2, 3}` (`pathBraidRelations_of_forall`), e.g. for
+  `A₁ × ⋯ × A₁` and for generalized Cartan matrices all of whose nonzero off-diagonal products
+  are `≥ 4`.
 * `Matrix.Realization.LSGeneralClass.LeviMap.iterate_reflection_eq_of_levi`: reduction of the
   braid relation for `Sᵢ, Sⱼ` on `B(Λ)` to the rank-two Levi path crystals `B_J(μ)`,
   `J = {i, j}`, via Levi restriction.
 
-The braid relations of lengths `3, 4, 6` on the rank-two crystals `B_J(μ)` (types `A₂`, `B₂`,
-`G₂`) are **not** proved here.
+The braid relations of lengths `3, 4, 6` (types `A₂`, `B₂`, `G₂`) are proved in
+`LieLean.RepresentationTheory.Crystal.Path.BraidA2` and, by folding,
+`LieLean.RepresentationTheory.Crystal.Path.BraidFolding`
+(`Matrix.Realization.pathBraidRelations`, every generalized Cartan matrix); the resulting action
+of the Weyl group on `B(Λ)` is `Matrix.Realization.pathWeylAction` in
+`LieLean.RepresentationTheory.Crystal.Path.WeylGroupAction`.
 
 ## References
 
@@ -284,66 +287,6 @@ theorem isLiftable_pathReflectionPerm (hΛ : P.IsDominantIntegral Λ)
     exact Crystal.IsSeminormal.reflectionPerm_mul_pow_two _
       (pathCrystal_reflection_comm hA hΛ hA0)
   · exact h i j hij hA0 hM
-
-variable (P) in
-/-- **Kashiwara's action of the Weyl group on `B(Λ)`** ([Kas94] §7, [Lit95] §8
-Thm. 8.1): given the braid relations of lengths `3, 4, 6` (`PathBraidRelations`), the reflections
-`Sᵢ` extend to a homomorphism `W →* Perm B(Λ)` with `sᵢ ↦ Sᵢ`. -/
-noncomputable def pathWeylAction (hΛ : P.IsDominantIntegral Λ)
-    (h : P.PathBraidRelations hA hΛ) :
-    P.weylGroup hA →*
-      Equiv.Perm (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component :=
-  (isSeminormal_pathCrystal hA hΛ).weylAction (P.coxeterSystem hA)
-    (isLiftable_pathReflectionPerm hA hΛ h)
-
-theorem pathWeylAction_simple (hΛ : P.IsDominantIntegral Λ) (h : P.PathBraidRelations hA hΛ)
-    (i : ι) : P.pathWeylAction hA hΛ h ((P.coxeterSystem hA).simple i) =
-      pathReflectionPerm P hA hΛ i :=
-  Crystal.IsSeminormal.weylAction_simple _ _ _ i
-
-/-- The action is compatible with weights: `wt (w • b) = w (wt b)`. -/
-theorem coe_wt_pathWeylAction (hΛ : P.IsDominantIntegral Λ) (h : P.PathBraidRelations hA hΛ)
-    (w : P.weylGroup hA)
-    (b : (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component) :
-    ((P.pathWeylAction hA hΛ h w b : LittelmannPath (P.pathSpace hA)).wt : Dual ℝ H) =
-      (w : Dual ℝ H ≃ₗ[ℝ] Dual ℝ H) (b.1.wt : Dual ℝ H) := by
-  refine (P.coxeterSystem hA).simple_induction_left
-    (p := fun w => ∀ b, ((P.pathWeylAction hA hΛ h w b : LittelmannPath (P.pathSpace hA)).wt :
-      Dual ℝ H) = (w : Dual ℝ H ≃ₗ[ℝ] Dual ℝ H) (b.1.wt : Dual ℝ H)) w ?_ ?_ b
-  · intro b
-    simp
-  · intro w i ih b
-    rw [map_mul, Equiv.Perm.mul_apply, pathWeylAction_simple,
-      Crystal.IsSeminormal.reflectionPerm_apply]
-    have hw := (isSeminormal_pathCrystal hA hΛ).wt_reflection i (P.pathWeylAction hA hΛ h w b)
-    change ((P.pathCrystal hA hΛ).wt _ : Dual ℝ H) = _
-    rw [hw, coe_reflection_cartanDatum]
-    change P.reflection hA i (((P.pathWeylAction hA hΛ h w b :
-      LittelmannPath (P.pathSpace hA)).wt : Dual ℝ H)) = _
-    rw [ih, Subgroup.coe_mul, coxeterSystem_simple, LinearEquiv.mul_apply]
-
-/-- The action on the extremal paths: `w • π_Λ = π_{wΛ}`. -/
-theorem pathWeylAction_top (hΛ : P.IsDominantIntegral Λ) (h : P.PathBraidRelations hA hΛ)
-    (w : P.weylGroup hA) :
-    ∃ hw : (w : Dual ℝ H ≃ₗ[ℝ] Dual ℝ H) Λ ∈ P.integralWeights,
-      (P.pathWeylAction hA hΛ h w ⟨_, mem_component_self _⟩ :
-        LittelmannPath (P.pathSpace hA)) = straightLine (P.pathSpace hA) ⟨_, hw⟩ := by
-  refine (P.coxeterSystem hA).simple_induction_left
-    (p := fun w => ∃ hw : (w : Dual ℝ H ≃ₗ[ℝ] Dual ℝ H) Λ ∈ P.integralWeights,
-      (P.pathWeylAction hA hΛ h w ⟨_, mem_component_self _⟩ :
-        LittelmannPath (P.pathSpace hA)) = straightLine (P.pathSpace hA) ⟨_, hw⟩) w ?_ ?_
-  · exact ⟨hΛ.mem_integralWeights, by simp⟩
-  · rintro w i ⟨hw, heq⟩
-    set x := (P.cartanDatum hA).reflection i ⟨_, hw⟩ with hx
-    have hxc : (x : Dual ℝ H) =
-        (((P.coxeterSystem hA).simple i * w : P.weylGroup hA) : Dual ℝ H ≃ₗ[ℝ] Dual ℝ H) Λ := by
-      rw [hx, coe_reflection_cartanDatum, Subgroup.coe_mul, coxeterSystem_simple,
-        LinearEquiv.mul_apply]
-    refine ⟨hxc ▸ x.2, ?_⟩
-    rw [map_mul, Equiv.Perm.mul_apply, pathWeylAction_simple,
-      Crystal.IsSeminormal.reflectionPerm_apply, coe_reflection_pathCrystal, heq,
-      reflection_straightLine]
-    exact congrArg _ (Subtype.ext hxc)
 
 end Matrix.Realization
 

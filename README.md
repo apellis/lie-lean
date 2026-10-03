@@ -47,8 +47,8 @@ declaration names and the list of upstreaming candidates.
 
 ### Phase 2 progress
 
-M10 (Coxeter theory), M11 (Hecke/Kazhdan–Lusztig theory) and M13 (Lie algebra homology)
-are complete at the roadmap's stated scope. M12, M14 and M15 remain in progress.
+M10 (Coxeter theory), M11 (Hecke/Kazhdan–Lusztig theory), M13 (Lie algebra homology) and M14
+(crystals) are complete at the roadmap's stated scope. M12 and M15 remain in progress.
 Further proved results include:
 
 * **Homology and BGG:** concrete/categorical Chevalley–Eilenberg comparison, coefficient
@@ -68,9 +68,13 @@ Further proved results include:
 * **Littelmann paths:** Proposition 5.7, the straight-path concatenation theorem, and the
   isomorphism theorem for rational piecewise-linear dominant paths are proved. The crystal-level
   Littlewood–Richardson decomposition is unconditional over `ℝ` with finite-dimensional Cartan
-  space (`nonempty_equiv_sigma_of_finiteDimensional`). Levi restriction and the simply-laced
-  Weyl-group action are proved. The `B₂`/`G₂` path-crystal braid relations and identification with
-  Kashiwara's crystal bases remain open; arbitrary continuous dominant paths are not covered.
+  space (`nonempty_equiv_sigma_of_finiteDimensional`). Levi restriction and Kashiwara's
+  Weyl-group action on `B(Λ)` are proved for every generalized Cartan matrix (the `B₂`/`G₂` braid
+  relations by folding). Normal crystals are defined relative to the path model
+  (`Crystal.IsNormal`): path crystals, disjoint unions and tensor products of normal crystals are
+  normal, and the Weyl group acts on every normal crystal (`Crystal.IsNormal.weylAction`). The
+  identification of path crystals with crystals of crystal bases is not formalized; arbitrary
+  continuous dominant paths are not covered.
 * **Quantum groups:** finite-dimensional generic quantum `sl₂` classification; Lusztig's `Tᵢ`
   at every node under explicit nonvanishing hypotheses (in particular, nonzero parameter not a
   root of unity); the `G₂` length-six relation; and Artin actions for every finite-type Cartan
