@@ -28,9 +28,9 @@ By the graded PBW theorem (`UniversalEnvelopingAlgebra.symmetricAlgebraEquivAsso
 ## References
 
 * J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*, GSM 94,
-  §0.5 and §4.1 (check) (the statement for `U(𝔫⁻)`, used to show that homomorphisms of Verma
-  modules are injective).
-* J. Dixmier, *Enveloping algebras*, Cor. 2.3.9 (check) (over a field).
+  §0.5, §4.1 and Theorem 4.2(a) (the statement for `U(𝔫⁻)`, used to show that homomorphisms
+  of Verma modules are injective).
+* J. Dixmier, *Enveloping algebras*, Cor. 2.3.9 (over a field).
 -/
 
 noncomputable section
@@ -60,8 +60,8 @@ theorem exists_toGr_ne_zero {u : UniversalEnvelopingAlgebra R L} (hu : u ≠ 0) 
 
 /-- If `L` is a free module over a ring `R` without zero divisors, then `U(L)` has no zero
 divisors. This follows from the graded PBW theorem `gr U(L) ≅ Sym(L)`. See Humphreys,
-*Representations of semisimple Lie algebras in the BGG category 𝒪*, §0.5 (check), and Dixmier,
-*Enveloping algebras*, Cor. 2.3.9 (check) (both over a field). -/
+*Representations of semisimple Lie algebras in the BGG category 𝒪*, §0.5, and Dixmier,
+*Enveloping algebras*, Cor. 2.3.9 (both over a field). -/
 instance instNoZeroDivisors [NoZeroDivisors R] [Module.Free R L] :
     NoZeroDivisors (UniversalEnvelopingAlgebra R L) := by
   have : NoZeroDivisors (AssociatedGraded R L) :=
@@ -82,8 +82,8 @@ instance instNontrivial [Nontrivial R] : Nontrivial (UniversalEnvelopingAlgebra 
 
 /-- **The universal enveloping algebra is a domain**: if `L` is a free module over a domain `R`
 (e.g. any Lie algebra over a field), then `U(L)` is a domain. See Humphreys, *Representations
-of semisimple Lie algebras in the BGG category 𝒪*, §0.5 (check), and Dixmier, *Enveloping
-algebras*, Cor. 2.3.9 (check). -/
+of semisimple Lie algebras in the BGG category 𝒪*, §0.5, and Dixmier, *Enveloping
+algebras*, Cor. 2.3.9. -/
 instance instIsDomain [IsDomain R] [Module.Free R L] : IsDomain (UniversalEnvelopingAlgebra R L) :=
   NoZeroDivisors.to_isDomain _
 

@@ -31,7 +31,7 @@ remain open. This module does not claim full Proposition 5.6.
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
 (1995), Definition 5.3, Remark 5.4, Proposition 5.6, pp. 514–516.
-The the proofs are reconstructed.
+The proofs are reconstructed.
 -/
 
 open Module Set LittelmannPath LittelmannPath.FiniteConstruction

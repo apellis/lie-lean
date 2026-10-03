@@ -16,7 +16,8 @@ zero and `v ∈ k` transcendental over `ℚ` (Lusztig's case is `k = ℚ(v)`), `
 (`QuantumGroup.IrreducibleModule`) and `L̃_q(Λ) = M_q(Λ) ⧸ Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ`
 (`QuantumGroup.FPowQuotient`).
 
-**Theorem** ([Lus] 6.2.2, 6.2.3, 33.1 (check); [Jan] 5.10, 5.15 (check)).
+**Theorem** ([Lus] 3.5.6, 6.2.3 (a), 33.1.3 (d), for `Y`- and `X`-regular root data over `ℚ(v)`;
+[Jan] 5.15).
 1. `L̃_q(Λ) = L_q(Λ)`, i.e. `M'_q(Λ) = Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ`
    (`QuantumGroup.VermaModule.maxSubmodule_eq_fPowSubmodule`,
    `QuantumGroup.FPowQuotient.equivIrreducibleModule`).
@@ -25,10 +26,9 @@ zero and `v ∈ k` transcendental over `ℚ` (Lusztig's case is `k = ℚ(v)`), `
    characteristic zero) with the same highest weight
    (`QuantumGroup.IrreducibleModule.finrank_weightSpace_eq`).
 
-The theorem numbers above are from memory and should be checked; [Jan] treats finite type only.
-We could not consult the proofs in [Lus] or [Jan]; the following argument is our own
-reconstruction, for arbitrary symmetrizable Cartan data, reusing the specialization machinery
-of the quantum Gabber–Kac theorem (`LieLean.Algebra.QuantumGroup.GabberKac`).
+[Jan] treats finite type only. The following argument is our own reconstruction, for arbitrary
+symmetrizable Cartan data, reusing the specialization machinery of the quantum Gabber–Kac
+theorem (`LieLean.Algebra.QuantumGroup.GabberKac`).
 
 ## Proof
 
@@ -54,7 +54,7 @@ Put `nᵢ = ⟨i, Λ⟩`. Through `y ↦ y⁻ v_Λ`, `'f ⧸ J ≅ M_q(Λ)` (`J`
      to `ℚ[T, T⁻¹]` (`LusztigF.serreProductL`) with quantum analogues in `Z_ν`; specialization.
   3. `ker Φ₀ ⊆ Z⁰_ν`: by nondegeneracy of the contravariant form, `ker Φ₀` is the kernel of
      `ℚ⟨θ⟩_ν → L(Λ)`, which is `Z⁰_ν` by the associative presentation
-     `L(Λ) ≅ 𝒮 ⧸ Σᵢ 𝒮 θᵢ^{nᵢ+1}` ([Kac] Thm. 9.11, Cor. 10.4 (check);
+     `L(Λ) ≅ 𝒮 ⧸ Σᵢ 𝒮 θᵢ^{nᵢ+1}` ([Kac] Thm. 9.11, Cor. 10.4;
      `LusztigF.mem_tildeSpan_of_shapovalovMap_eq_zero`).
   Hence `dim ker Φ = |W_ν| - rank Φ ≤ |W_ν| - rank Φ₀ = dim ker Φ₀ ≤ dim Z⁰_ν ≤ dim Z_ν
   ≤ dim ker Φ`: all are equal, `ker Φ = Z_ν` and `rank Φ = rank Φ₀`
@@ -77,10 +77,10 @@ Put `nᵢ = ⟨i, Λ⟩`. Through `y ↦ y⁻ v_Λ`, `'f ⧸ J ≅ M_q(Λ)` (`J`
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.5, §6.2, §33.1 (check).
-* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 5 (check).
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.5, §6.2, §33.1.
+* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 5.
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.4, Thm. 9.11,
-  Cor. 10.4 (check).
+  Cor. 10.4.
 -/
 
 noncomputable section
@@ -242,7 +242,7 @@ theorem shapovalovRank_qCoeff [Finite I] (hv : Transcendental ℚ v) (hR : R.IsX
       shapovalovRank (classicalCoeff ℚ D fun i ↦ (Λ (R.coroot i)).toNat) ν :=
   (shapovalov_comparison hv hR hΛ ν).2
 
-/-- **Quantum target 2** ([Lus] 6.2.2, 33.1 (check); [Jan] 5.10 (check)). For a Cartan datum
+/-- **Quantum target 2** ([Lus] 3.5.6, 6.2.3 (a); [Jan] 5.15, finite type). For a Cartan datum
 with finitely many simple roots, an `X`-regular root datum, `v` transcendental over `ℚ` and `Λ`
 dominant, the maximal submodule of the Verma module `M_q(Λ)` is `Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ`. -/
 theorem maxSubmodule_eq_fPowSubmodule [Finite I] (hv : Transcendental ℚ v) (hR : R.IsXRegular)
@@ -260,9 +260,9 @@ theorem maxSubmodule_eq_fPowSubmodule [Finite I] (hv : Transcendental ℚ v) (hR
 
 end VermaModule
 
-/-- **`L̃_q(Λ) ≅ L_q(Λ)`** ([Lus] 6.2.2, 33.1 (check); [Jan] 5.10 (check)): for `v` transcendental
-over `ℚ`, an `X`-regular root datum with finitely many simple roots and `Λ` dominant, the
-surjection `L̃_q(Λ) = M_q(Λ) ⧸ Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ → L_q(Λ)` is injective. -/
+/-- **`L̃_q(Λ) ≅ L_q(Λ)`** ([Lus] 3.5.6, 6.2.3 (a); [Jan] 5.15, finite type): for
+`v` transcendental over `ℚ`, an `X`-regular root datum with finitely many simple roots and `Λ`
+dominant, the surjection `L̃_q(Λ) = M_q(Λ) ⧸ Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ → L_q(Λ)` is injective. -/
 theorem FPowQuotient.toIrreducibleModule_injective [Finite I] (hv : Transcendental ℚ v)
     (hR : R.IsXRegular) (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (hΛ : ∀ i, 0 ≤ Λ (R.coroot i)) :
     Function.Injective (FPowQuotient.toIrreducibleModule hR hv' hΛ) := by
@@ -274,8 +274,8 @@ theorem FPowQuotient.toIrreducibleModule_injective [Finite I] (hv : Transcendent
     VermaModule.maxSubmodule_eq_fPowSubmodule hv hR hΛ] at hx
   exact (Submodule.Quotient.mk_eq_zero _).2 hx
 
-/-- The isomorphism `L̃_q(Λ) ≃ L_q(Λ)` of `U`-modules (quantum target 2, [Lus] 6.2.2, 33.1
-(check)), for `v` transcendental over `ℚ`, an `X`-regular root datum with finitely many simple
+/-- The isomorphism `L̃_q(Λ) ≃ L_q(Λ)` of `U`-modules (quantum target 2, [Lus] 6.2.3 (a)),
+for `v` transcendental over `ℚ`, an `X`-regular root datum with finitely many simple
 roots and `Λ` dominant. -/
 def FPowQuotient.equivIrreducibleModule [Finite I] (hv : Transcendental ℚ v) (hR : R.IsXRegular)
     (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (hΛ : ∀ i, 0 ≤ Λ (R.coroot i)) :
@@ -284,11 +284,11 @@ def FPowQuotient.equivIrreducibleModule [Finite I] (hv : Transcendental ℚ v) (
     ⟨FPowQuotient.toIrreducibleModule_injective hv hR hv' hΛ,
       FPowQuotient.toIrreducibleModule_surjective hR hv' hΛ⟩
 
-/-- **The characters of `L_q(Λ)` are classical** ([Lus] 6.2.3, 33.1 (check); [Jan] 5.15
-(check)). Let `(I, ·)` be a Cartan datum with `I` finite, `R` an `X`-regular root datum, `v ∈ k`
-transcendental over `ℚ` (`k` of characteristic zero) and `Λ` dominant. Let `L(Λ')` be the
-irreducible highest-weight module of the Kac–Moody algebra `𝔤(A)` of the Cartan matrix `A` of the
-datum, for any realization `P` of `A` over any field `K` of characteristic zero, with
+/-- **The characters of `L_q(Λ)` are classical** ([Lus] 6.2.3 (a), 33.1.3 (d); [Jan] 5.15
+(finite type)). Let `(I, ·)` be a Cartan datum with `I` finite, `R` an `X`-regular root
+datum, `v ∈ k` transcendental over `ℚ` (`k` of characteristic zero) and `Λ` dominant. Let `L(Λ')` be
+the irreducible highest-weight module of the Kac–Moody algebra `𝔤(A)` of the Cartan matrix `A` of
+the datum, for any realization `P` of `A` over any field `K` of characteristic zero, with
 `⟨Λ', αᵢ^∨⟩ = ⟨i, Λ⟩`. Then for every `ν ∈ ℕ[I]`,
 `dim L_q(Λ)^{Λ - Σ νᵢ i'} = dim L(Λ')_{Λ' - Σ νᵢ αᵢ}`. -/
 theorem IrreducibleModule.finrank_weightSpace_eq [Fintype I] (hv : Transcendental ℚ v)
@@ -309,7 +309,7 @@ theorem IrreducibleModule.finrank_weightSpace_eq [Fintype I] (hv : Transcendenta
 
 /-! ### Lusztig's case `k = ℚ(v)` -/
 
-/-- **Quantum target 2 over `ℚ(v)`** ([Lus] 6.2.2, 33.1 (check)): for an `X`-regular root datum
+/-- **Quantum target 2 over `ℚ(v)`** ([Lus] 3.5.6, 6.2.3 (a)): for an `X`-regular root datum
 with finitely many simple roots and `Λ` dominant, the maximal submodule of the Verma module
 `M_q(Λ)` over `ℚ(v)` is `Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ`, i.e. `L̃_q(Λ) = L_q(Λ)`. -/
 theorem VermaModule.maxSubmodule_eq_fPowSubmodule_ratFunc [Finite I] (hR : R.IsXRegular)
@@ -318,7 +318,7 @@ theorem VermaModule.maxSubmodule_eq_fPowSubmodule_ratFunc [Finite I] (hR : R.IsX
   haveI : NeZero (RatFunc.X : RatFunc ℚ) := ⟨RatFunc.X_ne_zero⟩
   maxSubmodule_eq_fPowSubmodule transcendental_ratFunc_X hR hΛ
 
-/-- **The characters of `L_q(Λ)` over `ℚ(v)` are classical** ([Lus] 6.2.3, 33.1 (check)): for an
+/-- **The characters of `L_q(Λ)` over `ℚ(v)` are classical** ([Lus] 6.2.3 (a), 33.1.3 (d)): for an
 `X`-regular root datum with finitely many simple roots and `Λ` dominant,
 `dim L_q(Λ)^{Λ - Σ νᵢ i'} = dim L(Λ')_{Λ' - Σ νᵢ αᵢ}` for the classical irreducible module
 `L(Λ')` of `𝔤(A)` (any realization over any field of characteristic zero) with

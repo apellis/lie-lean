@@ -14,11 +14,11 @@ import Mathlib.Tactic.NoncommRing
 decomposition
 
 Lusztig's algebra `'f` maps to `U = U_q(𝔤)` in two ways, `x ↦ x⁺` (`θᵢ ↦ Eᵢ`) and `x ↦ x⁻`
-(`θᵢ ↦ Fᵢ`) ([Lus] 3.1.2 (check)); both kill the quantum Serre elements, hence the two-sided
+(`θᵢ ↦ Fᵢ`) ([Lus] 3.1.1); both kill the quantum Serre elements, hence the two-sided
 ideal they generate. The group algebra `k[Y]` maps to `U` by `e^μ ↦ K_μ`. We show that `U` is
 spanned by the products `y⁻ K_μ x⁺` of monomials `x, y` and `μ ∈ Y`, i.e. the multiplication map
-`U⁻ ⊗ U⁰ ⊗ U⁺ → U` is surjective ([Jan] 4.21 (check), [Lus] 3.2 (check)). The injectivity
-of this map (the other half of the triangular decomposition) is not proved here.
+`U⁻ ⊗ U⁰ ⊗ U⁺ → U` is surjective ([Jan] 4.21, [Lus] 3.2). The injectivity of this map (the other
+half of the triangular decomposition) is not proved here.
 
 ## Main definitions
 
@@ -46,10 +46,10 @@ namespace QuantumGroup
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
 
-/-- The algebra homomorphism `'f → U`, `x ↦ x⁺`, `θᵢ ↦ Eᵢ` ([Lus] 3.1.2 (check)). -/
+/-- The algebra homomorphism `'f → U`, `x ↦ x⁺`, `θᵢ ↦ Eᵢ` ([Lus] 3.1.1). -/
 def plusHom : LusztigF k I →ₐ[k] QuantumGroup R v := FreeAlgebra.lift k (E R v)
 
-/-- The algebra homomorphism `'f → U`, `x ↦ x⁻`, `θᵢ ↦ Fᵢ` ([Lus] 3.1.2 (check)). -/
+/-- The algebra homomorphism `'f → U`, `x ↦ x⁻`, `θᵢ ↦ Fᵢ` ([Lus] 3.1.1). -/
 def minusHom : LusztigF k I →ₐ[k] QuantumGroup R v := FreeAlgebra.lift k (F R v)
 
 /-- The algebra homomorphism `k[Y] → U`, `e^μ ↦ K_μ`. -/
@@ -125,7 +125,7 @@ lemma PreRelations.lift_mul_kt_neg (h : PreRelations R v e f κ) (hv : v ≠ 0) 
   | mul a b ha hb => rw [map_mul, mul_assoc, hb, ← mul_assoc, ha, mul_assoc, map_mul, map_mul]
   | add a b ha hb => rw [map_add, add_mul, ha, hb, map_add, map_add, mul_add]
 
-/-- The commutator of `x⁺` with `Fₗ` ([Lus] 3.1.6 (check)): in any algebra in which the
+/-- The commutator of `x⁺` with `Fₗ` ([Lus] 3.1.6): in any algebra in which the
 relations (b)–(d) of `U` hold,
 `x⁺ Fₗ - Fₗ x⁺ = (rₗ(x)⁺ K̃ₗ - K̃₋ₗ ₗr(x)⁺)/(vₗ - vₗ⁻¹)` for `x ∈ 'f`. -/
 theorem PreRelations.lift_mul_sub (h : PreRelations R v e f κ) (hv : v ≠ 0) (l : I)
@@ -254,7 +254,7 @@ lemma E_mul_mem_triangularSpan (hv : v ≠ 0) (i : I) (w : List I) (μ : Y) (w' 
     · rw [zero_mul]; exact Submodule.zero_mem _
 
 /-- `U` is spanned by the products `y⁻ K_μ x⁺` of monomials `x, y ∈ 'f` and `μ ∈ Y`; i.e. the
-multiplication map `U⁻ ⊗ U⁰ ⊗ U⁺ → U` is surjective ([Jan] 4.21 (check)). -/
+multiplication map `U⁻ ⊗ U⁰ ⊗ U⁺ → U` is surjective ([Jan] 4.21). -/
 theorem span_triangular (hv : v ≠ 0) : triangularSpan R v = ⊤ := by
   have key : ∀ u : QuantumGroup R v, ∀ s ∈ triangularSpan R v, u * s ∈ triangularSpan R v := by
     intro u

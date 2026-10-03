@@ -8,7 +8,7 @@ import LieLean.Algebra.QuantumGroup.Verma
 /-!
 # Integrable `U_q(𝔤)`-modules
 
-A `U`-module `M` is *integrable* ([Lus] 3.5.1 (check), [Jan] 5.9 (check)) if it is the sum of its
+A `U`-module `M` is *integrable* ([Lus] 3.5.1, cf. [Jan] 5.7) if it is the sum of its
 weight spaces `M^Λ`, `Λ ∈ X`, and all `Eᵢ`, `Fᵢ` act locally nilpotently.
 
 We show:
@@ -25,7 +25,7 @@ We show:
   (`QuantumGroup.IrreducibleModule.isIntegrable`), since `Fᵢ^{⟨i,Λ⟩+1} v_Λ` lies in the maximal
   submodule of `M_q(Λ)` (`QuantumGroup.VermaModule.fPowSubmodule_le_maxSubmodule`).
 
-The arguments are the standard ones ([Jan] 5.9–5.10 (check), [Lus] §3.5 (check)), written out
+The arguments are the standard ones ([Jan] 5.6–5.10, [Lus] 3.5.3, 3.5.6), written out
 by us.
 
 ## Main definitions
@@ -109,7 +109,7 @@ section Module
 variable (R v) (M : Type*) [AddCommGroup M] [Module k M] [Module (QuantumGroup R v) M]
   [IsScalarTower k (QuantumGroup R v) M]
 
-/-- A `U`-module is integrable ([Lus] 3.5.1 (check), [Jan] 5.9 (check)) if it is the sum of its
+/-- A `U`-module is integrable ([Lus] 3.5.1, cf. [Jan] 5.7) if it is the sum of its
 weight spaces `M^Λ` (`Λ ∈ X`) and all `Eᵢ`, `Fᵢ` act locally nilpotently. -/
 structure IsIntegrable : Prop where
   iSup_weightSpace_eq_top : ⨆ Λ, weightSpace R v M Λ = ⊤
@@ -138,7 +138,7 @@ lemma F_pow_smul_F_smul_eq_zero {i j : I} (hij : i ≠ j) {m : M} {n : ℕ}
   rw [mul_smul, hm _ (by omega), smul_zero]
 
 variable (R v M) in
-/-- The `U`-submodule of elements on which `Fᵢ` acts nilpotently ([Jan] 5.9 (check)). -/
+/-- The `U`-submodule of elements on which `Fᵢ` acts nilpotently (cf. proof of [Jan] Lemma 5.7). -/
 def fLocNilSubmodule [NeZero v] (i : I) : Submodule (QuantumGroup R v) M where
   carrier := {m | ∃ n : ℕ, F R v i ^ n • m = 0}
   add_mem' := by
@@ -362,7 +362,7 @@ def fPowSubmodule : Submodule (QuantumGroup R v) (VermaModule R v Λ) :=
   Submodule.span _ (Set.range fun i ↦ F R v i ^ ((Λ (R.coroot i)).toNat + 1) • hwv R v Λ)
 
 /-- A quotient of `M_q(Λ)` by a submodule containing all `Fᵢ^{⟨i,Λ⟩⁺+1} v_Λ` is integrable
-([Jan] 5.9 (check)). -/
+([Jan] 5.7, 5.9). -/
 theorem isIntegrable_quotient {N : Submodule (QuantumGroup R v) (VermaModule R v Λ)}
     (hN : fPowSubmodule R v Λ ≤ N) : IsIntegrable R v (VermaModule R v Λ ⧸ N) where
   iSup_weightSpace_eq_top := iSup_weightSpace_quotient iSup_weightSpace_eq_top N
@@ -410,7 +410,7 @@ theorem toVerma_mem_maxSubmodule (hR : R.IsXRegular) (hv' : ∀ n : ℕ, 0 < n �
   | smul c x _ hx => rw [smul_assoc, map_smul, hx, smul_zero]
 
 /-- For dominant `Λ`, the vectors `Fᵢ^{⟨i,Λ⟩+1} v_Λ` lie in the maximal submodule of `M_q(Λ)`
-([Jan] 5.9 (check)); hence `L_q(Λ)` is a quotient of `L̃_q(Λ)`. -/
+([Jan] 5.6); hence `L_q(Λ)` is a quotient of `L̃_q(Λ)`. -/
 theorem fPowSubmodule_le_maxSubmodule (hR : R.IsXRegular) (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1)
     (hΛ : ∀ i, 0 ≤ Λ (R.coroot i)) : fPowSubmodule R v Λ ≤ maxSubmodule R v Λ := by
   rw [fPowSubmodule, Submodule.span_le]
@@ -429,25 +429,25 @@ theorem fPowSubmodule_le_maxSubmodule (hR : R.IsXRegular) (hv' : ∀ n : ℕ, 0 
 
 end VermaModule
 
-/-- For dominant `Λ`, the simple module `L_q(Λ)` is integrable ([Jan] 5.10 (check),
-[Lus] §3.5 (check)). Requires an `X`-regular root datum and `v` not a root of unity. -/
+/-- For dominant `Λ`, the simple module `L_q(Λ)` is integrable ([Jan] 5.10,
+[Lus] 3.5.6). Requires an `X`-regular root datum and `v` not a root of unity. -/
 theorem IrreducibleModule.isIntegrable [NeZero v] (hR : R.IsXRegular)
     (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) {Λ : Y →+ ℤ} (hΛ : ∀ i, 0 ≤ Λ (R.coroot i)) :
     IsIntegrable R v (IrreducibleModule R v Λ) :=
   VermaModule.isIntegrable_quotient (VermaModule.fPowSubmodule_le_maxSubmodule hR hv' hΛ)
 
 variable (R v) in
-/-- The module `L̃_q(Λ) = M_q(Λ) ⧸ Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ` for dominant `Λ` ([Jan] 5.9 (check),
-[Lus] §3.5 (check)); the quantum analogue of `Matrix.Realization.FPowQuotient`. -/
+/-- The module `L̃_q(Λ) = M_q(Λ) ⧸ Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ` for dominant `Λ` ([Jan] 5.9,
+[Lus] 3.5.6); the quantum analogue of `Matrix.Realization.FPowQuotient`. -/
 abbrev FPowQuotient (Λ : Y →+ ℤ) : Type _ :=
   VermaModule R v Λ ⧸ VermaModule.fPowSubmodule R v Λ
 
-/-- `L̃_q(Λ)` is integrable ([Jan] 5.9 (check)). -/
+/-- `L̃_q(Λ)` is integrable ([Jan] 5.9). -/
 theorem FPowQuotient.isIntegrable [NeZero v] (Λ : Y →+ ℤ) :
     IsIntegrable R v (FPowQuotient R v Λ) :=
   VermaModule.isIntegrable_quotient le_rfl
 
-/-- For dominant `Λ`, `L_q(Λ)` is a quotient of `L̃_q(Λ)` ([Jan] 5.9 (check)). -/
+/-- For dominant `Λ`, `L_q(Λ)` is a quotient of `L̃_q(Λ)` ([Jan] 5.10, proof). -/
 def FPowQuotient.toIrreducibleModule [NeZero v] (hR : R.IsXRegular)
     (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) {Λ : Y →+ ℤ} (hΛ : ∀ i, 0 ≤ Λ (R.coroot i)) :
     FPowQuotient R v Λ →ₗ[QuantumGroup R v] IrreducibleModule R v Λ :=

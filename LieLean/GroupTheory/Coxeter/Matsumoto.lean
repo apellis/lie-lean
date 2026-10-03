@@ -176,10 +176,9 @@ theorem IsReduced.isLeftDescent_cons {c : B} {η : List B} (h : cs.IsReduced (c 
   simp only [length_cons]
   omega
 
-/-- The key step of Matsumoto's theorem ([BB] proof of Thm. 3.3.1 (check)): if
-`a ≠ b` are both left descents of `w`, then `mₐᵦ < ∞` and `w` has reduced words
-`a ⋯ γ` and `b ⋯ γ` that differ by one braid move (they begin with the two alternating words of
-length `mₐᵦ`). -/
+/-- The key step of Matsumoto's theorem ([BB] proof of Thm. 3.3.1(ii)): if `a ≠ b` are both left
+descents of `w`, then `mₐᵦ < ∞` and `w` has reduced words `a ⋯ γ` and `b ⋯ γ` that differ by one
+braid move (they begin with the two alternating words of length `mₐᵦ`). -/
 theorem exists_braidMove_of_isLeftDescent {w : W} {a b : B} (hab : a ≠ b)
     (ha : cs.IsLeftDescent w a) (hb : cs.IsLeftDescent w b) :
     ∃ P₀ Q₀ γ : List B, M.BraidMove (a :: (P₀ ++ γ)) (b :: (Q₀ ++ γ)) ∧

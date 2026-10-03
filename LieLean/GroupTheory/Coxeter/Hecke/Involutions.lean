@@ -14,14 +14,14 @@ Let `𝓗 = 𝓗_q(W)` be the Iwahori–Hecke algebra of a Coxeter system over a
 (`IwahoriHeckeAlgebra.lift`) we construct:
 
 * the one-dimensional representations `ind : T_w ↦ q^{ℓ(w)}` ("index") and
-  `sgn : T_w ↦ (-1)^{ℓ(w)}` ("sign") ([GP] §8.1 (check));
+  `sgn : T_w ↦ (-1)^{ℓ(w)}` ("sign") ([GP] Rem. 8.1.3);
 * the `R`-linear anti-automorphism `T_w ↦ T_{w⁻¹}` (`antiInvolution`, an algebra isomorphism
   `𝓗 ≃ₐ[R] 𝓗ᵐᵒᵖ`), an involution;
 * for `q` a unit, the "sign twist" automorphism `T_s ↦ -q T_s⁻¹ = (q - 1) - T_s` (`signTwist`),
   an involution with `T_w ↦ (-q)^{ℓ(w)} T_{w⁻¹}⁻¹`, which interchanges `ind` and `sgn`;
 * its composite with the bar involution, `barSignTwist`, the `σ`-semilinear ring involution
-  `Σ a_w T_w ↦ Σ σ(a_w) (-q⁻¹)^{ℓ(w)} T_w` used by Kazhdan–Lusztig ([KL] §2, the map `j`
-  (check)).
+  `Σ a_w T_w ↦ Σ σ(a_w) (-q⁻¹)^{ℓ(w)} T_w` used by Kazhdan–Lusztig ([KL] §1, the
+  map `j`).
 
 ## Main definitions
 
@@ -45,8 +45,7 @@ Let `𝓗 = 𝓗_q(W)` be the Iwahori–Hecke algebra of a Coxeter system over a
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184.
 * [GP] M. Geck, G. Pfeiffer, *Characters of finite Coxeter groups and Iwahori–Hecke algebras*,
-  LMS Monographs 21, OUP 2000, Ch. 8 (check).
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, Ch. 7.
+  LMS Monographs 21, OUP 2000, Ch. 8.
 -/
 
 open MulOpposite
@@ -141,12 +140,12 @@ local prefix:100 "ℓ " => cs.length
 /-! ### One-dimensional representations -/
 
 /-- The "index" representation `ind : 𝓗 → R`, `T_s ↦ q`, so `T_w ↦ q^{ℓ(w)}` (`ind_T`)
-([GP] §8.1 (check); at `q = 1` it is the trivial representation of `W`). -/
+([GP] Rem. 8.1.3; at `q = 1` it is the trivial representation of `W`). -/
 noncomputable def ind : IwahoriHeckeAlgebra cs q →ₐ[R] R :=
   lift cs q R ⟨fun _ ↦ q, by simp, M.isBraidLiftable_const q⟩
 
 /-- The "sign" representation `sgn : 𝓗 → R`, `T_s ↦ -1`, so `T_w ↦ (-1)^{ℓ(w)}` (`sgn_T`)
-([GP] §8.1 (check); at `q = 1` it is the sign representation of `W`). -/
+([GP] Rem. 8.1.3; at `q = 1` it is the sign representation of `W`). -/
 noncomputable def sgn : IwahoriHeckeAlgebra cs q →ₐ[R] R :=
   lift cs q R ⟨fun _ ↦ -1, by simp, M.isBraidLiftable_const (-1)⟩
 
@@ -324,7 +323,7 @@ theorem signTwistHom_signTwistHom :
 
 /-- The *sign twist* of `𝓗` (for `q` a unit): the `R`-algebra involution with
 `T_s ↦ -q T_s⁻¹ = (q - 1) - T_s`, hence `T_w ↦ (-q)^{ℓ(w)} T_{w⁻¹}⁻¹` (`signTwist_T`)
-([KL] §2 (check); [GP] §8.1 (check)). It exchanges `ind` and `sgn` (`sgn_comp_signTwist`). -/
+([GP] Exercise 8.2). It exchanges `ind` and `sgn` (`sgn_comp_signTwist`). -/
 noncomputable def signTwist : IwahoriHeckeAlgebra cs q ≃ₐ[R] IwahoriHeckeAlgebra cs q :=
   AlgEquiv.ofAlgHom (signTwistHom cs hq) (signTwistHom cs hq) (signTwistHom_signTwistHom cs hq)
     (signTwistHom_signTwistHom cs hq)
@@ -383,7 +382,7 @@ variable {q} (σ : R →+* R) (hσ : σ q * q = 1)
 
 /-- The composite `j = signTwist ∘ bar` of the bar involution and the sign twist: the
 `σ`-semilinear ring endomorphism of `𝓗` with `T_w ↦ (-σ(q))^{ℓ(w)} T_w` (`barSignTwist_T`),
-i.e. `Σ a_w T_w ↦ Σ σ(a_w) (-q⁻¹)^{ℓ(w)} T_w`. This is the involution `j` of [KL] §2 (check),
+i.e. `Σ a_w T_w ↦ Σ σ(a_w) (-q⁻¹)^{ℓ(w)} T_w`. This is the involution `j` of [KL] §1,
 used to relate the bases `C_w` and `C'_w`. -/
 noncomputable def barSignTwist : IwahoriHeckeAlgebra cs q →+* IwahoriHeckeAlgebra cs q :=
   (signTwist cs (isUnit_of_mul_eq_one' σ hσ)).toRingEquiv.toRingHom.comp (bar cs σ hσ)

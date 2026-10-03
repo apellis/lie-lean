@@ -18,8 +18,8 @@ import LieLean.Algebra.QuantumGroup.BraidAction.SimplyLaced
 
 ## Scope and references
 Reconstructed from the defining presentation and published repository recovery
-identities; no primary source consulted. The centre `i` has exactly one
-nonorthogonal neighbour `j`, with directed Cartan entries `(-2,-1)`.
+identities. The centre `i` has exactly one nonorthogonal neighbour `j`, with
+directed Cartan entries `(-2,-1)`.
 Edges from `j` to other nodes are zero or mutual simple; entries between two
 untouched nodes are unrestricted. Neither finite rank nor characteristic zero
 nor any coroot-span or lattice-separation assumption is imposed.

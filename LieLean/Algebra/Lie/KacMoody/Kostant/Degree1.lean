@@ -31,9 +31,9 @@ of the kernel of `U(𝔫₋) → L(Λ)`, cf. `FPowQuotient.equivIrreducibleModul
 ## References
 
 * [GL] H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent.
-  Math. **34** (1976), 37–76 (check).
+  Math. **34** (1976), 37–76, Thm. 8.6.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002, §3.2 (check).
+  Math. 204, Birkhäuser 2002, §3.2.
 -/
 
 open Module LieModule LieModule.ChevalleyEilenberg

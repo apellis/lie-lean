@@ -28,8 +28,8 @@ import Mathlib.Algebra.Polynomial.Laurent
 
 ## References and scope
 Reconstructed elementary localization, valuation and basis arguments, guided by the
-rank-one target of Kashiwara, *On crystal bases*, §§12.2–12.3. The primary source was
-not consulted. No residue basis or balancedness is assumed.
+rank-one target of Kashiwara, *On crystal bases*, §§12.2–12.3; the arguments are
+our own. No residue basis or balancedness is assumed.
 
 This is only the positive type-1 `simpleRep X n 1` over `ℚ(X)`, for every natural `n`.
 The Laurent form is rational `ℚ[X,X⁻¹]`, not the integer integral form. No general-rank
@@ -296,8 +296,8 @@ lemma laurent_regular_polynomial (l : LaurentPolynomial ℚ)
   have h := congrArg laurentToCoeff hp
   simpa only [map_mul, laurentToCoeff_toLaurent, laurentToCoeff_T] using h.symm
 
-/-- Scalar Laurent triple-intersection theorem. Reconstructed argument; the primary
-Kashiwara source was not consulted. Neither balancedness nor any basis theorem is assumed. -/
+/-- Scalar Laurent triple-intersection theorem. Our own argument, not Kashiwara's. Neither
+balancedness nor any basis theorem is assumed. -/
 theorem laurent_regular_bar_regular_constant (l : LaurentPolynomial ℚ)
     (hzero : laurentToCoeff l ∈ LocalRing)
     (hinfty : RatFunc.bar (laurentToCoeff l) ∈ LocalRing) :
@@ -307,7 +307,7 @@ theorem laurent_regular_bar_regular_constant (l : LaurentPolynomial ℚ)
   exact polynomial_bar_regular_constant p hinfty
 
 /-- Inside `ℚ(X)`, the Laurent condition together with regularity at zero and at
-infinity forces a rational constant. Reconstructed; no primary source was consulted. -/
+infinity forces a rational constant. Reconstructed. -/
 theorem scalar_laurent_intersection (x : Coeff)
     (hlaurent : x ∈ Set.range laurentToCoeff)
     (hzero : x ∈ LocalRing) (hinfty : RatFunc.bar x ∈ LocalRing) :

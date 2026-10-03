@@ -11,7 +11,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Comul
 /-!
 # Lusztig's bilinear form on `'f` and the algebra `f`
 
-By [Lus] Prop. 1.2.3 (check) there is a unique bilinear form `(·, ·)` on `'f` with values in
+By [Lus] Prop. 1.2.3 there is a unique bilinear form `(·, ·)` on `'f` with values in
 `k = ℚ(v)` such that `(1, 1) = 1` and
 * (a) `(θᵢ, θⱼ) = δᵢⱼ (1 - vᵢ⁻²)⁻¹`;
 * (b) `(x, y'y'') = (r(x), y' ⊗ y'')`;
@@ -20,14 +20,14 @@ where `(x₁ ⊗ x₂, y₁ ⊗ y₂) = (x₁, y₁)(x₂, y₂)` on `'f ⊗ 'f`
 
 We construct the form directly as `(x, y) = ε(Ψ(x) y)`, where `ε` is the counit and
 `Ψ : 'f → End('f)` is the algebra homomorphism `θᵢ ↦ (θᵢ, θᵢ) rᵢ` (`formEnd`); thus
-`(x θᵢ, y) = (θᵢ, θᵢ)(x, rᵢ(y))` holds by construction ([Lus] 1.2.13 (a) (check)). We then prove
+`(x θᵢ, y) = (θᵢ, θᵢ)(x, rᵢ(y))` holds by construction ([Lus] 1.2.13 (a)). We then prove
 `(x, y θⱼ) = (θⱼ, θⱼ)(rⱼ(x), y)` (`form_mul_θ_right`), symmetry (`form_comm`), (b)
 (`form_mul_right`, using `(1 ⊗ rⱼ) ∘ r = r ∘ rⱼ`), (c) (`form_mul_left`), and
 `(θᵢ x, y) = (θᵢ, θᵢ)(x, ᵢr(y))` (`form_θ_mul`). This route (rather than Lusztig's, via the
 graded dual of `'f`) is our own.
 
 The radical `I = {x | ∀ y, (x, y) = 0}` of the form is a two-sided ideal (by (c)), and
-`f = 'f / I` ([Lus] 1.2.5 (check)).
+`f = 'f / I` ([Lus] 1.2.5).
 
 ## Main definitions
 
@@ -58,14 +58,14 @@ namespace LusztigF
 
 variable {k I : Type*} [Field k] [DecidableEq I] (D : LusztigCartanDatum I) (v : k)
 
-/-- `(θᵢ, θᵢ) = (1 - vᵢ⁻²)⁻¹`, `vᵢ = v^{dᵢ}` ([Lus] 1.2.3 (a) (check)). -/
+/-- `(θᵢ, θᵢ) = (1 - vᵢ⁻²)⁻¹`, `vᵢ = v^{dᵢ}` ([Lus] 1.2.3 (a)). -/
 def thetaNorm (i : I) : k := (1 - (v ^ D.d i)⁻¹ ^ 2)⁻¹
 
 /-- The algebra homomorphism `Ψ : 'f → End('f)`, `θᵢ ↦ (θᵢ, θᵢ) rᵢ`. -/
 def formEnd : LusztigF k I →ₐ[k] Module.End k (LusztigF k I) :=
   FreeAlgebra.lift k fun i ↦ thetaNorm D v i • rDeriv D v i
 
-/-- Lusztig's bilinear form `(·, ·)` on `'f` ([Lus] 1.2.3 (check)), `(x, y) = ε(Ψ(x) y)`. -/
+/-- Lusztig's bilinear form `(·, ·)` on `'f` ([Lus] 1.2.3), `(x, y) = ε(Ψ(x) y)`. -/
 def form : LinearMap.BilinForm k (LusztigF k I) :=
   (formEnd D v).toLinearMap.compr₂ (counit (k := k) (I := I)).toLinearMap
 
@@ -100,12 +100,12 @@ lemma formEnd_apply_one (x : LusztigF k I) :
 /-- `(1, 1) = 1`. -/
 theorem form_one_one : form D v (1 : LusztigF k I) 1 = 1 := by simp
 
-/-- `(x θᵢ, y) = (θᵢ, θᵢ)(x, rᵢ(y))` ([Lus] 1.2.13 (a) (check)). -/
+/-- `(x θᵢ, y) = (θᵢ, θᵢ)(x, rᵢ(y))` ([Lus] 1.2.13 (a)). -/
 theorem form_mul_θ (x : LusztigF k I) (i : I) (y : LusztigF k I) :
     form D v (x * θ k i) y = thetaNorm D v i * form D v x (rDeriv D v i y) := by
   simp [form_apply, formEnd]
 
-/-- `(θᵢ, θⱼ) = δᵢⱼ (1 - vᵢ⁻²)⁻¹` ([Lus] 1.2.3 (a) (check)). -/
+/-- `(θᵢ, θⱼ) = δᵢⱼ (1 - vᵢ⁻²)⁻¹` ([Lus] 1.2.3 (a)). -/
 theorem form_θ_θ (i j : I) :
     form D v (θ k i) (θ k j) = if i = j then thetaNorm D v i else 0 := by
   have := form_mul_θ D v 1 i (θ k j)
@@ -129,7 +129,7 @@ theorem form_mul_θ_right (x y : LusztigF k I) (j : I) :
     · simp only [h, Ne.symm h, ite_false, map_zero, LinearMap.zero_apply, D.dot_comm]
       ring
 
-/-- Lusztig's form is symmetric ([Lus] 1.2.3 (check)). -/
+/-- Lusztig's form is symmetric ([Lus] 1.2.3). -/
 theorem form_comm (x y : LusztigF k I) : form D v x y = form D v y x := by
   induction y using induction_right generalizing x with
   | algebraMap c => simp
@@ -137,7 +137,7 @@ theorem form_comm (x y : LusztigF k I) : form D v x y = form D v y x := by
   | add y y' hy hy' => simp [hy, hy']
   | mul_θ y j hy => rw [form_mul_θ_right, hy, form_mul_θ]
 
-/-- Lusztig's form is symmetric, as a bilinear form ([Lus] 1.2.3 (check)). -/
+/-- Lusztig's form is symmetric, as a bilinear form ([Lus] 1.2.3). -/
 theorem isSymm_form : LinearMap.IsSymm (form D v) :=
   LinearMap.isSymm_def.2 fun x y ↦ by simpa using form_comm D v x y
 
@@ -172,7 +172,7 @@ lemma formTensor_tmul_mul_θ (W : LusztigF k I ⊗[k] LusztigF k I) (y z : Luszt
   | tmul a b => simp [form_mul_θ_right, mul_left_comm]
   | add X Y hX hY => simp [hX, hY, mul_add]
 
-/-- Lusztig's property (b): `(x, y'y'') = (r(x), y' ⊗ y'')` ([Lus] 1.2.3 (b) (check)). -/
+/-- Lusztig's property (b): `(x, y'y'') = (r(x), y' ⊗ y'')` ([Lus] 1.2.3 (b)). -/
 theorem form_mul_right (x y' y'' : LusztigF k I) :
     form D v x (y' * y'') = formTensor D v (comul D v x) (y' ⊗ₜ y'') := by
   induction y'' using induction_right generalizing x with
@@ -184,7 +184,7 @@ theorem form_mul_right (x y' y'' : LusztigF k I) :
   | mul_θ y j hy =>
     rw [← mul_assoc, form_mul_θ_right, hy, formTensor_tmul_mul_θ, lTensor_rDeriv_comul]
 
-/-- Lusztig's property (c): `(x'x'', y) = (x' ⊗ x'', r(y))` ([Lus] 1.2.3 (c) (check)). -/
+/-- Lusztig's property (c): `(x'x'', y) = (x' ⊗ x'', r(y))` ([Lus] 1.2.3 (c)). -/
 theorem form_mul_left (x' x'' y : LusztigF k I) :
     form D v (x' * x'') y = formTensor D v (x' ⊗ₜ x'') (comul D v y) := by
   rw [form_comm, form_mul_right, formTensor_comm]
@@ -199,7 +199,7 @@ lemma formTensor_θ_tmul (i : I) (x : LusztigF k I) (W : LusztigF k I ⊗[k] Lus
     simp [this, mul_assoc]
   | add X Y hX hY => simp [hX, hY, mul_add]
 
-/-- `(θᵢ x, y) = (θᵢ, θᵢ)(x, ᵢr(y))` ([Lus] 1.2.13 (a) (check)). -/
+/-- `(θᵢ x, y) = (θᵢ, θᵢ)(x, ᵢr(y))` ([Lus] 1.2.13 (a)). -/
 theorem form_θ_mul (i : I) (x y : LusztigF k I) :
     form D v (θ k i * x) y = thetaNorm D v i * form D v x (lDeriv D v i y) := by
   rw [form_mul_left, formTensor_θ_tmul, lid_rTensor_counit_rDeriv_comul]
@@ -332,7 +332,7 @@ lemma form_monomial_eq_zero (w : List I) :
       rw [wordWeight_append, h, hμ']
       simp
 
-/-- Distinct weight spaces are orthogonal for Lusztig's form ([Lus] 1.2.3 (check)). -/
+/-- Distinct weight spaces are orthogonal for Lusztig's form ([Lus] 1.2.3). -/
 theorem form_eq_zero_of_ne {ν μ : I →₀ ℕ} (hνμ : ν ≠ μ) {x y : LusztigF k I}
     (hx : x ∈ weightSpace k ν) (hy : y ∈ weightSpace k μ) : form D v x y = 0 := by
   induction hx using Submodule.span_induction with
@@ -358,7 +358,7 @@ lemma formTensor_tmul_eq_zero_right {x : LusztigF k I} (hx : ∀ y, form D v x y
   | add X Y hX hY => simp [hX, hY]
 
 /-- The radical `{x | ∀ y, (x, y) = 0}` of Lusztig's form, a two-sided ideal of `'f`
-([Lus] 1.2.4 (check)). -/
+([Lus] 1.2.4). -/
 def radical : TwoSidedIdeal (LusztigF k I) :=
   TwoSidedIdeal.mk' {x | ∀ y, form D v x y = 0} (by simp) (fun hx hy z ↦ by simp [hx z, hy z])
     (fun hx z ↦ by simp [hx z])
@@ -378,7 +378,7 @@ lemma thetaNorm_ne_zero {i : I} (h : (v ^ D.d i) ^ 2 ≠ 1) : thetaNorm D v i �
   exact h0
 
 /-- If `x` has no constant term and `rᵢ(x)` lies in the radical for all `i`, then so does `x`
-(cf. [Lus] 1.2.15 (check)). -/
+(cf. [Lus] 1.2.15). -/
 theorem mem_radical_of_rDeriv_mem {x : LusztigF k I} (hx0 : counit x = 0)
     (hx : ∀ i, rDeriv D v i x ∈ radical D v) : x ∈ radical D v := by
   rw [mem_radical_iff']
@@ -408,7 +408,7 @@ theorem lDeriv_mem_radical {i : I} (hi : thetaNorm D v i ≠ 0) {x : LusztigF k 
   exact (mul_eq_zero.1 this.symm).resolve_left hi
 
 /-- Lusztig's algebra `f = 'f / I`, the quotient of `'f` by the radical of its bilinear form
-([Lus] 1.2.5 (check)). -/
+([Lus] 1.2.5). -/
 abbrev Quotient := (radical D v).ringCon.Quotient
 
 /-- The projection `'f → f`. -/

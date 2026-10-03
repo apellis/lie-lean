@@ -15,7 +15,7 @@ realization of `A` over a field `K` of characteristic zero, and `(·|·)` the bi
 of [Kac] §2.1 (`Matrix.Realization.bilinForm`), with the induced isomorphism `ν : 𝔥 ≃ 𝔥*`.
 We construct a symmetric invariant bilinear form on the auxiliary Lie algebra `𝔤̃(A)` extending
 the form on `𝔥` and show that its radical is the maximal ideal `𝔯`, so that it descends to a
-nondegenerate form on `𝔤(A) = 𝔤̃(A)/𝔯` ([Kac] Thm. 2.2 (check)); see
+nondegenerate form on `𝔤(A) = 𝔤̃(A)/𝔯` ([Kac] Thm. 2.2); see
 `LieLean/Algebra/Lie/KacMoody/InvariantForm.lean` for the latter.
 
 ## The construction
@@ -80,14 +80,15 @@ is nondegenerate on `𝔥`, so it lies in `𝔯`. Conversely if `r ∈ 𝔯 ∩ 
 * `Matrix.Realization.AuxLieAlgebra.invFormAux_h_h`: it restricts to the form on `𝔥`.
 * `Matrix.Realization.AuxLieAlgebra.invFormAux_eq_zero`: `(𝔤̃_μ | 𝔤̃_ν) = 0` unless `μ + ν = 0`.
 * `Matrix.Realization.AuxLieAlgebra.lie_eq_invFormAux_smul`: `[x, y] = (x | y) ν⁻¹(μ)` for
-  `x ∈ 𝔤̃_μ`, `y ∈ 𝔤̃_{-μ}` ([Kac] Thm. 2.2 e) (check)).
+  `x ∈ 𝔤̃_μ`, `y ∈ 𝔤̃_{-μ}` ([Kac] Thm. 2.2 e), for `𝔤̃(A)`).
 * `Matrix.Realization.AuxLieAlgebra.lieInvariant_invFormAux`: the form is invariant.
 * `Matrix.Realization.AuxLieAlgebra.invFormAux_eq_zero_iff_mem_maxIdeal`: its radical is the
   maximal ideal `𝔯`.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.1–2.2
+  (stated over `ℂ`).
 -/
 
 open Module LieModule LieAlgebra
@@ -380,7 +381,7 @@ theorem isSymm_invFormAux : (invFormAux P S).IsSymm := by
     | add y₁ y₂ h₁ h₂ => simp [h₁, h₂]
   | add x₁ x₂ h₁ h₂ => simp [h₁, h₂]
 
-/-- `(eᵢ | fⱼ) = δᵢⱼ εᵢ` ([Kac] §2.2 (check)). -/
+/-- `(eᵢ | fⱼ) = δᵢⱼ εᵢ` ([Kac] §2.2). -/
 theorem invFormAux_e_f (i j : ι) :
     invFormAux P S (e P i) (f P j) = if i = j then (S.ε i : K) else 0 := by
   split_ifs with hij
@@ -776,7 +777,7 @@ lemma exists_nat_eq_of_mem_negWeights {μ : Dual K H} (hμ : μ ∈ P.negWeights
 
 variable (P S) in
 /-- `C_μ` for all `μ`: `[x, y] = (x | y) ν⁻¹(μ)` for `x ∈ 𝔤̃_μ` and `y ∈ 𝔤̃_{-μ}`
-([Kac] Thm. 2.2 e) (check), for `𝔤̃(A)`). -/
+([Kac] Thm. 2.2 e), for `𝔤̃(A)`). -/
 theorem lie_eq_invFormAux_smul (μ : Dual K H) : LieEqForm P S μ := by
   have hpos : ∀ n : ℕ, ∀ μ ∈ P.posWeights, μ P.rhoCheck = n → LieEqForm P S μ := by
     intro n

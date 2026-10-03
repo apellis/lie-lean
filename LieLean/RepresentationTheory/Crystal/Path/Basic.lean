@@ -10,7 +10,7 @@ import Mathlib.Topology.Order.Compact
 /-!
 # Littelmann paths
 
-Littelmann's path model ([Lit95] §1 (check), [Lit94]) realizes the crystals of integrable
+Littelmann's path model ([Lit95] §1, [Lit94]) realizes the crystals of integrable
 highest-weight modules by paths `π : [0,1] → X_ℝ` in the real span of the weight lattice, with
 `π(0) = 0` and `π(1) ∈ X`. The root operators (defined in
 `LieLean.RepresentationTheory.Crystal.Path.RootOperators`) only use, for each simple coroot
@@ -19,12 +19,12 @@ these functions.
 
 ## Conventions
 
-Littelmann considers piecewise linear paths modulo reparametrization. We work instead with
-*parametrized* paths `π : 𝕜 → V` (constant outside `[0,1]`) and only require continuity of the
-functions `hᵢ`; no quotient is needed, because the root operators are defined pointwise in the
-time parameter (`π ↦ π - c(t) αᵢ` for an explicit continuous function `c`) and are exactly inverse
-to each other on parametrized paths. Piecewise linear paths form a subclass stable under the root
-operators; we do not need this.
+Littelmann considers piecewise linear paths `[0,1] ∩ ℚ → ℚ ⊗ X` ([Lit95] §1) modulo
+reparametrization. We work instead with *parametrized* paths `π : 𝕜 → V` (constant outside `[0,1]`)
+and only require continuity of the functions `hᵢ`; no quotient is needed, because the root operators
+are defined pointwise in the time parameter (`π ↦ π - c(t) αᵢ` for an explicit continuous function
+`c`) and are exactly inverse to each other on parametrized paths. Piecewise linear paths form a
+subclass stable under the root operators; we do not need this.
 
 The real span of the weight lattice is an auxiliary vector space `V` containing `X`, on which the
 coroots extend to linear forms (`CartanDatum.PathSpace`). Instead of `ℝ` we allow any
@@ -42,7 +42,7 @@ the intermediate value theorem are used.
   `LittelmannPath.runningMin π i t = min_{s ∈ [0,t]} hᵢ(s)`, the minimum from the right
   `LittelmannPath.rightMin π i t = min_{s ∈ [t,1]} hᵢ(s)`, and the minimum
   `LittelmannPath.minPairing π i = min_{[0,1]} hᵢ` (Littelmann's `m_α`).
-* `LittelmannPath.rev`: the reversed path `π^∨(t) = π(1 - t) - π(1)` ([Lit95] §1 (check)).
+* `LittelmannPath.rev`: the reversed path `π^∨(t) = π(1 - t) - π(1)` ([Lit95] §2).
 
 ## Main results
 
@@ -138,7 +138,7 @@ variable {ι X : Type*} [AddCommGroup X]
 
 /-- An embedding of the weight lattice `X` of a Cartan datum into a vector space `V` over a field
 `𝕜` (in practice `𝕜 = ℝ`), together with linear extensions `V → 𝕜` of the coroots `⟨·, αᵢ^∨⟩`.
-Littelmann's paths ([Lit95] §1 (check)) take values in `V` (for instance `V = ℝ ⊗ X`, or
+Littelmann's paths ([Lit95] §1) take values in `V` (for instance `V = ℝ ⊗ X`, or
 `V = 𝔥*` for a realization over `ℝ`). -/
 structure CartanDatum.PathSpace (D : CartanDatum ι X) (𝕜 V : Type*) [Field 𝕜]
     [AddCommGroup V] [Module 𝕜 V] where
@@ -166,7 +166,7 @@ lemma coroot_root (i j : ι) : S.coroot i (S.root j) = D.cartanMatrix i j := by
 
 end CartanDatum.PathSpace
 
-/-- A (parametrized) Littelmann path ([Lit95] §1 (check)) in the span `V` of the weight
+/-- A (parametrized) Littelmann path ([Lit95] §1) in the span `V` of the weight
 lattice: a map `π : 𝕜 → V`, constant outside `[0,1]`, with `π(0) = 0` and endpoint
 `π(1) = wt π ∈ X`, such that `t ↦ ⟨π(t), αᵢ^∨⟩` is continuous for every `i`. -/
 structure LittelmannPath {𝕜 : Type*} [Field 𝕜] [LE 𝕜] [TopologicalSpace 𝕜] {D : CartanDatum ι X}
@@ -335,7 +335,7 @@ lemma exists_rightMin (i : ι) (ht : t ≤ 1) : ∃ s ∈ Icc t 1, π.pairing i 
 
 /-! ### Reversed paths -/
 
-/-- The reversed path `π^∨(t) = π(1 - t) - π(1)` ([Lit95] §1 (check)): it runs through `π`
+/-- The reversed path `π^∨(t) = π(1 - t) - π(1)` ([Lit95] §2): it runs through `π`
 backwards, translated so as to start at `0`; its endpoint is `-π(1)`. -/
 def rev : LittelmannPath S where
   toFun t := π (1 - t) - π 1

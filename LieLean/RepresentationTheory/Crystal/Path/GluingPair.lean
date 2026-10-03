@@ -9,8 +9,9 @@ import LieLean.RepresentationTheory.Crystal.Path.GluingDirections
 # A concrete finite gluing pair and integrality at its cut
 
 Source: P. Littelmann, *Paths and root operators in representation theory*, Ann. Math.
-142 (1995), 499–525, Definition 5.3 and Lemma 5.5, printed pp. 514–515, with the
-literal gluing formula on p. 513. Proofs below are reconstructed.
+142 (1995), 499–525, Definition 5.3 and Lemma 5.5, pp. 514–515, with the literal gluing formula on
+p. 513.
+Proofs below are reconstructed.
 
 Scope: both LS presentations have dominant integral classes, using the published
 positive-real-root saturated `AChain` implementation. Directions need not be dominant;

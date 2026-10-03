@@ -10,7 +10,7 @@ import LieLean.Algebra.Lie.KacMoody.CharacterVerma
 # The Shapovalov form in a pair of dual PBW bases
 
 Let `A` be a symmetrizable matrix and `𝔤 = 𝔤(A)` over a field `K` of characteristic zero, with its
-invariant form `(·|·)` ([Kac] Thm. 2.2 (check)) and the antiinvolution `σ` of the Shapovalov form.
+invariant form `(·|·)` ([Kac] Thm. 2.2) and the antiinvolution `σ` of the Shapovalov form.
 For each positive root `α`, the form `(y, y') ↦ (σ y | y')` on `𝔤_{-α}` is nondegenerate; we take
 the basis `(e_x)` of `𝔫₋ = ⊕ 𝔤_{-α}` of `nNegBasis` and its dual basis `(e'_x)` for these forms
 (`nNegDualBasis`): `(σ e_x | e'_y) = δ_{xy}` for `x`, `y` of the same root. Then
@@ -35,9 +35,12 @@ polynomial of degree `≤ min(|s|, |t|)`, and for `|s| = |t|` its component of d
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2, §9.4.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2, §9.4
+  (stated over `ℂ`).
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. 34 (1979), 97–108.
+* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
+  Math. 204, Birkhäuser 2002, §2.3.
 -/
 
 open Module LieModule Module.Dual MvPolynomial UniversalEnvelopingAlgebra
@@ -281,8 +284,8 @@ lemma deg_pbwWord (s t : NegRootIndex P →₀ ℕ) :
     List.length_reverse, length_sort_toMultiset]
   omega
 
-/-- **The degree estimate for the Shapovalov form** ([KK] §3 (check)): `B_λ(e_s v_λ, e'_t v_λ)` is
-a polynomial function of `λ` of degree at most `min(|s|, |t|)`. -/
+/-- **The degree estimate for the Shapovalov form** ([KK]; [Kum] Thm. 2.3.4, proof, Step 2 (1)):
+`B_λ(e_s v_λ, e'_t v_λ)` is a polynomial function of `λ` of degree at most `min(|s|, |t|)`. -/
 theorem contravariantForm_pbw_mem_polyLE (s t : NegRootIndex P →₀ ℕ) :
     (fun Λ ↦ contravariantForm P Λ (pbwBasisVerma P Λ s) (pbwDualVerma P S Λ t)) ∈
       polyLE K H (min s.degree t.degree) := by
@@ -296,8 +299,9 @@ def pbwTopPoly (s : NegRootIndex P →₀ ℕ) : MvPolynomial (PolyIdx K H) K :=
   C (∏ x ∈ s.support, ((s x).factorial : K)) *
     ∏ x ∈ s.support, linPoly K H ((P.toDual S).symm x.root) ^ s x
 
-/-- **The leading term of the Shapovalov form** ([KK] §3 (check)): for `|s| = |t|`, the component
-of degree `|s|` of `λ ↦ B_λ(e_s v_λ, e'_t v_λ)` is `δ_{st} ∏_x s(x)! ∏_x (λ | α_x)^{s(x)}`. -/
+/-- **The leading term of the Shapovalov form** ([KK]; [Kum] Thm. 2.3.4, proof, Step 2,
+(2)–(3)): for `|s| = |t|`, the component of degree `|s|` of `λ ↦ B_λ(e_s v_λ, e'_t v_λ)` is
+`δ_{st} ∏_x s(x)! ∏_x (λ | α_x)^{s(x)}`. -/
 theorem contravariantForm_pbw_hasTop (s t : NegRootIndex P →₀ ℕ) (hst : s.degree = t.degree) :
     HasTop s.degree (if s = t then pbwTopPoly P S s else 0)
       (fun Λ ↦ contravariantForm P Λ (pbwBasisVerma P Λ s) (pbwDualVerma P S Λ t)) := by

@@ -14,7 +14,7 @@ Let `𝔤 = 𝔤(A)` be the Kac–Moody algebra of a realization of a generalize
 a field `K` of characteristic zero, `W` its Weyl group with the Coxeter system of fundamental
 reflections, and `w · λ = w(λ + ρ) - ρ` the dot action. For a dominant integral weight `Λ` we
 prove the "Bruhat ⇒ embedding" direction of Verma's theorem: if `w ≤ w'` in the Bruhat order,
-then `M(w' · Λ)` embeds into `M(w · Λ)` ([HumO] Thm. 4.6 (check); [Kum] §9.1 (check)).
+then `M(w' · Λ)` embeds into `M(w · Λ)` ([HumO] Thm. 4.6, Thm. 5.1 (a), §5.2; [Kum] Thm. 9.2.3 (a)).
 
 ## Main definitions
 
@@ -32,15 +32,15 @@ then `M(w' · Λ)` embeds into `M(w · Λ)` ([HumO] Thm. 4.6 (check); [Kum] §9.
   lies in `M(rᵢ · λ)`; hence (`bijective_reflectionHom_comp`) composition with
   `M(rᵢ · λ) ↪ M(λ)` is a bijection `Hom(M(ν), M(rᵢ · λ)) ≃ Hom(M(ν), M(λ))`.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_comp_reflectionHom_eq`: **Verma's
-  lemma** ([HumO] Lemma 4.6 (check)): if `⟨μ + ρ, αᵢ^∨⟩, ⟨μ' + ρ, αᵢ^∨⟩ ∈ ℤ_{>0}` and
+  lemma** ([HumO] Prop. 4.5 (b)): if `⟨μ + ρ, αᵢ^∨⟩, ⟨μ' + ρ, αᵢ^∨⟩ ∈ ℤ_{>0}` and
   `φ : M(μ') → M(μ)` is nonzero, there is a nonzero `ψ : M(rᵢ · μ') → M(rᵢ · μ)` making the
   square with the embeddings `M(rᵢ · μ) ↪ M(μ)`, `M(rᵢ · μ') ↪ M(μ')` commute.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_injective_simple_mul`: for `Λ` dominant
   integral and `ℓ(rᵢ w) > ℓ(w)`, `M(rᵢ w · Λ) ↪ M(w · Λ)`, and
   `finrank_hom_simple_mul`: this space of homomorphisms is one-dimensional.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_injective_of_bruhatLE`: **Verma's
-  theorem** ([HumO] Thm. 4.6 (check)): for `Λ` dominant integral and `w ≤ w'` in the Bruhat
-  order, there is an embedding `M(w' · Λ) ↪ M(w · Λ)`.
+  theorem** ([HumO] Thm. 4.6, Thm. 5.1 (a), §5.2): for `Λ` dominant integral and
+  `w ≤ w'` in the Bruhat order, there is an embedding `M(w' · Λ) ↪ M(w · Λ)`.
 
 ## Proofs
 
@@ -50,7 +50,7 @@ on `𝔤(A)`). The image of a primitive vector of weight `ν` is then a primitiv
 `𝔰𝔩₂`-triple `(αᵢ^∨, eᵢ, fᵢ)` on which `fᵢ` is nilpotent, so it vanishes unless
 `⟨ν, αᵢ^∨⟩ ∈ ℕ`. Verma's lemma follows by applying this to the primitive vector
 `φ(fᵢ^{n'} v_{μ'})` of weight `rᵢ · μ'`, as `⟨rᵢ · μ', αᵢ^∨⟩ = -n' - 1`; this argument is the one
-of [HumO] §4.4–4.6 (check) without the use of `U(𝔫₋)` being Ore, and was reconstructed by us.
+of [HumO] §4.5 without the use of `U(𝔫₋)` being Ore, and was reconstructed by us.
 Verma's theorem then follows by induction on `ℓ(w')`, using a left descent `s` of `w'` and the
 lifting property of the Bruhat order: if `s w < w` then `s w ≤ s w'` and Verma's lemma applies to
 `M(s w' · Λ) ↪ M(s w · Λ)`; otherwise `w ≤ s w'` and `M(w' · Λ) ↪ M(s w' · Λ) ↪ M(w · Λ)`.
@@ -63,10 +63,10 @@ proved here (see `LieLean.Algebra.Lie.KacMoody.VermaHom`).
 ## References
 
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, AMS 2008, §4.4–4.6 (check).
+  GSM 94, AMS 2008, §1.4, §1.8, §4.2–4.6, §5.1–5.2.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002, §9.1 (check).
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.12, §9 (check).
+  Math. 204, Birkhäuser 2002, §9.2 (Lemmas 9.2.5–9.2.6, Thm. 9.2.3).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.12, §9.
 -/
 
 open Module LieModule CoxeterSystem
@@ -80,8 +80,8 @@ variable {ι K H : Type*} [Fintype ι] [Field K] [AddCommGroup H] [Module K H]
 
 /-! ### The dot action -/
 
-/-- The dot action `w · λ = w(λ + ρ) - ρ` of the Weyl group on `𝔥*` ([Kac] §9.8 (check);
-[HumO] §1.8 (check)). It does not depend on the choice of `ρ`. -/
+/-- The dot action `w · λ = w(λ + ρ) - ρ` of the Weyl group on `𝔥*` ([Kum] Def. 1.3.1;
+[HumO] §1.8). It does not depend on the choice of `ρ`. -/
 def weylDot (w : P.weylGroup hA) (μ : Dual K H) : Dual K H :=
   (w : Dual K H ≃ₗ[K] Dual K H) (μ + P.rho) - P.rho
 
@@ -106,7 +106,7 @@ lemma weylDot_simple_mul (i : ι) (w : P.weylGroup hA) (μ : Dual K H) :
 /-! ### The integers `⟨w(Λ + ρ), αᵢ^∨⟩` -/
 
 /-- For a regular dominant integral `μ` (`⟨μ, αⱼ^∨⟩ ∈ ℤ_{>0}`) and `ℓ(rᵢ w) > ℓ(w)`,
-`⟨w μ, αᵢ^∨⟩` is a positive integer ([Kac] Lemma 3.11, §3.12 (check)). Indeed, `w⁻¹αᵢ` is a
+`⟨w μ, αᵢ^∨⟩` is a positive integer ([Kac] Lemma 3.11 (a), Prop. 3.12 (d)). Indeed, `w⁻¹αᵢ` is a
 positive root, and `μ - (w⁻¹ rᵢ w) μ = ⟨w μ, αᵢ^∨⟩ w⁻¹ αᵢ` lies in `Q₊ \ 0`. -/
 theorem exists_apply_coroot_eq_of_not_isLeftDescent {μ : Dual K H}
     (hμ : ∀ j, ∃ n : ℕ, μ (P.coroot j) = n + 1) {w : P.weylGroup hA} {i : ι}
@@ -216,7 +216,7 @@ variable {P}
 variable {Λ : Dual K H} {i : ι} {n : ℕ} (hn0 : 0 < n) (hn : (Λ + P.rho) (P.coroot i) = n)
 
 /-- The embedding `M(rᵢ · λ) ↪ M(λ)` sending `v_{rᵢ · λ}` to `fᵢⁿ v_λ`, where
-`n = ⟨λ + ρ, αᵢ^∨⟩ > 0` ([HumO] §1.4 (check)). -/
+`n = ⟨λ + ρ, αᵢ^∨⟩ > 0` ([HumO] §1.4). -/
 def reflectionHom :
     VermaModule P (P.reflection hA i (Λ + P.rho) - P.rho) →ₗ⁅K,P.KacMoodyAlgebra⁆
       VermaModule P Λ :=
@@ -273,7 +273,7 @@ lemma eq_zero_of_lie_e_eq_zero {v : V} {ν : Dual K H} (hv : v ∈ KacMoodyAlgeb
 
 variable {hA hn0 hn} in
 /-- **Primitive vectors of `M(λ)` of weight `ν` with `⟨ν, αᵢ^∨⟩ ∉ ℕ` lie in `M(rᵢ · λ)`**, for
-`⟨λ + ρ, αᵢ^∨⟩ ∈ ℤ_{>0}`. (Reconstructed by us; cf. [HumO] §4.4–4.6 (check).) -/
+`⟨λ + ρ, αᵢ^∨⟩ ∈ ℤ_{>0}`. (Reconstructed by us; cf. [HumO] Prop. 4.5.) -/
 theorem mem_range_reflectionHom {ν : Dual K H} (hν : ∀ m : ℕ, ν (P.coroot i) ≠ m)
     {y : VermaModule P Λ} (hy : y ∈ primitiveVectors P (VermaModule P Λ) ν) :
     y ∈ (reflectionHom hA hn0 hn).range := by
@@ -326,7 +326,7 @@ theorem finrank_hom_reflection_eq {ν : Dual K H} (hν : ∀ m : ℕ, ν (P.coro
       (bijective_reflectionHom_comp hν)
   exact e.finrank_eq
 
-/-- **Verma's lemma** ([HumO] Lemma 4.6 (check); [Kac] §9 (check)): let `⟨μ + ρ, αᵢ^∨⟩ = n` and
+/-- **Verma's lemma** ([HumO] Prop. 4.5 (b); [Kum] Lemma 9.2.6): let `⟨μ + ρ, αᵢ^∨⟩ = n` and
 `⟨μ' + ρ, αᵢ^∨⟩ = n'` be positive integers and `φ : M(μ') → M(μ)` a nonzero morphism. Then there
 is a nonzero morphism `ψ : M(rᵢ · μ') → M(rᵢ · μ)` such that the square formed with the
 embeddings `M(rᵢ · μ') ↪ M(μ')` and `M(rᵢ · μ) ↪ M(μ)` commutes. -/
@@ -358,7 +358,7 @@ variable {Λ : Dual K H} (hΛ : P.IsDominantIntegral Λ)
 include hΛ
 
 /-- For `Λ` dominant integral and `ℓ(rᵢ w) > ℓ(w)`, there is an embedding
-`M(rᵢ w · Λ) ↪ M(w · Λ)` ([HumO] §4.4–4.6 (check); [Kac] §9 (check)). -/
+`M(rᵢ w · Λ) ↪ M(w · Λ)` ([HumO] Prop. 4.3; [Kum] Lemma 9.2.5, Thm. 9.2.3). -/
 theorem exists_injective_simple_mul {w : P.weylGroup hA} {i : ι}
     (hw : ¬(P.coxeterSystem hA).IsLeftDescent w i) :
     ∃ φ : VermaModule P (P.weylDot hA ((P.coxeterSystem hA).simple i * w) Λ) →ₗ⁅K,
@@ -368,7 +368,7 @@ theorem exists_injective_simple_mul {w : P.weylGroup hA} {i : ι}
   exact ⟨reflectionHom hA hn0 hn, reflectionHom_injective hA hn0 hn⟩
 
 /-- For `Λ` dominant integral and `ℓ(rᵢ w) > ℓ(w)`, `Hom(M(rᵢ w · Λ), M(w · Λ))` is
-one-dimensional ([HumO] Thm. 4.2 (b) in this case (check)). -/
+one-dimensional ([HumO] Thm. 4.2 (b) in this case). -/
 theorem finrank_hom_simple_mul {w : P.weylGroup hA} {i : ι}
     (hw : ¬(P.coxeterSystem hA).IsLeftDescent w i) :
     finrank K (VermaModule P (P.weylDot hA ((P.coxeterSystem hA).simple i * w) Λ) →ₗ⁅K,
@@ -377,9 +377,9 @@ theorem finrank_hom_simple_mul {w : P.weylGroup hA} {i : ι}
   rw [weylDot_simple_mul]
   exact finrank_hom_reflection P hA hn0 hn
 
-/-- **Verma's theorem**, "Bruhat ⇒ embedding" ([HumO] Thm. 4.6 (check); [Kum] §9.1 (check)): for
-`Λ` dominant integral and `w ≤ w'` in the Bruhat order of `W`, there is an injective morphism of
-`𝔤(A)`-modules `M(w' · Λ) → M(w · Λ)`. -/
+/-- **Verma's theorem**, "Bruhat ⇒ embedding" ([HumO] Thm. 4.6, Thm. 5.1 (a), §5.2;
+[Kum] Thm. 9.2.3 (a)): for `Λ` dominant integral and `w ≤ w'` in the Bruhat order of `W`, there is
+an injective morphism of `𝔤(A)`-modules `M(w' · Λ) → M(w · Λ)`. -/
 theorem exists_injective_of_bruhatLE {w w' : P.weylGroup hA}
     (h : (P.coxeterSystem hA).BruhatLE w w') :
     ∃ φ : VermaModule P (P.weylDot hA w' Λ) →ₗ⁅K,P.KacMoodyAlgebra⁆

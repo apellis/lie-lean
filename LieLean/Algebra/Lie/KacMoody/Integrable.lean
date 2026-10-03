@@ -12,17 +12,17 @@ import LieLean.Algebra.Lie.KacMoody.Basic
 Let `A` be a generalized Cartan matrix with realization `(𝔥, Π, Π^∨)` over a field `K`. A module
 `V` over the Kac–Moody algebra `𝔤(A)` is *`𝔥`-diagonalizable* if it is the sum of its weight
 spaces `V_λ = {v | h • v = ⟨λ, h⟩ v for all h ∈ 𝔥}`, and it is *integrable* if moreover all the
-Chevalley generators `eᵢ`, `fᵢ` act locally nilpotently ([Kac] §3.6 (check)).
+Chevalley generators `eᵢ`, `fᵢ` act locally nilpotently ([Kac] §3.6).
 
-We show that the adjoint representation of `𝔤(A)` is integrable ([Kac] Lemma 3.5 (check)). The
+We show that the adjoint representation of `𝔤(A)` is integrable ([Kac] Lemma 3.5). The
 proof follows [Kac] §3.4–3.5: the elements of a Lie algebra on which `ad x` acts locally
 nilpotently form a Lie subalgebra (Mathlib's `LieSubalgebra.engel`), because of the Leibniz rule
-`(ad x)ⁿ [y, z] = ∑ₖ (n choose k) [(ad x)ᵏ y, (ad x)ⁿ⁻ᵏ z]` ([Kac] (3.4.1) (check)); so it suffices
+`(ad x)ⁿ [y, z] = ∑ₖ (n choose k) [(ad x)ᵏ y, (ad x)ⁿ⁻ᵏ z]` ([Kac] §3.4); so it suffices
 to check that `ad eᵢ` is nilpotent on the generators. This holds by the Serre relations for `eⱼ`
 (`j ≠ i`), and because `(ad eᵢ)³ fᵢ = 0`, `(ad eᵢ)² h = 0`. The case of `fᵢ` follows by applying
 the Chevalley involution.
 
-We also record the module version of this argument ([Kac] Lemma 3.4 (check)): if `ad x` is
+We also record the module version of this argument ([Kac] Lemma 3.4 (b)): if `ad x` is
 locally nilpotent on `L`, then the vectors of an `L`-module on which `x` acts locally nilpotently
 form a Lie submodule.
 
@@ -36,11 +36,11 @@ form a Lie submodule.
 
 ## Main results
 
-* `LieModule.exists_toEnd_pow_eq_zero_of_lieSpan`: [Kac] Lemma 3.4 (check).
+* `LieModule.exists_toEnd_pow_eq_zero_of_lieSpan`: [Kac] Lemma 3.4 (b).
 * `Matrix.Realization.KacMoodyAlgebra.engel_e_eq_top`, `engel_f_eq_top`: `ad eᵢ` and `ad fᵢ` are
   locally nilpotent on `𝔤(A)`.
 * `Matrix.Realization.KacMoodyAlgebra.isIntegrable_adjoint`: the adjoint `𝔤(A)`-module is
-  integrable ([Kac] Lemma 3.5 (check)).
+  integrable ([Kac] Lemma 3.5).
 
 ## References
 
@@ -59,7 +59,7 @@ variable {K L M : Type*} [CommRing K] [LieRing L] [LieAlgebra K L] [AddCommGroup
   [LieRingModule L M] [LieModule K L M]
 
 /-- If `ad x` is nilpotent on `y` and `x` is nilpotent on `m`, then `x` is nilpotent on `[y, m]`.
-This is the key step of [Kac] Lemma 3.4 (check). -/
+This is the key step of [Kac] Lemma 3.4 (b). -/
 lemma exists_toEnd_pow_lie_eq_zero {x y : L} {m : M} (hy : ∃ n, (ad K L x ^ n) y = 0)
     (hm : ∃ n, (toEnd K L M x ^ n) m = 0) : ∃ n, (toEnd K L M x ^ n) ⁅y, m⁆ = 0 := by
   obtain ⟨a, ha⟩ := hy
@@ -94,7 +94,7 @@ def locallyNilpotentSubmodule (x : L) (hx : ∀ y : L, ∃ n, (ad K L x ^ n) y =
 
 /-- Let `x ∈ L` be such that `ad x` is locally nilpotent on `L`. If an `L`-module `M` is generated
 by a set `S` of vectors on which `x` acts locally nilpotently, then `x` acts locally nilpotently
-on `M` ([Kac] Lemma 3.4 (check)). -/
+on `M` ([Kac] Lemma 3.4 (b)). -/
 theorem exists_toEnd_pow_eq_zero_of_lieSpan {x : L} (hx : ∀ y : L, ∃ n, (ad K L x ^ n) y = 0)
     {S : Set M} (hS : LieSubmodule.lieSpan K L S = ⊤)
     (hSx : ∀ m ∈ S, ∃ n, (toEnd K L M x ^ n) m = 0) (m : M) :
@@ -121,17 +121,17 @@ variable (V : Type*) [AddCommGroup V] [Module K V] [LieRingModule P.KacMoodyAlge
   [LieModule K P.KacMoodyAlgebra V]
 
 /-- The weight space `V_λ = {v ∈ V | h • v = ⟨λ, h⟩ v for all h ∈ 𝔥}` of a `𝔤(A)`-module `V`
-([Kac] §3.6 (check)). For the adjoint module it is the root space `𝔤_λ`. -/
+([Kac] §3.6). For the adjoint module it is the root space `𝔤_λ`. -/
 abbrev weightSpace (μ : Dual K H) : Submodule K V :=
   weightSpaceOfMap V (h P) μ
 
-/-- A `𝔤(A)`-module is `𝔥`-diagonalizable if it is the sum of its weight spaces ([Kac] §3.6
-(check)); the sum is then direct by `LieModule.iSupIndep_weightSpaceOfMap`. -/
+/-- A `𝔤(A)`-module is `𝔥`-diagonalizable if it is the sum of its weight spaces ([Kac] §3.6);
+the sum is then direct by `LieModule.iSupIndep_weightSpaceOfMap`. -/
 def IsHDiagonalizable : Prop :=
   ⨆ μ, weightSpace P V μ = ⊤
 
 /-- A `𝔤(A)`-module `V` is integrable if it is `𝔥`-diagonalizable and all the Chevalley generators
-`eᵢ`, `fᵢ` act locally nilpotently on `V` ([Kac] §3.6 (check)). -/
+`eᵢ`, `fᵢ` act locally nilpotently on `V` ([Kac] §3.6). -/
 structure IsIntegrable : Prop where
   isHDiagonalizable : IsHDiagonalizable P V
   exists_pow_e_eq_zero : ∀ i (v : V), ∃ n : ℕ, (toEnd K P.KacMoodyAlgebra V (e P i) ^ n) v = 0
@@ -213,7 +213,7 @@ theorem isHDiagonalizable_adjoint : IsHDiagonalizable P P.KacMoodyAlgebra :=
 variable [CharZero K] (hA : A.IsGeneralizedCartan)
 include hA
 
-/-- `ad eᵢ` is locally nilpotent on `𝔤(A)` ([Kac] Lemma 3.5 (check)). -/
+/-- `ad eᵢ` is locally nilpotent on `𝔤(A)` ([Kac] Lemma 3.5). -/
 theorem exists_ad_e_pow_eq_zero (i : ι) (y : P.KacMoodyAlgebra) :
     ∃ n, (ad K _ (e P i) ^ n) y = 0 := by
   induction y using induction_on with
@@ -243,7 +243,7 @@ theorem exists_ad_e_pow_eq_zero (i : ι) (y : P.KacMoodyAlgebra) :
     exact ⟨n, by rw [map_smul, hn, smul_zero]⟩
   | lie y z hy hz => exact exists_toEnd_pow_lie_eq_zero hy hz
 
-/-- `ad fᵢ` is locally nilpotent on `𝔤(A)` ([Kac] Lemma 3.5 (check)). -/
+/-- `ad fᵢ` is locally nilpotent on `𝔤(A)` ([Kac] Lemma 3.5). -/
 theorem exists_ad_f_pow_eq_zero (i : ι) (y : P.KacMoodyAlgebra) :
     ∃ n, (ad K _ (f P i) ^ n) y = 0 := by
   obtain ⟨n, hn⟩ := exists_ad_e_pow_eq_zero P hA i (chevalleyInvolution P y)
@@ -253,7 +253,7 @@ theorem exists_ad_f_pow_eq_zero (i : ι) (y : P.KacMoodyAlgebra) :
     map_zero, ad_neg_pow_apply] at this
   exact (smul_eq_zero.mp this).resolve_left (pow_ne_zero _ (neg_ne_zero.mpr one_ne_zero))
 
-/-- The adjoint representation of `𝔤(A)` is integrable ([Kac] Lemma 3.5 (check)). -/
+/-- The adjoint representation of `𝔤(A)` is integrable ([Kac] Lemma 3.5). -/
 theorem isIntegrable_adjoint : IsIntegrable P P.KacMoodyAlgebra where
   isHDiagonalizable := isHDiagonalizable_adjoint P
   exists_pow_e_eq_zero := exists_ad_e_pow_eq_zero P hA

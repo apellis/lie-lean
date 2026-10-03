@@ -27,8 +27,7 @@ No reparametrization quotient or component/crystal isomorphism is claimed.
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142 (1995),
-499–525, Section 4, pp. 509–510, Remark 4.2 and the cumulative affine formula
-.
+499–525, Section 4, pp. 509–510, Remark 4.2 and the cumulative affine formula.
 The proof is reconstructed using the source-oriented chain bridge in `Path.AChains`.
 -/
 
@@ -225,7 +224,8 @@ theorem raw_endpoint_integral (ha : StrictMono a) (ha0 : a 0 = 0)
   simpa only [sub_add_cancel] using hs
 
 /-- The actual finite rational LS path, from source a-chain data. Its endpoint is proved
-integral, not part of the input. Compare Littelmann 1995, §4, pp. 509–510, Remark 4.2.
+integral, not part of the input. Compare Littelmann 1995, §4, pp. 509–511: Remark 4.2,
+the definitions on p. 510, and Lemma 4.5 a) for the integral endpoint.
 Redundant equal directions are permitted (an explicit extension of the strict presentation). -/
 noncomputable def ofAChains (ha : StrictMono a) (ha0 : a 0 = 0)
     (ha1 : a (Fin.last (n + 1)) = 1)

@@ -17,7 +17,7 @@ assumed output presentation. This is a prerequisite for Littelmann Proposition 5
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142 (1995),
-pp. 515–516, Proposition 5.6. The proofs are reconstructed.
+pp. 515–516, Proposition 5.6. Proofs are reconstructed.
 -/
 
 open Module Set LittelmannPath LittelmannPath.FiniteConstruction

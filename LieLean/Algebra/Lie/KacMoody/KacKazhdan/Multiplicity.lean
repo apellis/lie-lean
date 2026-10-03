@@ -12,7 +12,7 @@ Let `A` be a symmetrizable generalized Cartan matrix, `𝔤 = 𝔤(A)` over an a
 field `K` of characteristic zero, and `M(λ)` the Verma module of highest weight `λ ∈ 𝔥*`. Call
 `λ → λ - n α` a **Kac–Kazhdan step** (`KacKazhdanStep`) if `α` is a positive root (`α ∈ Q₊ \ {0}`
 with `𝔤_α ≠ 0`, real or imaginary) and `n ≥ 1` is an integer with `2 (λ + ρ | α) = n (α | α)`.
-The **Kac–Kazhdan theorem** ([KK] Thm. 2 (check); [Kac] §9 (check)) states that `L(μ)` is a
+The **Kac–Kazhdan theorem** ([KK]; see [Kum] Cor. 2.3.6) states that `L(μ)` is a
 composition factor of `M(λ)`, `[M(λ) : L(μ)] ≠ 0`, iff `μ` is reached from `λ` by a finite chain of
 Kac–Kazhdan steps (`VermaModule.multiplicity_ne_zero_iff_reflTransGen`). As a corollary, `M(λ)` is
 irreducible iff no Kac–Kazhdan step starts at `λ`
@@ -39,7 +39,7 @@ roots `α`
   `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_kacKazhdanStep_of_multiplicity_ne_zero`:
   the two halves of the induction step.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.multiplicity_ne_zero_iff_reflTransGen`:
-  **the Kac–Kazhdan theorem** ([KK] Thm. 2 (check)).
+  **the Kac–Kazhdan theorem** ([KK]; [Kum] Cor. 2.3.6).
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.multiplicity_sub_nsmul_ne_zero`: a single step,
   `[M(λ) : L(λ - n α)] ≠ 0` if `2 (λ + ρ | α) = n (α | α)`.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.maxSubmodule_eq_bot_iff_kacKazhdan`,
@@ -83,17 +83,20 @@ Kac–Kazhdan step `λ → λ - n α` with `n α ≤ η` exists (the Kac–Kazhd
 `VermaModule.maxSubmodule_inf_weightSpace_ne_bot_iff`). If `(λ + ρ | α) ∉ ℚ`, then
 `2 (λ + ρ | α) ≠ n (α | α) ∈ ℚ`.
 
-This is the standard deformation argument (Jantzen's for finite-dimensional `𝔤`, [HumO] §5.3–5.7
-(check)); we reconstructed the details ourselves and did not check them against [KK] §4 (check),
-whose proof may differ.
+This is the standard deformation argument (Jantzen's for finite-dimensional `𝔤`, [HumO] §5.3–5.7);
+we reconstructed the details ourselves. [Kum] Cor. 2.3.5–2.3.6 deduce the theorem from the Jantzen
+sum formula in the same way.
 
 ## References
 
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
-  infinite-dimensional Lie algebras*, Adv. Math. 34 (1979), 97–108, Thm. 2 (check).
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9 (check).
+  infinite-dimensional Lie algebras*, Adv. Math. 34 (1979), 97–108.
+* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
+  Math. 204, Birkhäuser 2002, §2.3.
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, §5.3–5.7 (check).
+  GSM 94, §5.3–5.7.
+* [Jan79] J. C. Jantzen, *Moduln mit einem höchsten Gewicht*, Lecture Notes in Math. 750,
+  Springer 1979, 5.3 (numbering as cited in [HumO] §5.3, §5.7).
 -/
 
 open Module LieModule Polynomial
@@ -255,7 +258,7 @@ matrix, `K` algebraically closed of characteristic zero, `η ∈ Q₊`, and `λ�
 `(δ | α_x) ≠ 0` whenever `2 (λ₀ + ρ | α_x) = n (α_x | α_x)` with `n α_x ≤ η`. Then
 `∑_{i ≥ 1} [M(λ₀)^i : L(λ₀ - η)] = ∑_{(x, n)} [M(λ₀ - n α_x) : L(λ₀ - η)]`,
 the sum on the right over the pairs `(x, n)`, `n ≥ 1`, with `n α_x ≤ η` and
-`2 (λ₀ + ρ | α_x) = n (α_x | α_x)` (cf. [HumO] §5.3 (check), [Jantzen] (check)). -/
+`2 (λ₀ + ρ | α_x) = n (α_x | α_x)` (cf. [HumO] §5.3, [Jan79] 5.3). -/
 theorem finsum_multiplicity_jantzen [IsAlgClosed K] (Λ₀ δ : Dual K H) {η : ι → ℤ} (hη : 0 ≤ η)
     (hδ : ∀ x : NegRootIndex P, ∀ n : ℕ, (n + 1) • x.coeff ≤ η →
       2 * P.dualBilinForm S (Λ₀ + P.rho) x.root =
@@ -391,7 +394,7 @@ lemma exists_negRootIndex_root_eq {α : Dual K H} (hα : α ∈ P.posWeights)
     exact Nat.pos_of_ne_zero fun h0 ↦ h (Submodule.finrank_eq_zero.mp h0)
   exact ⟨⟨⟨α, hα⟩, ⟨0, hpos⟩⟩, rfl⟩
 
-/-- One step of a **Kac–Kazhdan chain** ([KK] Thm. 2 (check)): `μ = λ - n α` for a positive root
+/-- One step of a **Kac–Kazhdan chain** ([KK]; [Kum] Cor. 2.3.6): `μ = λ - n α` for a positive root
 `α` (i.e. `α ∈ Q₊ \ {0}` with `𝔤_α ≠ 0`) and an integer `n ≥ 1` with
 `2 (λ + ρ | α) = n (α | α)`. -/
 def KacKazhdanStep (Λ μ : Dual K H) : Prop :=
@@ -403,8 +406,8 @@ namespace VermaModule
 include hA in
 open Classical in
 /-- If `μ` is obtained from `λ` by a Kac–Kazhdan step, every composition factor of `M(μ)` is a
-composition factor of `M(λ)` (in fact of `M'(λ)`): this is the step "⇐" of [KK] Thm. 2 (check),
-via the Jantzen sum formula. -/
+composition factor of `M(λ)` (in fact of `M'(λ)`): this is the step "⇐" of the Kac–Kazhdan
+theorem ([KK]; [Kum] Cor. 2.3.6), via the Jantzen sum formula. -/
 theorem multiplicity_ne_zero_of_kacKazhdanStep [IsAlgClosed K] {Λ Λ' μ : Dual K H}
     (hstep : KacKazhdanStep P S Λ Λ') (h : (isCategoryO P Λ').multiplicity μ ≠ 0) :
     (isCategoryO P Λ).multiplicity μ ≠ 0 := by
@@ -443,8 +446,8 @@ theorem multiplicity_ne_zero_of_kacKazhdanStep [IsAlgClosed K] {Λ Λ' μ : Dual
 include hA in
 open Classical in
 /-- Every composition factor `L(μ)`, `μ ≠ λ`, of `M(λ)` is a composition factor of `M(λ - n α)`
-for some Kac–Kazhdan step `λ → λ - n α`: the step "⇒" of [KK] Thm. 2 (check), via the Jantzen
-sum formula. -/
+for some Kac–Kazhdan step `λ → λ - n α`: the step "⇒" of the Kac–Kazhdan theorem
+([KK]; [Kum] Cor. 2.3.6), via the Jantzen sum formula. -/
 theorem exists_kacKazhdanStep_of_multiplicity_ne_zero [IsAlgClosed K] {Λ μ : Dual K H}
     (hμ : μ ≠ Λ) (h : (isCategoryO P Λ).multiplicity μ ≠ 0) :
     ∃ Λ', KacKazhdanStep P S Λ Λ' ∧ (isCategoryO P Λ').multiplicity μ ≠ 0 := by
@@ -476,12 +479,11 @@ theorem exists_kacKazhdanStep_of_multiplicity_ne_zero [IsAlgClosed K] {Λ μ : D
   ring
 
 include hA in
-/-- **The Kac–Kazhdan theorem on composition factors of Verma modules** ([KK] Thm. 2 (check);
-[Kac] §9 (check)). Let `A` be a symmetrizable generalized Cartan matrix and `K` algebraically
-closed of characteristic zero. Then `L(μ)` is a composition factor of `M(λ)`, i.e.
-`[M(λ) : L(μ)] ≠ 0`, iff there is a chain `λ = λ₀, λ₁, …, λ_k = μ` with
-`λ_{j+1} = λ_j - n_j β_j` for positive roots `β_j` and integers `n_j ≥ 1` such that
-`2 (λ_j + ρ | β_j) = n_j (β_j | β_j)` (`KacKazhdanStep`). -/
+/-- **The Kac–Kazhdan theorem on composition factors of Verma modules** ([KK]; [Kum] Cor. 2.3.6).
+Let `A` be a symmetrizable generalized Cartan matrix and `K` algebraically closed of characteristic
+zero. Then `L(μ)` is a composition factor of `M(λ)`, i.e. `[M(λ) : L(μ)] ≠ 0`, iff there is a chain
+`λ = λ₀, λ₁, …, λ_k = μ` with `λ_{j+1} = λ_j - n_j β_j` for positive roots `β_j` and integers
+`n_j ≥ 1` such that `2 (λ_j + ρ | β_j) = n_j (β_j | β_j)` (`KacKazhdanStep`). -/
 theorem multiplicity_ne_zero_iff_reflTransGen [IsAlgClosed K] (Λ μ : Dual K H) :
     (isCategoryO P Λ).multiplicity μ ≠ 0 ↔ Relation.ReflTransGen (KacKazhdanStep P S) Λ μ := by
   constructor
@@ -514,7 +516,7 @@ theorem multiplicity_ne_zero_iff_reflTransGen [IsAlgClosed K] (Λ μ : Dual K H)
 
 include hA in
 /-- If `2 (λ + ρ | α) = n (α | α)` for a positive root `α` and an integer `n ≥ 1`, then `L(λ - n α)`
-is a composition factor of `M(λ)` ([KK] Thm. 2 (check)). -/
+is a composition factor of `M(λ)` ([KK]; [Kum] Cor. 2.3.6, case `p = 1`). -/
 theorem multiplicity_sub_nsmul_ne_zero [IsAlgClosed K] {Λ α : Dual K H} (hα : α ∈ P.posWeights)
     (hαne : rootSpace P α ≠ ⊥) {n : ℕ} (hn : 0 < n)
     (hK : 2 * P.dualBilinForm S (Λ + P.rho) α = n * P.dualBilinForm S α α) :
@@ -522,10 +524,10 @@ theorem multiplicity_sub_nsmul_ne_zero [IsAlgClosed K] {Λ α : Dual K H} (hα :
   (multiplicity_ne_zero_iff_reflTransGen P S hA Λ _).mpr (.single ⟨α, hα, hαne, n, hn, rfl, hK⟩)
 
 include hA in
-/-- **The Kac–Kazhdan irreducibility criterion** ([KK] (check); [Kac] §9 (check)): for `A`
-symmetrizable and `K` algebraically closed of characteristic zero, the Verma module `M(λ)` is
-irreducible, i.e. `M'(λ) = 0`, iff `2 (λ + ρ | α) ≠ n (α | α)` for all positive roots `α` and all
-integers `n ≥ 1`. -/
+/-- **The Kac–Kazhdan irreducibility criterion** ([KK]; via [Kum] Thm. 2.3.4 and
+Prop. 2.3.2; [Kum] Cor. 2.3.6): for `A` symmetrizable and `K` algebraically closed of characteristic
+zero, the Verma module `M(λ)` is irreducible, i.e. `M'(λ) = 0`, iff `2 (λ + ρ | α) ≠ n (α | α)` for
+all positive roots `α` and all integers `n ≥ 1`. -/
 theorem maxSubmodule_eq_bot_iff_kacKazhdan [IsAlgClosed K] (Λ : Dual K H) :
     maxSubmodule P Λ = ⊥ ↔ ∀ α ∈ P.posWeights, rootSpace P α ≠ ⊥ → ∀ n : ℕ, 0 < n →
       2 * P.dualBilinForm S (Λ + P.rho) α ≠ n * P.dualBilinForm S α α := by
@@ -577,8 +579,8 @@ lemma dualBilinForm_rootOf_rootOf (c c' : ι → ℤ) :
 
 include hA in
 /-- **Verma modules with generic highest weight are irreducible** (a consequence of the
-Kac–Kazhdan criterion, [KK] (check)): if `(λ + ρ | α) ∉ ℚ` for every positive root `α`, then
-`M(λ)` is irreducible. -/
+Kac–Kazhdan criterion, [KK]; cf. [Kum] Thm. 2.3.4): if `(λ + ρ | α) ∉ ℚ` for every positive
+root `α`, then `M(λ)` is irreducible. -/
 theorem maxSubmodule_eq_bot_of_forall_notMem_range_ratCast [IsAlgClosed K] {Λ : Dual K H}
     (hΛ : ∀ α ∈ P.posWeights, rootSpace P α ≠ ⊥ →
       P.dualBilinForm S (Λ + P.rho) α ∉ Set.range ((↑) : ℚ → K)) :

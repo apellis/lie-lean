@@ -10,12 +10,12 @@ import LieLean.Algebra.QuantumGroup.Weight
 # `U_q(𝔰𝔩₂)`-calculus in `U_q(𝔤)`
 
 For each `i ∈ I` the elements `Eᵢ, Fᵢ, K̃ᵢ^{±1}` of `U = U_q(𝔤)` satisfy the relations of
-`U_{vᵢ}(𝔰𝔩₂)`, `vᵢ = v^{dᵢ}`. We prove the basic commutation formula ([Jan] Lemma 1.7 (check),
-[Lus] 3.1.9 (check) in divided-power form)
+`U_{vᵢ}(𝔰𝔩₂)`, `vᵢ = v^{dᵢ}`. We prove the basic commutation formula ([Jan] 1.3(5), 4.4(6),
+[Lus] 3.1.9 in divided-power form)
 `Eᵢ Fᵢ^{n+1} - Fᵢ^{n+1} Eᵢ = [n+1]ᵢ Fᵢⁿ (vᵢ⁻ⁿ K̃ᵢ - vᵢⁿ K̃ᵢ⁻¹)/(vᵢ - vᵢ⁻¹)`
 and its consequences for weight vectors annihilated by `Eᵢ`: if `m ∈ M^Λ`, `Eᵢ m = 0`, then
 `Eᵢ Fᵢ^{s+1} m = [s+1]ᵢ [⟨i, Λ⟩ - s]ᵢ Fᵢ^s m`; in particular `Fᵢ^{⟨i,Λ⟩+1} m` is again
-annihilated by `Eᵢ` (and by all `Eⱼ`, `j ≠ i`) when `⟨i, Λ⟩ ≥ 0` ([Jan] 2.3, 5.6 (check)).
+annihilated by `Eᵢ` (and by all `Eⱼ`, `j ≠ i`) when `⟨i, Λ⟩ ≥ 0` ([Jan] 2.4, 5.6).
 
 ## Main results
 
@@ -28,7 +28,7 @@ annihilated by `Eᵢ` (and by all `Eⱼ`, `j ≠ i`) when `⟨i, Λ⟩ ≥ 0` ([
 
 ## References
 
-* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 1–2, 5.
+* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 1–2, 4–5.
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.1.
 -/
 
@@ -66,7 +66,7 @@ lemma qInt_aux {q : k} (hq : q ≠ 0) (c : k) (n : ℕ) :
   rw [qInt_succ (v := q) (n + 1)]
   linear_combination (c * q ^ (n + 1)) * h2 - c * h3
 
-/-- The commutation formula ([Jan] Lemma 1.7 (check)):
+/-- The commutation formula ([Jan] 1.3(5), 4.4(6)):
 `Eᵢ Fᵢ^{n+1} - Fᵢ^{n+1} Eᵢ = [n+1]ᵢ Fᵢⁿ (vᵢ⁻ⁿ K̃ᵢ - vᵢⁿ K̃ᵢ⁻¹)/(vᵢ - vᵢ⁻¹)`. -/
 theorem E_mul_F_pow_sub (hv : v ≠ 0) (i : I) (n : ℕ) :
     E R v i * F R v i ^ (n + 1) - F R v i ^ (n + 1) * E R v i =
@@ -102,7 +102,7 @@ theorem E_mul_F_pow_sub (hv : v ≠ 0) (i : I) (n : ℕ) :
     rw [lhs, qInt_aux_inv hq0, qInt_aux hq0]
     simp only [mul_sub, mul_smul_comm, smul_sub, smul_smul]
 
-/-- The commutation formula in divided powers ([Lus] 3.1.9 (check)): if `[n+1]ᵢ ≠ 0`, then
+/-- The commutation formula in divided powers ([Lus] 3.1.9): if `[n+1]ᵢ ≠ 0`, then
 `[Eᵢ, Fᵢ^{(n+1)}] = Fᵢ^{(n)} (vᵢ⁻ⁿ K̃ᵢ - vᵢⁿ K̃ᵢ⁻¹)/(vᵢ - vᵢ⁻¹)`. -/
 theorem E_mul_qDivPow_F_sub (hv : v ≠ 0) (i : I) (n : ℕ) (hn : qInt (v ^ D.d i) (n + 1) ≠ 0) :
     E R v i * qDivPow (v ^ D.d i) (n + 1) (F R v i) -
@@ -119,7 +119,7 @@ section Module
 variable {M : Type*} [AddCommGroup M] [Module k M] [Module (QuantumGroup R v) M]
   [IsScalarTower k (QuantumGroup R v) M]
 
-/-- For a weight vector `m ∈ M^Λ` with `Eᵢ m = 0` ([Jan] 2.3 (check)):
+/-- For a weight vector `m ∈ M^Λ` with `Eᵢ m = 0` ([Jan] 2.4(1)):
 `Eᵢ Fᵢ^{s+1} m = [s+1]ᵢ (vᵢ^{⟨i,Λ⟩-s} - vᵢ^{s-⟨i,Λ⟩})/(vᵢ - vᵢ⁻¹) Fᵢ^s m`. -/
 theorem E_smul_F_pow_smul (hv : v ≠ 0) {Λ : Y →+ ℤ} {m : M} (hm : m ∈ weightSpace R v M Λ)
     {i : I} (hE : E R v i • m = 0) (s : ℕ) :
@@ -138,7 +138,7 @@ theorem E_smul_F_pow_smul (hv : v ≠ 0) {Λ : Y →+ ℤ} {m : M} (hm : m ∈ w
     smul_assoc, mul_smul (F R v i ^ s), hK, smul_comm (F R v i ^ s), smul_smul]
 
 /-- If `m ∈ M^Λ` is annihilated by all `Eⱼ` and `⟨i, Λ⟩ = n ≥ 0`, then `Fᵢ^{n+1} m` is again
-annihilated by all `Eⱼ` ([Jan] 5.6 (check); the standard argument). -/
+annihilated by all `Eⱼ` ([Jan] 5.6; the standard argument). -/
 theorem E_smul_F_pow_smul_eq_zero (hv : v ≠ 0) {Λ : Y →+ ℤ} {m : M}
     (hm : m ∈ weightSpace R v M Λ) (hE : ∀ j, E R v j • m = 0) {i : I} {n : ℕ}
     (hn : Λ (R.coroot i) = n) (j : I) : E R v j • (F R v i ^ (n + 1) • m) = 0 := by

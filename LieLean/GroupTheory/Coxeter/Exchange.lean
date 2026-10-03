@@ -17,7 +17,7 @@ As a consequence we obtain the lemma on which the construction of the Iwahori–
 rests: if `ℓ(s w t) = ℓ(w)` and `ℓ(s w) = ℓ(w t)` for simple reflections `s, t`, then
 `s w = w t`.
 
-The proof is the one of [BB] §1.4 via the *reflection representation*: the simple reflections
+The proof is the one of [BB] §§1.3–1.4 via the *reflection representation*: the simple reflections
 act on `W × ZMod 2` by `s • (t, ε) = (s t s, ε + [t = s])`. These permutations satisfy the Coxeter
 relations (the key point is that the right inversion sequence of the word `(s s')^m`, for
 `m = m(s, s')`, is periodic of period `m`), so they define an action of `W`, and the second
@@ -26,26 +26,28 @@ sequence of any word for `w`.
 
 ## Main definitions
 
-* `CoxeterSystem.reflRep`: the action of `W` on `W × ZMod 2` ([BB] Thm. 1.4.3 (check)).
+* `CoxeterSystem.reflRep`: the action of `W` on `W × ZMod 2` (cf. [BB] Thm. 1.3.2, on `T × {±1}`).
 * `CoxeterSystem.inversionParity`: `n(w, t) ∈ ZMod 2`, the parity of the number of occurrences
   of `t` in the right inversion sequence of a word for `w`.
 
 ## Main results
 
 * `CoxeterSystem.mem_rightInvSeq_iff`: for a reduced word `ω` and a reflection `t`,
-  `t ∈ ris ω ↔ ℓ(π ω * t) < ℓ(π ω)` (strong exchange condition, [BB] Thm. 1.4.3, Cor. 1.4.4
-  (check); [HumC] §5.8 (check)).
+  `t ∈ ris ω ↔ ℓ(π ω * t) < ℓ(π ω)` (strong exchange condition, [BB] Thm. 1.4.3, Cor. 1.4.4;
+  [HumC] §5.8).
 * `CoxeterSystem.exists_mul_eq_wordProd_eraseIdx`: the (strong) exchange condition in the form
   `π ω * t = π (ω.eraseIdx j)`.
 * `CoxeterSystem.simple_mul_eq_mul_simple`: if `ℓ(s w t) = ℓ(w)` and `ℓ(s w) = ℓ(w t)` then
-  `s w = w t` ([HumC] §7.2 Lemma (check)).
+  `s w = w t` ([GP] Lemma 1.2.6).
 * `CoxeterSystem.induction_mul_simple`, `CoxeterSystem.induction_simple_mul`: induction along
   reduced words.
 
 ## References
 
-* [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, §1.4.
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §5.8, §7.2.
+* [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, §§1.3–1.4.
+* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §5.8.
+* [GP] M. Geck, G. Pfeiffer, *Characters of finite Coxeter groups and Iwahori–Hecke algebras*,
+  LMS Monographs 21, OUP 2000, Lemma 1.2.6.
 -/
 
 namespace CoxeterSystem
@@ -132,7 +134,7 @@ theorem even_count_rightInvSeq_alternatingWord (i i' : B) (t : W) :
   exact ⟨_, rfl⟩
 
 /-- The permutation of `W × ZMod 2` attached to the simple reflection `s i`:
-`(t, ε) ↦ (s t s, ε + [t = s])` ([BB] §1.4). -/
+`(t, ε) ↦ (s t s, ε + [t = s])` ([BB] §1.3). -/
 def reflPerm (i : B) : Equiv.Perm (W × ZMod 2) :=
   Function.Involutive.toPerm
     (fun x ↦ (s i * x.1 * s i, x.2 + if x.1 = s i then 1 else 0)) <| by
@@ -182,7 +184,7 @@ theorem isLiftable_reflPerm : M.IsLiftable cs.reflPerm := by
   rw [← two_mul, show (2 : ZMod 2) = 0 from rfl, zero_mul, add_zero]
 
 /-- The reflection representation of `W` on `W × ZMod 2`, `s • (t, ε) = (s t s, ε + [t = s])`
-([BB] Thm. 1.4.3 (check)). -/
+(cf. [BB] Thm. 1.3.2, where it acts on `T × {±1}`). -/
 def reflRep : W →* Equiv.Perm (W × ZMod 2) := cs.lift ⟨cs.reflPerm, cs.isLiftable_reflPerm⟩
 
 theorem reflRep_simple (i : B) : cs.reflRep (s i) = cs.reflPerm i :=
@@ -194,7 +196,8 @@ theorem reflRep_wordProd (ω : List B) : cs.reflRep (π ω) = (ω.map cs.reflPer
   exact List.map_congr_left fun i _ ↦ cs.reflRep_simple i
 
 /-- `n(w, t) ∈ ZMod 2`: the parity of the number of occurrences of `t` in the right inversion
-sequence of any word for `w` ([BB] §1.4, where it is written multiplicatively as `η(w, t)`). -/
+sequence of any word for `w`. [BB] §1.3 count occurrences in left inversion sequences instead
+((1.13), (1.17)), so `(-1)^{n(w, t)}` is their `η(w⁻¹; t)` (compare `reflRep_apply` with (1.18)). -/
 def inversionParity (w t : W) : ZMod 2 := (cs.reflRep w (t, 0)).2
 
 theorem inversionParity_wordProd (ω : List B) (t : W) :
@@ -249,8 +252,8 @@ theorem inversionParity_eq_one_iff {ω : List B} (hω : cs.IsReduced ω) (t : W)
 end reflRep
 
 /-- The strong exchange condition: for a reduced word `ω`, the right inversions of `π ω` are
-exactly the entries of the right inversion sequence of `ω` ([BB] Cor. 1.4.4 (check),
-[HumC] §5.8 (check)). -/
+exactly the entries of the right inversion sequence of `ω` ([BB] Cor. 1.4.4,
+[HumC] §5.8). -/
 theorem mem_rightInvSeq_iff {ω : List B} (hω : cs.IsReduced ω) {t : W} :
     t ∈ ris ω ↔ cs.IsRightInversion (π ω) t := by
   classical
@@ -270,7 +273,7 @@ theorem mem_rightInvSeq_iff {ω : List B} (hω : cs.IsReduced ω) {t : W} :
 
 /-- The strong exchange condition: if `ω` is reduced and `t` is a reflection with
 `ℓ(π ω * t) < ℓ(π ω)`, then `π ω * t` is obtained from `ω` by deleting a letter
-([BB] Thm. 1.4.3 (check)). -/
+([BB] Thm. 1.4.3). -/
 theorem exists_mul_eq_wordProd_eraseIdx {ω : List B} (hω : cs.IsReduced ω) {t : W}
     (ht : cs.IsRightInversion (π ω) t) :
     ∃ (j : ℕ) (hj : j < ω.length), t = (ris ω)[j]'(by simpa using hj) ∧
@@ -280,7 +283,7 @@ theorem exists_mul_eq_wordProd_eraseIdx {ω : List B} (hω : cs.IsReduced ω) {t
   rw [← cs.wordProd_mul_getD_rightInvSeq, List.getD_eq_getElem]
 
 /-- If `ℓ(s w t) = ℓ(w)` and `ℓ(s w) = ℓ(w t)` for simple reflections `s = sᵢ`, `t = sⱼ`, then
-`s w = w t` ([HumC] §7.2 Lemma (check); the proof uses the exchange condition). -/
+`s w = w t` ([GP] Lemma 1.2.6; the proof uses the exchange condition). -/
 theorem simple_mul_eq_mul_simple {i j : B} {w : W} (h₁ : ℓ (s i * w * s j) = ℓ w)
     (h₂ : ℓ (s i * w) = ℓ (w * s j)) : s i * w = w * s j := by
   -- First the case `ℓ(s w) > ℓ(w)`.

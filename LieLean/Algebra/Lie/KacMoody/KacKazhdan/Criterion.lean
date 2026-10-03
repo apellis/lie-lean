@@ -16,14 +16,13 @@ the radical of the Shapovalov form (`VermaModule.mem_maxSubmodule_iff`). For `η
 Shapovalov form is degenerate on `M(Λ)_{Λ - η}` iff `M'(Λ)_{Λ - η} ≠ 0`
 (`VermaModule.nondegenerate_weightSpaceForm_iff`).
 
-The **Kac–Kazhdan criterion** ([KK] Thm. 1 and Thm. 2 (check); [Kac] §9 (check)) states, for
-symmetrizable `A`, that `M'(Λ)_{Λ - η} ≠ 0` iff there are a positive root `α` and an integer
-`n ≥ 1` with `n α ≤ η` and `2 (Λ + ρ | α) = n (α | α)`; it follows from the Kac–Kazhdan
-determinant formula (`VermaModule.maxSubmodule_inf_weightSpace_ne_bot_iff` in
-`KacMoody/KacKazhdan/Formula.lean`). This file proves the two parts of it that do not need the
-determinant:
+The **Kac–Kazhdan criterion** ([KK]; see [Kum] Thm. 2.3.4 and Prop. 2.3.2) states, for symmetrizable
+`A`, that `M'(Λ)_{Λ - η} ≠ 0` iff there are a positive root `α` and an integer `n ≥ 1` with
+`n α ≤ η` and `2 (Λ + ρ | α) = n (α | α)`; it follows from the Kac–Kazhdan determinant formula
+(`VermaModule.maxSubmodule_inf_weightSpace_ne_bot_iff` in `KacMoody/KacKazhdan/Formula.lean`). This
+file proves the two parts of it that do not need the determinant:
 
-* **A necessary condition** (via the Casimir operator, [Kac] Prop. 9.8 (check)): if
+* **A necessary condition** (via the Casimir operator, [Kac] proof of Prop. 9.9 a)): if
   `M'(Λ)_{Λ - η} ≠ 0`, then there is `β ∈ Q₊ \ {0}` with `β ≤ η` and `2 (Λ + ρ | β) = (β | β)`,
   and in fact an embedding `M(Λ - β) ↪ M'(Λ)`. The criterion sharpens this to `β = n α`.
 * **Sufficiency for simple roots**: if `2 (Λ + ρ | αᵢ) = n (αᵢ | αᵢ)`, i.e. `⟨Λ + ρ, αᵢ^∨⟩ = n`,
@@ -53,18 +52,20 @@ determinant:
 For the necessary condition, choose `β ∈ Q₊` of minimal height with `β ≤ η` and
 `M'(Λ)_{Λ - β} ≠ 0`. A nonzero `v ∈ M'(Λ)_{Λ - β}` is primitive: `eᵢ v ∈ M'(Λ)_{Λ - β + αᵢ}`, which
 is zero by minimality. The Casimir operator acts on `M(Λ)` by `(Λ + 2ρ | Λ)` and on `U(𝔤) v`, a
-quotient of `M(Λ - β)`, by `(Λ - β + 2ρ | Λ - β)` ([Kac] Cor. 2.6 (check)), which gives
+quotient of `M(Λ - β)`, by `(Λ - β + 2ρ | Λ - β)` ([Kac] Cor. 2.6), which gives
 `2 (Λ + ρ | β) = (β | β)`. For simple roots, `fᵢⁿ v_Λ` is a primitive vector and `U(𝔫₋)` is a
-domain. These are the standard arguments (cf. [KK] §3 (check), [HumO] §4.2 (check)), written out
-by us.
+domain. These are the standard arguments (cf. [KK]; [Kum] Thm. 2.3.4, proof, Step 1; [HumO] §1.4,
+§4.2), written out by us.
 
 ## References
 
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. 34 (1979), 97–108.
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.4–9.8 (check).
+* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
+  Math. 204, Birkhäuser 2002, §2.3.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.6, §9.8–9.9.
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, §4.2 (check).
+  GSM 94, §1.4, §4.2.
 -/
 
 open Module LieModule
@@ -243,8 +244,8 @@ lemma dualBilinForm_add_two_rho_eq_iff (Λ b : Dual K H) :
 variable (hA : A.IsGeneralizedCartan)
 include hA
 
-/-- **The Casimir condition for primitive vectors** ([Kac] Prop. 9.8 (check), [KK]): if `M(Λ)` has
-a nonzero primitive vector of weight `Λ - β`, then `2 (Λ + ρ | β) = (β | β)`. -/
+/-- **The Casimir condition for primitive vectors** ([Kac] proof of Prop. 9.9 a), [KK]): if `M(Λ)`
+has a nonzero primitive vector of weight `Λ - β`, then `2 (Λ + ρ | β) = (β | β)`. -/
 theorem two_mul_dualBilinForm_eq_of_mem_primitiveVectors {Λ : Dual K H} {β : ι → ℤ}
     {v : VermaModule P Λ} (hv : v ∈ primitiveVectors P (VermaModule P Λ) (Λ - P.rootOf β))
     (hv0 : v ≠ 0) :
@@ -255,11 +256,11 @@ theorem two_mul_dualBilinForm_eq_of_mem_primitiveVectors {Λ : Dual K H} {β : �
     Function.surjective_id hvw hv0 he).2
   exact (dualBilinForm_add_two_rho_eq_iff P S Λ _).mp this
 
-/-- **Kac–Kazhdan: a necessary condition for degeneracy** ([KK] (check); via [Kac] Prop. 9.8
-(check)). Let `A` be a symmetrizable generalized Cartan matrix. If the maximal submodule `M'(Λ)`
-of `M(Λ)` has a nonzero vector of weight `Λ - η` (equivalently, the Shapovalov form is degenerate
-on `M(Λ)_{Λ - η}`), then there is `β ∈ Q₊ \ {0}` with `β ≤ η` and `2 (Λ + ρ | β) = (β | β)`, and an
-embedding `M(Λ - β) ↪ M(Λ)` with image in `M'(Λ)`.
+/-- **Kac–Kazhdan: a necessary condition for degeneracy** ([KK]; see [Kum] Thm. 2.3.4, proof,
+Step 1; via the proof of [Kac] Prop. 9.9 a)). Let `A` be a symmetrizable generalized Cartan matrix.
+If the maximal submodule `M'(Λ)` of `M(Λ)` has a nonzero vector of weight `Λ - η` (equivalently, the
+Shapovalov form is degenerate on `M(Λ)_{Λ - η}`), then there is `β ∈ Q₊ \ {0}` with `β ≤ η` and
+`2 (Λ + ρ | β) = (β | β)`, and an embedding `M(Λ - β) ↪ M(Λ)` with image in `M'(Λ)`.
 
 The Kac–Kazhdan criterion sharpens `2 (Λ + ρ | β) = (β | β)` to: `2 (Λ + ρ | α) = n (α | α)` for
 some positive root `α` and `n ≥ 1` with `n α ≤ η`. -/
@@ -277,8 +278,9 @@ theorem exists_of_maxSubmodule_inf_weightSpace_ne_bot {Λ : Dual K H} {η : ι �
   exact hvM
 
 /-- **Kac–Kazhdan: a sufficient condition for nondegeneracy of the Shapovalov form**
-([KK] (check)). Let `A` be a symmetrizable generalized Cartan matrix. If `2 (Λ + ρ | β) ≠ (β | β)`
-for all `β ∈ Q₊ \ {0}` with `β ≤ η`, then the Shapovalov form on `M(Λ)_{Λ - η}` is nondegenerate:
+([KK]; cf. [Kac] Prop. 9.9 a), [Kum] Thm. 2.3.4, proof, Step 1). Let `A` be a
+symmetrizable generalized Cartan matrix. If `2 (Λ + ρ | β) ≠ (β | β)` for all `β ∈ Q₊ \ {0}` with
+`β ≤ η`, then the Shapovalov form on `M(Λ)_{Λ - η}` is nondegenerate:
 its determinant with respect to any basis is nonzero. -/
 theorem det_toMatrix_weightSpaceForm_ne_zero_of_forall {Λ : Dual K H} {η : ι → ℤ}
     {n : Type*} [Fintype n] [DecidableEq n] (b : Basis n K (weightSpace P Λ (Λ - P.rootOf η)))
@@ -300,10 +302,10 @@ section Simple
 variable (hA : A.IsGeneralizedCartan)
 include hA
 
-/-- **Degeneracy along the hyperplanes of the simple roots** ([KK] (check); [HumO] §4.2
-(check)): if `⟨Λ + ρ, αᵢ^∨⟩ = n` is a positive integer and `n αᵢ ≤ η`, then `M'(Λ)` has a nonzero
-vector of weight `Λ - η`. Indeed `M(Λ - n αᵢ) ↪ M'(Λ)` (`exists_injective_reflection`), and
-`M(Λ - n αᵢ)_{Λ - η} ≠ 0`. -/
+/-- **Degeneracy along the hyperplanes of the simple roots** ([KK]; cf.
+[Kum] Thm. 2.3.4; [HumO] Prop. 1.4, Thm. 4.2 (a)): if `⟨Λ + ρ, αᵢ^∨⟩ = n` is a positive integer and
+`n αᵢ ≤ η`, then `M'(Λ)` has a nonzero vector of weight `Λ - η`. Indeed `M(Λ - n αᵢ) ↪ M'(Λ)`
+(`exists_injective_reflection`), and `M(Λ - n αᵢ)_{Λ - η} ≠ 0`. -/
 theorem inf_weightSpace_ne_bot_of_coroot {Λ : Dual K H} {η : ι → ℤ} {i : ι} {n : ℕ}
     (hn0 : 0 < n) (hn : (Λ + P.rho) (P.coroot i) = n) (hη : n • Pi.single i 1 ≤ η) :
     (maxSubmodule P Λ).toSubmodule ⊓ weightSpace P Λ (Λ - P.rootOf η) ≠ ⊥ := by
@@ -347,7 +349,7 @@ lemma two_mul_dualBilinForm_root_eq_iff (μ : Dual K H) (i : ι) (c : K) :
     simpa [sub_eq_zero, hε] using h2
   · linear_combination (2 / (S.ε i : K)) * h
 
-/-- **The Kac–Kazhdan condition for a simple root** ([KK] (check)): if
+/-- **The Kac–Kazhdan condition for a simple root** ([KK]; cf. [Kum] Thm. 2.3.4): if
 `2 (Λ + ρ | αᵢ) = n (αᵢ | αᵢ)` for a positive integer `n` with `n αᵢ ≤ η`, then `M'(Λ)` has a
 nonzero vector of weight `Λ - η`. -/
 theorem inf_weightSpace_ne_bot_of_two_mul_dualBilinForm {Λ : Dual K H} {η : ι → ℤ} {i : ι}
@@ -360,8 +362,9 @@ theorem inf_weightSpace_ne_bot_of_two_mul_dualBilinForm {Λ : Dual K H} {η : ι
     ((two_mul_dualBilinForm_root_eq_iff P hA S _ i n).mp hn) hη
 
 /-- **Vanishing of the Shapovalov determinant along the hyperplanes of the simple roots**
-([KK] (check)): if `2 (Λ + ρ | αᵢ) = n (αᵢ | αᵢ)` for a positive integer `n` with `n αᵢ ≤ η`, the
-determinant of the Shapovalov form on `M(Λ)_{Λ - η}` (with respect to any basis) vanishes. -/
+([KK]; a special case of [Kum] Thm. 2.3.4): if `2 (Λ + ρ | αᵢ) = n (αᵢ | αᵢ)` for a positive
+integer `n` with `n αᵢ ≤ η`, the determinant of the Shapovalov form on `M(Λ)_{Λ - η}` (with respect
+to any basis) vanishes. -/
 theorem det_toMatrix_weightSpaceForm_eq_zero_of_two_mul_dualBilinForm {Λ : Dual K H}
     {η : ι → ℤ} {i : ι} {n : ℕ} (hn0 : 0 < n)
     (hn : 2 * P.dualBilinForm S (Λ + P.rho) (P.root i) =

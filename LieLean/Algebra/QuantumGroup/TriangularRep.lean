@@ -10,13 +10,13 @@ import LieLean.Algebra.QuantumGroup.Triangular
 
 We construct operators `Eᵢ, Fᵢ, K_μ` on `V = ('f ⊗ k[Y]) ⊗ 'f` which model left multiplication
 in `U` on the elements `y⁻ K_μ x⁺ ↔ y ⊗ e^μ ⊗ x` (`y, x ∈ 'f`), following the formula
-`Eᵢ y⁻ = y⁻ Eᵢ + (K̃ᵢ ᵢr(y)⁻ - rᵢ(y)⁻ K̃₋ᵢ)/(vᵢ - vᵢ⁻¹)` ([Lus] 3.1.6 (check)):
+`Eᵢ y⁻ = y⁻ Eᵢ + (K̃ᵢ ᵢr(y)⁻ - rᵢ(y)⁻ K̃₋ᵢ)/(vᵢ - vᵢ⁻¹)` ([Lus] 3.1.6):
 * `Fᵢ (y ⊗ e^μ ⊗ x) = θᵢ y ⊗ e^μ ⊗ x`;
 * `K_ν (y ⊗ e^μ ⊗ x) = τ_ν y ⊗ e^{ν+μ} ⊗ x`, where `τ_ν(θⱼ) = v^{-⟨ν, j'⟩} θⱼ`;
 * `Eᵢ (y ⊗ e^μ ⊗ x) = v^{-⟨μ, i'⟩} y ⊗ e^μ ⊗ θᵢ x
     + (τ_{dᵢ i} ᵢr(y) ⊗ e^{dᵢ i + μ} ⊗ x - rᵢ(y) ⊗ e^{-dᵢ i + μ} ⊗ x)/(vᵢ - vᵢ⁻¹)`.
 These operators satisfy the relations (b)–(d) of `U` (`QuantumGroup.preRelations_op`); the
-construction is our own rendering of the standard argument ([Jan] 4.21 (check)).
+construction is our own rendering of the standard argument ([Jan] 4.14–4.17).
 
 ## Main definitions
 

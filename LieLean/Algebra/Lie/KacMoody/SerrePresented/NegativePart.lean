@@ -28,7 +28,7 @@ proof of the Gabber–Kac theorem ([Kac] Thm. 9.11, [GK]; `KacMoody/GabberKac.le
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.11 (check).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.11.
 * [GK] O. Gabber, V. G. Kac, *On defining relations of certain infinite-dimensional Lie
   algebras*, Bull. Amer. Math. Soc. (N.S.) **5** (1981), 185–189.
 -/

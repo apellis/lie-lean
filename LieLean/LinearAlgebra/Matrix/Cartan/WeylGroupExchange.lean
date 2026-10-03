@@ -13,9 +13,9 @@ characteristic zero, and `W` its Weyl group. Using that `W` is a Coxeter group w
 each simple root into `Q₊` or `-Q₊` (`Matrix.Realization.coxeterSystem`,
 `Matrix.Realization.isRightDescent_coxeterSystem_iff`), we prove:
 
-* If `u ∈ W` and `u αⱼ = αᵢ`, then `u rⱼ u⁻¹ = rᵢ` ([Kac] Lemma 3.10 (check); this is also
+* If `u ∈ W` and `u αⱼ = αᵢ`, then `u rⱼ u⁻¹ = rᵢ` (proof of [Kac] Lemma 3.10, (3.10.3); also
   what makes the reflection `r_α` of a real root `α` well defined, [Kac] §5.1).
-* The exchange condition ([Kac] Lemma 3.10 (check)): if `w = r_{i₁} ⋯ r_{iₜ}` and `w αᵢ < 0`, then
+* The exchange condition ([Kac] Lemma 3.10): if `w = r_{i₁} ⋯ r_{iₜ}` and `w αᵢ < 0`, then
   `w rᵢ = r_{i₁} ⋯ r̂_{iₛ} ⋯ r_{iₜ}` for some `s`.
 
 The proof of the first statement is not the one of [Kac], which uses automorphisms of `𝔤(A)`
@@ -33,7 +33,8 @@ roots, and `g = 1` by the faithfulness criterion `CoxeterSystem.eq_one_of_forall
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Lemma 3.10, §5.1.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Lemma 3.10, Lemma 3.11,
+  §5.1.
 * [Hum] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §5.4.
 -/
 
@@ -44,7 +45,7 @@ namespace Matrix.Realization
 variable {ι K H : Type*} [Fintype ι] [Field K] [CharZero K] [AddCommGroup H]
   [Module K H] {A : Matrix ι ι ℤ} (P : Realization A K H) (hA : A.IsGeneralizedCartan)
 
-/-- Every element of `W` maps a simple root into `Q₊` or into `-Q₊` ([Kac] Lemma 3.11 (check)). -/
+/-- Every element of `W` maps a simple root into `Q₊` or into `-Q₊` ([Kac] Lemma 3.11 (a)). -/
 theorem apply_root_nonneg_or_nonpos {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA)
     (i : ι) : (∃ k : ι → ℤ, 0 ≤ k ∧ w (P.root i) = P.rootOf k) ∨
       ∃ k : ι → ℤ, 0 ≤ k ∧ w (P.root i) = -P.rootOf k := by
@@ -98,9 +99,9 @@ lemma nonneg_of_apply_root_eq_add {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ 
     simp only [Pi.zero_apply] at this
     omega
 
-/-- **[Kac] Lemma 3.10 (check)**: if `u ∈ W` maps the simple root `αⱼ` to the simple root `αᵢ`,
-then `u rⱼ u⁻¹ = rᵢ`. The argument (reconstructed, see the module docstring) shows that
-`rᵢ u rⱼ u⁻¹` fixes all simple roots. -/
+/-- **Proof of [Kac] Lemma 3.10, (3.10.3)**: if `u ∈ W` maps the simple root `αⱼ` to the
+simple root `αᵢ`, then `u rⱼ u⁻¹ = rᵢ`. The argument (reconstructed, see the module docstring) shows
+that `rᵢ u rⱼ u⁻¹` fixes all simple roots. -/
 theorem mul_reflection_mul_inv_eq {u : Dual K H ≃ₗ[K] Dual K H} (hu : u ∈ P.weylGroup hA)
     {i j : ι} (h : u (P.root j) = P.root i) :
     u * P.reflection hA j * u⁻¹ = P.reflection hA i := by
@@ -183,7 +184,7 @@ lemma eq_root_of_reflection_apply {u : Dual K H ≃ₗ[K] Dual K H} (hu : u ∈ 
     rcases Int.eq_one_or_neg_one_of_mul_eq_one' h3.symm with ⟨h, -⟩ | ⟨h, -⟩ <;> omega
   rw [hγ, hkj1, Int.cast_one, one_smul]
 
-/-- **The exchange condition** ([Kac] Lemma 3.10 (check)): if `w = r_{i₁} ⋯ r_{iₜ}` and
+/-- **The exchange condition** ([Kac] Lemma 3.10): if `w = r_{i₁} ⋯ r_{iₜ}` and
 `w αᵢ < 0`, then there is `s` such that `w rᵢ = r_{i₁} ⋯ r̂_{iₛ} ⋯ r_{iₜ}`. -/
 theorem exists_mul_reflection_eq_eraseIdx (ω : List ι) {i : ι} {k : ι → ℤ} (hk : 0 ≤ k)
     (hw : (ω.map (P.reflection hA)).prod (P.root i) = -P.rootOf k) :

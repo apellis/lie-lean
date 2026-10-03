@@ -23,8 +23,8 @@ field, injectivity of `K` therefore gives a nonzero eigenvector killed by `T`.
 
 ## References
 
-The elementary eigenvector and linear-independence arguments are reconstructed here;
-no external source was consulted. No quantum-group structure is used.
+The elementary eigenvector and linear-independence arguments are reconstructed here.
+No quantum-group structure is used.
 -/
 
 namespace Module.End

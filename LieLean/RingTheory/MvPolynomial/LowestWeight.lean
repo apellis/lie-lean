@@ -32,8 +32,8 @@ vanishing criterion used for Chevalley restriction injectivity.
 
 The vanishing criterion is the infinitesimal form of the standard argument that the
 restriction of an invariant polynomial to a Cartan subalgebra is injective
-(Humphreys, *Introduction to Lie algebras and representation theory*, §23.1 (check);
-Etingof, MIT 18.757 (Fall 2023), Lecture 10, Thm. 10.1(ii) (check)). The graded argument here
+(Humphreys, *Introduction to Lie algebras and representation theory*, §23.1 and Appendix to §23;
+Etingof, MIT 18.757 (Fall 2023), Lecture 10, Thm. 10.1(ii)). The graded argument here
 is reconstructed; it replaces density of semisimple elements by a lowest-term computation.
 -/
 

@@ -30,7 +30,8 @@ support, not component stability or the isomorphism theorem.
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
 (1995), 499–525, §4 pp. 509–510 (Lemma 4.1, Corollary 1 and a-chain definition),
-§5 pp. 513–516 (Remark 5.1, Definition 5.3, Lemma 5.5 and Proposition 5.7). Proofs reconstructed.
+§5 pp. 513–516 (Remark 5.1, Definition 5.3, Lemma 5.5 and Proposition 5.7).
+Proofs reconstructed.
 -/
 
 open Module
@@ -428,7 +429,8 @@ theorem raw_endpoint_integral (ha : StrictMono a) (ha0 : a 0 = 0)
 
 /-- The actual finite rational-PL path for arbitrary integral directions with source
 a-chains. Its endpoint is derived. No dominant-class hypothesis occurs. Compare
-Littelmann 1995, §4, pp. 509–510; this does not assert abstract `IsLS` or stability.
+Littelmann 1995, §4, pp. 509–511 (definitions on p. 510; Lemma 4.5 a) for the integral
+endpoint); this does not assert abstract `IsLS` or stability.
 Redundant equal directions are permitted (an explicit extension of the strict presentation). -/
 noncomputable def ofAChains (ha : StrictMono a) (ha0 : a 0 = 0)
     (ha1 : a (Fin.last (n + 1)) = 1)

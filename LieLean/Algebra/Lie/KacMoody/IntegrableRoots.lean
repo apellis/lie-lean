@@ -11,8 +11,8 @@ import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
 Let `A` be a generalized Cartan matrix and `K` a field of characteristic zero. The set of roots
 `Δ` of `𝔤(A)` is the set of nonzero `α ∈ 𝔥*` with `𝔤_α ≠ 0`; every root is either positive
 (`α ∈ Q₊`) or negative (`α ∈ -Q₊`) ([Kac] §1.3). Since the adjoint module is integrable, `Δ` and
-the root multiplicities are invariant under the Weyl group `W` ([Kac] Prop. 3.7 (b) (check)).
-Moreover the fundamental reflection `rᵢ` permutes `Δ₊ \ {αᵢ}` ([Kac] Lemma 3.7 (check)).
+the root multiplicities are invariant under the Weyl group `W` ([Kac] Prop. 3.7 (b)).
+Moreover the fundamental reflection `rᵢ` permutes `Δ₊ \ {αᵢ}` ([Kac] Lemma 3.7).
 
 A root is real if it is `W`-conjugate to a simple root ([Kac] §5.1); real roots have
 multiplicity one, and `-α` is real when `α` is.
@@ -27,13 +27,14 @@ multiplicity one, and `-α` is real when `α` is.
   `α ∈ -(Q₊ \ 0) ∪ {0} ∪ (Q₊ \ 0)`.
 * `Matrix.Realization.KacMoodyAlgebra.apply_mem_roots`: `W Δ = Δ`.
 * `Matrix.Realization.KacMoodyAlgebra.reflection_mem_posWeights`: `rᵢ (Δ₊ \ {αᵢ}) ⊆ Δ₊`
-  ([Kac] Lemma 3.7 (check)).
+  ([Kac] Lemma 3.7).
 * `Matrix.Realization.KacMoodyAlgebra.rank_rootSpace_of_mem_realRoots`: real roots have
   multiplicity one.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.3, §3.7, §5.1.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.3, §3.7, §5.1
+  (stated over `ℂ`).
 -/
 
 open Module LieModule LieAlgebra
@@ -79,19 +80,19 @@ lemma root_mem_roots (i : ι) : P.root i ∈ roots P :=
 variable (hA : A.IsGeneralizedCartan)
 include hA
 
-/-- The root multiplicities of `𝔤(A)` are `W`-invariant ([Kac] Prop. 3.7 (b) (check)). -/
+/-- The root multiplicities of `𝔤(A)` are `W`-invariant ([Kac] Prop. 3.7 (b)). -/
 theorem rootSpace_apply_eq_bot_iff {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA)
     (μ : Dual K H) : rootSpace P (w μ) = ⊥ ↔ rootSpace P μ = ⊥ :=
   weightSpace_weylGroup_eq_bot_iff hA (isIntegrable_adjoint P hA) hw μ
 
-/-- The set of roots is `W`-invariant ([Kac] Prop. 3.7 (b) (check)). -/
+/-- The set of roots is `W`-invariant ([Kac] Prop. 3.7 (b)). -/
 theorem apply_mem_roots {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA)
     {μ : Dual K H} (hμ : μ ∈ roots P) : w μ ∈ roots P :=
   ⟨by rw [Ne, map_eq_zero_iff w w.injective]; exact hμ.1,
     by rw [Ne, rootSpace_apply_eq_bot_iff P hA hw]; exact hμ.2⟩
 
 /-- The fundamental reflection `rᵢ` maps the positive roots other than `αᵢ` to positive roots
-([Kac] Lemma 3.7 (check)). The proof: `α = ∑ kⱼ αⱼ ≠ αᵢ` has some `kⱼ > 0` with `j ≠ i`, since
+([Kac] Lemma 3.7). The proof: `α = ∑ kⱼ αⱼ ≠ αᵢ` has some `kⱼ > 0` with `j ≠ i`, since
 `k αᵢ` is not a root for `k ≥ 2`; `rᵢ α` is a root with the same coefficient `kⱼ`, hence is
 positive. -/
 theorem reflection_mem_posWeights {i : ι} {μ : Dual K H} (hμ : μ ∈ roots P)

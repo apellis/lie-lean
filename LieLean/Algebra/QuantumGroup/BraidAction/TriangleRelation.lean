@@ -34,7 +34,7 @@ of that end (e.g. `aᵢₗ = -2`) are not treated.
 ## References
 
 Reconstructed: the certificate was found by solving the linear system for the coefficients and
-is checked here by normal ordering. G. Lusztig, *Introduction to quantum groups*, 39.4 (check).
+is checked here by normal ordering. G. Lusztig, *Introduction to quantum groups*, 39.4.
 -/
 
 noncomputable section

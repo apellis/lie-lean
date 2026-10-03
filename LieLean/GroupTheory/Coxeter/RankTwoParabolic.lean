@@ -30,7 +30,7 @@ simple root vectors to `U⁺` (`LieLean/Algebra/QuantumGroup/PBW/RootVectors.lea
 
 ## References
 
-Standard facts about dihedral groups, e.g. [HumC] §1.1, §5.4 (check); the proofs are ours and use
+Standard facts about dihedral groups, e.g. [HumC] §1.1, §5.4; the proofs are ours and use
 `CoxeterSystem.orderOf_simple_mul_simple` and `CoxeterSystem.isReduced_alternatingWord`.
 -/
 

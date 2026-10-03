@@ -10,7 +10,7 @@ import LieLean.RepresentationTheory.Crystal.Path.GeneralClassStability
 
 Source: P. Littelmann, *Paths and root operators in representation theory*,
 Ann. Math. 142 (1995), §§4–5, pp. 509–515, source a-chains, Definition 5.3,
-and Lemma 5.5. proofs are reconstructed.
+and Lemma 5.5. Proofs are reconstructed.
 Neither class is assumed dominant or dominant-conjugate. Redundant subdivisions
 are allowed. No gluing-class root-operator stability is asserted.
 -/

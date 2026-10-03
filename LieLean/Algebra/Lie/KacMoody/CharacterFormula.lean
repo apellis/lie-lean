@@ -13,7 +13,7 @@ Let `A` be a symmetrizable generalized Cartan matrix (`A.IsSymmetrizable`), `(�
 realization of `A` over a field `K` of characteristic zero, `𝔤 = 𝔤(A)` the Kac–Moody algebra, `W`
 its Weyl group with length function `ℓ`, `ρ ∈ 𝔥*` with `⟨ρ, αᵢ^∨⟩ = 1` (`Matrix.Realization.rho`),
 and `R = ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α}` the denominator. For a dominant integral weight `Λ`,
-the **Weyl–Kac character formula** ([Kac] Thm. 10.4 (check)) states
+the **Weyl–Kac character formula** ([Kac] Thm. 10.4) states
 `ch L(Λ) · e^ρ · R = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(Λ + ρ)}`.
 As `W` is infinite in general, the right-hand side is an infinite formal sum; its support lies
 in the cone `Λ + ρ - Q₊`, so it is an element of the algebra `ℰ` of formal characters
@@ -22,12 +22,12 @@ coefficientwise: the coefficient of `e^μ` in `e^ρ R ch L(Λ)` is
 `∑_{w ∈ W, w(Λ + ρ) = μ} (-1)^{ℓ(w)}`, a sum with at most one nonzero term, as the stabilizer of
 `Λ + ρ` in `W` is trivial.
 
-## Proof ([Kac] §10.4 (check))
+## Proof ([Kac] §10.4)
 
-* `e^ρ R ch L(Λ)` is `W`-anti-invariant: `e^ρ R` is anti-invariant ([Kac] §10.2 (check),
+* `e^ρ R ch L(Λ)` is `W`-anti-invariant: `e^ρ R` is anti-invariant ([Kac] §10.2,
   `KacMoodyAlgebra.isWeylAntiInvariant_exp_rho_mul_denominator`) and `ch L(Λ)` is `W`-invariant
-  as `L(Λ)` is integrable ([Kac] Lemma 10.1, Prop. 3.7 (check)).
-* By [Kac] Prop. 9.8 (check) (`KacMoodyAlgebra.coeffAt_denominator_mul_character_ne_zero`), the
+  as `L(Λ)` is integrable ([Kac] Lemma 10.1, Prop. 3.7).
+* By [Kac] Prop. 9.8 (`KacMoodyAlgebra.coeffAt_denominator_mul_character_ne_zero`), the
   coefficient of `e^μ` in `R ch L(Λ)` vanishes unless `μ ≤ Λ` and `|μ + ρ|² = |Λ + ρ|²`; and it is
   `1` for `μ = Λ`.
 * An anti-invariant element with these properties is `∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(Λ + ρ)}`
@@ -43,14 +43,14 @@ coefficientwise: the coefficient of `e^μ` in `e^ρ R ch L(Λ)` is
 All in the namespace `Matrix.Realization.KacMoodyAlgebra.IrreducibleModule`:
 
 * `exp_rho_mul_denominator_mul_character`: the Weyl–Kac character formula
-  `e^ρ R ch L(Λ) = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(Λ + ρ)}` ([Kac] Thm. 10.4 (check)).
+  `e^ρ R ch L(Λ) = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(Λ + ρ)}` ([Kac] Thm. 10.4).
 * `coeffAt_exp_rho_mul_denominator_mul_character`: the same, coefficientwise.
 * `coeffAt_exp_rho_mul_denominator_mul_character_apply`,
   `coeffAt_exp_rho_mul_denominator_mul_character_eq_zero`: the coefficient of `e^{w(Λ + ρ)}` is
   `(-1)^{ℓ(w)}`, and the coefficients of `e^μ`, `μ ∉ W(Λ + ρ)`, vanish.
 * `character_zero`: `L(0)` is the trivial module, `ch L(0) = 1`.
 * `exp_rho_mul_denominator`: the denominator identity
-  `e^ρ ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α} = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w ρ}` ([Kac] (10.4.4) (check)).
+  `e^ρ ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α} = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w ρ}` ([Kac] (10.4.4)).
 
 ## References
 
@@ -157,7 +157,7 @@ variable (hA : A.IsGeneralizedCartan)
 include hA
 
 /-- `𝔤` kills the highest-weight vector of `L(0)`: the `eᵢ` and `𝔥` kill it, and so do the `fᵢ`
-since `fᵢ v_0` is a singular vector of `M(0)` ([Kac] §10.1 (check)). -/
+since `fᵢ v_0` is a singular vector of `M(0)` ([Kac] §10.1). -/
 lemma lie_hwv_zero (x : P.KacMoodyAlgebra) : ⁅x, hwv P (0 : Dual K H)⁆ = 0 := by
   refine induction_on P x (fun i ↦ ?_) (fun i ↦ ?_) (fun a ↦ ?_) (zero_lie _)
     (fun y z hy hz ↦ by rw [add_lie, hy, hz, add_zero])
@@ -217,7 +217,7 @@ variable [FiniteDimensional K H] (hA : A.IsGeneralizedCartan) (hS : A.IsSymmetri
 include hA hS hΛ
 
 open Classical in
-/-- **The Weyl–Kac character formula** ([Kac] Thm. 10.4 (check)): for a symmetrizable generalized
+/-- **The Weyl–Kac character formula** ([Kac] Thm. 10.4): for a symmetrizable generalized
 Cartan matrix and a dominant integral weight `Λ`,
 `e^ρ R ch L(Λ) = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(Λ + ρ)}`, where
 `R = ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α}`. It is stated coefficientwise: the coefficient of `e^μ` in
@@ -247,7 +247,7 @@ theorem coeffAt_exp_rho_mul_denominator_mul_character (μ : Dual K H) :
       rw [sub_add_cancel] at this
       exact this.symm
 
-/-- The Weyl–Kac character formula ([Kac] Thm. 10.4 (check)): the coefficient of `e^{w(Λ + ρ)}`
+/-- The Weyl–Kac character formula ([Kac] Thm. 10.4): the coefficient of `e^{w(Λ + ρ)}`
 in `e^ρ R ch L(Λ)` is `(-1)^{ℓ(w)}`. -/
 theorem coeffAt_exp_rho_mul_denominator_mul_character_apply (w : P.weylGroup hA) :
     (exp P ℤ P.rho * denominator P * (isCategoryO P Λ).character).coeffAt
@@ -261,7 +261,7 @@ theorem coeffAt_exp_rho_mul_denominator_mul_character_apply (w : P.weylGroup hA)
       (P.apply_injective_of_regular hA hreg h)]
   exact ite_eq_left rfl
 
-/-- The Weyl–Kac character formula ([Kac] Thm. 10.4 (check)): the coefficient of `e^μ` in
+/-- The Weyl–Kac character formula ([Kac] Thm. 10.4): the coefficient of `e^μ` in
 `e^ρ R ch L(Λ)` vanishes if `μ` is not in the orbit `W(Λ + ρ)`. -/
 theorem coeffAt_exp_rho_mul_denominator_mul_character_eq_zero {μ : Dual K H}
     (hμ : ∀ w : P.weylGroup hA, (w : Dual K H ≃ₗ[K] Dual K H) (Λ + P.rho) ≠ μ) :
@@ -270,7 +270,7 @@ theorem coeffAt_exp_rho_mul_denominator_mul_character_eq_zero {μ : Dual K H}
   rw [coeffAt_exp_rho_mul_denominator_mul_character hA hS hΛ]
   exact finsum_eq_zero_of_forall_eq_zero fun w ↦ ite_eq_right (hμ w)
 
-/-- **The Weyl–Kac character formula** ([Kac] Thm. 10.4 (check)): for a symmetrizable generalized
+/-- **The Weyl–Kac character formula** ([Kac] Thm. 10.4): for a symmetrizable generalized
 Cartan matrix and a dominant integral weight `Λ`,
 `e^ρ R ch L(Λ) = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(Λ + ρ)}` in the algebra `ℰ` of formal characters,
 where `R = ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α}`. -/
@@ -285,7 +285,7 @@ end Formula
 variable [FiniteDimensional K H] (hA : A.IsGeneralizedCartan) (hS : A.IsSymmetrizable)
 include hA hS
 
-/-- **The Weyl–Kac denominator identity** ([Kac] (10.4.4) (check)): for a symmetrizable
+/-- **The Weyl–Kac denominator identity** ([Kac] (10.4.4)): for a symmetrizable
 generalized Cartan matrix, `e^ρ ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α} = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w ρ}`.
 This is the character formula for the trivial module `L(0)`. -/
 theorem exp_rho_mul_denominator :

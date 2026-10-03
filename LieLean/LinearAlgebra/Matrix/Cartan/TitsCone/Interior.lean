@@ -22,7 +22,7 @@ no norm or inner product is chosen, and no symmetrizability is assumed.
 ## References
 
 Kac, *Infinite dimensional Lie algebras*, third edition, Proposition 3.12(f).
-The primary text was not consulted in this investigation; the argument is reconstructed.
+The argument is our own.
 It maximizes a linear functional over the actual finite stabilizer, not over the Weyl group.
 The essential domain hypothesis is membership in the Tits cone.
 -/

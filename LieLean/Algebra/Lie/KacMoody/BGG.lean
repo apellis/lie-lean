@@ -12,7 +12,7 @@ import LieLean.Algebra.Lie.KacMoody.BGG.Character
 
 Let `𝔤 = 𝔤(A)` be the Kac–Moody algebra of a generalized Cartan matrix `A` over a field `K` of
 characteristic zero, `W` its Weyl group with length function `ℓ`, and `Λ` a dominant integral
-weight. The **BGG complex** ([BGG] §10–11; [HumO] §6.1–6.3 (check); [Kum] §9.1 (check)) is
+weight. The **BGG complex** ([BGG] §10–11; [HumO] §6.1, §6.7–6.8; [Kum] Def. 9.2.17) is
 `⋯ → C₂ → C₁ → C₀ → 0`, `C_k = ⊕_{ℓ(w) = k} M(w · Λ)`, with differential
 `d(x_{w'}) = ∑_{w ⋖ w'} ε(w, w') i_{w', w}(x_{w'})`, where `i_{w', w} : M(w' · Λ) ↪ M(w · Λ)` are
 the embeddings of Verma's theorem, normalized compatibly, and `ε` are the BGG signs.
@@ -58,11 +58,11 @@ hypothesis are not established by that theorem.
 
 * [BGG] I. N. Bernstein, I. M. Gelfand, S. I. Gelfand, *Differential operators on the base
   affine space and a study of 𝔤-modules*, Lie groups and their representations (Budapest, 1971),
-  Halsted 1975, 21–64.
+  Halsted 1975, 21–64 (for complex semisimple `𝔤`).
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
   GSM 94, AMS 2008, Ch. 6.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
-  Math. 204, Birkhäuser 2002, §9.1 (check).
+  Math. 204, Birkhäuser 2002, §9.1–9.2.
 * [GL] H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent.
   Math. 34 (1976), 37–76.
 -/
@@ -236,7 +236,7 @@ lemma sum_bggSign_mul_bggSign {k : ℕ} (w'' : {w : W // (cs).length w = k + 2})
   simp only [bggSign]
   rw [mul_comm, mul_comm ((-1 : K) ^ ((cs).bruhatSign c₂ w'').val), hsq]
 
-/-- **`d² = 0`** for the BGG complex ([BGG] §11 (check), [HumO] §6.2 (check)). -/
+/-- **`d² = 0`** for the BGG complex ([BGG] proof of Thm. 10.1', [HumO] §6.7–6.8). -/
 theorem bggDiff_comp_bggDiff (k : ℕ) :
     (bggDiff P hA hΛ k).comp (bggDiff P hA hΛ (k + 1)) = 0 := by
   classical
@@ -414,7 +414,7 @@ lemma range_bggEmbZero_comp_bggDiff :
       mul_inv_cancel₀ (bggSign_ne_zero P hA _ _), one_smul]
 
 open Classical in
-/-- **Exactness of the BGG complex at `C₀`** ([BGG] (check), [HumO] Thm. 6.3 (check)): for a
+/-- **Exactness of the BGG complex at `C₀`** ([BGG] Thm. 10.1', [HumO] Thm. 2.6): for a
 symmetrizable generalized Cartan matrix and `Λ` dominant integral, the kernel of the
 augmentation `C₀ = M(Λ) → L(Λ)` is the image of `d : C₁ → C₀`. The proof uses
 `maxSubmodule_eq_fPowSubmodule` ([Kac] Cor. 10.4). -/

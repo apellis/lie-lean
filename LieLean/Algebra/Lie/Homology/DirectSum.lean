@@ -18,7 +18,7 @@ import Mathlib.LinearAlgebra.DirectSum.TensorProduct
 ## References
 
 The finite-support argument is reconstructed from Mathlib's tensor/direct-sum equivalence
-and the proved naturality of the actual CE differential. No external source consulted.
+and the proved naturality of the actual CE differential.
 -/
 
 noncomputable section

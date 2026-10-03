@@ -18,7 +18,7 @@ This is NOT detection modulo the nilradical action and does not claim BGG exactn
 
 Heckenberger–Kolb, *On the Bernstein–Gelfand–Gelfand resolution for Kac–Moody
 algebras and quantized enveloping algebras*, arXiv:math/0605460, Proposition 3.4,
-last paragraph of its proof (consulted). The Bruhat input is already formalized as
+last paragraph of its proof. The Bruhat input is already formalized as
 `CoxeterSystem.BruhatCovBy.eq_simple_mul`.
 -/
 

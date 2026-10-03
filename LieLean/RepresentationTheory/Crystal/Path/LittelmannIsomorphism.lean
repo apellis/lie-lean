@@ -19,7 +19,7 @@ import LieLean.RepresentationTheory.Crystal.Path.ConcatIsomorphism
   concatenation of straight lines (`IsDominantConcat`).
 * `componentIso_straightLine_of_pieces`: **[Lit95] Theorem 7.1** for such paths.
 * `componentIso_straightLine_of_rationalPieces`: **[Lit95] Theorem 7.1** for rational
-  piecewise linear paths: rational breakpoints, directions `N(Q(b_{j+1}) - Q(b_j))` integral
+  piecewise linear paths: breakpoints (real times), directions `N(Q(b_{j+1}) - Q(b_j))` integral
   for a common denominator `N`, dominant vertices and integral endpoint. This is the
   common-denominator interface: the stretched path `NQ` has integral vertices, and
   Lemma 2.5 b) descends the isomorphism back to `Q`.
@@ -36,11 +36,12 @@ import LieLean.RepresentationTheory.Crystal.Path.ConcatIsomorphism
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. of Math. (2) 142
-(1995), no. 3, 499–525: Lemma 2.5 (p. 504–505), Theorem 7.1 (p. 518) and its proof
+(1995), no. 3, 499–525: Lemma 2.5 (pp. 504–505), Theorem 7.1 (p. 518) and its proof
 (pp. 518–519), §10 (the Littlewood–Richardson rule). The Lean argument follows the printed
 reduction: stretch to integral vertices (Lemma 2.5), then induct on the pieces
 (Theorem 6.3 and Lemma 2.9). The parametrization is kept explicit instead of working modulo
-reparametrization.
+reparametrization. [Lit95] works with rational paths and a symmetrizable Kac–Moody algebra;
+here the time parameter is real and the generalized Cartan matrix need not be symmetrizable.
 -/
 
 open Set Module LittelmannPath

@@ -32,7 +32,7 @@ assembled in `KacKazhdan/Formula.lean`:
   = ∑_{γ ∈ ℓ} d(γ) P(β - γ)`, where `d(γ)` is the number of pairs `(x, n)` with `n α_x = γ`
   (`kkMult`), i.e. `d(γ) = ∑_{n ≥ 1, γ/n ∈ Δ₊} mult(γ/n)`.
 
-These arguments were reconstructed by us (cf. [KK] §3 (check), [Kac] §9 (check)).
+These arguments were reconstructed by us (cf. [KK]; [Kum] Thm. 2.3.4, proof, Steps 2–4).
 
 ## Main definitions
 
@@ -50,7 +50,8 @@ These arguments were reconstructed by us (cf. [KK] §3 (check), [Kac] §9 (check
 
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. **34** (1979), 97–108.
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9 (check).
+* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
+  Math. 204, Birkhäuser 2002, §2.3.
 -/
 
 open Module LieModule Module.Dual Polynomial

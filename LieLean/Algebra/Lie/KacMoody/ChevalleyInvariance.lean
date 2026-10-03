@@ -143,8 +143,9 @@ variable {ι H : Type*} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [Char
 local notation "𝔤" => KacMoodyAlgebra P
 
 /-- Homogeneous infinitesimal adjoint invariants restrict to ordinary reflection invariants.
-This is the homogeneous symmetric-symbol direction of Etingof, Lecture 10, Thm. 10.1(i),
-reconstructed via the independently proved central lift and graded HC identities. -/
+This is the homogeneous symmetric-symbol direction of Etingof, Lecture 10, Thm. 10.1(i)
+in the symbol form of Remark 10.2(1), reconstructed via the independently proved central lift and
+graded HC identities. -/
 theorem cartanRestriction_reflection_of_invariant_homogeneous
     (hA : A.IsGeneralizedCartan) (n : ℕ)
     (p : SymmetricAlgebra.homogeneousSubmodule (K := K) (M := 𝔤) n)
@@ -161,7 +162,7 @@ theorem cartanRestriction_reflection_of_invariant_homogeneous
 
 /-- Every infinitesimal adjoint-invariant symbol restricts to an ordinary reflection
 invariant polynomial, without a homogeneity premise. Reconstructed proof of the
-symmetric-symbol direction of Etingof, Lecture 10, Thm. 10.1(i). -/
+symmetric-symbol direction of Etingof, Lecture 10, Thm. 10.1(i), Remark 10.2(1). -/
 theorem cartanRestriction_reflection_of_invariant
     (hA : A.IsGeneralizedCartan) (p : SymmetricAlgebra K 𝔤)
     (hp : ∀ x : 𝔤, SymmetricAlgebra.derivation (LieAlgebra.ad K 𝔤 x) p = 0)

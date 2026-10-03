@@ -23,6 +23,8 @@ import LieLean.Algebra.Lie.KacMoody.HarishChandraSymmetrization
 The argument is reconstructed from the permutation average and the production graded
 PBW API. It supplies the symbol calculation underlying Etingof, MIT 18.757 (Fall 2023),
 Lecture 13, §13.3, proof of Theorem 13.5 (as cited by the imported construction).
+The source works over `ℂ`; the calculation here holds for every Lie algebra over a field, in
+degree `n` whenever `n! ≠ 0` in the field.
 It does not assert Chevalley restriction or the Harish-Chandra isomorphism.
 -/
 

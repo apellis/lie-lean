@@ -11,7 +11,7 @@ import Mathlib.Algebra.Lie.Semisimple.Defs
 
 The Verma module `M(Λ)` over the Kac–Moody algebra `𝔤(A)` has a unique maximal proper
 submodule `M'(Λ)`, the sum of all submodules not containing `v_Λ`; the quotient
-`L(Λ) = M(Λ)/M'(Λ)` is irreducible, and `L(Λ) ≅ L(μ)` only if `Λ = μ` ([Kac] §9.2–9.3 (check)).
+`L(Λ) = M(Λ)/M'(Λ)` is irreducible, and `L(Λ) ≅ L(μ)` only if `Λ = μ` ([Kac] §9.2–9.3).
 
 ## Main definitions
 
@@ -58,7 +58,7 @@ lemma map_mem_weightSpaceOfMap {V W : Type*} [AddCommGroup V] [Module K V]
 namespace VermaModule
 
 /-- The maximal proper submodule `M'(Λ)` of `M(Λ)`: the sum of all submodules not containing
-`v_Λ` ([Kac] §9.2 (check)). -/
+`v_Λ` ([Kac] §9.2). -/
 def maxSubmodule : LieSubmodule K P.KacMoodyAlgebra (VermaModule P Λ) :=
   sSup {N | hwv P Λ ∉ N}
 
@@ -117,7 +117,7 @@ theorem hwv_notMem_maxSubmodule : hwv P Λ ∉ maxSubmodule P Λ :=
 theorem maxSubmodule_ne_top : maxSubmodule P Λ ≠ ⊤ := fun h ↦
   hwv_notMem_maxSubmodule P Λ (h ▸ LieSubmodule.mem_top _)
 
-/-- A submodule of `M(Λ)` is proper iff it is contained in `M'(Λ)` ([Kac] §9.2 (check)). -/
+/-- A submodule of `M(Λ)` is proper iff it is contained in `M'(Λ)` ([Kac] §9.2). -/
 theorem le_maxSubmodule_iff (N : LieSubmodule K P.KacMoodyAlgebra (VermaModule P Λ)) :
     N ≤ maxSubmodule P Λ ↔ N ≠ ⊤ := by
   refine ⟨fun hN h ↦ maxSubmodule_ne_top P Λ (eq_top_iff.mpr (h ▸ hN)), fun hN ↦ ?_⟩
@@ -128,14 +128,14 @@ theorem isCoatom_maxSubmodule : IsCoatom (maxSubmodule P Λ) :=
   ⟨maxSubmodule_ne_top P Λ, fun N hN ↦ by_contra fun h ↦
     hN.not_ge ((le_maxSubmodule_iff P Λ N).mpr h)⟩
 
-/-- `M'(Λ)` is the unique maximal proper submodule of `M(Λ)` ([Kac] §9.2 (check)). -/
+/-- `M'(Λ)` is the unique maximal proper submodule of `M(Λ)` ([Kac] §9.2). -/
 theorem eq_maxSubmodule_of_isCoatom {N : LieSubmodule K P.KacMoodyAlgebra (VermaModule P Λ)}
     (hN : IsCoatom N) : N = maxSubmodule P Λ :=
   ((hN.le_iff.mp ((le_maxSubmodule_iff P Λ N).mpr hN.1)).resolve_left
     (maxSubmodule_ne_top P Λ)).symm
 
 omit [CharZero K] in
-/-- The weights of a quotient of `M(Λ)` lie in `Λ - Q₊` ([Kac] §9.2 (check)). -/
+/-- The weights of a quotient of `M(Λ)` lie in `Λ - Q₊` ([Kac] §9.2). -/
 theorem exists_eq_sub_of_mem_weightSpace {V : Type*} [AddCommGroup V] [Module K V]
     [LieRingModule P.KacMoodyAlgebra V] [LieModule K P.KacMoodyAlgebra V]
     (φ : VermaModule P Λ →ₗ⁅K,P.KacMoodyAlgebra⁆ V) (hφ : Function.Surjective φ)
@@ -165,7 +165,7 @@ theorem exists_eq_sub_of_mem_weightSpace {V : Type*} [AddCommGroup V] [Module K 
 
 end VermaModule
 
-/-- The irreducible highest-weight module `L(Λ) = M(Λ)/M'(Λ)` ([Kac] §9.3 (check)). -/
+/-- The irreducible highest-weight module `L(Λ) = M(Λ)/M'(Λ)` ([Kac] §9.3). -/
 abbrev IrreducibleModule : Type _ := VermaModule P Λ ⧸ VermaModule.maxSubmodule P Λ
 
 namespace IrreducibleModule
@@ -184,7 +184,7 @@ lemma hwv_mem_weightSpace : hwv P Λ ∈ weightSpaceOfMap (IrreducibleModule P �
 
 instance : Nontrivial (IrreducibleModule P Λ) := ⟨⟨_, _, hwv_ne_zero P Λ⟩⟩
 
-/-- `L(Λ)` is irreducible ([Kac] §9.3 (check)). -/
+/-- `L(Λ)` is irreducible ([Kac] §9.3). -/
 theorem isIrreducible : IsIrreducible K P.KacMoodyAlgebra (IrreducibleModule P Λ) := by
   refine IsIrreducible.mk fun N hN ↦ ?_
   set π' := LieSubmodule.Quotient.mk' (VermaModule.maxSubmodule P Λ)
@@ -204,7 +204,7 @@ theorem isIrreducible : IsIrreducible K P.KacMoodyAlgebra (IrreducibleModule P �
     rw [LieSubmodule.mem_bot, LieSubmodule.Quotient.mk_eq_zero, ← h]
     exact hq
 
-/-- `L(Λ) ≅ L(μ)` only if `Λ = μ` ([Kac] §9.3 (check)). -/
+/-- `L(Λ) ≅ L(μ)` only if `Λ = μ` ([Kac] §9.3). -/
 theorem eq_of_equiv {Λ μ : Dual K H}
     (e : IrreducibleModule P Λ ≃ₗ⁅K,P.KacMoodyAlgebra⁆ IrreducibleModule P μ) : Λ = μ := by
   -- `Λ` is a weight of `L(μ)` and `μ` is a weight of `L(Λ)`

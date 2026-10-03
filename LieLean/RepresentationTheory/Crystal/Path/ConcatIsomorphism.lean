@@ -32,7 +32,9 @@ import LieLean.RepresentationTheory.Crystal.Path.Decomposition
 P. Littelmann, *Paths and root operators in representation theory*, Ann. of Math. (2) 142
 (1995), no. 3, 499–525: §2.6–2.9 (pp. 505–506) and the proof of Theorem 7.1 (pp. 518–519).
 The Lean proofs are reconstructed from the library's closed root-operator formulas; paths are
-compared literally, the split clocks replacing the source's reparametrization.
+compared literally, the split clocks replacing the source's reparametrization. [Lit95] works
+with rational paths and a symmetrizable Kac–Moody algebra; here the time parameter is real and
+the generalized Cartan matrix need not be symmetrizable.
 -/
 
 open Set Module LittelmannPath
@@ -247,7 +249,8 @@ theorem straightLine_component_isIntegral (ν : P.integralWeights) :
   exact (Presentation.straight (hA := hA) ν).component_isIntegral
 
 /-- **[Lit95] Theorem 7.1** for dominant concatenations of straight lines with integral
-vertices: `B(π_{π(1)}) ≅ B(π)` with `π_{π(1)} ↦ π`, and `B(π)` has the integrality property.
+vertices: `B(π_{π(1)}) ≅ B(π)` with `π_{π(1)} ↦ π`, and `B(π)` has the integrality property
+([Lit95] §7 Corollary 1 a)).
 The induction on the number of pieces uses Theorem 6.3 (`π_{λ+ν} ↦ π_λ * π_ν`) and
 Lemma 2.9, as in the source (pp. 518–519). -/
 theorem IsDominantConcat.componentIso [FiniteDimensional ℝ H]

@@ -16,8 +16,8 @@ by `E(1) = 0` and
 This is the shape of the action of a raising operator on a Verma module, pulled back to the free
 algebra on the lowering operators: classically `eᵢ fⱼ y v_Λ = fⱼ eᵢ y v_Λ + δᵢⱼ hᵢ y v_Λ` with
 `hᵢ y v_Λ = ⟨Λ - μ, αᵢ^∨⟩ y v_Λ`, and for quantum groups the same holds with the quantum integer
-`[⟨Λ - μ, αᵢ^∨⟩]_{vᵢ}` ([Lus] 3.4 (check), [Jan] 4.7 (check)). For a family `c = (cᵢ)ᵢ` and a word
-`w = [i₁, …, iₙ]` we put `E_w = E_{iₙ} ∘ ⋯ ∘ E_{i₁}` (`LusztigF.vermaWordOp`) and
+`[⟨Λ - μ, αᵢ^∨⟩]_{vᵢ}` ([Lus] 3.4.2, 3.4.5, [Jan] 4.3 (R4), 5.12(8)). For a family `c = (cᵢ)ᵢ`
+and a word `w = [i₁, …, iₙ]` we put `E_w = E_{iₙ} ∘ ⋯ ∘ E_{i₁}` (`LusztigF.vermaWordOp`) and
 `S(w, y) = ε(E_w y)` (`LusztigF.vermaForm`), where `ε` is the augmentation: this is the
 (contravariant) Shapovalov pairing between the word `w` and `y`.
 
@@ -38,8 +38,8 @@ compared in the quantum Gabber–Kac theorem, and they lower weights
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.4 (check).
-* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, §4.7 (check).
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.4.
+* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, 4.3, 5.5, 5.12.
 -/
 
 noncomputable section

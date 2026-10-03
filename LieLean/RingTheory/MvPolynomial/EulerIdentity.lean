@@ -16,8 +16,7 @@ The weighted identity also allows an additional exterior-degree contribution.
 
 ## References
 
-Reconstructed directly from Mathlib's monomial derivative and homogeneous support APIs;
-no external reference was consulted.
+Reconstructed directly from Mathlib's monomial derivative and homogeneous support APIs.
 -/
 
 open scoped BigOperators

@@ -45,7 +45,7 @@ relations are not proved here.
 
 ## References
 
-G. Lusztig, *Introduction to quantum groups*, 39.4.3 (check). Reconstructed: the relations are
+G. Lusztig, *Introduction to quantum groups*, 39.4.3. Reconstructed: the relations are
 proved in `BraidAction/BraidRelationsGeneral.lean`, `BraidAction/DoubleEdgeGeneral.lean` and
 `BraidAction/GeneralRelations.lean`.
 -/

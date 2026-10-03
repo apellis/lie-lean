@@ -20,8 +20,8 @@ actual shifted-Verma factors, with multiplicities given by weight-space dimensio
 
 ## References
 
-The argument is reconstructed from the inspected weight-basis, reverse-root-order,
-Mathlib basis-flag and tensor-Verma APIs. No external printed proof was consulted.
+The argument is reconstructed from the weight-basis, reverse-root-order, Mathlib basis-flag and
+tensor-Verma APIs.
 -/
 
 open Module LieModule TensorProduct
@@ -228,7 +228,7 @@ end OrderedBasis
 /-- Existence of a finite weight-compatible Borel flag from finite-dimensionality and
 Cartan diagonalizability alone. The supplied hypotheses do not include a flag or primitive
 vectors. The proof sorts an actual weight basis; all coefficient steps have dimension one.
-Reconstructed from the inspected weight-decomposition and basis-flag APIs. -/
+Reconstructed from the weight-decomposition and basis-flag APIs. -/
 theorem exists_weightBorelFlag [FiniteDimensional K Z] (hZ : IsHDiagonalizable P Z) :
     ∃ (F : Fin (finrank K Z + 1) → LieSubmodule K (borel P) Z)
       (wt : Fin (finrank K Z) → Dual K H) (z : Fin (finrank K Z) → Z),

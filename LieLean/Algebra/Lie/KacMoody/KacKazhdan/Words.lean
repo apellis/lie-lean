@@ -19,10 +19,10 @@ PBW basis are of this form.
 If each `zᵢ` lies in `𝔫₊`, in `𝔥`, or in `𝔫₋` (a `TriLetter`), and the word has `a` letters in
 `𝔫₊`, `b` letters in `𝔫₋` and `c` letters in `𝔥`, then `F` is a polynomial function of `λ` of
 degree at most `c + min(a, b)` (`Matrix.Realization.KacMoodyAlgebra.wordFn_mem_polyLE`). This is
-the degree estimate behind the leading term of the Shapovalov determinant ([KK] §3 (check);
-[Jantzen, *Kontravariante Formen*] (check)); the argument below — move the first letter of `𝔫₊`
-to the right, where it kills `v_λ`, and count the letters of the commutators produced — is our
-reconstruction.
+the degree estimate behind the leading term of the Shapovalov determinant ([KK];
+[Kum] Thm. 2.3.4, proof, Step 2 (1); for finite type [HumO] §5.9, Lemma (b)); the argument below —
+move the first letter of `𝔫₊` to the right, where it kills `v_λ`, and count the letters of the
+commutators produced — is our reconstruction.
 
 ## Main definitions
 
@@ -38,6 +38,10 @@ reconstruction.
 
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. 34 (1979), 97–108.
+* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
+  Math. 204, Birkhäuser 2002, §2.3.
+* [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
+  GSM 94, AMS 2008, §5.9.
 -/
 
 open Module LieModule Module.Dual
@@ -204,9 +208,9 @@ lemma lie_h_mem_nPos' {x : P.KacMoodyAlgebra} (hx : x ∈ nPos P) (a : H) : ⁅x
   rw [← lie_skew]
   exact neg_mem (lie_h_mem_nPos P a hx)
 
-/-- **The degree estimate** (cf. [KK] §3 (check)): for a word `z₁ ⋯ zₘ` with `a` letters in
-`𝔫₊`, `b` letters in `𝔫₋` and `c` letters in `𝔥`, the coefficient of `v_λ` in `z₁ ⋯ zₘ v_λ` is a
-polynomial function of `λ` of degree at most `c + min(a, b)`. -/
+/-- **The degree estimate** (cf. [KK]; [Kum] Thm. 2.3.4, proof, Step 2 (1)): for a word `z₁ ⋯ zₘ`
+with `a` letters in `𝔫₊`, `b` letters in `𝔫₋` and `c` letters in `𝔥`, the coefficient of `v_λ` in
+`z₁ ⋯ zₘ v_λ` is a polynomial function of `λ` of degree at most `c + min(a, b)`. -/
 theorem wordFn_mem_polyLE (w : List (TriLetter P)) :
     wordFn P (w.map val) ∈ polyLE K H (deg w) := by
   suffices ∀ n, ∀ w : List (TriLetter P), w.length = n →

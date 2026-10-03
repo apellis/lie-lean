@@ -50,9 +50,9 @@ Highestness is used only through integrality of the component
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
-(1995), Proposition 5.7 and its proof, printed p. 516; Lemma 4.3 (p. 509 (check)) and
-Corollary 3 (p. 512). The printed pages 512–516 were consulted. The argument above is
-the printed one with the reconstructed modifications recorded in the implementation notes.
+(1995), Proposition 5.7 and its proof, p. 516; Lemma 4.3 (p. 510) and Corollary 3 (p. 512). The
+argument above is the printed one with the reconstructed modifications recorded in the
+implementation notes.
 -/
 
 open Module Set LittelmannPath
@@ -85,7 +85,7 @@ theorem AChain.eq_of_mem_dominantChamber {x y : Dual ℝ H} {a : ℝ}
     rw [← hw] at this
     linarith
 
-/-- First-source straightness ([Lit95] Corollary 3, p. 512, as used on p. 516): if the
+/-- First-source straightness ([Lit95] proof of Corollary 3, p. 513, as used on p. 516): if the
 first direction of a finite source presentation is dominant, all directions equal it. -/
 theorem Presentation.directions_eq_of_mem_dominantChamber (σ : Presentation P hA)
     (h0 : (σ.x 0 : Dual ℝ H) ∈ P.dominantChamber) (j : Fin (σ.n + 1)) :
@@ -98,7 +98,7 @@ theorem Presentation.directions_eq_of_mem_dominantChamber (σ : Presentation P h
     linarith
 
 omit [FiniteDimensional ℝ H] in
-/-- [Lit95] Lemma 4.3 (check), in the form used in the proof of Proposition 5.7: a chain
+/-- [Lit95] Lemma 4.3, in the form used in the proof of Proposition 5.7: a chain
 from `m` to `x` with `⟨m, α∨⟩ < 0 ≤ ⟨x, α∨⟩` yields a chain from `s_α m` to `x` at the
 same time. The first crossing step is `s_α` (Corollary 1); earlier steps are reflected. -/
 theorem AChain.reflection_of_neg_of_nonneg {a : ℝ} {m x : Dual ℝ H} {i : ι}

@@ -33,7 +33,7 @@ compatible symmetrizer and root-datum lattice).
 
 ## References
 
-G. Lusztig, *Introduction to quantum groups*, 39.4.3 (check). Reconstructed; the relations are
+G. Lusztig, *Introduction to quantum groups*, 39.4.3. Reconstructed; the relations are
 those of `BraidAction/GeneralArtin.lean`.
 -/
 

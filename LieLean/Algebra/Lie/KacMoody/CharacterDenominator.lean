@@ -12,15 +12,15 @@ import Mathlib.RingTheory.HahnSeries.Summable
 # The Kac–Moody denominator and the character of a Verma module
 
 Let `𝔤 = 𝔤(A)` be the Kac–Moody algebra of a realization `P` over a field `K` of characteristic
-zero. The *denominator* ([Kac] §10.2 (check)) is the element
-`R = ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α}` of the algebra `ℰ` of formal characters. Choosing a basis
-of `𝔫₋` consisting of root vectors (`Matrix.Realization.KacMoodyAlgebra.nNegBasis`, indexed by
-`NegRootIndex`: the index `(α, j)` contributes the factor `1 - e^{-α}`), the product expands as
-`R = ∑_S (-1)^{|S|} e^{-wt S}`, the sum running over the finite sets `S` of indices, with
-`wt S = ∑_{(α, j) ∈ S} α`. This is how we define `R`, as a summable family of Hahn series.
+zero. The *denominator* ([Kac] §10.2) is the element `R = ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α}` of the
+algebra `ℰ` of formal characters. Choosing a basis of `𝔫₋` consisting of root vectors
+(`Matrix.Realization.KacMoodyAlgebra.nNegBasis`, indexed by `NegRootIndex`: the index `(α, j)`
+contributes the factor `1 - e^{-α}`), the product expands as `R = ∑_S (-1)^{|S|} e^{-wt S}`, the sum
+running over the finite sets `S` of indices, with `wt S = ∑_{(α, j) ∈ S} α`. This is how we define
+`R`, as a summable family of Hahn series.
 
 We prove `R · ch M(Λ) = e^Λ`, i.e. `ch M(Λ) = e^Λ ∏_{α ∈ Δ₊} (1 - e^{-α})^{-mult α}`
-([Kac] (9.7.2) (check)). The proof combines the computation `dim M(Λ)_{Λ - β} = K(β)`
+([Kac] (9.7.2)). The proof combines the computation `dim M(Λ)_{Λ - β} = K(β)`
 (`Matrix.Realization.KacMoodyAlgebra.VermaModule.finrank_weightSpace_sub`) with the sign-reversing
 involution of `Finsupp.PairInvolution.sum_neg_one_pow_card_eq_ite`.
 
@@ -36,11 +36,11 @@ involution of `Finsupp.PairInvolution.sum_neg_one_pow_card_eq_ite`.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.character_eq_exp_mul_kostantSeries`:
   `ch M(Λ) = e^Λ ∑_β K(β) e^{-β}`.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.denominator_mul_character`:
-  `R · ch M(Λ) = e^Λ` ([Kac] (9.7.2) (check)).
+  `R · ch M(Λ) = e^Λ` ([Kac] (9.7.2)).
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.7, §10.2.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.7, §10.2, §10.5.
 -/
 
 open Module LieModule HahnSeries
@@ -176,7 +176,7 @@ def denominatorFamily : SummableFamily P.WeightOrd ℤ (Finset (NegRootIndex P))
     simp [hg]
 
 /-- The **denominator** `R = ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α} = ∑_S (-1)^{|S|} e^{-wt S} ∈ ℰ`
-([Kac] §10.2 (check)). -/
+([Kac] §10.2). -/
 def denominator : P.CharacterRing ℤ := (denominatorFamily P).hsum
 
 /-- The family `e^{-wt s}` indexed by the multisets `s` of indices. -/
@@ -249,7 +249,7 @@ theorem denominator_mul_kostantSeries : denominator P * kostantSeries P = 1 := b
 
 namespace VermaModule
 
-/-- `ch M(Λ) = e^Λ ∑_β K(β) e^{-β}` ([Kac] (9.7.2) (check)). -/
+/-- `ch M(Λ) = e^Λ ∑_β K(β) e^{-β}` ([Kac] (9.7.2), (10.5.2)). -/
 theorem character_eq_exp_mul_kostantSeries (Λ : Dual K H) :
     (isCategoryO P Λ).character = exp P ℤ Λ * kostantSeries P := by
   rw [character_eq]
@@ -258,7 +258,7 @@ theorem character_eq_exp_mul_kostantSeries (Λ : Dual K H) :
   rw [IsCategoryO.coeffAt_character, ← neg_neg μ, coeffAt_kostantSeries,
     ← finrank_weightSpace_sub P 0 (-μ), zero_sub]
 
-/-- **The character of a Verma module** ([Kac] (9.7.2) (check)):
+/-- **The character of a Verma module** ([Kac] (9.7.2)):
 `ch M(Λ) = e^Λ ∏_{α ∈ Δ₊} (1 - e^{-α})^{-mult α}`, in the form `R · ch M(Λ) = e^Λ`, where `R` is
 the denominator. -/
 theorem denominator_mul_character (Λ : Dual K H) :

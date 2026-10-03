@@ -18,7 +18,7 @@ import LieLean.Algebra.Lie.KacMoody.BGG.Integrable
 
 Heckenberger–Kolb, *On the Bernstein–Gelfand–Gelfand resolution for Kac–Moody algebras
 and quantized enveloping algebras*, arXiv:math/0605460, §3.1, Proposition 3.4 and the proof
-of Theorem 3.2 for symmetrizable Kac–Moody algebras (consulted). The final vanishing step
+of Theorem 3.2 for symmetrizable Kac–Moody algebras. The final vanishing step
 uses the reconstructed maximal-weight/Casimir argument instead of complete reducibility.
 The characteristic-zero field generality follows from the proved Lean arguments.
 -/

@@ -32,7 +32,7 @@ subalgebra `𝔟 = 𝔥 ⊕ 𝔫₊` of the triangular decomposition `𝔤 = �
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.3.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.3 (stated over `ℂ`).
 -/
 
 open Module LieModule

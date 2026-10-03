@@ -18,7 +18,7 @@ import LieLean.Algebra.Lie.KacMoody.BGG
 ## References
 
 Reconstructed from actual Verma acyclicity and finite-support direct-sum compatibility.
-No external source consulted. This does not prove exactness of the BGG differential.
+This does not prove exactness of the BGG differential.
 -/
 
 namespace Matrix.Realization.KacMoodyAlgebra

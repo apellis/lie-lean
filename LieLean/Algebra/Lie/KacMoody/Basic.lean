@@ -30,11 +30,12 @@ ideal `𝔯` meeting `𝔥` trivially ([Kac] §1.3).
   (`finrank_rootSpace_root`), and `𝔤_{k αᵢ} = 0` for `k ≥ 2` (`rootSpace_nsmul_root_eq_bot`).
 * `Matrix.Realization.KacMoodyAlgebra.serre_e`, `serre_f`: for a generalized Cartan matrix, the
   Serre relations `(ad eᵢ)^{1 - aᵢⱼ} eⱼ = 0 = (ad fᵢ)^{1 - aᵢⱼ} fⱼ` (`i ≠ j`) hold in `𝔤(A)`
-  ([Kac] §3.3 (check)).
+  ([Kac] §3.3).
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.2–1.3, §3.3.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.2–1.3, §3.3
+  (stated over `ℂ`).
 -/
 
 open FreeLieAlgebra Module LieModule LieAlgebra
@@ -276,15 +277,15 @@ def chevalleyInvolution : P.KacMoodyAlgebra →ₗ⁅K⁆ P.KacMoodyAlgebra :=
 variable (hA : A.IsGeneralizedCartan)
 include hA
 
-/-- The Serre relations `(ad eᵢ)^{1 - aᵢⱼ} eⱼ = 0` hold in `𝔤(A)` for `i ≠ j` ([Kac] §3.3
-(check)). -/
+/-- The Serre relations `(ad eᵢ)^{1 - aᵢⱼ} eⱼ = 0` hold in `𝔤(A)` for `i ≠ j` ([Kac]
+§3.3). -/
 theorem serre_e {i j : ι} (hij : i ≠ j) :
     (ad K _ (e P i) ^ (-A i j).toNat) ⁅e P i, e P j⁆ = 0 := by
   have := (π_eq_zero_iff P).mpr (AuxLieAlgebra.serreE_mem_maxIdeal P hA hij)
   rwa [AuxLieAlgebra.serreE, LieHom.map_ad_pow, LieHom.map_lie] at this
 
-/-- The Serre relations `(ad fᵢ)^{1 - aᵢⱼ} fⱼ = 0` hold in `𝔤(A)` for `i ≠ j` ([Kac] §3.3
-(check)). -/
+/-- The Serre relations `(ad fᵢ)^{1 - aᵢⱼ} fⱼ = 0` hold in `𝔤(A)` for `i ≠ j` ([Kac]
+§3.3). -/
 theorem serre_f {i j : ι} (hij : i ≠ j) :
     (ad K _ (f P i) ^ (-A i j).toNat) ⁅f P i, f P j⁆ = 0 := by
   have := (π_eq_zero_iff P).mpr (AuxLieAlgebra.serreF_mem_maxIdeal P hA hij)

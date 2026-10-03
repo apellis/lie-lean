@@ -17,7 +17,7 @@ extends to an antiautomorphism of `U(𝔤)`.
 The Verma module `M(Λ)` carries a unique bilinear form `B` with `B(v_Λ, v_Λ) = 1` which is
 *contravariant*: `B(x u, w) = B(u, σ(x) w)` for `x ∈ 𝔤`. It is symmetric, different weight spaces
 are orthogonal, and its radical is the maximal proper submodule `M'(Λ)` of `M(Λ)`
-([Kac] §9.4 (check)). Hence it descends to a nondegenerate contravariant form on
+([Kac] §9.4; [Kum] Prop. 2.3.2). Hence it descends to a nondegenerate contravariant form on
 `L(Λ) = M(Λ)/M'(Λ)`.
 
 ## Main definitions
@@ -48,7 +48,7 @@ are orthogonal, and its radical is the maximal proper submodule `M'(Λ)` of `M(�
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.contravariantForm_eq_zero_of_ne`: different
   weight spaces are orthogonal.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.mem_maxSubmodule_iff`: the radical of `B` is
-  the maximal proper submodule `M'(Λ)` ([Kac] §9.4 (check)); `maxSubmodule_eq_bot_iff`: `M(Λ)`
+  the maximal proper submodule `M'(Λ)` ([Kum] Prop. 2.3.2); `maxSubmodule_eq_bot_iff`: `M(Λ)`
   is irreducible iff `B` is nondegenerate.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.mem_maxSubmodule_iff_of_mem_weightSpace`,
   `nondegenerate_weightSpaceForm_iff`, `det_toMatrix_weightSpaceForm_ne_zero_iff`: the same
@@ -77,6 +77,10 @@ argument is ours.
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.4.
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. 34 (1979).
+* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
+  Math. 204, Birkhäuser 2002, §2.3.
+* [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
+  GSM 94, AMS 2008, §3.14–3.15.
 -/
 
 open Module LieModule
@@ -96,7 +100,7 @@ local notation "ιᵤ" => UniversalEnvelopingAlgebra.ι K
 /-! ### The antiinvolution `σ` -/
 
 /-- The antiinvolution `σ = -ω` of `𝔤(A)`, where `ω` is the Chevalley involution:
-`σ(eᵢ) = fᵢ`, `σ(fᵢ) = eᵢ`, `σ(h) = h` and `σ⁅x, y⁆ = ⁅σ y, σ x⁆` ([Kac] §9.4 (check)). -/
+`σ(eᵢ) = fᵢ`, `σ(fᵢ) = eᵢ`, `σ(h) = h` and `σ⁅x, y⁆ = ⁅σ y, σ x⁆` ([Kac] §9.4). -/
 def transpose : P.KacMoodyAlgebra →ₗ[K] P.KacMoodyAlgebra :=
   -(chevalleyInvolution P).toLinearMap
 
@@ -135,7 +139,7 @@ def transposeHom : P.KacMoodyAlgebra →ₗ⁅K⁆ 𝓤ᵐᵒᵖ where
       ← MulOpposite.op_mul, ← MulOpposite.op_sub]
 
 /-- The antiautomorphism `σ` of `U(𝔤(A))` extending the antiinvolution `σ` of `𝔤(A)`, as an
-algebra morphism `U(𝔤) → U(𝔤)ᵐᵒᵖ` ([Kac] §9.4 (check)). -/
+algebra morphism `U(𝔤) → U(𝔤)ᵐᵒᵖ` ([Kac] §9.4). -/
 def envTranspose : 𝓤 →ₐ[K] 𝓤ᵐᵒᵖ := UniversalEnvelopingAlgebra.lift K (transposeHom P)
 
 @[simp] lemma envTranspose_ι (x : P.KacMoodyAlgebra) :
@@ -161,7 +165,7 @@ lemma unop_envTranspose_mul (a b : 𝓤) :
 /-- The dual `V^*` of a `𝔤(A)`-module `V`, with the action twisted by the antiinvolution `σ`:
 `⁅x, φ⁆ = φ ∘ σ(x)`. Equivalently, the dual module pulled back along the Chevalley involution.
 Bilinear forms `B` on `V` with `B(x u, w) = B(u, σ(x) w)` are the same as morphisms
-`V → V^{*σ}` ([Kac] §9.4 (check)). -/
+`V → V^{*σ}` ([Kac] §9.4). -/
 @[nolint unusedArguments]
 def TwistedDual (_P : Realization A K H) (V : Type*) [AddCommGroup V] [Module K V] : Type _ :=
   Module.Dual K V
@@ -292,7 +296,8 @@ def toTwistedDual : VermaModule P Λ →ₗ⁅K,P.KacMoodyAlgebra⁆ TwistedDual
   lift P (hwCoordTw P Λ) (fun _ hx ↦ lie_hwCoordTw_of_mem_nPos P Λ hx) (lie_h_hwCoordTw P Λ)
 
 /-- The contravariant (Shapovalov) form `B` on the Verma module `M(Λ)`: the unique bilinear form
-with `B(v_Λ, v_Λ) = 1` and `B(x u, w) = B(u, σ(x) w)` for `x ∈ 𝔤(A)` ([Kac] §9.4 (check)). -/
+with `B(v_Λ, v_Λ) = 1` and `B(x u, w) = B(u, σ(x) w)` for `x ∈ 𝔤(A)` ([Kac] §9.4;
+uniqueness: cf. [HumO] Prop. 3.14 (b)). -/
 def contravariantForm : LinearMap.BilinForm K (VermaModule P Λ) :=
   (toDual P _).toLinearMap ∘ₗ (toTwistedDual P Λ).toLinearMap
 
@@ -307,14 +312,14 @@ lemma contravariantForm_apply (u w : VermaModule P Λ) :
   simp
 
 /-- **Contravariance** of the Shapovalov form: `B(x u, w) = B(u, σ(x) w)`
-([Kac] §9.4 (check)). -/
+([Kac] §9.4). -/
 theorem contravariantForm_lie_left (x : P.KacMoodyAlgebra) (u w : VermaModule P Λ) :
     contravariantForm P Λ ⁅x, u⁆ w = contravariantForm P Λ u ⁅transpose P x, w⁆ := by
   rw [contravariantForm_apply, LieModuleHom.map_lie, lie_apply]
   rfl
 
 /-- **Uniqueness** of the contravariant form: a contravariant bilinear form `B'` on `M(Λ)` is
-`B'(v_Λ, v_Λ) B` ([Kac] §9.4 (check)). -/
+`B'(v_Λ, v_Λ) B` ([HumO] Prop. 3.14 (b), for semisimple `𝔤`; cf. [Kac] Prop. 9.4 for `L(Λ)`). -/
 theorem eq_smul_contravariantForm (B : LinearMap.BilinForm K (VermaModule P Λ))
     (hB : ∀ x u w, B ⁅x, u⁆ w = B u ⁅transpose P x, w⁆) :
     B = B (hwv P Λ) (hwv P Λ) • contravariantForm P Λ := by
@@ -333,7 +338,7 @@ theorem eq_smul_contravariantForm (B : LinearMap.BilinForm K (VermaModule P Λ))
   rw [this, _root_.smul_apply, map_smul]
   rfl
 
-/-- **Symmetry** of the contravariant form ([Kac] §9.4 (check)). -/
+/-- **Symmetry** of the contravariant form ([Kac] §9.4). -/
 theorem isSymm_contravariantForm : (contravariantForm P Λ).IsSymm := by
   have := eq_smul_contravariantForm P Λ (LinearMap.flip (contravariantForm P Λ)) fun x u w ↦ by
     simp only [LinearMap.flip_apply]
@@ -343,7 +348,7 @@ theorem isSymm_contravariantForm : (contravariantForm P Λ).IsSymm := by
   exact ⟨fun u w ↦ LinearMap.congr_fun₂ this w u⟩
 
 /-- The contravariant form on `M(Λ)` is the unique bilinear form `B` with `B(v_Λ, v_Λ) = 1` and
-`B(x u, w) = B(u, σ(x) w)` for `x ∈ 𝔤(A)` ([Kac] §9.4 (check)). -/
+`B(x u, w) = B(u, σ(x) w)` for `x ∈ 𝔤(A)` ([Kac] §9.4; uniqueness: cf. [HumO] Prop. 3.14 (b)). -/
 theorem existsUnique_contravariantForm :
     ∃! B : LinearMap.BilinForm K (VermaModule P Λ),
       (∀ x u w, B ⁅x, u⁆ w = B u ⁅transpose P x, w⁆) ∧ B (hwv P Λ) (hwv P Λ) = 1 :=
@@ -366,14 +371,14 @@ theorem contravariantForm_smul_left (a : 𝓤) (u w : VermaModule P Λ) :
       ha, hb]
 
 /-- The Shapovalov form in terms of `U(𝔤)`: `B(a v_Λ, b v_Λ)` is the coefficient of `v_Λ` in
-`σ(a) b v_Λ` ([Kac] §9.4 (check)). -/
+`σ(a) b v_Λ` ([Kac] §9.4). -/
 theorem contravariantForm_smul_hwv (a b : 𝓤) :
     contravariantForm P Λ (a • hwv P Λ) (b • hwv P Λ) =
       hwCoord P Λ (((envTranspose P a).unop * b) • hwv P Λ) := by
   rw [contravariantForm_smul_left, contravariantForm_hwv_left, mul_smul]
 
 /-- **Orthogonality of weight spaces**: `B(M(Λ)_μ, M(Λ)_ν) = 0` for `μ ≠ ν`
-([Kac] §9.4 (check)). -/
+([Kac] §9.4). -/
 theorem contravariantForm_eq_zero_of_ne {μ ν : Dual K H} {u w : VermaModule P Λ}
     (hu : u ∈ weightSpace P Λ μ) (hw : w ∈ weightSpace P Λ ν) (hμν : μ ≠ ν) :
     contravariantForm P Λ u w = 0 := by
@@ -406,7 +411,7 @@ def orthMaxSubmodule : LieSubmodule K P.KacMoodyAlgebra (VermaModule P Λ) where
     exact hw _ ((maxSubmodule P Λ).lie_mem hu)
 
 /-- **The radical of the contravariant form is the maximal proper submodule** `M'(Λ)` of `M(Λ)`
-([Kac] §9.4 (check)). -/
+([Kum] Prop. 2.3.2). -/
 theorem mem_maxSubmodule_iff (u : VermaModule P Λ) :
     u ∈ maxSubmodule P Λ ↔ ∀ w, contravariantForm P Λ u w = 0 := by
   constructor
@@ -430,7 +435,7 @@ theorem mem_maxSubmodule_iff (u : VermaModule P Λ) :
     exact hu w
 
 /-- The maximal proper submodule `M'(Λ)` is the kernel of the contravariant form
-([Kac] §9.4 (check)). -/
+([Kum] Prop. 2.3.2). -/
 theorem maxSubmodule_toSubmodule_eq_ker :
     (maxSubmodule P Λ).toSubmodule = LinearMap.ker (contravariantForm P Λ) := by
   ext u
@@ -442,7 +447,7 @@ lemma contravariantForm_eq_zero_of_mem {u : VermaModule P Λ} (hu : u ∈ maxSub
   LinearMap.ext ((mem_maxSubmodule_iff P Λ u).mp hu)
 
 /-- A weight vector of `M(Λ)` of weight `μ` lies in `M'(Λ)` iff it is orthogonal to `M(Λ)_μ`
-([Kac] §9.4 (check)). -/
+(cf. [Kum] Prop. 2.3.2). -/
 theorem mem_maxSubmodule_iff_of_mem_weightSpace {μ : Dual K H} {u : VermaModule P Λ}
     (hu : u ∈ weightSpace P Λ μ) :
     u ∈ maxSubmodule P Λ ↔ ∀ w ∈ weightSpace P Λ μ, contravariantForm P Λ u w = 0 := by
@@ -458,7 +463,7 @@ theorem mem_maxSubmodule_iff_of_mem_weightSpace {μ : Dual K H} {u : VermaModule
   exact hle (by rw [iSup_weightSpace_eq_top]; trivial)
 
 /-- `M(Λ)` is irreducible, i.e. `M'(Λ) = 0`, iff its contravariant form is nondegenerate
-([Kac] §9.4 (check)). -/
+([Kum] Prop. 2.3.2). -/
 theorem maxSubmodule_eq_bot_iff : maxSubmodule P Λ = ⊥ ↔ (contravariantForm P Λ).Nondegenerate := by
   have hsep : (contravariantForm P Λ).Nondegenerate ↔
       ∀ u, (∀ w, contravariantForm P Λ u w = 0) → u = 0 := by
@@ -476,7 +481,7 @@ abbrev weightSpaceForm (μ : Dual K H) : LinearMap.BilinForm K (weightSpace P Λ
   (contravariantForm P Λ).restrict (weightSpace P Λ μ)
 
 /-- The restriction of the contravariant form to `M(Λ)_μ` is nondegenerate iff `M'(Λ)` has no
-nonzero vector of weight `μ`, i.e. iff `dim L(Λ)_μ = dim M(Λ)_μ` ([Kac] §9.4 (check)). -/
+nonzero vector of weight `μ`, i.e. iff `dim L(Λ)_μ = dim M(Λ)_μ` (cf. [Kum] Prop. 2.3.2). -/
 theorem nondegenerate_weightSpaceForm_iff (μ : Dual K H) :
     (weightSpaceForm P Λ μ).Nondegenerate ↔
       (maxSubmodule P Λ).toSubmodule ⊓ weightSpace P Λ μ = ⊥ := by
@@ -497,7 +502,7 @@ theorem nondegenerate_weightSpaceForm_iff (μ : Dual K H) :
       fun w hw ↦ hu ⟨w, hw⟩, u.2⟩)
 
 /-- The determinant of the contravariant form on `M(Λ)_μ` (with respect to any basis) is nonzero
-iff `M'(Λ)` has no nonzero vector of weight `μ` ([Kac] §9.4 (check)). -/
+iff `M'(Λ)` has no nonzero vector of weight `μ` (cf. [Kum] Prop. 2.3.2). -/
 theorem det_toMatrix_weightSpaceForm_ne_zero_iff {n : Type*} [Fintype n] [DecidableEq n]
     (μ : Dual K H) (b : Basis n K (weightSpace P Λ μ)) :
     (LinearMap.BilinForm.toMatrix b (weightSpaceForm P Λ μ)).det ≠ 0 ↔
@@ -515,7 +520,7 @@ open VermaModule
 variable (Λ : Dual K H)
 
 /-- The contravariant form on `L(Λ) = M(Λ)/M'(Λ)`, induced by the contravariant form of `M(Λ)`
-([Kac] §9.4 (check)). -/
+([Kac] §9.4). -/
 def contravariantForm : LinearMap.BilinForm K (IrreducibleModule P Λ) :=
   ((maxSubmodule P Λ).toSubmodule.liftQ
     ((maxSubmodule P Λ).toSubmodule.liftQ (VermaModule.contravariantForm P Λ)
@@ -549,7 +554,7 @@ theorem isSymm_contravariantForm : (contravariantForm P Λ).IsSymm := by
   obtain ⟨w, rfl⟩ := LieSubmodule.Quotient.surjective_mk' _ w
   rw [contravariantForm_mk, contravariantForm_mk, (VermaModule.isSymm_contravariantForm P Λ).eq]
 
-/-- The contravariant form on `L(Λ)` is nondegenerate ([Kac] §9.4 (check)). -/
+/-- The contravariant form on `L(Λ)` is nondegenerate ([Kac] §9.4). -/
 theorem nondegenerate_contravariantForm : (contravariantForm P Λ).Nondegenerate := by
   have hl : ∀ u : IrreducibleModule P Λ, (∀ w, contravariantForm P Λ u w = 0) → u = 0 := by
     intro u hu

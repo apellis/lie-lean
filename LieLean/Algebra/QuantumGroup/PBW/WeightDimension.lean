@@ -23,7 +23,7 @@ side is `dim U(𝔫)_ν` for the classical Kac–Moody algebra (Gabber–Kac, [K
 particular `dim U⁺_ν` does not depend on `v` (transcendental) or on `k`
 (`QuantumGroup.finrank_plusWeightSpace`, `QuantumGroup.finrank_plusWeightSpace_eq`).
 
-This is the dimension input for the PBW theorem ([Jan] 8.24 (check), [Lus] 40.2.1 (check)):
+This is the dimension input for the PBW theorem ([Jan] 8.24, [Lus] 40.2.1–40.2.2):
 ordered monomials in the root vectors of weight `ν` span `U⁺_ν` iff they are linearly independent
 as soon as their number is `dim U⁺_ν`.
 
@@ -36,9 +36,9 @@ as soon as their number is `dim U⁺_ν`.
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, 33.1.3, 40.2.1 (check).
-* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, 4.21, 8.24 (check).
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., Thm. 9.11 (check).
+* [Lus] G. Lusztig, *Introduction to quantum groups*, 33.1.3, 40.2.1–40.2.2.
+* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, 4.21, 8.24.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., Thm. 9.11.
 -/
 
 noncomputable section
@@ -71,7 +71,7 @@ theorem ker_plusHom_inf_weightSpace [Finite I] (hv : Transcendental ℚ v) (ν :
   exact ⟨fun h ↦ (mem_serreSpan_of_mem_radical_and_finrank_serreSpan D hv ν).1 x
     (serreIdeal_le_radical hv0 hvn h) hx, serreSpan_le_serreIdeal D hv0 hvn⟩
 
-/-- **The dimension of `U⁺_ν`** ([Lus] 33.1.3 (check)): for `v` transcendental over
+/-- **The dimension of `U⁺_ν`** ([Lus] 33.1.3): for `v` transcendental over
 `ℚ`, `dim U⁺_ν + dim Z_ν = #{words of weight ν}`, where `Z_ν ⊆ ℚ⟨θ⟩` is the span of the classical
 Serre products of weight `ν`. -/
 theorem finrank_plusWeightSpace [Finite I] (hv : Transcendental ℚ v) (ν : I →₀ ℕ) :

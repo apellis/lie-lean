@@ -13,7 +13,7 @@ import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
 Let `A` be a symmetrizable generalized Cartan matrix with symmetrization `S`, `K` a field of
 characteristic zero, and let `Λ₀ ∈ 𝔥*` be *regular dominant integral*: `⟨Λ₀, αᵢ^∨⟩ ∈ {1, 2, …}` for
 all `i` (e.g. `Λ₀ = Λ + ρ` for `Λ` dominant integral). This file contains the combinatorial final
-step of the proof of the Weyl–Kac character formula ([Kac] §10.4 (check)): if `X ∈ ℰ` is
+step of the proof of the Weyl–Kac character formula ([Kac] §10.4): if `X ∈ ℰ` is
 `W`-anti-invariant, `X_{Λ₀} = 1`, and every `μ` with `X_μ ≠ 0` satisfies `Λ₀ - μ ∈ Q₊` and
 `(μ | μ) = (Λ₀ | Λ₀)`, then `X = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w Λ₀}` coefficientwise.
 
@@ -25,7 +25,7 @@ with `ν = w μ` of maximal height. Then `ν` is dominant integral: `⟨ν, α�
 `Λ₀ - ν = ∑ kⱼ αⱼ` with `kⱼ ≥ 0`, we get
 `0 = (Λ₀ | Λ₀) - (ν | ν) = (Λ₀ - ν | Λ₀ + ν) = ∑ⱼ kⱼ ⟨Λ₀ + ν, αⱼ^∨⟩ / εⱼ`, a sum of nonnegative
 rationals with `⟨Λ₀ + ν, αⱼ^∨⟩ ≥ 1`, whence all `kⱼ = 0` and `μ = w⁻¹ Λ₀`. Moreover the stabilizer
-of `Λ₀` in `W` is trivial ([Kac] Prop. 3.12 (check)): if `w ≠ 1` has a right descent `i`, then
+of `Λ₀` in `W` is trivial ([Kac] Prop. 3.12 (a)): if `w ≠ 1` has a right descent `i`, then
 `Λ₀ - w Λ₀ = (Λ₀ - (w rᵢ) Λ₀) + ⟨Λ₀, αᵢ^∨⟩ (w rᵢ) αᵢ` with `Λ₀ - (w rᵢ) Λ₀ ∈ Q₊`
 (`Matrix.Realization.exists_sub_apply_eq_rootOf`) and `(w rᵢ) αᵢ ∈ Q₊ \ {0}`, so `w Λ₀ ≠ Λ₀`.
 Hence `X_{w Λ₀} = (-1)^{ℓ(w)}` for the unique `w` with `w Λ₀ = μ`, and `X_μ = 0` if `μ ∉ W Λ₀`.
@@ -58,7 +58,7 @@ variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K] [
 
 omit [DecidableEq ι] in
 /-- The stabilizer in `W` of a regular dominant integral weight `Λ₀` (`⟨Λ₀, αᵢ^∨⟩ ∈ {1, 2, …}`) is
-trivial ([Kac] Prop. 3.12 (check)). -/
+trivial ([Kac] Prop. 3.12 (a)). -/
 theorem apply_ne_self_of_regular {μ : Dual K H} (hμ : ∀ i, ∃ n : ℕ, μ (P.coroot i) = n + 1)
     {w : P.weylGroup hA} (hw : w ≠ 1) : (w : Dual K H ≃ₗ[K] Dual K H) μ ≠ μ := by
   classical
@@ -95,7 +95,7 @@ theorem apply_ne_self_of_regular {μ : Dual K H} (hμ : ∀ i, ∃ n : ℕ, μ (
 
 omit [DecidableEq ι] in
 /-- The map `w ↦ w Λ₀` is injective on `W` for a regular dominant integral weight `Λ₀`
-([Kac] Prop. 3.12 (check)). -/
+([Kac] Prop. 3.12 (a)). -/
 theorem apply_injective_of_regular {μ : Dual K H} (hμ : ∀ i, ∃ n : ℕ, μ (P.coroot i) = n + 1) :
     Function.Injective fun w : P.weylGroup hA ↦ (w : Dual K H ≃ₗ[K] Dual K H) μ := by
   intro w w' h
@@ -114,7 +114,7 @@ variable {P hA} [FiniteDimensional K H]
 
 /-- Let `X ∈ ℰ` be `W`-anti-invariant and `Λ₀` regular dominant integral, and suppose that every
 `μ` with `X_μ ≠ 0` satisfies `Λ₀ - μ ∈ Q₊` and `(μ | μ) = (Λ₀ | Λ₀)`. Then the support of `X`
-lies in the orbit `W Λ₀` ([Kac] §10.4 (check)). -/
+lies in the orbit `W Λ₀` ([Kac] §10.4). -/
 theorem exists_apply_eq_of_isWeylAntiInvariant (S : A.Symmetrization) {X : P.CharacterRing ℤ}
     (hX : X.IsWeylAntiInvariant P hA) {Λ₀ : Dual K H}
     (hΛ₀ : ∀ i, ∃ n : ℕ, Λ₀ (P.coroot i) = n + 1)
@@ -197,7 +197,7 @@ theorem exists_apply_eq_of_isWeylAntiInvariant (S : A.Symmetrization) {X : P.Cha
   exact LinearEquiv.symm_apply_apply _ μ
 
 open Classical in
-/-- **The final step of the proof of the Weyl–Kac character formula** ([Kac] §10.4 (check)): let
+/-- **The final step of the proof of the Weyl–Kac character formula** ([Kac] §10.4): let
 `X ∈ ℰ` be `W`-anti-invariant, `Λ₀` regular dominant integral, `X_{Λ₀} = 1`, and suppose that every
 `μ` with `X_μ ≠ 0` satisfies `Λ₀ - μ ∈ Q₊` and `(μ | μ) = (Λ₀ | Λ₀)`. Then
 `X = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w Λ₀}`, i.e. `X_μ = ∑_{w ∈ W, w Λ₀ = μ} (-1)^{ℓ(w)}` (a sum with at

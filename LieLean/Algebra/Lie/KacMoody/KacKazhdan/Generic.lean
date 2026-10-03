@@ -32,9 +32,11 @@ line `λ₀ + t δ`, the order formula gives
 
 for the Shapovalov determinants `D_β` (`VermaModule.natTrailingDegree_eq_mul_of_generic`). This is
 the step in the proof of the Kac–Kazhdan determinant formula that identifies the multiplicity of
-a non-isotropic hyperplane `H_γ` in `D_β` as `P(β - γ)` times a constant (cf. [KK] §3 (check),
-[Jantzen, *Kontravariante Formen auf induzierten Darstellungen halbeinfacher Lie-Algebren*,
-Math. Ann. 226 (1977)] (check); the argument here was reconstructed by us).
+a non-isotropic hyperplane `H_γ` in `D_β` as `P(β - γ)` times a constant (cf. [KK];
+[Kum] Thm. 2.3.4, proof, Step 4 and its conclusion; [Jantzen, *Kontravariante Formen auf induzierten
+Darstellungen halbeinfacher Lie-Algebren*, Math. Ann. 226 (1977), 53–65], where such a filtration is
+used for the parabolic determinant ([HumO] §9.17, Remark); the argument here was reconstructed by
+us).
 
 ## Main results
 
@@ -45,8 +47,8 @@ Math. Ann. 226 (1977)] (check); the argument here was reconstructed by us).
 
 `dim N_ξ = ∑_μ [N : L(μ)] dim L(μ)_ξ` (`IsCategoryO.finrank_weightSpace_eq_finsum`). If
 `[N : L(μ)] ≠ 0` then `[M(λ₀) : L(μ)] ≠ 0`, so `μ = λ₀ - γ` with `γ ∈ Q₊` and
-`2 (λ₀ + ρ | γ) = (γ | γ)` ([Kac] Prop. 9.8 (check)); `γ ≠ 0` since `N_{λ₀} = 0`; and if
-`dim L(μ)_{λ₀ - β} ≠ 0` then `γ ≤ β ≤ η`. By genericity `γ = γ₀`. Finally
+`2 (λ₀ + ρ | γ) = (γ | γ)` ([Kac] Lemma 9.8 and the proof of Prop. 9.8); `γ ≠ 0` since
+`N_{λ₀} = 0`; and if `dim L(μ)_{λ₀ - β} ≠ 0` then `γ ≤ β ≤ η`. By genericity `γ = γ₀`. Finally
 `dim L(λ₀ - γ₀)_{λ₀ - β} = dim M(λ₀ - γ₀)_{λ₀ - β} = P(β - γ₀)`, since `M'(λ₀ - γ₀)` has no
 vector of that weight.
 
@@ -54,9 +56,11 @@ vector of that weight.
 
 * [KK] V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. 34 (1979), 97–108.
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.8 (check).
+* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
+  Math. 204, Birkhäuser 2002, §2.3.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.8.
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, §5.6 (check).
+  GSM 94, §5.6–5.7.
 -/
 
 open Module LieModule Polynomial

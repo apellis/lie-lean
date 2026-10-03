@@ -34,7 +34,7 @@ filtration.
 ## References
 
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, §5.2 (check) (the universal Verma module and the Jantzen filtration).
+  GSM 94, §3.15 (the universal contravariant form), §5.7 (the Jantzen filtration).
 -/
 
 open Module LieModule Module.Dual MvPolynomial UniversalEnvelopingAlgebra

@@ -43,7 +43,7 @@ of weight spaces.
 ## References
 
 * H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent. Math.
-  **34** (1976), 37–76, §3 (check).
+  **34** (1976), 37–76, §1 (Prop. 1.4), §3, Lemma 9.2.
 -/
 
 open Module TensorProduct ExteriorAlgebra

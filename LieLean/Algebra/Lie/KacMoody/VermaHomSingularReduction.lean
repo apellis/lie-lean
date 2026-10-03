@@ -9,8 +9,8 @@ import LieLean.Algebra.Lie.KacMoody.VermaHomFiniteType
 # Singular integral reduction to dot-dominant targets
 
 The arguments are reconstructed from the existing BGG.Verma proofs, not transcribed
-from a consulted textbook. Here dot dominance means `IsDominantIntegral (Λ + rho)`;
-ordinary dominance of `Λ` is NOT assumed. Zero coroot pairings are allowed.
+from a textbook. Here dot dominance means `IsDominantIntegral (Λ + rho)`; ordinary dominance of `Λ`
+is NOT assumed. Zero coroot pairings are allowed.
 
 Main results: every Weyl translate of a dot-dominant integral weight embeds into its
 Verma module, and every integral target for a finite Weyl group embeds into such a

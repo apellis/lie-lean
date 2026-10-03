@@ -24,7 +24,7 @@ The base field has characteristic zero; the ordered Lie-algebra basis may have a
 ## References
 
 Arguments reconstructed from polynomial coefficients, tensor spans, the existing actual PBW
-bridge, and the proved concrete Koszul homotopy. No external source was consulted.
+bridge, and the proved concrete Koszul homotopy.
 -/
 noncomputable section
 open scoped TensorProduct BigOperators

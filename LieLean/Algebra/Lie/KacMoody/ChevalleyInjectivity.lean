@@ -40,11 +40,12 @@ the sources; it is reconstructed, not transcribed.
 
 ## References
 
-* Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §23.1 (check).
-* Etingof, MIT 18.757 (Fall 2023), Lecture 10, Theorem 10.1(ii) (check), injectivity:
+* Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §23.1 and
+  the Appendix to §23.
+* Etingof, MIT 18.757 (Fall 2023), Lecture 10, Theorem 10.1(ii), injectivity:
   https://ocw.mit.edu/courses/18-757-representations-of-lie-groups-fall-2023/mit18_757_f23_lec10.pdf
 * Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*, GSM 94,
-  §1.10 (check), where Chevalley's theorem feeds the Harish-Chandra isomorphism.
+  §1.10, where Chevalley's theorem feeds the Harish-Chandra isomorphism.
 -/
 
 noncomputable section
@@ -97,7 +98,7 @@ weight vectors for the image of `j : H → L` (weights `μ u`), whose weight-zer
 exactly that image. An infinitesimally coadjoint-invariant coordinate polynomial on `L` whose
 restriction along `j` vanishes is zero. Only invariance under the root vectors (the `b u` of
 nonzero weight) is used. Reconstructed lowest-term proof of the injectivity half of
-Chevalley's restriction theorem (Humphreys, GTM 9, §23.1 (check)). -/
+Chevalley's restriction theorem (Humphreys, GTM 9, §23.1 and the Appendix to §23). -/
 theorem eq_zero_of_invariant_of_restrict_eq_zero (j : H →ₗ[K] L) (b : Basis ν K L)
     (μ : ν → Dual K H) (hμ : ∀ u a, ⁅j a, b u⁆ = μ u a • b u)
     (hspan : Submodule.span K (b '' {u | μ u = 0}) = LinearMap.range j)
@@ -248,7 +249,7 @@ theorem span_diagWeightBasis_zero :
 include hA in
 /-- **Chevalley restriction injectivity**, finite type: an infinitesimally invariant coordinate
 polynomial on `𝔤(A)` whose literal restriction to the Cartan subalgebra vanishes is zero.
-Humphreys, GTM 9, §23.1 (check); Etingof, Lecture 10, Theorem 10.1(ii) (check), injectivity.
+Humphreys, GTM 9, §23.1 and Appendix to §23; Etingof, Lecture 10, Theorem 10.1(ii), injectivity.
 The proof (reconstructed) is the lowest-term argument of
 `LieAlgebra.eq_zero_of_invariant_of_restrict_eq_zero`, applied to an adjoint weight basis. -/
 theorem eq_zero_of_invariant_of_coordinateCartanRestriction_eq_zero
@@ -263,7 +264,8 @@ theorem eq_zero_of_invariant_of_coordinateCartanRestriction_eq_zero
     (fun u => u.1) (fun u a => diagWeightBasis_mem hV u a) (span_diagWeightBasis_zero P) F hF h₀
 
 /-- **Chevalley restriction is injective** on the genuine infinitesimal invariants, in finite
-type over any characteristic-zero field. Etingof, Lecture 10, Theorem 10.1(ii) (check). -/
+type over any characteristic-zero field. Etingof, Lecture 10, Theorem 10.1(ii) (stated there
+over `ℂ`). -/
 theorem chevalleyRestriction_injective : Function.Injective (chevalleyRestriction P hA) := by
   intro F G hFG
   have he : coordinateCartanRestriction P F.val = coordinateCartanRestriction P G.val :=
@@ -278,7 +280,7 @@ theorem chevalleyRestriction_injective : Function.Injective (chevalleyRestrictio
 /-- **Chevalley's restriction theorem** for the finite-type realization: literal coordinate
 restriction is a bijection from the infinitesimally invariant polynomials on `𝔤(A)` onto the
 Weyl-fixed polynomials on the Cartan subalgebra. Neither side is defined through the map.
-Humphreys, GTM 9, §23.1 (check); Etingof, Lecture 10, Theorem 10.1 (check). -/
+Humphreys, GTM 9, §23.1 and Appendix to §23; Etingof, Lecture 10, Theorem 10.1. -/
 theorem chevalleyRestriction_bijective : Function.Bijective (chevalleyRestriction P hA) :=
   ⟨chevalleyRestriction_injective P hA, chevalleyRestriction_surjective P hA⟩
 

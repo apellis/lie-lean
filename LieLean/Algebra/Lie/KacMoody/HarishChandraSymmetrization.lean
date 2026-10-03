@@ -41,9 +41,8 @@ form hypotheses must be retained when implementing those subsequent steps.
 P. Etingof, MIT 18.757 (Fall 2023), Lecture 13, §13.3, proof of Theorem 13.5:
 https://ocw.mit.edu/courses/18-757-representations-of-lie-groups-fall-2023/mit18_757_f23_lec13.pdf
 Lecture 14, §14.1, Theorem 14.1(iv)-(v), identifies the subsequent Chevalley/graded
-restriction step. Both sources were consulted. The elementary tensor construction
-below is reconstructed and works over any characteristic-zero field; the source's
-complex semisimple HC isomorphism is NOT asserted here.
+restriction step. The elementary tensor construction below is reconstructed and works over any
+characteristic-zero field; the source's complex semisimple HC isomorphism is NOT asserted here.
 -/
 
 noncomputable section

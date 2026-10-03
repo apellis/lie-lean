@@ -11,7 +11,7 @@ import LieLean.Algebra.Lie.KacMoody.InvariantForm
 
 Let `𝔤 = 𝔤(A)` be a Kac–Moody algebra and `i` a simple index. The subspace
 `𝔲ᵢ⁻ = ⊕_{α ∈ Q₊ \ {0, αᵢ}} 𝔤_{-α}` of `𝔫₋` is a Lie subalgebra, stable under `ad eᵢ`, `ad fᵢ` and
-`ad 𝔥`, and `𝔫₋ = K fᵢ ⊕ 𝔲ᵢ⁻` ([Kac] §3.? (check); [Kum] §1.? (check)). By PBW,
+`ad 𝔥`, and `𝔫₋ = K fᵢ ⊕ 𝔲ᵢ⁻` (cf. [Kac] (1.3.3), Lemma 1.3; [Kum] Def. 1.2.2). By PBW,
 `U(𝔫₋) = K[fᵢ] ⊗ U(𝔲ᵢ⁻)`; this is used to show that Verma modules are projective "in the direction
 of the `𝔰𝔩₂`-subalgebra `⟨eᵢ, fᵢ, αᵢ^∨⟩`".
 
@@ -30,7 +30,9 @@ of the `𝔰𝔩₂`-subalgebra `⟨eᵢ, fᵢ, αᵢ^∨⟩`".
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.3, §3.6 (check).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §1.3.
+* [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
+  Math. 204, Birkhäuser 2002, Def. 1.2.2.
 -/
 
 open Module LieModule

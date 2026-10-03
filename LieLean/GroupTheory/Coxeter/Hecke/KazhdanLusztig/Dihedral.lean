@@ -11,9 +11,9 @@ import LieLean.GroupTheory.Coxeter.Hecke.KazhdanLusztig.Properties
 Let `(W, S)` be a Coxeter system of rank at most two, i.e. `W` is a (finite or infinite) dihedral
 group, or of rank `≤ 1`. We show:
 
-* **The Bruhat order of a dihedral group** ([BB] §2.2 (check), [HumC] §5.9 (check)):
+* **The Bruhat order of a dihedral group** ([BB] §2.1, [HumC] §5.9):
   `y ≤ w` if and only if `ℓ(y) < ℓ(w)` or `y = w` (`CoxeterSystem.bruhatLE_iff_of_card_le_two`).
-* **Kazhdan–Lusztig polynomials of dihedral groups** ([BB] Ch. 5, Exercises (check)):
+* **Kazhdan–Lusztig polynomials of dihedral groups** ([GP] Exercise 11.4):
   `P_{y,w} = 1` for all `y ≤ w` (`IwahoriHeckeAlgebra.klPoly_eq_one_of_card_le_two`),
   i.e. `C'_w = v^{-ℓ(w)} Σ_{y ≤ w} T_y` (`IwahoriHeckeAlgebra.klBasis_eq_sum_of_card_le_two`).
 
@@ -43,6 +43,8 @@ a case analysis on `ℓ(x)` gives `P_{x,w} = 1`. The arguments were written by u
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184.
 * [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, Springer 2005.
+* [GP] M. Geck, G. Pfeiffer, *Characters of finite Coxeter groups and Iwahori–Hecke algebras*,
+  LMS Monographs 21, OUP 2000.
 * [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990.
 -/
 
@@ -122,7 +124,7 @@ theorem bruhatLE_of_length_lt (hB : Nat.card B ≤ 2) {y w : W} (h : ℓ y < ℓ
       rw [eq_of_length_eq_of_not_isLeftDescent hB (by omega) hy hw']
       exact cs.simple_mul_bruhatLE ht
 
-/-- **The Bruhat order of a dihedral group** ([BB] §2.2 (check), [HumC] §5.9 (check)): in a
+/-- **The Bruhat order of a dihedral group** ([BB] §2.1, [HumC] §5.9): in a
 Coxeter system of rank `≤ 2`, `y ≤ w` if and only if `ℓ(y) < ℓ(w)` or `y = w`. -/
 theorem bruhatLE_iff_of_card_le_two (hB : Nat.card B ≤ 2) {y w : W} :
     cs.BruhatLE y w ↔ ℓ y < ℓ w ∨ y = w :=
@@ -142,7 +144,7 @@ local prefix:100 "ℓ " => cs.length
 
 variable [Finite B]
 
-/-- **Kazhdan–Lusztig polynomials of dihedral groups** ([BB] Ch. 5, Exercises (check)):
+/-- **Kazhdan–Lusztig polynomials of dihedral groups** ([GP] Exercise 11.4):
 in a Coxeter system of rank `≤ 2`, `P_{y,w} = 1` for all `y ≤ w`. -/
 theorem klPoly_eq_one_of_card_le_two (hB : Nat.card B ≤ 2) {y w : W} (h : cs.BruhatLE y w) :
     klPoly cs y w = 1 := by

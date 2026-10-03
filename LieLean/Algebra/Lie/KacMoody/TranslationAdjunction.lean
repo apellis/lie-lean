@@ -13,7 +13,7 @@ For a finite-dimensional module `L` in `𝒪` with dual `L^*` (the contragredien
 `Module.Dual K L`, `⁅x, f⁆ = -f ∘ x`), the translation functors
 `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ L)` and `T' = pr_{χ₁}(pr_{χ₂}(−) ⊗ L^*)` are adjoint on the blocks:
 `Hom(T M, N) ≅ Hom(M, T' N)` for `M` in the `χ₁`-block and `N` in the `χ₂`-block
-(Humphreys, GSM 94, §7.2 (check)). With `L = L(ν)` this is the adjunction between `T_λ^μ` and
+(Humphreys, GSM 94, §7.2). With `L = L(ν)` this is the adjunction between `T_λ^μ` and
 `T_μ^λ`, where `L(ν)^*` plays the role of `L(-w₀ν)`; the identification `L(ν)^* ≅ L(-w₀ν)` is
 not needed and not formalized here.
 
@@ -142,7 +142,7 @@ def tensorHomAdjunction :
 
 variable [CharZero K] [IsAlgClosed K]
 
-/-- **Adjointness of translation functors** (Humphreys, GSM 94, §7.2 (check)): for `M` in `𝒪`
+/-- **Adjointness of translation functors** (Humphreys, GSM 94, §7.2): for `M` in `𝒪`
 lying in the block `χ₁`, `N` lying in the block `χ₂`, and a finite-dimensional `L` in `𝒪`,
 `Hom(pr_{χ₂}(pr_{χ₁} M ⊗ L), N) ≅ Hom(M, pr_{χ₁}(pr_{χ₂} N ⊗ L^*))`, `K`-linearly. -/
 def translationAdjunction (hM : IsCategoryO P M) (hL : IsCategoryO P L) {χ₁ χ₂ : 𝓩 →ₐ[K] K}
@@ -172,7 +172,7 @@ variable {ι' H' : Type*} {K' : Type} [Fintype ι'] [DecidableEq ι'] [Field K']
   [LieModule K' P'.KacMoodyAlgebra N₁]
 
 include hA in
-/-- **Adjointness of `T_λ^μ` and `T_μ^λ`** (Humphreys, GSM 94, §7.2 (check)), finite type: for
+/-- **Adjointness of `T_λ^μ` and `T_μ^λ`** (Humphreys, GSM 94, §7.2), finite type: for
 `ν` dominant integral, `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ L(ν))` and
 `T' = pr_{χ₁}(pr_{χ₂}(−) ⊗ L(ν)^*)`, `Hom(T M, N) ≅ Hom(M, T' N)` for `M ∈ 𝒪` in the block `χ₁`
 and `N` in the block `χ₂`. -/

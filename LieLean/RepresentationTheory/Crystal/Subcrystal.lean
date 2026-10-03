@@ -124,7 +124,7 @@ lemma IsSeminormal.restrict (hC : C.IsSeminormal) (hS : C.IsStable S) :
 
 variable (C₁ : Crystal D B₁) (C₂ : Crystal D B₂)
 
-/-- The disjoint union `B₁ ⊔ B₂` of two crystals ([Kas] §7.2 (check)). -/
+/-- The disjoint union `B₁ ⊔ B₂` of two crystals (cf. [Kas] §7.6). -/
 def sum : Crystal D (B₁ ⊕ B₂) where
   wt := Sum.elim C₁.wt C₂.wt
   ε i := Sum.elim (C₁.ε i) (C₂.ε i)

@@ -30,8 +30,7 @@ the operators with a CE associated-graded differential and does not assert CE or
 
 ## References
 
-Reconstructed directly from the contraction and polynomial Leibniz identities in Mathlib;
-no external reference was consulted.
+Reconstructed directly from the contraction and polynomial Leibniz identities in Mathlib.
 -/
 
 open scoped TensorProduct BigOperators

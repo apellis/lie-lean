@@ -22,8 +22,8 @@ all-simple-root minimum integrality. No mixed-word or decomposition claim is mad
 ## References
 
 Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142 (1995),
-Definition 5.3, Remark 5.4 and Proposition 5.6, pp.514–516.
-the safe terminal extension below is a reconstructed argument.
+Definition 5.3, Remark 5.4 and Proposition 5.6, pp. 514–516.
+The safe terminal extension below is a reconstructed argument.
 -/
 
 open Module Set LittelmannPath LittelmannPath.FiniteConstruction

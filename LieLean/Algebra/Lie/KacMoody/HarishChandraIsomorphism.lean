@@ -36,8 +36,8 @@ finite-dimensional Cartan space, over an arbitrary field of characteristic zero.
 ## References
 
 * Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*, GSM 94,
-  Theorem 1.10 (check).
-* Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §23.3 (check).
+  Theorem 1.10.
+* Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §23.3.
 The arguments are the standard graded ones, reconstructed here from the existing graded HC
 compatibility, central lifts, HC invariance and Chevalley's restriction theorem: the top PBW
 symbol of a central element is invariant and its Cartan restriction is the top HC term
@@ -241,8 +241,8 @@ theorem eq_zero_of_homogeneousComponent_eq_cartanRestriction
 
 include hA in
 /-- **The Harish-Chandra homomorphism is injective** on the centre of `U(𝔤)`, in finite type
-over any characteristic-zero field. Humphreys, GSM 94, §1.10 (check); Humphreys, GTM 9,
-§23.3 (check). Reconstructed: the top HC term is the Cartan restriction of the invariant PBW
+over any characteristic-zero field. Humphreys, GSM 94, §1.10.
+Reconstructed: the top HC term is the Cartan restriction of the invariant PBW
 symbol, which vanishes only for zero symbols by Chevalley injectivity. -/
 theorem harishChandra_injective : Function.Injective (harishChandra P) := by
   rw [injective_iff_map_eq_zero]
@@ -302,7 +302,7 @@ theorem exists_invariant_cartanRestriction_eq (n : ℕ) (f : SymmetricAlgebra K 
 include hA in
 /-- **Image of the Harish-Chandra homomorphism.** Every Cartan polynomial fixed by all simple
 coreflections is the `ρ`-shifted Harish-Chandra image of a central element, in finite type.
-Humphreys, GSM 94, §1.10 (check). Reconstructed by degree induction: Chevalley extension of the
+Humphreys, GSM 94, §1.10. Reconstructed by degree induction: Chevalley extension of the
 top component, a central lift with that top HC term, and the proved invariance of HC images. -/
 theorem exists_shiftedHarishChandra_eq (f : SymmetricAlgebra K H)
     (hinv : ∀ i, SymmetricAlgebra.affinePullback
@@ -377,8 +377,8 @@ theorem shiftedHarishChandra_range :
 /-- **Harish-Chandra's theorem** in finite type: the `ρ`-shifted Harish-Chandra homomorphism is
 an algebra isomorphism from the centre of `U(𝔤)` onto the polynomials on `𝔥*` fixed by all
 simple coreflections. Its value at `μ` is the Verma central character of `μ - ρ`
-(`eval_shiftedHarishChandra`). Humphreys, GSM 94, Theorem 1.10 (check); Humphreys, GTM 9,
-§23.3 (check). -/
+(`eval_shiftedHarishChandra`). Humphreys, GSM 94, Theorem 1.10(a); Humphreys, GTM 9,
+§23.3 (the image only; injectivity is not stated there). -/
 def shiftedHarishChandraEquiv :
     Subalgebra.center K 𝓤 ≃ₐ[K] coreflectionInvariants P hA.isGeneralizedCartan :=
   (AlgEquiv.ofInjective _ (shiftedHarishChandra_injective P hA)).trans

@@ -37,9 +37,10 @@ character in the algebra `ℰ` of formal characters (`Matrix.Realization.Charact
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §10.1 (check).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §10.1.
 * [HK] J. Hong, S.-J. Kang, *Introduction to quantum groups and crystal bases*, GSM 42, §2.1,
   Ch. 4.
+* [Kas] M. Kashiwara, *On crystal bases*, CMS Conf. Proc. 16 (1995).
 -/
 
 open Module
@@ -49,8 +50,7 @@ namespace Matrix.Realization
 variable {ι K H : Type*} [Fintype ι] [Field K] [AddCommGroup H] [Module K H]
   {A : Matrix ι ι ℤ} (P : Realization A K H)
 
-/-- The lattice of integral weights `{λ ∈ 𝔥* | ⟨λ, αᵢ^∨⟩ ∈ ℤ for all i}` ([Kac] §10.1
-(check)). -/
+/-- The lattice of integral weights `{λ ∈ 𝔥* | ⟨λ, αᵢ^∨⟩ ∈ ℤ for all i}` ([Kac] §10.1). -/
 def integralWeights : AddSubgroup (Dual K H) where
   carrier := {μ | ∀ i, ∃ n : ℤ, μ (P.coroot i) = n}
   add_mem' {μ ν} hμ hν i := by
@@ -186,7 +186,7 @@ private def fiberEquiv (C : Crystal (P.cartanDatum hA) B) (ν : P.integralWeight
   _root_.Equiv.subtypeEquivRight fun _ ↦ Subtype.coe_inj
 
 /-- The character in `ℰ` of a seminormal crystal is invariant under the fundamental reflections:
-the coefficients of `e^{rᵢ μ}` and `e^μ` agree ([Kas] §7.7 (check)). -/
+the coefficients of `e^{rᵢ μ}` and `e^μ` agree ([Kas] §11, via `Sᵢ`). -/
 theorem IsSeminormal.coeffAt_formalCharacterOfCones_reflection {C : Crystal (P.cartanDatum hA) B}
     (hs : C.IsSeminormal) (hC) (i : ι) (μ : Dual K H) :
     (formalCharacterOfCones C hC).coeffAt (P.reflection hA i μ) =

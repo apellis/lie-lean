@@ -19,7 +19,7 @@ import Mathlib.Tactic.LinearCombination
 # Quantum integers, quantum binomial coefficients and quantum Serre elements
 
 Let `k` be a field and `v ∈ k`. We define the (symmetric) quantum integers, factorials and binomial
-coefficients ([Lus] §1.3.1 (check), [Jan] §0.2 (check)):
+coefficients ([Lus] §§1.3.1, 1.3.3, [Jan] §§0.1–0.2):
 `[n]_v = Σ_{s < n} v^{n-1-2s} = (vⁿ - v⁻ⁿ)/(v - v⁻¹)`, `[n]_v! = [1]_v ⋯ [n]_v` and
 `[n j]_v`, the latter defined through the Pascal rule
 `[n+1, j+1]_v = v^{-(j+1)} [n, j+1]_v + v^{n-j} [n, j]_v`, so that they make sense for every `v`.
@@ -31,8 +31,8 @@ The main technical result is `qSerre_add`: if `w u = v² u w`, `w b = v^{-m} b w
 `u b' = v^m b' u`, then
 `qSerre v (m+1) (u + w) (b + b') = qSerre v (m+1) u b + qSerre v (m+1) w b'`.
 This single identity yields the compatibility of the quantum Serre relations with Lusztig's
-comultiplication `r` and with the skew derivations `rᵢ, ᵢr` of `'f` ([Lus] 1.4.2–1.4.3 (check)),
-and with the comultiplication of `U_q(𝔤)` ([Jan] Lemma 4.10 (check)). The proof is our own
+comultiplication `r` and with the skew derivations `rᵢ, ᵢr` of `'f` (cf. [Lus] 1.4.2–1.4.3),
+and with the comultiplication of `U_q(𝔤)` ([Jan] Lemma 4.10). The proof is our own
 reconstruction and avoids the usual expansion into `q`-multinomials: writing
 `D_λ(b) = z b - λ b z`, the Serre element factors as `D_{λ_m} ∘ ⋯ ∘ D_{λ_0}` with
 `λ_s = v^{m-2s}` (`serreAux_succ`, `serreAux_succ'`), and if `b` is a `w`-eigenvector
@@ -53,7 +53,7 @@ reconstruction and avoids the usual expansion into `q`-multinomials: writing
 * `QuantumGroup.qBinomial_symm`: `[n, n-k]_v = [n k]_v`.
 * `QuantumGroup.qSerre_add`: the additivity of the Serre element described above.
 * `QuantumGroup.qSerre_eq_zero_of_mul_eq_smul`: `S(a, b) = 0` if `b a = v^{-m} a b`
-  (the identity [Lus] 1.3.4 (check)).
+  (the identity [Lus] 1.3.4(a)).
 * `QuantumGroup.qSerre_op`, `QuantumGroup.qSerre_mul_mul`: Serre elements in the opposite
   algebra and of `q`-twisted generators.
 
@@ -71,17 +71,17 @@ variable {k : Type*} [Field k]
 
 /-! ### Quantum integers and binomial coefficients -/
 
-/-- The symmetric quantum integer `[n]_v = Σ_{s < n} v^{n-1-2s}` ([Lus] 1.3.1 (check)); it equals
+/-- The symmetric quantum integer `[n]_v = Σ_{s < n} v^{n-1-2s}` ([Lus] 1.3.3); it equals
 `(vⁿ - v⁻ⁿ)/(v - v⁻¹)` when `v² ≠ 1` (`qInt_mul_sub`). -/
 def qInt (v : k) (n : ℕ) : k := ∑ s ∈ range n, v ^ (n - 1 - s) * v⁻¹ ^ s
 
-/-- The quantum factorial `[n]_v! = [1]_v [2]_v ⋯ [n]_v` ([Lus] 1.3.1 (check)). -/
+/-- The quantum factorial `[n]_v! = [1]_v [2]_v ⋯ [n]_v` ([Lus] 1.3.3). -/
 def qFactorial (v : k) : ℕ → k
   | 0 => 1
   | n + 1 => qInt v (n + 1) * qFactorial v n
 
 /-- The quantum binomial coefficient `[n j]_v`, defined by the Pascal rule
-`[n+1, j+1] = v^{-(j+1)} [n, j+1] + v^{n-j} [n, j]` ([Lus] 1.3.1 (check)). It equals
+`[n+1, j+1] = v^{-(j+1)} [n, j+1] + v^{n-j} [n, j]` ([Lus] 1.3.1(e)). It equals
 `[n]!/([j]! [n-j]!)` whenever the factorials are nonzero
 (`qBinomial_mul_qFactorial_mul_qFactorial`). -/
 def qBinomial (v : k) : ℕ → ℕ → k
@@ -175,7 +175,7 @@ theorem qFactorial_ne_zero (hv : v ≠ 0) {n : ℕ} (h : ∀ m, 0 < m → m ≤ 
     exact mul_ne_zero (qInt_ne_zero hv (h _ n.succ_pos le_rfl))
       (ih fun m hm hmn ↦ h m hm (hmn.trans n.le_succ))
 
-/-- `[n j]_v [j]_v! [n-j]_v! = [n]_v!` for `j ≤ n` ([Lus] 1.3.1 (check)). -/
+/-- `[n j]_v [j]_v! [n-j]_v! = [n]_v!` for `j ≤ n` ([Lus] 1.3.3). -/
 theorem qBinomial_mul_qFactorial_mul_qFactorial {n j : ℕ} (hj : j ≤ n) :
     qBinomial v n j * qFactorial v j * qFactorial v (n - j) = qFactorial v n := by
   induction n generalizing j with
@@ -274,19 +274,18 @@ theorem qBinomial_inv (n k : ℕ) : qBinomial v⁻¹ n k = qBinomial v n k := by
 variable {B : Type*} [Ring B] [Algebra k B]
 
 variable (v) in
-/-- The quantum Serre element `Σ_{r=0}^{m} (-1)^r [m r]_v a^{m-r} b a^r` ([Jan] 4.3 (R6)
-(check)); up to the factor `[m]_v!` this is Lusztig's divided-power form `qSerreDiv`
-(`qSerreDiv_eq`). -/
+/-- The quantum Serre element `Σ_{r=0}^{m} (-1)^r [m r]_v a^{m-r} b a^r` ([Jan] 4.3 (R6));
+up to the factor `[m]_v!` this is Lusztig's divided-power form `qSerreDiv` (`qSerreDiv_eq`). -/
 def qSerre (m : ℕ) (a b : B) : B :=
   ∑ r ∈ range (m + 1), ((-1) ^ r * qBinomial v m r) • (a ^ (m - r) * b * a ^ r)
 
 variable (v) in
-/-- The divided power `a^{(n)} = a^n / [n]_v!` ([Lus] 1.4.1 (check)). -/
+/-- The divided power `a^{(n)} = a^n / [n]_v!` ([Lus] 1.4.1). -/
 def qDivPow (n : ℕ) (a : B) : B := (qFactorial v n)⁻¹ • a ^ n
 
 variable (v) in
 /-- The quantum Serre element in Lusztig's divided-power form
-`Σ_{r+s=m} (-1)^r a^{(s)} b a^{(r)}` ([Lus] 1.4.3 (check)). -/
+`Σ_{r+s=m} (-1)^r a^{(s)} b a^{(r)}` ([Lus] 1.4.3). -/
 def qSerreDiv (m : ℕ) (a b : B) : B :=
   ∑ r ∈ range (m + 1), (-1 : k) ^ r • (qDivPow v (m - r) a * b * qDivPow v r a)
 
@@ -477,8 +476,8 @@ theorem serreAux_add_right (hv : v ≠ 0) {u w : B} (hwu : w * u = v ^ 2 • (u 
 
 /-- The additivity of quantum Serre elements: if `w u = v² u w`, `w b = v⁻ᵐ b w` and
 `u b' = vᵐ b' u`, then `S(u + w, b + b') = S(u, b) + S(w, b')` for the Serre element `S` of
-degree `m + 1`. This is the combinatorial core of [Lus] 1.4.2–1.4.3 (check) and [Jan] Lemma 4.10
-(check); the proof (via the factorization of `S` into twisted commutators) is our own. -/
+degree `m + 1`. It replaces the form computation of [Lus] 1.4.4–1.4.6 and is the core of
+[Jan] Lemma 4.10; the proof (via the factorization of `S` into twisted commutators) is our own. -/
 theorem qSerre_add (hv : v ≠ 0) {u w b b' : B} {m : ℕ} (hwu : w * u = v ^ 2 • (u * w))
     (hb : w * b = v⁻¹ ^ m • (b * w)) (hb' : u * b' = v ^ m • (b' * u)) :
     qSerre v (m + 1) (u + w) (b + b') = qSerre v (m + 1) u b + qSerre v (m + 1) w b' := by
@@ -498,7 +497,7 @@ lemma qSerre_add_right (m : ℕ) (a b b' : B) :
     qSerre v m a (b + b') = qSerre v m a b + qSerre v m a b' := by
   simp only [qSerre, mul_add, add_mul, smul_add, Finset.sum_add_distrib]
 
-/-- `Σ_{r=0}^{m+1} (-1)^r [m+1, r]_v v^{-mr} = 0` ([Lus] 1.3.4 (check)). -/
+/-- `Σ_{r=0}^{m+1} (-1)^r [m+1, r]_v v^{-mr} = 0` ([Lus] 1.3.4(a)). -/
 theorem sum_qBinomial_mul_inv_pow_eq_zero (hv : v ≠ 0) (m : ℕ) :
     ∑ r ∈ range (m + 2), (-1) ^ r * qBinomial v (m + 1) r * (v⁻¹ ^ m) ^ r = 0 := by
   have h := serreAux_succ (B := k) hv (v⁻¹ ^ m) m 1 1

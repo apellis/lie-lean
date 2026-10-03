@@ -43,11 +43,11 @@ requires a parameter transcendental over `ℚ`; this file does not extend that t
 
 ## References
 
-* J. C. Jantzen, *Lectures on quantum groups*, GSM 6, §§4.7, 8.21–8.24 (check).
-* G. Lusztig, *Introduction to quantum groups*, §§2.2, 40.1–40.2 (check).
+* J. C. Jantzen, *Lectures on quantum groups*, GSM 6, §§4.7, 8.21–8.24.
+* G. Lusztig, *Introduction to quantum groups*, §§2.2, 40.1–40.2.
 
-The proofs are reconstructed from the existing conjugation and positive-subalgebra results
-and elementary independence of simultaneous eigenspaces; the printed sources were not consulted.
+The proofs are our own, from the existing conjugation and positive-subalgebra results and
+elementary independence of simultaneous eigenspaces.
 -/
 
 noncomputable section
@@ -357,7 +357,7 @@ theorem rootVectorDegree_nonneg_of_isFiniteCartan {ω : List I} (hω : cs.IsRedu
 
 include hA in
 /-- **Root-vector homogeneity in finite type**: the actual braid root vector belongs to
-`U⁺` in its prefix-reflected simple-root degree. See Jantzen §8.21 (check); reconstructed.
+`U⁺` in its prefix-reflected simple-root degree. See Jantzen §8.21; reconstructed.
 The hypotheses are finite type and a nonzero parameter not a root of unity, over any field. -/
 theorem rootVector_mem_plusWeightSpace_of_isFiniteCartan {ω : List I}
     (hω : cs.IsReduced ω) (n : ℕ) (hn : n < ω.length) :
@@ -382,7 +382,7 @@ theorem positiveRootVectorDegree_character_of_isFiniteCartan {ω : List I}
 
 include hA in
 /-- **Ordered-monomial homogeneity**: the degree is the sum of exponent-weighted prefix
-roots. See Jantzen §§8.21–8.24 (check); reconstructed from the product formula.
+roots. See Jantzen §§8.21–8.24; reconstructed from the product formula.
 This supplies the homogeneous-membership input, not the counting or spanning step. -/
 theorem pbwMonomial_mem_plusWeightSpace_of_isFiniteCartan {ω : List I}
     (hω : cs.IsReduced ω) (c : Fin ω.length → ℕ) :

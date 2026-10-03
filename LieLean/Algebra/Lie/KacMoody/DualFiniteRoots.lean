@@ -17,9 +17,10 @@ this completes the four finiteness/fullness equivalences of Kac Proposition 3.12
 
 ## References
 
-Kac, *Infinite dimensional Lie algebras*, third edition, §§1.1, 3.1 and Proposition 3.12(e).
+Kac, *Infinite dimensional Lie algebras*, third edition, §§1.1, 3.1 and Proposition 3.12(e),
+stated over `ℂ`. Definitions used:
 §3.1, p. 30 defines the dual root system as the full root system of the transpose algebra;
-§1.1, pp. 1–2 gives the dual realization. The proof is reconstructed using the existing
+§1.1, p. 2 gives the dual realization. The proof is reconstructed using the existing
 Coxeter-system theorem, not transcribed.
 The full dual roots here mean `KacMoodyAlgebra.roots P.transpose`, not real coroots.
 They live in the algebraic double dual of the original Cartan space: the simple roots
@@ -34,7 +35,7 @@ namespace Matrix
 variable {ι : Type*} [DecidableEq ι]
 
 /-- Transposition preserves the Coxeter matrix, since its entries depend on
-`aᵢⱼ aⱼᵢ`. This is the presentation-level duality used in Kac Proposition 3.12(e). -/
+`aᵢⱼ aⱼᵢ` (Kac Proposition 3.13). It is used here for Kac Proposition 3.12(e). -/
 @[simp] theorem coxeterMatrix_transpose (A : Matrix ι ι ℤ) :
     Aᵀ.coxeterMatrix = A.coxeterMatrix := by
   ext i j
@@ -47,7 +48,7 @@ variable {K H : Type*} [Fintype ι] [Field K] [CharZero K]
   (P : Realization A K H) (hA : A.IsGeneralizedCartan)
 
 /-- The canonical isomorphism between the original and transposed Weyl groups,
-through their common Coxeter presentation (Kac Proposition 3.12(e), reconstructed). -/
+through their common Coxeter presentation (Kac §3.7 and Proposition 3.13, reconstructed). -/
 noncomputable def weylGroupTransposeEquiv :
     P.weylGroup hA ≃* P.transpose.weylGroup hA.transpose :=
   (P.coxeterSystem hA).mulEquiv.trans
@@ -56,7 +57,7 @@ noncomputable def weylGroupTransposeEquiv :
 
 omit [DecidableEq ι] in
 /-- The original Weyl group is finite exactly when the transposed Weyl group is finite.
-No faithful action on a smaller span is assumed (Kac Proposition 3.12(e)). -/
+No faithful action on a smaller span is assumed (cf. Kac §3.7). -/
 theorem finite_weylGroup_iff_finite_transpose_weylGroup :
     Finite (P.weylGroup hA) ↔ Finite (P.transpose.weylGroup hA.transpose) := by
   classical

@@ -33,7 +33,7 @@ sets.
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §1.4 (check).
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §1.4.
 -/
 
 noncomputable section

@@ -14,7 +14,7 @@ Let `(𝔥, Π, Π^∨)` be a realization of a generalized Cartan matrix `A` ove
 ordered field `K` (i.e. over `ℝ`). Littelmann paths for the Cartan datum of integral weights
 (`Matrix.Realization.cartanDatum`) take values in `𝔥*` itself. For a dominant integral weight `Λ`
 we obtain Littelmann's crystal `B(Λ)`, the connected component of the straight line path
-`π_Λ(t) = tΛ` ([Lit95] §2 (check)).
+`π_Λ(t) = tΛ` ([Lit95] §2).
 
 ## Main definitions
 
@@ -32,11 +32,14 @@ we obtain Littelmann's crystal `B(Λ)`, the connected component of the straight 
 * `Matrix.Realization.straightLine_mem_pathCrystal`: the straight line paths `π_{wΛ}`, `w ∈ W`,
   lie in `B(Λ)`.
 * `Matrix.Realization.finite_wt_pathCrystal`: *if* the set of paths `f_{i₁} ⋯ f_{iₖ} π_Λ` is stable
-  under all `eⱼ` (Littelmann's theorem, not formalized here), then each weight occurs only
-  finitely often in `B(Λ)`, and all weights lie in `Λ - Q₊`
-  (`Matrix.Realization.exists_wt_eq_pathCrystal`).
+  under all `eⱼ`, then each weight occurs only finitely often in `B(Λ)`, and all weights lie in
+  `Λ - Q₊` (`Matrix.Realization.exists_wt_eq_pathCrystal`). This hypothesis is Littelmann's
+  stability theorem, proved as `Matrix.Realization.fOrbitStable` in
+  `LieLean.RepresentationTheory.Crystal.Path.Stability`.
 
-Littelmann's character formula `ch B(Λ) = ch L(Λ)` ([Lit95] Thm. 9.1 (check)) is not proved.
+Littelmann's character formula `ch B(Λ) = ch L(Λ)` ([Lit95] Thm. 9.1) is
+`Matrix.Realization.pathCharacter_eq_character` (symmetrizable `A`), in
+`LieLean.RepresentationTheory.Crystal.Path.CharacterFormula`.
 
 ## References
 
@@ -108,7 +111,7 @@ theorem injective_sum_map_root :
 variable [TopologicalSpace K] [OrderTopology K] [FloorRing K] {Λ : Dual K H}
 
 variable (P) in
-/-- Littelmann's crystal `B(Λ)` of a dominant integral weight `Λ` ([Lit95] §2 (check)): the
+/-- Littelmann's crystal `B(Λ)` of a dominant integral weight `Λ` ([Lit95] §2): the
 connected component of the straight line path `π_Λ(t) = tΛ` in the crystal of Littelmann paths in
 `𝔥*`. -/
 noncomputable def pathCrystal (hΛ : P.IsDominantIntegral Λ) :
@@ -154,7 +157,7 @@ private lemma card_reflection_aux {B : Type*} (C : Crystal (P.cartanDatum hA) B)
 
 /-- The number of paths in `B(Λ)` of weight `w μ` equals the number of paths of weight `μ`, for
 every element `w` of the Weyl group: the crystal analogue of the `W`-invariance of weight
-multiplicities of `L(Λ)` ([Kac] Prop. 3.7, Prop. 10.1 (check)). -/
+multiplicities of `L(Λ)` ([Kac] Prop. 3.7, Prop. 10.1). -/
 theorem card_wt_weylGroup_pathCrystal (hΛ : P.IsDominantIntegral Λ) {w : Dual K H ≃ₗ[K] Dual K H}
     (hw : w ∈ P.weylGroup hA) (μ : Dual K H) :
     Nat.card {b // ((P.pathCrystal hA hΛ).wt b : Dual K H) = w μ} =
@@ -165,7 +168,7 @@ theorem card_wt_weylGroup_pathCrystal (hΛ : P.IsDominantIntegral Λ) {w : Dual 
   rw [LinearEquiv.mul_apply, card_reflection_aux hA _ (isSeminormal_pathCrystal hA hΛ), ih]
 
 /-- For every `w` in the Weyl group, the straight line path `π_{wΛ}` lies in `B(Λ)`
-([Lit95] §5 (check)); in particular `wΛ` is a weight of `B(Λ)`. -/
+([Lit95] §4, Cor. 3); in particular `wΛ` is a weight of `B(Λ)`. -/
 theorem straightLine_mem_pathCrystal (hΛ : P.IsDominantIntegral Λ)
     {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA) :
     ∃ h : w Λ ∈ P.integralWeights, LittelmannPath.straightLine (P.pathSpace hA) ⟨w Λ, h⟩ ∈
@@ -186,8 +189,9 @@ theorem straightLine_mem_pathCrystal (hΛ : P.IsDominantIntegral Λ)
     (LittelmannPath.straightLine_reflection_mem_component _ i)
 
 /-- The stability hypothesis of Littelmann's theorem for `B(Λ)`: the set of paths
-`f_{i₁} ⋯ f_{iₖ} π_Λ` is stable under all root operators `eⱼ` ([Lit95] §5–7 (check); not
-formalized here). -/
+`f_{i₁} ⋯ f_{iₖ} π_Λ` is stable under all root operators `eⱼ` ([Lit95] §4, Cor. 2 and 3). It is
+proved as `Matrix.Realization.fOrbitStable` in
+`LieLean.RepresentationTheory.Crystal.Path.Stability`. -/
 def FOrbitStable (hΛ : P.IsDominantIntegral Λ) : Prop :=
   ∀ π' ∈ (LittelmannPath.straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).fOrbit,
     ∀ j π'', LittelmannPath.e j π' = some π'' →

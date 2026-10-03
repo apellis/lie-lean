@@ -26,8 +26,8 @@ import Mathlib.Algebra.Polynomial.Roots
 
 Reconstructed argument: restrict the actual Harish-Chandra polynomial to affine lines,
 use actual Verma embeddings on integral coroot hyperplanes, and apply the polynomial
-identity theorem. No source was consulted for this extension. No image, isomorphism,
-or converse character-separation theorem is assumed or asserted.
+identity theorem. No image, isomorphism, or converse character-separation theorem is
+assumed or asserted.
 -/
 
 open Module

@@ -24,7 +24,7 @@ acts on `U` by Lusztig's automorphisms `σᵢ ↦ Tᵢ` with no further hypothes
 
 ## References
 
-G. Lusztig, *Introduction to quantum groups*, 39.4.3 (check). The finite-type diagram facts are
+G. Lusztig, *Introduction to quantum groups*, 39.4.3. The finite-type diagram facts are
 proved from positive definiteness in `LinearAlgebra/Matrix/Cartan/FiniteRankTwo.lean`, not by
 the classification.
 -/

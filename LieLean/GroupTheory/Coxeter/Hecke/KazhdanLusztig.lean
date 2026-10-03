@@ -20,7 +20,7 @@ basis element `C'_w` is the unique element of `𝓗` with
   C̄'_w = C'_w,     C'_w = q^{-ℓ(w)/2} Σ_{y ≤ w} P_{y,w}(q) T_y,
 ```
 where `P_{w,w} = 1` and, for `y < w`, `P_{y,w} ∈ ℤ[q]` has degree `≤ (ℓ(w) - ℓ(y) - 1)/2`
-([KL] Thm. 1.1 (check)). Here `q^{-ℓ(w)/2} = v^{-ℓ(w)}`. In terms of `H_y = v^{-ℓ(y)} T_y` this
+([KL] Thm. 1.1, (1.1.c)). Here `q^{-ℓ(w)/2} = v^{-ℓ(w)}`. In terms of `H_y = v^{-ℓ(y)} T_y` this
 says `C'_w ∈ H_w + Σ_{y < w} v⁻¹ ℤ[v⁻¹] H_y`; up to the substitution `v ↦ v⁻¹` this is Soergel's
 normalization `\underline{H}_w ∈ H_w + Σ_y v ℤ[v] H_y` [Soe] (`coeff_toFinsupp_klBasis_eq_zero`).
 
@@ -33,7 +33,7 @@ Uniqueness is `IwahoriHeckeAlgebra.eq_zero_of_barL_eq_self` (a bar-invariant ele
   C'_w = C'_s C'_v - Σ_{z < v, sz < z} μ(z, v) C'_z,
 ```
 where `C'_s = v⁻¹ (T_s + 1)` and `μ(z, v)` is the coefficient of `q^{(ℓ(v) - ℓ(z) - 1)/2}` in
-`P_{z,v}`. The corresponding recursion for the polynomials is [KL] (2.2.c) (check):
+`P_{z,v}`. The corresponding recursion for the polynomials is [KL] (2.2.c):
 ```
   P_{x,w} = q^{1-c} P_{sx,v} + q^c P_{x,v} - Σ_{z < v, sz < z} μ(z,v) q^{(ℓ(w)-ℓ(z))/2} P_{x,z},
 ```
@@ -53,21 +53,20 @@ delicate point: the `μ`-terms exactly cancel the top coefficients) is written o
 ## Main results
 
 * `IwahoriHeckeAlgebra.existsUnique_klBasis`: **existence and uniqueness of the Kazhdan–Lusztig
-  basis** ([KL] Thm. 1.1 (check)).
+  basis** ([KL] Thm. 1.1).
 * `IwahoriHeckeAlgebra.barL_klBasis`, `klBasis_eq_sum`, `toFinsupp_klBasis_apply`.
 * `IwahoriHeckeAlgebra.klPoly_self`, `klPoly_eq_zero_of_not_bruhatLE`,
   `two_mul_natDegree_klPoly_add_length_lt`: `P_{w,w} = 1`, `P_{y,w} = 0` unless `y ≤ w`, and
   the degree bound.
 * `IwahoriHeckeAlgebra.klSimple_mul_klBasis`: `C'_s C'_v = C'_{sv} + Σ_{z<v, sz<z} μ(z,v) C'_z`
-  for `sv > v` ([KL] (2.3.b) (check)).
-* `IwahoriHeckeAlgebra.klPoly_simple_mul`: the recursion [KL] (2.2.c) (check).
+  for `sv > v` ([KL] §2.2, (2.3.a); stated there for the basis `C_w`).
+* `IwahoriHeckeAlgebra.klPoly_simple_mul`: the recursion [KL] (2.2.c).
 * `IwahoriHeckeAlgebra.klBasis_one`, `klBasis_simple`: `C'_1 = 1`, `C'_s = v⁻¹ (T_s + 1)`.
 
 ## References
 
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184, §1–2.
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §7.9–7.12.
 * [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, Ch. 5.
 * [Soe] W. Soergel, *Kazhdan–Lusztig-Polynome und eine Kombinatorik für Kipp-Moduln*,
   Represent. Theory **1** (1997), 37–68, §2.
@@ -213,7 +212,7 @@ theorem IsKLElement.eq_zero_of_length_lt {w : W} {C : 𝓗} {P : W → Polynomia
     (h : IsKLElement cs w C P) {y : W} (hy : ℓ w < ℓ y) : P y = 0 :=
   h.eq_zero_of_not_bruhatLE fun h' ↦ by have := h'.length_le; omega
 
-/-- **Uniqueness of Kazhdan–Lusztig elements** ([KL] proof of Thm. 1.1 (check)). -/
+/-- **Uniqueness of Kazhdan–Lusztig elements** ([KL] proof of Thm. 1.1). -/
 theorem IsKLElement.unique {w : W} {C C' : 𝓗} {P P' : W → Polynomial ℤ}
     (h : IsKLElement cs w C P) (h' : IsKLElement cs w C' P') : C = C' ∧ P = P' := by
   have hC : C = C' := by
@@ -302,7 +301,7 @@ noncomputable def klStepPoly (Pz : W → W → Polynomial ℤ) (i : B) (v y : W)
 
 variable {cs}
 
-/-- **The inductive step in the construction of the Kazhdan–Lusztig basis** ([KL] §2 (check);
+/-- **The inductive step in the construction of the Kazhdan–Lusztig basis** ([KL] §2.2;
 the verification is reconstructed): if `sv > v` and `Cz z`, `Pz z` are Kazhdan–Lusztig elements
 for all `z ≤ v`, then `C'_s C'_v - Σ_{z ≤ v, sz < z} μ(z, v) C'_z` is a Kazhdan–Lusztig element
 for `sv`, with the polynomials given by [KL] (2.2.c).
@@ -436,7 +435,7 @@ theorem isKLElement_klStep {i : B} {v : W} (hv : ℓ v < ℓ (s i * v)) {Cz : W 
 
 variable (cs)
 
-/-- **Existence of Kazhdan–Lusztig elements** ([KL] Thm. 1.1 (check)), by induction on `ℓ(w)`
+/-- **Existence of Kazhdan–Lusztig elements** ([KL] Thm. 1.1), by induction on `ℓ(w)`
 using `isKLElement_klStep`. -/
 theorem exists_isKLElement (w : W) : ∃ C P, IsKLElement cs w C P := by
   classical
@@ -520,13 +519,13 @@ theorem two_mul_natDegree_klPoly_add_length_lt {y w : W} (hyw : cs.BruhatLE y w)
 
 /-- The coefficient of `H_y = v^{-ℓ(y)} T_y` in `C'_w` lies in `v⁻¹ ℤ[v⁻¹]` for `y ≠ w`: the
 coefficient of `v^n` in `[T_y] C'_w` vanishes if `n + ℓ(y) ≥ 0` (Soergel's normalization [Soe]
-Thm. 2.1 (check), up to `v ↦ v⁻¹`). -/
+Thm. 2.1, up to `v ↦ v⁻¹`). -/
 theorem coeff_toFinsupp_klBasis_eq_zero {y w : W} (h : y ≠ w) {n : ℤ} (hn : 0 ≤ n + ℓ y) :
     (toFinsupp cs _ (klBasis cs w) y).coeff n = 0 := by
   rw [toFinsupp_klBasis_apply]
   exact coeff_T_mul_aeval_T_two_eq_zero fun k hk ↦ coeff_klPoly_eq_zero cs h (by omega)
 
-/-- The expansion `C'_w = q^{-ℓ(w)/2} Σ_{y ≤ w} P_{y,w}(q) T_y` ([KL] (1.1.c) (check)). -/
+/-- The expansion `C'_w = q^{-ℓ(w)/2} Σ_{y ≤ w} P_{y,w}(q) T_y` ([KL] (1.1.c)). -/
 theorem klBasis_eq_sum (w : W) :
     klBasis cs w = (LaurentPolynomial.T (-(ℓ w : ℤ)) : LaurentPolynomial ℤ) •
       ∑ y ∈ (cs.finite_setOf_bruhatLE w).toFinset,
@@ -544,7 +543,7 @@ theorem klBasis_eq_sum (w : W) :
   · rfl
   · rw [klPoly_eq_zero_of_not_bruhatLE cs hx, map_zero]
 
-/-- **Existence and uniqueness of the Kazhdan–Lusztig basis** ([KL] Thm. 1.1 (check)): for every
+/-- **Existence and uniqueness of the Kazhdan–Lusztig basis** ([KL] Thm. 1.1): for every
 `w ∈ W` there is a unique `C ∈ 𝓗` with `C̄ = C` and
 `C = q^{-ℓ(w)/2} Σ_{y ≤ w} P_y(q) T_y` for polynomials `P_y ∈ ℤ[q]` with `P_w = 1` and
 `deg P_y ≤ (ℓ(w) - ℓ(y) - 1)/2` (i.e. `2 deg P_y + ℓ(y) < ℓ(w)`) for `y < w`. It is `C'_w`. -/
@@ -576,7 +575,8 @@ theorem existsUnique_klBasis (w : W) : ∃! C : 𝓗, barL cs C = C ∧
 /-! ### The recursion formulas -/
 
 /-- The coefficient `μ(y, w)` of `q^{(ℓ(w) - ℓ(y) - 1)/2}` in `P_{y,w}` (`0` if `ℓ(w) - ℓ(y)` is
-even or `ℓ(y) ≥ ℓ(w)`) ([KL] §1 (check)). -/
+even or `ℓ(y) ≥ ℓ(w)`) ([KL] Def. 1.2, which moreover sets `μ(w, y) = μ(y, w)`; `klMu` is not
+symmetrized). -/
 noncomputable def klMu (y w : W) : ℤ := muCoeff (klPoly cs y w) (ℓ w - ℓ y)
 
 /-- `C'_1 = 1`. -/
@@ -589,7 +589,7 @@ theorem klPoly_one_right [DecidableEq W] (y : W) :
     klPoly cs y 1 = if y = 1 then 1 else 0 := by
   exact (congrFun ((isKLElement_one cs).eq_klBasis).2 y).symm
 
-/-- **The multiplication formula** ([KL] (2.3.b) (check)): if `sv > v`, then
+/-- **The multiplication formula** ([KL] §2.2, (2.3.a), for `C_w`): if `sv > v`, then
 `C'_s C'_v = C'_{sv} + Σ_{z ≤ v, sz < z} μ(z, v) C'_z`. -/
 theorem klSimple_mul_klBasis {i : B} {v : W} (hv : ℓ v < ℓ (s i * v)) :
     klSimple cs i * klBasis cs v = klBasis cs (s i * v) +
@@ -600,7 +600,7 @@ theorem klSimple_mul_klBasis {i : B} {v : W} (hv : ℓ v < ℓ (s i * v)) :
   simp only [klMu]
   exact (sub_add_cancel _ _).symm
 
-/-- **The recursion for Kazhdan–Lusztig polynomials** ([KL] (2.2.c) (check)): if `w = sv > v`,
+/-- **The recursion for Kazhdan–Lusztig polynomials** ([KL] (2.2.c)): if `w = sv > v`,
 then with `c = 1` if `sx < x` and `c = 0` otherwise,
 `P_{x,w} = q^{1-c} P_{sx,v} + q^c P_{x,v} - Σ_{z ≤ v, sz < z} μ(z,v) q^{(ℓ(w)-ℓ(z))/2} P_{x,z}`.
 -/

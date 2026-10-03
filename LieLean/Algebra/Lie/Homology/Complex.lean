@@ -36,7 +36,7 @@ which keeps the imports light.
 
 ## References
 
-* C. A. Weibel, *An introduction to homological algebra*, CUP 1994, §7.7 (check).
+* C. A. Weibel, *An introduction to homological algebra*, CUP 1994, §7.7.
 -/
 
 open TensorProduct ExteriorAlgebra
@@ -324,7 +324,7 @@ lemma boundaries_eq_map_d (k : ℕ) :
   exact LinearMap.ext fun t ↦ (incl_d k t).symm
 
 variable (R L M) in
-/-- The **Lie algebra homology** `H_k(L, M) = Z_k / B_k` ([Weibel, §7.7] (check)), realized as
+/-- The **Lie algebra homology** `H_k(L, M) = Z_k / B_k` ([Weibel, §7.7]), realized as
 the image of `Z_k` in `(⋀L ⊗ M) / B_k`. -/
 abbrev homology (k : ℕ) : Submodule R (E ⧸ boundaries R L M k) :=
   (cycles R L M k).map (boundaries R L M k).mkQ

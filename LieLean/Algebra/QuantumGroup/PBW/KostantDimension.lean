@@ -19,16 +19,16 @@ classical Serre ideal, and it maps the words of weight `ν` onto `M(Λ)_{Λ - ν
 
 `K(ν) + dim Z_ν = #{words of weight ν}`,
 
-where `K` is Kostant's partition function (`dim M(Λ)_{Λ - ν}`, [Kac] (9.7.2)) and `Z_ν` the span
+where `K` is Kostant's partition function (`dim M(Λ)_{Λ - ν}`, [Kac] (10.5.2)) and `Z_ν` the span
 of the classical Serre products of weight `ν`. Combined with the quantum Gabber–Kac dimension
 count (`QuantumGroup.finrank_plusWeightSpace`) this gives, for `v` transcendental over `ℚ`,
 
 `dim U⁺_ν = K(ν)` (`QuantumGroup.finrank_plusWeightSpace_eq_kostantPartition`),
 
-the dimension formula behind the PBW theorem ([Jan] 8.24 (check), [Lus] 40.2.1 (check)), with
-`K` computed for any realization over any field of characteristic zero (`dim Z_ν` does not depend
-on the field, `LusztigF.finrank_serreSpan_one`). Consequently a family of `K(ν)` elements of
-`U⁺_ν` is linearly independent iff it spans `U⁺_ν`
+the dimension formula behind the PBW theorem ([Jan] 5.19 a) and 8.24, Remark 3, both for finite
+type; [Lus] 40.2.1–40.2.2), with `K` computed for any realization over any field of characteristic
+zero (`dim Z_ν` does not depend on the field, `LusztigF.finrank_serreSpan_one`). Consequently a
+family of `K(ν)` elements of `U⁺_ν` is linearly independent iff it spans `U⁺_ν`
 (`QuantumGroup.linearIndependent_iff_span_eq_plusWeightSpace`).
 
 ## Main definitions / results
@@ -42,9 +42,9 @@ on the field, `LusztigF.finrank_serreSpan_one`). Consequently a family of `K(ν)
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., Thm. 9.11, (9.7.2) (check).
-* [Lus] G. Lusztig, *Introduction to quantum groups*, 33.1.3, 40.2.1 (check).
-* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, 4.21, 8.24 (check).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., Thm. 9.11, (9.7.2).
+* [Lus] G. Lusztig, *Introduction to quantum groups*, 33.1.3, 40.2.1–40.2.2.
+* [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, 4.21, 5.19, 8.24.
 -/
 
 noncomputable section
@@ -170,7 +170,7 @@ theorem toVerma_eq_zero_iff_mem_serreSpan {ν : I →₀ ℕ} {y : LusztigF K I}
 
 /-- **Kostant's partition function and the classical Serre relations**: `K(ν) + dim Z_ν` is the
 number of words of weight `ν`, where `Z_ν` is the span of the classical Serre products of weight
-`ν` in `K⟨θ⟩` ([Kac] Thm. 9.11, (9.7.2) (check)). -/
+`ν` in `K⟨θ⟩` ([Kac] Thm. 9.11, (9.7.2)). -/
 theorem kostantPartition_add_finrank_serreSpan (ν : I →₀ ℕ) :
     kostantPartition P (P.rootOf fun i ↦ (ν i : ℤ)) +
       finrank K (serreSpan D (fun _ ↦ (1 : K)) ν) = Fintype.card (Words ν) := by
@@ -249,7 +249,7 @@ open LusztigF
 variable {k : Type*} [Field k] [CharZero k] {I Y : Type*} [Fintype I] [AddCommGroup Y]
   [DecidableEq I] {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
 
-/-- **`dim U⁺_ν` is Kostant's partition function** ([Lus] 33.1.3 with [Kac] (9.7.2), (check)):
+/-- **`dim U⁺_ν` is Kostant's partition function** ([Lus] 33.1.3 with [Kac] (9.7.2)):
 for `v` transcendental over `ℚ`, the weight space `U⁺_ν` has dimension `K(ν)`, the number of ways
 of writing `ν` as a sum of positive roots of the Kac–Moody algebra of the Cartan matrix, counted
 with multiplicities (computed for the standard realization over `ℚ`). -/
@@ -262,7 +262,7 @@ theorem finrank_plusWeightSpace_eq_kostantPartition (hv : Transcendental ℚ v) 
   omega
 
 /-- **`dim U⁺_ν` is Kostant's partition function, for any realization** ([Lus] 33.1.3 with [Kac]
-(9.7.2) (check)): for `v` transcendental over `ℚ` and any realization `P` of the Cartan matrix
+(9.7.2), (10.5.2)): for `v` transcendental over `ℚ` and any realization `P` of the Cartan matrix
 over a field of characteristic zero, `dim U⁺_ν = K(ν)` computed for `P`. -/
 theorem finrank_plusWeightSpace_eq_kostantPartition' (hv : Transcendental ℚ v) {K H : Type*}
     [Field K] [CharZero K] [AddCommGroup H] [Module K H] (P : Realization D.cartanMatrix K H)
@@ -273,9 +273,9 @@ theorem finrank_plusWeightSpace_eq_kostantPartition' (hv : Transcendental ℚ v)
   rw [finrank_serreSpan_one] at h2
   omega
 
-/-- **The PBW criterion** ([Jan] 8.24 (check)): for `v` transcendental over `ℚ`, a family of
-`K(ν)` elements of `U⁺_ν` (e.g. the ordered monomials of weight `ν` in the root vectors) is
-linearly independent iff it spans `U⁺_ν`. -/
+/-- **The PBW criterion** (cf. [Jan] 5.19 a), finite type): for `v` transcendental over `ℚ`,
+a family of `K(ν)` elements of `U⁺_ν` (e.g. the ordered monomials of weight `ν` in the root vectors)
+is linearly independent iff it spans `U⁺_ν`. -/
 theorem linearIndependent_iff_span_eq_plusWeightSpace (hv : Transcendental ℚ v) {K H : Type*}
     [Field K] [CharZero K] [AddCommGroup H] [Module K H] (P : Realization D.cartanMatrix K H)
     (ν : I →₀ ℕ) {ι : Type*} [Fintype ι] (b : ι → QuantumGroup R v)

@@ -16,7 +16,7 @@ quantum Serre relation when the directed Cartan entry is `-2`.
 
 ## References
 
-Reconstructed from the defining quotient presentation; no external source was consulted.
+Reconstructed from the defining quotient presentation.
 -/
 
 noncomputable section

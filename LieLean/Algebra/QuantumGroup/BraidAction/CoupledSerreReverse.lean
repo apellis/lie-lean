@@ -16,8 +16,8 @@ positive ordering at an edge with both Cartan entries equal to `-1`.
 ## References
 
 Reconstructed from the defining presentation and the lowering commutator in
-`BraidAction/Coupled.lean`; no external primary source was inspected. No symmetry
-or braid automorphism is assumed. Negative images and other ordered pairs are not claimed.
+`BraidAction/Coupled.lean`. No symmetry or braid automorphism is assumed. Negative images and
+other ordered pairs are not claimed.
 -/
 
 noncomputable section

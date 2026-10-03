@@ -18,8 +18,8 @@ import LieLean.LinearAlgebra.ExteriorAlgebra.Koszul
 
 ## References
 
-Reconstructed from the concrete anticommutator and Mathlib's homogeneous derivative API;
-no external reference was consulted. No CE identification or BGG result is asserted.
+Reconstructed from the concrete anticommutator and Mathlib's homogeneous derivative API.
+No CE identification or BGG result is asserted.
 -/
 
 open scoped TensorProduct BigOperators

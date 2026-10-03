@@ -15,10 +15,10 @@ mᵢ + k) - mᵢ - k) αᵢ` (`LittelmannPath.eIter_eq_partialPitman`).
 
 For two colours `i, j` with `⟨αⱼ, αᵢ^∨⟩ = ⟨αᵢ, αⱼ^∨⟩ = -1` (type `A₂`), write `X = hᵢ`, `Y = hⱼ`,
 `M_X(t) = min_{[0,t]} X`. The basic identity (`LittelmannPath.runningMin_add_runningMin_eq`,
-[BBO05] Lemma 2.5) `M_X(t) + min_{[0,t]} hᵢ(PⱼPᵢπ) = min_{[0,t]} hᵢ(Pⱼ π)` gives the formula
+[BBO05] Lemma 2.7) `M_X(t) + min_{[0,t]} hᵢ(PⱼPᵢπ) = min_{[0,t]} hᵢ(Pⱼ π)` gives the formula
 `PᵢPⱼPᵢ π = π - (min_{[0,t]} hᵢ(Pⱼπ)) αᵢ - (min_{[0,t]} hⱼ(Pᵢπ)) αⱼ`
 (`LittelmannPath.pitman_three_apply`), which is symmetric in `i, j`: hence `PᵢPⱼPᵢ = PⱼPᵢPⱼ`,
-the braid relation for the Pitman transforms ([BBO05] Theorem 2.6 for `n = 3`). The
+the braid relation for the Pitman transforms ([BBO05] Theorem 2.4 for `n = 3`). The
 string-parametrization identity `min hⱼ(π) + min hᵢ(π) = min(min hᵢ(Pⱼπ), min hⱼ(Pᵢπ))`
 (`LittelmannPath.minPairing_add_minPairing_eq`) gives the `A₂` transition map of string
 coordinates. These are used in `LieLean.RepresentationTheory.Crystal.Path.BraidA2`.
@@ -26,8 +26,8 @@ coordinates. These are used in `LieLean.RepresentationTheory.Crystal.Path.BraidA
 ## References
 
 * [BBO05] P. Biane, P. Bougerol, N. O'Connell, *Littelmann paths and Brownian paths*, Duke
-  Math. J. **130** (2005), 127–167, §2 (Definition 2.1, Lemmas 2.4–2.5, Theorem 2.6 for
-  `n = 3`).
+  Math. J. **130** (2005), 127–167, §2 (Definition 2.1, (2.3), Theorems 2.4–2.5 for `n = 3`,
+  Lemmas 2.6–2.7; numbering of arXiv:math/0403171v2).
 
 The arguments are reconstructed from [BBO05] §2 and written for Littelmann paths.
 -/
@@ -191,7 +191,7 @@ section A2
 
 variable {π π₁ π₂ π₃ ρ₁ : LittelmannPath S} {i j : ι}
 
-/-- [BBO05] Lemma 2.4 (one direction): if `u ≤ t₀ ≤ t` where `hᵢ(t₀) = min_{[0,t]} hᵢ`, some
+/-- [BBO05] Lemma 2.6 (one direction): if `u ≤ t₀ ≤ t` where `hᵢ(t₀) = min_{[0,t]} hᵢ`, some
 `s ∈ [u, t]` has `hᵢ(s) - 2 min_{[0,s]} hᵢ = - min_{[0,u]} hᵢ` (the first time after `u` at
 which `hᵢ` reaches `min_{[0,u]} hᵢ`). -/
 theorem exists_pairing_sub_two_runningMin (π : LittelmannPath S) (i : ι) {u t₀ t : 𝕜}
@@ -246,7 +246,7 @@ lemma pairing_pitman_rho (s : 𝕜) : ρ₁.pairing i s = π.pairing i s + π.ru
   ring
 
 include hij hji h₁ h₂ hρ in
-/-- **The key `A₂` identity** ([BBO05] Lemma 2.5, reconstructed): with `π₁ = Pᵢ π`,
+/-- **The key `A₂` identity** ([BBO05] Lemma 2.7, reconstructed): with `π₁ = Pᵢ π`,
 `π₂ = Pⱼ π₁` and `ρ₁ = Pⱼ π`,
 `min_{[0,t]} hᵢ(π) + min_{[0,t]} hᵢ(π₂) = min_{[0,t]} hᵢ(ρ₁)`. -/
 theorem runningMin_add_runningMin_eq (t : 𝕜) :
@@ -303,7 +303,7 @@ theorem runningMin_add_runningMin_eq (t : 𝕜) :
       linarith
 
 include hij hji h₁ hρ in
-/-- **String-parametrization identity** ([BBO05] §2, reconstructed): with `π₁ = Pᵢ π` and
+/-- **String-parametrization identity** (elementary; proved here): with `π₁ = Pᵢ π` and
 `ρ₁ = Pⱼ π`, `min hⱼ(π) + min hᵢ(π) = min(min hᵢ(ρ₁), min hⱼ(π₁))`. -/
 theorem minPairing_add_minPairing_eq :
     π.minPairing j + π.minPairing i = min (ρ₁.minPairing i) (π₁.minPairing j) := by
@@ -335,7 +335,7 @@ theorem minPairing_add_minPairing_eq :
       linarith
 
 include hij hji h₁ h₂ hρ in
-/-- **The `A₂` Pitman formula** ([BBO05] Theorem 2.6, `n = 3`, reconstructed):
+/-- **The `A₂` Pitman formula** ([BBO05] Theorem 2.5, `n = 3`, reconstructed):
 `PᵢPⱼPᵢ π(t) = π(t) - (min_{[0,t]} hᵢ(Pⱼπ)) αᵢ - (min_{[0,t]} hⱼ(Pᵢπ)) αⱼ`. -/
 theorem pitman_three_apply (h₃ : ∀ t, π₃ t = π₂ t - π₂.runningMin i t • S.root i) (t : 𝕜) :
     π₃ t = π t - ρ₁.runningMin i t • S.root i - π₁.runningMin j t • S.root j := by

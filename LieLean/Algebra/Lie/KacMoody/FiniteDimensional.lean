@@ -45,7 +45,8 @@ Casimir argument of [Hum] §6.3) was chosen by us; the statement is classical.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.6, §10.1, §10.7.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.6, §10.1, §10.7,
+  §10.10.
 * [Hum] J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §6.3,
   §7.2, §21.2.
 -/
@@ -160,8 +161,8 @@ theorem isCategoryO_of_finiteDimensional : IsCategoryO P V where
 
 variable (V) in
 open scoped Classical in
-/-- **Weyl's complete reducibility theorem** for `𝔤(A)`, `A` of finite type ([Kac] §10.7
-(check); [Hum] §6.3, Thm.): over a field of characteristic zero, every finite-dimensional
+/-- **Weyl's complete reducibility theorem** for `𝔤(A)`, `A` of finite type
+([Kac] §10.7; [Hum] §6.3, Thm.): over a field of characteristic zero, every finite-dimensional
 `𝔤(A)`-module `V` is the internal direct sum of a family of submodules, each isomorphic to `L(Λ)`
 for some dominant integral `Λ`. We deduce it from complete reducibility of integrable modules in
 the category `𝒪` ([Kac] Thm. 10.7). -/
@@ -174,9 +175,9 @@ theorem exists_isInternal_irreducibleModule_of_finiteDimensional :
     (isCategoryO_of_finiteDimensional hA) (isIntegrable_of_finiteDimensional hA)
 
 variable (V) in
-/-- **Weyl's theorem** for `𝔤(A)`, `A` of finite type ([Hum] §6.3, Thm.): over a field of
-characteristic zero, every submodule of a finite-dimensional `𝔤(A)`-module has a complementary
-submodule. -/
+/-- **Weyl's theorem** for `𝔤(A)`, `A` of finite type ([Hum] §6.3, Thm., stated there over an
+algebraically closed field): over a field of characteristic zero, every submodule of a
+finite-dimensional `𝔤(A)`-module has a complementary submodule. -/
 theorem complementedLattice_of_finiteDimensional :
     ComplementedLattice (LieSubmodule K P.KacMoodyAlgebra V) :=
   IsCategoryO.complementedLattice hA.isGeneralizedCartan hA.isSymmetrizable
@@ -201,8 +202,8 @@ theorem sum_weylGroup_apply_eq_zero [Fintype (P.weylGroup hA.isGeneralizedCartan
     (P.finrank_eq_card_of_isFiniteCartan hA).symm
   exact LinearMap.ext_on_range hspan fun i ↦ by simp [hzero i]
 
-/-- For `A` of finite type and `Λ` dominant integral, `L(Λ)` is finite-dimensional ([Kac] §10.1
-(check); [Hum] §21.2, Thm. (check)).
+/-- For `A` of finite type and `Λ` dominant integral, `L(Λ)` is finite-dimensional
+([Kac] Cor. 10.10; [Hum] §21.2, Thm.).
 
 Proof (reconstructed by us): `L(Λ)` is integrable (`IrreducibleModule.isIntegrable_iff`), so its
 set of weights is `W`-invariant. If `μ` is a weight, write `w μ = Λ - kʷ` with `kʷ ∈ Q₊` for each
@@ -258,7 +259,7 @@ theorem IrreducibleModule.finiteDimensional {Λ : Dual K H} (hΛ : P.IsDominantI
   exact LinearEquiv.finiteDimensional Submodule.topEquiv
 
 /-- For `A` of finite type, `L(Λ)` is finite-dimensional if and only if `Λ` is dominant integral
-([Kac] §10.1 (check); [Hum] §21.2 (check)). -/
+([Kac] Lemma 10.1, Cor. 10.10; [Hum] §21.1–21.2). -/
 theorem IrreducibleModule.finiteDimensional_iff {Λ : Dual K H} :
     FiniteDimensional K (IrreducibleModule P Λ) ↔ P.IsDominantIntegral Λ := by
   refine ⟨fun _ ↦ ?_, IrreducibleModule.finiteDimensional hA⟩

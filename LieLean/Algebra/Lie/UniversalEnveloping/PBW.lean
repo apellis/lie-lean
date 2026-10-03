@@ -34,9 +34,9 @@ these ordered monomials form an `R`-basis of `U(L)`.
 ## Proof
 
 We follow Humphreys, *Introduction to Lie algebras and representation theory*, §17.4
-(Lemmas A–D; the argument is due to Jacobson). Humphreys writes `σ` for the canonical map
-`L → U(L)`; here it is `ι`, and `σ` is the index type of the basis. Let `S = R[z_i : i ∈ σ]`
-be the polynomial ring.
+(Lemmas A–C; the Notes to §17 say the treatment follows Bourbaki). Humphreys writes `i` for the
+canonical map `L → U(L)` and `Ω` for the index set of the basis; here they are `ι` and `σ`.
+Let `S = R[z_i : i ∈ σ]` be the polynomial ring.
 We construct a representation `ρ` of `L` on `S` such that, writing `X_i = ρ (b i)`,
 
 * (A) `X_i z^s = z_i z^s` whenever `i ≤ j` for every `j` occurring in `s`;
@@ -671,9 +671,9 @@ basis `b` indexed by a linearly ordered type `σ`, then the ordered monomials `p
 form an `R`-basis of the universal enveloping algebra.
 
 See Humphreys, *Introduction to Lie algebras and representation theory*, §17.3, Theorem and
-Corollary C, proved in §17.4 (check) (stated there over a field; the proof works over any
+Corollary C, proved in §17.4 (stated there over a field; the proof works over any
 commutative ring for free modules), and Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7,
-Theorem 1. -/
+Theorem 1 and Corollary 3. -/
 def pbwBasis : Basis (σ →₀ ℕ) R (UniversalEnvelopingAlgebra R L) :=
   (basisMonomials σ R).map (pbwEquiv b).symm
 
@@ -704,7 +704,7 @@ theorem ι_injective_of_basis (b : Basis σ R L) :
 
 variable (R L) in
 /-- **Corollary of PBW**: if `L` is free as an `R`-module then the canonical map `ι : L → U(L)`
-is injective. See Humphreys, §17.3, Corollary B (check). -/
+is injective. See Humphreys, §17.3, Corollary B. -/
 theorem ι_injective [Module.Free R L] :
     Function.Injective (ι R : L → UniversalEnvelopingAlgebra R L) := by
   let b := Module.Free.chooseBasis R L

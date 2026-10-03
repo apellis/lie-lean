@@ -64,6 +64,8 @@ The arguments are our reconstruction of the standard facts on parabolic Bruhat o
 * [Lit95] P. Littelmann, *Paths and root operators in representation theory*, Ann. of Math.
   **142** (1995), 499–525.
 * [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, Springer 2005.
+* [GP] M. Geck, G. Pfeiffer, *Characters of finite Coxeter groups and Iwahori–Hecke algebras*,
+  LMS Monographs 21, OUP 2000.
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990.
 -/
 
@@ -361,7 +363,7 @@ variable (P hA) in
 weight: `x → y` is a step if the minimal representatives `m, n ∈ W` of `x = m λ` and `y = n λ`
 satisfy `n ≤ m` in the Bruhat order, `ℓ(n) + 1 = ℓ(m)` and `n = u rⱼ u⁻¹ m` for a reflection
 `u rⱼ u⁻¹` with coroot `c = u αⱼ^∨` (the linear form `μ ↦ ⟨u⁻¹ μ, αⱼ^∨⟩`). The axioms are
-Deodhar's lemma and the lifting property of the Bruhat order ([BB] Prop. 2.2.7, 2.5.1 (check)),
+Deodhar's lemma ([GP] Lemma 2.1.2) and the lifting property of the Bruhat order ([BB] Prop. 2.2.7),
 in the forms needed for Littelmann's argument. -/
 noncomputable def lsData : LittelmannPath.LSData (P.pathSpace hA) where
   O := {x | ∃ w : P.weylGroup hA, (x : Dual K H) = w.1 Λ}
@@ -534,7 +536,7 @@ lemma exists_linearMap_root_eq_one : ∃ g : Dual K H →ₗ[K] K, ∀ i, g (P.r
 variable [TopologicalSpace K] [OrderTopology K] [FloorRing K] {Λ : Dual K H}
   (hΛ : P.IsDominantIntegral Λ)
 
-/-- **Littelmann's theorem** ([Lit94] §4–5, [Lit95] §4–5 (check)): for a dominant integral
+/-- **Littelmann's theorem** ([Lit94] §4–5, [Lit95] §4, Cor. 2 and 3): for a dominant integral
 weight `λ`, the connected component `B(λ)` of `π_λ` in the crystal of paths is the set of paths
 `f_{i₁} ⋯ f_{iₖ} π_λ`, and it consists of Lakshmibai–Seshadri paths of shape `λ`
 (`Matrix.Realization.lsData`). -/
@@ -567,7 +569,7 @@ theorem component_straightLine_eq_fOrbit :
     linarith
 
 omit [DecidableEq ι] in
-/-- **Littelmann's stability theorem** ([Lit95] §5–7 (check), [Lit94]): the set of paths
+/-- **Littelmann's stability theorem** ([Lit95] §4, Cor. 2 and 3; [Lit94]): the set of paths
 `f_{i₁} ⋯ f_{iₖ} π_λ` is stable under all root operators `eⱼ`. -/
 theorem fOrbitStable : FOrbitStable hA hΛ := by
   classical
@@ -577,7 +579,7 @@ theorem fOrbitStable : FOrbitStable hA hΛ := by
   exact LittelmannPath.isStable_component _ |>.e_mem j π' π'' hπ' he
 
 omit [DecidableEq ι] in
-/-- The weights of `B(λ)` lie in `λ - Q₊` ([Lit95] (check)). -/
+/-- The weights of `B(λ)` lie in `λ - Q₊` ([Lit95] §9, proof of Thm. 9.1). -/
 theorem exists_wt_eq_sub_rootOf_pathCrystal
     (b : (LittelmannPath.straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component) :
     ∃ k : ι → ℤ, 0 ≤ k ∧ ((P.pathCrystal hA hΛ).wt b : Dual K H) = Λ - P.rootOf k :=

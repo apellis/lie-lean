@@ -19,13 +19,13 @@ factor `q^{-ℓ(w)}`:
   T̄_w ∈ q^{-ℓ(w)} T_w + Σ_{y < w} A[v, v⁻¹] T_y.
 ```
 We deduce the lemma behind the uniqueness of the Kazhdan–Lusztig basis ([KL] proof of Thm. 1.1,
-[Soe] Thm. 2.1 (check)): with `H_y = v^{-ℓ(y)} T_y`, a bar-invariant element of
-`Σ_y v⁻¹ A[v⁻¹] H_y` is `0`.
+[Soe] Behauptung 2.4, in the proof of Thm. 2.1, up to `v ↦ v⁻¹`): with `H_y = v^{-ℓ(y)} T_y`,
+a bar-invariant element of `Σ_y v⁻¹ A[v⁻¹] H_y` is `0`.
 
 ## Main results
 
-* `IwahoriHeckeAlgebra.bruhatLE_of_rPoly_ne_zero`: `R_{y,w} ≠ 0 → y ≤ w` ([KL] §2 (check),
-  [HumC] §7.5 (check)).
+* `IwahoriHeckeAlgebra.bruhatLE_of_rPoly_ne_zero`: `R_{y,w} ≠ 0 → y ≤ w` ([KL] §2,
+  [BB] Thm. 5.1.1(i)).
 * `IwahoriHeckeAlgebra.toFinsupp_barL_T_apply`, `toFinsupp_barL_T_self`,
   `bruhatLE_of_toFinsupp_barL_T_ne_zero`, `barL_T_sub_mem_span`: triangularity of the bar
   involution.
@@ -36,7 +36,7 @@ We deduce the lemma behind the uniqueness of the Kazhdan–Lusztig basis ([KL] p
 
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184, §1–2.
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §7.4–7.9.
+* [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, Springer 2005, §5.1, §6.1.
 * [Soe] W. Soergel, *Kazhdan–Lusztig-Polynome und eine Kombinatorik für Kipp-Moduln*,
   Represent. Theory **1** (1997), 37–68, §2.
 -/
@@ -53,7 +53,7 @@ section General
 
 variable {R : Type*} [CommRing R] {q : R} (hq : IsUnit q)
 
-/-- If `R_{y,w} ≠ 0` then `y ≤ w` in the Bruhat order ([KL] §2 (check), [HumC] §7.5 (check)). -/
+/-- If `R_{y,w} ≠ 0` then `y ≤ w` in the Bruhat order ([KL] §2, [BB] Thm. 5.1.1(i)). -/
 theorem bruhatLE_of_rPoly_ne_zero {y w : W} (h : rPoly cs hq y w ≠ 0) : cs.BruhatLE y w := by
   obtain ⟨ω, hω, rfl⟩ := cs.exists_isReduced w
   exact hω.bruhatLE_iff.mpr (exists_sublist_of_rPoly_ne_zero cs hq hω h)
@@ -104,7 +104,7 @@ theorem toFinsupp_barL_T_self (w : W) :
   rw [toFinsupp_barL_T_apply, rPoly_self, ← two_mul, pow_mul, neg_one_sq, one_pow, one_mul,
     mul_one]
 
-/-- **Triangularity of the bar involution** ([KL] §2 (check), [HumC] §7.9 (check)):
+/-- **Triangularity of the bar involution** ([KL] §2, [BB] §6.1, Thm. 5.1.1):
 `T̄_w ∈ q^{-ℓ(w)} T_w + Σ_{y < w} A[v, v⁻¹] T_y`. -/
 theorem barL_T_sub_mem_span (w : W) :
     barL cs (T cs (LaurentPolynomial.T 2 : LaurentPolynomial A) w) -
@@ -134,10 +134,10 @@ theorem toFinsupp_barL_apply (h : 𝓗) (y : W) :
   rw [map_finsuppSum, map_finsuppSum, Finsupp.sum_apply]
   simp_rw [barL_smul, map_smul, Finsupp.smul_apply, smul_eq_mul]
 
-/-- **The uniqueness lemma for the Kazhdan–Lusztig basis** ([KL] proof of Thm. 1.1, [Soe] proof of
-Thm. 2.1 (check)): let `h ∈ 𝓗` be bar invariant and such that, for every `y`, the coefficient of
-`H_y = v^{-ℓ(y)} T_y` in `h` lies in `v⁻¹ A[v⁻¹]` (i.e. the coefficient of `v^n` in `[T_y] h`
-vanishes for `n + ℓ(y) ≥ 0`). Then `h = 0`. -/
+/-- **The uniqueness lemma for the Kazhdan–Lusztig basis** ([KL] proof of Thm. 1.1, [Soe]
+Behauptung 2.4, up to `v ↦ v⁻¹`): let `h ∈ 𝓗` be bar invariant and such that, for every `y`, the
+coefficient of `H_y = v^{-ℓ(y)} T_y` in `h` lies in `v⁻¹ A[v⁻¹]` (i.e. the coefficient of `v^n` in
+`[T_y] h` vanishes for `n + ℓ(y) ≥ 0`). Then `h = 0`. -/
 theorem eq_zero_of_barL_eq_self {h : 𝓗} (hbar : barL cs h = h)
     (hneg : ∀ y (n : ℤ), 0 ≤ n + ℓ y → (toFinsupp cs _ h y).coeff n = 0) : h = 0 := by
   by_contra hne

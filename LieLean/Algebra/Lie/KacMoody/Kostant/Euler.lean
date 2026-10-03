@@ -19,7 +19,8 @@ of `𝔫₋` (`nNegBasis`) and a basis of weight vectors of `V`, the Euler chara
 weight-`μ` chains is `∑_S (-1)^{|S|} dim V_{μ + wt S}`, which is the coefficient of `e^μ` in
 `R · ch V`, where `R = ∏_{α > 0} (1 - e^{-α})^{mult α} = ∑_S (-1)^{|S|} e^{-wt S}` is the
 denominator (`Matrix.Realization.KacMoodyAlgebra.denominator`). With the Euler–Poincaré principle
-we obtain ([GL] §3 (check); [Kum] §3.1 (check)), in the algebra `ℰ` of formal characters,
+we obtain ([GL] Lemma 9.2; cf. [Kum] proof of Cor. 3.2.8, for `V = L(Λ)`), in the algebra `ℰ`
+of formal characters,
 `∑_k (-1)^k ch C_k(𝔫₋, V) = ∑_k (-1)^k ch H_k(𝔫₋, V) = R · ch V`.
 
 ## Main definitions
@@ -205,7 +206,7 @@ theorem IsCategoryO.finrank_nNegChains (k : ℕ) (μ : Dual K H) :
   DerivAction.finrank_chainsIn_inf_chainWeightSpace (nNegBasis P) hV.weightBasis
     (nNegBasis_mem_weightSpaceOf P) hV.weightBasis_mem_weightSpaceOf (hV.chainWt_eq_iff_mem μ) k
 
-/-- **Euler characteristic of the chains** ([GL] §3 (check)): for `N` at least the maximal
+/-- **Euler characteristic of the chains** (cf. [GL] §9): for `N` at least the maximal
 degree of a nonzero weight-`μ` chain, `∑_{k ≤ N} (-1)^k dim C_k(𝔫₋, V)_μ` is the coefficient of
 `e^μ` in `R · ch V`. -/
 theorem IsCategoryO.sum_neg_one_pow_finrank_nNegChains (μ : Dual K H) {N : ℕ}
@@ -218,7 +219,7 @@ theorem IsCategoryO.sum_neg_one_pow_finrank_nNegChains (μ : Dual K H) {N : ℕ}
     (nNegBasis_mem_weightSpaceOf P) hV.weightBasis_mem_weightSpaceOf (hV.chainWt_eq_iff_mem μ)
     fun t ht ↦ (hV.card_le_maxDeg ht).trans hN
 
-/-- **Euler characteristic of the homology** ([GL] §3 (check)): for `N` at least the maximal
+/-- **Euler characteristic of the homology** ([GL] Lemma 9.2): for `N` at least the maximal
 degree of a nonzero weight-`μ` chain, `∑_{k ≤ N} (-1)^k dim H_k(𝔫₋, V)_μ` is the coefficient of
 `e^μ` in `R · ch V`. -/
 theorem IsCategoryO.sum_neg_one_pow_finrank_nNegHomology (μ : Dual K H) {N : ℕ}
@@ -364,7 +365,7 @@ lemma IsCategoryO.homologyEulerFamily_apply (k : ℕ) :
   rw [HahnSeries.coeff_smul, smul_eq_mul]
   rfl
 
-/-- **The Euler characteristic of the chains** ([GL] §3 (check)): for `V` in the category `𝒪`,
+/-- **The Euler characteristic of the chains** (cf. [GL] §9): for `V` in the category `𝒪`,
 `∑_k (-1)^k ch C_k(𝔫₋, V) = R · ch V` in `ℰ`, where `R = ∏_{α > 0} (1 - e^{-α})^{mult α}`. -/
 theorem IsCategoryO.hsum_chainEulerFamily :
     hV.chainEulerFamily.hsum = denominator P * hV.character := by
@@ -372,9 +373,9 @@ theorem IsCategoryO.hsum_chainEulerFamily :
   rw [← hV.sum_neg_one_pow_finrank_nNegChains μ le_rfl]
   exact hV.coeff_hsum_eulerFamily _ _ μ
 
-/-- **The Euler characteristic of `𝔫₋`-homology** ([GL] §3 (check); [Kum] §3.1 (check)): for
-`V` in the category `𝒪`, `∑_k (-1)^k ch H_k(𝔫₋, V) = R · ch V` in `ℰ`, where
-`R = ∏_{α > 0} (1 - e^{-α})^{mult α}` is the denominator. -/
+/-- **The Euler characteristic of `𝔫₋`-homology** ([GL] Lemma 9.2; cf. [Kum] proof of
+Cor. 3.2.8, for `V = L(Λ)`): for `V` in the category `𝒪`, `∑_k (-1)^k ch H_k(𝔫₋, V) = R · ch V` in
+`ℰ`, where `R = ∏_{α > 0} (1 - e^{-α})^{mult α}` is the denominator. -/
 theorem IsCategoryO.hsum_homologyEulerFamily :
     hV.homologyEulerFamily.hsum = denominator P * hV.character := by
   ext μ

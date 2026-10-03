@@ -9,7 +9,7 @@ import LieLean.RepresentationTheory.Crystal.Path.Basic
 # Littelmann's root operators
 
 Let `π` be a Littelmann path, `hᵢ(t) = ⟨π(t), αᵢ^∨⟩` and `mᵢ = min_{[0,1]} hᵢ`. Littelmann's root
-operators ([Lit95] §1 (check)) are defined as follows.
+operators ([Lit95] §1) are defined as follows.
 
 * If `mᵢ > -1` then `eᵢ π = 0`. Otherwise let `t₁` be the first time with `hᵢ(t₁) = mᵢ` and
   `t₀ ≤ t₁` maximal with `hᵢ ≥ mᵢ + 1` on `[0, t₀]`; `eᵢ π` is obtained by
@@ -27,7 +27,7 @@ Unwinding the definition, both operators have a closed form (our reformulation):
 `m(t) ∈ [mᵢ, mᵢ + 1]` decreases, i.e. on the reflected pieces, and there it changes like `-hᵢ`.)
 We take the closed formula for `eᵢ` as the definition (the piecewise recipe is not formalized) and
 define `fᵢ` through the time reversal `π^∨(t) = π(1 - t) - π(1)` by `fᵢ π = (eᵢ π^∨)^∨`
-([Lit95] Lemma 2.1 (check)); `LittelmannPath.f_apply` recovers the closed formula for `fᵢ`.
+([Lit95] Lemma 2.1); `LittelmannPath.f_apply` recovers the closed formula for `fᵢ`.
 
 ## Main definitions
 
@@ -42,13 +42,13 @@ define `fᵢ` through the time reversal `π^∨(t) = π(1 - t) - π(1)` by `fᵢ
 
 * `LittelmannPath.minPairing_eRaw`: `eᵢ` raises the minimum `mᵢ` by `1`.
 * `LittelmannPath.f_apply`: the closed formula for `fᵢ`.
-* `LittelmannPath.f_eq_some_iff`: `fᵢ π = π'` if and only if `eᵢ π' = π` ([Lit95] Lemma 2.1
-  (check)); in particular `eᵢ` and `fᵢ` are inverse to each other where defined.
+* `LittelmannPath.f_eq_some_iff`: `fᵢ π = π'` if and only if `eᵢ π' = π` ([Lit95]
+  Lemma 2.1); in particular `eᵢ` and `fᵢ` are inverse to each other where defined.
 * `LittelmannPath.isSeminormal_crystal`: the path crystal is seminormal: `εᵢ(π)` (resp. `φᵢ(π)`)
   is the maximal number of times `eᵢ` (resp. `fᵢ`) can be applied to `π`.
 
-Littelmann works with paths whose minima `mᵢ` are integers ("integral paths", [Lit95] §2
-(check)), for which `εᵢ = -mᵢ` and `φᵢ = hᵢ(1) - mᵢ`. With the definitions above (via the running
+Littelmann works with paths whose minima `mᵢ` are integers (the integrality property, [Lit95]
+2.6), for which `εᵢ = -mᵢ` and `φᵢ = hᵢ(1) - mᵢ`. With the definitions above (via the running
 minima; reflecting the whole of `π|[t₀, t₁]` instead would need integrality hypotheses) no
 integrality is needed: all paths with endpoint in `X` form a seminormal crystal, with
 `εᵢ = ⌊-mᵢ⌋`. The proof that `eᵢ` and `fᵢ` are mutually inverse
@@ -69,7 +69,7 @@ namespace Crystal
 
 variable {ι X : Type*} [AddCommGroup X] {D : CartanDatum ι X} {B : Type*}
 
-/-- The dual crystal `B^∨` ([Kas] §7.4 (check)): the same set, with `wt^∨ = -wt`, `εᵢ^∨ = φᵢ`,
+/-- The dual crystal `B^∨` ([Kas] §7.4): the same set, with `wt^∨ = -wt`, `εᵢ^∨ = φᵢ`,
 `φᵢ^∨ = εᵢ`, `ẽᵢ^∨ = f̃ᵢ` and `f̃ᵢ^∨ = ẽᵢ`. -/
 def dual (C : Crystal D B) : Crystal D B where
   wt b := -C.wt b
@@ -130,7 +130,7 @@ lemma eCoeff_of_one_le (ht : 1 ≤ t) : π.eCoeff i t = -1 := by
   ring
 
 /-- The path `eᵢ π(t) = π(t) - (min(min_{[0,t]} hᵢ, mᵢ + 1) - mᵢ - 1) αᵢ`, defined when
-`mᵢ ≤ -1` ([Lit95] §1 (check)). -/
+`mᵢ ≤ -1` ([Lit95] §1). -/
 noncomputable def eRaw (hQ : π.minPairing i ≤ -1) : LittelmannPath S where
   toFun t := π t - π.eCoeff i t • S.root i
   wt := π.wt + D.root i
@@ -253,12 +253,12 @@ end eRaw
 
 /-! ### The root operators -/
 
-/-- Littelmann's root operator `eᵢ` ([Lit95] §1 (check)): `eᵢ π = 0` (modelled by `none`) if
+/-- Littelmann's root operator `eᵢ` ([Lit95] §1): `eᵢ π = 0` (modelled by `none`) if
 `mᵢ > -1`, and otherwise `eᵢ π(t) = π(t) - (min(min_{[0,t]} hᵢ, mᵢ + 1) - mᵢ - 1) αᵢ`. -/
 noncomputable def e (i : ι) (π : LittelmannPath S) : Option (LittelmannPath S) :=
   if hQ : π.minPairing i ≤ -1 then some (π.eRaw i hQ) else none
 
-/-- Littelmann's root operator `fᵢ = ∨ ∘ eᵢ ∘ ∨` ([Lit95] §1, Lemma 2.1 (check)); explicitly,
+/-- Littelmann's root operator `fᵢ = ∨ ∘ eᵢ ∘ ∨` ([Lit95] §1, Lemma 2.1); explicitly,
 `fᵢ π = 0` if `hᵢ(1) - mᵢ < 1` and otherwise
 `fᵢ π(t) = π(t) - (min(min_{[t,1]} hᵢ, mᵢ + 1) - mᵢ) αᵢ`. -/
 noncomputable def f (i : ι) (π : LittelmannPath S) : Option (LittelmannPath S) :=
@@ -298,7 +298,7 @@ theorem e_rev_of_e_eq_some (h : e i π = some π') : e i π'.rev = some π.rev :
   obtain ⟨hQ, rfl⟩ := e_eq_some_iff.mp h
   rw [e_of_le (π.minPairing_rev_eRaw_le i hQ), eRaw_rev_eRaw]
 
-/-- `fᵢ π = π'` if and only if `eᵢ π' = π` ([Lit95] Lemma 2.1 (check)). -/
+/-- `fᵢ π = π'` if and only if `eᵢ π' = π` ([Lit95] Lemma 2.1). -/
 theorem f_eq_some_iff : f i π = some π' ↔ e i π' = some π := by
   constructor
   · intro h
@@ -318,7 +318,7 @@ lemma f_rev (i : ι) (π : LittelmannPath S) : f i π.rev = (e i π).map rev := 
     π.rev.pairing i 1 = -π.pairing i 1 := by
   rw [pairing_rev, sub_self, pairing_zero, zero_sub]
 
-/-- The closed formula for `fᵢ` ([Lit95] §1 (check), in our reformulation): if `fᵢ π = π'` then
+/-- The closed formula for `fᵢ` ([Lit95] §1, in our reformulation): if `fᵢ π = π'` then
 `π'(t) = π(t) - (min(min_{[t,1]} hᵢ, mᵢ + 1) - mᵢ) αᵢ` for `t ∈ [0,1]`. -/
 theorem f_apply (h : f i π = some π') {t : 𝕜} (ht : t ∈ Icc (0 : 𝕜) 1) :
     π' t = π t - (min (π.rightMin i t) (π.minPairing i + 1) - π.minPairing i) • S.root i := by
@@ -347,7 +347,7 @@ noncomputable def φ (i : ι) (π : LittelmannPath S) : WithBot ℤ :=
   (⌊π.pairing i 1 - π.minPairing i⌋ : ℤ)
 
 variable (S) in
-/-- The crystal of Littelmann paths ([Lit95] §1–2 (check)): the set of all (parametrized)
+/-- The crystal of Littelmann paths ([Lit95] §1–2): the set of all (parametrized)
 Littelmann paths with endpoint in `X`, with `wt π = π(1)`, `εᵢ(π) = ⌊-mᵢ⌋`,
 `φᵢ(π) = ⌊hᵢ(1) - mᵢ⌋` and Littelmann's root operators. -/
 noncomputable def crystal : Crystal D (LittelmannPath S) where
@@ -380,7 +380,7 @@ noncomputable def crystal : Crystal D (LittelmannPath S) where
 
 variable (S) in
 /-- The crystal of Littelmann paths is seminormal: `εᵢ(π)` (resp. `φᵢ(π)`) is the maximal number
-of times `eᵢ` (resp. `fᵢ`) can be applied to `π` ([Lit95] Lemma 2.1 (check)). -/
+of times `eᵢ` (resp. `fᵢ`) can be applied to `π` ([Lit95] Lemma 2.1). -/
 theorem isSeminormal_crystal : (crystal S).IsSeminormal := by
   rw [Crystal.isSeminormal_iff]
   intro i π
@@ -408,7 +408,7 @@ lemma ε_rev (i : ι) (π : LittelmannPath S) : ε i π.rev = φ i π := by
 
 variable (S) in
 /-- The time reversal `π ↦ π^∨`, `π^∨(t) = π(1 - t) - π(1)`, is an isomorphism from the path
-crystal onto its dual ([Lit95] §1, Lemma 2.1 (check)): it negates weights, exchanges `εᵢ` and
+crystal onto its dual ([Lit95] §2, Lemma 2.1): it negates weights, exchanges `εᵢ` and
 `φᵢ`, and exchanges `eᵢ` and `fᵢ`. -/
 noncomputable def revEquiv : Crystal.Equiv (crystal S) (crystal S).dual where
   toFun := rev

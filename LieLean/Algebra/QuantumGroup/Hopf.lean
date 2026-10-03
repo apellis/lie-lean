@@ -11,12 +11,12 @@ import LieLean.Algebra.QuantumGroup.Basic
 /-!
 # The Hopf algebra structure of `U_q(𝔤)`
 
-Following [Lus] 3.1.4 (check) (see also [Jan] 4.8 (check)), `U = U_q(𝔤)` has a unique algebra
+Following [Lus] 3.1.4, 3.1.10–3.1.11 (see also [Jan] 4.8, 4.11), `U = U_q(𝔤)` has a unique algebra
 homomorphism `Δ : U → U ⊗ U` with
 `Δ(Eᵢ) = Eᵢ ⊗ 1 + K̃ᵢ ⊗ Eᵢ`, `Δ(Fᵢ) = Fᵢ ⊗ K̃₋ᵢ + 1 ⊗ Fᵢ`, `Δ(K_μ) = K_μ ⊗ K_μ`,
 and an algebra homomorphism `ε : U → k` with `ε(Eᵢ) = ε(Fᵢ) = 0`, `ε(K_μ) = 1`. Together they
 make `U` a bialgebra (`QuantumGroup.instBialgebra`, for `v ≠ 0`). The antipode is the
-anti-automorphism `S(Eᵢ) = -K̃₋ᵢ Eᵢ`, `S(Fᵢ) = -Fᵢ K̃ᵢ`, `S(K_μ) = K_{-μ}` ([Lus] 3.1.12 (check)),
+anti-automorphism `S(Eᵢ) = -K̃₋ᵢ Eᵢ`, `S(Fᵢ) = -Fᵢ K̃ᵢ`, `S(K_μ) = K_{-μ}` ([Lus] 3.3.1 (a)),
 making `U` a Hopf algebra (`QuantumGroup.instHopfAlgebra`).
 
 That `S` respects the Serre relations follows from `QuantumGroup.qSerre_mul_mul` (Serre elements
@@ -28,7 +28,7 @@ The only nontrivial point in the construction of `Δ` is that it respects the qu
 relations; this follows from the additivity of Serre elements `QuantumGroup.qSerre_add`: for
 `x = Eᵢ ⊗ 1`, `y = K̃ᵢ ⊗ Eᵢ` we have `y x = vᵢ² x y`, and `Eⱼ ⊗ 1`, `K̃ⱼ ⊗ Eⱼ` are
 eigenvectors for commutation with `y`, `x` with eigenvalues `vᵢ^{aᵢⱼ}`, `vᵢ^{-aᵢⱼ}` (using the
-symmetry `dᵢ aᵢⱼ = dⱼ aⱼᵢ`). This argument is our own (cf. [Jan] Lemma 4.10 (check)).
+symmetry `dᵢ aᵢⱼ = dⱼ aⱼᵢ`). This argument is our own (cf. [Jan] Lemma 4.10).
 
 ## Main definitions
 
@@ -48,7 +48,7 @@ symmetry `dᵢ aᵢⱼ = dⱼ aⱼᵢ`). This argument is our own (cf. [Jan] Lem
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.1.
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.1, §3.3.
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 4.
 -/
 
@@ -211,7 +211,7 @@ theorem comul_relations (hv : v ≠ 0) :
 
 variable (R v) [NeZero v]
 
-/-- The comultiplication `Δ : U → U ⊗ U` ([Lus] 3.1.4 (check)). -/
+/-- The comultiplication `Δ : U → U ⊗ U` ([Lus] 3.1.4). -/
 def comul : QuantumGroup R v →ₐ[k] QuantumGroup R v ⊗[k] QuantumGroup R v :=
   lift (comul_relations (NeZero.ne v))
 
@@ -235,7 +235,7 @@ theorem counit_relations :
   serre_F _ _ _ := by simp
 
 omit [NeZero v] in
-/-- The counit `ε : U → k`, `ε(Eᵢ) = ε(Fᵢ) = 0`, `ε(K_μ) = 1` ([Lus] 3.1.4 (check)). -/
+/-- The counit `ε : U → k`, `ε(Eᵢ) = ε(Fᵢ) = 0`, `ε(K_μ) = 1` ([Lus] 3.1.11). -/
 def counit : QuantumGroup R v →ₐ[k] k := lift (counit_relations R v)
 
 omit [NeZero v] in
@@ -267,7 +267,7 @@ theorem counit_lTensor_comul :
       (Algebra.TensorProduct.rid k k (QuantumGroup R v)).symm := by
   ext i <;> simp
 
-/-- `U_q(𝔤)` is a bialgebra ([Lus] 3.1.4 (check)). -/
+/-- `U_q(𝔤)` is a bialgebra ([Lus] 3.1.4, 3.1.10, 3.1.11). -/
 instance instBialgebra : Bialgebra k (QuantumGroup R v) :=
   Bialgebra.ofAlgHom (comul R v) (counit R v) (comul_coassoc R v) (counit_rTensor_comul R v)
     (counit_lTensor_comul R v)
@@ -365,7 +365,7 @@ theorem antipode_relations (hv : v ≠ 0) :
 variable (R v)
 
 /-- The antipode `S : U → Uᵐᵒᵖ`, `S(Eᵢ) = -K̃₋ᵢ Eᵢ`, `S(Fᵢ) = -Fᵢ K̃ᵢ`, `S(K_μ) = K_{-μ}`
-([Lus] 3.1.12 (check)), as an algebra homomorphism to the opposite algebra. -/
+([Lus] 3.3.1 (a)), as an algebra homomorphism to the opposite algebra. -/
 def antipodeOp : QuantumGroup R v →ₐ[k] (QuantumGroup R v)ᵐᵒᵖ :=
   lift (antipode_relations (NeZero.ne v))
 
@@ -488,7 +488,7 @@ theorem mul'_lTensor_antipode_comul (x : QuantumGroup R v) :
       antipodeConjRight_one, hx, map_mul, Algebra.algebraMap_eq_smul_one,
       Algebra.algebraMap_eq_smul_one, smul_smul, mul_comm]
 
-/-- `U_q(𝔤)` is a Hopf algebra ([Lus] 3.1.12 (check)). -/
+/-- `U_q(𝔤)` is a Hopf algebra ([Lus] 3.3.1, 3.3.4). -/
 instance instHopfAlgebra : HopfAlgebra k (QuantumGroup R v) where
   antipode := antipode R v
   mul_antipode_rTensor_comul := LinearMap.ext fun x ↦ mul'_rTensor_antipode_comul R v x

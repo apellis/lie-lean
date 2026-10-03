@@ -11,7 +11,7 @@ import LieLean.GroupTheory.Coxeter.Hecke.Specialization
 Let `𝓗 = 𝓗_q(W)` be the Iwahori–Hecke algebra over a commutative ring `R` with parameter `q`
 (normalization `T_s² = (q - 1) T_s + q`, see `LieLean.GroupTheory.Coxeter.Hecke.Basic`), and let
 `σ : R → R` be a ring homomorphism with `σ(q) q = 1` (so `q` is a unit and `σ(q) = q⁻¹`). The
-*bar involution* ([KL] §1, [HumC] §7.7 (check)) is the ring homomorphism `h ↦ h̄` of `𝓗` with
+*bar involution* ([KL] §1) is the ring homomorphism `h ↦ h̄` of `𝓗` with
 ```
   (Σ a_w T_w)‾ = Σ σ(a_w) T_{w⁻¹}⁻¹,
 ```
@@ -43,7 +43,6 @@ relation `(T_s⁻¹)² = (q⁻¹ - 1) T_s⁻¹ + q⁻¹`; multiplicativity then 
 
 * [KL] D. Kazhdan, G. Lusztig, *Representations of Coxeter groups and Hecke algebras*,
   Invent. Math. **53** (1979), 165–184, §1.
-* [HumC] J. E. Humphreys, *Reflection groups and Coxeter groups*, CUP 1990, §7.4–7.7.
 -/
 
 open Finsupp
@@ -87,7 +86,7 @@ theorem TInv_mul {x y : W} (h : ℓ (x * y) = ℓ x + ℓ y) :
   rw [TInv, TUnit_mul cs hq h, mul_inv_rev, Units.val_mul]
   rfl
 
-/-- `T_s⁻¹ = q⁻¹ T_s - (1 - q⁻¹)` ([HumC] §7.1 (check)). -/
+/-- `T_s⁻¹ = q⁻¹ T_s - (1 - q⁻¹)` ([KL] §1). -/
 theorem TInv_simple (i : B) :
     TInv cs hq (s i) = hq.unit⁻¹.1 • T cs q (s i) - (1 - hq.unit⁻¹.1) • 1 :=
   Units.inv_eq_of_mul_eq_one_right (T_simple_mul_inv cs q hq i)
@@ -185,7 +184,7 @@ theorem barAddHom_mul_T_simple (h : IwahoriHeckeAlgebra cs q) (i : B) :
   | smul a x hx => rw [smul_mul_assoc, barAddHom_smul, hx, barAddHom_smul, smul_mul_assoc]
 
 /-- The bar involution `h ↦ h̄` of the Iwahori–Hecke algebra: the ring homomorphism with
-`ā = σ(a)` for `a ∈ R` and `T̄_w = T_{w⁻¹}⁻¹` ([KL] §1, [HumC] §7.7 (check)). -/
+`ā = σ(a)` for `a ∈ R` and `T̄_w = T_{w⁻¹}⁻¹` ([KL] §1). -/
 noncomputable def bar : IwahoriHeckeAlgebra cs q →+* IwahoriHeckeAlgebra cs q where
   __ := barAddHom cs σ hσ
   map_one' := by simpa using barAddHom_T cs σ hσ 1
@@ -193,7 +192,7 @@ noncomputable def bar : IwahoriHeckeAlgebra cs q →+* IwahoriHeckeAlgebra cs q 
     (by simpa using barAddHom_T cs σ hσ 1)
     (barAddHom_mul_T_simple cs σ hσ)
 
-/-- `T̄_w = T_{w⁻¹}⁻¹` ([KL] §1 (check)). -/
+/-- `T̄_w = T_{w⁻¹}⁻¹` ([KL] §1). -/
 theorem bar_T (w : W) :
     bar cs σ hσ (T cs q w) = TInv cs (isUnit_of_mul_eq_one' σ hσ) w⁻¹ :=
   barAddHom_T cs σ hσ w
@@ -220,7 +219,7 @@ theorem bar_bar_T_simple (hσσ : ∀ a, σ (σ a) = a) (i : B) :
     hσσ, smul_sub, smul_smul]
   match_scalars <;> linear_combination e
 
-/-- The bar map is an involution if `σ` is ([KL] §1 (check)). -/
+/-- The bar map is an involution if `σ` is ([KL] §1). -/
 theorem bar_bar (hσσ : ∀ a, σ (σ a) = a) (h : IwahoriHeckeAlgebra cs q) :
     bar cs σ hσ (bar cs σ hσ h) = h := by
   have hT : ∀ w, bar cs σ hσ (bar cs σ hσ (T cs q w)) = T cs q w := by
@@ -270,7 +269,7 @@ theorem barL_T_simple (i : B) :
         (1 - (LaurentPolynomial.T (-2) : A[T;T⁻¹])) • 1 := by
   rw [barL, bar_T_simple, invertHom_apply, invert_T]
 
-/-- The Kazhdan–Lusztig element `C'_s = v⁻¹ (T_s + 1)` is bar invariant ([KL] §1 (check)). -/
+/-- The Kazhdan–Lusztig element `C'_s = v⁻¹ (T_s + 1)` is bar invariant ([KL] §1). -/
 theorem barL_C'_simple (i : B) :
     barL cs ((LaurentPolynomial.T (-1) : A[T;T⁻¹]) •
       (IwahoriHeckeAlgebra.T cs (LaurentPolynomial.T 2 : A[T;T⁻¹]) (cs.simple i) + 1)) =
@@ -284,7 +283,7 @@ theorem barL_C'_simple (i : B) :
   rw [smul_add, smul_sub, smul_smul, smul_smul, e1, e2, sub_smul, smul_add]
   abel
 
-/-- The bar involution of `𝓗` over `A[v, v⁻¹]` is an involution ([KL] §1 (check)). -/
+/-- The bar involution of `𝓗` over `A[v, v⁻¹]` is an involution ([KL] §1). -/
 theorem barL_barL (h : IwahoriHeckeAlgebra cs (LaurentPolynomial.T 2 : A[T;T⁻¹])) :
     barL cs (barL cs h) = h :=
   bar_bar cs _ _ (fun a ↦ involutive_invert a) h

@@ -23,9 +23,8 @@ import Mathlib.Analysis.SpecificLimits.Normed
 
 These supply the Ore-domain and uniformity steps for classical Verma Hom uniqueness,
 not yet the full dimension bound. No integrality or regularity hypothesis is used.
-The proofs below are reconstructed, not transcribed from a consulted source; see
-Humphreys, *Representations of semisimple Lie algebras in the BGG category O*, §4.2
-for the classical application identified in `BGG/Uniqueness.lean`.
+The proofs below are reconstructed; see Humphreys, *Representations of semisimple Lie algebras in
+the BGG category O*, §4.2 for the classical application identified in `BGG/Uniqueness.lean`.
 -/
 
 open Module

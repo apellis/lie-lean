@@ -46,8 +46,8 @@ the image of `toGr R L n : Fₙ →ₗ[R] gr U(L)`, `x ↦ [x tⁿ]`, whose kern
 ## References
 
 * J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9, §17.3–17.4
-  (the PBW Theorem in §17.3 is the statement `Sym(L) ≅ gr U(L)` (check)).
-* N. Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.6–2.7 (check).
+  (the PBW Theorem in §17.3 is the statement `Sym(L) ≅ gr U(L)`).
+* N. Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.6–2.7.
 -/
 
 open Polynomial Module
@@ -487,8 +487,8 @@ end PBW
 variable (R L) in
 /-- **Poincaré–Birkhoff–Witt theorem, graded form**: if `L` is a free `R`-module, the canonical
 map `Sym(L) → gr U(L)` is an isomorphism. See Humphreys, *Introduction to Lie algebras and
-representation theory*, §17.3, PBW Theorem (proved in §17.4) (check), stated there over a field;
-and Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, Theorem 1 (check). The proof here
+representation theory*, §17.3, PBW Theorem (proved in §17.4), stated there over a field;
+and Bourbaki, *Lie groups and Lie algebras*, Ch. I, §2.7, Theorem 1. The proof here
 deduces it from the PBW basis (`UniversalEnvelopingAlgebra.pbwBasis`) and its filtered version
 (`UniversalEnvelopingAlgebra.map_pbwEquiv_filtration`). -/
 theorem symmetricAlgebraToAssociatedGraded_bijective [Module.Free R L] :

@@ -37,11 +37,13 @@ and the two remaining terms are both equal to `ε(y) ε([ν⁻¹β, z])`.
 ## References
 
 * B. Kostant, *Lie algebra cohomology and the generalized Borel–Weil theorem*, Ann. of Math.
-  **74** (1961), 329–387, §4 (check).
+  **74** (1961), 329–387 (cf. §4, Thm. 4.4).
 * [GL] H. Garland, J. Lepowsky, *Lie algebra homology and the Macdonald–Kac formulas*, Invent.
-  Math. **34** (1976), 37–76, §§5–8 (check).
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., Lemma 2.4.
-* The computation above is reconstructed by us; the sources were not consulted.
+  Math. **34** (1976), 37–76 (a Casimir argument, §7 and Appendix, in place of Kostant's
+  Laplacian).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Lemma 2.4
+  (stated over `ℂ`).
+* The computation above is our own.
 -/
 
 open Module LieModule LieModule.ChevalleyEilenberg TensorProduct ExteriorAlgebra

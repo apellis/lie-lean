@@ -29,7 +29,7 @@ operator acts nilpotently is a natural number (a variant of
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.4–3.6 (check).
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.2, §3.4.
 -/
 
 open LieAlgebra LieModule
@@ -87,7 +87,7 @@ variable {R L M : Type*} [CommRing R] [LieRing L] [LieAlgebra R L]
 
 /-- If `m` is a primitive vector of weight `μ` for an `𝔰𝔩₂`-triple `(h, e, f)` and some power of
 `f` kills `m`, then `μ` is a natural number. This is the standard `𝔰𝔩₂` computation, e.g.
-[Kac] Lemma 3.4 (check). -/
+[Kac] (3.2.4) and the proof of Lemma 3.2 (b). -/
 theorem exists_nat_of_exists_pow_eq_zero [IsDomain R] [CharZero R] [Module.IsTorsionFree R M]
     (P : t.HasPrimitiveVectorWith m μ) (hm : ∃ n : ℕ, ((toEnd R L M f) ^ n) m = 0) :
     ∃ n : ℕ, μ = n := by

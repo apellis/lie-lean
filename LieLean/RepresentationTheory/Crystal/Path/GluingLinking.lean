@@ -30,11 +30,11 @@ import LieLean.RepresentationTheory.Crystal.Path.Stability
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
 (1995), §6, Lemma 6.1, the Example following it, Proposition 6.2 and Theorem 6.3,
-pp. 517–518; Corollary 3, p. 512. The printed pages were consulted. The links use the fixed
-parametrization of `LittelmannPath.IsLink` (with the factor `1 + 2c`), and integrality of the linked
-components is derived from the gluing results rather than assumed. Paths are compared
-literally, with the explicit pause clocks of `GluingPause.lean` standing in for the
-source's "modulo reparametrization".
+pp. 517–518; Corollary 3, p. 512. The links use the fixed parametrization of `LittelmannPath.IsLink`
+(with the factor `1 + 2c`), and integrality of the linked components is derived from the gluing
+results rather than assumed. Paths are compared literally, with the explicit pause clocks of
+`GluingPause.lean` standing in for the source's "modulo reparametrization". [Lit95] assumes a
+symmetrizable Kac–Moody algebra; here the generalized Cartan matrix need not be symmetrizable.
 -/
 
 open Module Set

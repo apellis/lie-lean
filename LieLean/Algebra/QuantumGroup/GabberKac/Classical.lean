@@ -42,7 +42,7 @@ the span of the Serre products (`LusztigF.weightProj_mem_serreSpan`). This argum
 ## References
 
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.4, Thm. 9.11,
-  Cor. 10.4 (check).
+  Cor. 10.4.
 -/
 
 noncomputable section
@@ -201,7 +201,7 @@ lemma serreAssocIdeal_le_span_serreWord :
 classical Shapovalov pairing `S(w, y)` vanishes for all words `w` of weight `ν`, then `y` is a
 linear combination of products `a sᵢⱼ b` of weight `ν` with classical Serre elements `sᵢⱼ`
 (`i ≠ j`) and words `a`, `b`. This uses the Gabber–Kac theorem ([Kac] Thm. 9.11) and the
-presentation of `L(Λ)` ([Kac] Cor. 10.4 (check)). -/
+presentation of `L(Λ)` ([Kac] Cor. 10.4). -/
 theorem mem_serreSpan_of_vermaForm_eq_zero (P : Realization D.cartanMatrix K H)
     (hn : ∀ i, Λ (P.coroot i) = n i) {ν : I →₀ ℕ} (hν : ∀ i, ν i ≤ n i)
     {y : LusztigF K I} (hy : y ∈ weightSpace K ν)

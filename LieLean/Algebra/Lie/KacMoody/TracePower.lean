@@ -20,6 +20,8 @@ Its coefficients lie in `SymmetricAlgebra K (Module.Dual K L)`.
 ## References
 
 Etingof, MIT 18.757 (Fall 2023), Lecture 10, proof of Theorem 10.1(ii).
+The source works over `ℂ` for semisimple `g`; trace-power invariance is proved here for
+every Lie algebra over a field, the extension step for finite type in characteristic zero.
 The commutator proof below is an algebraic reconstruction of the trace-invariance step.
 -/
 

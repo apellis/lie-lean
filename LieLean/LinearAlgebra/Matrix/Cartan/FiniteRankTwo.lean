@@ -24,7 +24,7 @@ relations holds in finite type (`Matrix.IsFiniteCartan.braidOuterCondition`).
 
 ## References
 
-Standard, e.g. V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., §4.8 (check). The
+Standard, e.g. V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., §4.7–4.8. The
 proofs use the positive definite form `diag(d) A`: for `mul_le_three` its value at
 `x = -2 eᵢ + aⱼᵢ eⱼ`, which is `2 dᵢ (4 - aᵢⱼ aⱼᵢ) > 0`; in rank three the positivity of the
 principal `3 × 3` minors of `diag(d) A`, which are `dᵢ dⱼ dₗ` times those of `A`.

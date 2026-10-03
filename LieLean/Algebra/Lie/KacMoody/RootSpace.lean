@@ -32,7 +32,8 @@ existence of the maximal ideal `𝔯`. (The Chevalley involution, part (c), is
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Thm. 1.2.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, Thm. 1.2
+  (stated over `ℂ`).
 -/
 
 open FreeLieAlgebra Module LieModule

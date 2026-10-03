@@ -12,12 +12,13 @@ import Mathlib.Tactic.ReduceModChar
 Let `cs : CoxeterSystem M W` be a Coxeter system (possibly infinite), with the Bruhat order `≤`
 (`CoxeterSystem.BruhatLE`). Write `u ⋖ w` (`CoxeterSystem.BruhatCovBy`) if `u ≤ w` and
 `ℓ(w) = ℓ(u) + 1`; by the chain property these are exactly the Bruhat steps `u → w = u t`
-(`t` a reflection) that increase the length by one, the *arrows* of [BGG] §11.
+(`t` a reflection) that increase the length by one. These are the *arrows* of [BGG] Def. 8.9,
+which BGG draw from the longer to the shorter element.
 
-* **Squares** ([BGG] Lemma 11.3 (check), [HumO] §6.2 (check), [BB] Lemma 2.7.3 (check)): if
+* **Squares** ([BGG] Lemma 10.3, [HumO] Prop. 0.4 (d), §6.7, [BB] Lemma 2.7.3): if
   `a ≤ d` and `ℓ(d) = ℓ(a) + 2`, there are exactly two elements `x` with `a ⋖ x ⋖ d`. Together
   with `a, d` they form a *square*.
-* **Signs** ([BGG] Lemma 11.4 (check), [HumO] §6.2 (check)): there is a function `ε` from the
+* **Signs** ([BGG] Lemma 10.4, [HumO] §6.8): there is a function `ε` from the
   arrows to `ℤ/2` such that for every square `a ⋖ b ⋖ d`, `a ⋖ c ⋖ d` (`b ≠ c`),
   `ε(a, b) + ε(b, d) + ε(a, c) + ε(c, d) = 1`, i.e. every square anticommutes for the signs
   `(-1)^ε`. These are the signs in the differential of the BGG resolution.
@@ -55,7 +56,8 @@ construction; as every arrow lies on exactly two faces, the sum of the relations
 
 * [BGG] I. N. Bernstein, I. M. Gelfand, S. I. Gelfand, *Differential operators on the base
   affine space and a study of 𝔤-modules*, in: Lie groups and their representations (Budapest,
-  1971), Halsted 1975, 21–64, §11.
+  1971), Halsted 1975, 21–64, §§10–11 (for the Weyl group of a complex semisimple Lie
+  algebra).
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
   GSM 94, AMS 2008, Ch. 6.
 * [BB] A. Björner, F. Brenti, *Combinatorics of Coxeter groups*, GTM 231, Springer 2005, §2.7.
@@ -134,7 +136,7 @@ theorem BruhatCovBy.isLeftDescent_of_ne {b d : W} {i : B} (h : cs.BruhatCovBy b 
 
 /-! ### Squares -/
 
-/-- **Squares in the Bruhat order** ([BGG] Lemma 11.3 (check), [BB] Lemma 2.7.3 (check)): if
+/-- **Squares in the Bruhat order** ([BGG] Lemma 10.3, [BB] Lemma 2.7.3): if
 `a ≤ d` and `ℓ(d) = ℓ(a) + 2`, there are exactly two elements `x` with `a ⋖ x ⋖ d`. -/
 theorem exists_middle_pair {a d : W} (h : cs.BruhatLE a d) (hl : ℓ d = ℓ a + 2) :
     ∃ b c, b ≠ c ∧ ∀ x, (cs.BruhatCovBy a x ∧ cs.BruhatCovBy x d) ↔ x = b ∨ x = c := by
@@ -241,8 +243,8 @@ theorem exists_middle_pair {a d : W} (h : cs.BruhatLE a d) (hl : ℓ d = ℓ a +
       · exact ⟨bruhatCovBy_simple_mul_of_not_isLeftDescent ha, h₂, by omega⟩
       · exact ⟨⟨h₁, by omega⟩, hsd⟩
 
-/-- **Squares in the Bruhat order** ([BGG] Lemma 11.3 (check)): if `a ≤ d` and
-`ℓ(d) = ℓ(a) + 2`, the set `{x | a ⋖ x ⋖ d}` has exactly two elements. -/
+/-- **Squares in the Bruhat order** ([BGG] Lemma 10.3): if `a ≤ d` and `ℓ(d) = ℓ(a) + 2`, the set
+`{x | a ⋖ x ⋖ d}` has exactly two elements. -/
 theorem ncard_middle_eq_two {a d : W} (h : cs.BruhatLE a d) (hl : ℓ d = ℓ a + 2) :
     {x | cs.BruhatCovBy a x ∧ cs.BruhatCovBy x d}.ncard = 2 := by
   obtain ⟨b, c, hbc, hmid⟩ := exists_middle_pair h hl
@@ -258,8 +260,9 @@ variable (cs) in
 open Classical in
 /-- A sign function `ε : W → W → ZMod 2` on the arrows `b ⋖ d` of the Bruhat order such that
 every square anticommutes (`CoxeterSystem.bruhatSign_square`), following the inductive
-construction of [BGG] §11 (check): for `d ≠ 1` let `s` be a (chosen) left descent of `d`; then
-`ε(s d, d) = 0` and `ε(b, d) = ε(s b, b) + ε(s b, s d) + 1` for the other `b` with `ℓ(b) < ℓ(d)`.
+construction in the proof of [BGG] Lemma 10.4 (§11): for `d ≠ 1` let `s` be a (chosen) left
+descent of `d`; then `ε(s d, d) = 0` and `ε(b, d) = ε(s b, b) + ε(s b, s d) + 1` for the other `b`
+with `ℓ(b) < ℓ(d)`.
 (The values for pairs which are not arrows are irrelevant.) -/
 noncomputable def bruhatSign (b d : W) : ZMod 2 :=
   if h : ∃ i, cs.IsLeftDescent d i then
@@ -284,9 +287,8 @@ private lemma bruhatSign_spec {d : W} (hd : d ≠ 1) :
   · rw [bruhatSign.eq_1, dite_eq_left h, ite_eq_left rfl]
   · rw [bruhatSign.eq_1, dite_eq_left h, ite_eq_right hb, dite_eq_left hl]
 
-/-- **The BGG signs** ([BGG] Lemma 11.4 (check), [HumO] §6.2 (check)): for every square
-`a ⋖ b ⋖ d`, `a ⋖ c ⋖ d` with `b ≠ c` of the Bruhat order,
-`ε(a, b) + ε(b, d) + ε(a, c) + ε(c, d) = 1` in `ZMod 2`. -/
+/-- **The BGG signs** ([BGG] Lemma 10.4, [HumO] §6.8): for every square `a ⋖ b ⋖ d`, `a ⋖ c ⋖ d`
+with `b ≠ c` of the Bruhat order, `ε(a, b) + ε(b, d) + ε(a, c) + ε(c, d) = 1` in `ZMod 2`. -/
 theorem bruhatSign_square {a b c d : W} (hab : cs.BruhatCovBy a b) (hbd : cs.BruhatCovBy b d)
     (hac : cs.BruhatCovBy a c) (hcd : cs.BruhatCovBy c d) (hbc : b ≠ c) :
     cs.bruhatSign a b + cs.bruhatSign b d + cs.bruhatSign a c + cs.bruhatSign c d = 1 := by
@@ -361,7 +363,7 @@ theorem bruhatSign_square {a b c d : W} (hab : cs.BruhatCovBy a b) (hbd : cs.Bru
   ring_nf
   reduce_mod_char
 
-/-- **The BGG signs** ([BGG] Lemma 11.4 (check)): with `ε = bruhatSign`, every square of the
+/-- **The BGG signs** ([BGG] Lemma 10.4): with `ε = bruhatSign`, every square of the
 Bruhat order anticommutes for the signs `(-1)^ε` in any ring:
 `(-1)^ε(a, b) (-1)^ε(b, d) + (-1)^ε(a, c) (-1)^ε(c, d) = 0`. -/
 theorem neg_one_pow_bruhatSign_square {R : Type*} [Ring R] {a b c d : W}

@@ -12,7 +12,7 @@ import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
 
 Reconstructed finite-Weyl-orbit descent, followed by the Ore/uniformity argument.
 Classical context: Humphreys, Representations of semisimple Lie algebras in the
-BGG category O, Theorem 4.2. No printed proof was consulted for this construction.
+BGG category O, Theorem 4.2.
 -/
 
 open Module LieModule
@@ -152,7 +152,8 @@ theorem precomp_injective {Λ μ ν : Dual K H}
 /-- **Classical finite-type Verma Hom uniqueness for arbitrary highest weights**.
 No integrality, regularity, socle, embedding uniqueness, or Hom-bound hypothesis is
 assumed. Reconstructed proof of the finite-type result in Humphreys, category O,
-Theorem 4.2(b), using proved KK linkage, finite Weyl descent, and actual Ore uniformity. -/
+Theorem 4.2(b) (stated there over `ℂ`), using proved KK linkage, finite Weyl descent, and actual
+Ore uniformity. -/
 theorem finrank_hom_le_one_of_finite_type [IsAlgClosed K]
     (hA : A.IsFiniteCartan) (S : A.Symmetrization) (Λ μ : Dual K H) :
     finrank K (VermaModule P μ →ₗ⁅K,P.KacMoodyAlgebra⁆ VermaModule P Λ) ≤ 1 := by

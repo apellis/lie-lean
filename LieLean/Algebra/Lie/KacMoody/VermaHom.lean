@@ -18,12 +18,12 @@ characteristic zero, and let `M(λ)` be the Verma module of highest weight `λ �
   i.e. the vectors of weight `μ` killed by all the `eᵢ` (`VermaModule.homEquiv`). In particular
   there is a nonzero morphism `M(μ) → M(λ)` if and only if `M(λ)` has a nonzero primitive vector
   of weight `μ`.
-* Every nonzero morphism `M(μ) → M(λ)` is injective ([HumO] Thm. 4.2 (a) (check)): `M(λ)` is a
+* Every nonzero morphism `M(μ) → M(λ)` is injective ([HumO] Thm. 4.2 (a)): `M(λ)` is a
   free `U(𝔫₋)`-module of rank one and `U(𝔫₋)` is a domain.
 * If `⟨λ + ρ, αᵢ^∨⟩ = n` is a positive integer, then `fᵢⁿ v_λ` is a primitive vector of weight
   `rᵢ · λ = rᵢ(λ + ρ) - ρ = λ - n αᵢ`, which gives an embedding `M(rᵢ · λ) ↪ M(λ)`, and
-  `Hom(M(rᵢ · λ), M(λ))` is one-dimensional ([HumO] Prop. 1.4 and §4.2 (check);
-  [Kac] §9 (check)).
+  `Hom(M(rᵢ · λ), M(λ))` is one-dimensional ([HumO] Prop. 1.4 and §4.2; cf. [Kac] (3.2.4),
+  Exercise 9.1).
 
 ## Main definitions
 
@@ -55,8 +55,9 @@ general statement is not proved here; we only prove the case `μ = rᵢ · λ`.
 ## References
 
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, §1.4, §4.1–4.2 (check).
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §9.2–9.3 (check).
+  GSM 94, §1.4, §4.1–4.2.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.2, §9.2–9.3,
+  Exercise 9.1.
 -/
 
 open Module LieModule
@@ -83,7 +84,7 @@ variable (V : Type*) [AddCommGroup V] [Module K V] [LieRingModule P.KacMoodyAlge
 
 /-- The space of *primitive vectors* of weight `μ` of a `𝔤(A)`-module `V`: the vectors of weight
 `μ` killed by all the `eᵢ` (hence by `𝔫₊`, `lie_eq_zero_of_mem_nPos`). These are called maximal
-vectors in [HumO] §1.2 (check). -/
+vectors in [HumO] §1.2. -/
 def primitiveVectors (μ : Dual K H) : Submodule K V :=
   weightSpace P V μ ⊓ ⨅ i, LinearMap.ker (toEnd K P.KacMoodyAlgebra V (e P i))
 
@@ -111,7 +112,7 @@ lemma map_hwv_mem_primitiveVectors {μ : Dual K H}
     fun i ↦ by rw [← LieModuleHom.map_lie, lie_e_hwv, map_zero]⟩
 
 variable (V) in
-/-- **Universal property of Verma modules, linear form** ([Kac] §9.2 (check)): morphisms of
+/-- **Universal property of Verma modules, linear form** ([Kac] §9.2): morphisms of
 `𝔤(A)`-modules `M(μ) → V` correspond to the primitive vectors of weight `μ` of `V`, via
 `φ ↦ φ(v_μ)`. -/
 def homEquiv (μ : Dual K H) :
@@ -135,7 +136,7 @@ lemma eq_zero_iff {μ : Dual K H} (φ : VermaModule P μ →ₗ⁅K,P.KacMoodyAl
     LinearEquiv.map_eq_zero_iff]
 
 /-- There is a nonzero morphism `M(μ) → V` iff `V` has a nonzero primitive vector of weight `μ`
-([Kac] §9.2–9.3 (check); [HumO] §1.3 (check)). -/
+([Kac] §9.2–9.3; [HumO] §1.3). -/
 theorem exists_ne_zero_iff (μ : Dual K H) :
     (∃ φ : VermaModule P μ →ₗ⁅K,P.KacMoodyAlgebra⁆ V, φ ≠ 0) ↔
       ∃ v ∈ weightSpaceOfMap V (h P) μ, v ≠ 0 ∧ ∀ i, ⁅e P i, v⁆ = 0 := by
@@ -176,9 +177,9 @@ lemma map_smul_eq_smul {Λ μ : Dual K H}
     (u : 𝓤) (m : VermaModule P μ) : φ (u • m) = u • φ m := by
   rw [map_smul_eq_rep, rep_apply]
 
-/-- **Morphisms of Verma modules are injective** ([HumO] Thm. 4.2 (a) (check); [Kac] §9
-(check)): every nonzero morphism of `𝔤(A)`-modules `M(μ) → M(λ)` is injective. Indeed
-`M(λ) ≅ U(𝔫₋)` as a `U(𝔫₋)`-module (`VermaModule.equivEnvNNeg`) and `U(𝔫₋)` is a domain
+/-- **Morphisms of Verma modules are injective** ([HumO] Thm. 4.2 (a); [Kac] Exercise 9.1): every
+nonzero morphism of `𝔤(A)`-modules `M(μ) → M(λ)` is injective. Indeed `M(λ) ≅ U(𝔫₋)` as a
+`U(𝔫₋)`-module (`VermaModule.equivEnvNNeg`) and `U(𝔫₋)` is a domain
 (`UniversalEnvelopingAlgebra.instIsDomain`). -/
 theorem injective_of_ne_zero {Λ μ : Dual K H}
     {φ : VermaModule P μ →ₗ⁅K,P.KacMoodyAlgebra⁆ VermaModule P Λ} (hφ : φ ≠ 0) :
@@ -194,7 +195,7 @@ theorem injective_of_ne_zero {Λ μ : Dual K H}
   rw [(mul_eq_zero.mp hm).resolve_right hu₀0, map_zero]
 
 /-- A nonzero morphism `M(μ) → M(λ)` exists iff `M(λ)` has a nonzero primitive vector of weight
-`μ`, and then every nonzero such morphism is injective ([HumO] Thm. 4.2 (check)). -/
+`μ`, and then every nonzero such morphism is injective ([HumO] Thm. 4.2). -/
 theorem exists_injective_iff (Λ μ : Dual K H) :
     (∃ φ : VermaModule P μ →ₗ⁅K,P.KacMoodyAlgebra⁆ VermaModule P Λ, Function.Injective φ) ↔
       ∃ v ∈ weightSpace P Λ μ, v ≠ 0 ∧ ∀ i, ⁅e P i, v⁆ = 0 := by
@@ -279,7 +280,7 @@ lemma _root_.Matrix.Realization.reflection_add_rho_sub_rho (hA : A.IsGeneralized
 variable (hA : A.IsGeneralizedCartan)
 include hA
 
-/-- **Singular vectors for simple reflections** ([HumO] Prop. 1.4 (check), [Kac] §9 (check)): if
+/-- **Singular vectors for simple reflections** ([HumO] Prop. 1.4, [Kac] (3.2.4)): if
 `⟨λ + ρ, αᵢ^∨⟩ = n` is a positive integer, then `fᵢⁿ v_λ` is a nonzero primitive vector of
 `M(λ)` of weight `rᵢ · λ = λ - n αᵢ`. -/
 theorem toEnd_f_pow_hwv_mem_primitiveVectors {Λ : Dual K H} {i : ι} {n : ℕ} (hn0 : 0 < n)
@@ -294,7 +295,7 @@ theorem toEnd_f_pow_hwv_mem_primitiveVectors {Λ : Dual K H} {i : ι} {n : ℕ} 
   exact mem_primitiveVectors.mpr ⟨toEnd_f_pow_mem_weightSpace i (hwv_mem_weightSpace P Λ) _,
     lie_e_fPowHwv P Λ hA hm⟩
 
-/-- **The embedding `M(rᵢ · λ) ↪ M(λ)`** ([HumO] Prop. 1.4, §4.2 (check); [Kac] §9 (check)):
+/-- **The embedding `M(rᵢ · λ) ↪ M(λ)`** ([HumO] Prop. 1.4, §4.2; cf. [Kac] (3.2.4), Exercise 9.1):
 if `⟨λ + ρ, αᵢ^∨⟩ = n` is a positive integer, there is an injective morphism of `𝔤(A)`-modules
 `M(rᵢ · λ) → M(λ)`, where `rᵢ · λ = rᵢ(λ + ρ) - ρ = λ - n αᵢ`, sending `v_{rᵢ · λ}` to
 `fᵢⁿ v_λ`. -/
@@ -312,7 +313,7 @@ theorem exists_injective_reflection {Λ : Dual K H} {i : ι} {n : ℕ} (hn0 : 0 
   rw [← hφ, h, _root_.zero_apply]
 
 /-- If `⟨λ + ρ, αᵢ^∨⟩ = n` is a positive integer, then `dim Hom(M(rᵢ · λ), M(λ)) = 1`
-([HumO] Thm. 4.2 (b) in this case (check)). -/
+([HumO] Thm. 4.2 (b) in this case). -/
 theorem finrank_hom_reflection {Λ : Dual K H} {i : ι} {n : ℕ} (hn0 : 0 < n)
     (hn : (Λ + P.rho) (P.coroot i) = n) :
     finrank K (VermaModule P (P.reflection hA i (Λ + P.rho) - P.rho) →ₗ⁅K,P.KacMoodyAlgebra⁆

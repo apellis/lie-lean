@@ -11,7 +11,7 @@ import Mathlib.Algebra.DirectSum.Decomposition
 
 ## Main results
 Character-indexed decomposition for locally finite central actions and natural full-Lie
-projections. Arguments reconstructed; no primary source consulted.
+projections. Arguments reconstructed.
 -/
 
 open Module LieModule

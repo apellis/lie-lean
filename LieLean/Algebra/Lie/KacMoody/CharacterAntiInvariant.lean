@@ -16,7 +16,7 @@ with its length function `ℓ` (`Matrix.Realization.coxeterSystem`), and
 `R = ∏_{α ∈ Δ₊} (1 - e^{-α})^{mult α}` the denominator (`KacMoodyAlgebra.denominator`). The Weyl
 group does not act on the algebra `ℰ` of formal characters, but it acts on coefficient functions,
 and we say that `c ∈ ℰ` is `W`-anti-invariant if `c_{w μ} = (-1)^{ℓ(w)} c_μ` for all `w ∈ W` and
-`μ ∈ 𝔥*`. We prove ([Kac] §10.2 (check)) that `e^ρ R` is `W`-anti-invariant, where `ρ` is any
+`μ ∈ 𝔥*`. We prove ([Kac] §10.2) that `e^ρ R` is `W`-anti-invariant, where `ρ` is any
 element with `⟨ρ, αᵢ^∨⟩ = 1` (`Matrix.Realization.rho`), and deduce that so is `e^ρ R ch V` for
 every integrable module `V` in the category `𝒪`.
 
@@ -25,7 +25,7 @@ every integrable module `V` in the category `𝒪`.
 It suffices to treat the fundamental reflections `rᵢ`, since `ℓ(rᵢ w) = ℓ(w) ± 1`. Recall that
 `R = ∑_S (-1)^{|S|} e^{-wt S}`, the sum running over the finite sets `S` of indices of a basis of
 `𝔫₋` consisting of root vectors (`NegRootIndex`). Since `rᵢ` permutes `Δ₊ \ {αᵢ}` preserving
-multiplicities ([Kac] Lemma 3.7 (check), `KacMoodyAlgebra.reflection_mem_posWeights`,
+multiplicities ([Kac] Lemma 3.7, `KacMoodyAlgebra.reflection_mem_posWeights`,
 `KacMoodyAlgebra.rank_rootSpace_weylGroup`) and `mult αᵢ = 1`, there is a permutation `σ` of the
 index set with `root (σ x) = rᵢ (root x)` for `root x ≠ αᵢ`, fixing the unique index `xᵢ` of root
 `αᵢ`. The bijection `Φ(S) = σ(S) ∆ {xᵢ}` of the finite sets of indices satisfies
@@ -46,13 +46,13 @@ coefficientwise form of Kac's argument `rᵢ(e^ρ R) = e^{ρ - αᵢ} (1 - e^{α
   and a `W`-invariant element of `ℰ` is `W`-anti-invariant.
 * `Matrix.Realization.KacMoodyAlgebra.coeffAt_denominator_reflection`: `R_{rᵢ μ - αᵢ} = -R_μ`.
 * `Matrix.Realization.KacMoodyAlgebra.isWeylAntiInvariant_exp_rho_mul_denominator`: `e^ρ R` is
-  `W`-anti-invariant ([Kac] §10.2 (check)).
+  `W`-anti-invariant ([Kac] §10.2).
 * `Matrix.Realization.KacMoodyAlgebra.IsCategoryO.isWeylAntiInvariant_exp_rho_mul_character`:
-  `e^ρ R ch V` is `W`-anti-invariant for `V` integrable in `𝒪` ([Kac] §10.4 (check)).
+  `e^ρ R ch V` is `W`-anti-invariant for `V` integrable in `𝒪` ([Kac] Prop. 3.7 (a) and (10.2.2)).
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.7, §10.2–10.4.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §3.7, §10.2, §10.4.
 -/
 
 open Module HahnSeries
@@ -69,7 +69,7 @@ namespace CharacterRing
 variable {R : Type*} [CommRing R]
 
 /-- An element `c ∈ ℰ` is `W`-anti-invariant if `c_{w μ} = (-1)^{ℓ(w)} c_μ` for all `w ∈ W` and
-`μ ∈ 𝔥*` ([Kac] §10.2 (check)). -/
+`μ ∈ 𝔥*` ([Kac] §10.4: "`W`-skew-invariant"). -/
 def IsWeylAntiInvariant (c : P.CharacterRing R) : Prop :=
   ∀ w : P.weylGroup hA, ∀ μ, c.coeffAt ((w : Dual K H ≃ₗ[K] Dual K H) μ) =
     (-1) ^ (P.coxeterSystem hA).length w * c.coeffAt μ
@@ -330,7 +330,7 @@ lemma neg_one_pow_card_reflectFinset (i : ι) (S : Finset (NegRootIndex P)) :
 
 /-! ### Anti-invariance -/
 
-/-- The coefficients of the denominator satisfy `R_{rᵢ μ - αᵢ} = -R_μ` ([Kac] §10.2 (check)). -/
+/-- The coefficients of the denominator satisfy `R_{rᵢ μ - αᵢ} = -R_μ` ([Kac] §10.2). -/
 theorem coeffAt_denominator_reflection (i : ι) (μ : Dual K H) :
     (denominator P).coeffAt (P.reflection hA i μ - P.root i) = -(denominator P).coeffAt μ := by
   classical
@@ -344,7 +344,7 @@ theorem coeffAt_denominator_reflection (i : ι) (μ : Dual K H) :
   rw [if_congr this rfl rfl]
   split_ifs <;> simp
 
-/-- `(e^ρ R)_{rᵢ μ} = -(e^ρ R)_μ`, since `rᵢ ρ = ρ - αᵢ` ([Kac] §10.2 (check)). -/
+/-- `(e^ρ R)_{rᵢ μ} = -(e^ρ R)_μ`, since `rᵢ ρ = ρ - αᵢ` ([Kac] §10.2). -/
 theorem coeffAt_exp_rho_mul_denominator_reflection (i : ι) (μ : Dual K H) :
     (exp P ℤ P.rho * denominator P).coeffAt (P.reflection hA i μ) =
       -(exp P ℤ P.rho * denominator P).coeffAt μ := by
@@ -353,14 +353,14 @@ theorem coeffAt_exp_rho_mul_denominator_reflection (i : ι) (μ : Dual K H) :
   rw [map_sub, reflection_apply P hA i P.rho, rho_coroot, one_smul]
   abel
 
-/-- **Anti-invariance of `e^ρ R`** ([Kac] §10.2 (check)): `(e^ρ R)_{w μ} = (-1)^{ℓ(w)} (e^ρ R)_μ`
+/-- **Anti-invariance of `e^ρ R`** ([Kac] §10.2): `(e^ρ R)_{w μ} = (-1)^{ℓ(w)} (e^ρ R)_μ`
 for all `w ∈ W`. -/
 theorem isWeylAntiInvariant_exp_rho_mul_denominator :
     (exp P ℤ P.rho * denominator P).IsWeylAntiInvariant P hA :=
   isWeylAntiInvariant_of_reflection (coeffAt_exp_rho_mul_denominator_reflection hA)
 
 /-- For an integrable module `V` in the category `𝒪`, `e^ρ R ch V` is `W`-anti-invariant
-([Kac] §10.4 (check)). -/
+([Kac] Prop. 3.7 (a) and (10.2.2)). -/
 theorem IsCategoryO.isWeylAntiInvariant_exp_rho_mul_character {V : Type*} [AddCommGroup V]
     [Module K V] [LieRingModule P.KacMoodyAlgebra V] [LieModule K P.KacMoodyAlgebra V]
     (hV : IsCategoryO P V) (hI : IsIntegrable P V) :

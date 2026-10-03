@@ -14,6 +14,7 @@ Finite dominance inversion and invariant homogeneous extensions of orbit powers.
 
 ## References
 Etingof, MIT 18.757 (Fall 2023), Lecture 10, equation (6) and Theorem 10.1(ii).
+The source works over `ℂ`; here `K` is any field of characteristic zero (finite type).
 The finite cone bound and finite-poset induction below reconstruct the inversion step.
 -/
 

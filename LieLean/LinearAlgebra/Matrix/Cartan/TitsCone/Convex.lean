@@ -13,7 +13,7 @@ import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Coroots
 
 Let `A` be a generalized Cartan matrix with realization `(𝔥, Π, Π^∨)` over a linearly ordered
 field `K`, `W` its Weyl group acting on `𝔥*`, `C ⊂ 𝔥*` the dominant chamber and
-`X = ⋃_{w ∈ W} w(C)` the Tits cone. We prove ([Kac] Prop. 3.12 (c) (check)) that
+`X = ⋃_{w ∈ W} w(C)` the Tits cone. We prove ([Kac] Prop. 3.12 (c)) that
 
   `X = {λ ∈ 𝔥* | ⟨λ, β^∨⟩ < 0 for only finitely many positive real coroots β^∨}`,
 
@@ -59,7 +59,7 @@ lemma apply_corootOf_nonneg {μ : Dual K H} (hμ : μ ∈ P.dominantChamber) {k 
   exact Finset.sum_nonneg fun i _ ↦ mul_nonneg (by simpa using hk i) (hμ i)
 
 /-- A point of the Tits cone is negative on only finitely many positive real coroots
-([Kac] Prop. 3.12 (c) (check), dually). -/
+([Kac] Prop. 3.12 (c), dually). -/
 theorem finite_of_mem_titsCone {μ : Dual K H} (hμ : μ ∈ P.titsCone hA) :
     {h | h ∈ P.posRealCoroots hA ∧ μ h < 0}.Finite := by
   obtain ⟨w, hw, ν, hν, rfl⟩ := hμ
@@ -71,7 +71,7 @@ theorem finite_of_mem_titsCone {μ : Dual K H} (hμ : μ ∈ P.titsCone hA) :
   exact (P.apply_corootOf_nonneg hν hk).not_gt hlt
 
 /-- A point of `𝔥*` which is negative on only finitely many positive real coroots lies in the
-Tits cone ([Kac] Prop. 3.12 (c) (check), dually). -/
+Tits cone ([Kac] Prop. 3.12 (c), dually). -/
 theorem mem_titsCone_of_finite {μ : Dual K H}
     (hμ : {h | h ∈ P.posRealCoroots hA ∧ μ h < 0}.Finite) : μ ∈ P.titsCone hA := by
   generalize hn : {h | h ∈ P.posRealCoroots hA ∧ μ h < 0}.ncard = n
@@ -104,7 +104,7 @@ theorem mem_titsCone_of_finite {μ : Dual K H}
     (ih _ hlt (hfin.subset hsub) rfl)
   rwa [reflection_reflection] at this
 
-/-- **The Tits cone** ([Kac] Prop. 3.12 (c) (check), for the action on `𝔥*`):
+/-- **The Tits cone** ([Kac] Prop. 3.12 (c), for the action on `𝔥*`):
 `X = {λ | ⟨λ, β^∨⟩ < 0 for only finitely many positive real coroots β^∨}`. -/
 theorem mem_titsCone_iff {μ : Dual K H} :
     μ ∈ P.titsCone hA ↔ {h | h ∈ P.posRealCoroots hA ∧ μ h < 0}.Finite :=
@@ -120,7 +120,7 @@ theorem smul_mem_titsCone {c : K} (hc : 0 ≤ c) {μ : Dual K H} (hμ : μ ∈ P
   obtain ⟨w, hw, ν, hν, rfl⟩ := hμ
   exact ⟨w, hw, c • ν, fun i ↦ by simpa using mul_nonneg hc (hν i), map_smul w c ν⟩
 
-/-- The Tits cone is stable under addition ([Kac] Prop. 3.12 (c) (check), dually). -/
+/-- The Tits cone is stable under addition ([Kac] Prop. 3.12 (c), dually). -/
 theorem add_mem_titsCone {μ ν : Dual K H} (hμ : μ ∈ P.titsCone hA) (hν : ν ∈ P.titsCone hA) :
     μ + ν ∈ P.titsCone hA := by
   rw [mem_titsCone_iff] at hμ hν ⊢
@@ -131,7 +131,7 @@ theorem add_mem_titsCone {μ ν : Dual K H} (hμ : μ ∈ P.titsCone hA) (hν : 
   rw [LinearMap.add_apply] at hlt
   linarith [hn.1 hh, hn.2 hh]
 
-/-- **The Tits cone is convex** ([Kac] Prop. 3.12 (c) (check), dually). -/
+/-- **The Tits cone is convex** ([Kac] Prop. 3.12 (c), dually). -/
 theorem convex_titsCone : Convex K (P.titsCone hA) :=
   fun _ hμ _ hν _ _ ha hb _ ↦
     P.add_mem_titsCone hA (P.smul_mem_titsCone hA ha hμ) (P.smul_mem_titsCone hA hb hν)

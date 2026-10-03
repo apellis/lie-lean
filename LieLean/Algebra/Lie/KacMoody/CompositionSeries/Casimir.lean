@@ -11,8 +11,8 @@ import LieLean.Algebra.Lie.KacMoody.CompositionSeries.Multiplicity
 Let `A` be a symmetrizable generalized Cartan matrix and let `V` be a highest-weight module over
 `𝔤(A)` with highest weight `Λ`, i.e. a quotient of the Verma module `M(Λ)`. Using the Casimir
 operator we show that if `L(μ)` occurs as a factor of a local composition series of `V`, then
-`μ ≤ Λ` and `(Λ + ρ | Λ + ρ) = (μ + ρ | μ + ρ)` ([Kac] Prop. 9.8 (check)). More generally this
-holds for the weight `μ` of any vector of `V` that is primitive modulo a submodule.
+`μ ≤ Λ` and `(Λ + ρ | Λ + ρ) = (μ + ρ | μ + ρ)` ([Kac] §9.8, proof of Prop. 9.8). More generally
+this holds for the weight `μ` of any vector of `V` that is primitive modulo a submodule.
 
 ## Main results
 
@@ -23,24 +23,25 @@ holds for the weight `μ` of any vector of `V` that is primitive modulo a submod
   `N = 0` (primitive vectors of `V`).
 * `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.mem_cone_and_eq_of_mem_factorWeights`,
   `Matrix.Realization.KacMoodyAlgebra.IsStandardForm.mem_cone_and_eq_of_multiplicity_ne_zero`:
-  **[Kac] Prop. 9.8 (check)**.
+  **[Kac] §9.8, proof of Prop. 9.8**.
 * `Matrix.Realization.KacMoodyAlgebra.mem_cone_and_eq_of_mem_factorWeights`,
   `Matrix.Realization.KacMoodyAlgebra.mem_cone_and_eq_of_multiplicity_ne_zero`: the same for any
-  symmetrizable generalized Cartan matrix, using the invariant form of [Kac] Thm. 2.2 (check).
+  symmetrizable generalized Cartan matrix, using the invariant form of [Kac] Thm. 2.2.
 
 ## Proof
 
 The Casimir operator `Ω` acts on the quotient `V/N` of `M(Λ)` by the scalar `(Λ + 2ρ | Λ)`
-([Kac] Cor. 2.6 (check)), and on the image of `w`, a nonzero primitive vector of weight `μ`, by
+([Kac] Cor. 2.6), and on the image of `w`, a nonzero primitive vector of weight `μ`, by
 `(μ + 2ρ | μ)`; also `μ ≤ Λ` as `μ` is a weight of `V/N`. A factor `V_j / V_{j-1} ≅ L(μ)` of a
 local composition series provides such a `w` with `N = V_{j-1}`: a preimage in `V_j ∩ V_μ` of the
 highest-weight vector of `L(μ)`. Finally `(μ + ρ | μ + ρ) = (μ + 2ρ | μ) + (ρ | ρ)`. [Kac] states
-Prop. 9.8 for modules in `𝒪` with the corresponding hypothesis on `V`; the argument via `Ω` is the
-one of [Kac] §9.8 (check), written out by us.
+Prop. 9.8 as a character identity for highest-weight `V`; the factor statement and the argument
+via `Ω` (Lemma 9.8) are those of its proof in [Kac] §9.8, written out by us.
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.5–2.6, §9.6–9.8.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.2, §2.5–2.6,
+  §9.6–9.8 (stated over `ℂ`).
 -/
 
 open Module LieModule
@@ -110,7 +111,7 @@ include hB hA
 
 /-- Let `V` be a quotient of `M(Λ)` and let `w ∈ V_μ` be a primitive vector modulo a submodule
 `N`: `w ∉ N` and `eᵢ w ∈ N` for all `i`. Then `μ ≤ Λ` and `(Λ + 2ρ | Λ) = (μ + 2ρ | μ)`
-(via the Casimir operator, [Kac] §9.8 (check)). -/
+(via the Casimir operator, [Kac] §9.8). -/
 theorem mem_cone_and_eq_of_lie_e_mem {Λ : Dual K H}
     (φ : VermaModule P Λ →ₗ⁅K,P.KacMoodyAlgebra⁆ V) (hφ : Function.Surjective φ)
     (N : LieSubmodule K P.KacMoodyAlgebra V) {μ : Dual K H} {w : V}
@@ -132,7 +133,7 @@ theorem mem_cone_and_eq_of_lie_e_mem {Λ : Dual K H}
       (hB.casimir_apply_of_lie_e_eq_zero hO.isPosFinite hw' he'))
 
 /-- If `V` is a quotient of `M(Λ)` and `w ∈ V_μ` is a nonzero primitive vector (`eᵢ w = 0` for all
-`i`), then `μ ≤ Λ` and `(Λ + 2ρ | Λ) = (μ + 2ρ | μ)` ([Kac] §9.8 (check)). -/
+`i`), then `μ ≤ Λ` and `(Λ + 2ρ | Λ) = (μ + 2ρ | μ)` ([Kac] §9.8). -/
 theorem mem_cone_and_eq_of_lie_e_eq_zero {Λ : Dual K H}
     (φ : VermaModule P Λ →ₗ⁅K,P.KacMoodyAlgebra⁆ V) (hφ : Function.Surjective φ) {μ : Dual K H}
     {w : V} (hw : w ∈ weightSpace P V μ) (hw0 : w ≠ 0) (he : ∀ i, ⁅e P i, w⁆ = 0) :
@@ -141,8 +142,8 @@ theorem mem_cone_and_eq_of_lie_e_eq_zero {Λ : Dual K H}
   hB.mem_cone_and_eq_of_lie_e_mem hA φ hφ ⊥ hw (by rwa [LieSubmodule.mem_bot])
     fun i ↦ by rw [he i]; exact LieSubmodule.zero_mem _
 
-/-- **[Kac] Prop. 9.8 (check)**: if `V` is a quotient of `M(Λ)` and `L(μ)` occurs as a factor of a
-local composition series of `V` (for any `ν`), then `μ ≤ Λ` and
+/-- **[Kac] §9.8, proof of Prop. 9.8**: if `V` is a quotient of `M(Λ)` and `L(μ)` occurs
+as a factor of a local composition series of `V` (for any `ν`), then `μ ≤ Λ` and
 `(Λ + ρ | Λ + ρ) = (μ + ρ | μ + ρ)`. -/
 theorem mem_cone_and_eq_of_mem_factorWeights {Λ : Dual K H}
     (φ : VermaModule P Λ →ₗ⁅K,P.KacMoodyAlgebra⁆ V) (hφ : Function.Surjective φ) {ν : Dual K H}
@@ -156,7 +157,7 @@ theorem mem_cone_and_eq_of_mem_factorWeights {Λ : Dual K H}
   rw [dualBilinForm_add_rho_add_rho_eq_iff]
   exact hB.mem_cone_and_eq_of_lie_e_mem hA φ hφ M₁ hw hw₁ he
 
-/-- **[Kac] Prop. 9.8 (check)**: if `V` is a quotient of `M(Λ)` and `[V : L(μ)] ≠ 0`, then
+/-- **[Kac] §9.8, proof of Prop. 9.8**: if `V` is a quotient of `M(Λ)` and `[V : L(μ)] ≠ 0`, then
 `μ ≤ Λ` and `(Λ + ρ | Λ + ρ) = (μ + ρ | μ + ρ)`. -/
 theorem mem_cone_and_eq_of_multiplicity_ne_zero {Λ : Dual K H}
     (φ : VermaModule P Λ →ₗ⁅K,P.KacMoodyAlgebra⁆ V) (hφ : Function.Surjective φ)
@@ -174,7 +175,7 @@ end IsStandardForm
 variable (hA : A.IsGeneralizedCartan)
 include hA
 
-/-- **[Kac] Prop. 9.8 (check)**: let `A` be a symmetrizable generalized Cartan matrix, `S` a
+/-- **[Kac] §9.8, proof of Prop. 9.8**: let `A` be a symmetrizable generalized Cartan matrix, `S` a
 symmetrization of `A`, and `V` a quotient of `M(Λ)`. If `L(μ)` occurs as a factor of a local
 composition series of `V`, then `μ ≤ Λ` and `(Λ + ρ | Λ + ρ) = (μ + ρ | μ + ρ)`. -/
 theorem mem_cone_and_eq_of_mem_factorWeights (S : A.Symmetrization) {Λ : Dual K H}
@@ -186,7 +187,7 @@ theorem mem_cone_and_eq_of_mem_factorWeights (S : A.Symmetrization) {Λ : Dual K
       P.dualBilinForm S (Λ + P.rho) (Λ + P.rho) = P.dualBilinForm S (μ + P.rho) (μ + P.rho) :=
   (isStandardForm_invForm P S).mem_cone_and_eq_of_mem_factorWeights hA φ hφ hl hμ
 
-/-- **[Kac] Prop. 9.8 (check)**: let `A` be a symmetrizable generalized Cartan matrix, `S` a
+/-- **[Kac] §9.8, proof of Prop. 9.8**: let `A` be a symmetrizable generalized Cartan matrix, `S` a
 symmetrization of `A`, and `V` a quotient of `M(Λ)`. If `[V : L(μ)] ≠ 0`, then `μ ≤ Λ` and
 `(Λ + ρ | Λ + ρ) = (μ + ρ | μ + ρ)`. -/
 theorem mem_cone_and_eq_of_multiplicity_ne_zero (S : A.Symmetrization) {Λ : Dual K H}

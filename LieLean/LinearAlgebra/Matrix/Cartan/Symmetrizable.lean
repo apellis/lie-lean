@@ -18,33 +18,34 @@ The complement `𝔥''` is chosen once and for all (`Matrix.Realization.corootCo
 
 ## Main definitions
 
-* `Matrix.Symmetrization`: a symmetrization `A = diag(ε) B` of `A` ([Kac] §2.1).
+* `Matrix.Symmetrization`: a symmetrization `A = diag(ε) B` of `A` ([Kac] (2.1.1), (2.3.1)).
 * `Matrix.Realization.corootCoord`: coordinates with respect to the simple coroots; its kernel
   `Matrix.Realization.corootCompl` is the chosen complement `𝔥''` of the span of the coroots.
 * `Matrix.Realization.bilinForm`: the symmetric bilinear form on `𝔥` of [Kac] (2.1.2)–(2.1.3).
 * `Matrix.Realization.toDual`: the isomorphism `ν : 𝔥 ≃ 𝔥*` induced by the form ([Kac] §2.1).
 * `Matrix.Realization.dualBilinForm`: the induced form on `𝔥*`.
 * `Matrix.Realization.rho`, `Matrix.Realization.rhoCheck`: elements `ρ ∈ 𝔥*`, `ρ^∨ ∈ 𝔥` with
-  `⟨ρ, αᵢ^∨⟩ = 1` and `⟨αᵢ, ρ^∨⟩ = 1` for all `i` ([Kac] §2.5 (check); `ρ^∨` defines the
-  principal gradation, [Kac] §1.5 (check)).
+  `⟨ρ, αᵢ^∨⟩ = 1` and `⟨αᵢ, ρ^∨⟩ = 1` for all `i` ([Kac] §2.5, §10.8; `ρ^∨` defines the
+  principal gradation, [Kac] §1.5).
 
 ## Main results
 
 * `Matrix.isSymmetrizable_iff_nonempty_symmetrization`.
 * `Matrix.Realization.isSymm_bilinForm`, `Matrix.Realization.nondegenerate_bilinForm`: the form
-  on `𝔥` is symmetric and nondegenerate ([Kac] Lemma 2.1 b) (check)).
+  on `𝔥` is symmetric and nondegenerate ([Kac] Lemma 2.1 b)).
 * `Matrix.Realization.bilinForm_coroot_left`, `Matrix.Realization.bilinForm_corootCompl`: the
   defining properties (2.1.2), (2.1.3).
-* `Matrix.Realization.toDual_coroot`: `ν(αᵢ^∨) = εᵢ αᵢ` ([Kac] (2.1.4) (check)).
+* `Matrix.Realization.toDual_coroot`: `ν(αᵢ^∨) = εᵢ αᵢ` ([Kac] (2.1.5)).
 * `Matrix.Realization.dualBilinForm_root_root`: `(αᵢ | αⱼ) = aᵢⱼ / εᵢ = bᵢⱼ`
-  ([Kac] (2.1.5) (check)).
+  ([Kac] (2.1.6)).
 * `Matrix.Realization.dualBilinForm_root_self`: `(αᵢ | αᵢ) = 2 / εᵢ`, a positive rational.
 * `Matrix.Realization.apply_coroot_eq`: `⟨λ, αᵢ^∨⟩ = 2 (λ | αᵢ) / (αᵢ | αᵢ)`
-  ([Kac] (2.1.6) (check)).
+  ([Kac] (2.3.5)).
 
 ## References
 
-* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.1.
+* [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §2.1, §2.3
+  (stated over `ℂ`).
 -/
 
 open Module
@@ -55,7 +56,7 @@ namespace Matrix
 
 variable {ι : Type*}
 
-/-- A symmetrization of a square integer matrix `A` ([Kac] §2.1): positive rationals `εᵢ` such
+/-- A symmetrization of a square integer matrix `A` ([Kac] (2.3.1)): positive rationals `εᵢ` such
 that `A = diag(ε) B` with `B` symmetric, i.e. `εⱼ aᵢⱼ = εᵢ aⱼᵢ` for all `i, j`. The symmetric
 matrix `B` is `Matrix.Symmetrization.matrix`. -/
 structure Symmetrization (A : Matrix ι ι ℤ) where
@@ -141,9 +142,9 @@ theorem isCompl_corootCompl : IsCompl (LinearMap.range P.corootMap) P.corootComp
 
 /-! ### The elements `ρ` and `ρ^∨` -/
 
-/-- An element `ρ ∈ 𝔥*` with `⟨ρ, αᵢ^∨⟩ = 1` for all `i` ([Kac] §2.5 (check)). It exists since
-the simple coroots are linearly independent; it is unique only up to the annihilator of the coroots,
-and this is a chosen one. -/
+/-- An element `ρ ∈ 𝔥*` with `⟨ρ, αᵢ^∨⟩ = 1` for all `i` ([Kac] §10.8; [Kac] §2.5 has
+`⟨ρ, αᵢ^∨⟩ = aᵢᵢ/2`, which is `1` when `aᵢᵢ = 2`). It exists since the simple coroots are linearly
+independent; it is unique only up to the annihilator of the coroots, and this is a chosen one. -/
 def rho : Dual K H := ∑ i, LinearMap.proj i ∘ₗ P.corootCoord
 
 @[simp] theorem rho_coroot (i : ι) : P.rho (P.coroot i) = 1 := by
@@ -151,7 +152,7 @@ def rho : Dual K H := ∑ i, LinearMap.proj i ∘ₗ P.corootCoord
   simp [rho, LinearMap.sum_apply]
 
 /-- An element `ρ^∨ ∈ 𝔥` with `⟨αᵢ, ρ^∨⟩ = 1` for all `i`; it exists since the simple roots are
-linearly independent. It defines the principal gradation ([Kac] §1.5 (check)). -/
+linearly independent. It defines the principal gradation ([Kac] §1.5). -/
 def rhoCheck [FiniteDimensional K H] : H :=
   (P.rootMap_surjective (fun _ ↦ 1)).choose
 
@@ -240,7 +241,7 @@ theorem bilinForm_corootCompl {x y : H} (hx : x ∈ P.corootCompl) (hy : y ∈ P
   rw [corootCompl, LinearMap.mem_ker] at hx hy
   simp [bilinForm_apply, hx, hy]
 
-/-- The form on `𝔥` is nondegenerate ([Kac] Lemma 2.1 b) (check)). -/
+/-- The form on `𝔥` is nondegenerate ([Kac] Lemma 2.1 b)). -/
 theorem nondegenerate_bilinForm [FiniteDimensional K H] : (P.bilinForm S).Nondegenerate := by
   refine (LinearMap.IsRefl.nondegenerate_iff_separatingLeft
     (P.isSymm_bilinForm S).isRefl).mpr fun x hx ↦ ?_
@@ -280,7 +281,7 @@ def toDual : H ≃ₗ[K] Dual K H :=
     P.bilinForm S x ((P.toDual S).symm μ) = μ x := by
   rw [(P.isSymm_bilinForm S).eq, bilinForm_toDual_symm_left]
 
-/-- [Kac] (2.1.4) (check): `ν(αᵢ^∨) = εᵢ αᵢ`. -/
+/-- [Kac] (2.1.5): `ν(αᵢ^∨) = εᵢ αᵢ`. -/
 theorem toDual_coroot (i : ι) : P.toDual S (P.coroot i) = (S.ε i : K) • P.root i := by
   ext x
   simp
@@ -311,7 +312,7 @@ lemma dualBilinForm_root_right (μ : Dual K H) (i : ι) :
     P.dualBilinForm S μ (P.root i) = μ (P.coroot i) / S.ε i := by
   rw [dualBilinForm_apply_eq, toDual_symm_root, map_smul, smul_eq_mul, inv_mul_eq_div]
 
-/-- [Kac] (2.1.5) (check): `(αᵢ | αⱼ) = aᵢⱼ / εᵢ`, the entry `bᵢⱼ` of the symmetric matrix
+/-- [Kac] (2.1.6): `(αᵢ | αⱼ) = aᵢⱼ / εᵢ`, the entry `bᵢⱼ` of the symmetric matrix
 `B`. -/
 theorem dualBilinForm_root_root (i j : ι) :
     P.dualBilinForm S (P.root i) (P.root j) = (S.matrix i j : K) := by
@@ -324,7 +325,7 @@ theorem dualBilinForm_root_root (i j : ι) :
   linear_combination -this
 
 variable {P} in
-/-- `(αᵢ | αᵢ) = 2 / εᵢ` is a positive rational number ([Kac] §2.1). -/
+/-- `(αᵢ | αᵢ) = 2 / εᵢ` is a positive rational number ([Kac] (2.1.6), (2.3.3)). -/
 theorem dualBilinForm_root_self (hA : A.IsGeneralizedCartan) (i : ι) :
     P.dualBilinForm S (P.root i) (P.root i) = ((2 / S.ε i : ℚ) : K) := by
   rw [dualBilinForm_root_right, P.root_coroot, hA.diag]
@@ -335,7 +336,7 @@ omit [Fintype ι] in
 lemma two_div_ε_pos (i : ι) : 0 < 2 / S.ε i := div_pos two_pos (S.ε_pos i)
 
 variable {P} in
-/-- [Kac] (2.1.6) (check): `⟨λ, αᵢ^∨⟩ = 2 (λ | αᵢ) / (αᵢ | αᵢ)`. -/
+/-- [Kac] (2.3.5): `⟨λ, αᵢ^∨⟩ = 2 (λ | αᵢ) / (αᵢ | αᵢ)`. -/
 theorem apply_coroot_eq (hA : A.IsGeneralizedCartan) (μ : Dual K H) (i : ι) :
     μ (P.coroot i) =
       2 * P.dualBilinForm S μ (P.root i) / P.dualBilinForm S (P.root i) (P.root i) := by
@@ -349,7 +350,7 @@ theorem dualBilinForm_rho_root (i : ι) : P.dualBilinForm S P.rho (P.root i) = (
   rw [dualBilinForm_root_right, rho_coroot, one_div]
 
 variable {P} in
-/-- `2 (ρ | αᵢ) = (αᵢ | αᵢ)` ([Kac] §2.5 (check)). -/
+/-- `2 (ρ | αᵢ) = (αᵢ | αᵢ)` ([Kac] §2.5). -/
 theorem two_mul_dualBilinForm_rho_root (hA : A.IsGeneralizedCartan) (i : ι) :
     2 * P.dualBilinForm S P.rho (P.root i) = P.dualBilinForm S (P.root i) (P.root i) := by
   rw [dualBilinForm_rho_root, dualBilinForm_root_self S hA]

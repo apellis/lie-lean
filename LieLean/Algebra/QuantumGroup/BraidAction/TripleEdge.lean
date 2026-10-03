@@ -14,8 +14,7 @@ The ambient rank and compatible toral lattice are unrestricted.
 
 ## References
 Reconstructed from the repository quantum quotient presentation and its `T''` convention.
-No external primary source consulted. These are necessary identities, not a G₂ automorphism
-or a length-six action.
+These are necessary identities, not a G₂ automorphism or a length-six action.
 -/
 
 noncomputable section

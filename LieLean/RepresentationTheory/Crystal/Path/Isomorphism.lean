@@ -9,7 +9,7 @@ import Mathlib.Topology.Order.MonotoneContinuity
 /-!
 # Towards Littelmann's isomorphism theorem
 
-Littelmann's isomorphism theorem ([Lit95] §7 (check)) states that for two paths `π, π'` with
+Littelmann's isomorphism theorem ([Lit95] §7) states that for two paths `π, π'` with
 image in the dominant chamber and `π(1) = π'(1)`, the crystals `B(π)` and `B(π')` are isomorphic,
 by the unique isomorphism sending `π` to `π'`. This file sets up the statement
 (`LittelmannPath.ComponentIso`) and the abstract tools used to prove instances of it, and proves
@@ -58,11 +58,13 @@ for general dominant paths. A characters-only argument cannot work: the characte
 connected component of `B(λ) ⊗ B(μ)` is `∑ ch L(ν)` over the highest weight elements it contains
 (`Matrix.Realization.setCharacter_component_concat_eq_hsum`), whatever their number, so the
 characters do not see whether two highest weight elements lie in the same component. A natural
-route (which we believe to be close to Littelmann's, [Lit95] §4–7 (check); we could not consult
-the source) is a theory of Lakshmibai–Seshadri type paths "of shape `π`" for an arbitrary
-dominant path `π` (pieces of `π` twisted by Weyl group elements, with chain conditions),
-generalizing `LittelmannPath.LSData`; in finite type an alternative is the Pitman transform
-`P_{w₀}` of [BBO], which requires the braid relations for Pitman transforms.
+route is a theory of Lakshmibai–Seshadri type paths "of shape `π`" for an arbitrary dominant path
+`π` (pieces of `π` twisted by Weyl group elements, with chain conditions), generalizing
+`LittelmannPath.LSData`; in finite type an alternative is the Pitman transform `P_{w₀}` of [BBO],
+which requires the braid relations for Pitman transforms.
+Littelmann's own proof ([Lit95] §§5–7) takes a different route: gluing of L-S paths (§5),
+linking chains based on the continuity of the root operators (§§3, 6), and induction on
+concatenations of straight line paths (§7).
 
 ## References
 
@@ -399,7 +401,7 @@ noncomputable def reparamEquiv (τ : 𝕜 ≃o 𝕜) (h0 : τ 0 = 0) (h1 : τ 1 
   e_map i π := e_reparam π τ h0 h1 i
   f_map i π := f_reparam π τ h0 h1 i
 
-/-- **Littelmann's isomorphism property** for two paths `π, π'` ([Lit95] Thm. 7.1 (check)): there
+/-- **Littelmann's isomorphism property** for two paths `π, π'` ([Lit95] Thm. 7.1): there
 is an isomorphism of crystals `B(π) ≅ B(π')` sending `π` to `π'`. Littelmann's isomorphism theorem
 states this for all paths `π, π'` with image in the dominant chamber and `π(1) = π'(1)`. -/
 def ComponentIso (π π' : LittelmannPath S) : Prop :=
@@ -499,7 +501,7 @@ lemma exists_fWord_pathCrystal
   classical
   exact exists_fWord_componentCrystal (component_straightLine_eq_fOrbit (hA := hA) hΛ).1 b
 
-/-- `π_λ` is the only highest weight element of `B(λ)` ([Lit95] (check)). -/
+/-- `π_λ` is the only highest weight element of `B(λ)` ([Lit95] §4, Cor. 3). -/
 theorem isHighestWeight_pathCrystal_iff
     (b : (straightLine (P.pathSpace hA) ⟨Λ, hΛ.mem_integralWeights⟩).component) :
     (P.pathCrystal hA hΛ).IsHighestWeight b ↔ b = pathCrystalTop hA hΛ := by
