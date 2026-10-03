@@ -23,7 +23,7 @@ and integral connected component are proved from the source data.
 ## References
 
 Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
-(1995), Proposition 5.6, pp. 515–516; Definition 5.3, p. 514. Primary scans consulted.
+(1995), Proposition 5.6, pp. 515–516; Definition 5.3, p. 514.
 This proves the component statement for finite rational-breakpoint presentations
 with integral directions. Neither source class need be dominant. Arbitrary rational
 classes modulo pause-allowing reparametrization and Proposition 5.7 are NOT asserted.

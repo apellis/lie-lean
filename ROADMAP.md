@@ -8,7 +8,7 @@ University Press, 1990. Section and theorem numbers below refer to it.
 
 Secondary references:
 - **[GK]** O. Gabber, V. G. Kac, *On defining relations of certain infinite-dimensional Lie
-  algebras*, Bull. Amer. Math. Soc. (N.S.) **5** (1981), 185–189 (open access on ams.org).
+  algebras*, Bull. Amer. Math. Soc. (N.S.) **5** (1981), 185–189.
 - **[KK]** V. G. Kac, D. A. Kazhdan, *Structure of representations with highest weight of
   infinite-dimensional Lie algebras*, Adv. Math. **34** (1979), 97–108.
 - **[Hum]** J. E. Humphreys, *Introduction to Lie algebras and representation theory*, GTM 9

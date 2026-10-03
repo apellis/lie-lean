@@ -24,8 +24,7 @@ import LieLean.RepresentationTheory.Crystal.Path.Isomorphism
 These are direct proofs from the closed root-operator formula, reconstructed here, not
 claims of the full isomorphism theorem. They apply to the repository's continuous,
 parametrized paths. Littelmann, *Paths and root operators in representation theory*,
-Ann. of Math. 142 (1995), 499–525, Section 1 and Theorem 7.1, was consulted at
-<https://www.mi.uni-koeln.de/~littelma/papers/RootOperator.pdf>. The source's Theorem 7.1
+Ann. of Math. 142 (1995), 499–525, Section 1 and Theorem 7.1. The source's Theorem 7.1
 concerns piecewise-linear rational paths, modulo reparametrization, in the dominant chamber
 with integral endpoint, for a symmetrizable Kac–Moody algebra. Extending it to all continuous
 paths in the current interface is a further assertion, not something justified by that citation.

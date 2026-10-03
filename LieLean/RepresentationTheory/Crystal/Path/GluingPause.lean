@@ -18,7 +18,7 @@ change, not spatial stretching: no root letter is replaced by a power.
 ## References
 
 Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
-(1995), §1 p. 502, §2 p. 504, Remark 5.1 pp. 513–514. Primary scans consulted.
+(1995), §1 p. 502, §2 p. 504, Remark 5.1 pp. 513–514.
 The continuous real-path lemma extends the source rational piecewise-linear case.
 -/
 

@@ -28,7 +28,7 @@ This does not assert full Proposition 5.6 or the component isomorphism theorem.
 ## References
 
 Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142 (1995),
-pp. 515–516, Proposition 5.6. The primary scans were consulted; proofs are reconstructed.
+pp. 515–516, Proposition 5.6. Proofs are reconstructed.
 Neither source class is assumed dominant. Strict source monotonicity is never imposed
 across the artificial glued pause, and no Remark 5.4 equality-cut presentation is
 used as a strict same-cut gluing pair.

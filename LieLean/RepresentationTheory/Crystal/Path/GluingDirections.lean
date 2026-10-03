@@ -42,8 +42,6 @@ pause-allowing parametrizations with order automorphisms.
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
 (1995), 499–525, p. 514, definition preceding Lemma 5.2 and Lemma 5.2(a,b);
 application in Proposition 5.6, p. 515.
-https://www.mi.uni-koeln.de/~littelma/papers/RootOperator.pdf
-The scanned source pages 513–515 were inspected directly.
 -/
 
 open Module

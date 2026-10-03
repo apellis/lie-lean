@@ -21,8 +21,7 @@ The proofs below are reconstructed directly from the closed running-minimum form
 They do not assume LS data, integrality of intermediate minima, piecewise linearity,
 symmetrizability, or a component isomorphism. They prove only a two-letter step.
 Littelmann, Paths and root operators in representation theory, Ann. Math. 142 (1995),
-499–525, Sections 1 and 7, Theorem 7.1 and Corollary 1, was consulted at
-https://www.mi.uni-koeln.de/~littelma/papers/RootOperator.pdf . Its full isomorphism
+499–525, Sections 1 and 7, Theorem 7.1 and Corollary 1. Its full isomorphism
 statement concerns rational piecewise-linear paths modulo reparametrization, in the
 symmetrizable setting; no full continuous-path isomorphism is asserted here.
 -/

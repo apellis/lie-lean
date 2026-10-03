@@ -16,7 +16,6 @@ not arbitrary continuous paths modulo an unconstructed reparametrization quotien
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142 (1995),
 499–525, Section 4, definitions preceding and following Lemma 4.3 (consulted at
-https://www.mi.uni-koeln.de/~littelma/papers/RootOperator.pdf).
 The source orders directions decreasingly toward the dominant weight and requires
 `a * <preceding direction, coroot> ∈ ℤ` at each saturated reflection step.
 The proofs below are reconstructed; no general crystal isomorphism is assumed.

@@ -21,8 +21,8 @@ import LieLean.RepresentationTheory.Crystal.Path.LSFinitePieces
 ## References
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142 (1995),
-499–525, Section 4, pp. 509–510 (https://www.mi.uni-koeln.de/~littelma/papers/RootOperator.pdf).
-The proof is reconstructed from these inspected pages. Source steps use the
+499–525, Section 4, pp. 509–510.
+The proof is reconstructed. Source steps use the
 positive-real-root, negative-pairing, saturated dominant-orbit Bruhat presentation of
 Remark 4.2. No maximal-distance function or reparametrization quotient is constructed.
 -/

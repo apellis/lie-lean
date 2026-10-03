@@ -29,8 +29,7 @@ uses the separate endpoint-fiber uniqueness result, Proposition 6.2, in the sour
 
 P. Littelmann, *Paths and root operators in representation theory*, Ann. Math. 142
 (1995), Proposition 3.1, pp. 507–508, and Lemma 6.1, p. 517.
-https://www.mi.uni-koeln.de/~littelma/papers/RootOperator.pdf
-The scanned source was inspected. Proofs below reconstruct the estimates from the
+Proofs below reconstruct the estimates from the
 repository's closed running-minimum formulas. This analytic part extends to continuous
 coroot evaluations; it does NOT extend the source isomorphism theorem beyond rational
 piecewise-linear paths in its symmetrizable setting.
