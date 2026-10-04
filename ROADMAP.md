@@ -1606,9 +1606,9 @@ finite-type root weights, longest-word positive-root enumeration and actual mono
 are now proved. `PBW/GenericBasis.lean` combines these with natural-degree Kostant counting to
 prove degreewise and global spanning and construct the genuine ordered-monomial basis of `U⁺`
 at a transcendental parameter in characteristic zero. This includes type `G₂` under those
-parameter hypotheses, without a separate six-variable operator model. Still open: spanning and
-bases at arbitrary non-root-of-unity parameters (e.g. via Levendorskii–Soibelman straightening),
-the separate explicit `G₂` operator model, and canonical bases.
+parameter hypotheses, without a separate six-variable operator model. Spanning and bases at
+arbitrary non-root-of-unity parameters are proved by straightening (see `PBW/FiniteTypeSpan`
+below); canonical bases remain open.
 `BraidAction/BraidRelationsGeneral.lean`, `BraidAction/DoubleEdgeGeneral.lean` and
 `BraidAction/GeneralArtin.lean` prove braid relations for the general `Tᵢ` in arbitrary rank:
 length three at a simple edge when no third node meets both ends, with arbitrary Cartan entries
@@ -1803,21 +1803,21 @@ completed steps and continuation threads are:
   proves their Kostant cardinalities, and applies independence and graded dimensions to prove
   degreewise and global spanning. `finiteTypePBWBasis` is a genuine basis of `U⁺` with exactly
   the ordered braid-root monomials as vectors; `exists_finiteTypePBWBasis` supplies a longest
-  reduced word and its basis without a supplied enumeration or basis premise. Counting retains
-  the nonzero non-root-of-unity hypotheses; spanning and the basis additionally require
-  characteristic zero and transcendence. `PBW/NegativeBasis.lean` proves the actual Chevalley
+  reduced word and its basis without a supplied enumeration or basis premise. The dimension-count
+  spanning there requires characteristic zero and transcendence; the basis itself now uses the
+  straightening proof of `PBW/FiniteTypeSpan.lean` and needs only a nonzero non-root-of-unity
+  parameter. `PBW/NegativeBasis.lean` proves the actual Chevalley
   restriction `U⁺ ≃ₐ U⁻` (without parameter restrictions), intertwines root vectors and ordered
   monomials using the explicit conjugated operators `C Tᵢ C⁻¹`, and constructs the negative
   PBW basis with ambient finite-support reconstruction and existence without a supplied word.
-  Negative independence only requires the nonzero non-root-of-unity parameter; the basis
-  retains characteristic zero and transcendence. `PBW/TriangularBasis.lean` now identifies
+  Negative independence and the basis only require the nonzero non-root-of-unity parameter. `PBW/TriangularBasis.lean` now identifies
   the quotient tensor factors with the actual generated subalgebras and proves actual
   negative–toral–positive multiplication is a linear equivalence, requiring only a nonzero
   non-root-of-unity parameter. `finiteTypeFullPBWBasis` tensors the negative, toral and positive
   bases; its vectors are precisely negative monomial times `K_μ` times positive monomial.
   It gives finite-support reconstruction, and `exists_finiteTypeFullPBWBasis` supplies the
-  longest reduced word internally. The full basis retains finite type, characteristic zero
-  and transcendence, and the explicit Chevalley-conjugated negative braid convention.
+  longest reduced word internally. The full basis retains finite type and the explicit
+  Chevalley-conjugated negative braid convention, at any nonzero non-root-of-unity parameter.
   `PBW/RootVectorGeneration.lean` proves simple-degree scalar proportionality to `Eᵢ`
   directly from the word grading, without parameter restrictions. Longest-word root
   enumeration and braid nonvanishing then identify, for each `Eᵢ`, a root vector equal
@@ -1883,9 +1883,27 @@ completed steps and continuation threads are:
   `pbwMonomial_b2_rev_eq`: `Tⱼ(Eᵢ) = y'`, `TⱼTᵢ(Eⱼ) = [2]ᵢ!⁻¹x'`, `TⱼTᵢTⱼ(Eᵢ) = Eᵢ`), so both
   span the two-generator subalgebra in arbitrary ambient data (`span_pbwMonomial_b2_braid`),
   and proves B₂ span invariance in arbitrary prefix/suffix word context
-  (`span_pbwMonomial_b2_context`, `span_pbwMonomial_b2_context_of_not_root`). General ordered
-  spanning in non-simply-laced type (the remaining braid length six) and corresponding full
-  bases at arbitrary non-root-of-unity parameters remain open.
+  (`span_pbwMonomial_b2_context`, `span_pbwMonomial_b2_context_of_not_root`).
+  `PBW/OrderedSpan.lean` proves an abstract straightening theorem: if
+  `x_b x_a - c x_a x_b` lies in the span of the ordered monomials in the letters strictly
+  between `a` and `b` for all `a < b` (`OrderedSpan.IsLS`), the ordered monomials span the
+  generated subalgebra (`OrderedSpan.span_mono_eq_adjoin`; induction on the lexicographic
+  letter-count vector and the number of inversions), together with the transport of these
+  relations along a word by algebra endomorphisms (`isLS_cons`, `isLS_altVec`).
+  `PBW/RankTwoG2Relations.lean` proves, from the two G₂ Serre relations only, the relations
+  between the first letter and the later root vectors along both words `i j i j i j` and
+  `j i j i j i` (explicit Serre certificates; `G2PBW.baseRel_fwd`, `G2PBW.baseRel_rev`), and
+  `PBW/RankTwoG2BraidSpan.lean` identifies the actual root vectors (`altVec_g2`,
+  `altVec_g2_rev`), proves that both six-letter words span the two-generator subalgebra in
+  arbitrary ambient data (`span_pbwMonomial_g2`, `span_pbwMonomial_g2_rev`, `vᵢ - vᵢ⁻¹ ≠ 0`,
+  `[3]ᵢ! ≠ 0`) and G₂ span invariance in word context
+  (`span_pbwMonomial_g2_context_of_not_root`). `PBW/FiniteTypeSpan.lean` combines all four
+  rank-two moves: reduced-word independence of ordered PBW spans
+  (`span_pbwMonomial_of_isReduced_of_isFiniteCartan`, [Jan] Prop. 8.22 a)) and longest-word
+  spanning (`span_pbwMonomial_longest_of_isFiniteCartan`, [Jan] Thm. 8.24, [Lus] Cor. 40.2.2)
+  in every finite type, over any field at any nonzero parameter which is not a root of unity.
+  Hence `finiteTypePBWBasis`, `finiteTypeNegativePBWBasis`, `finiteTypeFullPBWBasis` (bases of
+  `U⁺`, `U⁻`, `U`) no longer assume characteristic zero or a transcendental parameter.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,

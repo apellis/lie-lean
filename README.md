@@ -78,7 +78,7 @@ Further proved results include:
 * **Quantum groups:** finite-dimensional generic quantum `sl₂` classification; Lusztig's `Tᵢ`
   at every node under explicit nonvanishing hypotheses (in particular, nonzero parameter not a
   root of unity); the `G₂` length-six relation; and Artin actions for every finite-type Cartan
-  datum and every simply-laced datum. Quantum PBW bases are proved in types `A₂` and `B₂`, with
+  datum and every simply-laced datum. Quantum PBW bases are proved in all finite types (see below), with
   reduced-word root vectors in `U⁺` under the roadmap's rank-two hypotheses. Root vectors along
   every word have the prefix-reflected simple-root conjugation character
   (`rootVector_conj_of_not_root`). In finite type, actual root vectors and their ordered monomials
@@ -95,18 +95,18 @@ Further proved results include:
   `PBW/KostantCounting`), using proved finite-type root multiplicity one.
   `PBW/GenericBasis` identifies the natural-degree fibers, proves degreewise and global spanning,
   and constructs `finiteTypePBWBasis`: the actual ordered braid-root monomials form a basis of
-  `U⁺` for every longest reduced word in finite type, over a characteristic-zero field at a
-  transcendental parameter. `exists_finiteTypePBWBasis` also supplies a longest reduced word
+  `U⁺` for every longest reduced word in finite type (its spanning input now comes from
+  `PBW/FiniteTypeSpan`, see below). `exists_finiteTypePBWBasis` also supplies a longest reduced word
   and its basis. `PBW/NegativeBasis` restricts the actual coefficient-linear Chevalley
   involution to `U⁺ ≃ₐ U⁻` and constructs a negative basis with finite-support coordinate
   reconstruction. Its ordered `F`-root monomials use the explicit conjugated operators
   `C Tᵢ C⁻¹`, not an asserted equality with the original braid operators on `F`.
-  Negative independence retains the nonzero non-root-of-unity hypotheses; the negative
-  basis retains characteristic zero and transcendence. `PBW/TriangularBasis` identifies
+  Negative independence and the negative basis need only the nonzero non-root-of-unity
+  hypotheses. `PBW/TriangularBasis` identifies
   the actual negative–toral–positive multiplication with a linear equivalence for every
   nonzero non-root-of-unity parameter. Tensoring the three bases gives the full finite-type
-  PBW basis and finite-support reconstruction at characteristic zero and transcendence,
-  with the same conjugated negative convention. `PBW/RootVectorGeneration` proves that
+  PBW basis and finite-support reconstruction, with the same conjugated negative
+  convention. `PBW/RootVectorGeneration` proves that
   the actual root vectors of any longest reduced word generate `U⁺` as an algebra over
   any coefficient field at a nonzero non-root-of-unity parameter. The auxiliary classical
   realization remains characteristic zero. This is not ordered-monomial spanning:
@@ -149,10 +149,16 @@ Further proved results include:
   finite simply-laced and nonzero non-root-of-unity hypotheses. Its exact vectors
   are negative monomial times `K_μ` times positive monomial; finite reconstruction
   and existence without a supplied longest word are proved. The quantum field
-  still needs neither characteristic zero nor transcendence. Non-simply-laced
-  ordered spanning and corresponding full bases at arbitrary non-root-of-unity
-  parameters, braid relations outside `BraidOuterCondition`, faithfulness and
-  general-rank global bases remain open.
+  still needs neither characteristic zero nor transcendence. **All finite types:**
+  `PBW/RankTwoB2BraidSpan` and `PBW/RankTwoG2BraidSpan` prove that both words of the
+  length-four and length-six braid moves span the two-generator subalgebra in arbitrary
+  ambient data (G₂ via Levendorskii–Soibelman-type straightening, `PBW/OrderedSpan`,
+  `PBW/RankTwoG2Relations`), so `PBW/FiniteTypeSpan` proves reduced-word independence and
+  longest-word spanning (`span_pbwMonomial_longest_of_isFiniteCartan`) in every finite type.
+  Consequently `finiteTypePBWBasis`, `finiteTypeNegativePBWBasis` and `finiteTypeFullPBWBasis`
+  (`U⁺`, `U⁻`, `U`) hold for every Cartan datum of finite type, over any field, at every
+  nonzero parameter which is not a root of unity. Braid relations outside
+  `BraidOuterCondition`, faithfulness and general-rank global bases remain open.
 
 These summaries do not replace the precise hypotheses and remaining dependencies in
 [`ROADMAP.md`](ROADMAP.md). In particular, the quantum actions are not claimed faithful, and

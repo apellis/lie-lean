@@ -20,14 +20,13 @@ import LieLean.Algebra.QuantumGroup.BraidAction.CoupledSerreNegative
 
 Chevalley fixes coefficients and sends `Eᵢ ↔ Fᵢ`, `K_μ ↦ K_{-μ}`. The conjugated operators
 are not asserted to be the original braid operators on `F`: scalar discrepancies already
-appear at a simple edge. Independence only needs a nonzero non-root-of-unity parameter.
-Spanning and the basis additionally retain characteristic zero and transcendence over `ℚ`
-from the positive basis. This is not yet a full negative/toral/positive multiplication basis.
+appear at a simple edge. Independence, spanning and the basis only need a nonzero
+non-root-of-unity parameter, over any field.
 
 ## References
 
 Reconstructed by restricting the presentation-defined Chevalley involution and transporting
-`PBW.GenericBasis`; no additional printed theorem number or broader parameter theorem is claimed.
+`PBW.GenericBasis`.
 -/
 
 noncomputable section
@@ -114,55 +113,54 @@ theorem linearIndependent_negativePBWMonomial_of_isFiniteCartan
     (CoxeterSystem.pbwMonomial (braidEquivOfNotRoot R hv) (E R v) ω c)) at h
   simpa only [chevalley_pbwMonomial] using h
 
-/-- The genuine longest-word negative PBW basis, at a transcendental parameter in
-characteristic zero, obtained by the actual Chevalley subalgebra equivalence. -/
-def finiteTypeNegativePBWBasis [CharZero k] (htrans : Transcendental ℚ v)
+/-- The genuine longest-word negative PBW basis, over any field at any nonzero parameter which
+is not a root of unity, obtained by the actual Chevalley subalgebra equivalence. -/
+def finiteTypeNegativePBWBasis
     {ω : List I} (hω : (P.coxeterSystem hD.isGeneralizedCartan).IsReduced ω)
     (hw : (P.coxeterSystem hD.isGeneralizedCartan).wordProd ω = finiteTypeLongest P hD) :
     Basis (Fin ω.length → ℕ) k (Algebra.adjoin k (Set.range (F R v))) :=
-  (finiteTypePBWBasis R P hD hv htrans hω hw).map
+  (finiteTypePBWBasis R P hD hv hω hw).map
     (chevalleyPlusEquivMinus R v).toLinearEquiv
 
 /-- The negative basis vectors are exactly the actual ordered conjugated-braid `F` monomials. -/
-theorem finiteTypeNegativePBWBasis_apply [CharZero k] (htrans : Transcendental ℚ v)
+theorem finiteTypeNegativePBWBasis_apply
     {ω : List I} (hω : (P.coxeterSystem hD.isGeneralizedCartan).IsReduced ω)
     (hw : (P.coxeterSystem hD.isGeneralizedCartan).wordProd ω = finiteTypeLongest P hD)
     (c : Fin ω.length → ℕ) :
-    (finiteTypeNegativePBWBasis R hv P hD htrans hω hw c : QuantumGroup R v) =
+    (finiteTypeNegativePBWBasis R hv P hD hω hw c : QuantumGroup R v) =
       CoxeterSystem.pbwMonomial (negativeBraidEquiv R hv) (F R v) ω c := by
-  change chevalley R v (finiteTypePBWBasis R P hD hv htrans hω hw c) = _
+  change chevalley R v (finiteTypePBWBasis R P hD hv hω hw c) = _
   rw [finiteTypePBWBasis_apply, chevalley_pbwMonomial]
 
 /-- Basis coordinates reconstruct every element of the actual negative subalgebra as a
 finite sum of ordered conjugated-braid `F` monomials in the ambient quantum group. -/
-theorem finiteTypeNegativePBWBasis_sum_repr [CharZero k] (htrans : Transcendental ℚ v)
+theorem finiteTypeNegativePBWBasis_sum_repr
     {ω : List I} (hω : (P.coxeterSystem hD.isGeneralizedCartan).IsReduced ω)
     (hw : (P.coxeterSystem hD.isGeneralizedCartan).wordProd ω = finiteTypeLongest P hD)
     (x : Algebra.adjoin k (Set.range (F R v))) :
-    ((finiteTypeNegativePBWBasis R hv P hD htrans hω hw).repr x).sum
+    ((finiteTypeNegativePBWBasis R hv P hD hω hw).repr x).sum
       (fun c a ↦ a • CoxeterSystem.pbwMonomial
         (negativeBraidEquiv R hv) (F R v) ω c) = (x : QuantumGroup R v) := by
   have h := congrArg (Algebra.adjoin k (Set.range (F R v))).val
-    ((finiteTypeNegativePBWBasis R hv P hD htrans hω hw).linearCombination_repr x)
+    ((finiteTypeNegativePBWBasis R hv P hD hω hw).linearCombination_repr x)
   simpa only [Finsupp.linearCombination_apply, Finsupp.sum, map_sum, map_smul,
     Subalgebra.val_apply,
     finiteTypeNegativePBWBasis_apply] using h
 
 /-- The basis uses precisely the Chevalley images of the established positive vectors,
 with coefficient field, exponent indexing, and word order unchanged. -/
-theorem finiteTypeNegativePBWBasis_apply_chevalley [CharZero k]
-    (htrans : Transcendental ℚ v)
+theorem finiteTypeNegativePBWBasis_apply_chevalley
     {ω : List I} (hω : (P.coxeterSystem hD.isGeneralizedCartan).IsReduced ω)
     (hw : (P.coxeterSystem hD.isGeneralizedCartan).wordProd ω = finiteTypeLongest P hD)
     (c : Fin ω.length → ℕ) :
-    (finiteTypeNegativePBWBasis R hv P hD htrans hω hw c : QuantumGroup R v) =
+    (finiteTypeNegativePBWBasis R hv P hD hω hw c : QuantumGroup R v) =
       chevalley R v
         (CoxeterSystem.pbwMonomial (braidEquivOfNotRoot R hv) (E R v) ω c) := by
   rw [finiteTypeNegativePBWBasis_apply, chevalley_pbwMonomial]
 
 /-- A longest reduced word and its actual negative basis exist without a supplied basis,
-equivalence, or root enumeration. Transcendence is retained from the positive spanning proof. -/
-theorem exists_finiteTypeNegativePBWBasis [CharZero k] (htrans : Transcendental ℚ v) :
+equivalence, or root enumeration. -/
+theorem exists_finiteTypeNegativePBWBasis :
     ∃ ω : List I, (P.coxeterSystem hD.isGeneralizedCartan).IsReduced ω ∧
       (P.coxeterSystem hD.isGeneralizedCartan).wordProd ω = finiteTypeLongest P hD ∧
       ∃ b : Basis (Fin ω.length → ℕ) k (Algebra.adjoin k (Set.range (F R v))),
@@ -170,7 +168,7 @@ theorem exists_finiteTypeNegativePBWBasis [CharZero k] (htrans : Transcendental 
         CoxeterSystem.pbwMonomial (negativeBraidEquiv R hv) (F R v) ω c := by
   obtain ⟨ω, hω, hw⟩ :=
     (P.coxeterSystem hD.isGeneralizedCartan).exists_isReduced (finiteTypeLongest P hD)
-  exact ⟨ω, hω, hw.symm, finiteTypeNegativePBWBasis R hv P hD htrans hω hw.symm,
-    finiteTypeNegativePBWBasis_apply R hv P hD htrans hω hw.symm⟩
+  exact ⟨ω, hω, hw.symm, finiteTypeNegativePBWBasis R hv P hD hω hw.symm,
+    finiteTypeNegativePBWBasis_apply R hv P hD hω hw.symm⟩
 
 end QuantumGroup
