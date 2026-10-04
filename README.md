@@ -64,7 +64,8 @@ Further proved results include:
   central-character separation. For integral weights in finite type over algebraically closed
   characteristic-zero fields: translation of Verma and dual Verma modules, exact translation
   functors, adjunction, the zero-or-simple dichotomy and the same-facet case for simple modules.
-  Non-integral weights and the general upper-closure criterion remain open.
+  The upper-closure criterion (Humphreys GSM 94 Thm. 7.9) is proved for integral weights
+  (`nonempty_equiv_translation_irreducible_iff`); non-integral weights remain open.
 * **Littelmann paths:** Proposition 5.7, the straight-path concatenation theorem, and the
   isomorphism theorem for rational piecewise-linear dominant paths are proved. The crystal-level
   Littlewood–Richardson decomposition is unconditional over `ℝ` with finite-dimensional Cartan

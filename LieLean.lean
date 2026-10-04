@@ -154,6 +154,9 @@ import LieLean.Algebra.Lie.KacMoody.TranslationAdjunction
 import LieLean.Algebra.Lie.KacMoody.TranslationSimple
 import LieLean.Algebra.Lie.KacMoody.DualIrreducible
 import LieLean.Algebra.Lie.KacMoody.TranslationSameFacet
+import LieLean.Algebra.Lie.KacMoody.TranslationMultiplicity
+import LieLean.Algebra.Lie.KacMoody.UpperClosure
+import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosure
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
