@@ -20,8 +20,10 @@ Reconstructed from the repository definitions `serreAux`, `braidEj`, `braidFj`,
 `SimplyLacedRelations` and `HigherDoubleRelation`.
 This does not construct maps at currently unsupported nodes or prove length three.
 -/
+
+open LieLean
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 section Polynomial
 variable {k B : Type*} [Field k] [Ring B] [Algebra k B]
@@ -222,4 +224,4 @@ theorem simplyLacedBraid_eq_nonterminalDoubleBraid (H : HigherDoubleData D v i) 
   (simplyLacedBraid_hasBraidGeneratorImages i he hl hp hq hs).unique
     (nonterminalDoubleBraid_hasBraidGeneratorImages i H)
 
-end QuantumGroup
+end LieLean.QuantumGroup

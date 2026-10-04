@@ -28,8 +28,10 @@ full automorphism or a length-four braid relation.
 Reconstructed from the defining quotient relations and the repository's `T''` convention.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k]
 
@@ -206,4 +208,4 @@ theorem braidEj_mul_braidFj_sub_of_cartanMatrix_eq_neg_two
   congr 1
   abel
 
-end QuantumGroup
+end LieLean.QuantumGroup

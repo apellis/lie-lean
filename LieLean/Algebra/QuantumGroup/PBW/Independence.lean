@@ -51,13 +51,15 @@ reconstructed.
 * [Lus] G. Lusztig, *Introduction to quantum groups*, 40.2.1.
 -/
 
+open LieLean
+
 noncomputable section
 
 open Polynomial TensorProduct
 
 /-! ### Powers of a generator modulo the Serre ideal -/
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k B : Type*} [Field k] [Ring B] [Algebra k B] {q : k}
 
@@ -67,12 +69,12 @@ lemma qSerreDiv_zero_left {m : ℕ} (hm : m ≠ 0) (b : B) : qSerreDiv q m 0 b =
   · simp [qDivPow, zero_pow hm]
   · simp [qDivPow, zero_pow hr.ne']
 
-end QuantumGroup
+end LieLean.QuantumGroup
 
 
 namespace LusztigF
 
-open QuantumGroup
+open LieLean.QuantumGroup
 
 variable {k I : Type*} [Field k] [DecidableEq I]
 
@@ -108,7 +110,7 @@ theorem nodeEval_eq_zero_of_mem_serreIdeal {D : LusztigCartanDatum I} {v : k} (i
 
 end LusztigF
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 open LusztigF CoxeterSystem
 
@@ -274,4 +276,4 @@ theorem linearIndependent_pbwMonomial_of_isFiniteCartan [Fintype I]
     (LusztigCartanDatum.braidOuterCondition_of_isFiniteCartan hA)
     (fun _ _ hij ↦ hA.mul_le_three hij) hω
 
-end QuantumGroup
+end LieLean.QuantumGroup

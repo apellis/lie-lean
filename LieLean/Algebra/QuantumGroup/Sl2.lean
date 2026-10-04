@@ -32,9 +32,11 @@ annihilated by `Eᵢ` (and by all `Eⱼ`, `j ≠ i`) when `⟨i, Λ⟩ ≥ 0` ([
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.1.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   {R : D.RootDatum Y} {v : k}
@@ -155,4 +157,4 @@ theorem E_smul_F_pow_smul_eq_zero (hv : v ≠ 0) {Λ : Y →+ ℤ} {m : M}
 
 end Module
 
-end QuantumGroup
+end LieLean.QuantumGroup

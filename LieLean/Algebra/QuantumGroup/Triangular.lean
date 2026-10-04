@@ -37,11 +37,13 @@ half of the triangular decomposition) is not proved here.
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 4.
 -/
 
+open LieLean
+
 noncomputable section
 
 open LusztigF
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
@@ -279,4 +281,4 @@ theorem span_triangular (hv : v ≠ 0) : triangularSpan R v = ⊤ := by
     simpa using mem_triangularSpan (R := R) (v := v) [] 0 []
   simpa using key u 1 h1
 
-end QuantumGroup
+end LieLean.QuantumGroup

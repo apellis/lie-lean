@@ -18,9 +18,11 @@ import LieLean.Algebra.QuantumGroup.Sl2.Classification
 Jantzen, *Lectures on quantum groups*, Ch. 2. The arguments are reconstructed.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup.Sl2
+namespace LieLean.QuantumGroup.Sl2
 
 variable {k M : Type*} [Field k] [AddCommGroup M] [Module k M] {v : k}
 
@@ -145,4 +147,4 @@ theorem exists_highestString_basis [FiniteDimensional k M] [Nontrivial M] [IsAlg
   exact ⟨n, σ, m, hσ, hm0, hm, hE, hn, hz,
     Module.Basis.mk hli hsp.ge, Module.Basis.mk_apply hli hsp.ge⟩
 
-end QuantumGroup.Sl2
+end LieLean.QuantumGroup.Sl2

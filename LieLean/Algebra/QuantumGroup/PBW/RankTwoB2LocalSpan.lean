@@ -28,8 +28,10 @@ operators. As in `RankTwoA2LocalSpan`, induction on a two-letter free algebra av
 requiring an operator representation satisfying relations involving other ambient nodes.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 namespace B2PBW
 open LusztigF
 variable {k B : Type*} [Field k] [Ring B] [Algebra k B]
@@ -138,4 +140,4 @@ theorem span_b2PBWMono_pair :
       rw [b2PBWMono_eq_smul h, smul_smul, inv_mul_cancel₀ (pow_ne_zero _ hc), one_smul]
     rw [SetLike.mem_coe, hm]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨m, rfl⟩)
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -27,8 +27,10 @@ Reconstructed from the quadratic quantum Serre relations using the established
 representation satisfying relations involving other ambient nodes.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 namespace A2PBW
 open LusztigF
 variable {k B : Type*} [Field k] [Ring B] [Algebra k B]
@@ -121,4 +123,4 @@ theorem span_a2PBWMono_pair_reverse :
       Submodule.span k (Set.range (a2PBWMono R v j i)) := by
   rw [span_a2PBWMono_pair R v hij h h', span_a2PBWMono_pair R v hij.symm h' h,
     Set.pair_comm]
-end QuantumGroup
+end LieLean.QuantumGroup

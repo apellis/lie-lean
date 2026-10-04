@@ -43,9 +43,11 @@ Reconstructed from the quotient presentation; the certificate was found by exact
 over `ℚ(p)`.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 section Ring
 
@@ -161,4 +163,4 @@ def tripleEdgeOtherBraidEquiv (hq : v ^ D.d i - (v ^ D.d i)⁻¹ ≠ 0)
   braidEquiv (degreeOne_braidGeneric hall h hq)
     (tripleEdgeOther_transformedSerre hij hall h h' hq h2)
 
-end QuantumGroup
+end LieLean.QuantumGroup

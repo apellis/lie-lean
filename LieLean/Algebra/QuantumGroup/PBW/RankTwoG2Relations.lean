@@ -36,9 +36,11 @@ powers of `q` and `q² + 1`.
 Our own computation.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 namespace G2PBW
 
@@ -325,4 +327,4 @@ theorem baseRel_rev {s2 c3 c5 : k} (hs2 : s2 ≠ 0) (hc3 : c3 ≠ 0) :
 
 end G2PBW
 
-end QuantumGroup
+end LieLean.QuantumGroup

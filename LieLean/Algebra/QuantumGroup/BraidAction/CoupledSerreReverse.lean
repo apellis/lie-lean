@@ -20,8 +20,10 @@ Reconstructed from the defining presentation and the lowering commutator in
 other ordered pairs are not claimed.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} {i j : I}
@@ -89,4 +91,4 @@ theorem qSerre_braidEj_braidEi_of_simply_laced_edge [NeZero v]
   rw [he, hXA]
   exact hXb
 
-end QuantumGroup
+end LieLean.QuantumGroup

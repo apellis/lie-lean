@@ -66,11 +66,13 @@ Reconstructed from the quotient presentation; this computation was not taken fro
 proved there differently).
 -/
 
+open LieLean
+
 noncomputable section
 
 open Finset
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 namespace ShortNode
 
@@ -620,4 +622,4 @@ theorem shortNode_qSerre_braidFj_braidFi [NeZero v] {i j : I} (h' : D.cartanMatr
     qSerre (v ^ D.d j) (1 - D.cartanMatrix j i).toNat (braidFj R v i j) (braidFi R i) = 0 :=
   twoNode_qSerre_braidFj_braidFi_of_braidEj (shortNode_qSerre_braidEj_braidEi h' hq hb)
 
-end QuantumGroup
+end LieLean.QuantumGroup

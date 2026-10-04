@@ -26,6 +26,8 @@ local generator images alone are not substituted for the full braid relation on 
 Reconstructed from the recursive PBW definition and the repository's actual A₂ span theorem.
 -/
 
+open LieLean
+
 noncomputable section
 
 namespace CoxeterSystem
@@ -94,7 +96,7 @@ theorem span_pbwMonomial_context {u w : List B}
 
 end CoxeterSystem
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) (v : k) [NeZero v]
@@ -153,4 +155,4 @@ theorem span_pbwMonomial_a2_context_of_not_root
   simpa [CoxeterSystem.braidWord, hm, hm', CoxeterSystem.alternatingWord,
     ← mul_assoc] using e.symm
 
-end QuantumGroup
+end LieLean.QuantumGroup

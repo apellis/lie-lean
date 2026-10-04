@@ -50,6 +50,8 @@ The proofs are our own, from the existing conjugation and positive-subalgebra re
 elementary independence of simultaneous eigenspaces.
 -/
 
+open LieLean
+
 noncomputable section
 namespace LusztigCartanDatum.RootDatum
 variable {I Y : Type*} [Fintype I] [DecidableEq I] [AddCommGroup Y]
@@ -73,7 +75,7 @@ theorem isXRegular_of_isFiniteCartan (hA : D.cartanMatrix.IsFiniteCartan) :
   exact congr_fun h i
 end LusztigCartanDatum.RootDatum
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
 
@@ -413,4 +415,4 @@ theorem braidEquiv_E_mem_plusWeightSpace_twoLetter {i j : I}
         R.root_coroot, hij, add_comm])
   simpa [CoxeterSystem.rootVector] using hm
 
-end QuantumGroup
+end LieLean.QuantumGroup

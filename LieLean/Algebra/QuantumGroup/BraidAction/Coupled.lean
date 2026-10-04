@@ -28,9 +28,11 @@ diagonal relations, fully coupled off-diagonal relations, and transformed Serre 
 remain outside this boundary.
 -/
 
+open LieLean
+
 
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} {i j : I}
@@ -206,4 +208,4 @@ theorem braidEj_mul_braidFj_sub_of_cartanMatrix_eq_neg_one
     K_comm (R := R) (v := v) (ktilde R i) (ktilde R j)]
   abel
 
-end QuantumGroup
+end LieLean.QuantumGroup

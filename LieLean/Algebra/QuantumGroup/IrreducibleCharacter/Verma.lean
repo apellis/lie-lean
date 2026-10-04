@@ -51,11 +51,13 @@ The arguments are standard; the formulation through `'f` is ours.
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.4.
 -/
 
+open LieLean
+
 noncomputable section
 
 open LusztigF FreeAlgebra Module
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
 
@@ -257,4 +259,4 @@ theorem toVerma_mem_fPowSubmodule {ν : I →₀ ℕ} {y : LusztigF k I}
 
 end VermaModule
 
-end QuantumGroup
+end LieLean.QuantumGroup

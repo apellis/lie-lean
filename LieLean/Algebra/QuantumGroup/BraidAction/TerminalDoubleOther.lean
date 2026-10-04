@@ -28,8 +28,10 @@ No two-node exhaustion, finite-rank, characteristic-zero, lattice-separation,
 transformed-relation or recovery premise. Higher-rank braid relations and a
 full all-node action are not established here.
 -/
+
+open LieLean
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
@@ -415,4 +417,4 @@ def terminalDoubleOtherBraidEquiv : QuantumGroup R v ≃ₐ[k] QuantumGroup R v 
     (terminalDoubleOtherBraid_comp_terminalDoubleOtherBraidInv i j hij hterminal hpath h h' hq hs)
     (terminalDoubleOtherBraidInv_comp_terminalDoubleOtherBraid i j hij hterminal hpath h h' hq hs)
 
-end QuantumGroup
+end LieLean.QuantumGroup

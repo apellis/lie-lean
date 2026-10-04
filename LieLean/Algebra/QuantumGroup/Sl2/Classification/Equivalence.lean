@@ -20,9 +20,11 @@ import LieLean.Algebra.QuantumGroup.Sl2.Classification.StringBasis
 Jantzen, *Lectures on quantum groups*, Ch. 2. The intertwining argument is reconstructed.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup.Sl2
+namespace LieLean.QuantumGroup.Sl2
 
 variable {k M : Type*} [Field k] [AddCommGroup M] [Module k M] {v : k}
 
@@ -169,4 +171,4 @@ theorem irreducible_iff_equiv_simpleRep [IsAlgClosed k] [FiniteDimensional k M]
   · rintro ⟨n, σ, hσ, e, he⟩
     exact irreducible_of_equiv_simpleRep hv hv' ρ hσ e he
 
-end QuantumGroup.Sl2
+end LieLean.QuantumGroup.Sl2

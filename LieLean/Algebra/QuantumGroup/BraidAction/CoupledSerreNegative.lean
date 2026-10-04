@@ -19,8 +19,10 @@ braid candidates transport the established positive Serre relation to negative i
 Reconstructed directly from the presentation.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) (v : k)
@@ -107,4 +109,4 @@ theorem qSerre_braidFi_braidFj_of_cartanMatrix_eq_neg_one [NeZero v]
     (mul_ne_zero (pow_ne_zero _ (pow_ne_zero _ (pow_ne_zero _ (NeZero.ne v))))
       (neg_ne_zero.mpr (inv_ne_zero (pow_ne_zero _ (NeZero.ne v)))))
 
-end QuantumGroup
+end LieLean.QuantumGroup

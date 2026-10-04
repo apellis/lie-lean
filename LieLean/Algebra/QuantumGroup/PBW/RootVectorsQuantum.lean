@@ -56,9 +56,11 @@ The rank-two computations are our own reconstruction from the lowering identitie
 repository.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 open BraidDiagonal CoxeterSystem
 
@@ -485,4 +487,4 @@ theorem exists_longestElement_rootVectors_mem_adjoin_of_isFiniteCartan_of_not_ro
 
 end NotRoot
 
-end QuantumGroup
+end LieLean.QuantumGroup

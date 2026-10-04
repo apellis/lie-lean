@@ -29,6 +29,8 @@ proved from positive definiteness in `LinearAlgebra/Matrix/Cartan/FiniteRankTwo.
 the classification.
 -/
 
+open LieLean
+
 /-- A Cartan datum of finite type satisfies the third-node condition of the braid relations. -/
 theorem LusztigCartanDatum.braidOuterCondition_of_isFiniteCartan {I : Type*} [Fintype I]
     [DecidableEq I] {D : LusztigCartanDatum I} (hA : D.cartanMatrix.IsFiniteCartan) :
@@ -37,7 +39,7 @@ theorem LusztigCartanDatum.braidOuterCondition_of_isFiniteCartan {I : Type*} [Fi
 
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k Y : Type*} [Field k] [AddCommGroup Y] {v : k} [NeZero v] {I : Type*} [Fintype I]
   [DecidableEq I] {D : LusztigCartanDatum I} (R : D.RootDatum Y)
@@ -56,4 +58,4 @@ theorem braidArtinHomOfIsFiniteCartan_artinGenerator (i : I) :
       braidEquivOfNotRoot R hpow i :=
   braidArtinHomOfCartanMatrix_artinGenerator R rfl _ hpow i
 
-end QuantumGroup
+end LieLean.QuantumGroup

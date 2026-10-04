@@ -23,8 +23,10 @@ Reconstructed from the original presentation and the published image formulas.
 The toral lattice is arbitrary.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
@@ -400,4 +402,4 @@ theorem doubleEdgeBraidEquiv_braid :
   intro x
   exact (DFunLike.congr_fun (doubleEdgeBraid_braid i j hij hall h h' hq hs) x).symm
 
-end QuantumGroup
+end LieLean.QuantumGroup

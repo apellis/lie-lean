@@ -43,11 +43,13 @@ proposed images `Tᵢ(Eₗ)`, `Tᵢ(Fₗ)`, `Tᵢ(K_μ)` except: relation (d) fo
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 8.
 -/
 
+open LieLean
+
 noncomputable section
 
 open Finset
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k]
 
@@ -244,4 +246,4 @@ theorem braidEj_mul_braidFi_sub [NeZero v] {i j : I} (hij : i ≠ j) :
   rw [← key, smul_neg, sub_neg_eq_add]
   exact neg_add_cancel _
 
-end QuantumGroup
+end LieLean.QuantumGroup

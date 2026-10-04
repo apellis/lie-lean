@@ -30,9 +30,11 @@ Reconstructed from `QuantumGroup.triangularEquiv` and Mathlib's quotient tensor-
 isomorphisms and the positive and negative bases of `PBW.GenericBasis`, `PBW.NegativeBasis`.
 -/
 
+open LieLean
+
 noncomputable section
 open TensorProduct Module
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) (v : k)
@@ -206,4 +208,4 @@ theorem exists_finiteTypeFullPBWBasis :
   exact ⟨ω, hω, hw.symm, finiteTypeFullPBWBasis R v hv P hD hω hw.symm,
     fun a μ c ↦ finiteTypeFullPBWBasis_apply R v hv P hD hω hw.symm a c μ⟩
 
-end QuantumGroup
+end LieLean.QuantumGroup

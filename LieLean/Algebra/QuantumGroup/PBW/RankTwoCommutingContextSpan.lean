@@ -24,8 +24,10 @@ Reconstructed from the recursive PBW definition, disconnected-node quantum Serre
 and the repository's full orthogonal braid relation.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) (v : k)
@@ -103,4 +105,4 @@ theorem span_pbwMonomial_commuting_context_of_not_root [NeZero v]
   exact span_pbwMonomial_commuting_context R v (braidEquivOfNotRoot R hv')
     (H i) (H j) hij h0 p s
 
-end QuantumGroup
+end LieLean.QuantumGroup

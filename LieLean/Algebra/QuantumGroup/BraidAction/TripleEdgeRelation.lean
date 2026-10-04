@@ -48,9 +48,11 @@ reduction to fixed points (as in [Jan] 8.16–8.17) follows the standard argumen
 The chain computation is our own reconstruction.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 section Ring
 
@@ -593,4 +595,4 @@ theorem tripleEdgeBraidEquiv_braid_six (hall : ∀ l, l = i ∨ l = j)
     Ti * Tj * Ti * Tj * Ti * Tj = Tj * Ti * Tj * Ti * Tj * Ti :=
   braidEquiv_braid_six_of_triple_edge hij h h' hq h3 hall _ _ _ _
 
-end QuantumGroup
+end LieLean.QuantumGroup

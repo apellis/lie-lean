@@ -38,9 +38,11 @@ two Serre relations (see `BraidAction/NeighborSerreShort.lean`).
 Reconstructed from the quotient presentation.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k] {I Y : Type*} [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
@@ -161,4 +163,4 @@ theorem shortNodeBraidEquiv_eq_tripleEdgeBraidEquiv (h : D.cartanMatrix i j = -3
       tripleEdgeBraidEquiv hij hall h h' hq h3 h4 :=
   rfl
 
-end QuantumGroup
+end LieLean.QuantumGroup

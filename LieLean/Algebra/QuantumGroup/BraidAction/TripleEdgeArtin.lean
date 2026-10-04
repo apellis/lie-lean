@@ -42,6 +42,8 @@ there from [Lus] 39.2.2); the construction here is reconstructed from the reposi
 and length-six relation.
 -/
 
+open LieLean
+
 /-- The length-six braid relator `ijijij (jijiji)⁻¹` in the free group. -/
 def tripleEdgeArtinRelator {I : Type*} (i j : I) : FreeGroup I :=
   (FreeGroup.of i * FreeGroup.of j * FreeGroup.of i * FreeGroup.of j * FreeGroup.of i *
@@ -107,7 +109,7 @@ end TripleEdgeArtinGroup
 
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 section Action
 
@@ -296,4 +298,4 @@ theorem artinHom_G₂_images {D : LusztigCartanDatum (Fin 2)} (R : D.RootDatum Y
 
 end Literal
 
-end QuantumGroup
+end LieLean.QuantumGroup

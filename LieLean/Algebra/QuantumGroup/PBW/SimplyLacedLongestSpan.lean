@@ -32,6 +32,8 @@ Reconstructed from the repository's longest-element, Matsumoto span-invariance, 
 finite-type root-vector membership theorems.
 -/
 
+open LieLean
+
 noncomputable section
 
 namespace CoxeterSystem
@@ -81,7 +83,7 @@ lemma exists_reduced_cons_longest {W : Type*} [Group W] [Finite W]
 
 end CoxeterSystem
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) (v : k) [NeZero v]
@@ -149,4 +151,4 @@ theorem span_pbwMonomial_longest_of_isFiniteCartan_of_simplyLaced [Fintype I]
         (fun _ _ hij ↦ hD.mul_le_three hij) hv hw n hn) c
   · exact adjoin_le_span_pbwMonomial_longest_of_simplyLaced R v hv hSL cs hw hw₀
 
-end QuantumGroup
+end LieLean.QuantumGroup

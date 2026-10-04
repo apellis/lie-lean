@@ -21,8 +21,10 @@ Reconstructed directly from the defining presentation and the lowering commutato
 rank-one specialization is assumed.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k]
 
@@ -89,5 +91,5 @@ theorem qSerre_braidEi_braidEj_of_cartanMatrix_eq_neg_one [NeZero v]
   rw [he, hAX]
   simp [hAb, smul_smul, hq0]
 
-end QuantumGroup
+end LieLean.QuantumGroup
 

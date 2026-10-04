@@ -30,8 +30,10 @@ orientation, not just a two-node diagram. It does not construct the opposite
 orientation, an action by all nodes, higher braid relations, or faithfulness.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} {i j : I}
@@ -342,4 +344,4 @@ def terminalDoubleBraidEquiv : QuantumGroup R v ≃ₐ[k] QuantumGroup R v :=
     (terminalDoubleBraid_comp_terminalDoubleBraidInv i j hij hterminal hpath h h' hq hs hn)
     (terminalDoubleBraidInv_comp_terminalDoubleBraid i j hij hterminal hpath h h' hq hs hn)
 
-end QuantumGroup
+end LieLean.QuantumGroup

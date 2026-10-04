@@ -45,9 +45,11 @@ the span of the Serre products (`LusztigF.weightProj_mem_serreSpan`). This argum
   Cor. 10.4.
 -/
 
+open LieLean
+
 noncomputable section
 
-open FreeAlgebra QuantumGroup Matrix Matrix.Realization Matrix.Realization.KacMoodyAlgebra
+open FreeAlgebra LieLean.QuantumGroup Matrix Matrix.Realization Matrix.Realization.KacMoodyAlgebra
 
 namespace LusztigCartanDatum
 

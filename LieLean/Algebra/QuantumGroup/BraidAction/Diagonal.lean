@@ -53,11 +53,13 @@ automorphism ([Lus] §37.1, [Jan] Ch. 8), whose published proofs proceed differe
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 8.
 -/
 
+open LieLean
+
 noncomputable section
 
 open Finset
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 namespace BraidDiagonal
 
@@ -739,4 +741,4 @@ theorem braidEj_commute_braidFj (hv : v ≠ 0) {i j l : I} (hij : i ≠ j) (hil 
     BraidDiagonal.X_eq_serreAux hq0 (pow_ne_zero _ hq0), hc] at H
   simp only [braidEj, braidFj, smul_mul_smul_comm, H, mul_comm]
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -52,11 +52,13 @@ symmetry `dᵢ aᵢⱼ = dⱼ aⱼᵢ`). This argument is our own (cf. [Jan] Lem
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 4.
 -/
 
+open LieLean
+
 noncomputable section
 
 open TensorProduct
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I : Type*} [Field k]
 
@@ -496,4 +498,4 @@ instance instHopfAlgebra : HopfAlgebra k (QuantumGroup R v) where
 
 end Antipode
 
-end QuantumGroup
+end LieLean.QuantumGroup

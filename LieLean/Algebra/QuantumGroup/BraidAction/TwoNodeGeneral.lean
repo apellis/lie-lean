@@ -41,9 +41,11 @@ Reconstructed from the quotient presentation (the statement that `Tᵢ` is an au
 [Lus] Prop. 37.1.2, [Jan] Prop. 8.13).
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k] {I Y : Type*} [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
@@ -174,4 +176,4 @@ theorem tripleEdgeOtherBraidEquiv_eq_twoNodeBraidEquiv (h : D.cartanMatrix i j =
         (by rwa [show negA D i j = 1 by simp [negA, h], show negA D j i = 3 by simp [negA, h']]) :=
   rfl
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -39,9 +39,11 @@ of unity.
 The proofs here are reconstructed from the generator relations.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) (v : k)
@@ -166,4 +168,4 @@ theorem rootVector_mem_adjoin_and_adWeightSpace_of_isFiniteCartan [Fintype I]
     (fun _ _ hij ↦ hA.mul_le_three hij) hv hω n hn,
     rootVector_mem_adWeightSpace_of_not_root hv ω n hn⟩
 
-end QuantumGroup
+end LieLean.QuantumGroup

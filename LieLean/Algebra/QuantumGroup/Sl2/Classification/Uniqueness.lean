@@ -19,7 +19,9 @@ The argument is reconstructed from the explicit operators in `Sl2.SimpleModule`:
 fixes the string length, and the one-dimensional raising kernel fixes the highest eigenvalue.
 -/
 
-namespace QuantumGroup.Sl2
+open LieLean
+
+namespace LieLean.QuantumGroup.Sl2
 
 variable {k : Type*} [Field k] {v σ τ : k} {n m : ℕ}
 
@@ -98,4 +100,4 @@ theorem simpleRep_equiv_iff (hv : v ≠ 0)
   · rintro ⟨rfl, rfl⟩
     exact ⟨LinearEquiv.refl k _, fun _ _ ↦ rfl⟩
 
-end QuantumGroup.Sl2
+end LieLean.QuantumGroup.Sl2

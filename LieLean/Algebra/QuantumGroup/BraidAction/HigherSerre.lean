@@ -19,8 +19,10 @@ quantum Serre relation when the directed Cartan entry is `-2`.
 Reconstructed from the defining quotient presentation.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k]
 
@@ -137,4 +139,4 @@ theorem qSerre_braidFi_braidFj_of_cartanMatrix_eq_neg_two (hv : v ≠ 0)
     (mul_ne_zero (pow_ne_zero _ (pow_ne_zero _ (pow_ne_zero _ hv)))
       (pow_ne_zero _ (inv_ne_zero (pow_ne_zero _ hv))))
 
-end QuantumGroup
+end LieLean.QuantumGroup

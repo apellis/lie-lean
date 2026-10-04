@@ -37,9 +37,11 @@ Reconstructed: the certificate was found by solving the linear system for the co
 is checked here by normal ordering. G. Lusztig, *Introduction to quantum groups*, 39.4.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 section Core
 
@@ -265,4 +267,4 @@ theorem braidEquiv_braid_three_triangle (hgi : BraidGeneric D v i)
 
 end Quantum
 
-end QuantumGroup
+end LieLean.QuantumGroup

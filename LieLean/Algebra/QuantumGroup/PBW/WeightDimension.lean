@@ -41,9 +41,11 @@ as soon as their number is `dim U⁺_ν`.
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., Thm. 9.11.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 open LusztigF Module
 
@@ -104,4 +106,4 @@ theorem finrank_plusWeightSpace_eq [Finite I] (hv : Transcendental ℚ v) {k' Y'
   have h' := finrank_plusWeightSpace (R := R') hv' ν
   omega
 
-end QuantumGroup
+end LieLean.QuantumGroup

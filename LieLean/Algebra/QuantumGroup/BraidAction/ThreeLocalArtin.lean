@@ -16,8 +16,10 @@ Reconstructed from the quotient presentation and degree-one recovery proofs. The
 external certificate uses only the original two simple-edge Serre relations and orthogonal
 outer-node commutation.
 -/
+
+open LieLean
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 section Polynomial
 variable {k B : Type*} [Field k] [Ring B] [Algebra k B]
 
@@ -505,7 +507,7 @@ theorem threeLocalEquiv_four (i j : I) (Hi : ThreeLocalData D v i)
   intro x
   exact DFunLike.congr_fun (higherDoubleBraid_braid i j HDi HDj hij h h') x
 
-end QuantumGroup
+end LieLean.QuantumGroup
 
 namespace LusztigCartanDatum
 variable {I : Type*} (D : LusztigCartanDatum I)
@@ -583,7 +585,7 @@ theorem lift_unique (g : SimpleDoubleArtinGroup D →* G)
   exact (hg i).trans (lift_generator f h2 h3 h4 i).symm
 end SimpleDoubleArtinGroup
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
   (H : ∀ i, ThreeLocalData D v i)
@@ -637,4 +639,4 @@ theorem threeLocalArtinHom_unique
     (hg : ∀ i, g (SimpleDoubleArtinGroup.generator i) = threeLocalEquiv i (H i)) :
     g = threeLocalArtinHom H := SimpleDoubleArtinGroup.lift_unique _ _ _ _ g hg
 
-end QuantumGroup
+end LieLean.QuantumGroup

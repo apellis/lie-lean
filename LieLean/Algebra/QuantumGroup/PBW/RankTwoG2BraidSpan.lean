@@ -38,9 +38,11 @@ Our own reconstruction of the rank-two case of [Jan] J. C. Jantzen, *Lectures on
 groups*, GSM 6, Prop. 8.22 b) (the input of the reduced-word independence of PBW spans).
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 namespace OrderedSpan
 
@@ -401,4 +403,4 @@ theorem span_pbwMonomial_g2_context_of_not_root
   simpa [CoxeterSystem.braidWord, hm, hm', CoxeterSystem.alternatingWord,
     ← mul_assoc] using e
 
-end QuantumGroup
+end LieLean.QuantumGroup

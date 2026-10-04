@@ -25,6 +25,8 @@ Reconstructed from the word grading, the proved longest-word positive-root enume
 and braid-root homogeneity. No printed theorem number or ordered-spanning claim is asserted.
 -/
 
+open LieLean
+
 noncomputable section
 
 namespace LusztigF
@@ -59,7 +61,7 @@ lemma weightSpace_single_one (i : I) :
 
 end LusztigF
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 open Matrix.Realization.KacMoodyAlgebra
 
 variable {I Y k : Type*} [DecidableEq I] [AddCommGroup Y]
@@ -137,4 +139,4 @@ theorem adjoin_rootVector_of_isFiniteCartan :
     rw [he] at hm
     simpa [smul_smul, ha] using Subalgebra.smul_mem _ hm a⁻¹
 
-end QuantumGroup
+end LieLean.QuantumGroup

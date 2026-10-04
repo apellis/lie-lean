@@ -53,6 +53,8 @@ algebra on the generators.
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 4.
 -/
 
+open LieLean
+
 noncomputable section
 
 variable {I : Type*}
@@ -68,7 +70,7 @@ structure LusztigCartanDatum.RootDatum (D : LusztigCartanDatum I) (Y : Type*) [A
   root : I → Y →+ ℤ
   root_coroot : ∀ i j, root j (coroot i) = D.cartanMatrix i j
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable (I) in
 /-- The generators `Eᵢ`, `Fᵢ`, `K_μ` of the free algebra of which `U` is a quotient. -/
@@ -142,16 +144,17 @@ inductive Rel : FreeAlgebra k (Generator I Y) → FreeAlgebra k (Generator I Y) 
   | serre_F (i j : I) (h : i ≠ j) :
       Rel (qSerre (v ^ D.d i) (1 - D.cartanMatrix i j).toNat (genF k i) (genF k j)) 0
 
-end QuantumGroup
+end LieLean.QuantumGroup
 
-open QuantumGroup in
+open LieLean.QuantumGroup in
 /-- The quantized enveloping algebra `U = U_q(𝔤)` of a root datum `R` of type `(I, ·)` over a
 field `k`, at the parameter `v ∈ k` (cf. [Lus] 3.1.1, Cor. 33.1.5, where `k = ℚ(v)`). -/
-def QuantumGroup {k Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
+def LieLean.QuantumGroup {k Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
+    {D : LusztigCartanDatum I}
     (R : D.RootDatum Y) (v : k) : Type _ :=
   RingQuot (Rel R v)
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
@@ -322,4 +325,4 @@ theorem hom_ext {φ ψ : QuantumGroup R v →ₐ[k] A} (hE : ∀ i, φ (E R v i)
 
 end lift
 
-end QuantumGroup
+end LieLean.QuantumGroup

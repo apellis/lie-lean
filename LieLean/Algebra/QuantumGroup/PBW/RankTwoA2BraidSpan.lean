@@ -24,8 +24,10 @@ Reconstructed from the repository's local A₂ straightening and third-root-vect
 identity, with the actual recursive PBW monomial definition.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) (v : k) [NeZero v]
   (T : I → QuantumGroup R v ≃ₐ[k] QuantumGroup R v)
@@ -74,4 +76,4 @@ theorem span_pbwMonomial_a2_braid :
   rw [span_pbwMonomial_a2 R v T Hi Hj hij h h' hq,
     span_pbwMonomial_a2 R v T Hj Hi hij.symm h' h hqj, Set.pair_comm]
 
-end QuantumGroup
+end LieLean.QuantumGroup

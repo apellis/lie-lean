@@ -18,8 +18,10 @@ Reconstructed from the defining quotient presentation.
 These are automorphism prerequisites, not an automorphism or length-four braid relation.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
@@ -169,4 +171,4 @@ theorem qSerre_braidFj_braidFi_of_double_edge (hv : v ≠ 0)
     (mul_ne_zero (pow_ne_zero _ (pow_ne_zero _ (inv_ne_zero (pow_ne_zero _ hv))))
       (pow_ne_zero _ (pow_ne_zero _ hv)))
 
-end QuantumGroup
+end LieLean.QuantumGroup

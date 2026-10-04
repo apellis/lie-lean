@@ -47,11 +47,13 @@ by us.
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.5.
 -/
 
+open LieLean
+
 noncomputable section
 
 open LusztigF
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   {R : D.RootDatum Y} {v : k}
@@ -458,4 +460,4 @@ theorem FPowQuotient.toIrreducibleModule_surjective [NeZero v] (hR : R.IsXRegula
     Function.Surjective (FPowQuotient.toIrreducibleModule hR hv' hΛ) :=
   Submodule.factor_surjective (VermaModule.fPowSubmodule_le_maxSubmodule hR hv' hΛ)
 
-end QuantumGroup
+end LieLean.QuantumGroup

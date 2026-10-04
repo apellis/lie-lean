@@ -44,6 +44,8 @@ identification of `'f ⧸ J` with Lusztig's `f` is the quantum Gabber–Kac theo
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, §4.21.
 -/
 
+open LieLean
+
 noncomputable section
 
 /-! ### Endomorphisms preserving a submodule -/
@@ -85,7 +87,7 @@ lemma endDescend_eq_zero {X : W.endStab} (h : ∀ x, X.1 x ∈ W) : W.endDescend
 
 end Submodule
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 open LusztigF TensorProduct
 
@@ -610,4 +612,4 @@ theorem zeroHom_injective : Function.Injective (zeroHom R v) := by
   have := hW hz
   rwa [LinearMap.mem_ker, hπ, map_one, one_smul, one_smul] at this
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -25,6 +25,8 @@ highest-weight modules (`LieLean.Algebra.QuantumGroup.Character`).
   `y ↦ (S(w, y))_{w}` on the words of weight `ν`, and the dimension of its image on `'f_ν`.
 -/
 
+open LieLean
+
 noncomputable section
 
 open Module FreeAlgebra

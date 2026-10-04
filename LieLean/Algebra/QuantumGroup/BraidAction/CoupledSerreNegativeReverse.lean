@@ -19,8 +19,10 @@ This uses the independently proved positive companion and the genuine quotient i
 Reconstructed from the quotient presentation and the positive companion proof.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} {i j : I}
@@ -43,4 +45,4 @@ theorem qSerre_braidFj_braidFi_of_simply_laced_edge [NeZero v]
       (pow_ne_zero _ (neg_ne_zero.mpr (inv_ne_zero (pow_ne_zero _ (NeZero.ne v)))))
       (pow_ne_zero _ (pow_ne_zero _ (NeZero.ne v))))
 
-end QuantumGroup
+end LieLean.QuantumGroup

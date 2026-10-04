@@ -28,6 +28,8 @@ repository's quantum Gabber–Kac theorem ([Lus], *Introduction to quantum group
 Theorem 33.1.3 (a)). No crystal lattice, balancedness, or global basis is claimed.
 -/
 
+open LieLean
+
 noncomputable section
 
 namespace LusztigF

@@ -34,9 +34,11 @@ counting from `PBW.KostantCounting`, the quantum graded dimensions from `PBW.Kos
 and actual ordered-monomial independence from `PBW.Independence`.
 -/
 
+open LieLean
+
 noncomputable section
 open Module Matrix.Realization.KacMoodyAlgebra
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {I Y k K H : Type*} [Fintype I] [DecidableEq I] [AddCommGroup Y]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y)
   [Field k] {v : k} [hv0 : NeZero v]
@@ -185,4 +187,4 @@ theorem exists_finiteTypePBWBasis :
   exact ⟨ω, hω, hw.symm, finiteTypePBWBasis R P hD hv hω hw.symm,
     finiteTypePBWBasis_apply R P hD hv hω hw.symm⟩
 
-end QuantumGroup
+end LieLean.QuantumGroup

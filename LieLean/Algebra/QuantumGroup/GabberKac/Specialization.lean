@@ -36,6 +36,8 @@ The quantum integers and binomial coefficients with respect to a unit of a commu
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §33.1.
 -/
 
+open LieLean
+
 noncomputable section
 
 open Finset Matrix

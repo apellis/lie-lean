@@ -45,9 +45,11 @@ The PBW basis itself (spanning and linear independence of the ordered monomials)
 The computations are our own reconstruction from the lowering identities of the repository.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 open BraidDiagonal
 
@@ -274,4 +276,4 @@ theorem g2_rootVectors_mem_adjoin :
 
 end G2
 
-end QuantumGroup
+end LieLean.QuantumGroup

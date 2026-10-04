@@ -27,6 +27,8 @@ and triangles are not covered. The toral lattice is arbitrary. Nonvanishing of b
 `q_i - q_i⁻¹` and `q_i + q_i⁻¹` is retained explicitly.
 -/
 
+open LieLean
+
 noncomputable section
 
 namespace LusztigCartanDatum
@@ -124,7 +126,7 @@ theorem generator_sq_ne_one (i : I) : generator (D := D) i ^ 2 ≠ 1 := by
 
 end SimplyLacedArtinGroup
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
@@ -283,4 +285,4 @@ theorem artinAction_smul_scalar (g : SimplyLacedArtinGroup D)
     letI := artinAction (R := R) H hq hs
     g • (a • x) = a • (g • x) := map_smul (artinHom (R := R) H hq hs g) a x
 
-end QuantumGroup
+end LieLean.QuantumGroup
