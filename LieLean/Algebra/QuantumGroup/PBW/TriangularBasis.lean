@@ -15,20 +15,19 @@ import Mathlib.LinearAlgebra.TensorProduct.Basis
 * `serreTensorEquiv`: quotienting the two outer factors gives the triangular quotient.
 * `triangularMultiplicationEquiv`: actual multiplication `U⁻ ⊗ (k[Y] ⊗ U⁺) ≃ₗ[k] U`.
 * `triangularMultiplicationEquiv_tmul`: this equivalence sends `y ⊗ (g ⊗ x)` to `y g x`.
-* `finiteTypeFullPBWBasis`: full finite-type PBW basis at a transcendental parameter.
+* `finiteTypeFullPBWBasis`: full finite-type PBW basis of `U`.
 * `finiteTypeFullPBWBasis_apply`: its vectors are negative monomial times `K_μ` times
   positive monomial, with the established Chevalley-conjugated negative convention.
 * `finiteTypeFullPBWBasis_sum_repr`: finite reconstruction of every element of `U`.
 * `exists_finiteTypeFullPBWBasis`: existence without a supplied longest reduced word.
 
-The multiplication equivalence requires only a nonzero non-root-of-unity parameter.
-The basis additionally retains characteristic zero and transcendence over `ℚ`; no full
-PBW basis at every non-root-of-unity parameter is claimed.
+The multiplication equivalence and the basis require only a nonzero non-root-of-unity
+parameter, over any field.
 
 ## References
 
 Reconstructed from `QuantumGroup.triangularEquiv` and Mathlib's quotient tensor-product
-isomorphisms. The basis retains the generic-parameter hypotheses of `PBW.GenericBasis`.
+isomorphisms and the positive and negative bases of `PBW.GenericBasis`, `PBW.NegativeBasis`.
 -/
 
 noncomputable section
@@ -158,7 +157,6 @@ open Matrix.Realization.KacMoodyAlgebra
 variable [Fintype I] {K H : Type*} [Field K] [CharZero K]
   [AddCommGroup H] [Module K H]
   (P : Matrix.Realization D.cartanMatrix K H) (hD : D.cartanMatrix.IsFiniteCartan)
-  [CharZero k] (htrans : Transcendental ℚ v)
   {ω : List I} (hω : (P.coxeterSystem hD.isGeneralizedCartan).IsReduced ω)
   (hw : (P.coxeterSystem hD.isGeneralizedCartan).wordProd ω = finiteTypeLongest P hD)
 
@@ -166,35 +164,34 @@ variable [Fintype I] {K H : Type*} [Field K] [CharZero K]
 point, and positive exponents. The negative vectors use Chevalley-conjugated braids. -/
 def finiteTypeFullPBWBasis :
     Basis ((Fin ω.length → ℕ) × Y × (Fin ω.length → ℕ)) k (QuantumGroup R v) :=
-  ((finiteTypeNegativePBWBasis R hv P hD htrans hω hw).tensorProduct
+  ((finiteTypeNegativePBWBasis R hv P hD hω hw).tensorProduct
     ((AddMonoidAlgebra.basis Y k).tensorProduct
-      (finiteTypePBWBasis R P hD hv htrans hω hw))).map
+      (finiteTypePBWBasis R P hD hv hω hw))).map
     (triangularMultiplicationEquiv R v hv)
 
 /-- The full basis vectors are precisely negative monomial times `K_μ` times positive
 monomial, with no hidden change of vectors or reversal of either word. -/
 theorem finiteTypeFullPBWBasis_apply (a c : Fin ω.length → ℕ) (μ : Y) :
-    finiteTypeFullPBWBasis R v hv P hD htrans hω hw (a, μ, c) =
+    finiteTypeFullPBWBasis R v hv P hD hω hw (a, μ, c) =
       CoxeterSystem.pbwMonomial (negativeBraidEquiv R hv) (F R v) ω a * QuantumGroup.K R v μ *
         CoxeterSystem.pbwMonomial (braidEquivOfNotRoot R hv) (E R v) ω c := by
   simp [finiteTypeFullPBWBasis, finiteTypeNegativePBWBasis_apply, finiteTypePBWBasis_apply]
 
 /-- Full PBW coordinates give a finite expansion of every element of the actual quantum group. -/
 theorem finiteTypeFullPBWBasis_sum_repr (x : QuantumGroup R v) :
-    ((finiteTypeFullPBWBasis R v hv P hD htrans hω hw).repr x).sum
+    ((finiteTypeFullPBWBasis R v hv P hD hω hw).repr x).sum
       (fun t a ↦ a • (CoxeterSystem.pbwMonomial (negativeBraidEquiv R hv) (F R v) ω t.1 *
         QuantumGroup.K R v t.2.1 *
         CoxeterSystem.pbwMonomial (braidEquivOfNotRoot R hv) (E R v) ω t.2.2)) = x := by
   have hvec (t : (Fin ω.length → ℕ) × Y × (Fin ω.length → ℕ)) :
-      finiteTypeFullPBWBasis R v hv P hD htrans hω hw t =
+      finiteTypeFullPBWBasis R v hv P hD hω hw t =
         CoxeterSystem.pbwMonomial (negativeBraidEquiv R hv) (F R v) ω t.1 *
           QuantumGroup.K R v t.2.1 *
           CoxeterSystem.pbwMonomial (braidEquivOfNotRoot R hv) (E R v) ω t.2.2 :=
-    finiteTypeFullPBWBasis_apply R v hv P hD htrans hω hw t.1 t.2.2 t.2.1
+    finiteTypeFullPBWBasis_apply R v hv P hD hω hw t.1 t.2.2 t.2.1
   simpa only [Finsupp.linearCombination_apply, hvec] using
-    (finiteTypeFullPBWBasis R v hv P hD htrans hω hw).linearCombination_repr x
+    (finiteTypeFullPBWBasis R v hv P hD hω hw).linearCombination_repr x
 
-include htrans in
 /-- A full PBW basis exists without a supplied reduced word, basis, spanning assertion,
 or linear equivalence. -/
 theorem exists_finiteTypeFullPBWBasis :
@@ -206,7 +203,7 @@ theorem exists_finiteTypeFullPBWBasis :
             CoxeterSystem.pbwMonomial (braidEquivOfNotRoot R hv) (E R v) ω c := by
   obtain ⟨ω, hω, hw⟩ :=
     (P.coxeterSystem hD.isGeneralizedCartan).exists_isReduced (finiteTypeLongest P hD)
-  exact ⟨ω, hω, hw.symm, finiteTypeFullPBWBasis R v hv P hD htrans hω hw.symm,
-    fun a μ c ↦ finiteTypeFullPBWBasis_apply R v hv P hD htrans hω hw.symm a c μ⟩
+  exact ⟨ω, hω, hw.symm, finiteTypeFullPBWBasis R v hv P hD hω hw.symm,
+    fun a μ c ↦ finiteTypeFullPBWBasis_apply R v hv P hD hω hw.symm a c μ⟩
 
 end QuantumGroup

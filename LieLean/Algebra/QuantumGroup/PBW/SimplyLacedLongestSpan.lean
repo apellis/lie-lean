@@ -39,18 +39,18 @@ namespace CoxeterSystem
 variable {B k A : Type*} [Field k] [Ring A] [Algebra k A]
   (T : B → A ≃ₐ[k] A) (E : B → A)
 
-private lemma pbwMonomial_zero_exponents (w : List B) :
+lemma pbwMonomial_zero_exponents (w : List B) :
     pbwMonomial T E w (fun _ ↦ 0) = 1 := by
   induction w with
   | nil => rfl
   | cons i w ih => simp [pbwMonomial_cons, ih]
 
-private lemma one_mem_pbwSpan (w : List B) :
+lemma one_mem_pbwSpan (w : List B) :
     (1 : A) ∈ Submodule.span k (Set.range (pbwMonomial T E w)) := by
   rw [← pbwMonomial_zero_exponents T E w]
   exact Submodule.subset_span ⟨_, rfl⟩
 
-private lemma mul_mem_pbwSpan_cons (i : B) (w : List B) {x : A}
+lemma mul_mem_pbwSpan_cons (i : B) (w : List B) {x : A}
     (hx : x ∈ Submodule.span k (Set.range (pbwMonomial T E (i :: w)))) :
     E i * x ∈ Submodule.span k (Set.range (pbwMonomial T E (i :: w))) := by
   induction hx using Submodule.span_induction with
@@ -67,7 +67,7 @@ private lemma mul_mem_pbwSpan_cons (i : B) (w : List B) {x : A}
   | add x y _ _ hx hy => simpa only [mul_add] using Submodule.add_mem _ hx hy
   | smul a x _ hx => simpa only [mul_smul_comm] using Submodule.smul_mem _ a hx
 
-private lemma exists_reduced_cons_longest {W : Type*} [Group W] [Finite W]
+lemma exists_reduced_cons_longest {W : Type*} [Group W] [Finite W]
     {M : CoxeterMatrix B} (cs : CoxeterSystem M W) (i : B) :
     ∃ u : List B, cs.IsReduced (i :: u) ∧ cs.wordProd (i :: u) = cs.longestElement := by
   obtain ⟨u, hu, he⟩ := cs.exists_isReduced (cs.simple i * cs.longestElement)

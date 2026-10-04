@@ -6,28 +6,32 @@ Authors: Alex Ellis
 import LieLean.Algebra.QuantumGroup.PBW.KostantCounting
 import LieLean.Algebra.QuantumGroup.PBW.KostantDimension
 import LieLean.Algebra.QuantumGroup.PBW.Independence
+import LieLean.Algebra.QuantumGroup.PBW.FiniteTypeSpan
 
 /-!
-# Finite-type quantum PBW bases at a transcendental parameter
+# Finite-type quantum PBW bases
 
 ## Main results
 
 * `card_pbwMonomialDegree_fiber`: natural-degree fibers of actual ordered root-vector
   monomials have the Kostant cardinality.
 * `span_pbwMonomialDegree_fiber`: those monomials span the corresponding quantum weight space.
-* `finiteTypePBWBasis`: the actual ordered monomials form a basis of `U⁺`.
+* `finiteTypePBWBasis`: the actual ordered monomials form a basis of `U⁺`, over any field at
+  any nonzero parameter which is not a root of unity.
 * `exists_finiteTypePBWBasis`: such a basis exists, without assuming a chosen reduced word.
 
 The natural-degree comparison and counting use only a nonzero non-root-of-unity parameter.
-Spanning and the basis additionally require characteristic zero and a parameter transcendental
-over `ℚ`. They do not prove PBW spanning at every non-root-of-unity parameter.
+The degreewise spanning theorems `span_pbwMonomialDegree_fiber` and
+`span_pbwMonomial_of_isFiniteCartan` are proved here by a dimension count which requires
+characteristic zero and a parameter transcendental over `ℚ`. The basis `finiteTypePBWBasis`
+instead uses the straightening proof of spanning `span_pbwMonomial_longest_of_isFiniteCartan`
+(`PBW.FiniteTypeSpan`), which needs neither.
 
 ## References
 
 Reconstructed dimension argument: combine the longest-word root enumeration and Kostant
 counting from `PBW.KostantCounting`, the quantum graded dimensions from `PBW.KostantDimension`,
-and actual ordered-monomial independence from `PBW.Independence`. No new printed theorem
-number is asserted here; the stronger parameter restriction in this argument is explicit.
+and actual ordered-monomial independence from `PBW.Independence`.
 -/
 
 noncomputable section
@@ -140,29 +144,36 @@ theorem span_pbwMonomial_of_isFiniteCartan [CharZero k] (htrans : Transcendental
     rintro _ ⟨c, rfl⟩
     exact ⟨c.1, rfl⟩
 
-/-- The genuine longest-word PBW basis of `U⁺` at a transcendental parameter in
-characteristic zero. Its vectors are the existing ordered braid-root monomials. -/
-def finiteTypePBWBasis [CharZero k] (htrans : Transcendental ℚ v)
+/-- **The PBW basis of `U⁺` in finite type** ([Jan] Thm. 8.24, opposite multiplication order;
+[Lus] Cor. 40.2.2, over `ℚ(v)`): for every Cartan
+datum of finite type, over any field, at any nonzero parameter which is not a root of unity, the
+ordered monomials in the root vectors along a reduced word of the longest element form a basis
+of `U⁺`. Spanning is `span_pbwMonomial_longest_of_isFiniteCartan`, independence
+`linearIndependent_pbwMonomial_of_isFiniteCartan`. -/
+def finiteTypePBWBasis
     {ω : List I} (hω : (P.coxeterSystem hD.isGeneralizedCartan).IsReduced ω)
     (hw : (P.coxeterSystem hD.isGeneralizedCartan).wordProd ω = finiteTypeLongest P hD) :
     Basis (Fin ω.length → ℕ) k (Algebra.adjoin k (Set.range (E R v))) :=
   (Basis.span (linearIndependent_pbwMonomial_of_isFiniteCartan (R := R) hv hD hω)).map
-    (LinearEquiv.ofEq _ _ (span_pbwMonomial_of_isFiniteCartan R P hD hv htrans hω hw))
+    (LinearEquiv.ofEq _ _ (by
+      have := P.finite_weylGroup hD
+      exact span_pbwMonomial_longest_of_isFiniteCartan R v hv hD
+        (P.coxeterSystem hD.isGeneralizedCartan) hω hw))
 
 /-- The basis has exactly the promised ordered monomials, without a change of vectors. -/
-theorem finiteTypePBWBasis_apply [CharZero k] (htrans : Transcendental ℚ v)
+theorem finiteTypePBWBasis_apply
     {ω : List I} (hω : (P.coxeterSystem hD.isGeneralizedCartan).IsReduced ω)
     (hw : (P.coxeterSystem hD.isGeneralizedCartan).wordProd ω = finiteTypeLongest P hD)
     (c : Fin ω.length → ℕ) :
-    (finiteTypePBWBasis R P hD hv htrans hω hw c : QuantumGroup R v) =
+    (finiteTypePBWBasis R P hD hv hω hw c : QuantumGroup R v) =
       CoxeterSystem.pbwMonomial (braidEquivOfNotRoot R hv) (E R v) ω c := by
   simp only [finiteTypePBWBasis, Basis.map_apply, Basis.span_apply]
   rfl
 
-/-- A longest reduced word and its genuine ordered-monomial basis exist in finite type.
-This is the same reconstructed dimension argument, retaining characteristic zero and
-transcendence; no supplied basis or root-enumeration hypothesis is required. -/
-theorem exists_finiteTypePBWBasis [CharZero k] (htrans : Transcendental ℚ v) :
+/-- A longest reduced word and its genuine ordered-monomial basis exist in finite type, over any
+field at any nonzero parameter which is not a root of unity; no supplied basis or
+root-enumeration hypothesis is required. -/
+theorem exists_finiteTypePBWBasis :
     ∃ ω : List I, (P.coxeterSystem hD.isGeneralizedCartan).IsReduced ω ∧
       (P.coxeterSystem hD.isGeneralizedCartan).wordProd ω = finiteTypeLongest P hD ∧
       ∃ b : Basis (Fin ω.length → ℕ) k
@@ -171,7 +182,7 @@ theorem exists_finiteTypePBWBasis [CharZero k] (htrans : Transcendental ℚ v) :
         CoxeterSystem.pbwMonomial (braidEquivOfNotRoot R hv) (E R v) ω c := by
   obtain ⟨ω, hω, hw⟩ :=
     (P.coxeterSystem hD.isGeneralizedCartan).exists_isReduced (finiteTypeLongest P hD)
-  exact ⟨ω, hω, hw.symm, finiteTypePBWBasis R P hD hv htrans hω hw.symm,
-    finiteTypePBWBasis_apply R P hD hv htrans hω hw.symm⟩
+  exact ⟨ω, hω, hw.symm, finiteTypePBWBasis R P hD hv hω hw.symm,
+    finiteTypePBWBasis_apply R P hD hv hω hw.symm⟩
 
 end QuantumGroup

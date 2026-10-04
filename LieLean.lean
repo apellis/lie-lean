@@ -272,6 +272,10 @@ import LieLean.Algebra.QuantumGroup.PBW.KostantCounting
 import LieLean.Algebra.QuantumGroup.PBW.GenericBasis
 import LieLean.Algebra.QuantumGroup.PBW.NegativeBasis
 import LieLean.Algebra.QuantumGroup.PBW.TriangularBasis
+import LieLean.Algebra.QuantumGroup.PBW.OrderedSpan
+import LieLean.Algebra.QuantumGroup.PBW.RankTwoG2Relations
+import LieLean.Algebra.QuantumGroup.PBW.RankTwoG2BraidSpan
+import LieLean.Algebra.QuantumGroup.PBW.FiniteTypeSpan
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorGeneration
 import LieLean.Algebra.QuantumGroup.PBW.RootVectors
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
