@@ -528,8 +528,8 @@ exactness for Casimir-block restriction. Injectivity and middle exactness use po
 modules; surjectivity is stated for category-O modules. These are actual morphism results,
 not just character equalities. The subsequent full-central projection, facet exclusion and
 translation results below prove the Verma and dual-Verma parts of [HumO] Thm. 7.6 for integral
-weights in finite type over algebraically closed characteristic-zero fields. Non-integral
-weights and the general upper-closure criterion remain open.
+weights in finite type over algebraically closed characteristic-zero fields, as is the
+upper-closure criterion Thm. 7.9 for integral weights (below). Non-integral weights remain open.
 `KacMoody/TensorVerma.lean` proves the actual left-regular enveloping tensor identity over
 any commutative ring, with a Hom-module inverse and both inverse laws. Its PBW specialization
 identifies `U(n₋) ⊗ Z_trivial` with `M(Λ) ⊗ Z`, equivariantly for `n₋`, and constructs
@@ -741,10 +741,20 @@ proves the **same-facet case**: if `λ + ρ`, `μ + ρ` have the same simple wal
 the Verma part for `λ, μ` exchanged), `T_μ^λ T_λ^μ M(w·λ) ≅ M(w·λ)`
 (`translation_translation_verma_of_sameFacet`) and `T_μ^λ T_λ^μ L(w·λ) ≅ L(w·λ)`
 (`translation_translation_irreducible_of_sameFacet`), with `T_μ^λ` built from `L(ν)^*`
-(Humphreys GSM 94 §7.8, Thm. 7.9). Remaining: non-integral `λ` (`W_[λ]`); the general
-upper-closure criterion of Thm. 7.9 when `μ` lies on more walls than `λ`; and the
-equivalence of blocks as a natural isomorphism of functors (only its values on Verma and simple
-modules are proved).
+(Humphreys GSM 94 §7.8, Thm. 7.9). **Upper-closure criterion** (Humphreys GSM 94 Thm. 7.9,
+integral weights; upper closure as in §7.3: pairings with `β^∨` that vanish stay zero, positive
+ones stay positive, negative ones become `≤ 0`): `KacMoody/UpperClosure.lean`
+(`Realization.MemUpperClosure`, `memUpperClosure_weylDot_iff`, the minimality
+`exists_apply_sub_eq_rootOf_of_upperClosureCondition` and the descent
+`exists_upperClosureCondition`), `KacMoody/TranslationMultiplicity.lean` (exactness of
+translation on multiplicities, `multiplicity_centralTranslation_eq_sum` along a local composition
+series) and `KacMoody/TranslationUpperClosure.lean`: `translation_irreducible_of_memUpperClosure`
+(`T_λ^μ L(w·λ) ≅ L(w·μ)` if `w·μ` lies in the upper closure of the facet of `w·λ`),
+`translation_irreducible_of_not_memUpperClosure` (otherwise `T_λ^μ L(w·λ) = 0`),
+`nonempty_equiv_translation_irreducible_iff`. The vanishing half replaces Humphreys' Verma
+embedding `M(s_α w·λ) ↪ M(w·λ)` by a Kac–Kazhdan chain and a count in the Grothendieck group
+(reconstructed). Remaining: non-integral `λ` (`W_[λ]`); the equivalence of blocks as a natural
+isomorphism of functors (only its values on Verma and simple modules are proved).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
@@ -1733,7 +1743,8 @@ completed steps and continuation threads are:
   `L(ν)^* ≅ L(-w₀ν)` (`IrreducibleModule.exists_equiv_dual`) and the same-facet case
   `T_λ^μ L(w·λ) ≅ L(w·μ)`, `T_μ^λ T_λ^μ ≅ id` on Verma and simple modules
   (`translation_irreducible_of_sameFacet`, `translation_translation_*_of_sameFacet`).
-  Remaining: non-integral weights (`W_[λ]`) and the general upper-closure criterion of Thm. 7.9.
+  The upper-closure criterion Thm. 7.9 is proved for integral weights
+  (`nonempty_equiv_translation_irreducible_iff`). Remaining: non-integral weights (`W_[λ]`).
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
   linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
@@ -1906,7 +1917,7 @@ completed steps and continuation threads are:
   `U⁺`, `U⁻`, `U`) no longer assume characteristic zero or a transcendental parameter.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
-  and the general upper-closure criterion of Humphreys O Thm. 7.9,
+  (Humphreys O Thm. 7.9 for non-integral weights),
   and valid restricted extensions of the Hom dimension bound.
   Finite-dimensional exhaustion and parameter uniqueness are proved for both signs at generic
   parameter. The unrestricted Verma Hom dimension bound is false
