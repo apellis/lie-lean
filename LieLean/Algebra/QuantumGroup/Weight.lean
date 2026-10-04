@@ -39,6 +39,8 @@ Here a `U`-module is a `k`-vector space `M` with `[Module U M]` and `[IsScalarTo
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 5.
 -/
 
+open LieLean
+
 noncomputable section
 
 namespace LusztigCartanDatum.RootDatum
@@ -78,7 +80,7 @@ theorem exists_rootSum_ne (hR : R.IsXRegular) {ν ν' : I →₀ ℕ} (hν : ν 
 
 end LusztigCartanDatum.RootDatum
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
@@ -219,4 +221,4 @@ theorem iSupIndep_weightSpace (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) :
 
 end Weight
 
-end QuantumGroup
+end LieLean.QuantumGroup

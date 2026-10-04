@@ -40,7 +40,7 @@ De Concini–Kac).
 
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 namespace OrderedSpan
 
@@ -357,4 +357,4 @@ theorem BaseRel.castSucc {y : Fin (n + 2) → B} (h : BaseRel k y) :
 
 end OrderedSpan
 
-end QuantumGroup
+end LieLean.QuantumGroup

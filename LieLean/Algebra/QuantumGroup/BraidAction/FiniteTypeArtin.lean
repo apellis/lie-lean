@@ -37,6 +37,8 @@ G. Lusztig, *Introduction to quantum groups*, 39.4.3. Reconstructed; the relatio
 those of `BraidAction/GeneralArtin.lean`.
 -/
 
+open LieLean
+
 
 /-- A Cartan datum whose Cartan matrix satisfies `Matrix.BraidOuterCondition` satisfies
 `LusztigCartanDatum.BraidOuterCondition`. -/
@@ -48,7 +50,7 @@ theorem LusztigCartanDatum.BraidOuterCondition.of_cartanMatrix_eq {I : Type*}
 
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k Y : Type*} [Field k] [AddCommGroup Y] {v : k} [NeZero v]
 
@@ -190,4 +192,4 @@ theorem braidArtinHom_G₂_artinGenerator {D : LusztigCartanDatum (Fin 2)} (R : 
 
 end Named
 
-end QuantumGroup
+end LieLean.QuantumGroup

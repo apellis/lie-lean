@@ -36,9 +36,11 @@ sets.
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §1.4.
 -/
 
+open LieLean
+
 noncomputable section
 
-open Finset QuantumGroup
+open Finset LieLean.QuantumGroup
 
 namespace FreeAlgebra
 

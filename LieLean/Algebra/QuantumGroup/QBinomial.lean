@@ -65,7 +65,7 @@ reconstruction and avoids the usual expansion into `q`-multinomials: writing
 
 open Finset
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k]
 
@@ -646,9 +646,9 @@ lemma qSerreDiv_smul_smul (m : ℕ) (a b : B) (c d : k) :
   rw [show c ^ m = c ^ (m - r) * c ^ r by rw [← pow_add, Nat.sub_add_cancel hr]]
   ring
 
-end QuantumGroup
+end LieLean.QuantumGroup
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 /-! ### Quantum integers and binomial coefficients with respect to a unit of a ring
 
@@ -719,4 +719,4 @@ lemma map_qIntU_of_eq_one (hφ : φ q = 1) (n : ℤ) : φ (qIntU q n) = n := by
     rw [qIntU, map_neg, map_qNatU, hφ]
     simp [qInt, Int.negSucc_eq]
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -17,8 +17,10 @@ Reconstructed from the repository quantum quotient presentation and its `T''` co
 These are necessary identities, not a G₂ automorphism or a length-six action.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
@@ -368,4 +370,4 @@ theorem qSerre_braidFj_braidFi_of_triple_edge (hv : v ≠ 0)
     (mul_ne_zero (pow_ne_zero _ (neg_ne_zero.mpr (pow_ne_zero _ (inv_ne_zero (pow_ne_zero _ hv)))))
       (pow_ne_zero _ (pow_ne_zero _ hv)))
 
-end QuantumGroup
+end LieLean.QuantumGroup

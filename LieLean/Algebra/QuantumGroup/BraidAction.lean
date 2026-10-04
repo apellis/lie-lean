@@ -45,9 +45,11 @@ The images `Tᵢ(Eⱼ)`, `Tᵢ(Fⱼ)` for `j ≠ i` and the relations involving 
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 8.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
@@ -324,4 +326,4 @@ def Sl2.braidEquiv : Sl2 v ≃ₐ[k] Sl2 v := rankOneBraidEquiv sl2RootDatum
 
 end RankOne
 
-end QuantumGroup
+end LieLean.QuantumGroup

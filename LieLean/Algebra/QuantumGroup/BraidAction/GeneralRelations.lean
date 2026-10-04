@@ -26,9 +26,11 @@ The automorphisms `braidEquiv` of `BraidAction/General.lean` have Lusztig's gene
 Reconstructed; see the files cited above.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k] {I Y : Type*} [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v] {i j : I}
@@ -69,4 +71,4 @@ theorem braidEquiv_braid_three (hgi : BraidGeneric D v i) (hSi : TransformedSerr
   HasBraidGeneratorImages.three_equiv (braidHom_hasBraidGeneratorImages hgi hSi)
     (braidHom_hasBraidGeneratorImages hgj hSj) hij h h' hgi.sub_ne hout
 
-end QuantumGroup
+end LieLean.QuantumGroup

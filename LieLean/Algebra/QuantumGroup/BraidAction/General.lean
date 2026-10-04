@@ -32,9 +32,11 @@ Reconstructed from the quotient presentation (the statement that `Tᵢ` is an au
 [Lus] Prop. 37.1.2, [Jan] Prop. 8.13, proved there differently).
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k] {I Y : Type*} [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
@@ -174,4 +176,4 @@ def braidEquiv : QuantumGroup R v ≃ₐ[k] QuantumGroup R v :=
   AlgEquiv.ofAlgHom (braidHom hg hS) (braidInvHom hg hS) (braidHom_comp_braidInvHom hg hS)
     (braidInvHom_comp_braidHom hg hS)
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -25,8 +25,10 @@ Reconstructed directly from the quotient presentation.
 These are defining-relation prerequisites, not an automorphism construction.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
@@ -250,4 +252,4 @@ theorem braidEj_mul_braidFj_sub_of_cartanMatrix_eq_neg_two_neg_two
     (by rw [K_mul_E, map_neg, root_ktilde, hij, mul_neg, neg_neg, he])
     (by rw [K_mul_F, map_neg, neg_neg, root_ktilde, hil, mul_neg, zpow_neg, he, inv_pow])
 
-end QuantumGroup
+end LieLean.QuantumGroup

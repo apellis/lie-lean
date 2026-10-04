@@ -20,8 +20,10 @@ Builds on the repository's `PathSerre`, `HigherSerreReverse`, `HigherMixed`, `Do
 `DoubleEdgeOther` and `DoubleEdgeRelation`. The degree-seven polynomial certificate is
 reconstructed by exact rational-function elimination and checked by Lean.
 -/
+
+open LieLean
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
@@ -213,4 +215,4 @@ theorem qSerre_braidFj_braidFj_of_double_path_reverse
   exact (smul_eq_zero.mp h).resolve_left
     (pow_ne_zero _ (inv_ne_zero (pow_ne_zero _ hv)))
 
-end QuantumGroup
+end LieLean.QuantumGroup

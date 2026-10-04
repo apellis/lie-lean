@@ -20,8 +20,10 @@ Reconstructed directly from the defining Serre polynomials. This is a dependency
 simply-laced braid automorphism theorem, not an assertion of the full theorem.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k] {B : Type*} [Ring B] [Algebra k B]
 
@@ -165,4 +167,4 @@ theorem qSerre_braidFj_braidFj_of_path_reverse
   exact (smul_eq_zero.mp h).resolve_left
     (neg_ne_zero.mpr (inv_ne_zero (pow_ne_zero _ hv)))
 
-end QuantumGroup
+end LieLean.QuantumGroup

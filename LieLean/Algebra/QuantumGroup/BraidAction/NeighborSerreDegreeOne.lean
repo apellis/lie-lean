@@ -42,9 +42,11 @@ Reconstructed from the quotient presentation (the statement that `Tᵢ` is an au
 [Lus] Prop. 37.1.2, [Jan] Prop. 8.13, proved there differently).
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 section Ring
 
@@ -163,4 +165,4 @@ def degreeOneBraidEquiv : QuantumGroup R v ≃ₐ[k] QuantumGroup R v :=
 
 end TwoNode
 
-end QuantumGroup
+end LieLean.QuantumGroup

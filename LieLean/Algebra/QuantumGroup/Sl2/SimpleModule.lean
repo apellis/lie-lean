@@ -35,9 +35,11 @@ more generally `K_μ` acts on `mⱼ` by `σ^μ v^{μ(n-2j)}`. We realize it on `
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 1–2.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 /-- The Cartan datum of type `A₁`: `I = {∗}` and `∗ · ∗ = 2`. -/
 def sl2Datum : LusztigCartanDatum Unit where
@@ -414,4 +416,4 @@ theorem simpleRep_irreducible (hv : v ≠ 0) (hv' : ∀ m : ℕ, 0 < m → v ^ m
 
 end Sl2
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -30,6 +30,8 @@ Construction and proofs reconstructed from the divided-power definition and the 
 property of algebra generation.
 -/
 
+open LieLean
+
 noncomputable section
 
 namespace LusztigF

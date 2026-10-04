@@ -68,9 +68,11 @@ specialization lemma `LinearIndependent.of_comp_ratHom` says: vectors over `L` w
   Cor. 10.4.
 -/
 
+open LieLean
+
 noncomputable section
 
-open FreeAlgebra QuantumGroup Module
+open FreeAlgebra LieLean.QuantumGroup Module
 
 namespace LusztigF
 

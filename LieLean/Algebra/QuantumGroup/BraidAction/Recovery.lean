@@ -36,11 +36,13 @@ Reconstructed from the quotient presentation; this computation was not taken fro
 (compare [Lus] §37.1, [Jan] Ch. 8).
 -/
 
+open LieLean
+
 noncomputable section
 
 open Finset
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 namespace BraidDiagonal
 
@@ -417,4 +419,4 @@ theorem qSerre_braidFi_braidFj [NeZero v] {i j : I} (hij : i ≠ j)
   rw [← serreAux_one, one_sub_cartanMatrix_toNat hij, hY, BraidDiagonal.serreAux_smul_right,
     braidFi, (braidDiagonal_hyp R v hv hij hq).serreAux_centre_F (K_neg_mul_Kt i), smul_zero]
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -45,11 +45,13 @@ Reconstructed from the repository's B₂ straightening relations and root-vector
 the passage to the reversed word through the opposite algebra is our own device.
 -/
 
+open LieLean
+
 noncomputable section
 
 open LusztigF
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 namespace B2PBW
 
@@ -331,4 +333,4 @@ theorem span_pbwMonomial_b2_context_of_not_root
   simpa [CoxeterSystem.braidWord, hm, hm', CoxeterSystem.alternatingWord,
     ← mul_assoc] using e
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -25,6 +25,8 @@ of unity) for `v = RatFunc.X`.
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §1.
 -/
 
+open LieLean
+
 namespace LusztigF
 
 /-- The indeterminate `v ∈ ℚ(v)` is not a root of unity. -/

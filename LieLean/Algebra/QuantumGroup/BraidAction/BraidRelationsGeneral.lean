@@ -51,11 +51,13 @@ A third node meeting both ends of a simple edge (a triangle) needs the rank-thre
 Reconstructed. G. Lusztig, *Introduction to quantum groups*, 39.4, for the statement.
 -/
 
+open LieLean
+
 noncomputable section
 
 open Finset
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 namespace TwoNode
 
@@ -144,11 +146,11 @@ lemma three_outer_core (hq : q ≠ 0) {a b z : B} {r : ℕ} (hab : X q q b a 2 =
 
 end TwoNode
 
-end QuantumGroup
+end LieLean.QuantumGroup
 
 /-! ### Length three at an outer node meeting one endpoint -/
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 open BraidDiagonal
 
@@ -360,4 +362,4 @@ theorem braidEquiv_braid_six_of_orthogonal (hgi : BraidGeneric D v i)
 
 end Six
 
-end QuantumGroup
+end LieLean.QuantumGroup

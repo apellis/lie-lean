@@ -26,8 +26,10 @@ The index type has exactly the two distinct nodes `i,j`, both Cartan entries are
 root datum lattice is arbitrary.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
@@ -268,4 +270,4 @@ def a2BraidEquiv : QuantumGroup R v ≃ₐ[k] QuantumGroup R v :=
     (a2Braid_comp_a2BraidInv i j hij hall h h' hq)
     (a2BraidInv_comp_a2Braid i j hij hall h h' hq)
 
-end QuantumGroup
+end LieLean.QuantumGroup

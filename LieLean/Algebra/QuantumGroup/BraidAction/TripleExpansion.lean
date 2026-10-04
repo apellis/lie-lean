@@ -15,8 +15,10 @@ The negative candidate's odd-degree sign and the expanded third quantum factoria
 Reconstructed from the original quotient presentation.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k : Type*} [Field k]
 /-- Expanded third quantum factorial; reconstructed from its defining recursion. -/
 lemma qFactorial_three_eq (q : k) (hq : q ≠ 0) :
@@ -46,4 +48,4 @@ theorem braidFj_eq_of_cartanMatrix_eq_neg_three (hv : v ≠ 0)
     smul_add, smul_sub, smul_smul]
   match_scalars <;> field_simp [pow_ne_zero (D.d i) hv] <;> ring
 
-end QuantumGroup
+end LieLean.QuantumGroup

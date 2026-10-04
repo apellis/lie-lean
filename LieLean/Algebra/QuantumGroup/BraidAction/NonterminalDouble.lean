@@ -22,8 +22,10 @@ All scalar cancellations are explicit. Higher-rank braid relations are not prove
 Reconstructed by exact rational-function elimination from the defining Serre
 relations. Lean checks the certificate.
 -/
+
+open LieLean
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k : Type*} [Field k]
 
 set_option maxHeartbeats 2000000 in
@@ -114,9 +116,9 @@ theorem braidFj_commute_braidFj_of_double_simple_neighbours
     from ?_)).resolve_left (mul_ne_zero (pow_ne_zero _ hq) (neg_ne_zero.mpr hq))
   simpa only [smul_sub, mul_comm] using sub_eq_zero.mpr hc
 
-end QuantumGroup
+end LieLean.QuantumGroup
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k}
 
@@ -518,4 +520,4 @@ def nonterminalDoubleBraidEquiv : QuantumGroup R v ≃ₐ[k] QuantumGroup R v :=
     (nonterminalDoubleBraid_comp_nonterminalDoubleBraidInv i hedge hleaf hunique hpath hq hs hn hc)
     (nonterminalDoubleBraidInv_comp_nonterminalDoubleBraid i hedge hleaf hunique hpath hq hs hn hc)
 
-end QuantumGroup
+end LieLean.QuantumGroup

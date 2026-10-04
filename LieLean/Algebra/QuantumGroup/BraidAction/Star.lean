@@ -31,8 +31,10 @@ Reconstructed directly from the defining quantum Serre relations. No rank restri
 assumed braid automorphism is used.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k]
 
@@ -128,10 +130,10 @@ theorem braidFj_commute_braidFj_of_orthogonal_neighbours
     from ?_)).resolve_left (mul_ne_zero hq hq)
   simpa only [smul_sub] using sub_eq_zero.mpr hc
 
-end QuantumGroup
+end LieLean.QuantumGroup
 
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
@@ -332,4 +334,4 @@ def a3MiddleBraidEquiv (j l : I)
     · exact (D.isGeneralizedCartan_cartanMatrix.zero_comm _ _).mp hjl'
   exact starBraidEquiv i he hl hq hs
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -33,11 +33,13 @@ construction is our own rendering of the standard argument ([Jan] 4.14–4.17).
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, Ch. 4.
 -/
 
+open LieLean
+
 noncomputable section
 
 open LusztigF TensorProduct
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
@@ -325,4 +327,4 @@ theorem preRelations_op : PreRelations R v (opE R v) (opF (k := k) (Y := Y)) (op
       module
     · module
 
-end QuantumGroup
+end LieLean.QuantumGroup

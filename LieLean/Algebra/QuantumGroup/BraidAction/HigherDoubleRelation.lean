@@ -17,8 +17,10 @@ Reconstructed from the repository's NonterminalDouble, TerminalDouble,
 TerminalDoubleOther, DoubleEdgeRelation, SimplyLacedRelations and Artin sources.
 No rank-two exhaustion is imposed.
 -/
+
+open LieLean
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 section Polynomial
 variable {k B : Type*} [Field k] [Ring B] [Algebra k B]
 
@@ -448,4 +450,4 @@ theorem higherDoubleBraidEquiv_braid :
   intro x
   exact (DFunLike.congr_fun (higherDoubleBraid_braid i j Hi Hj hij h h') x).symm
 
-end QuantumGroup
+end LieLean.QuantumGroup

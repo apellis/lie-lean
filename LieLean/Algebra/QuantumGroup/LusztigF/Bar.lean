@@ -35,6 +35,8 @@ The implementation and all proofs below are reconstructed arguments. Coefficient
 hold over an arbitrary constant field, but always at the indeterminate, not a scalar specialization.
 -/
 
+open LieLean
+
 noncomputable section
 
 namespace RatFunc
@@ -76,7 +78,7 @@ def bar : RatFunc K ≃ₐ[K] RatFunc K :=
 
 end RatFunc
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {K : Type*} [Field K]
 
@@ -122,7 +124,7 @@ theorem qFactorial_X_pow_ne_zero (d n : ℕ) (hd : 0 < d) :
   rw [← pow_mul]
   exact LusztigF.ratFunc_X_pow_ne_one (Nat.mul_pos hd (by omega))
 
-end QuantumGroup
+end LieLean.QuantumGroup
 
 namespace LusztigF
 

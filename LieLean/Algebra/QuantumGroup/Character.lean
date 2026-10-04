@@ -83,6 +83,8 @@ Put `nᵢ = ⟨i, Λ⟩`. Through `y ↦ y⁻ v_Λ`, `'f ⧸ J ≅ M_q(Λ)` (`J`
   Cor. 10.4.
 -/
 
+open LieLean
+
 noncomputable section
 
 open LusztigF FreeAlgebra Module
@@ -116,7 +118,7 @@ lemma span_mapCoeffs_tildeFamily {F : Type*} [Field F] (φ : LaurentPolynomial �
 
 end LusztigF
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [CharZero k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v] {Λ : Y →+ ℤ}
@@ -336,4 +338,4 @@ theorem IrreducibleModule.finrank_weightSpace_eq_ratFunc [Fintype I] (hR : R.IsX
   haveI : NeZero (RatFunc.X : RatFunc ℚ) := ⟨RatFunc.X_ne_zero⟩
   finrank_weightSpace_eq transcendental_ratFunc_X hR hΛ P hΛ' ν
 
-end QuantumGroup
+end LieLean.QuantumGroup

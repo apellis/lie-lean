@@ -15,8 +15,10 @@ Original-Serre certificates for neighbour/untouched pairs and a broader quotient
 Reconstructed from the defining Serre polynomials and the repository's PathSerre,
 SimplyLaced and OrthogonalGeneral.
 -/
+
+open LieLean
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 section Polynomial
 variable {k B : Type*} [Field k] [Ring B] [Algebra k B]
 
@@ -540,4 +542,4 @@ theorem nextEdgeBraid_comm_of_images
       T.comp (nextEdgeBraid i hedge hleaf hpath hq hs hc) :=
   (nextEdgeBraid_hasBraidGeneratorImages i hedge hleaf hpath hq hs hc).comm HT hij h0
 
-end QuantumGroup
+end LieLean.QuantumGroup

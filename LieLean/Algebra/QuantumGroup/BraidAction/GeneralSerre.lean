@@ -47,9 +47,11 @@ Reconstructed from the quotient presentation (the statement that `Tᵢ` is an au
 [Lus] Prop. 37.1.2, [Jan] Prop. 8.13, proved there differently).
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k] {I Y : Type*} [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k}
@@ -225,4 +227,4 @@ theorem twoNodeBraidEquiv_eq_braidEquivOfGeneric [NeZero v] {j : I} (hij : i ≠
       braidEquivOfGeneric hq (braidSerreGeneric_of_twoNode hij hall hN) :=
   rfl
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -47,9 +47,12 @@ family of `K(ν)` elements of `U⁺_ν` is linearly independent iff it spans `U�
 * [Jan] J. C. Jantzen, *Lectures on quantum groups*, GSM 6, 4.21, 5.19, 8.24.
 -/
 
+open LieLean
+
 noncomputable section
 
-open FreeAlgebra QuantumGroup Matrix Matrix.Realization Matrix.Realization.KacMoodyAlgebra Module
+open FreeAlgebra LieLean.QuantumGroup Matrix Matrix.Realization
+open Matrix.Realization.KacMoodyAlgebra Module
   LieModule
 
 namespace LusztigF
@@ -242,7 +245,7 @@ theorem finrank_serreSpan_one (ν : I →₀ ℕ) :
 
 end LusztigF
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 open LusztigF
 
@@ -297,4 +300,4 @@ theorem linearIndependent_iff_span_eq_plusWeightSpace (hv : Transcendental ℚ v
   · intro h
     rw [linearIndependent_iff_card_eq_finrank_span, Set.finrank, h, hdim, hcard]
 
-end QuantumGroup
+end LieLean.QuantumGroup

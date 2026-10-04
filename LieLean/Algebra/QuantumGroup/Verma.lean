@@ -54,6 +54,8 @@ so it is the unique maximal submodule and `L_q(Λ) = M_q(Λ) ⧸ M'_q(Λ)` is si
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §3.4.
 -/
 
+open LieLean
+
 noncomputable section
 
 open LusztigF TensorProduct
@@ -117,7 +119,7 @@ lemma counit_weightProj_zero (y : LusztigF k I) : counit (weightProj 0 y) = coun
 
 end LusztigF
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
@@ -568,9 +570,9 @@ end Max
 
 end VermaModule
 
-end QuantumGroup
+end LieLean.QuantumGroup
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   (R : D.RootDatum Y) (v : k)
@@ -586,4 +588,4 @@ theorem IrreducibleModule.isSimpleModule (hR : R.IsXRegular) (hv' : ∀ n : ℕ,
     (Λ : Y →+ ℤ) : IsSimpleModule (QuantumGroup R v) (IrreducibleModule R v Λ) :=
   isSimpleModule_iff_isCoatom.2 (VermaModule.isCoatom_maxSubmodule hR hv')
 
-end QuantumGroup
+end LieLean.QuantumGroup

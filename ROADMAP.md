@@ -1258,14 +1258,14 @@ Classical bridge done (`KacMoody/SerreAssociative*.lean`): the associative Serre
 (the Serre relations are the relations of `𝔫̂₋`, any GCM); for symmetrizable `A` (Gabber–Kac)
 `KacMoodyAlgebra.serreAssocAlgebraEquiv : 𝒮 ≃ U(𝔫₋)` and the associative presentation of
 target 2, `KacMoodyAlgebra.serreAssocQuotientEquiv : 𝒮 ⧸ Σ 𝒮 θᵢ^{nᵢ+1} ≃ L(Λ)`.
-Quantum groups (`LieLean/Algebra/QuantumGroup/`): `LusztigCartanDatum` (+ `ofSymmetrization`),
+Quantum groups (`LieLean/Algebra/QuantumGroup/`; declarations in the namespace `LieLean.QuantumGroup`, the algebra itself is `LieLean.QuantumGroup R v`): `LusztigCartanDatum` (+ `ofSymmetrization`),
 q-binomials (`QBinomial.lean`); Lusztig's `'f` (`LusztigF k I := FreeAlgebra k I`, `θ`,
 `weightSpace`, skew derivations `rDeriv`/`lDeriv`, twisted coproduct `comul`), the form `form`
 (`form_θ_θ`, `form_mul_right`, `form_θ_mul`, `isSymm_form`, `form_eq_zero_of_ne`), `radical`,
 `Quotient` (= `f`), quantum Serre elements `serreElement`/`serreIdeal` with
 `serreIdeal_le_radical` ([Lus] 1.4.3; `_ratFunc` over `ℚ(v)`); `QuantumGroup R v` (presentation,
 `lift`), Hopf algebra (`instBialgebra`, `instHopfAlgebra`); triangular decomposition
-`QuantumGroup.triangularEquiv` (`U ≅ ('f ⊗ k[Y] ⊗ 'f)/W`), `plusHom_eq_zero_iff`
+`LieLean.QuantumGroup.triangularEquiv` (`U ≅ ('f ⊗ k[Y] ⊗ 'f)/W`), `plusHom_eq_zero_iff`
 (`U^± ≅ 'f/J`), `zeroHom_injective`. **Quantum Gabber–Kac** ([Lus] Thm. 33.1.3;
 `QuantumGroup/GabberKac*.lean`): `LusztigF.radical_eq_serreIdeal_ratFunc` (over `ℚ(v)`),
 `radical_eq_serreIdeal` (char-0 `k`, `v` transcendental), `toQuotient_eq_zero_iff_mem_serreIdeal`
@@ -1693,11 +1693,11 @@ including `n=0`, not an assumed balancedness interface. The argument is reconstr
 of Kashiwara's. No full quantum-algebra bar, general-rank global basis, integer integral basis or
 arbitrary specialization is asserted.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
-`QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
+`LieLean.QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
 irreducible representation over an algebraically closed field, for nonzero `v` of infinite
 multiplicative order, with some `simpleRep v n σ`, `σ² = 1`. Both signs are retained; no
 characteristic-zero or type-1 hypothesis is imposed. Parameter uniqueness
-(`Sl2/Classification/Uniqueness.lean`, `QuantumGroup.Sl2.simpleRep_equiv_iff`) proves that
+(`Sl2/Classification/Uniqueness.lean`, `LieLean.QuantumGroup.Sl2.simpleRep_equiv_iff`) proves that
 `L(n, σ)` and `L(m, τ)` are equivalent exactly when `n = m` and `σ = τ`; this part needs
 only a field, not algebraic closedness. Thus the finite-dimensional classification is complete
 up to equivalence under the stated generic-parameter hypotheses. Classification of arbitrary

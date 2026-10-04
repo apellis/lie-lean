@@ -20,6 +20,8 @@ The field and root datum lattice are arbitrary; the index type has exactly two d
 with mutual Cartan entries `-1`.
 -/
 
+open LieLean
+
 namespace LusztigCartanDatum
 
 variable {I : Type*} {D : LusztigCartanDatum I} {i j : I}
@@ -39,7 +41,7 @@ theorem sub_inv_ne_zero_of_simply_laced_edge {k : Type*} [Field k] {v : k}
 
 end LusztigCartanDatum
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 section Lattice
 
@@ -160,4 +162,4 @@ theorem a2BraidEquiv_braid :
 
 end
 
-end QuantumGroup
+end LieLean.QuantumGroup

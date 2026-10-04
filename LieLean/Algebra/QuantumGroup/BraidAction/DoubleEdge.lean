@@ -26,8 +26,10 @@ reverse `-2`) still needs its neighbor-first cubic transformed Serre relation.
 Reconstructed directly from the quotient presentation.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k : Type*} [Field k]
 
 section Ring
@@ -290,4 +292,4 @@ def doubleEdgeBraidEquiv : QuantumGroup R v ≃ₐ[k] QuantumGroup R v :=
     (doubleEdgeBraid_comp_doubleEdgeBraidInv i j hij hall h h' hq hs)
     (doubleEdgeBraidInv_comp_doubleEdgeBraid i j hij hall h h' hq hs)
 
-end QuantumGroup
+end LieLean.QuantumGroup

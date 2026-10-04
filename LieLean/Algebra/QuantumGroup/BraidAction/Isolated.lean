@@ -26,9 +26,11 @@ that the parameter is nonzero; no genericity hypothesis is needed. This file doe
 the automorphisms at coupled nodes or prove their braid relations.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k B : Type*} [Field k] [Ring B] [Algebra k B]
 
@@ -353,4 +355,4 @@ theorem isolatedBraid_comp_comm (j : I)
   · simp only [AlgHom.comp_apply, isolatedBraid_K]
     rw [reflY_comm_of_cartanMatrix_eq_zero i j (hi j (Ne.symm hij))]
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -21,8 +21,10 @@ parameter hypotheses of `simplyLacedBraidEquiv` are retained. No finiteness, cha
 or coroot spanning assumption is imposed. Triangles through either centre are excluded.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 section Polynomial
 variable {k B : Type*} [Field k] [Ring B] [Algebra k B]
@@ -304,4 +306,4 @@ theorem simplyLacedBraidEquiv_braid :
   exact DFunLike.congr_fun
     (simplyLacedBraid_braid i j hei hli hpi hqi hsi hej hlj hpj hqj hsj hij h h') x
 
-end QuantumGroup
+end LieLean.QuantumGroup

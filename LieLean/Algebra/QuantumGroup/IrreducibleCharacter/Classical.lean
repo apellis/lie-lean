@@ -44,9 +44,12 @@ is the irreducible highest-weight module of the Kac–Moody algebra `𝔤(A)`.
   Cor. 10.4.
 -/
 
+open LieLean
+
 noncomputable section
 
-open FreeAlgebra QuantumGroup Matrix Matrix.Realization Matrix.Realization.KacMoodyAlgebra Module
+open FreeAlgebra LieLean.QuantumGroup Matrix Matrix.Realization
+open Matrix.Realization.KacMoodyAlgebra Module
   LieModule
 
 namespace LusztigF

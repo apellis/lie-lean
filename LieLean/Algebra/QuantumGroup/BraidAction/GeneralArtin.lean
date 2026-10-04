@@ -50,6 +50,8 @@ proved in `BraidAction/BraidRelationsGeneral.lean`, `BraidAction/DoubleEdgeGener
 `BraidAction/GeneralRelations.lean`.
 -/
 
+open LieLean
+
 noncomputable section
 
 namespace LusztigCartanDatum
@@ -73,7 +75,7 @@ structure BraidOuterCondition : Prop where
 
 end LusztigCartanDatum
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 open CoxeterSystem
 
@@ -219,4 +221,4 @@ theorem braidArtinHomOfNotRoot_artinGenerator (hv' : ∀ n : ℕ, 0 < n → v ^ 
       braidEquivOfNotRoot R hv' i :=
   braidArtinHom_artinGenerator _ _ _ hD i
 
-end QuantumGroup
+end LieLean.QuantumGroup

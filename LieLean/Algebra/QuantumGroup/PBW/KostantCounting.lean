@@ -25,6 +25,8 @@ Kac, *Infinite dimensional Lie algebras*, 3rd ed., Lemma 3.11, §9.7 and §10.5.
 Proofs reconstructed using the existing root enumeration and root-multiplicity theorems.
 -/
 
+open LieLean
+
 noncomputable section
 open Module
 namespace Matrix.Realization.KacMoodyAlgebra
@@ -155,7 +157,7 @@ theorem prefixExponentWeight_A2 {i j : I} (hij : A i j = -1) (hji : A j i = -1)
 
 end Matrix.Realization.KacMoodyAlgebra
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 open Matrix.Realization.KacMoodyAlgebra
 variable {I Y K H : Type*} [Fintype I] [DecidableEq I] [AddCommGroup Y]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y)
@@ -188,4 +190,4 @@ theorem card_realized_rootVectorDegree_fiber {ω : List I}
   simp only [realize_sum_rootVectorDegree R P hD]
   exact card_prefixExponentFiber P hD hω hw β
 
-end QuantumGroup
+end LieLean.QuantumGroup

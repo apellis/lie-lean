@@ -40,9 +40,11 @@ this argument is our own.
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §1.3–1.4.
 -/
 
+open LieLean
+
 noncomputable section
 
-open QuantumGroup Matrix
+open LieLean.QuantumGroup Matrix
 
 namespace LusztigF
 

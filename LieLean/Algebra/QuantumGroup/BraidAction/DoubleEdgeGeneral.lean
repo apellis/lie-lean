@@ -38,9 +38,11 @@ Reconstructed; see the files cited above. G. Lusztig, *Introduction to quantum g
 39.4, for the braid relations.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 section Inverse
 
@@ -368,4 +370,4 @@ theorem braidEquiv_braid_four (hsj : v ^ D.d j + (v ^ D.d j)⁻¹ ≠ 0)
   intro x
   exact DFunLike.congr_fun (braidHom_braid_four hgi hSi hgj hSj hij h h' hsi hsj hout) x
 
-end QuantumGroup
+end LieLean.QuantumGroup

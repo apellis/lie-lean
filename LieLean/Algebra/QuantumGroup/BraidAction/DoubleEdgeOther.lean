@@ -15,8 +15,10 @@ Neighbor-first cubic relations and the second exact-two-node automorphism.
 Reconstructed from the defining presentation.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
@@ -295,4 +297,4 @@ def doubleEdgeOtherBraidEquiv : QuantumGroup R v ≃ₐ[k] QuantumGroup R v :=
     (doubleEdgeOtherBraid_comp_doubleEdgeOtherBraidInv i j hij hall h h' hq)
     (doubleEdgeOtherBraidInv_comp_doubleEdgeOtherBraid i j hij hall h h' hq)
 
-end QuantumGroup
+end LieLean.QuantumGroup

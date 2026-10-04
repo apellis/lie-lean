@@ -29,9 +29,11 @@ Reconstructed by restricting the presentation-defined Chevalley involution and t
 `PBW.GenericBasis`.
 -/
 
+open LieLean
+
 noncomputable section
 open Module Matrix.Realization.KacMoodyAlgebra
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {I Y k : Type*} [DecidableEq I] [AddCommGroup Y]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) [Field k] (v : k)
@@ -171,4 +173,4 @@ theorem exists_finiteTypeNegativePBWBasis :
   exact ⟨ω, hω, hw.symm, finiteTypeNegativePBWBasis R hv P hD hω hw.symm,
     finiteTypeNegativePBWBasis_apply R hv P hD hω hw.symm⟩
 
-end QuantumGroup
+end LieLean.QuantumGroup

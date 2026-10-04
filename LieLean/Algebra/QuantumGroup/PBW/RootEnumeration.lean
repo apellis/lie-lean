@@ -26,6 +26,8 @@ Birkhäuser 2002, Lemma 1.3.14.
 Our own proofs, from the existing inversion-set API.
 -/
 
+open LieLean
+
 noncomputable section
 open Module
 namespace Matrix.Realization
@@ -171,7 +173,7 @@ theorem prefixRoots_A2 {i j : I} (hij : A i j = -1) (hji : A j i = -1) :
 
 end Matrix.Realization
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 variable {I Y K H : Type*} [Fintype I] [DecidableEq I] [AddCommGroup Y]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y)
   [Field K] [AddCommGroup H] [Module K H] (P : Matrix.Realization D.cartanMatrix K H)
@@ -215,4 +217,4 @@ theorem rootVectorDegree_realization (ω : List I) (n : ℕ) (hn : n < ω.length
   ext j
   simp [Finsupp.single_apply, Pi.single_apply, eq_comm]
 
-end QuantumGroup
+end LieLean.QuantumGroup

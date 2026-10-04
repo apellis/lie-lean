@@ -25,7 +25,9 @@ Reconstructed from the pinned matrix definitions and the repository's proved
 local-class Artin theorem.
 -/
 
-namespace QuantumGroup
+open LieLean
+
+namespace LieLean.QuantumGroup
 
 /-- Literal B has its directed -2 entry from the penultimate to the last node. -/
 theorem cartanMatrix_B_eq_neg_two_iff {n : ℕ} (i j : Fin n) :
@@ -290,4 +292,4 @@ theorem artinHom_F₄_images {D : LusztigCartanDatum (Fin 4)} (R : D.RootDatum Y
 
 end Families
 
-end QuantumGroup
+end LieLean.QuantumGroup

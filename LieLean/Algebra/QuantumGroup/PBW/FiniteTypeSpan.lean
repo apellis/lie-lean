@@ -36,9 +36,11 @@ The rank-two inputs ([Jan] Prop. 8.22 b)) are reconstructed (`RankTwoA2ContextSp
 `RankTwoB2BraidSpan`, `RankTwoG2BraidSpan`).
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) (v : k) [NeZero v]
@@ -264,4 +266,4 @@ theorem span_pbwMonomial_longest_of_isFiniteCartan :
         simpa only [mul_assoc] using hx (z * y) (hz y hy)
     simpa only [mul_one] using hmul 1 h1
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -22,9 +22,11 @@ lowering identity in `BraidAction/Coupled.lean`.
 This is an additional defining relation, not a construction of a braid automorphism.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} {i j l : I}
@@ -78,4 +80,4 @@ theorem braidEj_commute_braidFj_of_two_cartanMatrix_eq_neg_one
     Commute (braidEj R v i j) (braidFj R v i l) :=
   sub_eq_zero.mp (braidEj_mul_braidFj_sub_of_two_cartanMatrix_eq_neg_one hv hij hil hjl hq)
 
-end QuantumGroup
+end LieLean.QuantumGroup

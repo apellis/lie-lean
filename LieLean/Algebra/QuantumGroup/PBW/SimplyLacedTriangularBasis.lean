@@ -33,9 +33,11 @@ Reconstructed by tensoring the actual bases from `PBW.SimplyLacedBasis` with
 the older characteristic-zero, transcendental full basis is not used.
 -/
 
+open LieLean
+
 noncomputable section
 open Module
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] [Fintype I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) {v : k} [NeZero v]
@@ -91,4 +93,4 @@ theorem exists_simplyLacedFullPBWBasis :
   exact ⟨w, hw, he.symm, simplyLacedFullPBWBasis R hv hSL cs hD hw he.symm,
     fun a μ c ↦ simplyLacedFullPBWBasis_apply R hv hSL cs hD hw he.symm a c μ⟩
 
-end QuantumGroup
+end LieLean.QuantumGroup

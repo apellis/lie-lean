@@ -33,9 +33,11 @@ isomorphism has yet been proved. Compatibility of module bar is stated generator
 this file does not construct a bar ring equivalence on the full quantum algebra.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup.Sl2.RankOne
+namespace LieLean.QuantumGroup.Sl2.RankOne
 
 abbrev Coeff := RatFunc ℚ
 abbrev Space (n : ℕ) := Fin (n + 1) → Coeff
@@ -281,4 +283,4 @@ theorem raise_mem_lattice (n : ℕ) {x : Space n} (hx : x ∈ lattice n) :
   | smul a x _ hx =>
     simpa using (lattice n).smul_mem a hx
 
-end QuantumGroup.Sl2.RankOne
+end LieLean.QuantumGroup.Sl2.RankOne

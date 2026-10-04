@@ -49,9 +49,11 @@ reconstruction.
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §1.2, §3.1.
 -/
 
+open LieLean
+
 noncomputable section
 
-open FreeAlgebra QuantumGroup
+open FreeAlgebra LieLean.QuantumGroup
 
 namespace LusztigCartanDatum
 

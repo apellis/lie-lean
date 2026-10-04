@@ -34,9 +34,11 @@ through `chevalleyPlusEquivMinus` from `PBW.NegativeBasis`. Its older transcende
 constructions are not used.
 -/
 
+open LieLean
+
 noncomputable section
 open Module
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] [Fintype I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) {v : k} [NeZero v]
@@ -112,4 +114,4 @@ theorem exists_simplyLacedPBWBases :
     simplyLacedPBWBasis_apply R hv hSL cs hD hw he.symm,
     simplyLacedNegativePBWBasis_apply R hv hSL cs hD hw he.symm⟩
 
-end QuantumGroup
+end LieLean.QuantumGroup

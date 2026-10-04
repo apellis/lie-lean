@@ -24,8 +24,10 @@ longest-word spanning, linear independence or basis conclusion is asserted.
 Reconstructed from the two local contextual span theorems and the repository's Matsumoto theorem.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} (R : D.RootDatum Y) (v : k) [NeZero v]
@@ -100,4 +102,4 @@ theorem span_pbwMonomial_of_isReduced_of_simplyLaced {W : Type*} [Group W]
     (fun _ _ _ hm ↦ span_pbwMonomial_of_braidMove_of_simplyLaced R v hv' hSL hm)
     hu (CoxeterSystem.reflTransGen_braidMove_of_isReduced hu hw huw)
 
-end QuantumGroup
+end LieLean.QuantumGroup

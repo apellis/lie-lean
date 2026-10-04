@@ -48,11 +48,13 @@ not use the bilinear form or a dimension count.
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, §40.1–40.2.
 -/
 
+open LieLean
+
 noncomputable section
 
 open LusztigF
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 namespace A2PBW
 
@@ -555,4 +557,4 @@ theorem a2PBWBasis_apply_braidEquiv (p : ℕ × ℕ × ℕ) :
 
 end Concrete
 
-end QuantumGroup
+end LieLean.QuantumGroup

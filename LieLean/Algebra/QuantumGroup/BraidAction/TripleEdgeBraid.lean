@@ -30,9 +30,11 @@ treated here.
 Reconstructed from the quotient presentation.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k] {I Y : Type*} [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
@@ -77,4 +79,4 @@ def tripleEdgeBraidEquiv (hq : v ^ D.d i - (v ^ D.d i)⁻¹ ≠ 0)
   braidEquiv (tripleEdge_braidGeneric hij hall h hq h3)
     (tripleEdge_transformedSerre hij hall h h' h4)
 
-end QuantumGroup
+end LieLean.QuantumGroup

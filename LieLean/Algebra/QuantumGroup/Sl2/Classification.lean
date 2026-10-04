@@ -29,9 +29,11 @@ The irreducible highest-string basis and exhaustion equivalence are proved in
 Jantzen, *Lectures on quantum groups*, Ch. 2. The arguments here are reconstructed.
 -/
 
+open LieLean
+
 noncomputable section
 
-namespace QuantumGroup.Sl2
+namespace LieLean.QuantumGroup.Sl2
 
 variable {k M : Type*} [Field k] [AddCommGroup M] [Module k M] {v : k}
 
@@ -185,4 +187,4 @@ theorem F_string_linearIndependent (hv : v ≠ 0)
   · intro i
     exact ⟨Module.End.mem_eigenspace_iff.mpr (K_apply_F_pow ρ hm i), hn i (by omega)⟩
 
-end QuantumGroup.Sl2
+end LieLean.QuantumGroup.Sl2

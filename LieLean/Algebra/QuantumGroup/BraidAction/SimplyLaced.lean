@@ -26,8 +26,10 @@ Neither finite rank nor characteristic zero is assumed. Both parameter sum
 and difference nonvanishing are explicit; their necessity is not asserted.
 -/
 
+open LieLean
+
 noncomputable section
-namespace QuantumGroup
+namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} {i j l : I}
@@ -328,4 +330,4 @@ def simplyLacedBraidEquiv : QuantumGroup R v ≃ₐ[k] QuantumGroup R v :=
     (simplyLacedBraid_comp_simplyLacedBraidInv i hedge hleaf hpath hq hs)
     (simplyLacedBraidInv_comp_simplyLacedBraid i hedge hleaf hpath hq hs)
 
-end QuantumGroup
+end LieLean.QuantumGroup

@@ -36,8 +36,10 @@ The Laurent form is rational `ℚ[X,X⁻¹]`, not the integer integral form. No 
 canonical basis, integer integral basis, or full quantum-algebra bar is asserted.
 The local lattice is not bar-stable; only the displayed global vectors are bar-fixed.
 -/
+
+open LieLean
 noncomputable section
-namespace QuantumGroup.Sl2.RankOne
+namespace LieLean.QuantumGroup.Sl2.RankOne
 
 /-- Evaluation at zero sends every allowed denominator to a unit. -/
 theorem evalZero_denominator (s : (Polynomial.idealX ℚ).asIdeal.primeCompl) :
@@ -179,11 +181,11 @@ def residueBasis (n : ℕ) : Module.Basis (Fin (n + 1)) ℚ (ResidueSpace n) :=
   ext k
   simp [residueBasis, latticeResidue, Pi.single_apply, Finsupp.single_apply, eq_comm]
 
-end QuantumGroup.Sl2.RankOne
+end LieLean.QuantumGroup.Sl2.RankOne
 noncomputable section
 -- Prefer the generic constant-field algebra to the competing rational-cast algebra.
 attribute [local instance 1100] RatFunc.instAlgebraOfPolynomial
-namespace QuantumGroup.Sl2.RankOne
+namespace LieLean.QuantumGroup.Sl2.RankOne
 open IsDedekindDomain.HeightOneSpectrum
 open scoped WithZero
 
@@ -565,4 +567,4 @@ def residueRaise (n : ℕ) : Module.End ℚ (ResidueSpace n) :=
       simp [h]
     rw [hz, map_zero]
 
-end QuantumGroup.Sl2.RankOne
+end LieLean.QuantumGroup.Sl2.RankOne
