@@ -1874,10 +1874,18 @@ completed steps and continuation threads are:
   the existing straightening operators through a two-letter free algebra and
   retains the explicit nonzero parameter and denominator conditions
   `vᵢ - vᵢ⁻¹ ≠ 0` and `[2]ᵢ! ≠ 0`, without characteristic-zero, transcendence,
-  non-root-of-unity or finite-type hypotheses. Reverse-orientation spanning and
-  length-four braid-span invariance are not yet asserted. General ordered spanning
-  in non-simply-laced type (braid lengths four and six) and corresponding full bases
-  at arbitrary non-root-of-unity parameters remain open.
+  non-root-of-unity or finite-type hypotheses. `PBW/RankTwoB2BraidSpan.lean` proves
+  that the reversed elements `Eᵢ < x' < y' < Eⱼ` (`y' = EⱼEᵢ - vᵢ⁻²EᵢEⱼ`, `x' = y'Eᵢ - Eᵢy'`)
+  satisfy the B₂ straightening relations in the opposite algebra (`B2PBW.rel_op`, the Serre
+  relations being palindromic), hence reverse-orientation local spanning
+  (`B2PBW.span_revMono_eq_adjoin`, `span_b2RevMono_pair`). It identifies the actual recursive
+  PBW monomials of both words `i j i j` and `j i j i` (`pbwMonomial_b2_eq`,
+  `pbwMonomial_b2_rev_eq`: `Tⱼ(Eᵢ) = y'`, `TⱼTᵢ(Eⱼ) = [2]ᵢ!⁻¹x'`, `TⱼTᵢTⱼ(Eᵢ) = Eᵢ`), so both
+  span the two-generator subalgebra in arbitrary ambient data (`span_pbwMonomial_b2_braid`),
+  and proves B₂ span invariance in arbitrary prefix/suffix word context
+  (`span_pbwMonomial_b2_context`, `span_pbwMonomial_b2_context_of_not_root`). General ordered
+  spanning in non-simply-laced type (the remaining braid length six) and corresponding full
+  bases at arbitrary non-root-of-unity parameters remain open.
   Other later targets:
   infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
   and the general upper-closure criterion of Humphreys O Thm. 7.9,
