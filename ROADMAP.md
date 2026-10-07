@@ -1764,8 +1764,16 @@ completed steps and continuation threads are:
   and Humphreys Prop. 3.5 for `IsAntidominant` weights (`⟨λ + ρ, β^∨⟩ ∉ ℤ_{>0}`): `λ ≤ w·λ` for
   `w ∈ W_[λ]` (`IsAntidominant.exists_weylDot_sub_eq_rootOf`), uniqueness
   (`IsAntidominant.eq_of_weylDot_eq`) and existence (`exists_isAntidominant_weylDot`) of the
-  antidominant weight in `W_[λ]·λ`. Next for non-integral weights: Lemma 7.5,
-  Thm. 7.6, Prop. 7.7 and Thm. 7.9 relative to `W_[λ]`.
+  antidominant weight in `W_[λ]·λ`. Non-integral translation (`KacMoody/TranslationNonintegral.lean`,
+  root-datum part `IntegralWeylGroupFacet.lean`): Humphreys Lemma 7.5
+  (`weylDot_add_eq_weylDot_of_isAntidominant`, via `apply_eq_of_add_eq_apply_integralWeylGroup`:
+  the norm argument over the positive integral roots, with all comparisons in `ℤ`), Thm. 7.6
+  (`translation_verma_of_isAntidominant`, `translation_verma_equiv_of_isAntidominant`,
+  `translation_dualVerma_of_isAntidominant`) and Prop. 7.7
+  (`translation_irreducible_of_isAntidominant`) for arbitrary antidominant compatible `λ, μ`
+  such that every positive coroot vanishing on `λ + ρ` vanishes on `μ + ρ`, for every `w ∈ W`
+  (Humphreys: `w ∈ W_[λ]`). Next: Thm. 7.9 (upper closure) for
+  non-integral weights, which needs the combinatorics of `UpperClosure.lean` relative to `W_[λ]`.
 - **Littelmann's isomorphism theorem** (M14): rational-piece gluing/component stability and
   pause transport are proved, as are Proposition 5.7 (`twoPieceGluing_highest_iff`), the
   linking chain `π_ν ~ π_λ * π_μ`, Proposition 6.2 and Theorem 6.3
