@@ -167,6 +167,11 @@ Further proved results include:
   (`U⁺`, `U⁻`, `U`) hold for every Cartan datum of finite type, over any field, at every
   nonzero parameter which is not a root of unity. Braid relations outside
   `BraidOuterCondition`, faithfulness and general-rank global bases remain open.
+- **Symmetries of integrable modules (rank one):** `QuantumGroup/ModuleSymmetry/Strings` and
+  `Rank1` treat integrable `U_q(𝔰𝔩₂)`-modules abstractly (`IntegrableSl2`, Lusztig's category
+  `C'`): every weight vector is a sum of `F^{(j)} η`, `η` primitive; Lusztig's symmetry
+  `T''` (`IntegrableSl2.T`) with its string formula, inverse `T'`, `T'' = (-t)ⁿ T'`, the
+  `E`/`F` commutation rules and naturality ([Lus] 5.2), at any `q` not a root of unity.
 
 These summaries do not replace the precise hypotheses and remaining dependencies in
 [`ROADMAP.md`](ROADMAP.md). In particular, the quantum actions are not claimed faithful, and

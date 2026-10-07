@@ -255,6 +255,8 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Bar
 import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
 import LieLean.Algebra.QuantumGroup.LusztigF.IntegralForm
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
+import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Rank1
+import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Strings
 import LieLean.Algebra.QuantumGroup.PBW.Independence
 import LieLean.Algebra.QuantumGroup.PBW.KostantDimension
 import LieLean.Algebra.QuantumGroup.PBW.Monomials
