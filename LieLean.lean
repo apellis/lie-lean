@@ -235,6 +235,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.GeneralArtin
 import LieLean.Algebra.QuantumGroup.BraidAction.FiniteTypeArtin
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
+import LieLean.Algebra.QuantumGroup.Faithful
 import LieLean.Algebra.QuantumGroup.GabberKac
 import LieLean.Algebra.QuantumGroup.GabberKac.Classical
 import LieLean.Algebra.QuantumGroup.GabberKac.MapCoeffs
