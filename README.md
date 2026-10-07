@@ -165,8 +165,8 @@ Further proved results include:
   longest-word spanning (`span_pbwMonomial_longest_of_isFiniteCartan`) in every finite type.
   Consequently `finiteTypePBWBasis`, `finiteTypeNegativePBWBasis` and `finiteTypeFullPBWBasis`
   (`U⁺`, `U⁻`, `U`) hold for every Cartan datum of finite type, over any field, at every
-  nonzero parameter which is not a root of unity. Braid relations outside
-  `BraidOuterCondition`, faithfulness and general-rank global bases remain open.
+  nonzero parameter which is not a root of unity. Faithfulness and general-rank global bases
+  remain open.
 - **Symmetries of integrable modules (rank one):** `QuantumGroup/ModuleSymmetry/Strings` and
   `Rank1` treat integrable `U_q(𝔰𝔩₂)`-modules abstractly (`IntegrableSl2`, Lusztig's category
   `C'`): every weight vector is a sum of `F^{(j)} η`, `η` primitive; Lusztig's symmetry
@@ -175,6 +175,12 @@ Further proved results include:
   `ModuleSymmetry/Integrable`: on every integrable `U`-module these symmetries satisfy
   `Tᵢ(u m) = Tᵢ(u) Tᵢ(m)` for Lusztig's automorphisms `Tᵢ` of `U` (`nodeSl2_T_smul`,
   [Lus] 37.1.2).
+- **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`
+  satisfy all braid relations, with no condition on the Dynkin diagram
+  (`isBraidLiftable_braidEquivOfNotRoot`, `braidArtinHomOfNotRoot`; [Lus] 39.4.3), via the
+  symmetries of integrable modules and their braid relations (`ModuleSymmetry/RankTwo`), the
+  faithfulness of integrable modules on `U^±` (`Faithful`) and morphisms of root data
+  (`RootDatumHom`).
 
 These summaries do not replace the precise hypotheses and remaining dependencies in
 [`ROADMAP.md`](ROADMAP.md). In particular, the quantum actions are not claimed faithful, and
