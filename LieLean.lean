@@ -258,6 +258,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Integrable
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Rank1
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Rank1Formula
+import LieLean.Algebra.QuantumGroup.ModuleSymmetry.RankTwo
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Strings
 import LieLean.Algebra.QuantumGroup.PBW.Independence
 import LieLean.Algebra.QuantumGroup.PBW.KostantDimension

@@ -1673,9 +1673,14 @@ endomorphism `Tᵢ` of `U` with Lusztig's generator formulas (`nodeSl2_T_smul`; 
 [Jan] 8.13). For `Eⱼ` the identity is stable under `Fᵢ`, and on primitive vectors it reduces to
 the rank-one formula `T = (-1)^p vᵢ^p Σ_s (-1)^s vᵢ^{-s} E^{(r-s)} F^{(p-s)}` on short strings
 (`IntegrableSl2.T_eq_psi_of_mem`, again from the `QBinomialSeries` identity), not Jantzen's
-computation; `Fⱼ` is the flipped case. These are steps of a module-theoretic proof of the
-braid relations without `BraidOuterCondition` (next: rank-two relations on modules,
-faithfulness).
+computation; `Fⱼ` is the flipped case. `QuantumGroup/ModuleSymmetry/RankTwo.lean`: the braid relations
+of lengths 2, 3, 4, 6 for these operators on every integrable module, for any pair of nodes with
+`aᵢⱼ aⱼᵢ ≤ 3` and no condition on the other nodes (`nodeSl2_T_comm`, `nodeSl2_T_braid_three`,
+`nodeSl2_T_braid_four`, `nodeSl2_T_braid_six`), by conjugation: the common word `W` of length
+`mᵢⱼ - 1` is a morphism between the rank-one structures at the two nodes (`nodeSl2_T_conj`).
+These are steps of a module-theoretic proof of the braid relations on `U` without
+`BraidOuterCondition` (remaining: faithfulness of integrable modules, transfer between root
+data).
 Remaining for general `Tᵢ`: braid relations when a third node meets both ends of a simple edge
 with an entry `≤ -2` in the row of an end, when a third node meets a double edge by a multiple
 bond or meets both of its ends, and at a triple edge with neighbours (e.g. `G̃₂`); faithfulness;
