@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.Lie.KacMoody.VermaHomFiniteType
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupForm
 
 /-!
 # Facet exclusion for translation functors (integral weights, finite type)
@@ -14,11 +15,6 @@ in the closure of the facet of `λ` (every simple wall containing `λ + ρ` cont
 form `w·λ + ν'`, `ν'` a weight of `L(ν)`, lying in the dot orbit `W·μ` is `w·μ`, which does
 occur (`ν' = w (μ - λ)`). This is the combinatorial input to the translation of Verma modules
 `T_λ^μ M(w·λ) ≅ M(w·μ)`.
-
-## Main definitions
-
-* `Matrix.Symmetrization.ofDiagonal`: the symmetrization `εᵢ = 1 / dᵢ` of a matrix with
-  `diag(d) A` symmetric.
 
 ## Main results
 
@@ -52,47 +48,12 @@ noncomputable section
 
 open Module
 
-namespace Matrix.Symmetrization
-
-variable {ι : Type*} [Fintype ι] [DecidableEq ι] {A : Matrix ι ι ℤ}
-
-/-- The symmetrization `εᵢ = 1 / dᵢ` attached to positive integers `dᵢ` with `diag(d) A`
-symmetric; its symmetric matrix is `diag(d) A`. -/
-def ofDiagonal (d : ι → ℤ) (hd : ∀ i, 0 < d i) (hsymm : (diagonal d * A).IsSymm) :
-    A.Symmetrization where
-  ε i := 1 / d i
-  ε_pos i := by have := hd i; positivity
-  ε_mul_comm i j := by
-    have h := congrFun (congrFun hsymm i) j
-    simp only [transpose_apply, diagonal_mul] at h
-    have hi : (d i : ℚ) ≠ 0 := by exact_mod_cast (hd i).ne'
-    have hj : (d j : ℚ) ≠ 0 := by exact_mod_cast (hd j).ne'
-    have h' : (d j * A j i : ℚ) = d i * A i j := by exact_mod_cast h
-    field_simp
-    linarith
-
-end Matrix.Symmetrization
 
 namespace Matrix.Realization
 
 variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K]
   [AddCommGroup H] [Module K H] [FiniteDimensional K H]
   {A : Matrix ι ι ℤ} (P : Realization A K H)
-
-/-- For the symmetrization `εᵢ = 1 / dᵢ`, `(∑ kᵢ αᵢ | x) = ∑ kᵢ dᵢ ⟨x, αᵢ^∨⟩`. -/
-theorem dualBilinForm_ofDiagonal_rootOf (d : ι → ℤ) (hd : ∀ i, 0 < d i)
-    (hsymm : (diagonal d * A).IsSymm) (k : ι → ℤ) (x : Dual K H) :
-    P.dualBilinForm (Symmetrization.ofDiagonal d hd hsymm) (P.rootOf k) x =
-      ∑ i, ((k i * d i : ℤ) : K) * x (P.coroot i) := by
-  rw [P.rootOf_apply, map_sum (P.dualBilinForm (Symmetrization.ofDiagonal d hd hsymm)),
-    LinearMap.sum_apply]
-  refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_smul, LinearMap.smul_apply, (P.isSymm_dualBilinForm _).eq, dualBilinForm_root_right,
-    smul_eq_mul]
-  simp only [Symmetrization.ofDiagonal]
-  push_cast
-  have hi : (d i : K) ≠ 0 := by exact_mod_cast (hd i).ne'
-  field_simp
 
 /-- **Facet exclusion, root-datum form.** Let `A` be of finite type, `a`, `b` antidominant
 integral weights with every simple wall of `a` a wall of `b`, `ν = z (b - a)` for some `z ∈ W`,
