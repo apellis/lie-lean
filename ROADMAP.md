@@ -1665,9 +1665,17 @@ abstract structure `IntegrableSl2` (graded `E, F`, `EF - FE = [n]`, locally nilp
 formula `T_dF_of_primitive`, `T'_{t⁻¹} T''_t = T''_t T'_{t⁻¹} = 1` (`symmEquiv`, [Lus] 5.2.3(a)),
 `T''_t = (-t)ⁿ T'_t` on `Mⁿ` ([Lus] 5.2.3(b)), `T(E m) = -t^{-n} F T(m)`,
 `T(F m) = -t^{n-2} E T(m)` (`T_E`, `T_F`), `T(Mⁿ) ⊆ M⁻ⁿ` and naturality (`map_T`), for `q`
-nonzero and not a root of unity. These are the first steps of a module-theoretic proof of the
-braid relations without `BraidOuterCondition` (rank-one operators on integrable `U`-modules,
-compatibility `T(u m) = Tᵢ(u) T(m)`, rank-two relations on modules, faithfulness).
+nonzero and not a root of unity. Compatibility with `U` (`QuantumGroup/ModuleSymmetry/{Rank1Formula,Integrable}.lean`):
+for an integrable `U`-module `M` (`v` not a root of unity) and a node `i`, `M` with `Eᵢ`, `Fᵢ`
+and the grading by `⟨i, ·⟩` is an `IntegrableSl2` (`nodeSl2`); its `T''` maps `M^Λ` to `M^{sᵢΛ}`
+(`nodeSl2_T_mem_weightSpace`) and satisfies `Tᵢ(u m) = Tᵢ(u) Tᵢ(m)` for every algebra
+endomorphism `Tᵢ` of `U` with Lusztig's generator formulas (`nodeSl2_T_smul`; [Lus] 37.1.2,
+[Jan] 8.13). For `Eⱼ` the identity is stable under `Fᵢ`, and on primitive vectors it reduces to
+the rank-one formula `T = (-1)^p vᵢ^p Σ_s (-1)^s vᵢ^{-s} E^{(r-s)} F^{(p-s)}` on short strings
+(`IntegrableSl2.T_eq_psi_of_mem`, again from the `QBinomialSeries` identity), not Jantzen's
+computation; `Fⱼ` is the flipped case. These are steps of a module-theoretic proof of the
+braid relations without `BraidOuterCondition` (next: rank-two relations on modules,
+faithfulness).
 Remaining for general `Tᵢ`: braid relations when a third node meets both ends of a simple edge
 with an entry `≤ -2` in the row of an end, when a third node meets a double edge by a multiple
 bond or meets both of its ends, and at a triple edge with neighbours (e.g. `G̃₂`); faithfulness;

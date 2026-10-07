@@ -172,6 +172,9 @@ Further proved results include:
   `C'`): every weight vector is a sum of `F^{(j)} η`, `η` primitive; Lusztig's symmetry
   `T''` (`IntegrableSl2.T`) with its string formula, inverse `T'`, `T'' = (-t)ⁿ T'`, the
   `E`/`F` commutation rules and naturality ([Lus] 5.2), at any `q` not a root of unity.
+  `ModuleSymmetry/Integrable`: on every integrable `U`-module these symmetries satisfy
+  `Tᵢ(u m) = Tᵢ(u) Tᵢ(m)` for Lusztig's automorphisms `Tᵢ` of `U` (`nodeSl2_T_smul`,
+  [Lus] 37.1.2).
 
 These summaries do not replace the precise hypotheses and remaining dependencies in
 [`ROADMAP.md`](ROADMAP.md). In particular, the quantum actions are not claimed faithful, and
