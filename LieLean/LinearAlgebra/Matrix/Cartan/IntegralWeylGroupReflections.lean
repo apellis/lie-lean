@@ -222,6 +222,33 @@ lemma transport_apply (w : P.weylGroup hA) (μ : Dual K H) :
       LinearEquiv.mul_apply, coxeterSystem_simple, coxeterSystem_simple, transport_reflection hA hF
       Ψ, ih]
 
+/-- A rational weight attached to `μ`: `W_[μ]` maps into its integral Weyl group, and the roots
+integral for it are integral for `μ`. -/
+lemma exists_transport_integral (μ : Dual K H) : ∃ μ' : Dual ℚ (ι → ℚ),
+    (∀ w ∈ P.integralWeylGroup hF.isGeneralizedCartan μ,
+      weylGroupEquiv P (ratRealization hF) hF.isGeneralizedCartan w ∈
+        (ratRealization hF).integralWeylGroup hF.isGeneralizedCartan μ') ∧
+    ∀ v i, (ratRealization hF).IsIntegralRoot hF.isGeneralizedCartan μ'
+        (weylGroupEquiv P (ratRealization hF) hF.isGeneralizedCartan v) i →
+      P.IsIntegralRoot hF.isGeneralizedCartan μ v i := by
+  classical
+  have : Finite (P.weylGroup hF.isGeneralizedCartan) := P.finite_weylGroup hF
+  have : Fintype (P.weylGroup hF.isGeneralizedCartan) := Fintype.ofFinite _
+  obtain ⟨Ψ, hΨ1, hΨ⟩ := exists_rat_linearMap_of_finset (Finset.univ.image
+    fun p : P.weylGroup hF.isGeneralizedCartan × ι ↦
+      P.corootPairing hF.isGeneralizedCartan μ p.1 p.2)
+  refine ⟨transport (P := P) Ψ μ, fun w hw ↦ ?_, fun v i ⟨z, hz⟩ ↦ ?_⟩
+  · rw [mem_integralWeylGroup, ← transport_apply _ hF Ψ, ← transport_sub]
+    obtain ⟨k, hk⟩ := (P.mem_rootLattice).mp hw
+    rw [← hk, transport_rootOf hF Ψ hΨ1]
+    exact (ratRealization hF).rootOf_mem_rootLattice k
+  · refine hΨ _ (Finset.mem_image.mpr ⟨(v, i), Finset.mem_univ _, rfl⟩) ⟨z, ?_⟩
+    rw [← hz]
+    change Ψ ((((v⁻¹ : P.weylGroup hF.isGeneralizedCartan) : Dual K H ≃ₗ[K] Dual K H) μ)
+      (P.coroot i)) = _
+    rw [← transport_apply_single (P := P) Ψ, transport_apply _ hF Ψ, map_inv]
+    rfl
+
 /-! ### Humphreys, GSM 94, Theorem 3.4 (b) -/
 
 /-- **Humphreys, GSM 94, Thm. 3.4 (b).** For a Cartan matrix of finite type, a realization over
@@ -232,36 +259,17 @@ reduction to rational weights is our own (see the module docstring). -/
 theorem integralWeylGroup_eq_integralReflectionGroup (μ : Dual K H) :
     P.integralWeylGroup hF.isGeneralizedCartan μ =
       P.integralReflectionGroup hF.isGeneralizedCartan μ := by
-  classical
-  set hA := hF.isGeneralizedCartan
-  have : Finite (P.weylGroup hA) := P.finite_weylGroup hF
-  have : Fintype (P.weylGroup hA) := Fintype.ofFinite _
-  obtain ⟨Ψ, hΨ1, hΨ⟩ := exists_rat_linearMap_of_finset (Finset.univ.image
-    fun p : P.weylGroup hA × ι ↦ P.corootPairing hA μ p.1 p.2)
-  set Q := ratRealization hF
-  set e := weylGroupEquiv P Q hA
-  refine le_antisymm (fun w hw ↦ ?_) (P.integralReflectionGroup_le hA μ)
-  have h1 : e w ∈ Q.integralWeylGroup hA (transport (P := P) Ψ μ) := by
-    rw [mem_integralWeylGroup, ← transport_apply hA hF Ψ, ← transport_sub]
-    obtain ⟨k, hk⟩ := (P.mem_rootLattice).mp hw
-    rw [← hk, transport_rootOf hF Ψ hΨ1]
-    exact Q.rootOf_mem_rootLattice k
-  have h2 := integralWeylGroup_le_integralReflectionGroup_of_rat hF _ h1
-  have h3 : (Q.integralReflectionGroup hA (transport (P := P) Ψ μ)).map
-      e.symm.toMonoidHom ≤ P.integralReflectionGroup hA μ := by
+  obtain ⟨μ', hW, hint⟩ := exists_transport_integral (P := P) hF μ
+  set e := weylGroupEquiv P (ratRealization hF) hF.isGeneralizedCartan
+  refine le_antisymm (fun w hw ↦ ?_) (P.integralReflectionGroup_le _ μ)
+  have h2 := integralWeylGroup_le_integralReflectionGroup_of_rat hF _ (hW w hw)
+  have h3 : ((ratRealization hF).integralReflectionGroup hF.isGeneralizedCartan μ').map
+      e.symm.toMonoidHom ≤ P.integralReflectionGroup hF.isGeneralizedCartan μ := by
     rw [integralReflectionGroup, MonoidHom.map_closure, Subgroup.closure_le]
-    rintro _ ⟨_, ⟨v', i, ⟨z, hz⟩, rfl⟩, rfl⟩
-    refine Subgroup.subset_closure ⟨e.symm v', i, ?_, ?_⟩
-    · refine hΨ _ (Finset.mem_image.mpr ⟨(e.symm v', i), Finset.mem_univ _, rfl⟩) ⟨z, ?_⟩
-      rw [← hz]
-      change Ψ ((((e.symm v')⁻¹ : P.weylGroup hA) : Dual K H ≃ₗ[K] Dual K H) μ
-        (P.coroot i)) = _
-      rw [← transport_apply_single (P := P) Ψ, transport_apply hA hF Ψ, map_inv,
-        MulEquiv.apply_symm_apply]
-      rfl
-    · change P.reflectionOf hA (e.symm v') i = e.symm (Q.reflectionOf hA v' i)
-      rw [eq_comm, MulEquiv.symm_apply_eq, weylGroupEquiv_reflectionOf, MulEquiv.apply_symm_apply]
-  have := h3 ⟨e w, h2, e.symm_apply_apply w⟩
-  exact this
+    rintro _ ⟨_, ⟨v', i, hv', rfl⟩, rfl⟩
+    refine Subgroup.subset_closure ⟨e.symm v', i, hint _ i (by rwa [MulEquiv.apply_symm_apply]), ?_⟩
+    change P.reflectionOf _ (e.symm v') i = e.symm ((ratRealization hF).reflectionOf _ v' i)
+    rw [eq_comm, MulEquiv.symm_apply_eq, weylGroupEquiv_reflectionOf, MulEquiv.apply_symm_apply]
+  exact h3 ⟨e w, h2, e.symm_apply_apply w⟩
 
 end Matrix.Realization
