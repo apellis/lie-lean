@@ -335,6 +335,7 @@ import LieLean.LinearAlgebra.ExteriorAlgebra.Koszul
 import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulExact
 import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulSupport
 import LieLean.LinearAlgebra.Filtered.Exactness
+import LieLean.LinearAlgebra.Matrix.Cartan.AffineWeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.BraidOuter
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteRankTwo
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteType
@@ -349,9 +350,11 @@ import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.Interior
 import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.InteriorConverse
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.IntegralWeylGroup
+import LieLean.LinearAlgebra.Matrix.Cartan.IntegralWeylGroupReflections
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupDominant
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupExchange
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupForm
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupTits
 import LieLean.RepresentationTheory.Crystal.Basic
 import LieLean.RepresentationTheory.Crystal.Character

@@ -7,6 +7,7 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.GarlandLepowsky
 import LieLean.Algebra.Lie.KacMoody.GabberKac
 import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupExchange
+import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupForm
 
 /-!
 # Kostant's lemma on the weights of `⋀𝔫₋ ⊗ L(Λ)`
@@ -48,7 +49,6 @@ removes `αᵢ` from `m`, applies `rᵢ` to the other roots (which `rᵢ` permut
 
 ## Main results
 
-* `Matrix.Realization.dualBilinForm_weylGroup`: `W` preserves the form on `𝔥*`.
 * `Matrix.Realization.KacMoodyAlgebra.exists_weylGroup_of_dualBilinForm_eq`: Kostant's lemma.
 * `Matrix.Realization.KacMoodyAlgebra.IrreducibleModule.
   exists_weylGroup_of_homologyWeightSpace_ne_bot_of_eq`: if `H_k(𝔫₋, L(Λ))_μ ≠ 0` and
@@ -75,36 +75,6 @@ namespace Matrix.Realization
 variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K] [AddCommGroup H]
   [Module K H] [FiniteDimensional K H] {A : Matrix ι ι ℤ} (P : Realization A K H)
   (hA : A.IsGeneralizedCartan) (S : A.Symmetrization)
-
-/-! ### `W`-invariance of the form on `𝔥*` -/
-
-omit [DecidableEq ι] in
-/-- The fundamental reflections preserve the form: `(rᵢ μ | rᵢ μ') = (μ | μ')`. -/
-theorem dualBilinForm_reflection (i : ι) (μ μ' : Dual K H) :
-    P.dualBilinForm S (P.reflection hA i μ) (P.reflection hA i μ') =
-      P.dualBilinForm S μ μ' := by
-  have h1 := P.dualBilinForm_root_right S μ i
-  have h2 : P.dualBilinForm S (P.root i) μ' = μ' (P.coroot i) / S.ε i := by
-    rw [(P.isSymm_dualBilinForm S).eq]
-    exact P.dualBilinForm_root_right S μ' i
-  have h3 := P.dualBilinForm_root_right S (P.root i) i
-  rw [P.root_coroot, hA.diag] at h3
-  have hε : (S.ε i : K) ≠ 0 := by exact_mod_cast S.ε_ne_zero i
-  simp only [reflection_apply, map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
-    smul_eq_mul, h1, h2, h3]
-  push_cast
-  field_simp
-  ring
-
-omit [DecidableEq ι] in
-/-- The Weyl group preserves the form: `(w μ | w μ') = (μ | μ')` ([Kac] Prop. 3.9). -/
-theorem dualBilinForm_weylGroup {w : Dual K H ≃ₗ[K] Dual K H} (hw : w ∈ P.weylGroup hA)
-    (μ μ' : Dual K H) : P.dualBilinForm S (w μ) (w μ') = P.dualBilinForm S μ μ' := by
-  refine P.weylGroup_induction hA (p := fun w ↦ ∀ μ μ',
-    P.dualBilinForm S (w μ) (w μ') = P.dualBilinForm S μ μ') (fun _ _ ↦ rfl)
-    (fun i w ih μ μ' ↦ ?_) hw μ μ'
-  rw [LinearEquiv.mul_apply, LinearEquiv.mul_apply, dualBilinForm_reflection, ih]
-
 
 /-! ### Multisets of positive roots -/
 
