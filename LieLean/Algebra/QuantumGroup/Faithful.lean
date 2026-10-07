@@ -46,7 +46,7 @@ lemma weightProj_apply (ν : I →₀ ℕ) (y : LusztigF k I) :
     weightProj ν y = (gradingHom k I y).coeff ν := rfl
 
 /-- Every element of `'f` is the sum of its weight components. -/
-lemma sum_weightProj (y : LusztigF k I) : (gradingHom k I y).coeff.sum (fun _ a ↦ a) = y := by
+lemma sum_coeff_gradingHom (y : LusztigF k I) : (gradingHom k I y).coeff.sum (fun _ a ↦ a) = y := by
   classical
   have hy : y ∈ ⨆ μ, weightSpace k (I := I) μ := by rw [iSup_weightSpace]; trivial
   induction hy using Submodule.iSup_induction' with
@@ -109,7 +109,7 @@ theorem weightProj_mem_serreIdeal {x : LusztigF k I} (hx : x ∈ serreIdeal D v)
 /-- An element of `'f` all of whose weight components lie in the Serre ideal lies in it. -/
 lemma mem_serreIdeal_of_weightProj {y : LusztigF k I}
     (h : ∀ ν, weightProj ν y ∈ serreIdeal D v) : y ∈ serreIdeal D v := by
-  rw [← sum_weightProj y]
+  rw [← sum_coeff_gradingHom y]
   exact sum_mem fun ν _ ↦ h ν
 
 end LusztigF
