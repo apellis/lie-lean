@@ -157,7 +157,9 @@ import LieLean.Algebra.Lie.KacMoody.TranslationSameFacet
 import LieLean.Algebra.Lie.KacMoody.TranslationMultiplicity
 import LieLean.Algebra.Lie.KacMoody.TranslationNonintegral
 import LieLean.Algebra.Lie.KacMoody.UpperClosure
+import LieLean.Algebra.Lie.KacMoody.UpperClosureNonintegral
 import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosure
+import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosureNonintegral
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
