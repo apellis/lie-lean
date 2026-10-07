@@ -11,11 +11,11 @@ import Mathlib.Order.SupIndep
 # Integrable `U_q(𝔰𝔩₂)`-modules and their strings
 
 Throughout, `k` is a field and `q ∈ k` is nonzero and not a root of unity. Following
-[Lus] 5.1.1 we consider `ℤ`-graded `k`-vector spaces `M = ⊕_n M^n` with two locally nilpotent
-operators `E`, `F` of degrees `2` and `-2` such that `EF - FE = [n]` on `M^n`, where
-`[n] = (qⁿ - q⁻ⁿ)/(q - q⁻¹)` (`QuantumGroup.IntegrableSl2`). For an integrable module `M` of `U_q(𝔤)` and a node `i` this is
-`M` with `Eᵢ`, `Fᵢ` and the grading by `⟨i, wt⟩`, with `q = vᵢ`; in this file only the abstract
-structure appears.
+[Lus] 5.1.1 we consider `ℤ`-graded `k`-vector spaces `M = ⊕_n M^n` with two locally
+nilpotent operators `E`, `F` of degrees `2` and `-2` such that `EF - FE = [n]` on `M^n`,
+where `[n] = (qⁿ - q⁻ⁿ)/(q - q⁻¹)` (`QuantumGroup.IntegrableSl2`). For an integrable module
+`M` of `U_q(𝔤)` and a node `i` this is `M` with `Eᵢ`, `Fᵢ` and the grading by `⟨i, wt⟩`, with
+`q = vᵢ`; in this file only the abstract structure appears.
 
 A vector `η ∈ M^p` with `E η = 0` is *primitive*. We show:
 * `E F^{(b+1)} η = [p - b] F^{(b)} η` and more generally
