@@ -287,6 +287,7 @@ import LieLean.Algebra.QuantumGroup.PBW.RootVectors
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
 import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
 import LieLean.Algebra.QuantumGroup.QBinomial
+import LieLean.Algebra.QuantumGroup.QBinomialSeries
 import LieLean.Algebra.QuantumGroup.Sl2
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Equivalence
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Uniqueness
