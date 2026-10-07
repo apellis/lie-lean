@@ -1655,6 +1655,19 @@ positive principal `3 × 3` minors (`det_three_pos`), no triangles
 `BraidAction/FiniteCartanArtin.lean` gives the Artin action `braidArtinHomOfIsFiniteCartan` for
 every Cartan datum of finite type with no diagram hypothesis
 (`LusztigCartanDatum.braidOuterCondition_of_isFiniteCartan`).
+Module symmetries, rank one (`QuantumGroup/QBinomialSeries.lean`,
+`QuantumGroup/ModuleSymmetry/{Strings,Rank1}.lean`; [Lus] 5.1–5.2): `q`-binomial generating
+series and the two sum identities behind [Lus] 5.2.2; integrable `U_q(𝔰𝔩₂)`-modules as an
+abstract structure `IntegrableSl2` (graded `E, F`, `EF - FE = [n]`, locally nilpotent;
+[Lus] 5.1.1), spanning of each weight space by vectors `F^{(j)} η` with `η` primitive
+(`IntegrableSl2.mem_strings`, replacing the Casimir decomposition of [Lus] 5.1.3); Lusztig's
+`T''_{t}` (`IntegrableSl2.T`, for `t` with `[n, j]_t = [n, j]_q`, e.g. `t = q^{±1}`), its string
+formula `T_dF_of_primitive`, `T'_{t⁻¹} T''_t = T''_t T'_{t⁻¹} = 1` (`symmEquiv`, [Lus] 5.2.3(a)),
+`T''_t = (-t)ⁿ T'_t` on `Mⁿ` ([Lus] 5.2.3(b)), `T(E m) = -t^{-n} F T(m)`,
+`T(F m) = -t^{n-2} E T(m)` (`T_E`, `T_F`), `T(Mⁿ) ⊆ M⁻ⁿ` and naturality (`map_T`), for `q`
+nonzero and not a root of unity. These are the first steps of a module-theoretic proof of the
+braid relations without `BraidOuterCondition` (rank-one operators on integrable `U`-modules,
+compatibility `T(u m) = Tᵢ(u) T(m)`, rank-two relations on modules, faithfulness).
 Remaining for general `Tᵢ`: braid relations when a third node meets both ends of a simple edge
 with an entry `≤ -2` in the row of an end, when a third node meets a double edge by a multiple
 bond or meets both of its ends, and at a triple edge with neighbours (e.g. `G̃₂`); faithfulness;
