@@ -256,6 +256,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Bar
 import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
 import LieLean.Algebra.QuantumGroup.LusztigF.IntegralForm
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
+import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Braid
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Integrable
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Rank1
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Rank1Formula
@@ -294,6 +295,7 @@ import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
 import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.QBinomialSeries
+import LieLean.Algebra.QuantumGroup.RootDatumHom
 import LieLean.Algebra.QuantumGroup.Sl2
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Equivalence
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Uniqueness

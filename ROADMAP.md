@@ -1631,10 +1631,11 @@ argument of `DoubleEdgeRelation`/`HigherDoubleRelation` transferred to `braidHom
 length six at a `(-3, -1)` edge with orthogonal third nodes
 (`braidEquiv_braid_six_of_orthogonal`). `GroupTheory/Coxeter/ArtinGroup.lean` defines the Artin
 group `M.ArtinGroup` of a Coxeter matrix (presented group, `artinLift`), and
-**`braidArtinHom`**/`braidArtinHomOfNotRoot` give the action `σᵢ ↦ Tᵢ` of the Artin group of
+**`braidArtinHom`** gives the action `σᵢ ↦ Tᵢ` of the Artin group of
 `D.cartanMatrix.coxeterMatrix` on `U` for every Cartan datum satisfying
 `LusztigCartanDatum.BraidOuterCondition` (all finite types, see below; any rank), via
-`isBraidLiftable_braidEquivOfGeneric` (so Matsumoto's `braidLift` also gives `T_w`).
+`isBraidLiftable_braidEquivOfGeneric` (so Matsumoto's `braidLift` also gives `T_w`); for `v` not a
+root of unity, `braidArtinHomOfNotRoot` (`ModuleSymmetry/Braid.lean`) needs no condition at all.
 `BraidAction/TriangleRelation.lean` adds triangles: at a simple edge, a third node `l` with
 `aᵢₗ = aⱼₗ = -1` (entries `aₗᵢ`, `aₗⱼ` arbitrary) satisfies `TᵢTⱼTᵢ(Eₗ) = TⱼTᵢTⱼ(Eₗ)` and the `F`
 analogue (`HasBraidGeneratorImages.three_E_triangle`, `_F_triangle`, from the rank-three
@@ -1684,12 +1685,22 @@ of lengths 2, 3, 4, 6 for these operators on every integrable module, for any pa
 `plusHom_eq_zero_of_forall_smul_eq_zero`; no `X`-regularity needed), via the grading of the Serre
 ideal (`LusztigF.weightProj_mem_serreIdeal`) and
 `Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ ⊆ ('f_{high})⁻ v_Λ` (`VermaModule.fPowSubmodule_le_map_toVerma`).
-These are steps of a module-theoretic proof of the braid relations on `U` without
-`BraidOuterCondition` (remaining: outer root vectors in `U^±`, transfer between root data).
-Remaining for general `Tᵢ`: braid relations when a third node meets both ends of a simple edge
-with an entry `≤ -2` in the row of an end, when a third node meets a double edge by a multiple
-bond or meets both of its ends, and at a triple edge with neighbours (e.g. `G̃₂`); faithfulness;
-general canonical bases.
+**Braid relations for every Cartan datum** (`QuantumGroup/RootDatumHom.lean`,
+`QuantumGroup/ModuleSymmetry/Braid.lean`; [Lus] 39.4.3): for `v ≠ 0` not a root of unity, over
+any field and root datum, `isBraidLiftable_braidEquivOfNotRoot` (the `Tᵢ` satisfy all braid
+relations of `D.cartanMatrix.coxeterMatrix`, no condition on the diagram) and the Artin-group
+action `braidArtinHomOfNotRoot`. On `Eᵢ, Eⱼ, Fᵢ, Fⱼ, K_μ` these are the rank-two computations
+above (`wordProd_pair`). For a third node `l`, both `X(E_l)`, `Y(E_l)` lie in `U⁺`
+(`alternatingWord_apply_mem_adjoin`, rank-two root vector property `pairRoot_mem`), their
+difference acts as zero on every integrable module (`wordT_smul`, `wordT_braid`), hence vanishes
+by `plusHom_eq_zero_of_forall_smul_eq_zero` for the root datum `freeCoroot R` (free coroots) and
+then for `R` along `mapHom (freeCorootHom R)` (morphisms of root data intertwine the `Tᵢ`,
+`mapHom_comp_of_hasBraidGeneratorImages`) (`wordProd_E_outer`); `F_l` follows from
+`ω Tᵢ ω D_ζ = D_ζ Tᵢ`, `ζᵢ = -vᵢ` (`chevalley_comp_comp_diagHom`, `wordProd_F_outer`). Our own
+argument (Lusztig uses quantum Verma identities and complete reducibility).
+API change: `braidArtinHomOfNotRoot R hD hv'` (in `GeneralArtin`) → `braidArtinHomOfNotRoot R hv'`.
+Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
+`BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
@@ -1850,8 +1861,11 @@ completed steps and continuation threads are:
   `TriangleRelation`), and the Artin-group action `braidArtinHom` of
   `D.cartanMatrix.coxeterMatrix.ArtinGroup`; named actions for all of Mathlib's finite-type Cartan
   matrices, for every Cartan datum of finite type (`braidArtinHomOfIsFiniteCartan`) and for every
-  simply-laced datum (`FiniteTypeArtin`, `FiniteCartanArtin`). Remaining: braid relations for
-  data violating `BraidOuterCondition` (e.g. `G̃₂`), action faithfulness, and canonical bases.
+  simply-laced datum (`FiniteTypeArtin`, `FiniteCartanArtin`). For `v` not a root of unity the
+  braid relations hold for every Cartan datum (`isBraidLiftable_braidEquivOfNotRoot`,
+  `braidArtinHomOfNotRoot`, `ModuleSymmetry/Braid.lean`, via integrable modules). Remaining:
+  braid relations at roots of unity outside `BraidOuterCondition`, action faithfulness, and
+  canonical bases.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.

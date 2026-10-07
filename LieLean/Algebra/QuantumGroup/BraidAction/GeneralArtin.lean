@@ -31,7 +31,9 @@ and allows, e.g., the cycles of affine type `Ãₙ`, `n ≥ 2` (including the tr
 excludes third nodes meeting both ends of a simple edge with an entry `≤ -2` in the row of an end,
 third nodes attached to a double edge by a multiple bond in the row of the double-edge node or
 meeting both of its ends, and triple edges with neighbours (e.g. `G̃₂`); for these the braid
-relations are not proved here.
+relations are not proved here by these direct computations. When `v` is not a root of unity they
+hold for every Cartan datum (`QuantumGroup/ModuleSymmetry/Braid.lean`, by a module-theoretic
+argument).
 
 ## Main definitions / results
 
@@ -41,7 +43,9 @@ relations are not proved here.
   (`CoxeterSystem.braidLift`) defines `T_w` for `w` in the Weyl group.
 * `QuantumGroup.braidArtinHom`: the Artin group action `A.coxeterMatrix.ArtinGroup →* Aut U`,
   `σᵢ ↦ Tᵢ`, assuming `vᵢ - vᵢ⁻¹ ≠ 0`, `BraidSerreGeneric` and `[3]ᵢ! ≠ 0` at every node.
-* `QuantumGroup.braidArtinHomOfNotRoot`: the same when `v` is not a root of unity.
+* For `v` not a root of unity the braid relations hold with no condition on the diagram:
+  `QuantumGroup.isBraidLiftable_braidEquivOfNotRoot` and the action
+  `QuantumGroup.braidArtinHomOfNotRoot` in `QuantumGroup/ModuleSymmetry/Braid.lean`.
 
 ## References
 
@@ -202,23 +206,5 @@ theorem braidArtinHom_artinGenerator (i : I) :
     braidArtinHom (R := R) hq hS h3 hD (D.cartanMatrix.coxeterMatrix.artinGenerator i) =
       braidEquivOfGeneric (hq i) (hS i) :=
   CoxeterMatrix.artinLift_artinGenerator _ _ i
-
-omit hq hS h3
-
-variable (R) in
-/-- **The Artin group action on `U` at a generic parameter**: if `v` is not a root of unity,
-`σᵢ ↦ Tᵢ = braidEquivOfNotRoot` is an action of the Artin group of the Coxeter matrix of any
-Cartan datum satisfying `BraidOuterCondition`, in arbitrary rank. -/
-def braidArtinHomOfNotRoot (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) :
-    D.cartanMatrix.coxeterMatrix.ArtinGroup →* (QuantumGroup R v ≃ₐ[k] QuantumGroup R v) :=
-  braidArtinHom (fun i ↦ (shortNode_braidGeneric_of_not_root hv' i).sub_ne)
-    (braidSerreGeneric_of_not_root hv')
-    (fun i ↦ LusztigF.qFactorial_ne_zero_of_not_root (NeZero.ne v) hv' i 3) hD
-
-@[simp]
-theorem braidArtinHomOfNotRoot_artinGenerator (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (i : I) :
-    braidArtinHomOfNotRoot R hD hv' (D.cartanMatrix.coxeterMatrix.artinGenerator i) =
-      braidEquivOfNotRoot R hv' i :=
-  braidArtinHom_artinGenerator _ _ _ hD i
 
 end LieLean.QuantumGroup
