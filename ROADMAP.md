@@ -1678,9 +1678,14 @@ of lengths 2, 3, 4, 6 for these operators on every integrable module, for any pa
 `aᵢⱼ aⱼᵢ ≤ 3` and no condition on the other nodes (`nodeSl2_T_comm`, `nodeSl2_T_braid_three`,
 `nodeSl2_T_braid_four`, `nodeSl2_T_braid_six`), by conjugation: the common word `W` of length
 `mᵢⱼ - 1` is a morphism between the rank-one structures at the two nodes (`nodeSl2_T_conj`).
+`QuantumGroup/Faithful.lean`: if `⟨i, Λ⟩` can be made arbitrarily large, an element of `U⁻`
+(resp. `U⁺`) acting as zero on all `L̃_q(Λ)` (resp. their twists by the Chevalley involution,
+`ChevalleyTwist`) is zero (`minusHom_eq_zero_of_forall_smul_eq_zero`,
+`plusHom_eq_zero_of_forall_smul_eq_zero`; no `X`-regularity needed), via the grading of the Serre
+ideal (`LusztigF.weightProj_mem_serreIdeal`) and
+`Σᵢ U Fᵢ^{⟨i,Λ⟩+1} v_Λ ⊆ ('f_{high})⁻ v_Λ` (`VermaModule.fPowSubmodule_le_map_toVerma`).
 These are steps of a module-theoretic proof of the braid relations on `U` without
-`BraidOuterCondition` (remaining: faithfulness of integrable modules, transfer between root
-data).
+`BraidOuterCondition` (remaining: outer root vectors in `U^±`, transfer between root data).
 Remaining for general `Tᵢ`: braid relations when a third node meets both ends of a simple edge
 with an entry `≤ -2` in the row of an end, when a third node meets a double edge by a multiple
 bond or meets both of its ends, and at a triple edge with neighbours (e.g. `G̃₂`); faithfulness;
