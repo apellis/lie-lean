@@ -241,6 +241,7 @@ import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integrable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.KashiwaraOperators
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Lattice
 import LieLean.Algebra.QuantumGroup.Faithful
 import LieLean.Algebra.QuantumGroup.GabberKac
 import LieLean.Algebra.QuantumGroup.GabberKac.Classical

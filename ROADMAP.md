@@ -1737,8 +1737,13 @@ unity) the string decomposition `IntegrableSl2.stringEquiv : ⨁_{(n,j)} prim(n+
 (`ẽ m = 0 ↔ E m = 0`). For integrable `U`-modules: `kashiwaraE`, `kashiwaraF` (through
 `nodeSl2`), `ẽᵢ M^Λ ⊆ M^{Λ+αᵢ}`, `f̃ᵢ M^Λ ⊆ M^{Λ-αᵢ}` (`kashiwaraE_mem_weightSpace`,
 `kashiwaraF_mem_weightSpace`; [HK] Prop. 4.1.3 (1)), commutation with `U`-module maps
-(`map_kashiwaraE`, `map_kashiwaraF`). Crystal lattices and bases, the `𝔰𝔩₂` theory, the tensor
-product rule and the grand loop are the next steps (tracking issue #34).
+(`map_kashiwaraE`, `map_kashiwaraF`). `CrystalBasis/Lattice.lean`: Kashiwara-stable `A`-submodules
+(`IsKashiwaraStable`: graded, `ẽ L ⊆ L`, `f̃ L ⊆ L`; any ring `A` acting compatibly), the string
+vectors of `u ∈ L` lie in `L` (`mem_of_sum_mem`, [HK] Prop. 4.2.11 (1)), `ẽ u ∈ cL ⇒ ηⱼ ∈ cL` for
+`j ≥ 1` (`mem_smul_of_eTilde_mem`, (2)), the operators `eTildeQ`, `fTildeQ` on `L/cL`, and for
+`B ⊆ L/cL` with the crystal-base axioms, `u ≡ F^{(k)} ηₖ` with `[ηₖ] ∈ B`, the other `ηⱼ ∈ cL`
+(`exists_of_mk_mem`, (3)). Crystal bases, the `𝔰𝔩₂` theory, the tensor product rule and the
+grand loop are the next steps (tracking issue #34).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
