@@ -1781,6 +1781,12 @@ own proof). `CrystalBasis/TensorCrystalBase.lean`: for string bases of `M₁`, `
 `L₁ ⊗ L₂` of the `F^{(i)}η₁ₜ ⊗ F^{(j)}η₂ₜ'` with the classes of these vectors is a crystal base of
 `M₁ ⊗ M₂` (`isCrystalBase_tensorLattice`, any non-unit `c` with `ϖ ∈ cA`), on which `ẽ`, `f̃` act
 by the tensor product rule (`nextPos`, `prevPos`, `fTilde_tensorVec_sub`, `eTilde_tensorVec_sub`).
+`CrystalBasis/Sl2Structure.lean`: every element of a crystal base at one colour is `f̃ʲ h` for a
+unique highest element `h` (`ẽ h = 0`) and `j ≤ ⟨wt h⟩` (`IsCrystalBase.strCls`,
+`range_strCls`), each `h` lifts to a primitive vector `η_h ∈ L`, and for `M` finite-dimensional,
+`A` local with fraction field `k`, every crystal base is a string lattice:
+`IsCrystalBase.eq_stringLattice` (the `η_h` of each weight form a basis of the primitive vectors
+and `L = span_A {F^{(j)} η_h}`; [HK] Thm. 4.3.2, uniqueness; own proof via Nakayama).
 Note: with the library's
 (Lusztig's) coproduct, the natural lattices are at `v = ∞` (`c = v⁻¹`).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
