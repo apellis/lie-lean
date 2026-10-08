@@ -280,6 +280,48 @@ lemma range_strCls : Set.range (hB.strCls hc) = B := by
 
 /-! ### Finite-dimensional modules -/
 
+/-- `ẽᵃ (f̃ʲ h) = 0` iff `a > j`: the element `f̃ʲ h` has `ε = j`. -/
+lemma eQ_pow_strCls_eq_zero_iff (x : Σ h : hB.highest, Fin (hB.hwt hc h + 1)) (a : ℕ) :
+    (V.eTildeQ hq0 hq hB.isKashiwaraStable.eTilde_mem c ^ a) (hB.strCls hc x) = 0 ↔
+      (x.2 : ℕ) < a := by
+  obtain ⟨h, j, hj⟩ := x
+  have hne : ∀ j' (hj' : j' < hB.hwt hc h + 1),
+      (V.fTildeQ hq0 hq hB.isKashiwaraStable.fTilde_mem c ^ j') h.1 ≠ 0 :=
+    fun j' hj' ↦ hB.strCls_ne_zero hc ⟨h, j', hj'⟩
+  simp only [strCls]
+  constructor
+  · intro h0
+    by_contra hlt
+    push Not at hlt
+    have e := hB.eQ_pow_fQ_pow h.1 h.2.1 a (j - a) (by rw [Nat.add_sub_cancel' hlt]; exact hne j hj)
+    rw [Nat.add_sub_cancel' hlt] at e
+    rw [e] at h0
+    exact hne (j - a) (by omega) h0
+  · intro hlt
+    have e1 : (V.eTildeQ hq0 hq hB.isKashiwaraStable.eTilde_mem c ^ j)
+        ((V.fTildeQ hq0 hq hB.isKashiwaraStable.fTilde_mem c ^ j) h.1) = h.1 := by
+      simpa using hB.eQ_pow_fQ_pow h.1 h.2.1 j 0 (by simpa using hne j hj)
+    rw [show a = (a - j - 1) + 1 + j by omega, pow_add, Module.End.mul_apply, e1, pow_succ,
+      Module.End.mul_apply, h.2.2, map_zero]
+
+/-- `f̃ᵃ (f̃ʲ h) = 0` iff `j + a > ⟨wt h⟩`: the element `f̃ʲ h` has `φ = ⟨wt h⟩ - j`. -/
+lemma fQ_pow_strCls_eq_zero_iff (x : Σ h : hB.highest, Fin (hB.hwt hc h + 1)) (a : ℕ) :
+    (V.fTildeQ hq0 hq hB.isKashiwaraStable.fTilde_mem c ^ a) (hB.strCls hc x) = 0 ↔
+      hB.hwt hc x.1 < x.2 + a := by
+  obtain ⟨h, j, hj⟩ := x
+  simp only [strCls]
+  rw [← Module.End.mul_apply, ← pow_add, hB.fQ_pow_highest hc h, mk_eq_zero_iff]
+  constructor
+  · intro h0
+    by_contra hlt
+    push Not at hlt
+    exact hB.dF_notMem_smul (hB.hvec_prim hc h) (hB.hvec_notMem hc h) (by omega) h0
+  · intro hlt
+    change V.dF (a + j) (hB.hvec hc h) ∈ c • L
+    rw [dF_eq_zero_of_primitive hq0 hq (hB.hvec_prim hc h).1 (hB.hvec_prim hc h).2
+      (by push_cast; omega)]
+    exact zero_mem _
+
 /-- The string vectors `F^{(j)} η_h` of a crystal base. -/
 noncomputable def strVec (x : Σ h : hB.highest, Fin (hB.hwt hc h + 1)) : M :=
   V.dF x.2 (hB.hvec hc x.1)

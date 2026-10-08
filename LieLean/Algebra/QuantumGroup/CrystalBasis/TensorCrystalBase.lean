@@ -346,6 +346,73 @@ theorem isCrystalBase_tensorLattice (hη₁ : ∀ t, η₁ t ∈ V₁.prim (p₁
     rw [hfQ, heQ, hclsOpt_eq, hclsOpt_eq]
     exact nextPos_eq_some_iff p₁ p₂ x y
 
+omit [IsLocalRing A] in
+include hq0 hq in
+/-- The classes of the vectors `F^{(i)} η₁ₜ ⊗ F^{(j)} η₂ₜ'` modulo `c L₁ ⊗ L₂` are distinct. -/
+lemma mk_tensorVec_injective (hη₁ : ∀ t, η₁ t ∈ V₁.prim (p₁ t))
+    (hη₂ : ∀ t, η₂ t ∈ V₂.prim (p₂ t))
+    (hind₁ : ∀ p₀ : ℕ, LinearIndependent k (fun t : {t // p₁ t = p₀} ↦ η₁ t))
+    (hind₂ : ∀ p₀ : ℕ, LinearIndependent k (fun t : {t // p₂ t = p₀} ↦ η₂ t))
+    {c : A} (hc : ¬IsUnit c) :
+    Function.Injective fun x ↦ (Submodule.Quotient.mk
+      (⟨tensorVec V₁ V₂ p₁ p₂ η₁ η₂ x, tensorVec_mem V₁ V₂ p₁ p₂ η₁ η₂ x⟩ :
+        tensorLattice V₁ V₂ p₁ p₂ η₁ η₂ A) : tensorLattice V₁ V₂ p₁ p₂ η₁ η₂ A ⧸
+          (Ideal.span {c} • ⊤ : Submodule A (tensorLattice V₁ V₂ p₁ p₂ η₁ η₂ A))) := by
+  have hlik : LinearIndependent k (tensorVec V₁ V₂ p₁ p₂ η₁ η₂) := by
+    have h1 := linearIndependent_dF hq0 hq hη₁ hind₁
+    have h2 := linearIndependent_dF hq0 hq hη₂ hind₂
+    have h := LinearIndependent.tmul_of_isDomain h1 h2
+    exact h
+  let bL : Module.Basis (TensorPos p₁ p₂) A (tensorLattice V₁ V₂ p₁ p₂ η₁ η₂ A) :=
+    Module.Basis.span (hlik.restrict_scalars' A)
+  have hbL : ∀ x, bL x = ⟨tensorVec V₁ V₂ p₁ p₂ η₁ η₂ x, tensorVec_mem V₁ V₂ p₁ p₂ η₁ η₂ x⟩ :=
+    fun x ↦ Module.Basis.span_apply _ x
+  have : Nontrivial (A ⧸ Ideal.span {c}) :=
+    Ideal.Quotient.nontrivial_iff.mpr (by rwa [Ne, Ideal.span_singleton_eq_top])
+  have := (linearIndependent_mk_basis c bL).injective
+  simpa only [hbL] using this
+
+omit [IsLocalRing A] [FaithfulSMul A k] in
+lemma tensorVecOpt_mem (o : Option (TensorPos p₁ p₂)) :
+    tensorVecOpt V₁ V₂ p₁ p₂ η₁ η₂ o ∈ tensorLattice V₁ V₂ p₁ p₂ η₁ η₂ A := by
+  rcases o with _ | y
+  · exact zero_mem _
+  · exact tensorVec_mem V₁ V₂ p₁ p₂ η₁ η₂ y
+
+omit [FaithfulSMul A k] in
+include hq0 hq hϖ hϖq in
+/-- `f̃` on the classes of `L₁ ⊗ L₂ / c L₁ ⊗ L₂` is given by the tensor product rule. -/
+lemma fTildeQ_mk_tensorVec (hη₁ : ∀ t, η₁ t ∈ V₁.prim (p₁ t))
+    (hη₂ : ∀ t, η₂ t ∈ V₂.prim (p₂ t)) (h0₁ : ∀ t, η₁ t ≠ 0) (h0₂ : ∀ t, η₂ t ≠ 0)
+    {c : A} (hϖc : ϖ ∈ Ideal.span {c}) (x : TensorPos p₁ p₂) :
+    (tensor V₁ V₂ hq0 hq).fTildeQ hq0 hq
+      (isKashiwaraStable_tensorLattice (A := A) hq0 hq hη₁ hη₂ hϖ hϖq h0₁ h0₂).fTilde_mem c
+      (Submodule.Quotient.mk ⟨tensorVec V₁ V₂ p₁ p₂ η₁ η₂ x, tensorVec_mem V₁ V₂ p₁ p₂ η₁ η₂ x⟩) =
+      Submodule.Quotient.mk ⟨tensorVecOpt V₁ V₂ p₁ p₂ η₁ η₂ (nextPos x), tensorVecOpt_mem _⟩ := by
+  obtain ⟨d, hd⟩ := Ideal.mem_span_singleton'.1 hϖc
+  rw [fTildeQ_mk, mk_eq_mk_iff]
+  obtain ⟨z, hz, hz'⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1
+    (fTilde_tensorVec_sub hq0 hq hη₁ hη₂ hϖ hϖq h0₁ h0₂ x)
+  rw [← hz', ← hd, mul_comm, mul_smul]
+  exact Submodule.smul_mem_pointwise_smul _ _ _ (Submodule.smul_mem _ d hz)
+
+omit [FaithfulSMul A k] in
+include hq0 hq hϖ hϖq in
+/-- `ẽ` on the classes of `L₁ ⊗ L₂ / c L₁ ⊗ L₂` is given by the tensor product rule. -/
+lemma eTildeQ_mk_tensorVec (hη₁ : ∀ t, η₁ t ∈ V₁.prim (p₁ t))
+    (hη₂ : ∀ t, η₂ t ∈ V₂.prim (p₂ t)) (h0₁ : ∀ t, η₁ t ≠ 0) (h0₂ : ∀ t, η₂ t ≠ 0)
+    {c : A} (hϖc : ϖ ∈ Ideal.span {c}) (x : TensorPos p₁ p₂) :
+    (tensor V₁ V₂ hq0 hq).eTildeQ hq0 hq
+      (isKashiwaraStable_tensorLattice (A := A) hq0 hq hη₁ hη₂ hϖ hϖq h0₁ h0₂).eTilde_mem c
+      (Submodule.Quotient.mk ⟨tensorVec V₁ V₂ p₁ p₂ η₁ η₂ x, tensorVec_mem V₁ V₂ p₁ p₂ η₁ η₂ x⟩) =
+      Submodule.Quotient.mk ⟨tensorVecOpt V₁ V₂ p₁ p₂ η₁ η₂ (prevPos x), tensorVecOpt_mem _⟩ := by
+  obtain ⟨d, hd⟩ := Ideal.mem_span_singleton'.1 hϖc
+  rw [eTildeQ_mk, mk_eq_mk_iff]
+  obtain ⟨z, hz, hz'⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1
+    (eTilde_tensorVec_sub hq0 hq hη₁ hη₂ hϖ hϖq h0₁ h0₂ x)
+  rw [← hz', ← hd, mul_comm, mul_smul]
+  exact Submodule.smul_mem_pointwise_smul _ _ _ (Submodule.smul_mem _ d hz)
+
 end CrystalBase
 
 end IntegrableSl2
