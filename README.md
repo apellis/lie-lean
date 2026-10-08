@@ -178,6 +178,9 @@ Further proved results include:
   `ModuleSymmetry/Integrable`: on every integrable `U`-module these symmetries satisfy
   `Tᵢ(u m) = Tᵢ(u) Tᵢ(m)` for Lusztig's automorphisms `Tᵢ` of `U` (`nodeSl2_T_smul`,
   [Lus] 37.1.2).
+- **Kashiwara operators:** the string decomposition of integrable `U_q(𝔰𝔩₂)`-modules and the
+  Kashiwara operators `ẽᵢ`, `f̃ᵢ` on integrable `U`-modules (`QuantumGroup/CrystalBasis/`), the first
+  step towards crystal bases.
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`
   satisfy all braid relations, with no condition on the Dynkin diagram
   (`isBraidLiftable_braidEquivOfNotRoot`, `braidArtinHomOfNotRoot`; [Lus] 39.4.3), via the
