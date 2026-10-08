@@ -246,6 +246,8 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Lattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Sl2
 import LieLean.Algebra.QuantumGroup.CrystalBasis.StringCounts
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorSl2
+import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorStrings
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Valuation
 import LieLean.Algebra.QuantumGroup.Faithful
 import LieLean.Algebra.QuantumGroup.GabberKac
 import LieLean.Algebra.QuantumGroup.GabberKac.Classical

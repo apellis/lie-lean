@@ -1763,7 +1763,12 @@ of crystal bases of every integrable `U_q(𝔰𝔩₂)`-module (`isCrystalBase_s
 rule and the grand loop are the next steps (tracking issue #34). `CrystalBasis/TensorSl2.lean`:
 the tensor product of integrable `U_q(𝔰𝔩₂)`-modules with Kashiwara's coproduct
 (`IntegrableSl2.tensor`; graded pieces = eigenspaces of `K ⊗ K`), with the divided powers on pure
-tensors (`tensor_dF_tmul`, `tensor_dE_tmul`). Note: with the library's
+tensors (`tensor_dF_tmul`, `tensor_dE_tmul`). `CrystalBasis/{Valuation,TensorStrings}.lean`: orders
+of quantum integers and binomials at `q = 0` (`isOnePow_qInt`, `isOnePow_qBinomial`); in a tensor
+product of two strings `uᵢ = F^{(i)}η`, `vⱼ = F^{(j)}ζ`, the primitive vectors `w_s`
+(`tensor_E_tensorHigh`) and `F`-killed vectors `z_s` (`tensor_F_tensorLow`), with
+`F^{(r)} w_s ≡ u_r ⊗ v_s` (`r ≤ a - s`) and `E^{(t)} z_s ≡ u_{a-s} ⊗ v_{b-t}` (`t ≤ b - s`) modulo `ϖ`
+(`tensor_dF_tensorHigh_sub`, `tensor_dE_tensorLow_sub`; our own computation). Note: with the library's
 (Lusztig's) coproduct, the natural lattices are at `v = ∞` (`c = v⁻¹`).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
