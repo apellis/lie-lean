@@ -19,7 +19,8 @@ be a local ring with `ϖ ∈ A` a non-unit mapping to `q`, `A ⊆ k`, and `c ∈
 `L₁ ⊗ L₂` of the `F^{(i)} η₁ₜ ⊗ F^{(j)} η₂ₜ'`, with the classes of these vectors in
 `(L₁ ⊗ L₂) / c (L₁ ⊗ L₂)`, is a crystal base of `M₁ ⊗ M₂`
 (`QuantumGroup.IntegrableSl2.isCrystalBase_tensorLattice`), and on these classes `f̃` acts on
-the first factor if `φ > ε` and on the second otherwise (`QuantumGroup.IntegrableSl2.fTilde_tensorVec_sub`, positions `nextPos`),
+the first factor if `φ > ε` and on the second otherwise
+(`QuantumGroup.IntegrableSl2.fTilde_tensorVec_sub`, positions `nextPos`),
 where `φ(F^{(i)} η) = p - i` and `ε(F^{(j)} η') = j`; similarly for `ẽ`
 (`QuantumGroup.IntegrableSl2.eTilde_tensorVec_sub`, `prevPos`).
 
