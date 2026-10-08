@@ -151,6 +151,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationFacetClosureNonintegral
 import LieLean.Algebra.Lie.KacMoody.TranslationVerma
 import LieLean.Algebra.Lie.KacMoody.TranslationWall
 import LieLean.Algebra.Lie.KacMoody.TranslationWallCrossing
+import LieLean.Algebra.Lie.KacMoody.TranslationWallExt
 import LieLean.Algebra.Lie.KacMoody.TranslationWallFactor
 import LieLean.Algebra.Lie.KacMoody.TranslationWallHead
 import LieLean.Algebra.Lie.KacMoody.TranslationWallMultiplicity
@@ -176,6 +177,7 @@ import LieLean.Algebra.Lie.KacMoody.WeightBasis
 import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.Algebra.Lie.LocallyNilpotent
 import LieLean.Algebra.Lie.Quotient
+import LieLean.Algebra.Lie.RelativeExt
 import LieLean.Algebra.Lie.Sl2
 import LieLean.Algebra.Lie.Subalgebra
 import LieLean.Algebra.Lie.UniversalEnveloping.Domain

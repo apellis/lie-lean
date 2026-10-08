@@ -808,7 +808,17 @@ for `wα > 0`, §7.16 step (3)), `wallCrossing_irreducible_of_isPosRoot` (`Θ_s 
 (`L(Λ) ≅ L(Λ)^∨` via the contravariant form, every `Λ`, Humphreys GSM 94 §3.2) and
 `nonempty_equiv_restrictedDual_centralTranslation` (`T L(Λ) ≅ (T L(Λ))^∨` for every translation
 functor `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ L(ν))`), completing 7.14 (c).
-Remaining: 7.14 (g) (needs `Ext` in `𝒪`), the
+**Theorem 7.14 (g)** (`KacMoody/TranslationWallExt.lean`): `nonempty_hom_ker_equiv_extOne_wall`
+(`Ext¹_𝒪(L(w·λ), L(x·λ)) ≅ Hom(ker p, L(x·λ))` for a surjection `p : T_μ^λ L(w·μ) → L(w·λ)`, whose
+kernel is the radical, `x ∈ W_[λ]`, `xs·λ < x·λ`), with `Ext¹` the `𝔥`-relative `Ext¹`
+`LieModule.ExtOne` (`Algebra/Lie/RelativeExt.lean`: relative cocycles modulo coboundaries;
+extension modules `ExtOne.Extension` and the splitting criterion `ExtOne.mk_eq_zero_iff`, so it
+classifies the extensions in which `𝔥` acts semisimply, i.e. the extensions in `𝒪`
+(`IsCategoryO.extension`); connecting map and exactness `SplitData.connecting_eq_zero_iff`,
+`SplitData.exists_connecting_eq`, `SplitData.connectingEquiv`; equivariant sections for weight
+modules `exists_splitData`), via naturality of the adjunction (`translationAdjunction_comp`) and
+`Ext¹(T M, N) = 0` when `T' N = 0` (`extOne_eq_zero_of_subsingleton_centralTranslation`).
+Remaining: the
 adjunction morphism `M → Θ_s M` and shuffling functors, and the independence of `Θ_s` from `μ`
 (projective functors). Remaining: the equivalence of blocks as a natural
 isomorphism of functors (only its values on Verma and simple modules are proved).
