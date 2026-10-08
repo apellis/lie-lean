@@ -1793,6 +1793,10 @@ of finite-dimensional integrable `U_q(𝔰𝔩₂)`-modules (`IsCrystalBase.isCr
 `M₁ ⊗ M₂`; [HK] Thm. 4.4.1 for `𝔰𝔩₂`, Kashiwara's coproduct).
 Note: with the library's
 (Lusztig's) coproduct, the natural lattices are at `v = ∞` (`c = v⁻¹`).
+`QuantumGroup/TensorModule.lean`: tensor products of `U`-modules through the coproduct
+(`TensorModule k M₁ M₂`, `E_smul_tmul`, `F_smul_tmul`, `K_smul_tmul`), weights of pure tensors
+(`tmul_mem_weightSpace`) and integrability of tensor products (`TensorModule.isIntegrable`,
+[Lus] 3.5.2 (a); own argument).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
