@@ -774,8 +774,14 @@ comparing on the cone of positive roots orthogonal to it). **Translation from a 
 `translation_verma_shortExact_of_isAntidominant` gives `0 → M(ws·λ) → T_μ^λ M(w·μ) → M(w·λ) → 0`
 for `μ + ρ` on the single wall `H_α`, `⟨λ + ρ, α^∨⟩ ≠ 0` and `wα > 0`, every `w ∈ W`; the
 ordering step of Prop. 3.7 (a) is `exists_verma_lieSubmodule_of_extension` (reconstructed: the
-vector of weight `ws·λ` lifting the top step is primitive and splits it). Thm. 7.14 (b)–(g) and
-wall-crossing (§7.15) remain open. Remaining: the equivalence of blocks as a natural
+vector of weight `ws·λ` lifting the top step is primitive and splits it). With moreover
+`w ∈ W_[λ]` and every positive root orthogonal to `λ + ρ` orthogonal to `μ + ρ`
+(`KacMoody/TranslationWallHead.lean`): Thm. 7.14 (b) `exists_hom_translation_verma_ne_zero_iff`
+(the simple quotients `L(x·λ)` of `T_μ^λ M(w·μ)` are exactly `L(w·λ)`) and the head and socle
+parts of (c) (`exists_hom_translation_irreducible_ne_zero_iff`,
+`exists_hom_irreducible_translation_ne_zero_iff`), by adjunction and Thm. 7.9
+(`translation_irreducible_wall`). Self-duality in (c), (d)–(g) and wall-crossing (§7.15)
+remain open. Remaining: the equivalence of blocks as a natural
 isomorphism of functors (only its values on Verma and simple modules are proved).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with

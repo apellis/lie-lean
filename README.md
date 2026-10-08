@@ -74,7 +74,8 @@ Further proved results include:
   non-integral weights (`translation_verma_of_isAntidominant`,
   `translation_irreducible_of_isAntidominant`), as does translation out of a facet closure
   (Thm. 7.12, `character_translation_verma_of_isAntidominant`) and the short exact sequence of
-  translation from a wall (Thm. 7.14 (a), `translation_verma_shortExact_of_isAntidominant`).
+  translation from a wall (Thm. 7.14 (a), `translation_verma_shortExact_of_isAntidominant`), with
+  the head of `T_μ^λ M(w·μ)` and the head and socle of `T_μ^λ L(w·μ)` (Thm. 7.14 (b), (c)).
 * **Littelmann paths:** Proposition 5.7, the straight-path concatenation theorem, and the
   isomorphism theorem for rational piecewise-linear dominant paths are proved. The crystal-level
   Littlewood–Richardson decomposition is unconditional over `ℝ` with finite-dimensional Cartan
