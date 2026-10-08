@@ -1797,6 +1797,11 @@ Note: with the library's
 (`TensorModule k M₁ M₂`, `E_smul_tmul`, `F_smul_tmul`, `K_smul_tmul`), weights of pure tensors
 (`tmul_mem_weightSpace`) and integrability of tensor products (`TensorModule.isIntegrable`,
 [Lus] 3.5.2 (a); own argument).
+`CrystalBasis/TensorIntegrable.lean`: an integrable `U_q(𝔰𝔩₂)`-module is one for `q⁻¹` with the
+same `ẽ`, `f̃` (`IntegrableSl2.inv`, `inv_eTilde`, `inv_fTilde`), and under the flip
+`x ⊗ y ↦ y ⊗ x` the operators `ẽᵢ`, `f̃ᵢ` of `M₁ ⊗ M₂` (Lusztig's coproduct) are those of
+Kashiwara's tensor product of `M₂`, `M₁` at `vᵢ⁻¹` (`TensorModule.flip_kashiwaraE`,
+`flip_kashiwaraF`).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring

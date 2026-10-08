@@ -248,6 +248,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Sl2Structure
 import LieLean.Algebra.QuantumGroup.CrystalBasis.StringCounts
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorCrystal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorCrystalBase
+import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorIntegrable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorProductRule
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorRule
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorSl2
