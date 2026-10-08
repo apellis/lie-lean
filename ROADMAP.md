@@ -764,8 +764,13 @@ hypothesis is not needed. The proof determines the surviving weights of `L(ν)` 
 (`IrreducibleModule.exists_weylDot_eq_of_add_eq_weylDot`, a norm argument minimizing over the
 stabilizer of `μ + ρ`; `finrank_weightSpace_weylDot_sub_weylDot`: they have multiplicity one),
 with additivity of weight multiplicities along filtrations
-(`finrank_inf_weightSpaceOfMap_eq_sum`); reconstructed. Translation from a wall and wall-crossing
-(Thm. 7.14, §7.15) remain open. Remaining: the equivalence of blocks as a natural
+(`finrank_inf_weightSpaceOfMap_eq_sum`); reconstructed. The same holds for arbitrary antidominant
+`λ, μ` and all `w ∈ W` (`KacMoody/TranslationFacetClosureNonintegral.lean`:
+`exists_translation_verma_filtration_of_isAntidominant`,
+`character_translation_verma_of_isAntidominant`; root-datum core
+`exists_apply_eq_of_add_eq_apply_of_antidominant`, minimizing over the stabilizer of `μ + ρ` and
+comparing on the cone of positive roots orthogonal to it). Translation from a wall and
+wall-crossing (Thm. 7.14, §7.15) remain open. Remaining: the equivalence of blocks as a natural
 isomorphism of functors (only its values on Verma and simple modules are proved).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
