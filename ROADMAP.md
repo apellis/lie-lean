@@ -1760,7 +1760,10 @@ and `isSeminormal_crystal` ([HK] (4.9), (4.10), Prop. 4.2.11). Any commutative r
 `F^{(j)} ηₜ` form a basis of `M` when the `ηₜ` form bases of the primitive spaces) and existence
 of crystal bases of every integrable `U_q(𝔰𝔩₂)`-module (`isCrystalBase_stringLattice`, `A ⊆ k`,
 `c` not a unit; [HK] Thm. 4.3.1 for finite-dimensional modules). Uniqueness, the tensor product
-rule and the grand loop are the next steps (tracking issue #34). Note: with the library's
+rule and the grand loop are the next steps (tracking issue #34). `CrystalBasis/TensorSl2.lean`:
+the tensor product of integrable `U_q(𝔰𝔩₂)`-modules with Kashiwara's coproduct
+(`IntegrableSl2.tensor`; graded pieces = eigenspaces of `K ⊗ K`), with the divided powers on pure
+tensors (`tensor_dF_tmul`, `tensor_dE_tmul`). Note: with the library's
 (Lusztig's) coproduct, the natural lattices are at `v = ∞` (`c = v⁻¹`).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
