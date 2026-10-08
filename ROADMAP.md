@@ -800,7 +800,13 @@ semisimplicity of `T_λ^μ T_μ^λ L(w·μ)`) and the vanishing part of (f)
 (`weylDot_mul_reflectionOf_lt_of_multiplicity_ne_zero`, for all `x ∈ W`), and Thm. 7.14 (e)
 (`KacMoody/TranslationWallFactor.lean`, `multiplicity_translation_irreducible_wall_reflection`:
 `[T_μ^λ L(w·μ) : L(ws·λ)] = 1`, via the generic `IsCategoryO.multiplicity_eq_one_of_extension`).
-Self-duality in (c), (g) and wall-crossing (§7.15) remain open. Remaining: the equivalence of blocks as a natural
+**Wall-crossing** `Θ_s = T_μ^λ T_λ^μ` (§7.15, `KacMoody/TranslationWallCrossing.lean`, stated for
+`T_μ^λ X`, `X ≅ T_λ^μ V`): `wallCrossing_verma_shortExact` (`0 → M(ws·λ) → Θ_s M(w·λ) → M(w·λ) → 0`
+for `wα > 0`, §7.16 step (3)), `wallCrossing_irreducible_of_isPosRoot` (`Θ_s L(w·λ) ≅ T_μ^λ L(w·μ)`),
+`wallCrossing_irreducible_of_not_isPosRoot` (`Θ_s L(w·λ) = 0` for `w ∈ W_[λ]`, `wα < 0`).
+Remaining: self-duality in 7.14 (c) (needs `L(x)^∨ ≅ L(x)`), 7.14 (g) (needs `Ext` in `𝒪`), the
+adjunction morphism `M → Θ_s M` and shuffling functors, and the independence of `Θ_s` from `μ`
+(projective functors). Remaining: the equivalence of blocks as a natural
 isomorphism of functors (only its values on Verma and simple modules are proved).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with

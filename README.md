@@ -77,7 +77,9 @@ Further proved results include:
   translation from a wall (Thm. 7.14 (a), `translation_verma_shortExact_of_isAntidominant`), with
   the head of `T_μ^λ M(w·μ)` and the head and socle of `T_μ^λ L(w·μ)` (Thm. 7.14 (b), (c)), and
   `ch T_λ^μ T_μ^λ M = |W_μ°/W_λ°| ch M` (Cor. 7.12, `character_translation_translation`), with
-  `[T_μ^λ L(w·μ) : L(w·λ)] = 2` on a wall (Thm. 7.14 (d), `multiplicity_translation_irreducible_wall`).
+  `[T_μ^λ L(w·μ) : L(w·λ)] = 2` on a wall (Thm. 7.14 (d), `multiplicity_translation_irreducible_wall`),
+  `[T_μ^λ L(w·μ) : L(ws·λ)] = 1` (Thm. 7.14 (e)), and wall-crossing functors on Verma and simple
+  modules (§7.15, `wallCrossing_verma_shortExact`).
 * **Littelmann paths:** Proposition 5.7, the straight-path concatenation theorem, and the
   isomorphism theorem for rational piecewise-linear dominant paths are proved. The crystal-level
   Littlewood–Richardson decomposition is unconditional over `ℝ` with finite-dimensional Cartan
