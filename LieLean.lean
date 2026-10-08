@@ -244,10 +244,12 @@ import LieLean.Algebra.QuantumGroup.BraidAction.GeneralArtin
 import LieLean.Algebra.QuantumGroup.BraidAction.FiniteTypeArtin
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Boson
 import LieLean.Algebra.QuantumGroup.CrystalBasis.CrystalBase
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integrable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.KashiwaraOperators
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Lattice
+import LieLean.Algebra.QuantumGroup.CrystalBasis.NegativePart
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Sl2
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Sl2Structure
 import LieLean.Algebra.QuantumGroup.CrystalBasis.StringCounts

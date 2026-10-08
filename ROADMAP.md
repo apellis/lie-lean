@@ -1837,6 +1837,15 @@ fraction field `k`, at a non-unit `c` with `ϖ ∈ cA` in the maximal ideal mapp
 `(L₁ ⊗ L₂, B₁ ⊗ B₂)` (`TensorModule.lattice`, `TensorModule.base`) is a crystal base of
 `M₁ ⊗ M₂` (`I` nonempty), with `ẽᵢ`, `f̃ᵢ` given at each node by the `𝔰𝔩₂` rule for `B₂ ⊗ B₁`
 at `vᵢ⁻¹` (`TensorModule.isCrystalBase_nodeSl2`).
+`CrystalBasis/Boson.lean`: modules over the `q`-boson algebra (`BosonModule`: `e f = q⁻² f e + 1`,
+`e` locally nilpotent), the unique string decomposition `m = Σ f^{(n)} mₙ`, `e mₙ = 0`
+(`BosonModule.stringEquiv`), Kashiwara's operators `ẽ`, `f̃` with `ẽ f̃ = 1`, naturality, and their
+homogeneity for graded families (`map_eTilde_shift`) ([Kas] §3, [Jan] 10.1–10.2; own proof, no
+PBW basis). `CrystalBasis/NegativePart.lean`: `U⁻ = 'f ⧸ J` (`NegativePart`) with Kashiwara's
+`e'ᵢ = vᵢ² rᵢ ∘ σᵢ⁻¹` and `fᵢ` (`LusztigF.bosonE_bosonF`: `e'ᵢ fᵢ = vᵢ⁻² fᵢ e'ᵢ + 1`), the
+Kashiwara operators on `U⁻` (`NegativePart.kashiwaraE`, `kashiwaraF`; `ẽᵢ f̃ᵢ = 1`, homogeneity
+`kashiwaraE_mem_weightSpace`), and `L(∞)`, `B(∞)` (`latticeInf`, `baseInf`) for any
+`A`-algebra structure on `k`.
 `CrystalBasis/TensorCrystalEquiv.lean`: Kashiwara's tensor product rule on classes
 (`IntegrableSl2.IsCrystalBase.fTildeQ_tmulQ`, `eTildeQ_tmulQ`; at the `U`-level
 `TensorModule.fQ_tmulL`, `eQ_tmulL`) and **the crystal of `B₁ ⊗ B₂` is the tensor product of
