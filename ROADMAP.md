@@ -1811,6 +1811,13 @@ Kashiwara's tensor product of `M₂`, `M₁` at `vᵢ⁻¹` (`TensorModule.flip_
 `CrystalBasis/Transfer.lean`: crystal bases at one colour are transported along linear
 equivalences matching the gradings and the Kashiwara operators, also between `q` and `q⁻¹`
 (`IntegrableSl2.IsCrystalBase.of_equiv`).
+`CrystalBasis/TensorModuleCrystal.lean`: the **tensor product rule for crystal bases of
+integrable `U`-modules** (`TensorModule.isCrystalBase_tensor`; [HK] Thm. 4.4.1): for crystal bases
+`(L₁, B₁)`, `(L₂, B₂)` of finite-dimensional integrable modules over a local ring `A` with
+fraction field `k`, at a non-unit `c` with `ϖ ∈ cA` in the maximal ideal mapping to `v⁻¹`,
+`(L₁ ⊗ L₂, B₁ ⊗ B₂)` (`TensorModule.lattice`, `TensorModule.base`) is a crystal base of
+`M₁ ⊗ M₂` (`I` nonempty), with `ẽᵢ`, `f̃ᵢ` given at each node by the `𝔰𝔩₂` rule for `B₂ ⊗ B₁`
+at `vᵢ⁻¹` (`TensorModule.isCrystalBase_nodeSl2`).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
