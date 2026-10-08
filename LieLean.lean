@@ -151,6 +151,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationFacetClosureNonintegral
 import LieLean.Algebra.Lie.KacMoody.TranslationVerma
 import LieLean.Algebra.Lie.KacMoody.TranslationWall
 import LieLean.Algebra.Lie.KacMoody.TranslationWallHead
+import LieLean.Algebra.Lie.KacMoody.TranslationWallMultiplicity
 import LieLean.Algebra.Lie.KacMoody.TranslationFunctor
 import LieLean.Algebra.Lie.KacMoody.RestrictedDual
 import LieLean.Algebra.Lie.KacMoody.TranslationDuality
