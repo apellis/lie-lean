@@ -453,20 +453,23 @@ end Steps
 variable [IsAlgClosed K] (hA : A.IsFiniteCartan)
 
 include hA in
-/-- **Translation out of a facet closure** (integral weights, finite type; Humphreys, GSM 94,
-Theorem 7.12, in the form of standard filtrations). Let `λ + ρ`, `μ + ρ` be antidominant integral
-and `ν = z (λ - μ)`, `z ∈ W`, dominant. For `w ∈ W`, the `χ_λ`-block of `M(w·μ) ⊗ L(ν)` (that
-is, `T_μ^λ M(w·μ)`) has a filtration `0 = F₀ ≤ ⋯ ≤ Fₙ` whose successive quotients are `0` or
-Verma modules, and the Verma modules occurring are the `M((w w')·λ)`, `w'` running over the
-stabilizer `W_μ°` of `μ` modulo that of `λ`, each exactly once: the map `j ↦ xⱼ` from the nonzero
-steps to the weights `(w w')·λ` is a bijection. The character form is
-`character_translation_verma`. The facet condition of the source is not needed. -/
-theorem exists_translation_verma_filtration {lam μ ν : Dual K H}
-    (hlam : ∀ i, ∃ n : ℕ, (lam + P.rho) (P.coroot i) = -n)
-    (hμ : ∀ i, ∃ n : ℕ, (μ + P.rho) (P.coroot i) = -n)
+/-- **Translation out of a facet closure, general form.** Let `ν = z (λ - μ)`, `z ∈ W`, be
+dominant integral and `w ∈ W`, and suppose that the weights `ν'` of `L(ν)` with `w·μ + ν'` linked
+to `λ` are among the `(w w')·λ - w·μ`, `w'·μ = μ` (hypothesis `hkey`). Then the `χ_λ`-block of
+`M(w·μ) ⊗ L(ν)` has a filtration whose nonzero steps are the Verma modules `M((w w')·λ)`, each
+exactly once. `hkey` is supplied by
+`KacMoodyAlgebra.IrreducibleModule.exists_weylDot_eq_of_add_eq_weylDot` for antidominant integral
+weights, and by its non-integral counterpart. -/
+theorem exists_translation_verma_filtration_of_forall {lam μ ν : Dual K H}
     (hν : P.IsDominantIntegral ν) {z : Dual K H ≃ₗ[K] Dual K H}
     (hz : z ∈ P.weylGroup hA.isGeneralizedCartan) (hzν : z (lam - μ) = ν)
-    (w : P.weylGroup hA.isGeneralizedCartan) :
+    (w : P.weylGroup hA.isGeneralizedCartan)
+    (hkey : ∀ ν' : Dual K H, weightSpace P (IrreducibleModule P ν) ν' ≠ ⊥ →
+      ∀ y : P.weylGroup hA.isGeneralizedCartan,
+        P.weylDot hA.isGeneralizedCartan w μ + ν' = P.weylDot hA.isGeneralizedCartan y lam →
+        ∃ w' : P.weylGroup hA.isGeneralizedCartan, P.weylDot hA.isGeneralizedCartan w' μ = μ ∧
+          P.weylDot hA.isGeneralizedCartan y lam =
+            P.weylDot hA.isGeneralizedCartan (w * w') lam) :
     ∃ (n : ℕ) (F : Fin (n + 1) → LieSubmodule K 𝔤
         (VermaModule P (P.weylDot hA.isGeneralizedCartan w μ) ⊗[K] IrreducibleModule P ν))
       (x : Fin n → Dual K H) (S : Set (Fin n)),
@@ -508,7 +511,7 @@ theorem exists_translation_verma_filtration {lam μ ν : Dual K H}
       simp only [weylDot]
       abel
     obtain ⟨w', hw', he⟩ :=
-      IrreducibleModule.exists_weylDot_eq_of_add_eq_weylDot hA hlam hμ hν hz hzν hwtj h
+      hkey _ hwtj _ h
     exact ⟨w', hw', h.trans he⟩
   · -- injective
     intro j hj j' hj' hjj'
@@ -527,7 +530,7 @@ theorem exists_translation_verma_filtration {lam μ ν : Dual K H}
       simp only [weylDot]
       abel
     obtain ⟨w', hw', he⟩ :=
-      IrreducibleModule.exists_weylDot_eq_of_add_eq_weylDot hA hlam hμ hν hz hzν hwtj h
+      hkey _ hwtj _ h
     have hmult : finrank K (weightSpace P (IrreducibleModule P ν) (wt j)) = 1 := by
       have hwtj' : wt j = P.weylDot hA' (w * w') lam - P.weylDot hA' w μ := by
         rw [← he, ← h]; abel
@@ -555,17 +558,18 @@ theorem exists_translation_verma_filtration {lam μ ν : Dual K H}
     rw [hjwt, add_sub_cancel]
 
 include hA in
-/-- **Translation out of a facet closure, on characters** (integral weights, finite type;
-Humphreys, GSM 94, Theorem 7.12). Under the hypotheses of `exists_translation_verma_filtration`,
-`ch T_μ^λ M(w·μ) = Σ_y ch M(y)`, `y` running over the finitely many weights `(w w')·λ` with `w'` in
-the stabilizer `W_μ°` of `μ`, each counted once (i.e. over `w' ∈ W_μ°/W_λ°`). The facet condition
-of the source is not needed. -/
-theorem character_translation_verma {lam μ ν : Dual K H}
-    (hlam : ∀ i, ∃ n : ℕ, (lam + P.rho) (P.coroot i) = -n)
-    (hμ : ∀ i, ∃ n : ℕ, (μ + P.rho) (P.coroot i) = -n)
+/-- **Translation out of a facet closure on characters, general form**: the character version of
+`exists_translation_verma_filtration_of_forall`, under the same hypothesis `hkey`. -/
+theorem character_translation_verma_of_forall {lam μ ν : Dual K H}
     (hν : P.IsDominantIntegral ν) {z : Dual K H ≃ₗ[K] Dual K H}
     (hz : z ∈ P.weylGroup hA.isGeneralizedCartan) (hzν : z (lam - μ) = ν)
-    (w : P.weylGroup hA.isGeneralizedCartan) :
+    (w : P.weylGroup hA.isGeneralizedCartan)
+    (hkey : ∀ ν' : Dual K H, weightSpace P (IrreducibleModule P ν) ν' ≠ ⊥ →
+      ∀ y : P.weylGroup hA.isGeneralizedCartan,
+        P.weylDot hA.isGeneralizedCartan w μ + ν' = P.weylDot hA.isGeneralizedCartan y lam →
+        ∃ w' : P.weylGroup hA.isGeneralizedCartan, P.weylDot hA.isGeneralizedCartan w' μ = μ ∧
+          P.weylDot hA.isGeneralizedCartan y lam =
+            P.weylDot hA.isGeneralizedCartan (w * w') lam) :
     ∃ T : Finset (Dual K H), (T : Set (Dual K H)) = {y | ∃ w' : P.weylGroup hA.isGeneralizedCartan,
         P.weylDot hA.isGeneralizedCartan w' μ = μ ∧
           y = P.weylDot hA.isGeneralizedCartan (w * w') lam} ∧
@@ -575,7 +579,7 @@ theorem character_translation_verma {lam μ ν : Dual K H}
         ∑ y ∈ T, (VermaModule.isCategoryO P y).character := by
   classical
   obtain ⟨n, F, x, S, hmono, hF0, hFlast, hiso, hzero, hbij⟩ :=
-    exists_translation_verma_filtration hA hlam hμ hν hz hzν w
+    exists_translation_verma_filtration_of_forall hA hν hz hzν w hkey
   set S' : Finset (Fin n) := Finset.univ.filter (· ∈ S)
   have hS' : (S' : Set (Fin n)) = S := by ext; simp [S']
   refine ⟨S'.image x, by rw [Finset.coe_image, hS', hbij.image_eq], ?_⟩
@@ -593,6 +597,58 @@ theorem character_translation_verma {lam μ ν : Dual K H}
     rw [finrank_weightSpaceOfMap_equiv P e]
   · rw [hzero j hj, finrank_weightSpaceOfMap_lieSubmodule]
     simp
+
+include hA in
+/-- **Translation out of a facet closure** (integral weights, finite type; Humphreys, GSM 94,
+Theorem 7.12, in the form of standard filtrations). Let `λ + ρ`, `μ + ρ` be antidominant integral
+and `ν = z (λ - μ)`, `z ∈ W`, dominant. For `w ∈ W`, the `χ_λ`-block of `M(w·μ) ⊗ L(ν)` (that
+is, `T_μ^λ M(w·μ)`) has a filtration `0 = F₀ ≤ ⋯ ≤ Fₙ` whose successive quotients are `0` or
+Verma modules, and the Verma modules occurring are the `M((w w')·λ)`, `w'` running over the
+stabilizer `W_μ°` of `μ` modulo that of `λ`, each exactly once: the map `j ↦ xⱼ` from the nonzero
+steps to the weights `(w w')·λ` is a bijection. The character form is
+`character_translation_verma`. The facet condition of the source is not needed. -/
+theorem exists_translation_verma_filtration {lam μ ν : Dual K H}
+    (hlam : ∀ i, ∃ n : ℕ, (lam + P.rho) (P.coroot i) = -n)
+    (hμ : ∀ i, ∃ n : ℕ, (μ + P.rho) (P.coroot i) = -n)
+    (hν : P.IsDominantIntegral ν) {z : Dual K H ≃ₗ[K] Dual K H}
+    (hz : z ∈ P.weylGroup hA.isGeneralizedCartan) (hzν : z (lam - μ) = ν)
+    (w : P.weylGroup hA.isGeneralizedCartan) :
+    ∃ (n : ℕ) (F : Fin (n + 1) → LieSubmodule K 𝔤
+        (VermaModule P (P.weylDot hA.isGeneralizedCartan w μ) ⊗[K] IrreducibleModule P ν))
+      (x : Fin n → Dual K H) (S : Set (Fin n)),
+      Monotone F ∧ F 0 = ⊥ ∧
+      F (Fin.last n) = centralBlock P (VermaModule P (P.weylDot hA.isGeneralizedCartan w μ) ⊗[K]
+        IrreducibleModule P ν) (centralCharacter P lam) ∧
+      (∀ j ∈ S, Nonempty (VermaModule P (x j) ≃ₗ⁅K,𝔤⁆
+        (F j.succ).map (LieSubmodule.Quotient.mk' (F j.castSucc)))) ∧
+      (∀ j ∉ S, (F j.succ).map (LieSubmodule.Quotient.mk' (F j.castSucc)) = ⊥) ∧
+      Set.BijOn x S {y | ∃ w' : P.weylGroup hA.isGeneralizedCartan,
+        P.weylDot hA.isGeneralizedCartan w' μ = μ ∧
+          y = P.weylDot hA.isGeneralizedCartan (w * w') lam} :=
+  exists_translation_verma_filtration_of_forall hA hν hz hzν w fun _ hν' _ h ↦
+    IrreducibleModule.exists_weylDot_eq_of_add_eq_weylDot hA hlam hμ hν hz hzν hν' h
+
+include hA in
+/-- **Translation out of a facet closure, on characters** (integral weights, finite type;
+Humphreys, GSM 94, Theorem 7.12). Under the hypotheses of `exists_translation_verma_filtration`,
+`ch T_μ^λ M(w·μ) = Σ_y ch M(y)`, `y` running over the finitely many weights `(w w')·λ` with `w'` in
+the stabilizer `W_μ°` of `μ`, each counted once (i.e. over `w' ∈ W_μ°/W_λ°`). The facet condition
+of the source is not needed. -/
+theorem character_translation_verma {lam μ ν : Dual K H}
+    (hlam : ∀ i, ∃ n : ℕ, (lam + P.rho) (P.coroot i) = -n)
+    (hμ : ∀ i, ∃ n : ℕ, (μ + P.rho) (P.coroot i) = -n)
+    (hν : P.IsDominantIntegral ν) {z : Dual K H ≃ₗ[K] Dual K H}
+    (hz : z ∈ P.weylGroup hA.isGeneralizedCartan) (hzν : z (lam - μ) = ν)
+    (w : P.weylGroup hA.isGeneralizedCartan) :
+    ∃ T : Finset (Dual K H), (T : Set (Dual K H)) = {y | ∃ w' : P.weylGroup hA.isGeneralizedCartan,
+        P.weylDot hA.isGeneralizedCartan w' μ = μ ∧
+          y = P.weylDot hA.isGeneralizedCartan (w * w') lam} ∧
+      (((VermaModule.isCategoryO P (P.weylDot hA.isGeneralizedCartan w μ)).tensorProduct
+          (IrreducibleModule.isCategoryO P ν)).lieSubmodule
+          (centralBlock P _ (centralCharacter P lam))).character =
+        ∑ y ∈ T, (VermaModule.isCategoryO P y).character :=
+  character_translation_verma_of_forall hA hν hz hzν w fun _ hν' _ h ↦
+    IrreducibleModule.exists_weylDot_eq_of_add_eq_weylDot hA hlam hμ hν hz hzν hν' h
 
 end KacMoodyAlgebra
 
