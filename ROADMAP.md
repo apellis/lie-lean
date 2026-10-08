@@ -1768,7 +1768,11 @@ of quantum integers and binomials at `q = 0` (`isOnePow_qInt`, `isOnePow_qBinomi
 product of two strings `uᵢ = F^{(i)}η`, `vⱼ = F^{(j)}ζ`, the primitive vectors `w_s`
 (`tensor_E_tensorHigh`) and `F`-killed vectors `z_s` (`tensor_F_tensorLow`), with
 `F^{(r)} w_s ≡ u_r ⊗ v_s` (`r ≤ a - s`) and `E^{(t)} z_s ≡ u_{a-s} ⊗ v_{b-t}` (`t ≤ b - s`) modulo `ϖ`
-(`tensor_dF_tensorHigh_sub`, `tensor_dE_tensorLow_sub`; our own computation). Note: with the library's
+(`tensor_dF_tensorHigh_sub`, `tensor_dE_tensorLow_sub`; our own computation).
+`CrystalBasis/TensorRule.lean`: `F^{(a+b-2s)} w_s = e z_s` with `e ∈ 1 + ϖA`
+(`exists_tensor_dF_tensorHigh_top`, `isOnePow_of_tensor_dF_tensorHigh_top`), hence the whole string
+`F^{(r)} w_s` reduces modulo `ϖ` to the string of `u₀ ⊗ v_s` in `B(a) ⊗ B(b)` given by the tensor
+rule (`tensor_dF_tensorHigh_sub_tensorIndex`, [HK] (4.12)). Note: with the library's
 (Lusztig's) coproduct, the natural lattices are at `v = ∞` (`c = v⁻¹`).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
