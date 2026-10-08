@@ -529,7 +529,8 @@ modules; surjectivity is stated for category-O modules. These are actual morphis
 not just character equalities. The subsequent full-central projection, facet exclusion and
 translation results below prove the Verma and dual-Verma parts of [HumO] Thm. 7.6 for integral
 weights in finite type over algebraically closed characteristic-zero fields, as is the
-upper-closure criterion Thm. 7.9 for integral weights (below). Non-integral weights remain open.
+upper-closure criterion Thm. 7.9 for integral weights (below). The non-integral case (Lemma 7.5, Thm. 7.6, Prop. 7.7, Thm. 7.9) is proved in
+`KacMoody/TranslationNonintegral.lean` and `KacMoody/TranslationUpperClosureNonintegral.lean` (status section).
 `KacMoody/TensorVerma.lean` proves the actual left-regular enveloping tensor identity over
 any commutative ring, with a Hom-module inverse and both inverse laws. Its PBW specialization
 identifies `U(n₋) ⊗ Z_trivial` with `M(Λ) ⊗ Z`, equivariantly for `n₋`, and constructs
@@ -577,8 +578,9 @@ modules when their central character matches, and zero otherwise; retained weigh
 equal the coefficient weight-space dimensions. Category O is derived from the finite-dimensional
 Cartan-diagonalizable coefficient module. Algebraic closure and characteristic zero are explicit;
 no finite type, dominance, integrality or character separation is assumed. The projected chain
-retains zero steps and is monotone, not asserted strict. Facet exclusion, classification and dual
-compatibility for the translation theorem remain open.
+retains zero steps and is monotone, not asserted strict. Facet exclusion, central-character
+classification and dual compatibility for the translation theorem are proved below
+(`KacMoody/TranslationFacet.lean`, `VermaModule.centralCharacter_eq_iff`, `KacMoody/TranslationDuality.lean`).
 `KacMoody/HarishChandra.lean` constructs the actual weight-independent PBW projection to
 `SymmetricAlgebra K H`. Its unshifted evaluation at every weight is the actual highest-vector
 coefficient; on the full enveloping centre it recovers the Verma central character. Polynomial
@@ -591,8 +593,9 @@ single-integral-coroot reflection identity without requiring all weight pairings
 The unshifted HC polynomial is dot-reflection invariant; translation by negative rho gives
 ordinary reflection-invariant polynomials and all-Weyl evaluation invariance. No additional
 finite-type, symmetrization, algebraic-closure or Cartan-dimension hypothesis is added beyond
-the supplied characteristic-zero GCM realization. HC image/isomorphism and converse finite-type
-character separation remain open; invariance alone does not prove classification.
+the supplied characteristic-zero GCM realization. Invariance alone does not prove classification; the
+finite-type HC isomorphism and character separation are proved below (`shiftedHarishChandraEquiv`,
+`VermaModule.centralCharacter_eq_iff`).
 `KacMoody/HarishChandraSymmetrization.lean` constructs factorial-normalized degreewise
 symmetrization from Mathlib's symmetric tensor quotient into the actual enveloping algebra.
 It intertwines diagonal infinitesimal adjoint operators with commutators and sends invariant
@@ -622,7 +625,8 @@ exact zero correction in degree zero, so the actual negative-rho shifted HC has 
 top symbol. The same invariant-homogeneous central lift now has its shifted HC leading
 term identified. No extra dimension hypothesis is added beyond the supplied `Realization`
 and its `finrank_add_rank` constraint. Chevalley extension is now proved below; HC image/injectivity
-and character separation remain open. Graded compatibility alone is not the HC isomorphism.
+and character separation are proved below (`shiftedHarishChandraEquiv`,
+`VermaModule.centralCharacter_eq_iff`). Graded compatibility alone is not the HC isomorphism.
 `KacMoody/ChevalleyInvariance.lean` proves that actual infinitesimal invariant symbols
 restrict to Weyl-invariant Cartan symbols in all degrees. In finite type it derives full
 and Cartan Killing nondegeneracy and the adjoint/coadjoint identification, including the
@@ -630,8 +634,8 @@ contragredient sign and the commuting restriction diagram. Literal coordinate-po
 restriction therefore lands in polynomials fixed by every actual Weyl element. This is
 the invariance direction of [Etingof, Lecture 10, Thm. 10.1], reconstructed through the
 independently proved central lift and graded HC; no circular extension or image premise.
-Chevalley extension and restriction injectivity are completed below. HC image/isomorphism and
-character separation remain open.
+Chevalley extension and restriction injectivity are completed below, as are the HC isomorphism
+(`shiftedHarishChandraEquiv`) and character separation (`VermaModule.centralCharacter_eq_iff`).
 `KacMoody/TracePower.lean` constructs genuine invariant homogeneous coordinate polynomials
 `Tr(ρ(x)^n)` for actual finite-dimensional Lie modules. Literal Cartan restriction equals
 the power sum weighted by actual weight-space dimensions, with finite support proved.
@@ -1915,8 +1919,8 @@ completed steps and continuation threads are:
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
 - Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
-  `Hecke/KazhdanLusztig/Canonical.lean`; the PBW basis is proved for `A₂` and `B₂`,
-  `a2PBWBasis`, `b2PBWBasis`, and the root vectors along reduced words lie in `U⁺` in every rank
+  `Hecke/KazhdanLusztig/Canonical.lean`; the PBW basis is proved in every finite type,
+  `finiteTypePBWBasis` (below; rank two: `a2PBWBasis`, `b2PBWBasis`), and the root vectors along reduced words lie in `U⁺` in every rank
   with rank-two subdiagrams of finite type, `rootVector_mem_adjoin_of_isReduced`).
   `PBW/RootVectorWeights.lean` proves the conjugation-character formula for actual braid root
   vectors along every word (`rootVector_conj_of_not_root`), over any field at a nonzero parameter
@@ -2044,8 +2048,7 @@ completed steps and continuation threads are:
   Hence `finiteTypePBWBasis`, `finiteTypeNegativePBWBasis`, `finiteTypeFullPBWBasis` (bases of
   `U⁺`, `U⁻`, `U`) no longer assume characteristic zero or a transcendental parameter.
   Other later targets:
-  infinite-dimensional extensions of quantum `sl₂` classification, non-integral translation
-  (Humphreys O Thm. 7.9 for non-integral weights),
+  infinite-dimensional extensions of quantum `sl₂` classification
   and valid restricted extensions of the Hom dimension bound.
   Finite-dimensional exhaustion and parameter uniqueness are proved for both signs at generic
   parameter. The unrestricted Verma Hom dimension bound is false
