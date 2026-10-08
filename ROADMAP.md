@@ -804,7 +804,11 @@ semisimplicity of `T_λ^μ T_μ^λ L(w·μ)`) and the vanishing part of (f)
 `T_μ^λ X`, `X ≅ T_λ^μ V`): `wallCrossing_verma_shortExact` (`0 → M(ws·λ) → Θ_s M(w·λ) → M(w·λ) → 0`
 for `wα > 0`, §7.16 step (3)), `wallCrossing_irreducible_of_isPosRoot` (`Θ_s L(w·λ) ≅ T_μ^λ L(w·μ)`),
 `wallCrossing_irreducible_of_not_isPosRoot` (`Θ_s L(w·λ) = 0` for `w ∈ W_[λ]`, `wα < 0`).
-Remaining: self-duality in 7.14 (c) (needs `L(x)^∨ ≅ L(x)`), 7.14 (g) (needs `Ext` in `𝒪`), the
+**Self-duality** (`KacMoody/TranslationSelfDual.lean`): `IrreducibleModule.equivRestrictedDual`
+(`L(Λ) ≅ L(Λ)^∨` via the contravariant form, every `Λ`, Humphreys GSM 94 §3.2) and
+`nonempty_equiv_restrictedDual_centralTranslation` (`T L(Λ) ≅ (T L(Λ))^∨` for every translation
+functor `T = pr_{χ₂}(pr_{χ₁}(−) ⊗ L(ν))`), completing 7.14 (c).
+Remaining: 7.14 (g) (needs `Ext` in `𝒪`), the
 adjunction morphism `M → Θ_s M` and shuffling functors, and the independence of `Θ_s` from `μ`
 (projective functors). Remaining: the equivalence of blocks as a natural
 isomorphism of functors (only its values on Verma and simple modules are proved).
