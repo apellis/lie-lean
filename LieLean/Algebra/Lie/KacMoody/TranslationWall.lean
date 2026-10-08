@@ -247,42 +247,17 @@ theorem exists_of_two_steps {n : ℕ} (F : Fin (n + 1) → LieSubmodule K 𝔤 X
 
 end TwoStep
 
-/-! ### Translation from a wall -/
+section RootLemmas
 
-section Wall
-
-variable {ι H : Type*} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K]
+variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K]
   [AddCommGroup H] [Module K H] [FiniteDimensional K H]
   {A : Matrix ι ι ℤ} {P : Realization A K H} (hA : A.IsFiniteCartan)
-
-local notation "𝔤" => KacMoodyAlgebra P
-
-open VermaModule
-
-omit [CharZero K] [FiniteDimensional K H] in
-include hA in
-/-- If `ν = z (λ - μ)` is integral (`z ∈ W`), then so is `λ - μ`. -/
-lemma integral_sub_of_apply_eq {lam μ ν : Dual K H} (hν : P.IsDominantIntegral ν)
-    {z : Dual K H ≃ₗ[K] Dual K H} (hz : z ∈ P.weylGroup hA.isGeneralizedCartan)
-    (hzν : z (lam - μ) = ν) :
-    ∀ j, ∃ n : ℤ, ((lam + P.rho) - (μ + P.rho)) (P.coroot j) = n := by
-  have hνint : ∀ i, ∃ n : ℤ, ν (P.coroot i) = n := fun i ↦ by
-    obtain ⟨n, hn⟩ := hν i; exact ⟨n, by rw [hn, Int.cast_natCast]⟩
-  intro j
-  obtain ⟨k, hk⟩ := P.exists_apply_eq_add_rootOf hA.isGeneralizedCartan (inv_mem hz) hνint
-  obtain ⟨n, hn⟩ := hνint j
-  have e : (lam + P.rho) - (μ + P.rho) = z⁻¹ ν := by
-    rw [add_sub_add_right_eq_sub, ← hzν]
-    exact (z.symm_apply_apply _).symm
-  refine ⟨n + (A *ᵥ k) j, ?_⟩
-  rw [e, hk, LinearMap.add_apply, hn, rootOf_apply_coroot]
-  push_cast
-  ring
 
 include hA in
 /-- In finite type the coroot of a real root is determined by the root: if `v' αᵢ' = v αᵢ`, then
 `⟨x, (v' αᵢ')^∨⟩ = ⟨x, (v αᵢ)^∨⟩` (both equal `2 (x | β) / (β | β)` for a `W`-invariant form). -/
-lemma corootPairing_eq_of_apply_root_eq {v v' : P.weylGroup hA.isGeneralizedCartan} {i i' : ι}
+lemma _root_.Matrix.Realization.corootPairing_eq_of_apply_root_eq
+    {v v' : P.weylGroup hA.isGeneralizedCartan} {i i' : ι}
     (h : (v' : Dual K H ≃ₗ[K] Dual K H) (P.root i') = (v : Dual K H ≃ₗ[K] Dual K H) (P.root i))
     (x : Dual K H) :
     P.corootPairing hA.isGeneralizedCartan x v' i' =
@@ -320,7 +295,8 @@ lemma corootPairing_eq_of_apply_root_eq {v v' : P.weylGroup hA.isGeneralizedCart
 
 include hA in
 /-- The reflection in a real root only depends on the root up to sign. -/
-lemma reflectionOf_eq_of_apply_root_eq {v v' : P.weylGroup hA.isGeneralizedCartan} {i i' : ι}
+lemma _root_.Matrix.Realization.reflectionOf_eq_of_apply_root_eq
+    {v v' : P.weylGroup hA.isGeneralizedCartan} {i i' : ι}
     (h : (v' : Dual K H ≃ₗ[K] Dual K H) (P.root i') = (v : Dual K H ≃ₗ[K] Dual K H) (P.root i) ∨
       (v' : Dual K H ≃ₗ[K] Dual K H) (P.root i') = -(v : Dual K H ≃ₗ[K] Dual K H) (P.root i)) :
     P.reflectionOf hA.isGeneralizedCartan v' i' = P.reflectionOf hA.isGeneralizedCartan v i := by
@@ -335,6 +311,40 @@ lemma reflectionOf_eq_of_apply_root_eq {v v' : P.weylGroup hA.isGeneralizedCarta
     rw [reflectionOf_apply', reflectionOf_apply', ← corootPairing_eq_of_apply_root_eq hA h',
       corootPairing_mul_simple, h]
     module
+
+end RootLemmas
+
+/-! ### Translation from a wall -/
+
+section Wall
+
+variable {ι H : Type*} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K]
+  [AddCommGroup H] [Module K H] [FiniteDimensional K H]
+  {A : Matrix ι ι ℤ} {P : Realization A K H} (hA : A.IsFiniteCartan)
+
+local notation "𝔤" => KacMoodyAlgebra P
+
+open VermaModule
+
+omit [CharZero K] [FiniteDimensional K H] in
+include hA in
+/-- If `ν = z (λ - μ)` is integral (`z ∈ W`), then so is `λ - μ`. -/
+lemma integral_sub_of_apply_eq {lam μ ν : Dual K H} (hν : P.IsDominantIntegral ν)
+    {z : Dual K H ≃ₗ[K] Dual K H} (hz : z ∈ P.weylGroup hA.isGeneralizedCartan)
+    (hzν : z (lam - μ) = ν) :
+    ∀ j, ∃ n : ℤ, ((lam + P.rho) - (μ + P.rho)) (P.coroot j) = n := by
+  have hνint : ∀ i, ∃ n : ℤ, ν (P.coroot i) = n := fun i ↦ by
+    obtain ⟨n, hn⟩ := hν i; exact ⟨n, by rw [hn, Int.cast_natCast]⟩
+  intro j
+  obtain ⟨k, hk⟩ := P.exists_apply_eq_add_rootOf hA.isGeneralizedCartan (inv_mem hz) hνint
+  obtain ⟨n, hn⟩ := hνint j
+  have e : (lam + P.rho) - (μ + P.rho) = z⁻¹ ν := by
+    rw [add_sub_add_right_eq_sub, ← hzν]
+    exact (z.symm_apply_apply _).symm
+  refine ⟨n + (A *ᵥ k) j, ?_⟩
+  rw [e, hk, LinearMap.add_apply, hn, rootOf_apply_coroot]
+  push_cast
+  ring
 
 omit [FiniteDimensional K H] in
 include hA in
