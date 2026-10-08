@@ -75,7 +75,8 @@ Further proved results include:
   `translation_irreducible_of_isAntidominant`), as does translation out of a facet closure
   (Thm. 7.12, `character_translation_verma_of_isAntidominant`) and the short exact sequence of
   translation from a wall (Thm. 7.14 (a), `translation_verma_shortExact_of_isAntidominant`), with
-  the head of `T_μ^λ M(w·μ)` and the head and socle of `T_μ^λ L(w·μ)` (Thm. 7.14 (b), (c)), and
+  the head of `T_μ^λ M(w·μ)`, and the self-duality, head and socle of `T_μ^λ L(w·μ)` (Thm. 7.14 (b),
+  (c); `L(Λ) ≅ L(Λ)^∨`, `IrreducibleModule.equivRestrictedDual`), and
   `ch T_λ^μ T_μ^λ M = |W_μ°/W_λ°| ch M` (Cor. 7.12, `character_translation_translation`), with
   `[T_μ^λ L(w·μ) : L(w·λ)] = 2` on a wall (Thm. 7.14 (d), `multiplicity_translation_irreducible_wall`),
   `[T_μ^λ L(w·μ) : L(ws·λ)] = 1` (Thm. 7.14 (e)), and wall-crossing functors on Verma and simple
