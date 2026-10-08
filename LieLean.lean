@@ -243,6 +243,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.CrystalBase
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integrable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.KashiwaraOperators
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Lattice
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Sl2
 import LieLean.Algebra.QuantumGroup.CrystalBasis.StringCounts
 import LieLean.Algebra.QuantumGroup.Faithful
 import LieLean.Algebra.QuantumGroup.GabberKac

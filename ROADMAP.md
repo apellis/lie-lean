@@ -1754,8 +1754,14 @@ basis `B` of the `A/cA`-module `L/cL` of classes of weight vectors with `ẽᵢB
 `f̃ᵢ b = b' ↔ ẽᵢ b' = b`), the crystal `IsCrystalBase.crystal` over
 `LusztigCartanDatum.RootDatum.crystalDatum` (for `c` not a unit; weights unique, `IsCrystalBase.wt_eq`),
 and `isSeminormal_crystal` ([HK] (4.9), (4.10), Prop. 4.2.11). Any commutative ring `A` and
-`c ∈ A` (Kashiwara: `A₀ ⊆ ℚ(q)`, `c = q`). The `𝔰𝔩₂` theory, direct sums, the tensor product rule
-and the grand loop are the next steps (tracking issue #34).
+`c ∈ A` (Kashiwara: `A₀ ⊆ ℚ(q)`, `c = q`). `CrystalBasis/Sl2.lean`: crystal bases at one colour
+(`IntegrableSl2.IsCrystalBase`), restriction of crystal bases of `U`-modules to every `nodeSl2`
+(`IsCrystalBase.isCrystalBase_nodeSl2`), string bases (`linearIndependent_dF`, `span_dF`: the
+`F^{(j)} ηₜ` form a basis of `M` when the `ηₜ` form bases of the primitive spaces) and existence
+of crystal bases of every integrable `U_q(𝔰𝔩₂)`-module (`isCrystalBase_stringLattice`, `A ⊆ k`,
+`c` not a unit; [HK] Thm. 4.3.1 for finite-dimensional modules). Uniqueness, the tensor product
+rule and the grand loop are the next steps (tracking issue #34). Note: with the library's
+(Lusztig's) coproduct, the natural lattices are at `v = ∞` (`c = v⁻¹`).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
