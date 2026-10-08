@@ -320,6 +320,7 @@ import LieLean.Algebra.QuantumGroup.Sl2.Classification.Uniqueness
 import LieLean.Algebra.QuantumGroup.Sl2.SimpleModule
 import LieLean.Algebra.QuantumGroup.Sl2.CrystalLattice
 import LieLean.Algebra.QuantumGroup.Sl2.GlobalBasis
+import LieLean.Algebra.QuantumGroup.TensorModule
 import LieLean.Algebra.QuantumGroup.Triangular
 import LieLean.Algebra.QuantumGroup.TriangularDecomposition
 import LieLean.Algebra.QuantumGroup.TriangularRep
