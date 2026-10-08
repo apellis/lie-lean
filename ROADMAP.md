@@ -796,8 +796,9 @@ the Verma case and induction over the linkage class
 2 ch L(w·μ)`), Thm. 7.14 (d) (`multiplicity_translation_irreducible_wall`:
 `[T_μ^λ L(w·μ) : L(w·λ)] = 2`, from the multiplicity formula and Thm. 7.9, without the
 semisimplicity of `T_λ^μ T_μ^λ L(w·μ)`) and the vanishing part of (f)
-(`translation_irreducible_eq_zero_of_multiplicity_ne_zero`). Self-duality in (c), (e), the order
-part of (f), (g) and wall-crossing (§7.15) remain open. Remaining: the equivalence of blocks as a natural
+(`translation_irreducible_eq_zero_of_multiplicity_ne_zero`) and order part of (f)
+(`weylDot_mul_reflectionOf_lt_of_multiplicity_ne_zero`, for all `x ∈ W`). Self-duality in (c),
+(e), (g) and wall-crossing (§7.15) remain open. Remaining: the equivalence of blocks as a natural
 isomorphism of functors (only its values on Verma and simple modules are proved).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with

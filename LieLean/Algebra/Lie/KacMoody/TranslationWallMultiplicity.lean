@@ -20,7 +20,9 @@ In the setting of Humphreys, GSM 94, §7.14 (`λ`, `μ` antidominant, `μ♮` on
   `[T_μ^λ L(w·μ) : L(w·λ)] = 2` (Theorem 7.14 (d));
 * `Matrix.Realization.KacMoodyAlgebra.translation_irreducible_eq_zero_of_multiplicity_ne_zero`:
   `T_λ^μ L(η) = 0` for every other composition factor `L(η)` of `T_μ^λ L(w·μ)` (Theorem 7.14 (f),
-  second assertion).
+  second assertion);
+* `Matrix.Realization.KacMoodyAlgebra.weylDot_mul_reflectionOf_lt_of_multiplicity_ne_zero`:
+  such factors `L(x·λ)` satisfy `xs·λ < x·λ` (Theorem 7.14 (f), first assertion).
 
 ## Proof of (d)
 
@@ -348,5 +350,86 @@ theorem translation_irreducible_eq_zero_of_multiplicity_ne_zero {lam μ ν ν' :
   · have hl0 : l y = 0 := (hl y).trans (ite_eq_right hy)
     have h3 := hsum.symm.trans (by rw [hl0])
     exact hpos.ne' (Nat.add_eq_zero_iff.mp h3).1
+
+include hA in
+/-- **The other composition factors of `T_μ^λ L(w·μ)` lie below their `s`-reflections**
+(Humphreys, GSM 94, Theorem 7.14 (f), first assertion, arbitrary weights). Under the hypotheses
+of `multiplicity_translation_irreducible_wall`, if `x·λ ≠ w·λ` and
+`[T_μ^λ L(w·μ) : L(x·λ)] ≠ 0` (`x ∈ W`), then `xs·λ < x·λ`, `s = s_α`. Humphreys assumes
+`x ∈ W_[λ]`. -/
+theorem weylDot_mul_reflectionOf_lt_of_multiplicity_ne_zero {lam μ ν : Dual K H}
+    (hlam : P.IsAntidominant hA.isGeneralizedCartan lam)
+    (hμ : P.IsAntidominant hA.isGeneralizedCartan μ)
+    (hfacet : ∀ v i, P.IsPosRoot hA.isGeneralizedCartan v i →
+      P.corootPairing hA.isGeneralizedCartan (lam + P.rho) v i = 0 →
+        P.corootPairing hA.isGeneralizedCartan (μ + P.rho) v i = 0)
+    (hν : P.IsDominantIntegral ν) {z : Dual K H ≃ₗ[K] Dual K H}
+    (hz : z ∈ P.weylGroup hA.isGeneralizedCartan) (hzν : z (lam - μ) = ν)
+    {v : P.weylGroup hA.isGeneralizedCartan} {i : ι} (hv : P.IsPosRoot hA.isGeneralizedCartan v i)
+    (hμα : P.corootPairing hA.isGeneralizedCartan (μ + P.rho) v i = 0)
+    (hwall : ∀ v' i', P.corootPairing hA.isGeneralizedCartan (μ + P.rho) v' i' = 0 →
+      (v' : Dual K H ≃ₗ[K] Dual K H) (P.root i') = (v : Dual K H ≃ₗ[K] Dual K H) (P.root i) ∨
+        (v' : Dual K H ≃ₗ[K] Dual K H) (P.root i') = -(v : Dual K H ≃ₗ[K] Dual K H) (P.root i))
+    (hlamα : P.corootPairing hA.isGeneralizedCartan (lam + P.rho) v i ≠ 0)
+    {w : P.weylGroup hA.isGeneralizedCartan} (hw : P.IsPosRoot hA.isGeneralizedCartan (w * v) i)
+    (hwint : w ∈ P.integralWeylGroup hA.isGeneralizedCartan lam)
+    (x : P.weylGroup hA.isGeneralizedCartan)
+    (hxw : P.weylDot hA.isGeneralizedCartan x lam ≠ P.weylDot hA.isGeneralizedCartan w lam)
+    (hη : ((IrreducibleModule.isCategoryO P
+        (P.weylDot hA.isGeneralizedCartan w μ)).centralTranslation P
+          (IrreducibleModule.isCategoryO P ν) (centralCharacter P μ)
+            (centralCharacter P lam)).multiplicity (P.weylDot hA.isGeneralizedCartan x lam) ≠ 0) :
+    P.weylDot hA.isGeneralizedCartan (x * P.reflectionOf hA.isGeneralizedCartan v i) lam ∈
+        cone P (P.weylDot hA.isGeneralizedCartan x lam) ∧
+      P.weylDot hA.isGeneralizedCartan (x * P.reflectionOf hA.isGeneralizedCartan v i) lam ≠
+        P.weylDot hA.isGeneralizedCartan x lam := by
+  have hA' := hA.isGeneralizedCartan
+  obtain ⟨z', hz', hν', -⟩ := IrreducibleModule.exists_equiv_dual P hA hν
+  have hzz : z' * z ∈ P.weylGroup hA' := mul_mem hz' hz
+  have hzν' : (z' * z) (μ - lam) = z' (-ν) := by
+    change z' (z (μ - lam)) = z' (-ν)
+    rw [← hzν, ← map_neg, neg_sub]
+  -- `T_λ^μ L(x·λ) = 0`, so `x·μ` is not in the upper closure of the facet of `x·λ`
+  have hsub := translation_irreducible_eq_zero_of_multiplicity_ne_zero P hA hlam hμ hfacet hν hz
+    hzν hν' hzz hzν' hv hμα hwall hlamα hw hwint hxw hη
+  have hnot : ¬P.MemUpperClosure hA' (P.weylDot hA' x lam) (P.weylDot hA' x μ) := by
+    intro hU
+    obtain ⟨e⟩ := translation_irreducible_of_memUpperClosure_of_isAntidominant P hA hlam hμ hfacet
+      hν' hzz hzν' x hU
+    exact IrreducibleModule.hwv_ne_zero P _ ((LinearEquiv.map_eq_zero_iff e.toLinearEquiv).mp
+      (Subsingleton.elim _ _))
+  have hint := sub_rho_integral P hA hν' hzz hzν'
+  have hnotU : ¬P.UpperClosureCondition hA' (x.val (lam + P.rho)) (x.val (μ + P.rho)) :=
+    fun hU ↦ hnot ((memUpperClosure_weylDot_iff_of_isAntidominant hA hlam hμ hint hfacet x).mpr hU)
+  -- `⟨λ + ρ, α^∨⟩ ∈ ℤ_{<0}` and `x α < 0`
+  obtain ⟨n, hn⟩ := (P.isIntegralRoot_congr _ hint v i).mpr ⟨0, by rw [Int.cast_zero]; exact hμα⟩
+  change P.corootPairing _ (lam + P.rho) v i = n at hn
+  have hn0 : n < 0 := lt_of_le_of_ne (hlam v i hv n hn)
+    (by rintro rfl; exact hlamα (by simp [hn]))
+  have hneg : ¬P.IsPosRoot hA' (x * v) i := fun hp ↦
+    hnotU (upperClosureCondition_of_wall hA hwall hn0 hn hp)
+  obtain ⟨k, hk, hke⟩ := (isPosRoot_or (x * v) i).resolve_left hneg
+  rw [mul_simple_apply_root] at hke
+  have hk0 : k ≠ 0 := by
+    rintro rfl
+    rw [map_zero, neg_eq_zero, LinearEquiv.map_eq_zero_iff] at hke
+    exact P.linearIndependent_root.ne_zero i hke
+  have he : P.weylDot hA' (x * P.reflectionOf hA' v i) lam =
+      P.weylDot hA' x lam - P.rootOf ((-n) • k) := by
+    simp only [weylDot]
+    rw [Subgroup.coe_mul, LinearEquiv.mul_apply, reflectionOf_apply', hn, map_sub, map_smul,
+      ← LinearEquiv.mul_apply, ← Subgroup.coe_mul, ← neg_neg ((((x * v : P.weylGroup hA')) :
+        Dual K H ≃ₗ[K] Dual K H) (P.root i)), hke, map_zsmul, ← Int.cast_smul_eq_zsmul K]
+    push_cast
+    module
+  refine ⟨⟨(-n) • k, smul_nonneg (by omega) hk, he⟩, fun h ↦ ?_⟩
+  rw [he, sub_eq_self] at h
+  have h0 := P.rootOf_injective (h.trans (map_zero _).symm)
+  obtain ⟨j, hj⟩ := Function.ne_iff.mp hk0
+  have := congrFun h0 j
+  simp only [Pi.smul_apply, smul_eq_mul, Pi.zero_apply, mul_eq_zero] at this
+  rcases this with h1 | h1
+  · omega
+  · exact hj h1
 
 end Matrix.Realization.KacMoodyAlgebra
