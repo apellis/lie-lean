@@ -73,7 +73,8 @@ Further proved results include:
   and dual Verma modules (Thm. 7.6) and the zero-or-simple dichotomy (Prop. 7.7) also hold for
   non-integral weights (`translation_verma_of_isAntidominant`,
   `translation_irreducible_of_isAntidominant`), as does translation out of a facet closure
-  (Thm. 7.12, `character_translation_verma_of_isAntidominant`).
+  (Thm. 7.12, `character_translation_verma_of_isAntidominant`) and the short exact sequence of
+  translation from a wall (Thm. 7.14 (a), `translation_verma_shortExact_of_isAntidominant`).
 * **Littelmann paths:** Proposition 5.7, the straight-path concatenation theorem, and the
   isomorphism theorem for rational piecewise-linear dominant paths are proved. The crystal-level
   Littlewood–Richardson decomposition is unconditional over `ℝ` with finite-dimensional Cartan
