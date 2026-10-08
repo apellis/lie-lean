@@ -1856,6 +1856,12 @@ PBW basis). `CrystalBasis/NegativePart.lean`: `U⁻ = 'f ⧸ J` (`NegativePart`)
 Kashiwara operators on `U⁻` (`NegativePart.kashiwaraE`, `kashiwaraF`; `ẽᵢ f̃ᵢ = 1`, homogeneity
 `kashiwaraE_mem_weightSpace`), and `L(∞)`, `B(∞)` (`latticeInf`, `baseInf`) for any
 `A`-algebra structure on `k`.
+`QuantumGroup/ContravariantForm.lean`: Lusztig's anti-automorphism `ρ` ([Lus] 19.1.1; `rho`,
+`rho_mul`, `rho_rho`), contravariant forms (`IsContravariant`, orthogonality of weight spaces),
+the Shapovalov form on `M_q(Λ)` (symmetric via `χ ∘ ρ = χ`, radical `M'_q(Λ)`, unique), the
+nondegenerate symmetric contravariant form on `L_q(Λ)` with `(v_Λ, v_Λ) = 1`, unique
+(`IrreducibleModule.form`, `eq_smul_form_of_isContravariant`; [Lus] Prop. 19.1.2), and tensor
+products of contravariant forms (`TensorModule.isContravariant_form`).
 `CrystalBasis/TensorCrystalEquiv.lean`: Kashiwara's tensor product rule on classes
 (`IntegrableSl2.IsCrystalBase.fTildeQ_tmulQ`, `eTildeQ_tmulQ`; at the `U`-level
 `TensorModule.fQ_tmulL`, `eQ_tmulL`) and **the crystal of `B₁ ⊗ B₂` is the tensor product of
