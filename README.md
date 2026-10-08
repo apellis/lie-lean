@@ -120,8 +120,8 @@ Further proved results include:
   convention. `PBW/RootVectorGeneration` proves that
   the actual root vectors of any longest reduced word generate `U⁺` as an algebra over
   any coefficient field at a nonzero non-root-of-unity parameter. The auxiliary classical
-  realization remains characteristic zero. This is not ordered-monomial spanning:
-  straightening or a parameter-uniform dimension argument is still required.
+  realization remains characteristic zero. Ordered-monomial spanning is proved separately
+  (`PBW/FiniteTypeSpan`, below).
   `PBW/RankTwoA2LocalSpan` proves local ordered spanning for a simple edge inside an
   arbitrary ambient Cartan datum, removing the exact-two-node assumption from this
   spanning step. Both edge orientations span the same two-generator subalgebra, using
