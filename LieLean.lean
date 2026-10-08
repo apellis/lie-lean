@@ -150,6 +150,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationFacetClosure
 import LieLean.Algebra.Lie.KacMoody.TranslationFacetClosureNonintegral
 import LieLean.Algebra.Lie.KacMoody.TranslationVerma
 import LieLean.Algebra.Lie.KacMoody.TranslationWall
+import LieLean.Algebra.Lie.KacMoody.TranslationWallFactor
 import LieLean.Algebra.Lie.KacMoody.TranslationWallHead
 import LieLean.Algebra.Lie.KacMoody.TranslationWallMultiplicity
 import LieLean.Algebra.Lie.KacMoody.TranslationFunctor
