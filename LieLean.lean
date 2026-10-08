@@ -245,6 +245,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.KashiwaraOperators
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Lattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Sl2
 import LieLean.Algebra.QuantumGroup.CrystalBasis.StringCounts
+import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorCrystal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorRule
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorSl2
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorStrings
