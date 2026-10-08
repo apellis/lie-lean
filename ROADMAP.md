@@ -1726,6 +1726,19 @@ then for `R` along `mapHom (freeCorootHom R)` (morphisms of root data intertwine
 `ω Tᵢ ω D_ζ = D_ζ Tᵢ`, `ζᵢ = -vᵢ` (`chevalley_comp_comp_diagHom`, `wordProd_F_outer`). Our own
 argument (Lusztig uses quantum Verma identities and complete reducibility).
 API change: `braidArtinHomOfNotRoot R hD hv'` (in `GeneralArtin`) → `braidArtinHomOfNotRoot R hv'`.
+**Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
+[HK] §4.1): for an integrable `U_q(𝔰𝔩₂)`-module (`IntegrableSl2`, `q` nonzero, not a root of
+unity) the string decomposition `IntegrableSl2.stringEquiv : ⨁_{(n,j)} prim(n+2j) ≃ M`
+(`(ηₙⱼ) ↦ Σ F^{(j)} ηₙⱼ`, summands zero unless `n + j ≥ 0`; uniqueness
+`dF_eq_zero_of_sum_eq_zero`, [HK] Lemma 4.1.1), the Kashiwara operators `eTilde`, `fTilde`
+([HK] Def. 4.1.2) with `ẽ F^{(j+1)} η = F^{(j)} η` (`j < p`), `ẽ η = 0`, `f̃ F^{(j)} η = F^{(j+1)} η`,
+`ẽ Mⁿ ⊆ M^{n+2}`, `f̃ Mⁿ ⊆ M^{n-2}`, naturality (`map_eTilde`, `map_fTilde`; [HK] Prop. 4.1.3 (2)),
+`flip_eTilde` (interchanging `E`, `F` exchanges `ẽ`, `f̃`) and `eTilde_eq_zero_iff`
+(`ẽ m = 0 ↔ E m = 0`). For integrable `U`-modules: `kashiwaraE`, `kashiwaraF` (through
+`nodeSl2`), `ẽᵢ M^Λ ⊆ M^{Λ+αᵢ}`, `f̃ᵢ M^Λ ⊆ M^{Λ-αᵢ}` (`kashiwaraE_mem_weightSpace`,
+`kashiwaraF_mem_weightSpace`; [HK] Prop. 4.1.3 (1)), commutation with `U`-module maps
+(`map_kashiwaraE`, `map_kashiwaraF`). Crystal lattices and bases, the `𝔰𝔩₂` theory, the tensor
+product rule and the grand loop are the next steps (tracking issue #34).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
