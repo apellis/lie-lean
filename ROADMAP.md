@@ -1787,6 +1787,10 @@ unique highest element `h` (`ẽ h = 0`) and `j ≤ ⟨wt h⟩` (`IsCrystalBase.
 `A` local with fraction field `k`, every crystal base is a string lattice:
 `IsCrystalBase.eq_stringLattice` (the `η_h` of each weight form a basis of the primitive vectors
 and `L = span_A {F^{(j)} η_h}`; [HK] Thm. 4.3.2, uniqueness; own proof via Nakayama).
+`CrystalBasis/TensorProductRule.lean`: hence the **tensor product rule for arbitrary crystal bases**
+of finite-dimensional integrable `U_q(𝔰𝔩₂)`-modules (`IsCrystalBase.isCrystalBase_tensor`:
+`L₁ ⊗ L₂ = span_A {x ⊗ y}` (`IsCrystalBase.tensorLattice_eq`) with `B₁ × B₂` is a crystal base of
+`M₁ ⊗ M₂`; [HK] Thm. 4.4.1 for `𝔰𝔩₂`, Kashiwara's coproduct).
 Note: with the library's
 (Lusztig's) coproduct, the natural lattices are at `v = ∞` (`c = v⁻¹`).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
