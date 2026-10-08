@@ -1808,6 +1808,9 @@ same `ẽ`, `f̃` (`IntegrableSl2.inv`, `inv_eTilde`, `inv_fTilde`), and under t
 `x ⊗ y ↦ y ⊗ x` the operators `ẽᵢ`, `f̃ᵢ` of `M₁ ⊗ M₂` (Lusztig's coproduct) are those of
 Kashiwara's tensor product of `M₂`, `M₁` at `vᵢ⁻¹` (`TensorModule.flip_kashiwaraE`,
 `flip_kashiwaraF`).
+`CrystalBasis/Transfer.lean`: crystal bases at one colour are transported along linear
+equivalences matching the gradings and the Kashiwara operators, also between `q` and `q⁻¹`
+(`IntegrableSl2.IsCrystalBase.of_equiv`).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring

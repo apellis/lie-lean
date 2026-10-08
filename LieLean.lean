@@ -254,6 +254,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorProductRule
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorRule
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorSl2
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorStrings
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Transfer
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Valuation
 import LieLean.Algebra.QuantumGroup.Faithful
 import LieLean.Algebra.QuantumGroup.GabberKac
