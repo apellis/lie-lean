@@ -754,7 +754,18 @@ series) and `KacMoody/TranslationUpperClosure.lean`: `translation_irreducible_of
 `nonempty_equiv_translation_irreducible_iff`. The vanishing half replaces Humphreys' Verma
 embedding `M(s_α w·λ) ↪ M(w·λ)` by a Kac–Kazhdan chain and a count in the Grothendieck group
 (reconstructed). Non-integral weights: see the status section (`TranslationNonintegral.lean`,
-`TranslationUpperClosureNonintegral.lean`). Remaining: the equivalence of blocks as a natural
+`TranslationUpperClosureNonintegral.lean`). **Translation out of a facet closure** (Humphreys
+GSM 94 Thm. 7.12, integral weights, finite type, algebraically closed characteristic-zero field;
+`KacMoody/TranslationFacetClosure.lean`): for `λ + ρ`, `μ + ρ` antidominant and `ν` dominant in
+`W(λ - μ)`, `exists_translation_verma_filtration` gives a filtration of `T_μ^λ M(w·μ)` whose
+nonzero steps are the `M((w w')·λ)`, `w' ∈ W_μ°/W_λ°`, each once, and
+`character_translation_verma` gives `ch T_μ^λ M(w·μ) = Σ ch M((w w')·λ)`; the facet-closure
+hypothesis is not needed. The proof determines the surviving weights of `L(ν)` directly
+(`IrreducibleModule.exists_weylDot_eq_of_add_eq_weylDot`, a norm argument minimizing over the
+stabilizer of `μ + ρ`; `finrank_weightSpace_weylDot_sub_weylDot`: they have multiplicity one),
+with additivity of weight multiplicities along filtrations
+(`finrank_inf_weightSpaceOfMap_eq_sum`); reconstructed. Translation from a wall and wall-crossing
+(Thm. 7.14, §7.15) remain open. Remaining: the equivalence of blocks as a natural
 isomorphism of functors (only its values on Verma and simple modules are proved).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
