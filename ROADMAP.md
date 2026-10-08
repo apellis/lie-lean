@@ -784,8 +784,14 @@ vector of weight `ws·λ` lifting the top step is primitive and splits it). With
 (the simple quotients `L(x·λ)` of `T_μ^λ M(w·μ)` are exactly `L(w·λ)`) and the head and socle
 parts of (c) (`exists_hom_translation_irreducible_ne_zero_iff`,
 `exists_hom_irreducible_translation_ne_zero_iff`), by adjunction and Thm. 7.9
-(`translation_irreducible_wall`). Self-duality in (c), (d)–(g) and wall-crossing (§7.15)
-remain open. Remaining: the equivalence of blocks as a natural
+(`translation_irreducible_wall`). **Cor. 7.12** for arbitrary weights
+(`KacMoody/TranslationComposite.lean`): `character_translation_translation`
+(`ch T_λ^μ T_μ^λ M = |W_μ°/W_λ°| ch M` for `M` in the block of `μ`, stated for `T_λ^μ X`,
+`X ≅ T_μ^λ M`), via the multiplicity formula for translation
+(`multiplicity_centralTranslation_eq_finsetSum`, `multiplicity_centralTranslation_of_equiv_eq_sum`),
+the Verma case and induction over the linkage class
+(`multiplicity_translation_translation_irreducible`). Self-duality in (c), (d)–(g) and
+wall-crossing (§7.15) remain open. Remaining: the equivalence of blocks as a natural
 isomorphism of functors (only its values on Verma and simple modules are proved).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
