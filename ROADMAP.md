@@ -1837,6 +1837,12 @@ fraction field `k`, at a non-unit `c` with `ϖ ∈ cA` in the maximal ideal mapp
 `(L₁ ⊗ L₂, B₁ ⊗ B₂)` (`TensorModule.lattice`, `TensorModule.base`) is a crystal base of
 `M₁ ⊗ M₂` (`I` nonempty), with `ẽᵢ`, `f̃ᵢ` given at each node by the `𝔰𝔩₂` rule for `B₂ ⊗ B₁`
 at `vᵢ⁻¹` (`TensorModule.isCrystalBase_nodeSl2`).
+`CrystalBasis/TensorCrystalEquiv.lean`: Kashiwara's tensor product rule on classes
+(`IntegrableSl2.IsCrystalBase.fTildeQ_tmulQ`, `eTildeQ_tmulQ`; at the `U`-level
+`TensorModule.fQ_tmulL`, `eQ_tmulL`) and **the crystal of `B₁ ⊗ B₂` is the tensor product of
+crystals** (`TensorModule.nonempty_crystalEquiv`: `crystal (B₁ ⊗ B₂) ≅ Crystal.tensor (crystal B₂)
+(crystal B₁)`, factors exchanged by Lusztig's coproduct); `Crystal.equivOfE` (a bijection of
+seminormal crystals commuting with the `ẽᵢ` and weights is an isomorphism).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring

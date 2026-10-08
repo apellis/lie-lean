@@ -91,6 +91,32 @@ noncomputable def quotEquiv' (c : A) :
       simp only [SetLike.val_smul]
       rw [← algebraMap_smul k a (x : M), map_smul, algebraMap_smul])
 
+/-- `quotEquiv` intertwines `ẽ` on `L / cL` and `L' / cL'`. -/
+lemma quotEquiv_eTildeQ {hq0 : q ≠ 0} {hq : ∀ n : ℕ, 0 < n → q ^ n ≠ 1}
+    {hq0' : q' ≠ 0} {hq' : ∀ n : ℕ, 0 < n → q' ^ n ≠ 1}
+    (he : ∀ m, φ (V.eTilde hq0 hq m) = V'.eTilde hq0' hq' (φ m))
+    (hLe : ∀ m ∈ L, V.eTilde hq0 hq m ∈ L) (hLe' : ∀ m ∈ L', V'.eTilde hq0' hq' m ∈ L') (c : A)
+    (b : L ⧸ (Ideal.span {c} • ⊤ : Submodule A L)) :
+    quotEquiv φ hL c (V.eTildeQ hq0 hq hLe c b) =
+      V'.eTildeQ hq0' hq' hLe' c (quotEquiv φ hL c b) := by
+  obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ b
+  rw [eTildeQ_mk, quotEquiv_mk, quotEquiv_mk, eTildeQ_mk]
+  congr 1
+  exact Subtype.ext (he x)
+
+/-- `quotEquiv` intertwines `f̃` on `L / cL` and `L' / cL'`. -/
+lemma quotEquiv_fTildeQ {hq0 : q ≠ 0} {hq : ∀ n : ℕ, 0 < n → q ^ n ≠ 1}
+    {hq0' : q' ≠ 0} {hq' : ∀ n : ℕ, 0 < n → q' ^ n ≠ 1}
+    (hf : ∀ m, φ (V.fTilde hq0 hq m) = V'.fTilde hq0' hq' (φ m))
+    (hLf : ∀ m ∈ L, V.fTilde hq0 hq m ∈ L) (hLf' : ∀ m ∈ L', V'.fTilde hq0' hq' m ∈ L') (c : A)
+    (b : L ⧸ (Ideal.span {c} • ⊤ : Submodule A L)) :
+    quotEquiv φ hL c (V.fTildeQ hq0 hq hLf c b) =
+      V'.fTildeQ hq0' hq' hLf' c (quotEquiv φ hL c b) := by
+  obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ b
+  rw [fTildeQ_mk, quotEquiv_mk, quotEquiv_mk, fTildeQ_mk]
+  congr 1
+  exact Subtype.ext (hf x)
+
 variable {hq0 : q ≠ 0} {hq : ∀ n : ℕ, 0 < n → q ^ n ≠ 1}
   {hq0' : q' ≠ 0} {hq' : ∀ n : ℕ, 0 < n → q' ^ n ≠ 1}
 
