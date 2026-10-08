@@ -164,6 +164,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationSimple
 import LieLean.Algebra.Lie.KacMoody.DualIrreducible
 import LieLean.Algebra.Lie.KacMoody.TranslationSameFacet
 import LieLean.Algebra.Lie.KacMoody.TranslationSelfDual
+import LieLean.Algebra.Lie.KacMoody.TranslationShuffling
 import LieLean.Algebra.Lie.KacMoody.TranslationMultiplicity
 import LieLean.Algebra.Lie.KacMoody.TranslationNonintegral
 import LieLean.Algebra.Lie.KacMoody.UpperClosure
