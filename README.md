@@ -83,7 +83,8 @@ Further proved results include:
   `Ext¹_𝒪(L(w·λ), L(x·λ)) ≅ Hom(Rad T_μ^λ L(w·μ), L(x·λ))` for `xs·λ < x·λ` (Thm. 7.14 (g),
   `nonempty_hom_ker_equiv_extOne_wall`, with `Ext¹` relative to the Cartan subalgebra,
   `LieModule.ExtOne`), and wall-crossing functors on Verma and simple modules (§7.15,
-  `wallCrossing_verma_shortExact`).
+  `wallCrossing_verma_shortExact`), with the adjunction morphism `M → Θ_s M` and shuffling
+  (`translationUnit`, `shuffling_exact`).
 * **Littelmann paths:** Proposition 5.7, the straight-path concatenation theorem, and the
   isomorphism theorem for rational piecewise-linear dominant paths are proved. The crystal-level
   Littlewood–Richardson decomposition is unconditional over `ℝ` with finite-dimensional Cartan

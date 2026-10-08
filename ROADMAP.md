@@ -818,9 +818,15 @@ classifies the extensions in which `𝔥` acts semisimply, i.e. the extensions i
 `SplitData.exists_connecting_eq`, `SplitData.connectingEquiv`; equivariant sections for weight
 modules `exists_splitData`), via naturality of the adjunction (`translationAdjunction_comp`) and
 `Ext¹(T M, N) = 0` when `T' N = 0` (`extOne_eq_zero_of_subsingleton_centralTranslation`).
-Remaining: the
-adjunction morphism `M → Θ_s M` and shuffling functors, and the independence of `Θ_s` from `μ`
-(projective functors). Remaining: the equivalence of blocks as a natural
+**Adjunction morphism and shuffling** (§7.15, `KacMoody/TranslationShuffling.lean`, generic
+translation functors `T`, `T'` by `L`, `L^*`, stated for `X ≅ T M`): `translationUnit`
+(`η_M : M → T' T M`, the adjoint of `id_{T M}`), its universal property
+`translationAdjunction_eq_comp_translationUnit`, naturality `translationUnit_naturality` (from
+naturality of the adjunction in the first variable, `translationAdjunction_comp_left`),
+`not_injective_translationUnit` (`M ≠ 0`, `T M = 0`), the shuffling cokernel `shuffling` with
+`shuffling_exact` (`M → Θ M → Sh M → 0`) and functoriality `shufflingMap`, `shufflingMap_id`,
+`shufflingMap_comp`. Remaining: the independence of `Θ_s` from `μ` (Humphreys derives it from the
+classification of projective functors, §10.8). Remaining: the equivalence of blocks as a natural
 isomorphism of functors (only its values on Verma and simple modules are proved).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
