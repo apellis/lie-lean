@@ -1777,7 +1777,11 @@ rule (`tensor_dF_tensorHigh_sub_tensorIndex`, [HK] (4.12)). `CrystalBasis/Tensor
 Nakayama), is graded and stable under `ẽ`, `f̃`, and modulo `ϖ L` the **tensor product rule** holds:
 `f̃(uᵢ ⊗ vⱼ) ≡ u_{i+1} ⊗ vⱼ` if `j < a - i`, `≡ uᵢ ⊗ v_{j+1}` otherwise (`fTilde_tensorPiece_sub`),
 and the dual rule for `ẽ` (`eTilde_tensorPiece_sub`) ([HK] Thm. 4.4.3 for Kashiwara's coproduct;
-own proof). Note: with the library's
+own proof). `CrystalBasis/TensorCrystalBase.lean`: for string bases of `M₁`, `M₂`, the `A`-span
+`L₁ ⊗ L₂` of the `F^{(i)}η₁ₜ ⊗ F^{(j)}η₂ₜ'` with the classes of these vectors is a crystal base of
+`M₁ ⊗ M₂` (`isCrystalBase_tensorLattice`, any non-unit `c` with `ϖ ∈ cA`), on which `ẽ`, `f̃` act
+by the tensor product rule (`nextPos`, `prevPos`, `fTilde_tensorVec_sub`, `eTilde_tensorVec_sub`).
+Note: with the library's
 (Lusztig's) coproduct, the natural lattices are at `v = ∞` (`c = v⁻¹`).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
