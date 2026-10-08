@@ -1746,8 +1746,16 @@ unity) the string decomposition `IntegrableSl2.stringEquiv : ⨁_{(n,j)} prim(n+
 vectors of `u ∈ L` lie in `L` (`mem_of_sum_mem`, [HK] Prop. 4.2.11 (1)), `ẽ u ∈ cL ⇒ ηⱼ ∈ cL` for
 `j ≥ 1` (`mem_smul_of_eTilde_mem`, (2)), the operators `eTildeQ`, `fTildeQ` on `L/cL`, and for
 `B ⊆ L/cL` with the crystal-base axioms, `u ≡ F^{(k)} ηₖ` with `[ηₖ] ∈ B`, the other `ηⱼ ∈ cL`
-(`exists_of_mk_mem`, (3)). Crystal bases, the `𝔰𝔩₂` theory, the tensor product rule and the
-grand loop are the next steps (tracking issue #34).
+(`exists_of_mk_mem`, (3)). `CrystalBasis/StringCounts.lean`: string lengths at one colour
+(`exists_string_counts`: `ẽᵃ b = 0 ↔ a > k`, `f̃ᵃ b = 0 ↔ k + a > p`), local nilpotence of `ẽ`.
+`CrystalBasis/CrystalBase.lean`: for integrable `U`-modules, `IsCrystalLattice` ([HK] Def. 4.2.2:
+free, spanning, weight-graded, stable under all `ẽᵢ`, `f̃ᵢ`), `IsCrystalBase` ([HK] Def. 4.2.3: a
+basis `B` of the `A/cA`-module `L/cL` of classes of weight vectors with `ẽᵢB, f̃ᵢB ⊆ B ∪ {0}` and
+`f̃ᵢ b = b' ↔ ẽᵢ b' = b`), the crystal `IsCrystalBase.crystal` over
+`LusztigCartanDatum.RootDatum.crystalDatum` (for `c` not a unit; weights unique, `IsCrystalBase.wt_eq`),
+and `isSeminormal_crystal` ([HK] (4.9), (4.10), Prop. 4.2.11). Any commutative ring `A` and
+`c ∈ A` (Kashiwara: `A₀ ⊆ ℚ(q)`, `c = q`). The `𝔰𝔩₂` theory, direct sums, the tensor product rule
+and the grand loop are the next steps (tracking issue #34).
 Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
 `BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
