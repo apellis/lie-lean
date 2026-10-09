@@ -905,6 +905,11 @@ orthogonal to every root integral for `λ`: `nonempty_equiv_projectiveCover_of_s
 Reconstructed via Prop. 7.13 and adjunction. Such a `μ` need not exist for non-integral `λ` (the
 coroots of the integral roots can span a non-saturated sublattice, e.g. type `A₁ × A₁` inside
 `B₂`); Thm. 7.16 for all antidominant `λ` (Irving's wall-crossing argument) remains open.
+**`Ext¹` from projective presentations** (`KacMoody/ExtProjective.lean`): `extOne_eq_zero_of_isProjectiveO`
+(`Ext¹(P, N) = 0` for `P` projective in `𝒪`), `extOneEquivQuotient` and
+`nonempty_extOne_equiv_quotient_ker` (`Ext¹(C, N) ≅ Hom(A, N) / {g ∘ i}` for `0 → A → B → C → 0`
+with `B` projective in `𝒪`), so the relative `ExtOne` agrees with the `Ext¹` of projective
+resolutions in `𝒪`. The comparison of its vector-space structure with the Baer sum is not formalized.
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
