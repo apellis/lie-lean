@@ -270,6 +270,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Existence
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Head
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityBase
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityCompare
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityForm
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityProj
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityString
@@ -320,13 +321,14 @@ import LieLean.Algebra.QuantumGroup.Integrable
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Classical
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Rank
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Verma
+import LieLean.Algebra.QuantumGroup.LusztigF.Bar
+import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
 import LieLean.Algebra.QuantumGroup.LusztigF.Basic
 import LieLean.Algebra.QuantumGroup.LusztigF.Comul
 import LieLean.Algebra.QuantumGroup.LusztigF.Form
-import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
-import LieLean.Algebra.QuantumGroup.LusztigF.Bar
-import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
 import LieLean.Algebra.QuantumGroup.LusztigF.IntegralForm
+import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
+import LieLean.Algebra.QuantumGroup.LusztigF.Reverse
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Braid
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Integrable

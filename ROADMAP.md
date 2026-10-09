@@ -2045,6 +2045,9 @@ Prop. 10.11 (a)).
 (`crystalInf`, [KS97] Example 3.1.3).
 `GrandLoop/InfinityProj`: `π̄_λ : B(∞) → B(λ) ∪ {0}` commutes with `ẽᵢ` where nonzero (`evq_kE_fWi_sub_mem`, [Jan] 10.13) and is
 injective on `{b | π̄_λ(b) ≠ 0}` (`fWi_sub_mem_of_fW_sub_mem`, [Jan] Prop. 10.14).
+`LusztigF/Reverse`: the anti-automorphism `σ` of `'f` (`rev`; `rᵢ ∘ σ = σ ∘ ᵢr`, `(σx, σy) = (x, y)`, `σ(J) ⊆ J`).
+`GrandLoop/InfinityForm`: polarization of `(L(∞), B(∞))` ([Kas91] Prop. 5.1.2): `(L(∞), L(∞)) ⊆ A` (`formU_mem`),
+`(f̃ᵢu, w) ≡ (u, ẽᵢw)` (`formU_kF_sub_kE_mem`), `B(∞)` orthonormal modulo `ϖ` (`formU_fWi_fWi`).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
