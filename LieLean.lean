@@ -276,6 +276,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityProj
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinitySlice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityStar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityStarB
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityStarOps
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityString
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityWall
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Main
