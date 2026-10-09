@@ -287,25 +287,41 @@ theorem exists_sum_fWi [IsFormallyReal (A ⧸ Ideal.span {ϖ})] {ν : I →₀ �
 set_option maxHeartbeats 1600000 in
 -- one long argument with many local lattice computations
 include hR in
-/-- **[Kas93a] Prop. 2.1.2** (in the form used for Thm. 2.1.1): if `A/ϖA` is formally real,
-`P ∈ L(∞) ∩ U⁻_{-ν}`, `e''ᵢ P = 0` and `P ≡ f̃_{w₀} 1` modulo `ϖ L(∞)`, then `P fᵢ^{(m)}` is
-congruent to some `f̃_{w'} 1`. Our proof replaces `B(∞)* ⊆ B(∞) ∪ -B(∞)` ([Kas91] Cor. 6.1.2) and
-the global bases by formal reality, the slice formula and `GrandLoop.evq_notMem_smul_lat`. -/
-theorem rmulF_sub_mem_of_sub_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I) (m : ℕ)
-    {ν : I →₀ ℕ} {P : Um D v} (hP : P ∈ latInf hvt A) (hPw : P ∈ Uw D v ν)
-    (he : (bos (D := D) (pow_ne_one_of_transcendental' hvt) i).e (starU D v P) = 0)
-    {w₀ : List I} (hw₀ : P - fWi hvt w₀ ∈ ϖ • latInf hvt A) :
-    ∃ w' : List I, rmulF hvt i m P - fWi hvt w' ∈ ϖ • latInf hvt A := by
+/-- **[Kas93a] Prop. 2.1.2**: if `A/ϖA` is formally real, `P ∈ L(∞) ∩ U⁻_{-ν}`, `e''ᵢ P = 0` and
+`P ≡ f̃_{w₀} 1` modulo `ϖ L(∞)`, then `P fᵢ^{(m)}` is congruent to some `f̃_{w'} 1`, and for
+`μ ≫ 0` and `⟨i, λ⟩ = 0`, `⟨j, λ⟩ ≫ 0` (`j ≠ i`),
+`Φ(π_{μ+λ}(P fᵢ^{(m)})) ≡ f̃ᵢ^m v_μ ⊗ f̃_{w₀} v_λ` (Kashiwara's `P fᵢ^{(m)} (u_λ ⊗ u_μ) ≡
+P u_λ ⊗ fᵢ^{(m)} u_μ`, library order). Our proof replaces `B(∞)* ⊆ B(∞) ∪ -B(∞)` ([Kas91]
+Cor. 6.1.2) and the global bases by formal reality, the slice formula and
+`GrandLoop.evq_notMem_smul_lat`. -/
+theorem rmulF_tensor_congr [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I) (m : ℕ)
+    (ν : I →₀ ℕ) (hν' : (ν + m • Finsupp.single i 1).degree ≠ 0) :
+    ∃ N : ℕ, ∀ μ Λl : Dom R, (∀ j, (N : ℤ) ≤ μ.1 (R.coroot j)) →
+      Λl.1 (R.coroot i) = 0 → (∀ j, j ≠ i → (N : ℤ) ≤ Λl.1 (R.coroot j)) →
+      ∀ P : Um D v, P ∈ latInf hvt A → P ∈ Uw D v ν →
+        (bos (D := D) (pow_ne_one_of_transcendental' hvt) i).e (starU D v P) = 0 →
+        ∀ w₀ : List I, P - fWi hvt w₀ ∈ ϖ • latInf hvt A →
+        (∃ w' : List I, rmulF hvt i m P - fWi hvt w' ∈ ϖ • latInf hvt A) ∧
+        tensorEmb hvt hR μ.2 Λl.2 (evq hvt (μ + Λl) (rmulF hvt i m P)) -
+          TensorModule.mk _ _ (fW hvt hR μ (List.replicate m i) ⊗ₜ[k]
+            fW hvt hR Λl w₀) ∈ ϖ • LL hvt hR A μ Λl := by
   classical
   set hv' := pow_ne_one_of_transcendental' hvt
-  rcases Nat.eq_zero_or_pos m with rfl | hm
-  · exact ⟨w₀, by simpa using hw₀⟩
   have hϖ0 : algebraMap A k ϖ ≠ 0 := by rw [hϖv]; exact inv_ne_zero (NeZero.ne v)
   have hϖu : ¬IsUnit ϖ := (IsLocalRing.mem_maximalIdeal ϖ).1 hϖ
   have hall := allProp (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund
   set ν' := ν + m • Finsupp.single i 1
-  have hν' : ν'.degree ≠ 0 := by
-    simp only [ν', map_add, map_nsmul, Finsupp.degree_single, smul_eq_mul, mul_one]; omega
+  obtain ⟨N₀, hinjT⟩ :=
+    exists_large_mem_smul_latInf_of_tensorEmb_mem (hR := hR) hinj hϖ hϖv hk hfund hν'
+  obtain ⟨m₁, hm₁⟩ := exists_form_mem_of_large (hR := hR) hinj hϖ hϖv hk hfund
+    (m • Finsupp.single i 1)
+  obtain ⟨m₂, hm₂⟩ := exists_form_fW_fW (hR := hR) hinj hϖ hϖv hk hfund (m • Finsupp.single i 1)
+  obtain ⟨m₃, hm₃⟩ := evq_notMem_smul_lat (hR := hR) hinj hϖ hϖv hk hfund i ν
+  refine ⟨N₀ + m₁ + m₂ + m₃, fun μ Λl hμN hΛli hΛl₀ P hP hPw he w₀ hw₀ ↦ ?_⟩
+  have hμN₀ : ∀ j, (N₀ : ℤ) ≤ μ.1 (R.coroot j) := fun j ↦ by
+    have := hμN j; push_cast at this; omega
+  have hΛl : ∀ j, j ≠ i → (m₃ : ℤ) ≤ Λl.1 (R.coroot j) := fun j hj ↦ by
+    have := hΛl₀ j hj; push_cast at this; omega
   set Q := rmulF hvt i m P with hQdef
   have hQ : Q ∈ latInf hvt A := rmulF_mem_latInf (hR := hR) hinj hϖ hϖv hk hfund i m hP he
   have hQw : Q ∈ Uw D v ν' := rmulF_mem_Uw i m hPw
@@ -345,20 +361,9 @@ theorem rmulF_sub_mem_of_sub_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I
     simp only [map_sub, map_mul, map_one, map_add] at ht ⊢
     linear_combination ht
   -- 3. the weights `μ`, `λ`
-  obtain ⟨Λs, hΛs, hinjT⟩ :=
-    exists_mem_smul_latInf_of_tensorEmb_mem (hR := hR) hinj hϖ hϖv hk hfund hν'
-  obtain ⟨m₁, hm₁⟩ := exists_form_mem_of_large (hR := hR) hinj hϖ hϖv hk hfund
-    (m • Finsupp.single i 1)
-  obtain ⟨m₂, hm₂⟩ := exists_form_fW_fW (hR := hR) hinj hϖ hϖv hk hfund (m • Finsupp.single i 1)
-  obtain ⟨m₃, hm₃⟩ := evq_notMem_smul_lat (hR := hR) hinj hϖ hϖv hk hfund i ν
-  obtain ⟨Λl, hΛli, hΛl⟩ := exists_dom_wall hfund i m₃
-  obtain ⟨Λb, hΛb⟩ := exists_dom_ge hfund (m₁ + m₂)
-  set μ : Dom R := Λb + Λs
   have hμ : ∀ j, ((m₁ + m₂ : ℕ) : ℤ) ≤ μ.1 (R.coroot j) := fun j ↦ by
-    have h1 := hΛb j
-    have h2 := Λs.2 j
-    change _ ≤ (Λb.1 + Λs.1) (R.coroot j)
-    rw [AddMonoidHom.add_apply]; omega
+    have h1 := hμN j
+    push_cast at h1 ⊢; omega
   have hμ₁ : ∀ j, (m₁ : ℤ) ≤ μ.1 (R.coroot j) := fun j ↦ by have := hμ j; push_cast at this; omega
   have hμ₂ : ∀ j, (m₂ : ℤ) ≤ μ.1 (R.coroot j) := fun j ↦ by have := hμ j; push_cast at this; omega
   -- 4. `T` and the slice
@@ -488,7 +493,7 @@ theorem rmulF_sub_mem_of_sub_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I
       have := add_mem (hTfWi s) (tmul_mem_smul_right (hfWμ (s₁ s)) h)
       rwa [sub_add_cancel] at this
     exact fWi_notMem (hR := hR) hinj hϖ hϖv hk hfund s
-      (hinjT Λb Λl _ (NegativePart.fWord_mem_latticeInf _ _ s)
+      (hinjT μ Λl hμN₀ _ (NegativePart.fWord_mem_latticeInf _ _ s)
         ((hSw s (hS'S hs)) ▸ fWi_mem_Uw (hvt := hvt) s) h1)
   have hd' : ∀ s ∈ S', ∀ s' ∈ S', s ≠ s' →
       fW hvt hR Λl (s₂ s) - fW hvt hR Λl (s₂ s') ∉ ϖ • lat hvt hR A Λl := by
@@ -513,7 +518,7 @@ theorem rmulF_sub_mem_of_sub_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I
       convert this using 1
       rw [sub_tmul, tmul_sub, map_sub, map_sub]; abel
     exact hSd s (hS'S hs) s' (hS'S hs') hne
-      (hinjT Λb Λl _ (sub_mem (NegativePart.fWord_mem_latticeInf _ _ s)
+      (hinjT μ Λl hμN₀ _ (sub_mem (NegativePart.fWord_mem_latticeInf _ _ s)
         (NegativePart.fWord_mem_latticeInf _ _ s'))
         (sub_mem ((hSw s (hS'S hs)) ▸ fWi_mem_Uw (hvt := hvt) s)
           ((hSw s' (hS'S hs')) ▸ fWi_mem_Uw (hvt := hvt) s')) h3)
@@ -521,10 +526,11 @@ theorem rmulF_sub_mem_of_sub_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I
     intro h
     exact hm₃ Λl hΛli hΛl _ hP hPw he hP0 (by simpa using add_mem hPw₀ h)
   -- 9. some `s₀ ∈ S'` has `aₛ₀ ≡ 1`
-  have hone : ∃ s₀ ∈ S', a s₀ - 1 ∈ Ideal.span {ϖ} := by
+  have hone : ∃ s₀ ∈ S', a s₀ - 1 ∈ Ideal.span {ϖ} ∧
+      fW hvt hR Λl w₀ - fW hvt hR Λl (s₂ s₀) ∈ ϖ • lat hvt hR A Λl := by
     by_cases hex : ∃ s₀ ∈ S', fW hvt hR Λl w₀ - fW hvt hR Λl (s₂ s₀) ∈ ϖ • lat hvt hR A Λl
     · obtain ⟨s₀, hs₀, hw⟩ := hex
-      refine ⟨s₀, hs₀, ?_⟩
+      refine ⟨s₀, hs₀, ?_, hw⟩
       have hc := coeff_mem_of_sum_fW_mem (hR := hR) hinj hϖ hϖv hk hfund Λl S' s₂
         (fun s ↦ -a s + if s = s₀ then 1 else 0) hs₂w h0' hd' (by
           simp only [add_smul, neg_smul, Finset.sum_add_distrib, Finset.sum_neg_distrib,
@@ -573,7 +579,7 @@ theorem rmulF_sub_mem_of_sub_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I
       have hc'' : c * ϖ = 1 := by simpa using hc'
       exact hϖu (isUnit_iff_exists_inv.2 ⟨c, by rw [mul_comm]; exact hc''⟩)
   -- 10. formal reality
-  obtain ⟨s₀, hs₀, ha₀⟩ := hone
+  obtain ⟨s₀, hs₀, ha₀, hw₀s₀⟩ := hone
   have hs₀S := hS'S hs₀
   have hrest : ∀ s ∈ S.erase s₀, a s ∈ Ideal.span {ϖ} := by
     have h1 : ∑ s ∈ S.erase s₀, a s ^ 2 ∈ Ideal.span {ϖ} := by
@@ -587,7 +593,6 @@ theorem rmulF_sub_mem_of_sub_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I
     refine eq_zero_of_sum_sq_eq_zero (S.erase s₀) (fun s ↦ Ideal.Quotient.mk _ (a s)) ?_ s hs
     simp only [← map_pow, ← map_sum]
     exact Ideal.Quotient.eq_zero_iff_mem.2 h1
-  refine ⟨s₀, ?_⟩
   have hspan : ∀ c : A, c ∈ Ideal.span {ϖ} → ∀ x : Um D v, x ∈ latInf hvt A →
       c • x ∈ ϖ • latInf hvt A := by
     intro c hc x hx
@@ -603,8 +608,45 @@ theorem rmulF_sub_mem_of_sub_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I
     exact add_mem (hspan _ ha₀ _ (NegativePart.fWord_mem_latticeInf _ _ s₀))
       (Submodule.sum_mem _ fun s hs ↦ hspan _ (hrest s hs) _
         (NegativePart.fWord_mem_latticeInf _ _ s))
-  have := add_mem hQS hfin
-  rwa [sub_add_sub_cancel] at this
+  have hQs₀ : Q - fWi hvt s₀ ∈ ϖ • latInf hvt A := by
+    have := add_mem hQS hfin
+    rwa [sub_add_sub_cancel] at this
+  refine ⟨⟨s₀, hQs₀⟩, ?_⟩
+  -- the tensor congruence
+  have hg := (Finset.mem_filter.1 hs₀).2.2
+  have hz₁ : fW hvt hR μ (s₁ s₀) - z ∈ ϖ • lat hvt hR A μ := by
+    have e1 := evq_mem_smul_lat (hR := hR) hinj hϖ hϖv hk hfund hg μ
+    have e2 := evq_fWord_sub_fW_mem (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund rep μ
+    have e3 := evq_fWord_sub_fW_mem (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund (s₁ s₀) μ
+    rw [map_sub] at e1
+    have := sub_mem (sub_mem e1 e2) (neg_mem e3)
+    have := neg_mem this
+    convert this using 1; abel
+  have k1 := tmul_mem_smul_left hz₁ (hfW (s₂ s₀))
+  have k2 := tmul_mem_smul_right hzL (show fW hvt hR Λl (s₂ s₀) - fW hvt hR Λl w₀ ∈
+    ϖ • lat hvt hR A Λl by have := neg_mem hw₀s₀; rwa [neg_sub] at this)
+  have k3 := hTS _ hQs₀
+  have := add_mem (add_mem (add_mem k3 (hTfWi s₀)) k1) k2
+  change T Q - _ ∈ _
+  convert this using 1
+  rw [map_sub, sub_tmul, tmul_sub, map_sub, map_sub]
+  abel
+
+include hR in
+/-- **[Kas93a] Prop. 2.1.2** (the membership part, as used for Thm. 2.1.1). -/
+theorem rmulF_sub_mem_of_sub_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I) (m : ℕ)
+    {ν : I →₀ ℕ} {P : Um D v} (hP : P ∈ latInf hvt A) (hPw : P ∈ Uw D v ν)
+    (he : (bos (D := D) (pow_ne_one_of_transcendental' hvt) i).e (starU D v P) = 0)
+    {w₀ : List I} (hw₀ : P - fWi hvt w₀ ∈ ϖ • latInf hvt A) :
+    ∃ w' : List I, rmulF hvt i m P - fWi hvt w' ∈ ϖ • latInf hvt A := by
+  rcases Nat.eq_zero_or_pos m with rfl | hm
+  · exact ⟨w₀, by simpa using hw₀⟩
+  have hν' : (ν + m • Finsupp.single i 1).degree ≠ 0 := by
+    simp only [map_add, map_nsmul, Finsupp.degree_single, smul_eq_mul, mul_one]; omega
+  obtain ⟨N, h⟩ := rmulF_tensor_congr (hR := hR) hinj hϖ hϖv hk hfund i m ν hν'
+  obtain ⟨Λl, hΛli, hΛl⟩ := exists_dom_wall hfund i N
+  obtain ⟨Λb, hΛb⟩ := exists_dom_ge hfund N
+  exact (h Λb Λl hΛb hΛli hΛl P hP hPw he w₀ hw₀).1
 
 include hR in
 lemma comp_mem_smul_latInf (i : I) (n : ℕ) {u : Um D v} (hu : u ∈ ϖ • latInf hvt A) :
