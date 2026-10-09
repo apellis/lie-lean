@@ -880,6 +880,10 @@ category, without finite generation), `IsProjectiveCover.exists_retract`.
 `dualSwap : Hom(V, W^∨) ↪ Hom(W, V^∨)`, `finrank_hom_restrictedDual_verma`
 (`dim Hom(V, M(μ)^∨) = dim (V/𝔫₋V)_μ`) and **Thm. 3.7** `IsStdFiltered.count_eq_finrank_hom`
 (`(V : M(μ)) = dim Hom(V, M(μ)^∨)`; reconstructed via coinvariants instead of `Ext¹` vanishing).
+**Theorems 3.10, 3.11** (`KacMoody/BGGReciprocity.lean`): `ProjectiveCover.exists_isStdFiltered`
+(`P(λ)` has a standard filtration with `M(λ)` once and all factors `M(μ)` with `λ ∈ μ - Q₊`) and
+**BGG reciprocity** `ProjectiveCover.count_eq_multiplicity` (`(P(λ) : M(μ)) = [M(μ) : L(λ)]` in every
+standard filtration; generic form `IsProjectiveCover.count_eq_multiplicity`).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
