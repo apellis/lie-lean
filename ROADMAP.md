@@ -2056,6 +2056,8 @@ injective on `{b | π̄_λ(b) ≠ 0}` (`fWi_sub_mem_of_fW_sub_mem`, [Jan] Prop. 
 `GrandLoop/InfinityStarB`: **`B(∞)* = B(∞)`** for `A/ϖA` formally real ([Kas93a] Thm. 2.1.1; `starU_fWi_sub_mem`, `exists_fWi_sub_starU_mem`), from
 [Kas93a] Prop. 2.1.2 (`rmulF_sub_mem_of_sub_mem`: `P fᵢ^{(m)} ∈ B(∞)` for `P ∈ B(∞)`, `e''ᵢ P = 0`), proved with `T = Φ ∘ π_{μ+λ}`, the slice formula, the
 nonvanishing at a wall, formal reality and the orthonormality of `B(∞)`, without `ℤ`-forms or global bases (our argument).
+`GrandLoop/InfinityStarOps`: `ẽᵢ* = * ẽᵢ *`, `f̃ᵢ*` on `U⁻` (`kEs`, `kFs`); for `j ≠ i` they commute exactly with `ẽⱼ`, `f̃ⱼ` (`kE_kEs`, `kF_kEs`, `kE_kFs`, `kF_kFs`;
+[Kas93a] Cor. 2.2.2 for `j ≠ i`, here by a direct computation), and `ẽⱼ`, `f̃ⱼ` preserve `ker e''ᵢ`.
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
