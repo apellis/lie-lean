@@ -854,6 +854,12 @@ for large `n`; reconstructed via `ρ - wρ ∈ Q₊ \ {0}` for `w ≠ 1`,
 independent of the filtration), via `VermaModule.coinvDim_top` and `coinvDim_step`, whose key
 input is a `U(𝔫₋)`-linear section of each Verma step (`exists_section`, `negSpan_inf_le`;
 reconstructed, replacing `Ext¹(M(μ), M(λ)^∨) = 0`).
+**Summands** (`KacMoody/StandardFiltrationSummand.lean`, Humphreys GSM 94 Prop. 3.7):
+`IsStdFiltered.map_of_injOn` (transport along morphisms injective on the filtered submodule),
+`IsStdFiltered.comap_mk` (extensions), `IsStdFiltered.exists_mem_cone`,
+`IsStdFiltered.verma_of_maximal` (Prop. 3.7 (a): a primitive vector of maximal weight `λ`
+generates a copy of `M(λ)` with quotient filtered by `s - {λ}`), `exists_isStdFiltered_range`
+and `exists_isStdFiltered_range_add` (Prop. 3.7 (b) for `p(X)`, `p² = p`, with `s = t + t'`).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
