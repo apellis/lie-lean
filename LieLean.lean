@@ -271,6 +271,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Head
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityBase
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityCompare
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityForm
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityKS
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityProj
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityPsi
@@ -455,6 +456,7 @@ import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupTits
 import LieLean.RepresentationTheory.Crystal.Basic
 import LieLean.RepresentationTheory.Crystal.Character
 import LieLean.RepresentationTheory.Crystal.Normal
+import LieLean.RepresentationTheory.Crystal.KashiwaraSaito
 import LieLean.RepresentationTheory.Crystal.Path.Basic
 import LieLean.RepresentationTheory.Crystal.Path.Cancellation
 import LieLean.RepresentationTheory.Crystal.Path.Character
