@@ -273,6 +273,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityCompare
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityForm
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityKS
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinitySimilarity
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.HighestWeightSimilarity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityProj
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityPsi
@@ -461,6 +462,7 @@ import LieLean.RepresentationTheory.Crystal.Normal
 import LieLean.RepresentationTheory.Crystal.KashiwaraSaito
 import LieLean.RepresentationTheory.Crystal.Similarity
 import LieLean.RepresentationTheory.Crystal.SimilarityComparison
+import LieLean.RepresentationTheory.Crystal.SimilarityEmbedding
 import LieLean.RepresentationTheory.Crystal.Extremal
 import LieLean.RepresentationTheory.Crystal.TensorPower
 import LieLean.RepresentationTheory.Crystal.Path.Basic
