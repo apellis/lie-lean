@@ -2035,6 +2035,10 @@ decomposition (`GrandLoop.free_lat`) and `B(λ)` linearly independent by `D(r)`
 `π_λ(f̃ᵢ u) ≡ f̃ᵢ π_λ(u)`, `π_λ(ẽᵢ u) ≡ ẽᵢ π_λ(u)` modulo `ϖ L(λ)` (`GrandLoop.exists_evq_kashiwara_sub_mem`,
 [Jan] 10.6 (b)); for all dominant `λ`, `π_λ(L(∞)) ⊆ L(λ)` and `π_λ(f̃ᵢ b) ≡ f̃ᵢ π_λ(b)` on the generators
 of `L(∞)` (`GrandLoop.evq_mem_lat_of_mem_latticeInf`, `GrandLoop.evq_fWord_mem_and_sub_mem`; [Jan] Prop. 10.9).
+`GrandLoop/InfinityLattice`: for `⟨j, λ⟩ ≥ |ν|`, `π_λ` maps `L(∞)_{-ν}` onto `L(λ)_{λ-ν}` (`GrandLoop.exists_evq_eq`, Nakayama)
+and `u ∈ L(∞) ↔ π_λ(u) ∈ L(λ)`, `u ∈ ϖL(∞) ↔ π_λ(u) ∈ ϖL(λ)` on `U⁻_{-ν}` (`mem_latticeInf_iff`, `mem_smul_latInf_iff`;
+[Jan] Thm. 10.10 (a)); `ẽᵢ L(∞) ⊆ L(∞)` (`kashiwaraE_mem_latticeInf`, Thm. 10.10 (b)); `0 ∉ B(∞)` (`fWi_notMem`,
+Prop. 10.11 (a)).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
