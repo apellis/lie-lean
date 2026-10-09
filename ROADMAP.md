@@ -2014,6 +2014,10 @@ large (`GrandLoop.tensorProj_tmul_hwv_mem`, the main step of [HK] Lemma 5.3.15),
 `ẽᵢ (v ⊗ y) ≡ v ⊗ ẽᵢ y` (`eT_hwv_tmul_mem`, Lemma 5.3.11 (1)) and `f̃ᵢ ẽᵢ z ≡ z` for `ẽᵢ z ≢ 0`
 (`fT_eT_tmul_sub`, Lemma 5.3.2 (4)); the direction `⟸` goes through `λ₁ + Λⱼ` with `λ₁` large
 (`propC_backward_of`) and back to `λ` by `S ∘ Φ`.
+`PropDFG`: `D(r)` (`GrandLoop.PropD`, `propD_zero`, `propD_succ`; [HK] Prop. 5.3.17), Lemma 5.3.18
+(`mem_smul_lat_of_eK`, `mem_lat_of_eK`), `F(r)` (`propF_succ`, Prop. 5.3.19) and `G(r)` (`propG_succ`,
+Prop. 5.3.21). `Main`: **the grand loop**, `A(r)`, …, `G(r)` for all `r` (`GrandLoop.allProp`), for a
+discrete valuation ring `A ⊆ k = A[ϖ⁻¹]` with `ϖ ↦ v⁻¹`, `v` transcendental, and fundamental weights.
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form

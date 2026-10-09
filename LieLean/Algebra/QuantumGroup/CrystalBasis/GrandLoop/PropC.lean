@@ -60,9 +60,9 @@ lemma eT_hwv_tmul_mem {d : ℕ} (hA : ∀ s ≤ d, PropA hvt hR A s) {Λ₁ Λ�
 
 /-- **`f̃ᵢ ẽᵢ z ≡ z`** for `z = f̃_{w₁} v ⊗ f̃_{w₂} v` with `ẽᵢ z ∉ ϖ (L ⊗ L)` ([HK]
 Lemma 5.3.2 (4), library order). -/
-theorem fT_eT_tmul_sub {d : ℕ} (hA : ∀ s ≤ d + 1, PropA hvt hR A s)
-    (hB : ∀ s ≤ d, PropB hvt hR A ϖ s) (hC : ∀ s ≤ d, PropC hvt hR A ϖ s) {Λ₁ Λ₂ : Dom R}
-    (i : I) {w₁ w₂ : List I} (h₁ : w₁.length ≤ d) (h₂ : w₂.length ≤ d)
+theorem fT_eT_tmul_sub {d e : ℕ} (hA : ∀ s ≤ d + 1, PropA hvt hR A s)
+    (hB : ∀ s ≤ e, PropB hvt hR A ϖ s) (hC : ∀ s ≤ e, PropC hvt hR A ϖ s) {Λ₁ Λ₂ : Dom R}
+    (i : I) {w₁ w₂ : List I} (h₁ : w₁.length ≤ e) (h₂ : w₂.length ≤ e)
     (hw : w₁.length + w₂.length = d + 1)
     (he : eT hvt hR Λ₁ Λ₂ i (TensorModule.mk _ _ (fW hvt hR Λ₁ w₁ ⊗ₜ[k] fW hvt hR Λ₂ w₂)) ∉
       ϖ • LL hvt hR A Λ₁ Λ₂) :
@@ -106,6 +106,10 @@ theorem fT_eT_tmul_sub {d : ℕ} (hA : ∀ s ≤ d + 1, PropA hvt hR A s)
       have := degree_wordWeight w₂
       rw [hν₂', map_add, Finsupp.degree_single] at this
       omega
+    have hpos₂ : 1 ≤ w₂.length := by
+      have := degree_wordWeight w₂
+      rw [hν₂', map_add, Finsupp.degree_single] at this
+      omega
     have hy'' := hys.kashiwaraE (fun s hs ↦ hA s (by omega)) (degree_wordWeight w₂) hϖ0 hν₂'
       (by omega)
     have hf := fT_tmul hϖ hϖv (fun s hs ↦ hA s (by omega)) (fun s hs ↦ hA s (by omega))
@@ -135,6 +139,10 @@ theorem fT_eT_tmul_sub {d : ℕ} (hA : ∀ s ≤ d + 1, PropA hvt hR A s)
     have hk1 : 1 ≤ k₁ := by omega
     obtain ⟨ν₁', hν₁'⟩ := hxs.exists_pred hk1
     have hdeg₁ : ν₁'.degree = w₁.length - 1 := by
+      have := degree_wordWeight w₁
+      rw [hν₁', map_add, Finsupp.degree_single] at this
+      omega
+    have hpos₁ : 1 ≤ w₁.length := by
       have := degree_wordWeight w₁
       rw [hν₁', map_add, Finsupp.degree_single] at this
       omega
@@ -304,7 +312,7 @@ theorem propC_backward_of {n : ℕ} (hA : ∀ s ≤ n + 2, PropA hvt hR A s)
     rw [sub_add_cancel] at this
     exact hb0 this
   -- `f̃ᵢ ẽᵢ z ≡ z`
-  have hfe := fT_eT_tmul_sub hϖ hϖv (d := n + 1) hA hB hC i (by omega) (by omega)
+  have hfe := fT_eT_tmul_sub hϖ hϖv (d := n + 1) (e := n + 1) hA hB hC i (by omega) (by omega)
     (by omega) hez0
   -- weights one step up
   have hez00 : eT hvt hR Λ₁ Λj i z ≠ 0 := fun h0 ↦ hez0 (by rw [h0]; exact zero_mem _)
