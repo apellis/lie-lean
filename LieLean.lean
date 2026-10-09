@@ -113,6 +113,7 @@ import LieLean.Algebra.Lie.KacMoody.SerrePresented.Syzygy
 import LieLean.Algebra.Lie.KacMoody.SerrePresented.SyzygyEnveloping
 import LieLean.Algebra.Lie.KacMoody.Shapovalov
 import LieLean.Algebra.Lie.KacMoody.StandardFiltration
+import LieLean.Algebra.Lie.KacMoody.StandardFiltrationSummand
 import LieLean.Algebra.Lie.KacMoody.TensorProduct
 import LieLean.Algebra.Lie.KacMoody.TensorVerma
 import LieLean.Algebra.Lie.KacMoody.TensorVermaStability
