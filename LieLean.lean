@@ -252,6 +252,8 @@ import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.ContravariantForm
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Boson
 import LieLean.Algebra.QuantumGroup.CrystalBasis.CrystalBase
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Basic
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Tensor
 import LieLean.Algebra.QuantumGroup.CrystalBasis.HighestWeightLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integrable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.KashiwaraOperators

@@ -1906,6 +1906,11 @@ above `μ` (`j ≥ 0` steps of `αᵢ`), the string vectors of `x ∈ L ∩ M^μ
 (`mem_of_sum_mem_weight`, cf. [HK] Lemma 5.3.1 (1)), `ẽᵢ`, `f̃ᵢ` preserve `x ⊗ y ∈ L₁ ⊗ L₂`
 (`TensorModule.kashiwaraF_tmul_mem`), and act on string vectors by the tensor product rule modulo
 `ϖ` (`TensorModule.kashiwaraF_tmul_sub_mem`, `kashiwaraE_tmul_sub_mem`; cf. [HK] Lemma 5.3.2).
+`CrystalBasis/GrandLoop/`: Kashiwara's grand loop ([HK] §5.3) in progress. `Basic`: the inductive
+statements `A(r)`, `B(r)`, `C(r)` (`GrandLoop.PropA`, `PropB`, `PropC`) indexed by depth, local
+`ẽᵢ`-stability, and the string lemma (`GrandLoop.exists_string`, [HK] Lemma 5.3.1 (2)). `Tensor`:
+string data (`GrandLoop.IsStr`, `exists_isStr`) and the tensor product rule on `L(λ₁) ⊗ L(λ₂)` in
+bounded depth (`GrandLoop.fT_tmul`, `eT_tmul`; [HK] Lemma 5.3.2 (2)).
 `CrystalBasis/TensorCrystalEquiv.lean`: Kashiwara's tensor product rule on classes
 (`IntegrableSl2.IsCrystalBase.fTildeQ_tmulQ`, `eTildeQ_tmulQ`; at the `U`-level
 `TensorModule.fQ_tmulL`, `eQ_tmulL`) and **the crystal of `B₁ ⊗ B₂` is the tensor product of
