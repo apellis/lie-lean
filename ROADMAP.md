@@ -884,6 +884,15 @@ category, without finite generation), `IsProjectiveCover.exists_retract`.
 (`P(λ)` has a standard filtration with `M(λ)` once and all factors `M(μ)` with `λ ∈ μ - Q₊`) and
 **BGG reciprocity** `ProjectiveCover.count_eq_multiplicity` (`(P(λ) : M(μ)) = [M(μ) : L(λ)]` in every
 standard filtration; generic form `IsProjectiveCover.count_eq_multiplicity`).
+**Proposition 7.13** (`KacMoody/TranslationProjective.lean`, arbitrary antidominant `λ, μ` with
+`μ♮` in the closure of the facet of `λ♮`): `nonempty_equiv_projectiveCover_translation_verma`
+(`T_μ^λ M(w·μ) ≅ P(x·λ)` for `w ∈ W_[λ]` with `w·μ` maximal in its dot orbit, `x` the unique
+element with `x·μ = w·μ` and `x·μ` in the upper closure of the facet of `x·λ`), via the recognition
+criterion `nonempty_equiv_projectiveCover_of_hom` (projective, standard filtration, one simple
+quotient occurring once), `isProjectiveO_centralBlock` and
+`exists_isStdFiltered_translation_verma`; the Hom spaces to simple modules are computed by
+adjunction, Thm. 3.9 (c) and Thm. 7.9 (reconstructed; Humphreys uses Verma's theorem and BGG
+reciprocity). The identification `x = w_λ w_μ°` is not formalized.
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
