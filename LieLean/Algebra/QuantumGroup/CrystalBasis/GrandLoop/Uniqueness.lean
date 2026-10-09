@@ -8,7 +8,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Existence
 /-!
 # Uniqueness of crystal bases of `V(λ)`
 
-Let `(L, B)` be a crystal base of `V(λ) = L_q(λ)` with `L_λ = A v_λ` and `v_λ + ϖ L ∈ B`. Then
+Suppose `(L, B)` is a crystal base of `V(λ) = L_q(λ)` with `L_λ = A v_λ` and `v_λ + ϖ L ∈ B`. Then
 `L = L(λ)` (`GrandLoop.eq_lat_of_isCrystalLattice`, [HK] Lemma 5.2.2 (2)) and `B = B(λ)`
 (`GrandLoop.eq_base_of_isCrystalBase`), so the crystal base of `V(λ)` is unique up to the choice of
 the highest weight vector ([HK] Lemma 5.2.3). The argument for `B` differs from [HK]: instead of
