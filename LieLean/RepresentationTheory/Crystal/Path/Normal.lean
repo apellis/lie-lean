@@ -322,7 +322,10 @@ Levi morphism `B_J(ν) → C` (`Crystal.IsLeviHom` along the inclusion `J ⊆ ι
 Kashiwara's definition ([Kas94] §1.5, [Kas] §7.6) asks instead that the restriction of `C` to `J`
 be isomorphic to the crystal of the crystal base of an integrable `U_q(𝔤_J)`-module. The two agree
 by the theorems identifying `B_J(ν)` with the crystal of the crystal base of the irreducible
-`U_q(𝔤_J)`-module of highest weight `ν` (Kashiwara; Joseph), which are not formalized here. -/
+`U_q(𝔤_J)`-module of highest weight `ν` (Kashiwara; Joseph); this identification is
+`LieLean.QuantumGroup.GrandLoop.existsUnique_equiv_pathCrystal` (for a root datum of `A_J` with a
+morphism of Cartan data to the realization), while the decomposition of the crystal base of an
+integrable module into such crystals is not formalized here. -/
 structure IsNormal (C : Crystal (P.cartanDatum hA) B) : Prop where
   isSeminormal : C.IsSeminormal
   exists_leviHom : ∀ J : Finset ι, (A.submatrix ((↑) : J → ι) (↑)).IsFiniteCartan → ∀ b : B,

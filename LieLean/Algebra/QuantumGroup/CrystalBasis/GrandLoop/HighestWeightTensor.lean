@@ -7,21 +7,39 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.HighestWeightSimilari
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorIndependence
 
 /-!
-# The embedding `B(λ₁ + λ₂) → B(λ₁) ⊗ B(λ₂)`
+# The embeddings `B(λ₁ + λ₂) → B(λ₂) ⊗ B(λ₁)` and `B((n + 1)λ) → B(λ)^{⊗(n+1)}`
 
 The embedding `Φ : V(λ₁ + λ₂) → V(λ₁) ⊗ V(λ₂)`, `v ↦ v ⊗ v`, maps `f̃_w v_{λ₁+λ₂}` to
 `f̃_w (v ⊗ v) ≡ f̃_{w₁} v_{λ₁} ⊗ f̃_{w₂} v_{λ₂}` modulo `ϖ (L(λ₁) ⊗ L(λ₂))`
-(`GrandLoop.fTw_fW_tmul`). This defines a strict embedding of crystals
-`GrandLoop.tensorHW : B(λ₁ + λ₂) → B(λ₂) ⊗ B(λ₁)` (in the library's order of the tensor factors,
-`Crystal.tensor`), `u_{λ₁+λ₂} ↦ u_{λ₂} ⊗ u_{λ₁}`.
+(`GrandLoop.fTw_fW_tmul`). This defines a strict embedding of the crystals of the crystal bases
+`B(λ₁ + λ₂) → B(λ₂) ⊗ B(λ₁)` (in the library's order of the tensor factors, `Crystal.tensor`),
+`u_{λ₁+λ₂} ↦ u_{λ₂} ⊗ u_{λ₁}`. Iterating, and composing with the similarity
+`S : B(λ) → B((n + 1)λ)` of [Kas96] Thm. 3.1, gives the injective similarities
+`B(λ) → B(λ)^{⊗(n+1)}`, `u_λ ↦ u_λ ⊗ ⋯ ⊗ u_λ`, of [Kas96] proof of Thm. 4.1.
+
+## Main definitions
+
+* `GrandLoop.tensorHWHom`: the strict embedding `B(λ₁ + λ₂) → B(λ₂) ⊗ B(λ₁)`.
+* `GrandLoop.powHW`: the strict embedding `B((n + 1)λ) → B(λ)^{⊗(n+1)}`.
+
+## Main results
+
+* `GrandLoop.tensorHW_mkHW`: `[f̃_w v] ↦ [f̃_{w₂} v] ⊗ [f̃_{w₁} v]` when
+  `Φ(f̃_w v) ≡ f̃_{w₁} v ⊗ f̃_{w₂} v`.
+* `GrandLoop.ε_crystalHW_of_isStr`, `GrandLoop.φ_crystalHW_of_isStr`: `εᵢ`, `φᵢ` on `B(λ)`
+  from string data.
+* `GrandLoop.exists_similarityPowHW`: the similarities `B(λ) → B(λ)^{⊗(n+1)}`.
 
 ## Proof
 
-Well-definedness and injectivity on classes come from `TensorModule.mk_eq_of_tmul_sub_mem`; the
+Well-definedness of the embedding on classes comes from `TensorModule.mk_eq_of_tmul_sub_mem`; the
 compatibility with `f̃ᵢ` is the tensor product rule `GrandLoop.fT_tmul` together with the
-computation of `εᵢ`, `φᵢ` on `B(λ)` from string data (`GrandLoop.φ_crystalHW_of_isStr`).
--/
+computation of `εᵢ`, `φᵢ` from string data, and `Crystal.StrictHom.ofFMap`.
 
+## References
+
+* [Kas96] M. Kashiwara, *Similarity of crystal bases*, Contemp. Math. 194 (1996), 177–186.
+-/
 open LusztigF Pointwise TensorProduct
 
 noncomputable section

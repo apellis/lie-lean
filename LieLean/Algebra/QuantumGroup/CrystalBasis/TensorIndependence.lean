@@ -8,20 +8,27 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorModuleCrystal
 /-!
 # Pure tensors of basis classes
 
-Let `A ⊆ k` with `k = A[ϖ⁻¹]`, `ϖ` not a unit, and let `L₁ ⊆ M₁`, `L₂ ⊆ M₂` be free `A`-lattices
-spanning the `k`-vector spaces `M₁`, `M₂`, with `A/ϖA`-bases `B₁ ⊆ L₁/ϖL₁`, `B₂ ⊆ L₂/ϖL₂`. Then the
-classes of the pure tensors `x ⊗ y` (`[x] ∈ B₁`, `[y] ∈ B₂`) in `(L₁ ⊗ L₂)/ϖ(L₁ ⊗ L₂)` are nonzero
-and pairwise distinct (`TensorModule.mk_tmul_sub_mem_iff`, `TensorModule.mk_tmul_notMem`). No
-finite-dimensionality is needed (compare `IntegrableSl2.IsCrystalBase.tmulQ_injective`).
+Let `A ⊆ k` with `k = A[ϖ⁻¹]` and let `L₁ ⊆ M₁`, `L₂ ⊆ M₂` be free `A`-lattices spanning the
+`k`-vector spaces `M₁`, `M₂`, with `A/ϖA`-bases `B₁` of `L₁/ϖL₁` and `B₂` of `L₂/ϖL₂`. Then the
+classes of the pure tensors `x ⊗ y` (`[x] ∈ B₁`, `[y] ∈ B₂`) in `(L₁ ⊗ L₂)/ϖ(L₁ ⊗ L₂)` are
+nonzero and pairwise distinct. No finite-dimensionality is needed (compare
+`IntegrableSl2.IsCrystalBase.tmulQ_injective`).
+
+## Main results
+
+* `TensorModule.mul_eq_of_tmul_sub_mem`: if `x ⊗ y ≡ x' ⊗ y'` modulo `ϖ (L₁ ⊗ L₂)`, then
+  `p₁(x) p₂(y) = p₁(x') p₂(y')` for all `A`-linear `p₁ : L₁ → A/ϖA`, `p₂ : L₂ → A/ϖA`.
+* `TensorModule.mk_eq_of_tmul_sub_mem`: pure tensors of basis classes that agree modulo
+  `ϖ (L₁ ⊗ L₂)` have the same factors.
+* `TensorModule.mk_tmul_notMem`: pure tensors of basis classes are not in `ϖ (L₁ ⊗ L₂)`.
 
 ## Proof
 
-For `[x₀] ∈ B₁` the coordinate functional of `[x₀]` lifts (by projectivity of the free module
-`L₁`) to `f : L₁ → A`, which extends `k`-linearly to `M₁` (an `A`-basis of `L₁` is a `k`-basis of
-`M₁`). For a second such `g` on `M₂`, `F = f ⊗ g : M₁ ⊗ M₂ → k` maps `L₁ ⊗ L₂` into `A` and
-`ϖ(L₁ ⊗ L₂)` into `ϖA`, and `F(x ⊗ y) ≡ δ_{[x],[x₀]} δ_{[y],[y₀]}` modulo `ϖ` (our argument).
+Our argument: an `A`-linear functional on `L₁` extends `k`-linearly to `M₁`, since an `A`-basis
+of `L₁` is a `k`-basis of `M₁` (`TensorModule.exists_extend`); a lift `f` of the coordinate
+functional of `[x₀] ∈ B₁` and a lift `g` of that of `[y₀] ∈ B₂` give `f ⊗ g : M₁ ⊗ M₂ → k`, which
+maps `L₁ ⊗ L₂` into `A` and `ϖ (L₁ ⊗ L₂)` into `ϖA`.
 -/
-
 open TensorProduct Pointwise
 
 noncomputable section
