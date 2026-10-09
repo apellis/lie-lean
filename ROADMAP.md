@@ -2063,6 +2063,9 @@ nonvanishing at a wall, formal reality and the orthonormality of `B(∞)`, witho
 `GrandLoop/InfinityPsiEmb`: **the strict embeddings `Ψᵢ : B(∞) → B(∞) ⊗ Bᵢ`**, `f̃ᵢ*ᵐ b₀ ↦ b₀ ⊗ f̃ᵢᵐ bᵢ`, `u_∞ ↦ u_∞ ⊗ bᵢ` ([Kas93a] Thm. 2.2.1 (i),
 [KS97] Thm. 3.2.2 (1); `psiInfHom`, `psiInf_injective`, `psiInf_one`), with image in `B(∞) × {f̃ᵢⁿ bᵢ}` and some `n > 0` for `b ≠ u_∞`
 (`psiInf_snd_nonpos`, `exists_psiInf_snd_neg`).
+`GrandLoop/InfinityPsiStar`: `*` and `f̃ᵢ* = * f̃ᵢ *` on `B(∞)` (`starInf`, `fsInf`); if `Ψᵢ(b) = b' ⊗ f̃ᵢⁿ bᵢ` then `εᵢ(b*) = n`, `εᵢ(b'*) = 0`, `b = f̃ᵢ*ⁿ b'`
+(`psiInf_star`), `Ψᵢ(f̃ᵢ* b) = b' ⊗ f̃ᵢⁿ⁺¹ bᵢ` (`psiInf_fsInf`), `Im Ψᵢ = {b ⊗ f̃ᵢⁿ bᵢ | εᵢ(b*) = 0}` (`exists_psiInf_eq_iff`) and uniqueness of `Ψᵢ`
+(`eq_psiInfHom`) ([Kas93a] Thm. 2.2.1 (i)–(iii), [KS97] Thm. 3.2.2).
 `Crystal/KashiwaraSaito`: **the Kashiwara–Saito characterization** ([KS97] Prop. 3.2.3): two crystals with the data (1)–(7) (`Crystal.KSData`: weights in `Q₋`,
 a unique element `b₀` of weight `0` with `εᵢ(b₀) = 0`, integral `εᵢ`, strict embeddings `Ψᵢ : B → B ⊗ Bᵢ` with image in `B × {f̃ᵢⁿ bᵢ}` and some `n > 0` for `b ≠ b₀`) are
 isomorphic when the simple roots are independent (`Crystal.KSData.equiv`; our proof, by induction on word length instead of the infinite tensor product of [KS97]).
