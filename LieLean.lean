@@ -262,6 +262,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Basic
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Embedding
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Head
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropA
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropB
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Tensor
 import LieLean.Algebra.QuantumGroup.CrystalBasis.HighestWeightLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integrable
