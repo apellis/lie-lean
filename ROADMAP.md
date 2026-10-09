@@ -1936,6 +1936,10 @@ bounded depth (`GrandLoop.fT_tmul`, `eT_tmul`; [HK] Lemma 5.3.2 (2)).
 with `S f̃ᵢ ≡ f̃ᵢ S` (`GrandLoop.Sh_fT_sub_mem`; Lemma 5.3.6), the tensor rule on `f̃`-words
 (`fT_fW_tmul`), `f̃_w (v ⊗ v) ≡ v ⊗ f̃_w v` (`fTw_hwv_tmul`; Lemma 5.3.2 (7)) and Lemma 5.3.4
 (`fTw_fund`, for a fundamental weight).
+`PropA`: `A(r)` (`GrandLoop.propA_zero`, `propA_one`, `propA_add_two`; [HK] Lemmas 5.3.7, 5.3.8,
+Prop. 5.3.9), by descending induction on `N` in `ẽᵢ L(μ) ⊆ ϖ^{-N} L(μ)` over the finite set of the
+given weight and the fundamental weights (the uniform bound used in [HK] is not justified there;
+see the module docstring).
 `CrystalBasis/TensorCrystalEquiv.lean`: Kashiwara's tensor product rule on classes
 (`IntegrableSl2.IsCrystalBase.fTildeQ_tmulQ`, `eTildeQ_tmulQ`; at the `U`-level
 `TensorModule.fQ_tmulL`, `eQ_tmulL`) and **the crystal of `B₁ ⊗ B₂` is the tensor product of
