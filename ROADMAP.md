@@ -836,6 +836,17 @@ induction): the kernel of `η_V` is killed by `T` (naturality of the adjunction 
 `T` is faithful on the block since `ch T' T V = ch V` (`character_translation_translation_of_sameFacet`,
 Cor. 7.12 with `stabilizerIndex_eq_one`); injectivity and equal characters give bijectivity
 (`IsCategoryO.bijective_of_injective_of_character_eq`).
+**Projectives in `𝒪`** (`KacMoody/Projective.lean`, Humphreys GSM 94 §3.8; finite type,
+algebraically closed characteristic-zero field): `IsProjectiveO` (lifting along surjections of
+modules in `𝒪`, in a fixed universe), closure under retracts; `IsDominant`
+(`⟨λ + ρ, β^∨⟩ ∉ ℤ_{<0}`) and `IsDominant.eq_zero_of_apply_eq` (dominant weights are maximal in
+their dot orbit); Prop. 3.8 (a) `VermaModule.isProjectiveO` (and `isProjectiveO_of_forall` for
+weights maximal in their dot orbit; via central blocks and Harish-Chandra linkage); Prop. 3.8 (b)
+`IsProjectiveO.tensorProduct` (`P ⊗ L`, `L` finite-dimensional; naturality
+`tensorHomAdjunction_comp`); `exists_forall_add_nsmul_rho` (`λ + nρ` maximal in its dot orbit
+for large `n`; reconstructed via `ρ - wρ ∈ Q₊ \ {0}` for `w ≠ 1`,
+`eq_one_or_exists_sub_apply_eq_rootOf`) and `exists_isProjectiveO_surjective_verma`
+(`M(λ + nρ) ⊗ L(nρ)^* ↠ M(λ)`, the first step of Thm. 3.8).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
