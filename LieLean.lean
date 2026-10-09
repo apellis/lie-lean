@@ -274,6 +274,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityForm
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityKS
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinitySimilarity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.HighestWeightSimilarity
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.HighestWeightTensor
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityProj
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityPsi
@@ -286,6 +287,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityStarOps
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityString
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityWall
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Main
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PathComparison
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Projection
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropA
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropB
@@ -309,6 +311,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.StringCounts
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorCrystal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorCrystalBase
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorCrystalEquiv
+import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorIndependence
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorIntegrable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorModuleCrystal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorPiece
@@ -527,6 +530,7 @@ import LieLean.RepresentationTheory.Crystal.WeylGroupAction
 import LieLean.RepresentationTheory.Crystal.BraidA2
 import LieLean.RepresentationTheory.Crystal.Folding
 import LieLean.RepresentationTheory.Crystal.Levi
+import LieLean.RepresentationTheory.Crystal.MapDatum
 import LieLean.RepresentationTheory.Crystal.Path.Normal
 import LieLean.RingTheory.MvPolynomial.EulerIdentity
 import LieLean.RingTheory.MvPolynomial.LowestWeight
