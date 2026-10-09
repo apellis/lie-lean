@@ -1868,6 +1868,11 @@ the Shapovalov form on `M_q(Λ)` (symmetric via `χ ∘ ρ = χ`, radical `M'_q(
 nondegenerate symmetric contravariant form on `L_q(Λ)` with `(v_Λ, v_Λ) = 1`, unique
 (`IrreducibleModule.form`, `eq_smul_form_of_isContravariant`; [Lus] Prop. 19.1.2), and tensor
 products of contravariant forms (`TensorModule.isContravariant_form`).
+`QuantumGroup/HighestWeightMaps.lean`: universal properties of `M_q(Λ)` and (for `Λ` dominant,
+`v` transcendental) `L_q(Λ)` (`VermaModule.lift`, `IrreducibleModule.lift`); adjoints of
+`U`-linear maps for nondegenerate symmetric contravariant forms (`adjointHom`); the maps
+`Φ : L_q(Λ₁+Λ₂) → L_q(Λ₁) ⊗ L_q(Λ₂)`, `Ψ = Φ*` with `Ψ ∘ Φ = 1` ([HK] (5.6)–(5.8);
+`tensorEmb`, `tensorProj`, `tensorProj_tensorEmb`) and the `Fᵢ`-equivariant `S` (`tensorHead`).
 `CrystalBasis/TensorCrystalEquiv.lean`: Kashiwara's tensor product rule on classes
 (`IntegrableSl2.IsCrystalBase.fTildeQ_tmulQ`, `eTildeQ_tmulQ`; at the `U`-level
 `TensorModule.fQ_tmulL`, `eQ_tmulL`) and **the crystal of `B₁ ⊗ B₂` is the tensor product of
