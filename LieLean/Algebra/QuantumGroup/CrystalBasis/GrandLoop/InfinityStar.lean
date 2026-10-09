@@ -57,6 +57,11 @@ lemma formU_starU (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (u w : Um D v) :
   exact form_rev D v x y
 
 omit [CharZero k] [NeZero v] [DecidableEq I] in
+@[simp] lemma starU_starU (u : Um D v) : starU D v (starU D v u) = u := by
+  obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ u
+  rw [starU_mk, starU_mk, rev_rev]
+
+omit [CharZero k] [NeZero v] [DecidableEq I] in
 lemma starU_mem_Uw {ν : I →₀ ℕ} {u : Um D v}
     (hu : u ∈ Uw D v ν) : starU D v u ∈ Uw D v ν := by
   obtain ⟨y, hy, rfl⟩ := hu
@@ -133,43 +138,14 @@ lemma exists_pow_smul_mem_latInf {ν : I →₀ ℕ} {u : Um D v} (hu : u ∈ Uw
   exact hn Λ
 
 include hR in
-/-- **[Kas91] Prop. 5.1.3**: if the residue ring `A/ϖA` is formally real, then
-`L(∞) ∩ U⁻_{-ν} = {u ∈ U⁻_{-ν} | (u, u) ∈ A}`. Kashiwara states this for `A` the local ring of
-`ℚ(q)` at `q = 0` (residue field `ℚ`); the proof uses only the orthonormality of `B(∞)` modulo
-`ϖ` ([Kas91] Prop. 5.1.2) and formal reality. -/
-theorem mem_latInf_iff_formU_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] {ν : I →₀ ℕ}
-    {u : Um D v} (hu : u ∈ Uw D v ν) :
-    u ∈ latInf hvt A ↔
-      ∃ a : A, formU (pow_ne_one_of_transcendental' hvt) u u = algebraMap A k a := by
+/-- If `A/ϖA` is formally real, `x ∈ L(∞)` and `(x, x) ∈ ϖA`, then `x ∈ ϖL(∞)`: the form induced
+on `L(∞)/ϖL(∞)` is positive definite, `B(∞)` being orthonormal ([Kas91] Prop. 5.1.2 (iii)). -/
+theorem mem_smul_latInf_of_formU_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] {x : Um D v}
+    (hxL : x ∈ latInf hvt A) {b₀ : A}
+    (hxx : formU (pow_ne_one_of_transcendental' hvt) x x = algebraMap A k (ϖ * b₀)) :
+    x ∈ ϖ • latInf hvt A := by
   classical
-  refine ⟨fun h ↦ formU_mem (hR := hR) hinj hϖ hϖv hk hfund h h, fun ⟨a₀, ha₀⟩ ↦ ?_⟩
-  by_contra hnot
   set hv' := pow_ne_one_of_transcendental' hvt
-  have hex : ∃ n : ℕ, ϖ ^ n • u ∈ latInf hvt A :=
-    exists_pow_smul_mem_latInf (hR := hR) hinj hϖ hϖv hk hfund hu
-  set n := Nat.find hex with hn
-  have hxL : ϖ ^ n • u ∈ latInf hvt A := Nat.find_spec hex
-  have hn0 : n ≠ 0 := fun h ↦ hnot (by simpa [h] using hxL)
-  obtain ⟨m, hm⟩ := Nat.exists_eq_succ_of_ne_zero hn0
-  have hmL : ϖ ^ m • u ∉ latInf hvt A := Nat.find_min hex (by omega)
-  have hϖ0 : algebraMap A k ϖ ≠ 0 := by rw [hϖv]; exact inv_ne_zero (NeZero.ne v)
-  set x := ϖ ^ n • u with hx
-  -- `x ∉ ϖ L(∞)`
-  have hxS : x ∉ ϖ • latInf hvt A := by
-    intro h
-    obtain ⟨y, hy, hyx⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1 h
-    refine hmL ?_
-    have : y = ϖ ^ m • u := by
-      have e : (algebraMap A k ϖ) • y = (algebraMap A k ϖ) • (ϖ ^ m • u) := by
-        rw [algebraMap_smul, algebraMap_smul, hyx, hx, hm, pow_succ', mul_smul]
-      exact smul_right_injective _ hϖ0 e
-    exact this ▸ hy
-  -- `(x, x) ∈ ϖ A`
-  have hxx : formU hv' x x = algebraMap A k (ϖ * (ϖ ^ (2 * n - 1) * a₀)) := by
-    simp only [hx, ← algebraMap_smul k (ϖ ^ n) u, map_smul, LinearMap.smul_apply, ha₀,
-      smul_eq_mul]
-    have e2 : n + n = 2 * n - 1 + 1 := by omega
-    rw [← map_mul, ← map_mul, ← mul_assoc, ← mul_assoc, ← pow_add, ← pow_succ', e2]
   -- expansion of `x` in the `f̃_w 1`
   obtain ⟨c, hc⟩ := (Finsupp.mem_span_range_iff_exists_finsupp).1 hxL
   set W := c.support
@@ -231,7 +207,7 @@ theorem mem_latInf_iff_formU_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] {ν : 
   -- conclusion
   have hsum : ∑ s ∈ S, a s ^ 2 ∈ Ideal.span {ϖ} := by
     rw [Ideal.mem_span_singleton']
-    refine ⟨ϖ ^ (2 * n - 1) * a₀ - (t₁ + t₂) - ∑ s ∈ S, ∑ s' ∈ S, a s * a s' * e s s', ?_⟩
+    refine ⟨b₀ - (t₁ + t₂) - ∑ s ∈ S, ∑ s' ∈ S, a s * a s' * e s s', ?_⟩
     apply hinj
     have h1 := hxy'
     rw [hxx, hyy] at h1
@@ -243,7 +219,6 @@ theorem mem_latInf_iff_formU_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] {ν : 
     refine eq_zero_of_sum_sq_eq_zero S (fun s ↦ Ideal.Quotient.mk _ (a s)) ?_ s hs
     simp only [← map_pow, ← map_sum]
     exact Ideal.Quotient.eq_zero_iff_mem.2 hsum
-  refine hxS ?_
   have hyS : y ∈ ϖ • latInf hvt A := by
     rw [hy]
     refine Submodule.sum_mem _ fun s hs ↦ ?_
@@ -252,6 +227,46 @@ theorem mem_latInf_iff_formU_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] {ν : 
     exact Submodule.smul_mem_pointwise_smul _ _ _
       (Submodule.smul_mem _ _ (NegativePart.fWord_mem_latticeInf _ _ s))
   simpa using add_mem hxy hyS
+
+include hR in
+/-- **[Kas91] Prop. 5.1.3**: if the residue ring `A/ϖA` is formally real, then
+`L(∞) ∩ U⁻_{-ν} = {u ∈ U⁻_{-ν} | (u, u) ∈ A}`. Kashiwara states this for `A` the local ring of
+`ℚ(q)` at `q = 0` (residue field `ℚ`); the proof uses only the orthonormality of `B(∞)` modulo
+`ϖ` ([Kas91] Prop. 5.1.2) and formal reality. -/
+theorem mem_latInf_iff_formU_mem [IsFormallyReal (A ⧸ Ideal.span {ϖ})] {ν : I →₀ ℕ}
+    {u : Um D v} (hu : u ∈ Uw D v ν) :
+    u ∈ latInf hvt A ↔
+      ∃ a : A, formU (pow_ne_one_of_transcendental' hvt) u u = algebraMap A k a := by
+  classical
+  refine ⟨fun h ↦ formU_mem (hR := hR) hinj hϖ hϖv hk hfund h h, fun ⟨a₀, ha₀⟩ ↦ ?_⟩
+  by_contra hnot
+  set hv' := pow_ne_one_of_transcendental' hvt
+  have hex : ∃ n : ℕ, ϖ ^ n • u ∈ latInf hvt A :=
+    exists_pow_smul_mem_latInf (hR := hR) hinj hϖ hϖv hk hfund hu
+  set n := Nat.find hex with hn
+  have hxL : ϖ ^ n • u ∈ latInf hvt A := Nat.find_spec hex
+  have hn0 : n ≠ 0 := fun h ↦ hnot (by simpa [h] using hxL)
+  obtain ⟨m, hm⟩ := Nat.exists_eq_succ_of_ne_zero hn0
+  have hmL : ϖ ^ m • u ∉ latInf hvt A := Nat.find_min hex (by omega)
+  have hϖ0 : algebraMap A k ϖ ≠ 0 := by rw [hϖv]; exact inv_ne_zero (NeZero.ne v)
+  set x := ϖ ^ n • u with hx
+  -- `x ∉ ϖ L(∞)`
+  have hxS : x ∉ ϖ • latInf hvt A := by
+    intro h
+    obtain ⟨y, hy, hyx⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1 h
+    refine hmL ?_
+    have : y = ϖ ^ m • u := by
+      have e : (algebraMap A k ϖ) • y = (algebraMap A k ϖ) • (ϖ ^ m • u) := by
+        rw [algebraMap_smul, algebraMap_smul, hyx, hx, hm, pow_succ', mul_smul]
+      exact smul_right_injective _ hϖ0 e
+    exact this ▸ hy
+  -- `(x, x) ∈ ϖ A`
+  have hxx : formU hv' x x = algebraMap A k (ϖ * (ϖ ^ (2 * n - 1) * a₀)) := by
+    simp only [hx, ← algebraMap_smul k (ϖ ^ n) u, map_smul, LinearMap.smul_apply, ha₀,
+      smul_eq_mul]
+    have e2 : n + n = 2 * n - 1 + 1 := by omega
+    rw [← map_mul, ← map_mul, ← mul_assoc, ← mul_assoc, ← pow_add, ← pow_succ', e2]
+  exact hxS (mem_smul_latInf_of_formU_mem (hR := hR) hinj hϖ hϖv hk hfund hxL hxx)
 
 include hR in
 /-- **[Kas91] Prop. 5.2.4**: `L(∞)* = L(∞)`, when `A/ϖA` is formally real. -/
