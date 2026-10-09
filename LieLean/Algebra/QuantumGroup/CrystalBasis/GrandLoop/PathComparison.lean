@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.HighestWeightTensor
+import LieLean.Algebra.QuantumGroup.CrystalBasis.RealizationHom
 import LieLean.RepresentationTheory.Crystal.MapDatum
 import LieLean.RepresentationTheory.Crystal.Path.Normal
 import LieLean.RepresentationTheory.Crystal.Path.Similarity
@@ -27,6 +28,10 @@ unique isomorphism `u_λ ↦ π_{ψ λ}` ([Kas96] Thm. 4.1, for the path model).
 
 * `GrandLoop.existsUnique_equiv_pathCrystal`: `ψ_* B(λ) ≅ B(π_{ψ λ})`.
 * `GrandLoop.isNormal_crystalHW`: `ψ_* B(λ)` is normal (`Crystal.IsNormal`).
+* `GrandLoop.existsUnique_equiv_pathCrystal'`, `GrandLoop.isNormal_crystalHW'`: the same for the
+  standard real realization of the Cartan matrix and the morphism
+  `LusztigCartanDatum.RootDatum.stdHom`, which exists for every `X`-regular root datum; no
+  morphism of Cartan data is assumed.
 
 ## Proof
 
@@ -165,6 +170,35 @@ theorem isNormal_crystalHW (Λ : Dom R) :
   obtain ⟨Φ, -, -⟩ := existsUnique_equiv_pathCrystal hM ψ hinj hϖ hϖv hk hfund Λ
   exact (Matrix.Realization.isNormal_pathCrystal hM (isDominantIntegral_hom hM ψ Λ)).of_equiv
     Φ.symm
+
+section Std
+
+open Matrix.Realization
+
+/-- **The crystal of `L_q(λ)` is Littelmann's path crystal**, for the standard real realization
+`P` of the Cartan matrix: with `ψ = R.stdHom hR` (`LusztigCartanDatum.RootDatum.stdHom`, which
+exists because the root datum is `X`-regular), there is a unique isomorphism of crystals
+`ψ_* B(λ) ≅ B(π_{ψ λ})` with `u_λ ↦ π_{ψ λ}` ([Kas96] Thm. 4.1). -/
+theorem existsUnique_equiv_pathCrystal' (Λ : Dom R) :
+    ∃ Φ : Crystal.Equiv ((crystalHW hvt hR hinj hϖ hϖv hk hfund Λ).mapDatum (R.stdHom hR))
+        ((std D.cartanMatrix ℝ).pathCrystal D.isGeneralizedCartan_cartanMatrix
+          (isDominantIntegral_hom _ (R.stdHom hR) Λ)),
+      Φ (topHW hvt hR hinj hϖ Λ) = pathCrystalTop _ (isDominantIntegral_hom _ (R.stdHom hR) Λ) ∧
+        ∀ Φ' : Crystal.Equiv ((crystalHW hvt hR hinj hϖ hϖv hk hfund Λ).mapDatum (R.stdHom hR))
+            ((std D.cartanMatrix ℝ).pathCrystal D.isGeneralizedCartan_cartanMatrix
+              (isDominantIntegral_hom _ (R.stdHom hR) Λ)),
+          Φ' (topHW hvt hR hinj hϖ Λ) =
+            pathCrystalTop _ (isDominantIntegral_hom _ (R.stdHom hR) Λ) →
+          ∀ b, Φ' b = Φ b :=
+  existsUnique_equiv_pathCrystal _ (R.stdHom hR) hinj hϖ hϖv hk hfund Λ
+
+/-- **The crystal of `L_q(λ)` is normal**, with weights in the standard real realization of the
+Cartan matrix (`GrandLoop.existsUnique_equiv_pathCrystal'`). -/
+theorem isNormal_crystalHW' (Λ : Dom R) :
+    ((crystalHW hvt hR hinj hϖ hϖv hk hfund Λ).mapDatum (R.stdHom hR)).IsNormal :=
+  isNormal_crystalHW _ (R.stdHom hR) hinj hϖ hϖv hk hfund Λ
+
+end Std
 
 end GrandLoop
 
