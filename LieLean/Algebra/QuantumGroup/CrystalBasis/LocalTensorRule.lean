@@ -62,27 +62,25 @@ lemma nonneg_of_primitive {M : Type*} [AddCommGroup M] [Module k M] [Module (Qua
   exact h0 (IntegrableSl2.eq_zero_of_primitive_of_neg (V := nodeSl2 R v M hv hM i)
     (pow_d_ne_zero i) (pow_d_ne_one hv i) hp hE (by omega))
 
-/-- The string pieces through `x ⊗ y`: a submodule of `L₁ ⊗ L₂` containing `x ⊗ y` and stable
-under `ẽᵢ` and `f̃ᵢ`. -/
-theorem exists_stable_tmul (hf₁ : ∀ y ∈ L₁, kashiwaraF R v M₁ hv h₁ i y ∈ L₁)
+/-- The string pieces through `x ⊗ y`, given string decompositions of `x` and `y` by weights with
+components in `L₁`, `L₂`: a submodule of `L₁ ⊗ L₂` containing `x ⊗ y` and stable under `ẽᵢ` and
+`f̃ᵢ`. -/
+theorem exists_stable_tmul_of_strings (hf₁ : ∀ y ∈ L₁, kashiwaraF R v M₁ hv h₁ i y ∈ L₁)
     (hf₂ : ∀ y ∈ L₂, kashiwaraF R v M₂ hv h₂ i y ∈ L₂) {μ₁ μ₂ : Y →+ ℤ}
-    (he₁ : ∀ j : ℕ, ∀ y ∈ L₁, y ∈ weightSpace R v M₁ (μ₁ + j • R.root i) →
-      kashiwaraE R v M₁ hv h₁ i y ∈ L₁)
-    (he₂ : ∀ j : ℕ, ∀ y ∈ L₂, y ∈ weightSpace R v M₂ (μ₂ + j • R.root i) →
-      kashiwaraE R v M₂ hv h₂ i y ∈ L₂)
     [IsLocalRing A] {ϖ : A} (hϖ : ϖ ∈ IsLocalRing.maximalIdeal A)
-    (hϖv : algebraMap A k ϖ = v⁻¹)
-    {x : M₁} {y : M₂} (hx : x ∈ L₁) (hxw : x ∈ weightSpace R v M₁ μ₁) (hy : y ∈ L₂)
-    (hyw : y ∈ weightSpace R v M₂ μ₂) :
-    ∃ N : Submodule A (TensorModule k M₁ M₂), mk M₁ M₂ (x ⊗ₜ[k] y) ∈ N ∧
+    (hϖv : algebraMap A k ϖ = v⁻¹) {N₁ N₂ : ℕ} {η : ℕ → M₁} {ζ : ℕ → M₂}
+    (hηw : ∀ j : ℕ, η j ∈ weightSpace R v M₁ (μ₁ + j • R.root i)) (hηE : ∀ j, E R v i • η j = 0)
+    (hη2 : ∀ j : ℕ, η j ≠ 0 → 0 ≤ μ₁ (R.coroot i) + j)
+    (hζw : ∀ j : ℕ, ζ j ∈ weightSpace R v M₂ (μ₂ + j • R.root i)) (hζE : ∀ j, E R v i • ζ j = 0)
+    (hζ2 : ∀ j : ℕ, ζ j ≠ 0 → 0 ≤ μ₂ (R.coroot i) + j)
+    (hηL : ∀ j < N₁, η j ∈ L₁) (hζL : ∀ j < N₂, ζ j ∈ L₂) :
+    ∃ N : Submodule A (TensorModule k M₁ M₂),
+      mk M₁ M₂ ((∑ j ∈ range N₁, (nodeSl2 R v M₁ hv h₁ i).dF j (η j)) ⊗ₜ[k]
+        (∑ j ∈ range N₂, (nodeSl2 R v M₂ hv h₂ i).dF j (ζ j))) ∈ N ∧
       N ≤ lattice k A L₁ L₂ ∧
       (∀ z ∈ N, kashiwaraF R v _ hv (isIntegrable h₁ h₂) i z ∈ N) ∧
       (∀ z ∈ N, kashiwaraE R v _ hv (isIntegrable h₁ h₂) i z ∈ N) := by
   classical
-  obtain ⟨N₁, η, hηw, hηE, hη2, -, rfl⟩ := exists_sum_dF_weight hv h₁ i hxw
-  obtain ⟨N₂, ζ, hζw, hζE, hζ2, -, rfl⟩ := exists_sum_dF_weight hv h₂ i hyw
-  have hηL := mem_of_sum_mem_weight hv h₁ i hf₁ N₁ μ₁ η hηw hηE hη2 he₁ hx
-  have hζL := mem_of_sum_mem_weight hv h₂ i hf₂ N₂ μ₂ ζ hζw hζE hζ2 he₂ hy
   set a : ℕ → ℕ := fun s ↦ (μ₁ (R.coroot i) + 2 * s).toNat
   set b : ℕ → ℕ := fun t ↦ (μ₂ (R.coroot i) + 2 * t).toNat
   have hηp : ∀ s, η s ∈ (nodeSl2 R v M₁ hv h₁ i).prim (a s) := fun s ↦ by
@@ -134,6 +132,28 @@ theorem exists_stable_tmul (hf₁ : ∀ y ∈ L₁, kashiwaraF R v M₁ hv h₁ 
       rw [hz, map_zero]
     · push Not at h0
       exact kashiwaraE_mem_pieceLattice hv h₁ h₂ i hϖ hϖv (hηp st.1) (hζp st.2) h0.1 h0.2 hz
+
+/-- The string pieces through `x ⊗ y`: a submodule of `L₁ ⊗ L₂` containing `x ⊗ y` and stable
+under `ẽᵢ` and `f̃ᵢ`. -/
+theorem exists_stable_tmul (hf₁ : ∀ y ∈ L₁, kashiwaraF R v M₁ hv h₁ i y ∈ L₁)
+    (hf₂ : ∀ y ∈ L₂, kashiwaraF R v M₂ hv h₂ i y ∈ L₂) {μ₁ μ₂ : Y →+ ℤ}
+    (he₁ : ∀ j : ℕ, ∀ y ∈ L₁, y ∈ weightSpace R v M₁ (μ₁ + j • R.root i) →
+      kashiwaraE R v M₁ hv h₁ i y ∈ L₁)
+    (he₂ : ∀ j : ℕ, ∀ y ∈ L₂, y ∈ weightSpace R v M₂ (μ₂ + j • R.root i) →
+      kashiwaraE R v M₂ hv h₂ i y ∈ L₂)
+    [IsLocalRing A] {ϖ : A} (hϖ : ϖ ∈ IsLocalRing.maximalIdeal A)
+    (hϖv : algebraMap A k ϖ = v⁻¹)
+    {x : M₁} {y : M₂} (hx : x ∈ L₁) (hxw : x ∈ weightSpace R v M₁ μ₁) (hy : y ∈ L₂)
+    (hyw : y ∈ weightSpace R v M₂ μ₂) :
+    ∃ N : Submodule A (TensorModule k M₁ M₂), mk M₁ M₂ (x ⊗ₜ[k] y) ∈ N ∧
+      N ≤ lattice k A L₁ L₂ ∧
+      (∀ z ∈ N, kashiwaraF R v _ hv (isIntegrable h₁ h₂) i z ∈ N) ∧
+      (∀ z ∈ N, kashiwaraE R v _ hv (isIntegrable h₁ h₂) i z ∈ N) := by
+  obtain ⟨N₁, η, hηw, hηE, hη2, -, rfl⟩ := exists_sum_dF_weight hv h₁ i hxw
+  obtain ⟨N₂, ζ, hζw, hζE, hζ2, -, rfl⟩ := exists_sum_dF_weight hv h₂ i hyw
+  exact exists_stable_tmul_of_strings hv h₁ h₂ i hf₁ hf₂ hϖ hϖv hηw hηE hη2 hζw hζE hζ2
+    (mem_of_sum_mem_weight hv h₁ i hf₁ N₁ μ₁ η hηw hηE hη2 he₁ hx)
+    (mem_of_sum_mem_weight hv h₂ i hf₂ N₂ μ₂ ζ hζw hζE hζ2 he₂ hy)
 
 section Rule
 
