@@ -867,6 +867,13 @@ algebraically closed characteristic-zero field): `ProjectiveCover P hA λ` (`P(�
 `ProjectiveCover.eq_top_of_not_le_ker` (no proper submodule maps onto `L(λ)`), via Fitting's
 trichotomy `exists_fitting` and `eq_top_of_minimal` (reconstructed; Humphreys cites general
 results on artinian categories).
+**Theorem 3.9** (`KacMoody/ProjectiveCoverHom.lean`; generic for `IsProjectiveCover P V π`):
+(c) `ProjectiveCover.finrank_hom_eq_multiplicity` (`dim Hom(P(λ), M) = [M : L(λ)]` for `M ∈ 𝒪`, by
+exactness of `Hom(P(λ), −)` along a local composition series, `IsProjectiveCover.finrank_hom_eq_add`),
+`ProjectiveCover.finrank_hom_irreducible` (`dim Hom(P(λ), L(μ)) = δ_{λμ}`), (a)
+`ProjectiveCover.nonempty_equiv_of_indecomposable` (an indecomposable projective in `𝒪` mapping onto
+`L(λ)` is `≅ P(λ)`; the surjection onto a simple module is a hypothesis since `𝒪` here is Kac's
+category, without finite generation), `IsProjectiveCover.exists_retract`.
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,

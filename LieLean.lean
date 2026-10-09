@@ -101,6 +101,7 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.WeightShift
 import LieLean.Algebra.Lie.KacMoody.Kostant.Weights
 import LieLean.Algebra.Lie.KacMoody.Projective
 import LieLean.Algebra.Lie.KacMoody.ProjectiveCover
+import LieLean.Algebra.Lie.KacMoody.ProjectiveCoverHom
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
