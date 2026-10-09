@@ -2048,6 +2048,8 @@ injective on `{b | π̄_λ(b) ≠ 0}` (`fWi_sub_mem_of_fW_sub_mem`, [Jan] Prop. 
 `LusztigF/Reverse`: the anti-automorphism `σ` of `'f` (`rev`; `rᵢ ∘ σ = σ ∘ ᵢr`, `(σx, σy) = (x, y)`, `σ(J) ⊆ J`).
 `GrandLoop/InfinityForm`: polarization of `(L(∞), B(∞))` ([Kas91] Prop. 5.1.2): `(L(∞), L(∞)) ⊆ A` (`formU_mem`),
 `(f̃ᵢu, w) ≡ (u, ẽᵢw)` (`formU_kF_sub_kE_mem`), `B(∞)` orthonormal modulo `ϖ` (`formU_fWi_fWi`).
+`GrandLoop/InfinityStar`: for `A/ϖA` formally real, `L(∞) ∩ U⁻_{-ν} = {u | (u, u) ∈ A}` (`mem_latInf_iff_formU_mem`,
+[Kas91] Prop. 5.1.3) and `L(∞)* = L(∞)` for the anti-automorphism `*` of `U⁻` (`starU`, `starU_mem_latInf`, Prop. 5.2.4).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
