@@ -860,6 +860,13 @@ reconstructed, replacing `Ext¹(M(μ), M(λ)^∨) = 0`).
 `IsStdFiltered.verma_of_maximal` (Prop. 3.7 (a): a primitive vector of maximal weight `λ`
 generates a copy of `M(λ)` with quotient filtered by `s - {λ}`), `exists_isStdFiltered_range`
 and `exists_isStdFiltered_range_add` (Prop. 3.7 (b) for `p(X)`, `p² = p`, with `s = t + t'`).
+**Projective covers** (`KacMoody/ProjectiveCover.lean`, Humphreys GSM 94 §3.9; finite type,
+algebraically closed characteristic-zero field): `ProjectiveCover P hA λ` (`P(λ)`), the summand of
+`M(λ + nρ) ⊗ L(nρ)^*` cut out by an idempotent `e` with `π ∘ e ≠ 0` minimal for `dim (e ∘ End)`
+(`projectiveCoverIdem`); `ProjectiveCover.isProjectiveO`, `ProjectiveCover.surjective_π` and
+`ProjectiveCover.eq_top_of_not_le_ker` (no proper submodule maps onto `L(λ)`), via Fitting's
+trichotomy `exists_fitting` and `eq_top_of_minimal` (reconstructed; Humphreys cites general
+results on artinian categories).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
