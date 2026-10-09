@@ -2007,6 +2007,9 @@ proof of [HK] Exercise 5.13). Generic inputs in `DualLattice`
 large (`GrandLoop.tensorProj_tmul_hwv_mem`, the main step of [HK] Lemma 5.3.15), using
 `M^∨∨ = M` for finitely generated full lattices over a PID (`DualLattice.dual_dual_of_fg`,
 [HK] Lemma 5.3.13).
+`Projection`: the generators `f̃_{w₁} v ⊗ f̃_{i u} v` are `f̃ᵢ z` modulo `ϖ` (`fW_tmul_cons_sub_mem`,
+[HK] Lemma 5.3.2 (4), (5); cf. Prop. 5.3.5), and **[HK] Lemma 5.3.15**: `Ψ((L(λ₁) ⊗ L(λ₂))_{λ₁+λ₂-ν})
+⊆ L(λ₁ + λ₂)` for `λ₁` large (`GrandLoop.tensorProj_mem_lat_of_large`, Nakayama).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
