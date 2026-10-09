@@ -2043,6 +2043,8 @@ Prop. 10.11 (a)).
 `L(∞)/ϖL(∞)` with distinct elements of one weight independent (`span_BInf`, `coeff_mem_of_sum_fWi_mem`), `ẽᵢ B(∞) ⊆ B(∞) ∪ {0}`,
 `f̃ᵢ B(∞) ⊆ B(∞)`, `f̃ᵢ b = b' ↔ ẽᵢ b' = b` (`eQInf_mem_BInf`, `fQInf_mem_BInf`, `fQInf_eq_iff`), and the crystal `B(∞)`
 (`crystalInf`, [KS97] Example 3.1.3).
+`GrandLoop/InfinityProj`: `π̄_λ : B(∞) → B(λ) ∪ {0}` commutes with `ẽᵢ` where nonzero (`evq_kE_fWi_sub_mem`, [Jan] 10.13) and is
+injective on `{b | π̄_λ(b) ≠ 0}` (`fWi_sub_mem_of_fW_sub_mem`, [Jan] Prop. 10.14).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
