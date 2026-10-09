@@ -893,6 +893,18 @@ quotient occurring once), `isProjectiveO_centralBlock` and
 `exists_isStdFiltered_translation_verma`; the Hom spaces to simple modules are computed by
 adjunction, Thm. 3.9 (c) and Thm. 7.9 (reconstructed; Humphreys uses Verma's theorem and BGG
 reciprocity). The identification `x = w_λ w_μ°` is not formalized.
+**Self-dual projectives** (`KacMoody/SelfDualProjective.lean`, Humphreys GSM 94 Thm. 4.10, Thm. 7.16):
+`VermaModule.maxSubmodule_eq_bot_of_isAntidominant` (antidominant Verma modules are simple, one
+direction of Thm. 4.8); for antidominant `λ` and a weight `μ` with `λ - μ` integral and `μ + ρ`
+orthogonal to every root integral for `λ`: `nonempty_equiv_projectiveCover_of_singular`
+(`P(λ) ≅ T_μ^λ M(μ)`), Thm. 7.16 (a) `nonempty_equiv_restrictedDual_projectiveCover_of_singular`
+(`P(λ) ≅ P(λ)^∨`) and (b) `multiplicity_verma_weylDot_of_singular`, `count_projectiveCover_of_singular`
+(`[M(w·λ) : L(λ)] = 1`, `(P(λ) : M(w·λ)) = 1` for `w ∈ W_[λ]`); Thm. 4.10 for integral `λ`
+(`μ = -ρ`): `exists_nonempty_equiv_projectiveCover_of_integral`,
+`nonempty_equiv_restrictedDual_projectiveCover_of_integral`, `multiplicity_verma_weylDot_of_integral`.
+Reconstructed via Prop. 7.13 and adjunction. Such a `μ` need not exist for non-integral `λ` (the
+coroots of the integral roots can span a non-saturated sublattice, e.g. type `A₁ × A₁` inside
+`B₂`); Thm. 7.16 for all antidominant `λ` (Irving's wall-crossing argument) remains open.
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
