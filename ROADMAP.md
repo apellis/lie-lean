@@ -1985,6 +1985,15 @@ given weight and the fundamental weights (the uniform bound used in [HK] is not 
 see the module docstring).
 `PropB`: `B(r)` (`GrandLoop.propB_zero`, `propB_one`, `propB_add_two`; [HK] Lemma 5.3.11,
 Prop. 5.3.12), with `G(r)` (`GrandLoop.PropG`) and `S f̃_w (v ⊗ v) ≡ f̃_w v` (`Sh_fTw_sub`).
+`QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
+member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
+(`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
+(`form_eq_shapZ_zero`, [Lus] 1.2.13 (a)), and on words of bounded length `G_z ≡ G_0` modulo `zᵢ`
+up to a fixed power of `ϖ` (`exists_shapZ_sub_mem`). `CrystalBasis/DualLattice.lean`: dual lattices
+of bilinear forms, their stability under perturbation (`DualLattice.dual_eq_of_sub`) and
+stabilization of decreasing lattices over a discrete valuation ring (`DualLattice.exists_stable`).
+These are the inputs for the comparison of `L(λ)` with its dual lattice ([HK] Lemma 5.3.15), whose
+printed proof relies on [HK] Exercise 5.13.
 `CrystalBasis/TensorCrystalEquiv.lean`: Kashiwara's tensor product rule on classes
 (`IntegrableSl2.IsCrystalBase.fTildeQ_tmulQ`, `eTildeQ_tmulQ`; at the `U`-level
 `TensorModule.fQ_tmulL`, `eQ_tmulL`) and **the crystal of `B₁ ⊗ B₂` is the tensor product of
