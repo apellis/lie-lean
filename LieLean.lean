@@ -276,6 +276,7 @@ import LieLean.Algebra.QuantumGroup.GabberKac.Quantum
 import LieLean.Algebra.QuantumGroup.GabberKac.SerreSpan
 import LieLean.Algebra.QuantumGroup.GabberKac.Specialization
 import LieLean.Algebra.QuantumGroup.GabberKac.VermaOperator
+import LieLean.Algebra.QuantumGroup.HighestWeightMaps
 import LieLean.Algebra.QuantumGroup.Hopf
 import LieLean.Algebra.QuantumGroup.Integrable
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Classical
