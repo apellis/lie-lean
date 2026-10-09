@@ -2052,6 +2052,10 @@ injective on `{b | π̄_λ(b) ≠ 0}` (`fWi_sub_mem_of_fW_sub_mem`, [Jan] Prop. 
 [Kas91] Prop. 5.1.3) and `L(∞)* = L(∞)` for the anti-automorphism `*` of `U⁻` (`starU`, `starU_mem_latInf`, Prop. 5.2.4).
 `GrandLoop/InfinityWall`: the Shapovalov forms at a wall (`⟨i, λ⟩ = 0`, `⟨j, λ⟩ ≫ 0`): `G_{zᵂ}(x, y) = (x, y⁰)` (`shapZ_zWall_eq_formU`),
 `(π_λ x, π_λ y)_λ ≡ (x, y⁰)` (`exists_form_evq_sub_formU`), and `π_λ(P) ∉ ϖL(λ)` for `P ∈ L(∞) ∖ ϖL(∞)`, `e''ᵢ P = 0` (`evq_notMem_smul_lat`).
+`GrandLoop/InfinitySlice`: `((z, ·) ⊗ 1)(y⁻ (x ⊗ y')) = (z, x) y⁻ y'` for `(z, ·)` vanishing below `x` (`TensorModule.prL_minusHom_smul_tmul`).
+`GrandLoop/InfinityStarB`: **`B(∞)* = B(∞)`** for `A/ϖA` formally real ([Kas93a] Thm. 2.1.1; `starU_fWi_sub_mem`, `exists_fWi_sub_starU_mem`), from
+[Kas93a] Prop. 2.1.2 (`rmulF_sub_mem_of_sub_mem`: `P fᵢ^{(m)} ∈ B(∞)` for `P ∈ B(∞)`, `e''ᵢ P = 0`), proved with `T = Φ ∘ π_{μ+λ}`, the slice formula, the
+nonvanishing at a wall, formal reality and the orthonormality of `B(∞)`, without `ℤ`-forms or global bases (our argument).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
