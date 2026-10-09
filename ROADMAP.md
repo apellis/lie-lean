@@ -905,6 +905,14 @@ orthogonal to every root integral for `λ`: `nonempty_equiv_projectiveCover_of_s
 Reconstructed via Prop. 7.13 and adjunction. Such a `μ` need not exist for non-integral `λ` (the
 coroots of the integral roots can span a non-saturated sublattice, e.g. type `A₁ × A₁` inside
 `B₂`); Thm. 7.16 for all antidominant `λ` (Irving's wall-crossing argument) remains open.
+*Maybe (future)*: Thm. 7.16 for all antidominant `λ`. Outline: (1) the Coxeter system of the integral Weyl
+group `W_[λ]` with its simple integral reflections (Humphreys Thm. 3.4, already formalized as a reflection group,
+needs the simple system and length function); (2) wall-crossing `Θ_s` for simple integral reflections at
+non-integral `λ` (generalize `TranslationWallCrossing` from `W` to `W_[λ]`); (3) injectivity of `P(λ)^∨` in `𝒪`
+(duality of `𝒪` exchanging projectives and injectives); (4) socles of Verma modules for non-integral weights
+(`soc M(w·λ) = L(λ)` for antidominant `λ`); (5) a Krull–Schmidt step for singular `λ` to identify `P(λ)` as a
+summand of an iterated wall-crossing of `M(λ)`; then Irving's argument: `P(λ)` is self-dual because it is a
+summand of `Θ_{s_1} ⋯ Θ_{s_k} M(λ)` and each `Θ_s` commutes with duality. Estimated several thousand lines.
 **`Ext¹` from projective presentations** (`KacMoody/ExtProjective.lean`): `extOne_eq_zero_of_isProjectiveO`
 (`Ext¹(P, N) = 0` for `P` projective in `𝒪`), `extOneEquivQuotient` and
 `nonempty_extOne_equiv_quotient_ker` (`Ext¹(C, N) ≅ Hom(A, N) / {g ∘ i}` for `0 → A → B → C → 0`
