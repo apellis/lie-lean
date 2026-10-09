@@ -414,6 +414,97 @@ theorem tensorHWHom_topHW (Λ₁ Λ₂ : Dom R) :
   rw [tensorEmb_fW]
   simp
 
+/-! ### Tensor powers: `B(nλ) → B(λ)^{⊗n}` and the similarities `B(λ) → B(λ)^{⊗n}` -/
+
+variable (hvt hR) in
+/-- The identification `B(λ) = B(λ')` for `λ = λ'`. -/
+def castHW {Λ Λ' : Dom R} (h : Λ = Λ') :
+    Crystal.StrictHom (crystalHW hvt hR hinj hϖ hϖv hk hfund Λ)
+      (crystalHW hvt hR hinj hϖ hϖv hk hfund Λ') := by
+  subst h
+  exact Crystal.StrictHom.id _
+
+lemma castHW_topHW {Λ Λ' : Dom R} (h : Λ = Λ') :
+    castHW hvt hR hinj hϖ hϖv hk hfund h (topHW hvt hR hinj hϖ Λ) = topHW hvt hR hinj hϖ Λ' := by
+  subst h
+  rfl
+
+omit [DecidableEq I] [NeZero v] [CharZero k] [Finite I] [IsDomain A]
+  [IsDiscreteValuationRing A] hinj hϖ hϖv hk hfund in
+lemma nsmulDom_one (Λ : Dom R) : nsmulDom R 1 Λ = Λ := Subtype.ext (one_nsmul _)
+
+omit [DecidableEq I] [NeZero v] [CharZero k] [Finite I] [IsDomain A]
+  [IsDiscreteValuationRing A] hinj hϖ hϖv hk hfund in
+lemma nsmulDom_succ (n : ℕ) (Λ : Dom R) : nsmulDom R (n + 1) Λ = nsmulDom R n Λ + Λ :=
+  Subtype.ext (by rw [nsmulDom_val, Dom.add_val, nsmulDom_val, succ_nsmul])
+
+variable (hvt hR) in
+/-- The strict embedding `B((n + 1) λ) → B(λ)^{⊗(n+1)}`, `u ↦ u ⊗ ⋯ ⊗ u`. -/
+def powHW (Λ : Dom R) : (n : ℕ) →
+    Crystal.StrictHom (crystalHW hvt hR hinj hϖ hϖv hk hfund (nsmulDom R (n + 1) Λ))
+      ((crystalHW hvt hR hinj hϖ hϖv hk hfund Λ).tensorPow (n + 1))
+  | 0 => ((Crystal.tensorUnit _).symm.toStrictHom).comp
+      (castHW hvt hR hinj hϖ hϖv hk hfund (nsmulDom_one Λ))
+  | n + 1 => ((Crystal.StrictHom.id _).tensorMap (powHW Λ n)).comp
+      ((tensorHWHom hvt hR hinj hϖ hϖv hk hfund (nsmulDom R (n + 1) Λ) Λ).comp
+        (castHW hvt hR hinj hϖ hϖv hk hfund (nsmulDom_succ (n + 1) Λ)))
+
+theorem powHW_topHW (Λ : Dom R) : ∀ n : ℕ,
+    powHW hvt hR hinj hϖ hϖv hk hfund Λ n (topHW hvt hR hinj hϖ (nsmulDom R (n + 1) Λ)) =
+      Crystal.TPow.replicate (topHW hvt hR hinj hϖ Λ) (n + 1)
+  | 0 => by
+    have h := castHW_topHW (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund (nsmulDom_one Λ)
+    change (Crystal.tensorUnit (crystalHW hvt hR hinj hϖ hϖv hk hfund Λ)).symm
+      (castHW hvt hR hinj hϖ hϖv hk hfund (nsmulDom_one Λ)
+        (topHW hvt hR hinj hϖ (nsmulDom R 1 Λ))) = _
+    rw [h]
+    rfl
+  | n + 1 => by
+    have h := castHW_topHW (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund (nsmulDom_succ (n + 1) Λ)
+    change ((tensorHWHom hvt hR hinj hϖ hϖv hk hfund (nsmulDom R (n + 1) Λ) Λ
+        (castHW hvt hR hinj hϖ hϖv hk hfund (nsmulDom_succ (n + 1) Λ)
+          (topHW hvt hR hinj hϖ (nsmulDom R (n + 2) Λ)))).1,
+      powHW hvt hR hinj hϖ hϖv hk hfund Λ n
+        (tensorHWHom hvt hR hinj hϖ hϖv hk hfund (nsmulDom R (n + 1) Λ) Λ
+          (castHW hvt hR hinj hϖ hϖv hk hfund (nsmulDom_succ (n + 1) Λ)
+            (topHW hvt hR hinj hϖ (nsmulDom R (n + 2) Λ)))).2) = _
+    rw [h, tensorHWHom_topHW, powHW_topHW Λ n]
+    rfl
+
+/-- `u_λ` is a highest weight element. -/
+lemma e_topHW (Λ : Dom R) (j : I) :
+    (crystalHW hvt hR hinj hϖ hϖv hk hfund Λ).e j (topHW hvt hR hinj hϖ Λ) = none := by
+  classical
+  rw [Option.eq_none_iff_forall_ne_some]
+  intro c hc
+  have hw := (crystalHW hvt hR hinj hϖ hϖv hk hfund Λ).wt_e j _ _ hc
+  obtain ⟨w, hw', rfl⟩ := exists_mkHW (hvt := hvt) Λ c
+  rw [topHW, wt_mkHW, wt_mkHW] at hw
+  have h1 : R.rootSum (wordWeight w + Finsupp.single j 1) = R.rootSum 0 := by
+    rw [R.rootSum_add, R.rootSum_single, one_nsmul, R.rootSum_zero]
+    simp only [wordWeight_nil, R.rootSum_zero, sub_zero,
+      LusztigCartanDatum.RootDatum.crystalDatum_root] at hw
+    have := congrArg (· - Λ.1) hw
+    simp only [sub_sub_cancel_left, add_sub_cancel_left] at this
+    rw [← neg_eq_iff_eq_neg.mpr this.symm]
+    abel
+  have h2 := congrArg (· j) (LusztigCartanDatum.RootDatum.rootSum_injective hR h1)
+  simp at h2
+
+/-- **The similarities `B(λ) → B(λ)^{⊗(n+1)}`** ([Kas96] proof of Thm. 4.1:
+`G_{n+1} ∘ S_{n+1}`), `u_λ ↦ u_λ ⊗ ⋯ ⊗ u_λ`; they are injective. -/
+theorem exists_similarityPowHW [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (Λ : Dom R) (n : ℕ) :
+    ∃ T : Crystal.Similarity (crystalHW hvt hR hinj hϖ hϖv hk hfund Λ)
+      ((crystalHW hvt hR hinj hϖ hϖv hk hfund Λ).tensorPow (n + 1)) (n + 1),
+      T (topHW hvt hR hinj hϖ Λ) = Crystal.TPow.replicate (topHW hvt hR hinj hϖ Λ) (n + 1) ∧
+      Function.Injective T := by
+  obtain ⟨S, hS⟩ := exists_similarityHW hinj hϖ hϖv hk hfund n.succ_pos Λ
+  refine ⟨S.compStrictHom (powHW hvt hR hinj hϖ hϖv hk hfund Λ n), ?_, ?_⟩
+  · rw [Crystal.Similarity.compStrictHom_apply, hS, powHW_topHW]
+  · exact Crystal.Similarity.injective_of_fWord _
+      (exists_fWord_crystalHW hvt hR hinj hϖ hϖv hk hfund Λ)
+      (e_topHW hinj hϖ hϖv hk hfund Λ)
+
 end GrandLoop
 
 end LieLean.QuantumGroup
