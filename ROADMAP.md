@@ -1890,8 +1890,8 @@ and `isSeminormal_crystal` ([HK] (4.9), (4.10), Prop. 4.2.11). Any commutative r
 (`IsCrystalBase.isCrystalBase_nodeSl2`), string bases (`linearIndependent_dF`, `span_dF`: the
 `F^{(j)} ηₜ` form a basis of `M` when the `ηₜ` form bases of the primitive spaces) and existence
 of crystal bases of every integrable `U_q(𝔰𝔩₂)`-module (`isCrystalBase_stringLattice`, `A ⊆ k`,
-`c` not a unit; [HK] Thm. 4.3.1 for finite-dimensional modules). Uniqueness, the tensor product
-rule and the grand loop are the next steps (tracking issue #34). `CrystalBasis/TensorSl2.lean`:
+`c` not a unit; [HK] Thm. 4.3.1 for finite-dimensional modules). The tensor product rule and the
+grand loop are treated below (tracking issue #34). `CrystalBasis/TensorSl2.lean`:
 the tensor product of integrable `U_q(𝔰𝔩₂)`-modules with Kashiwara's coproduct
 (`IntegrableSl2.tensor`; graded pieces = eigenspaces of `K ⊗ K`), with the divided powers on pure
 tensors (`tensor_dF_tmul`, `tensor_dE_tmul`). `CrystalBasis/{Valuation,TensorStrings}.lean`: orders
@@ -2022,6 +2022,9 @@ discrete valuation ring `A ⊆ k = A[ϖ⁻¹]` with `ϖ ↦ v⁻¹`, `v` transce
 `L_q(λ)` for every dominant `λ` (`GrandLoop.isCrystalBase`), with `L(λ)` free over `A` by its weight
 decomposition (`GrandLoop.free_lat`) and `B(λ)` linearly independent by `D(r)`
 (`GrandLoop.linearIndependent_base`).
+`Uniqueness`: a crystal lattice of `L_q(λ)` with `L_λ = A v_λ` is `L(λ)` (`GrandLoop.eq_lat_of_isCrystalLattice`,
+[HK] Lemma 5.2.2 (2)), and a crystal base `(L(λ), B)` with `v_λ + ϖ L(λ) ∈ B` has `B = B(λ)`
+(`GrandLoop.eq_base_of_isCrystalBase`, [HK] Lemma 5.2.3; our argument uses that `B(λ) ⊆ B` spans).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form

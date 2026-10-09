@@ -277,6 +277,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropDFG
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Purity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Stable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Tensor
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Uniqueness
 import LieLean.Algebra.QuantumGroup.CrystalBasis.HighestWeightLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integrable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.KashiwaraOperators
