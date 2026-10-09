@@ -158,6 +158,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationWallMultiplicity
 import LieLean.Algebra.Lie.KacMoody.TranslationFunctor
 import LieLean.Algebra.Lie.KacMoody.RestrictedDual
 import LieLean.Algebra.Lie.KacMoody.TranslationDuality
+import LieLean.Algebra.Lie.KacMoody.TranslationEquivalence
 import LieLean.Algebra.Lie.KacMoody.TranslationAdjunction
 import LieLean.Algebra.Lie.KacMoody.TranslationComposite
 import LieLean.Algebra.Lie.KacMoody.TranslationSimple

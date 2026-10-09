@@ -84,7 +84,8 @@ Further proved results include:
   `nonempty_hom_ker_equiv_extOne_wall`, with `Ext¹` relative to the Cartan subalgebra,
   `LieModule.ExtOne`), and wall-crossing functors on Verma and simple modules (§7.15,
   `wallCrossing_verma_shortExact`), with the adjunction morphism `M → Θ_s M` and shuffling
-  (`translationUnit`, `shuffling_exact`).
+  (`translationUnit`, `shuffling_exact`); within a facet, translation is an equivalence of
+  blocks, `id ≅ T_λ^μ T_μ^λ` naturally (Thm. 7.8, `bijective_translationUnit_of_sameFacet`).
 * **Littelmann paths:** Proposition 5.7, the straight-path concatenation theorem, and the
   isomorphism theorem for rational piecewise-linear dominant paths are proved. The crystal-level
   Littlewood–Richardson decomposition is unconditional over `ℝ` with finite-dimensional Cartan

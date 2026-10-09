@@ -826,8 +826,16 @@ naturality of the adjunction in the first variable, `translationAdjunction_comp_
 `not_injective_translationUnit` (`M ≠ 0`, `T M = 0`), the shuffling cokernel `shuffling` with
 `shuffling_exact` (`M → Θ M → Sh M → 0`) and functoriality `shufflingMap`, `shufflingMap_id`,
 `shufflingMap_comp`. Remaining: the independence of `Θ_s` from `μ` (Humphreys derives it from the
-classification of projective functors, §10.8). Remaining: the equivalence of blocks as a natural
-isomorphism of functors (only its values on Verma and simple modules are proved).
+classification of projective functors, §10.8).
+**Theorem 7.8 as a natural isomorphism** (`KacMoody/TranslationEquivalence.lean`, arbitrary
+weights): `bijective_translationUnit_of_sameFacet` — for `λ♮`, `μ♮` in the same facet, the
+adjunction morphism `η_V : V → T' T V` (natural by `translationUnit_naturality`) is bijective for
+every `V ∈ 𝒪` in the block of `μ`, `T = pr_{χ_λ}(pr_{χ_μ}(−) ⊗ L(ν))`, `T'` its adjoint (by
+`L(ν)^*`); the other composite by exchanging `λ, μ`. Proof (reconstructed, not Humphreys' length
+induction): the kernel of `η_V` is killed by `T` (naturality of the adjunction and exactness), and
+`T` is faithful on the block since `ch T' T V = ch V` (`character_translation_translation_of_sameFacet`,
+Cor. 7.12 with `stabilizerIndex_eq_one`); injectivity and equal characters give bijectivity
+(`IsCategoryO.bijective_of_injective_of_character_eq`).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
