@@ -270,6 +270,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Head
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Projection
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropA
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropB
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropC
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Purity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Stable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Tensor

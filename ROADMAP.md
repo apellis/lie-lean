@@ -2010,6 +2010,10 @@ large (`GrandLoop.tensorProj_tmul_hwv_mem`, the main step of [HK] Lemma 5.3.15),
 `Projection`: the generators `f̃_{w₁} v ⊗ f̃_{i u} v` are `f̃ᵢ z` modulo `ϖ` (`fW_tmul_cons_sub_mem`,
 [HK] Lemma 5.3.2 (4), (5); cf. Prop. 5.3.5), and **[HK] Lemma 5.3.15**: `Ψ((L(λ₁) ⊗ L(λ₂))_{λ₁+λ₂-ν})
 ⊆ L(λ₁ + λ₂)` for `λ₁` large (`GrandLoop.tensorProj_mem_lat_of_large`, Nakayama).
+`PropC`: **`C(r)`** (`GrandLoop.propC_zero`, `propC_one`, `propC_add_two`; [HK] Prop. 5.3.16), with
+`ẽᵢ (v ⊗ y) ≡ v ⊗ ẽᵢ y` (`eT_hwv_tmul_mem`, Lemma 5.3.11 (1)) and `f̃ᵢ ẽᵢ z ≡ z` for `ẽᵢ z ≢ 0`
+(`fT_eT_tmul_sub`, Lemma 5.3.2 (4)); the direction `⟸` goes through `λ₁ + Λⱼ` with `λ₁` large
+(`propC_backward_of`) and back to `λ` by `S ∘ Φ`.
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
