@@ -1957,6 +1957,8 @@ with `S f̃ᵢ ≡ f̃ᵢ S` (`GrandLoop.Sh_fT_sub_mem`; Lemma 5.3.6), the tenso
 Prop. 5.3.9), by descending induction on `N` in `ẽᵢ L(μ) ⊆ ϖ^{-N} L(μ)` over the finite set of the
 given weight and the fundamental weights (the uniform bound used in [HK] is not justified there;
 see the module docstring).
+`PropB`: `B(r)` (`GrandLoop.propB_zero`, `propB_one`, `propB_add_two`; [HK] Lemma 5.3.11,
+Prop. 5.3.12), with `G(r)` (`GrandLoop.PropG`) and `S f̃_w (v ⊗ v) ≡ f̃_w v` (`Sh_fTw_sub`).
 `CrystalBasis/TensorCrystalEquiv.lean`: Kashiwara's tensor product rule on classes
 (`IntegrableSl2.IsCrystalBase.fTildeQ_tmulQ`, `eTildeQ_tmulQ`; at the `U`-level
 `TensorModule.fQ_tmulL`, `eQ_tmulL`) and **the crystal of `B₁ ⊗ B₂` is the tensor product of
