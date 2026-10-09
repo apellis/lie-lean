@@ -2002,6 +2002,11 @@ valuation ring, `Λ_λ` is independent of `λ` for `λ` large (`GrandLoop.exists
 of the stable lattice for `G_λ` equals its dual for `G_0` (`GrandLoop.exists_dual_stLat_eq`; our
 proof of [HK] Exercise 5.13). Generic inputs in `DualLattice`
 (`exists_pow_smul_mem_of_mem_dual`, `exists_pow_smul_mem_dual`).
+`Purity`: the map `S' : M ⊗ V(λ₂) → M`, `x ⊗ y ↦ (v_{λ₂}, y) x` (`GrandLoop.tensorTail`,
+`Fᵢ`-equivariant up to `vᵢ^{-⟨i,λ₂⟩}`), and `Ψ(L(λ₁)_{λ₁-ν} ⊗ v_{λ₂}) ⊆ L(λ₁ + λ₂)` for `λ₁`
+large (`GrandLoop.tensorProj_tmul_hwv_mem`, the main step of [HK] Lemma 5.3.15), using
+`M^∨∨ = M` for finitely generated full lattices over a PID (`DualLattice.dual_dual_of_fg`,
+[HK] Lemma 5.3.13).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form

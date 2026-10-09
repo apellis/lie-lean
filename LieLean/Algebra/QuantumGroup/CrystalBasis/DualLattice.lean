@@ -8,6 +8,7 @@ import Mathlib.RingTheory.Artinian.Module
 import Mathlib.RingTheory.DiscreteValuationRing.TFAE
 import Mathlib.RingTheory.FiniteLength
 import Mathlib.RingTheory.OrderOfVanishing.Basic
+import Mathlib.LinearAlgebra.FreeModule.PID
 
 /-!
 # Lattices over a subring of a field: bounds, duals, stabilization
@@ -245,6 +246,64 @@ theorem exists_pow_smul_mem_dual (B : LinearMap.BilinForm k V) {M : Submodule A 
   rw [ha, apply_smul_right_A, pow_add, mul_smul, apply_smul_left_A, apply_smul_left_A,
     apply_smul_left_A]
   ring
+
+omit hk in
+/-- A finitely generated torsion-free lattice over a PID `A ⊆ k`. -/
+lemma isTorsionFree_of_injective [IsDomain A] (hinj : Function.Injective (algebraMap A k))
+    (M : Submodule A V) : Module.IsTorsionFree A M := ⟨fun r hr m₁ m₂ h ↦ by
+  have hr0 : algebraMap A k r ≠ 0 := fun h0 ↦ hr.ne_zero (hinj (by rw [h0, map_zero]))
+  refine Subtype.ext (smul_right_injective V hr0 ?_)
+  simpa [algebraMap_smul] using congrArg Subtype.val h⟩
+
+/-- Over a principal ideal domain `A ⊆ k` with `k = A[ϖ⁻¹]`, a finitely generated `A`-lattice
+spanning `V` is the `A`-span of a `k`-basis. -/
+theorem exists_basis_span_eq [IsDomain A] [IsPrincipalIdealRing A]
+    (hinj : Function.Injective (algebraMap A k)) (hϖ0 : algebraMap A k ϖ ≠ 0)
+    {M : Submodule A V} (hM : M.FG) (hspan : Submodule.span k (M : Set V) = ⊤) :
+    ∃ (n : ℕ) (b : Module.Basis (Fin n) k V), Submodule.span A (Set.range b) = M := by
+  classical
+  have : Module.Finite A M := Module.Finite.iff_fg.2 hM
+  have := isTorsionFree_of_injective hinj M
+  obtain ⟨n, bA⟩ := Module.basisOfFiniteTypeTorsionFree' (R := A) (M := M)
+  let b : Fin n → V := fun j ↦ (bA j : V)
+  have hspanA : Submodule.span A (Set.range b) = M := by
+    have : Set.range b = M.subtype '' Set.range bA := by
+      ext x; simp [b]
+    rw [this, ← Submodule.map_span, bA.span_eq, Submodule.map_top, Submodule.range_subtype]
+  have hli : LinearIndependent k b := by
+    rw [linearIndependent_iff']
+    intro s g hg j hj
+    choose m a ha using fun j ↦ hk (g j)
+    set N := Finset.univ.sup m
+    have hga : ∀ j, algebraMap A k (ϖ ^ N) * g j = algebraMap A k (ϖ ^ (N - m j) * a j) := by
+      intro j
+      have hle : m j ≤ N := Finset.le_sup (f := m) (Finset.mem_univ j)
+      rw [map_mul, ← ha, ← mul_assoc, ← map_mul, ← pow_add, Nat.sub_add_cancel hle]
+    have hzero : ∑ i ∈ s, (ϖ ^ (N - m i) * a i) • bA i = 0 := by
+      apply Subtype.ext
+      simp only [Submodule.coe_sum, Submodule.coe_smul_of_tower, Submodule.coe_zero]
+      have : ∑ i ∈ s, (ϖ ^ (N - m i) * a i) • b i =
+          algebraMap A k (ϖ ^ N) • ∑ i ∈ s, g i • b i := by
+        rw [Finset.smul_sum]
+        refine Finset.sum_congr rfl fun i _ ↦ ?_
+        rw [← algebraMap_smul k, ← hga, smul_smul]
+      rw [this, hg, smul_zero]
+    have h0 := linearIndependent_iff'.1 bA.linearIndependent s _ hzero j hj
+    have := hga j
+    rw [h0, map_zero] at this
+    exact (mul_eq_zero.1 this).resolve_left (by rw [map_pow]; exact pow_ne_zero _ hϖ0)
+  have hsp : ⊤ ≤ Submodule.span k (Set.range b) := by
+    rw [← hspan, ← hspanA, Submodule.span_span_of_tower]
+  exact ⟨n, Module.Basis.mk hli hsp, by rw [Module.Basis.coe_mk, hspanA]⟩
+
+/-- **`M^∨∨ = M`** for a finitely generated full lattice over a principal ideal domain and a
+symmetric nondegenerate form ([HK] Lemma 5.3.13). -/
+theorem dual_dual_of_fg [IsDomain A] [IsPrincipalIdealRing A]
+    (hinj : Function.Injective (algebraMap A k)) (hϖ0 : algebraMap A k ϖ ≠ 0)
+    {B : LinearMap.BilinForm k V} (hB : B.Nondegenerate) (hs : B.IsSymm) {M : Submodule A V}
+    (hM : M.FG) (hspan : Submodule.span k (M : Set V) = ⊤) : dual B (dual B M) = M := by
+  obtain ⟨n, b, hb⟩ := exists_basis_span_eq hk hinj hϖ0 hM hspan
+  rw [← hb, dual_dual_span hB hs b]
 
 end Bounds
 
