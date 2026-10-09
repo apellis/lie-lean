@@ -2039,6 +2039,10 @@ of `L(∞)` (`GrandLoop.evq_mem_lat_of_mem_latticeInf`, `GrandLoop.evq_fWord_mem
 and `u ∈ L(∞) ↔ π_λ(u) ∈ L(λ)`, `u ∈ ϖL(∞) ↔ π_λ(u) ∈ ϖL(λ)` on `U⁻_{-ν}` (`mem_latticeInf_iff`, `mem_smul_latInf_iff`;
 [Jan] Thm. 10.10 (a)); `ẽᵢ L(∞) ⊆ L(∞)` (`kashiwaraE_mem_latticeInf`, Thm. 10.10 (b)); `0 ∉ B(∞)` (`fWi_notMem`,
 Prop. 10.11 (a)).
+`GrandLoop/InfinityBase`: `(L(∞), B(∞))` is a crystal base of `U⁻` ([KS97] Def. 2.3.2; [Jan] 10.11, 10.12): `B(∞)` spans
+`L(∞)/ϖL(∞)` with distinct elements of one weight independent (`span_BInf`, `coeff_mem_of_sum_fWi_mem`), `ẽᵢ B(∞) ⊆ B(∞) ∪ {0}`,
+`f̃ᵢ B(∞) ⊆ B(∞)`, `f̃ᵢ b = b' ↔ ẽᵢ b' = b` (`eQInf_mem_BInf`, `fQInf_mem_BInf`, `fQInf_eq_iff`), and the crystal `B(∞)`
+(`crystalInf`, [KS97] Example 3.1.3).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form

@@ -268,6 +268,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Dual
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Embedding
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Existence
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Head
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityBase
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityCompare
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityString
