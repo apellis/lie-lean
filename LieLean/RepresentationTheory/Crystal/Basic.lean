@@ -23,6 +23,7 @@ Cartan datum, their morphisms, and the basic examples.
 * `Crystal D B`: a crystal structure on a type `B` over the Cartan datum `D`: maps
   `wt : B → X`, `εᵢ, φᵢ : B → ℤ ⊔ {-∞}` and Kashiwara operators `ẽᵢ, f̃ᵢ : B → B ⊔ {0}`.
 * `Crystal.eIter`, `Crystal.fIter`: the iterates `ẽᵢⁿ`, `f̃ᵢⁿ`.
+* `Crystal.fWord C l b`: `f̃_{i₁} ⋯ f̃_{iₖ} b` for a word `l = [i₁, …, iₖ]`.
 * `Crystal.Hom`, `Crystal.StrictHom`, `Crystal.Equiv`: morphisms, strict morphisms and
   isomorphisms of crystals.
 * `Crystal.T D λ`: the crystal `T_λ = {t_λ}`; `Crystal.trivial D`: the crystal `C = {c}`;
@@ -290,6 +291,16 @@ lemma ε_fIter {n : ℕ} (h : C.fIter i n b = some b') : C.ε i b' = C.ε i b + 
 
 lemma φ_fIter {n : ℕ} (h : C.fIter i n b = some b') : C.φ i b = C.φ i b' + n :=
   C.φ_eIter ((C.fIter_eq_some_iff n b b').mp h)
+
+/-- `fWord [i₁, …, iₖ] b = f̃_{i₁} ⋯ f̃_{iₖ} b` (`none` if some step gives `0`). -/
+def fWord : List ι → B → Option B
+  | [], b => some b
+  | j :: l, b => (fWord l b).bind (C.f j)
+
+@[simp] lemma fWord_nil (b : B) : C.fWord [] b = some b := rfl
+
+lemma fWord_cons (j : ι) (l : List ι) (b : B) :
+    C.fWord (j :: l) b = (C.fWord l b).bind (C.f j) := rfl
 
 /-! ### Morphisms -/
 

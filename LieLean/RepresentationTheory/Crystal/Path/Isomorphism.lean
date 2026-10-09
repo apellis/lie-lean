@@ -18,7 +18,6 @@ it in the cases available so far.
 ## Main definitions
 
 * `Crystal.IsHighestWeight C b`: all `ẽᵢ b = 0`.
-* `Crystal.fWord C l b`: `f̃_{i₁} ⋯ f̃_{iₖ} b` for a word `l = [i₁, …, iₖ]`.
 * `Crystal.Equiv.ofInjective`: an injective strict morphism is an isomorphism onto its image.
 * `Crystal.Equiv.restrictCongr`, `Crystal.Equiv.restrictClosure`: restrictions of isomorphisms
   to stable subsets and to connected components.
@@ -86,16 +85,6 @@ variable {ι X : Type*} [AddCommGroup X] {D : CartanDatum ι X} {B B₁ B₂ : T
 
 /-- A highest weight element of a crystal: all `ẽᵢ b = 0`. -/
 def IsHighestWeight (b : B) : Prop := ∀ i, C.e i b = none
-
-/-- `fWord [i₁, …, iₖ] b = f̃_{i₁} ⋯ f̃_{iₖ} b` (`none` if some step gives `0`). -/
-def fWord : List ι → B → Option B
-  | [], b => some b
-  | i :: l, b => (fWord l b).bind (C.f i)
-
-@[simp] lemma fWord_nil (b : B) : C.fWord [] b = some b := rfl
-
-lemma fWord_cons (i : ι) (l : List ι) (b : B) :
-    C.fWord (i :: l) b = (C.fWord l b).bind (C.f i) := rfl
 
 variable {C}
 
