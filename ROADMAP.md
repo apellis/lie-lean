@@ -874,6 +874,12 @@ exactness of `Hom(P(λ), −)` along a local composition series, `IsProjectiveCo
 `ProjectiveCover.nonempty_equiv_of_indecomposable` (an indecomposable projective in `𝒪` mapping onto
 `L(λ)` is `≅ P(λ)`; the surjection onto a simple module is a hypothesis since `𝒪` here is Kac's
 category, without finite generation), `IsProjectiveCover.exists_retract`.
+**Dual Verma modules and Thm. 3.7** (`KacMoody/DualVerma.lean`): `isCategoryO_restrictedDual`,
+`multiplicity_restrictedDual` (`V^∨ ∈ 𝒪` with `[V^∨ : L(ν)] = [V : L(ν)]`, Humphreys §3.2),
+`finrank_primitiveVectors_restrictedDual` (`dim Hom(M(μ), V^∨) = dim (V/𝔫₋V)_μ`), the swap
+`dualSwap : Hom(V, W^∨) ↪ Hom(W, V^∨)`, `finrank_hom_restrictedDual_verma`
+(`dim Hom(V, M(μ)^∨) = dim (V/𝔫₋V)_μ`) and **Thm. 3.7** `IsStdFiltered.count_eq_finrank_hom`
+(`(V : M(μ)) = dim Hom(V, M(μ)^∨)`; reconstructed via coinvariants instead of `Ext¹` vanishing).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
