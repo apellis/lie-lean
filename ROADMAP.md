@@ -1390,7 +1390,9 @@ image of an injective Levi morphism from a path crystal `B_J(ν)` of the standar
 `A_J` (`Crystal.leviPathCrystal`). Kashiwara's definition ([Kas94] §1.5, [Kas] §7.6) asks for
 the crystal of the crystal base of an integrable `U_q(𝔤_J)`-module; the two agree by the
 identification of `B_J(ν)` with crystal-base crystals (Kashiwara, Joseph), which is not
-formalized (the library has no crystal bases of `U_q`-modules). `IsNormal.reflectionPerm_mul_pow`
+formalized (crystal bases of the `L_q(λ)` exist and are unique, `GrandLoop.isCrystalBase`,
+`GrandLoop.eq_base_of_isCrystalBase`, but their crystals are not yet compared with path crystals).
+`IsNormal.reflectionPerm_mul_pow`
 (the Coxeter relations `(SᵢSⱼ)^{mᵢⱼ} = 1`, [Kas94] Thm. 7.2.2, transported along Levi morphisms
 from `pathBraidRelations` on the rank-two Levi path crystals; rank-two finite type from
 `Matrix.IsGeneralizedCartan.isFiniteCartan_of_mul_le_three`), `IsNormal.weylAction`
@@ -2187,8 +2189,18 @@ completed steps and continuation threads are:
   Normal crystals are defined relative to the path model (`Crystal.IsNormal`); `B(λ)`, disjoint
   unions and tensor products of normal crystals are normal, and Kashiwara's Weyl group action
   exists on every normal crystal (`Crystal.IsNormal.weylAction`). Not formalized: the
-  identification of `B_J(μ)` with crystals of crystal bases of `U_q(𝔤_J)`-modules (the library
-  has no crystal bases of `U_q`-modules).
+  identification of `B_J(μ)` with crystals of crystal bases of `U_q(𝔤_J)`-modules (crystal bases
+  of the `L_q(λ)` exist and are unique, see below; the comparison with path crystals, which needs
+  the uniqueness of normal highest-weight crystals (Kashiwara, Joseph), is open).
+- **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
+  (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
+  ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
+  `L_q(λ)` for every dominant `λ`, for `v` transcendental and a discrete valuation ring
+  `A ⊆ k = A[ϖ⁻¹]`, `ϖ ↦ v⁻¹`. The printed proof has gaps (the uniform bound in Lemmas 5.3.7, 5.3.8;
+  Exercise 5.13, used in Lemma 5.3.15), which are filled by our own arguments (`GrandLoop/PropA`,
+  `ShapovalovLimit`, `GrandLoop/{Stable,Dual,Purity}`). Remaining: uniqueness for arbitrary modules
+  in `𝒪_int` ([HK] Thm. 5.2.1; needs complete reducibility of integrable `U_q`-modules), `B(∞)`, and
+  the comparison with path crystals.
 - **Braid automorphisms `Tᵢ` in general** (M15): **`braidEquivOfGeneric`**: Lusztig's `Tᵢ` is an
   algebra automorphism (explicit reversal-conjugate inverse) at every node of every Cartan
   datum, in arbitrary rank, over any field and root-datum lattice, under explicit q-factorial
