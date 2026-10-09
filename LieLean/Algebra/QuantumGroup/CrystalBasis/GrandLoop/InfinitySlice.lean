@@ -452,6 +452,29 @@ theorem exists_mem_smul_latInf_of_tensorEmb_mem {ν : I →₀ ℕ} (hν : ν.de
   exact Submodule.smul_mem_pointwise_smul _ _ _ hP
 
 include hR in
+/-- **`T = Φ ∘ π_{μ+λ}` is injective modulo `ϖ`** on `L(∞) ∩ U⁻_{-ν}` for all `μ ≫ 0`. -/
+theorem exists_large_mem_smul_latInf_of_tensorEmb_mem {ν : I →₀ ℕ} (hν : ν.degree ≠ 0) :
+    ∃ N : ℕ, ∀ μ Λ₂ : Dom R, (∀ j, (N : ℤ) ≤ μ.1 (R.coroot j)) →
+      ∀ u ∈ latInf hvt A, u ∈ Uw D v ν →
+        tensorEmb hvt hR μ.2 Λ₂.2 (evq hvt (μ + Λ₂) u) ∈ ϖ • LL hvt hR A μ Λ₂ →
+          u ∈ ϖ • latInf hvt A := by
+  classical
+  have := Fintype.ofFinite I
+  obtain ⟨Λs, -, h⟩ := exists_mem_smul_latInf_of_tensorEmb_mem (hR := hR) hinj hϖ hϖv hk hfund hν
+  refine ⟨Finset.univ.sup fun j ↦ (Λs.1 (R.coroot j)).toNat, fun μ Λ₂ hμ ↦ ?_⟩
+  have hle : ∀ j, Λs.1 (R.coroot j) ≤ μ.1 (R.coroot j) := fun j ↦ by
+    have h1 : (Λs.1 (R.coroot j)).toNat ≤ Finset.univ.sup fun j ↦ (Λs.1 (R.coroot j)).toNat :=
+      Finset.le_sup (f := fun j ↦ (Λs.1 (R.coroot j)).toNat) (Finset.mem_univ j)
+    have h2 := hμ j
+    have h3 := Int.self_le_toNat (Λs.1 (R.coroot j))
+    omega
+  obtain ⟨Λ, hΛ⟩ : ∃ Λ : Dom R, Λ + Λs = μ := ⟨⟨μ.1 - Λs.1, fun j ↦ by
+    rw [AddMonoidHom.sub_apply]; exact sub_nonneg.2 (hle j)⟩, Subtype.ext (sub_add_cancel _ _)⟩
+  clear hle hμ
+  subst hΛ
+  exact h Λ Λ₂
+
+include hR in
 /-- `T(f̃ₛ 1) ≡ f̃_{s₁} v_μ ⊗ f̃_{s₂} v_λ` modulo `ϖ (L(μ) ⊗ L(λ))`. -/
 theorem exists_tensorEmb_evq_fWi_sub (Λ₁ Λ₂ : Dom R) (s : List I) :
     ∃ s₁ s₂ : List I, wordWeight s₁ + wordWeight s₂ = wordWeight s ∧

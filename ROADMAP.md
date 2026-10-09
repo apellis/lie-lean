@@ -2058,6 +2058,8 @@ injective on `{b | π̄_λ(b) ≠ 0}` (`fWi_sub_mem_of_fW_sub_mem`, [Jan] Prop. 
 nonvanishing at a wall, formal reality and the orthonormality of `B(∞)`, without `ℤ`-forms or global bases (our argument).
 `GrandLoop/InfinityStarOps`: `ẽᵢ* = * ẽᵢ *`, `f̃ᵢ*` on `U⁻` (`kEs`, `kFs`); for `j ≠ i` they commute exactly with `ẽⱼ`, `f̃ⱼ` (`kE_kEs`, `kF_kEs`, `kE_kFs`, `kF_kFs`;
 [Kas93a] Cor. 2.2.2 for `j ≠ i`, here by a direct computation), and `ẽⱼ`, `f̃ⱼ` preserve `ker e''ᵢ`.
+`GrandLoop/InfinityPsi`: `*`-string data of `B(∞)` (`exists_starStr`, unique by `eq_of_rmulF_sub_mem`), `εᵢ(π̄_λ b) = εᵢ(b)` (`kE_pow_of_isStr`), and the rule for `ẽᵢ` on
+`b = f̃ᵢ*ᵐ b₀`, `ẽᵢ* b₀ = 0` ([Kas93a] Thm. 2.2.1, `j = i`): `ẽᵢ b = f̃ᵢ*ᵐ ẽᵢ b₀` if `φᵢ(b₀) ≥ m`, `f̃ᵢ*ᵐ⁻¹ b₀` otherwise (`kE_rmulF`).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
