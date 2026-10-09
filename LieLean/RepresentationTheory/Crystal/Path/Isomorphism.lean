@@ -137,13 +137,6 @@ namespace StrictHom
 
 variable (ψ : StrictHom C₁ C₂)
 
-lemma fWord_apply (l : List ι) (b : B₁) : C₂.fWord l (ψ b) = (C₁.fWord l b).map ψ := by
-  induction l with
-  | nil => rfl
-  | cons i l ih =>
-    rw [fWord_cons, fWord_cons, ih]
-    cases C₁.fWord l b <;> simp [ψ.f_apply]
-
 lemma isHighestWeight_apply_iff {b : B₁} : C₂.IsHighestWeight (ψ b) ↔ C₁.IsHighestWeight b := by
   simp only [IsHighestWeight, ψ.e_apply, Option.map_eq_none_iff]
 

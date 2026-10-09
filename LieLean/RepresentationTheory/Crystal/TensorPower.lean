@@ -223,6 +223,26 @@ def unitTensor (C : Crystal D B) : Equiv ((unit.{u} D).tensor C) C where
     change C.f i b = (if C.ε i b < ⊥ then none else (C.f i b).map (PUnit.unit, ·)).map _
     simp [Option.map_map, Function.comp_def]
 
+/-- `B ⊗ T₀ ≅ B`. -/
+def tensorUnit (C : Crystal D B) : Equiv (C.tensor (unit.{u} D)) C where
+  toEquiv := _root_.Equiv.prodPUnit B
+  wt_map b := by simp [unit]
+  ε_map i b := by
+    obtain ⟨b, _⟩ := b
+    change C.ε i b = max (C.ε i b) (⊥ + _)
+    simp
+  e_map i b := by
+    obtain ⟨b, _⟩ := b
+    change C.e i b = (if ⊥ ≤ C.φ i b then (C.e i b).map (·, PUnit.unit) else none).map _
+    simp [Option.map_map, Function.comp_def]
+  f_map i b := by
+    obtain ⟨b, _⟩ := b
+    change C.f i b = (if ⊥ < C.φ i b then (C.f i b).map (·, PUnit.unit) else none).map _
+    split_ifs with h
+    · simp [Option.map_map, Function.comp_def]
+    · rw [not_lt, le_bot_iff] at h
+      simp [C.f_eq_none_of_φ_eq_bot h]
+
 /-! ### Tensor powers -/
 
 /-- The tensor power `B^{⊗n} = B ⊗ (B ⊗ (⋯ ⊗ (B ⊗ T₀)))`. -/
