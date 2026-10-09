@@ -294,6 +294,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropB
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropC
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropDFG
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Purity
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.RatFunc
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Stable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Tensor
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Uniqueness
@@ -304,6 +305,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Lattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.LocalStrings
 import LieLean.Algebra.QuantumGroup.CrystalBasis.LocalTensorRule
 import LieLean.Algebra.QuantumGroup.CrystalBasis.NegativePart
+import LieLean.Algebra.QuantumGroup.CrystalBasis.RealizationHom
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Sl2
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Sl2Structure
 import LieLean.Algebra.QuantumGroup.CrystalBasis.StringComparison

@@ -2096,7 +2096,12 @@ rule; `εᵢ`, `φᵢ` on `B(λ)` from string data, `ε_crystalHW_of_isStr`), `B
 data (`CartanDatum.Hom`, `Crystal.mapDatum`). `GrandLoop/PathComparison`: **the crystal of `L_q(λ)` is Littelmann's path crystal**
 ([Kas96] Thm. 4.1): for a realization `P` over `ℝ` and a morphism of Cartan data `ψ` from the root datum to `P`, `ψ_* B(λ) ≅ B(π_{ψ λ})` by a unique
 isomorphism `u_λ ↦ π_{ψ λ}` (`existsUnique_equiv_pathCrystal`, from `similarityDataHW` and `pathSimilarityData`); hence `ψ_* B(λ)` is normal
-(`isNormal_crystalHW`, via `Crystal.IsNormal.of_equiv`). Hypotheses: those of the grand loop and `A/ϖA` formally real (for `B(∞)`).
+(`isNormal_crystalHW`, via `Crystal.IsNormal.of_equiv`). Hypotheses: those of the grand loop and `A/ϖA` formally real (for `B(∞)`). Such a `ψ` exists for every `X`-regular root datum: `CrystalBasis/RealizationHom`
+constructs `LusztigCartanDatum.RootDatum.stdHom` into the standard real realization of the Cartan matrix (extending the root
+coordinates from the root lattice by Baer's criterion), giving `existsUnique_equiv_pathCrystal'`, `isNormal_crystalHW'` with no
+morphism assumed. `GrandLoop/RatFunc`: all hypotheses hold in Kashiwara's setting `k = ℚ(v)`, `A = ℚ[v⁻¹]_{(v⁻¹)}`, `ϖ = v⁻¹`,
+`A/ϖA = ℚ`, for every Cartan datum with finite index set and the root datum `LusztigCartanDatum.extendedRootDatum`
+(`Y = ℤ^I × ℤ^I`, `X`-regular with fundamental weights): `existsUnique_equiv_pathCrystal_ratFunc`, `isNormal_crystalHW_ratFunc`.
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
@@ -2276,7 +2281,10 @@ completed steps and continuation threads are:
   formally real: the similarities of `B(∞)` and `B(λ)`, the embeddings `B(λ₁ + λ₂) → B(λ₂) ⊗ B(λ₁)`,
   and `ψ_* B(λ) ≅ B(π_{ψ λ})` for every morphism of Cartan data `ψ` from the root datum to a
   realization over `ℝ` (`GrandLoop.existsUnique_equiv_pathCrystal`); hence the crystal of
-  `L_q(λ)` is normal (`GrandLoop.isNormal_crystalHW`).
+  `L_q(λ)` is normal (`GrandLoop.isNormal_crystalHW`). Such a `ψ` exists for every `X`-regular root datum
+  (`LusztigCartanDatum.RootDatum.stdHom`, `GrandLoop.existsUnique_equiv_pathCrystal'`), and all hypotheses
+  hold over `ℚ(v)` with `A` the local ring at `v = ∞`, for every Cartan datum
+  (`GrandLoop.isNormal_crystalHW_ratFunc`).
 - **Braid automorphisms `Tᵢ` in general** (M15): **`braidEquivOfGeneric`**: Lusztig's `Tᵢ` is an
   algebra automorphism (explicit reversal-conjugate inverse) at every node of every Cartan
   datum, in arbitrary rank, over any field and root-datum lattice, under explicit q-factorial
