@@ -1885,6 +1885,10 @@ products of contravariant forms (`TensorModule.isContravariant_form`).
 (`IrreducibleModule.lattice`, `base`); the `f̃`-words span `L_q(Λ)` over `k` (`span_fWord`, via
 `F_smul_mem_span_kashiwaraF`: `Fᵢ x` is a combination of `f̃ᵢ^{j+1} u`, `u ∈ M^{μ+jαᵢ}`); `L(Λ)` is
 graded and `f̃ᵢ`-stable.
+`CrystalBasis/TensorPiece.lean`: for `Eᵢ`-primitive `η ∈ M₁`, `ζ ∈ M₂`, the `A`-span of the
+`Fᵢ^{(s)} η ⊗ Fᵢ^{(t)} ζ` in `M₁ ⊗ M₂` is `ẽᵢ`, `f̃ᵢ`-stable and they act on it by the rank-one
+tensor product rule modulo `ϖ` (`TensorModule.kashiwaraF_piece_sub`, `kashiwaraE_piece_sub`), the
+local form of the rule used in the grand loop.
 `CrystalBasis/TensorCrystalEquiv.lean`: Kashiwara's tensor product rule on classes
 (`IntegrableSl2.IsCrystalBase.fTildeQ_tmulQ`, `eTildeQ_tmulQ`; at the `U`-level
 `TensorModule.fQ_tmulL`, `eQ_tmulL`) and **the crystal of `B₁ ⊗ B₂` is the tensor product of
