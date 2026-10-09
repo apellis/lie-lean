@@ -161,6 +161,93 @@ theorem dual_dual_span {ι : Type*} [Finite ι] {B : LinearMap.BilinForm k V}
   rw [Module.Basis.repr_self, LinearMap.BilinForm.dualBasis_repr_apply, hs.eq,
     LinearMap.BilinForm.apply_dualBasis_left, Finsupp.single_apply]
 
+
+lemma dual_antitone {B : LinearMap.BilinForm k V} {Λ Λ' : Submodule A V} (h : Λ ≤ Λ') :
+    dual B Λ' ≤ dual B Λ := fun _ hx y hy ↦ hx y (h hy)
+
+lemma apply_smul_left_A (B : LinearMap.BilinForm k V) (a : A) (x y : V) :
+    B (a • x) y = algebraMap A k a * B x y := by
+  rw [← algebraMap_smul k a x, map_smul, LinearMap.smul_apply, smul_eq_mul]
+
+lemma apply_smul_right_A (B : LinearMap.BilinForm k V) (a : A) (x y : V) :
+    B x (a • y) = algebraMap A k a * B x y := by
+  rw [← algebraMap_smul k a y, map_smul, smul_eq_mul]
+
+section Bounds
+
+variable (hk : ∀ c : k, ∃ (m : ℕ) (a : A), algebraMap A k (ϖ ^ m) * c = algebraMap A k a)
+include hk
+
+/-- For a nondegenerate form and a finitely generated `A`-lattice `M` spanning `V`,
+`M^∨ ⊆ ϖ^{-e} M` for some `e`. -/
+theorem exists_pow_smul_mem_of_mem_dual {B : LinearMap.BilinForm k V} (hB : B.Nondegenerate)
+    {M : Submodule A V} (hM : M.FG) (hspan : Submodule.span k (M : Set V) = ⊤) :
+    ∃ e : ℕ, ∀ x ∈ dual B M, ϖ ^ e • x ∈ M := by
+  classical
+  obtain ⟨s, rfl⟩ := hM
+  rw [Submodule.span_span_of_tower] at hspan
+  obtain ⟨t, hts, hspan_t, hli⟩ := exists_linearIndependent k (s : Set V)
+  have htfin : t.Finite := (s.finite_toSet).subset hts
+  have : Finite t := htfin.to_subtype
+  let b : Module.Basis t k V := Module.Basis.mk hli (by rw [Subtype.range_coe, hspan_t, hspan])
+  have hb : Set.range b = t := by
+    simp [b, Module.Basis.coe_mk]
+  have hmem : ∀ j : t, ∃ m : ℕ, ϖ ^ m • B.dualBasis hB b j ∈ Submodule.span A (s : Set V) :=
+    fun j ↦ exists_pow_smul_mem hk (by rw [Submodule.span_span_of_tower, hspan]; trivial)
+  choose m hm using hmem
+  have := Fintype.ofFinite t
+  refine ⟨Finset.univ.sup m, fun x hx ↦ ?_⟩
+  have hx' : x ∈ dual B (Submodule.span A (Set.range b)) :=
+    dual_antitone (Submodule.span_mono (by rw [hb]; exact hts)) hx
+  rw [dual_span_basis hB b] at hx'
+  clear hx
+  induction hx' using Submodule.span_induction with
+  | mem y hy =>
+    obtain ⟨j, rfl⟩ := hy
+    obtain ⟨d, hd⟩ := Nat.exists_eq_add_of_le (Finset.le_sup (f := m) (Finset.mem_univ j))
+    rw [hd, add_comm, pow_add, mul_smul]
+    exact Submodule.smul_mem _ _ (hm j)
+  | zero => simp
+  | add y z _ _ hy hz => rw [smul_add]; exact add_mem hy hz
+  | smul c y _ hy => rw [smul_comm]; exact Submodule.smul_mem _ _ hy
+
+/-- If `ϖ^c Λ ⊆ M` with `M` finitely generated, every vector lies in some `ϖ^{-n} Λ^∨`. -/
+theorem exists_pow_smul_mem_dual (B : LinearMap.BilinForm k V) {M : Submodule A V} (hM : M.FG)
+    {Λ : Submodule A V} {c : ℕ} (hΛ : ∀ y ∈ Λ, ϖ ^ c • y ∈ M) (x : V) :
+    ∃ n : ℕ, ϖ ^ n • x ∈ dual B Λ := by
+  classical
+  obtain ⟨s, rfl⟩ := hM
+  have hg : ∀ g : s, ∃ n : ℕ, B (ϖ ^ n • x) g ∈ (algebraMap A k).range := fun g ↦ by
+    obtain ⟨n, a, ha⟩ := hk (B x g)
+    exact ⟨n, a, by rw [apply_smul_left_A, ha]⟩
+  choose n hn using hg
+  refine ⟨Finset.univ.sup n + c, fun y hy ↦ ?_⟩
+  have key : ∀ z ∈ Submodule.span A (s : Set V),
+      B (ϖ ^ Finset.univ.sup n • x) z ∈ (algebraMap A k).range := by
+    intro z hz
+    induction hz using Submodule.span_induction with
+    | mem z hz =>
+      obtain ⟨d, hd⟩ := Nat.exists_eq_add_of_le
+        (Finset.le_sup (f := n) (Finset.mem_univ (⟨z, hz⟩ : s)))
+      obtain ⟨a, ha⟩ := hn ⟨z, hz⟩
+      refine ⟨ϖ ^ d * a, ?_⟩
+      rw [hd, add_comm, pow_add, mul_smul, apply_smul_left_A, map_mul, ha]
+    | zero => exact ⟨0, by simp⟩
+    | add z z' _ _ hz hz' =>
+      obtain ⟨a, ha⟩ := hz
+      obtain ⟨a', ha'⟩ := hz'
+      exact ⟨a + a', by rw [map_add, map_add, ha, ha']⟩
+    | smul c z _ hz =>
+      obtain ⟨a, ha⟩ := hz
+      exact ⟨c * a, by rw [apply_smul_right_A, map_mul, ha]⟩
+  obtain ⟨a, ha⟩ := key _ (hΛ y hy)
+  refine ⟨a, ?_⟩
+  rw [ha, apply_smul_right_A, pow_add, mul_smul, apply_smul_left_A, apply_smul_left_A,
+    apply_smul_left_A]
+  ring
+
+end Bounds
+
 /-! ### Perturbation -/
 
 /-- If `Λ^∨ ⊆ ϖ^{-e} Λ` for `B` (and every vector lies in some `ϖ^{-n} Λ^∨`), and `B' ≡ B` modulo

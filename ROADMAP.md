@@ -1997,6 +1997,11 @@ Prop. 5.3.12), with `G(r)` (`GrandLoop.PropG`) and `S f̃_w (v ⊗ v) ≡ f̃_w 
 ϖ^{-|ν| dᵢ} L(λ)` in depth `|ν|` (`pow_smul_F_smul_mem`), `Λ_{λ'+λ} ⊆ Λ_λ` by `E(r)`
 (`stLat_add_le`), uniform lower and upper bounds by the monomials `θ_w`, and, over a discrete
 valuation ring, `Λ_λ` is independent of `λ` for `λ` large (`GrandLoop.exists_stLat_eq`).
+`Dual`: on `U⁻_ν` the Shapovalov forms `G_λ` (`GrandLoop.gF`) and Lusztig's form `G_0`
+(`GrandLoop.g0`, nondegenerate by quantum Gabber–Kac, `nondegenerate_g0`); for `λ` large the dual
+of the stable lattice for `G_λ` equals its dual for `G_0` (`GrandLoop.exists_dual_stLat_eq`; our
+proof of [HK] Exercise 5.13). Generic inputs in `DualLattice`
+(`exists_pow_smul_mem_of_mem_dual`, `exists_pow_smul_mem_dual`).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form

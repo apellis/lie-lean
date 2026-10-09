@@ -264,6 +264,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Boson
 import LieLean.Algebra.QuantumGroup.CrystalBasis.CrystalBase
 import LieLean.Algebra.QuantumGroup.CrystalBasis.DualLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Basic
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Dual
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Embedding
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Head
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropA
