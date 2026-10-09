@@ -2018,6 +2018,10 @@ large (`GrandLoop.tensorProj_tmul_hwv_mem`, the main step of [HK] Lemma 5.3.15),
 (`mem_smul_lat_of_eK`, `mem_lat_of_eK`), `F(r)` (`propF_succ`, Prop. 5.3.19) and `G(r)` (`propG_succ`,
 Prop. 5.3.21). `Main`: **the grand loop**, `A(r)`, …, `G(r)` for all `r` (`GrandLoop.allProp`), for a
 discrete valuation ring `A ⊆ k = A[ϖ⁻¹]` with `ϖ ↦ v⁻¹`, `v` transcendental, and fundamental weights.
+`Existence`: **existence of crystal bases** ([HK] Thm. 5.1.1): `(L(λ), B(λ))` is a crystal base of
+`L_q(λ)` for every dominant `λ` (`GrandLoop.isCrystalBase`), with `L(λ)` free over `A` by its weight
+decomposition (`GrandLoop.free_lat`) and `B(λ)` linearly independent by `D(r)`
+(`GrandLoop.linearIndependent_base`).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
