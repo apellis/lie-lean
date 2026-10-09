@@ -1950,7 +1950,7 @@ at `vᵢ⁻¹` (`TensorModule.isCrystalBase_nodeSl2`).
 (`BosonModule.stringEquiv`), Kashiwara's operators `ẽ`, `f̃` with `ẽ f̃ = 1`, naturality, and their
 homogeneity for graded families (`map_eTilde_shift`) ([Kas] §3, [Jan] 10.1–10.2; own proof, no
 PBW basis). `CrystalBasis/NegativePart.lean`: `U⁻ = 'f ⧸ J` (`NegativePart`) with Kashiwara's
-`e'ᵢ = vᵢ² rᵢ ∘ σᵢ⁻¹` and `fᵢ` (`LusztigF.bosonE_bosonF`: `e'ᵢ fᵢ = vᵢ⁻² fᵢ e'ᵢ + 1`), the
+`e'ᵢ = ᵢr` (the operator controlling the strings of `U⁻ v_λ` for `λ ≫ 0` with lattices at `v = ∞`) and `fᵢ` (`LusztigF.bosonE_bosonF`: `e'ᵢ fᵢ = vᵢ² fᵢ e'ᵢ + 1`, a `q`-boson module at `q = vᵢ⁻¹`), the
 Kashiwara operators on `U⁻` (`NegativePart.kashiwaraE`, `kashiwaraF`; `ẽᵢ f̃ᵢ = 1`, homogeneity
 `kashiwaraE_mem_weightSpace`), and `L(∞)`, `B(∞)` (`latticeInf`, `baseInf`) for any
 `A`-algebra structure on `k`.
