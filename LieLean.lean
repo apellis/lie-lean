@@ -268,6 +268,8 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Dual
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Embedding
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Existence
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Head
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityCompare
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityString
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Main
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Projection
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropA
@@ -287,6 +289,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.LocalTensorRule
 import LieLean.Algebra.QuantumGroup.CrystalBasis.NegativePart
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Sl2
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Sl2Structure
+import LieLean.Algebra.QuantumGroup.CrystalBasis.StringComparison
 import LieLean.Algebra.QuantumGroup.CrystalBasis.StringCounts
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorCrystal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorCrystalBase

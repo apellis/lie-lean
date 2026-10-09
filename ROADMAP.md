@@ -2027,6 +2027,14 @@ decomposition (`GrandLoop.free_lat`) and `B(λ)` linearly independent by `D(r)`
 `Uniqueness`: a crystal lattice of `L_q(λ)` with `L_λ = A v_λ` is `L(λ)` (`GrandLoop.eq_lat_of_isCrystalLattice`,
 [HK] Lemma 5.2.2 (2)), and a crystal base `(L(λ), B)` with `v_λ + ϖ L(λ) ∈ B` has `B = B(λ)`
 (`GrandLoop.eq_base_of_isCrystalBase`, [HK] Lemma 5.2.3; our argument uses that `B(λ) ⊆ B` spans).
+`CrystalBasis/StringComparison.lean`, `GrandLoop/{InfinityString,InfinityCompare}`: towards `B(∞)`
+([Jan] 10.4–10.9 in this library's conventions). For `x = Σⱼ Fᵢ^{(j)} ηⱼ` with small components
+`f̃ᵢ Fᵢ^{(a)} x ≡ Fᵢ^{(a+1)} x` (`IntegrableSl2.IsKashiwaraStable.fTilde_dF_sub_mem`); `ᵢr ∘ rⱼ = rⱼ ∘ ᵢr`
+(`LusztigF.lDeriv_rDeriv`); `Eᵢ^m (y⁻ v_λ) = cᵢ^m (rᵢ^m y)⁻ v_λ` for `ᵢr(y) ∈ J`
+(`GrandLoop.E_pow_ev_of_lDeriv`); for homogeneous `u ∈ U⁻` and `⟨i, λ⟩` large,
+`π_λ(f̃ᵢ u) ≡ f̃ᵢ π_λ(u)`, `π_λ(ẽᵢ u) ≡ ẽᵢ π_λ(u)` modulo `ϖ L(λ)` (`GrandLoop.exists_evq_kashiwara_sub_mem`,
+[Jan] 10.6 (b)); for all dominant `λ`, `π_λ(L(∞)) ⊆ L(λ)` and `π_λ(f̃ᵢ b) ≡ f̃ᵢ π_λ(b)` on the generators
+of `L(∞)` (`GrandLoop.evq_mem_lat_of_mem_latticeInf`, `GrandLoop.evq_fWord_mem_and_sub_mem`; [Jan] Prop. 10.9).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
