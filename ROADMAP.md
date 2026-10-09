@@ -847,6 +847,13 @@ weights maximal in their dot orbit; via central blocks and Harish-Chandra linkag
 for large `n`; reconstructed via `ρ - wρ ∈ Q₊ \ {0}` for `w ≠ 1`,
 `eq_one_or_exists_sub_apply_eq_rootOf`) and `exists_isProjectiveO_surjective_verma`
 (`M(λ + nρ) ⊗ L(nρ)^* ↠ M(λ)`, the first step of Thm. 3.8).
+**Standard filtrations** (`KacMoody/StandardFiltration.lean`, Humphreys GSM 94 §3.6–3.7):
+`IsStdFiltered P N s` (`N` has a Verma flag with highest weights `s`), `isStdFiltered_of_fin`,
+`exists_isStdFiltered_tensorVerma` (Thm. 3.6 for `M(Λ) ⊗ Z`); the coinvariant form of Thm. 3.7,
+`IsStdFiltered.count_eq_coinvDim` (the multiplicity of `M(μ)` is `dim (N / 𝔫₋N)_μ`, so it is
+independent of the filtration), via `VermaModule.coinvDim_top` and `coinvDim_step`, whose key
+input is a `U(𝔫₋)`-linear section of each Verma step (`exists_section`, `negSpan_inf_le`;
+reconstructed, replacing `Ext¹(M(μ), M(λ)^∨) = 0`).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
