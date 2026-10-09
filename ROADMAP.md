@@ -2063,6 +2063,10 @@ nonvanishing at a wall, formal reality and the orthonormality of `B(∞)`, witho
 `GrandLoop/InfinityPsiEmb`: **the strict embeddings `Ψᵢ : B(∞) → B(∞) ⊗ Bᵢ`**, `f̃ᵢ*ᵐ b₀ ↦ b₀ ⊗ f̃ᵢᵐ bᵢ`, `u_∞ ↦ u_∞ ⊗ bᵢ` ([Kas93a] Thm. 2.2.1 (i),
 [KS97] Thm. 3.2.2 (1); `psiInfHom`, `psiInf_injective`, `psiInf_one`), with image in `B(∞) × {f̃ᵢⁿ bᵢ}` and some `n > 0` for `b ≠ u_∞`
 (`psiInf_snd_nonpos`, `exists_psiInf_snd_neg`).
+`Crystal/KashiwaraSaito`: **the Kashiwara–Saito characterization** ([KS97] Prop. 3.2.3): two crystals with the data (1)–(7) (`Crystal.KSData`: weights in `Q₋`,
+a unique element `b₀` of weight `0` with `εᵢ(b₀) = 0`, integral `εᵢ`, strict embeddings `Ψᵢ : B → B ⊗ Bᵢ` with image in `B × {f̃ᵢⁿ bᵢ}` and some `n > 0` for `b ≠ b₀`) are
+isomorphic when the simple roots are independent (`Crystal.KSData.equiv`; our proof, by induction on word length instead of the infinite tensor product of [KS97]).
+`GrandLoop/InfinityKS`: `B(∞)` satisfies them (`ksDataInf`), so any such crystal is `≅ B(∞)` (`equivInf`, `equivInf_b₀`).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
@@ -2235,8 +2239,10 @@ completed steps and continuation threads are:
   `A ⊆ k = A[ϖ⁻¹]`, `ϖ ↦ v⁻¹`. The printed proof has gaps (the uniform bound in Lemmas 5.3.7, 5.3.8;
   Exercise 5.13, used in Lemma 5.3.15), which are filled by our own arguments (`GrandLoop/PropA`,
   `ShapovalovLimit`, `GrandLoop/{Stable,Dual,Purity}`). Remaining: uniqueness for arbitrary modules
-  in `𝒪_int` ([HK] Thm. 5.2.1; needs complete reducibility of integrable `U_q`-modules), `B(∞)`, and
-  the comparison with path crystals.
+  in `𝒪_int` ([HK] Thm. 5.2.1; needs complete reducibility of integrable `U_q`-modules) and the
+  comparison with path crystals. For `B(∞)`: the crystal `crystalInf`, `B(∞)* = B(∞)`, the strict
+  embeddings `Ψᵢ` ([Kas93a] Thm. 2.2.1 (i)) and the Kashiwara–Saito characterization (`equivInf`)
+  are proved, for `A/ϖA` formally real.
 - **Braid automorphisms `Tᵢ` in general** (M15): **`braidEquivOfGeneric`**: Lusztig's `Tᵢ` is an
   algebra automorphism (explicit reversal-conjugate inverse) at every node of every Cartan
   datum, in arbitrary rank, over any field and root-datum lattice, under explicit q-factorial
