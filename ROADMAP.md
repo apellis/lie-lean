@@ -1993,6 +1993,10 @@ given weight and the fundamental weights (the uniform bound used in [HK] is not 
 see the module docstring).
 `PropB`: `B(r)` (`GrandLoop.propB_zero`, `propB_one`, `propB_add_two`; [HK] Lemma 5.3.11,
 Prop. 5.3.12), with `G(r)` (`GrandLoop.PropG`) and `S f̃_w (v ⊗ v) ≡ f̃_w v` (`Sh_fTw_sub`).
+`Stable`: the lattices `Λ_λ = {y ∈ U⁻_ν | y v_λ ∈ L(λ)}` (`GrandLoop.stLat`): `Fᵢ L(λ) ⊆
+ϖ^{-|ν| dᵢ} L(λ)` in depth `|ν|` (`pow_smul_F_smul_mem`), `Λ_{λ'+λ} ⊆ Λ_λ` by `E(r)`
+(`stLat_add_le`), uniform lower and upper bounds by the monomials `θ_w`, and, over a discrete
+valuation ring, `Λ_λ` is independent of `λ` for `λ` large (`GrandLoop.exists_stLat_eq`).
 `QuantumGroup/ShapovalovLimit.lean`: the Shapovalov form of `M_q(Λ)` pulled back to `'f` is the
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
