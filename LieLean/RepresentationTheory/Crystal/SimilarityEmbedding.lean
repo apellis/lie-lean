@@ -152,4 +152,65 @@ theorem Similarity.exists_of_isWeakEmbedding (hm : 0 < m) (hC : C.IsSeminormal)
   · change S b₀ = b₀'
     exact hj'.injective ((hSj b₀).trans (by rw [hσ, h₀]))
 
+section OfF
+
+variable {C : Crystal D B} {E : Crystal D BE}
+
+/-- A weight-preserving map of seminormal crystals commuting with the `f̃ᵢ` (as partial maps)
+commutes with the `f̃ᵢ`-strings. -/
+lemma fIter_map_of_f_map {G : B → BE} (hf : ∀ i b, E.f i (G b) = (C.f i b).map G) (i : ι) :
+    ∀ (n : ℕ) (b : B), E.fIter i n (G b) = (C.fIter i n b).map G
+  | 0, _ => rfl
+  | n + 1, b => by
+    rw [fIter_succ, fIter_succ, hf]
+    cases C.f i b with
+    | none => rfl
+    | some c => exact fIter_map_of_f_map hf i n c
+
+/-- A weight-preserving map of seminormal crystals commuting with the `f̃ᵢ` (as partial maps) is a
+strict morphism. -/
+def StrictHom.ofFMap (hC : C.IsSeminormal) (hE : E.IsSeminormal) (G : B → BE)
+    (hwt : ∀ b, E.wt (G b) = C.wt b) (hf : ∀ i b, E.f i (G b) = (C.f i b).map G) :
+    StrictHom C E :=
+  have hφ : ∀ i b, E.φ i (G b) = C.φ i b := fun i b ↦ by
+    obtain ⟨p, hp⟩ := hE.exists_φ_eq i (G b)
+    obtain ⟨q, hq⟩ := hC.exists_φ_eq i b
+    have h1 := (hE.isSome_fIter_iff (i := i) (b := G b) p).2 (by rw [hp])
+    have h2 := (hC.isSome_fIter_iff (i := i) (b := b) q).2 (by rw [hq])
+    rw [fIter_map_of_f_map hf, Option.isSome_map, hC.isSome_fIter_iff, hq] at h1
+    rw [← Option.isSome_map (f := G), ← fIter_map_of_f_map hf, hE.isSome_fIter_iff, hp] at h2
+    rw [hp, hq]
+    have h1' : p ≤ q := by exact_mod_cast h1
+    have h2' : q ≤ p := by exact_mod_cast h2
+    rw [le_antisymm h1' h2']
+  have hε : ∀ i b, E.ε i (G b) = C.ε i b := fun i b ↦ by
+    have h := hφ i b
+    rw [E.φ_eq, C.φ_eq, hwt] at h
+    obtain ⟨p, hp⟩ := hE.exists_ε_eq i (G b)
+    obtain ⟨q, hq⟩ := hC.exists_ε_eq i b
+    rw [hp, hq, ← WithBot.coe_natCast, ← WithBot.coe_natCast, ← WithBot.coe_add,
+      ← WithBot.coe_add, WithBot.coe_inj] at h
+    rw [hp, hq]
+    exact_mod_cast (add_right_cancel h)
+  { toFun := G
+    wt_map := hwt
+    ε_map := hε
+    e_map := fun i b ↦ by
+      cases he : C.e i b with
+      | some b' =>
+        have h1 : E.f i (G b') = some (G b) := by
+          rw [hf, (C.f_eq_some_iff i b' b).2 he]; rfl
+        exact (E.f_eq_some_iff i _ _).1 h1
+      | none =>
+        have h0 : E.ε i (G b) = 0 := by rw [hε, hC.ε_eq_zero he]
+        rw [Option.map_none, ← Option.not_isSome_iff_eq_none, ← eIter_one, hE.isSome_eIter_iff, h0]
+        exact_mod_cast (by norm_num : ¬ (1 : ℤ) ≤ 0)
+    f_map := hf }
+
+@[simp] lemma StrictHom.ofFMap_apply (hC : C.IsSeminormal) (hE : E.IsSeminormal) (G : B → BE)
+    (hwt : ∀ b, E.wt (G b) = C.wt b) (hf : ∀ i b, E.f i (G b) = (C.f i b).map G) (b : B) :
+    StrictHom.ofFMap hC hE G hwt hf b = G b := rfl
+
+end OfF
+
 end Crystal
