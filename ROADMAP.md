@@ -1900,6 +1900,12 @@ graded and `f̃ᵢ`-stable.
 `Fᵢ^{(s)} η ⊗ Fᵢ^{(t)} ζ` in `M₁ ⊗ M₂` is `ẽᵢ`, `f̃ᵢ`-stable and they act on it by the rank-one
 tensor product rule modulo `ϖ` (`TensorModule.kashiwaraF_piece_sub`, `kashiwaraE_piece_sub`), the
 local form of the rule used in the grand loop.
+`CrystalBasis/LocalStrings.lean`, `CrystalBasis/LocalTensorRule.lean`: string decompositions by
+weights (`exists_sum_dF_weight`); for lattices stable under `f̃ᵢ` and under `ẽᵢ` only on the weights
+above `μ` (`j ≥ 0` steps of `αᵢ`), the string vectors of `x ∈ L ∩ M^μ` lie in `L`
+(`mem_of_sum_mem_weight`, cf. [HK] Lemma 5.3.1 (1)), `ẽᵢ`, `f̃ᵢ` preserve `x ⊗ y ∈ L₁ ⊗ L₂`
+(`TensorModule.kashiwaraF_tmul_mem`), and act on string vectors by the tensor product rule modulo
+`ϖ` (`TensorModule.kashiwaraF_tmul_sub_mem`, `kashiwaraE_tmul_sub_mem`; cf. [HK] Lemma 5.3.2).
 `CrystalBasis/TensorCrystalEquiv.lean`: Kashiwara's tensor product rule on classes
 (`IntegrableSl2.IsCrystalBase.fTildeQ_tmulQ`, `eTildeQ_tmulQ`; at the `U`-level
 `TensorModule.fQ_tmulL`, `eQ_tmulL`) and **the crystal of `B₁ ⊗ B₂` is the tensor product of
