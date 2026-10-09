@@ -1881,6 +1881,10 @@ products of contravariant forms (`TensorModule.isContravariant_form`).
 `U`-linear maps for nondegenerate symmetric contravariant forms (`adjointHom`); the maps
 `Φ : L_q(Λ₁+Λ₂) → L_q(Λ₁) ⊗ L_q(Λ₂)`, `Ψ = Φ*` with `Ψ ∘ Φ = 1` ([HK] (5.6)–(5.8);
 `tensorEmb`, `tensorProj`, `tensorProj_tensorEmb`) and the `Fᵢ`-equivariant `S` (`tensorHead`).
+`CrystalBasis/HighestWeightLattice.lean`: `L(Λ) = Σ A f̃_{i₁} ⋯ f̃_{iᵣ} v_Λ` and `B(Λ)`
+(`IrreducibleModule.lattice`, `base`); the `f̃`-words span `L_q(Λ)` over `k` (`span_fWord`, via
+`F_smul_mem_span_kashiwaraF`: `Fᵢ x` is a combination of `f̃ᵢ^{j+1} u`, `u ∈ M^{μ+jαᵢ}`); `L(Λ)` is
+graded and `f̃ᵢ`-stable.
 `CrystalBasis/TensorCrystalEquiv.lean`: Kashiwara's tensor product rule on classes
 (`IntegrableSl2.IsCrystalBase.fTildeQ_tmulQ`, `eTildeQ_tmulQ`; at the `U`-level
 `TensorModule.fQ_tmulL`, `eQ_tmulL`) and **the crystal of `B₁ ⊗ B₂` is the tensor product of
