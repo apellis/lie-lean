@@ -364,6 +364,14 @@ lemma e_apply (ψ : StrictHom C₁ C₂) (i : ι) (b : B₁) : C₂.e i (ψ b) =
 lemma f_apply (ψ : StrictHom C₁ C₂) (i : ι) (b : B₁) : C₂.f i (ψ b) = (C₁.f i b).map ψ :=
   ψ.f_map i b
 
+lemma fWord_apply (ψ : StrictHom C₁ C₂) (l : List ι) (b : B₁) :
+    C₂.fWord l (ψ b) = (C₁.fWord l b).map ψ := by
+  induction l with
+  | nil => rfl
+  | cons i l ih =>
+    rw [fWord_cons, fWord_cons, ih]
+    cases C₁.fWord l b <;> simp [ψ.f_apply]
+
 /-- Strict morphisms preserve the `φᵢ`. -/
 @[simp] lemma φ_map (ψ : StrictHom C₁ C₂) (i : ι) (b : B₁) : C₂.φ i (ψ b) = C₁.φ i b := by
   rw [C₂.φ_eq, C₁.φ_eq, ψ.ε_apply, ψ.wt_apply]

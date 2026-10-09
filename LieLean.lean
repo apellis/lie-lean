@@ -461,6 +461,7 @@ import LieLean.RepresentationTheory.Crystal.Normal
 import LieLean.RepresentationTheory.Crystal.KashiwaraSaito
 import LieLean.RepresentationTheory.Crystal.Similarity
 import LieLean.RepresentationTheory.Crystal.SimilarityComparison
+import LieLean.RepresentationTheory.Crystal.Extremal
 import LieLean.RepresentationTheory.Crystal.TensorPower
 import LieLean.RepresentationTheory.Crystal.Path.Basic
 import LieLean.RepresentationTheory.Crystal.Path.Cancellation
@@ -495,6 +496,7 @@ import LieLean.RepresentationTheory.Crystal.Path.GluingFibre
 import LieLean.RepresentationTheory.Crystal.Path.GluingHighest
 import LieLean.RepresentationTheory.Crystal.Path.ComponentWords
 import LieLean.RepresentationTheory.Crystal.Path.GluingLinking
+import LieLean.RepresentationTheory.Crystal.Path.Similarity
 import LieLean.RepresentationTheory.Crystal.Path.Stretching
 import LieLean.RepresentationTheory.Crystal.Path.ConcatIsomorphism
 import LieLean.RepresentationTheory.Crystal.Path.LittelmannIsomorphism
