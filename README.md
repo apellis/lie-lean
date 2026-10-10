@@ -204,6 +204,7 @@ Further proved results include:
 | --- | --- | --- | --- | --- |
 | Integral PBW span invariance, left-descent stability, longest-element spanning | [Lus] 41.1.4, 41.1.7 | `Modified.span_pbwDivSymm_b2_braid`, `braidInvariant_of_mul_ne_three`, `braidInvariantSymm_of_mul_ne_three`, `*_of_mul_ne_three` | Over `ℚ(v)`, no triple edges; finite Coxeter system for the longest-element statements | Proved for both signs and all four braid-operator conventions; `G₂` remains open |
 | Normalized G₂ commutation relations | Quantum Serre presentation | `G2Integral.rel_of_not_root`, `altVec_g2_normalized`, `G2Integral.Dd_e` | Nonzero parameter not a root of unity, any field | All fifteen degree-one pairs and first-generator divided-power formulas proved; full integral G₂ spanning remains open |
+| G₂ first/last divided-power straightening | Quantum Serre presentation; direct derivation | `G2Integral.adjointSum_e`, `qDivPow_f_mul_qDivPow_e_sum`, `adjoint_straightening_coeff_mem` | `Rel`, `q ≠ 0`, `q - q⁻¹ ≠ 0`, nonzero positive quantum integers at `q` and `q³`; coefficients in any subring containing `q, q⁻¹` | Proved for arbitrary exponents; other mixed pairs and integral span closure remain open |
 
 These summaries do not replace the precise hypotheses and remaining dependencies in
 [`ROADMAP.md`](ROADMAP.md). In particular, the quantum actions are not claimed faithful, and
