@@ -2041,9 +2041,17 @@ under left multiplication by every `e^{(r)}`. These mixed formulas have one expo
 fixed at one; they do not settle the unrestricted two-exponent mixed pairs.
 `G2SquareKernel.lean` gives an arbitrary-two-exponent field identity for `C^{(s)}e^{(r)}`
 (`qDivPow_C_mul_qDivPow_e_field_sum`), using a sparse two-transition numerator recurrence.
-Its support satisfies both root-weight constraints and vanishes after `n = 3s`. The numerator
-coefficients are Laurent integral, but cancellation of the normalizing factorial `[n]_q!`
-is not proved. Consequently, this is not yet an integral mixed-pair kernel.
+Its support satisfies both root-weight constraints and vanishes after `n = 3s`.
+`G2SquareCancellation.lean`, `G2SquareNewton.lean`, and `G2SquareDivisibility.lean`
+prove the integral polynomial cancellation through cyclotomic blocks. `G2SquareRecurrence.lean`
+proves the normalized quotient recurrence, including support boundaries.
+`G2SquareLaurent.lean` specializes the quotient at `q⁻²` with integer Laurent exponents;
+no division by `q² - 1` is used. `G2SquareIntegral.lean` identifies this expression with the
+actual normalized sparse coefficient (`squareCoeff_eq_squareScalar`), proves its membership
+in any subring containing `q,q⁻¹` (`squareCoeff_mem`), and proves arbitrary
+`C^{(s)}e^{(r)}` belongs to the ordered integral span (`qDivPow_C_mul_qDivPow_e_mem`).
+The coefficient identification needs `q ≠ 0` and nonzero positive `[n]_q`; the ordered-span
+statement additionally uses `Rel` and nonzero positive `[n]_(q³)` for the field expansion.
 These are inputs to, not a proof of, integral `G₂` spanning: the other divided-power pairs,
 closure of the integral span, and the `G₂` integral braid move remain open.
 *Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:

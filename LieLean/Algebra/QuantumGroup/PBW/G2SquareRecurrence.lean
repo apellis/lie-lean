@@ -10,10 +10,12 @@ import LieLean.Algebra.QuantumGroup.PBW.G2SquareDivisibility
 
 The cubic Newton recurrence also satisfies a first-order dilation equation. This is the
 coefficient recurrence used to compare the integral polynomial kernel with the sparse
-square recurrence. The comparison with `squareCoeff` is not asserted here.
+square recurrence. Factorial cancellation then yields the integral quotient recurrence,
+with support and base values. `G2SquareIntegral` compares its Laurent specialization with
+`squareCoeff`.
 -/
 
-open Polynomial
+open Polynomial Finset
 
 noncomputable section
 
@@ -127,5 +129,127 @@ theorem newtonCoeff_gaussian_recurrence (n t : ℕ) (hn : n ≤ 3 * (t + 1)) :
     ring
   rw [hd] at hrec
   linear_combination hrec
+
+lemma progressionProduct_zero (k : ℕ) : progressionProduct k 0 = 1 := by
+  simp [progressionProduct]
+
+lemma progressionProduct_succ (k n : ℕ) :
+    progressionProduct k (n + 1) = progressionProduct k n * gaussian (k * (n + 1)) := by
+  simp [progressionProduct, prod_range_succ]
+
+lemma newtonCoeff_zero_succ (t : ℕ) : newtonCoeff 0 (t + 1) = 0 := by
+  induction t with
+  | zero => simp [newtonCoeff, newtonPolynomial_succ, newtonPolynomial_zero]
+  | succ t ih =>
+    simp only [newtonCoeff, newtonPolynomial_succ, coeff_sub, mul_coeff_zero,
+      coeff_add, coeff_one_zero, coeff_X_zero, coeff_C_zero, comp_C_mul_X_coeff,
+      pow_zero, mul_one, add_zero] at *
+    rw [ih]
+    ring
+
+lemma newtonCoeff_eq_zero_of_lt (n t : ℕ) (h : n < t) : newtonCoeff n t = 0 := by
+  induction n generalizing t with
+  | zero => obtain ⟨t, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : t ≠ 0)
+            exact newtonCoeff_zero_succ t
+  | succ n ih =>
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : t ≠ 0)
+    have hr := newtonCoeff_gaussian_recurrence n t (by omega)
+    rw [ih (t + 1) (by omega), ih t (by omega), mul_zero, mul_zero, add_zero] at hr
+    exact (mul_eq_zero.mp hr).resolve_left (gaussian_ne_zero (n + 1) (by omega))
+
+lemma newtonCoeff_eq_zero_of_gt (n t : ℕ) (h : 3 * t < n) : newtonCoeff n t = 0 := by
+  induction n generalizing t with
+  | zero => omega
+  | succ n ih =>
+    cases t with
+    | zero => simp [newtonCoeff, newtonPolynomial_zero, coeff_one]
+    | succ t =>
+      have hr := newtonCoeff_recurrence n t
+      rw [ih t (by omega), mul_zero, add_zero] at hr
+      have hz : ((X : ℤ[X]) ^ (3 * (t + 1)) - X ^ n) * newtonCoeff n (t + 1) = 0 := by
+        by_cases he : n = 3 * (t + 1)
+        · rw [he, sub_self, zero_mul]
+        · rw [ih (t + 1) (by omega), mul_zero]
+      rw [hz] at hr
+      have hn : (X : ℤ[X]) ^ (n + 1) - 1 ≠ 0 := by
+        intro he
+        have hc := congrArg (fun p : ℤ[X] ↦ p.coeff (n + 1)) he
+        simp [coeff_one] at hc
+      exact (mul_eq_zero.mp hr).resolve_left hn
+
+lemma squarePolynomial_eq_zero (n t : ℕ) (h : ¬ (t ≤ n ∧ n ≤ 3 * t)) :
+    squarePolynomial n t = 0 := by
+  simp [squarePolynomial, h]
+
+lemma squarePolynomial_spec_all (n t : ℕ) :
+    progressionProduct 3 t * squarePolynomial n t =
+      progressionProduct 1 (3 * t - n) * progressionProduct 3 (n - t) * newtonCoeff n t := by
+  by_cases h : t ≤ n ∧ n ≤ 3 * t
+  · exact squarePolynomial_spec n t h.1 h.2
+  · rw [squarePolynomial_eq_zero n t h]
+    have hz : newtonCoeff n t = 0 := by
+      by_cases hnt : n < t
+      · exact newtonCoeff_eq_zero_of_lt n t hnt
+      · exact newtonCoeff_eq_zero_of_gt n t (by omega)
+    rw [hz, mul_zero, mul_zero]
+
+lemma squarePolynomial_zero_zero : squarePolynomial 0 0 = 1 := by
+  symm
+  apply squarePolynomial_unique 0 0 (by omega) (by omega)
+  simp [progressionProduct_zero, newtonCoeff, newtonPolynomial_zero]
+
+lemma squarePolynomial_recurrence_first (n t : ℕ) (htn : t ≤ n)
+    (hnt : n ≤ 3 * t + 2) :
+    progressionProduct 1 (3 * t + 2 - n) * progressionProduct 3 (n - t) *
+        gaussian (3 * (t + 1) - n) * newtonCoeff n (t + 1) =
+      progressionProduct 3 (t + 1) * gaussian (3 * (n - t)) *
+        squarePolynomial n (t + 1) := by
+  by_cases he : n = t
+  · subst n
+    rw [newtonCoeff_eq_zero_of_lt t (t + 1) (by omega)]
+    simp [gaussian]
+  · have ha : n - t = (n - (t + 1)) + 1 := by omega
+    have hb : 3 * (t + 1) - n = (3 * t + 2 - n) + 1 := by omega
+    have hs := squarePolynomial_spec_all n (t + 1)
+    rw [hb, progressionProduct_succ 1, one_mul] at hs
+    rw [ha, progressionProduct_succ 3 (n - (t + 1))]
+    rw [hb]
+    linear_combination -gaussian (3 * (n - (t + 1) + 1)) * hs
+
+lemma squarePolynomial_recurrence_second (n t : ℕ) (htn : t ≤ n) :
+    progressionProduct 1 (3 * t + 2 - n) * progressionProduct 3 (n - t) *
+        gaussian (3 * (t + 1)) * newtonCoeff n t =
+      progressionProduct 3 (t + 1) * gaussian (3 * t + 2 - n) *
+        gaussian (3 * t + 1 - n) * squarePolynomial n t := by
+  by_cases he : n ≤ 3 * t
+  · have hb : 3 * t + 2 - n = (3 * t - n) + 1 + 1 := by omega
+    have hb' : 3 * t + 1 - n = (3 * t - n) + 1 := by omega
+    have hs := squarePolynomial_spec n t htn he
+    rw [hb, hb', progressionProduct_succ, progressionProduct_succ,
+      progressionProduct_succ]
+    simp only [one_mul]
+    linear_combination -gaussian (3 * (t + 1)) * gaussian (3 * t - n + 1 + 1) *
+      gaussian (3 * t - n + 1) * hs
+  · rw [newtonCoeff_eq_zero_of_gt n t (by omega),
+      squarePolynomial_eq_zero n t (by omega), mul_zero, mul_zero]
+
+/-- The integral quotient satisfies the normalized first-order square recurrence.
+The successor support range is essential at its upper endpoint. -/
+theorem squarePolynomial_recurrence (n t : ℕ) (htn : t ≤ n)
+    (hnt : n ≤ 3 * t + 2) :
+    gaussian (n + 1) * squarePolynomial (n + 1) (t + 1) =
+      (X : ℤ[X]) ^ n * gaussian (3 * (n - t)) * squarePolynomial n (t + 1) +
+        X ^ (3 * t) * gaussian (3 * t + 2 - n) * gaussian (3 * t + 1 - n) *
+          squarePolynomial n t := by
+  apply mul_left_cancel₀ (progressionProduct_ne_zero 3 (t + 1) (by decide))
+  have hs := squarePolynomial_spec (n + 1) (t + 1) (by omega) (by omega)
+  rw [show 3 * (t + 1) - (n + 1) = 3 * t + 2 - n by omega,
+    show n + 1 - (t + 1) = n - t by omega] at hs
+  have hr := newtonCoeff_gaussian_recurrence n t (by omega)
+  have h₁ := squarePolynomial_recurrence_first n t htn hnt
+  have h₂ := squarePolynomial_recurrence_second n t htn
+  linear_combination gaussian (n + 1) * hs +
+    progressionProduct 1 (3 * t + 2 - n) * progressionProduct 3 (n - t) * hr +
+    X ^ n * h₁ + X ^ (3 * t) * h₂
 
 end LieLean.QuantumGroup.G2Integral.SquareCancellation

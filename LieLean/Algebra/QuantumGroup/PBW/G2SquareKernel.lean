@@ -10,9 +10,9 @@ import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 # A finite ordered recurrence for the G₂ pair C,e
 
 This is an arbitrary-two-exponent identity over the coefficient field. The sparse numerator
-recurrence has Laurent coefficients, but its normalization divides by `[n]_q!`. Divisibility
-of the collected coefficients by this factorial is not proved here; in particular this file
-is not an integral straightening theorem.
+recurrence has Laurent coefficients, and its normalization divides by `[n]_q!`.
+`G2SquareIntegral` proves the cancellation of this factorial in the collected coefficients
+and derives unrestricted integral ordered-span membership.
 -/
 
 open Finset
@@ -187,11 +187,12 @@ lemma squareNumerator_mem (q : k) (Λ : Subring k) (hqΛ : q ∈ Λ) (hqiΛ : q�
       Finsupp.sum, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
     exact Λ.sum_mem fun j _ ↦ Λ.mul_mem (ih j) (squareStepTerm_mem q Λ hqΛ hqiΛ j i)
 
-/-- The collected normalized coefficient. Its Laurent integrality remains to be proved. -/
+/-- The collected normalized coefficient.
+Its Laurent integrality is proved in `G2SquareIntegral`. -/
 def squareCoeff (q : k) (s n : ℕ) (i : SquareIndex) : k :=
   (qFactorial q n)⁻¹ * squareNumerator q s n i
 
-/-- The normalized sparse adjoint; factorial integrality is a separate, unproved issue. -/
+/-- The normalized sparse adjoint; its coefficient integrality is proved in `G2SquareIntegral`. -/
 def squareW (q : k) (A b C : B) (s n : ℕ) : B :=
   (qFactorial q n)⁻¹ • squareEval q A b C (squareNumerator q s n)
 
@@ -233,7 +234,7 @@ theorem qDivPow_C_mul_qDivPow_e_field (s r : ℕ) :
 
 include hq hqi hpi H in
 /-- The same field identity as a finite sum of ordered four-root divided monomials.
-The two exponents are unrestricted. The coefficients are not yet proved Laurent integral. -/
+The two exponents are unrestricted. Laurent integrality is proved in `G2SquareIntegral`. -/
 theorem qDivPow_C_mul_qDivPow_e_field_sum (s r : ℕ) :
     qDivPow (q ^ 3) s C * qDivPow q r e =
       ∑ n ∈ range (r + 1), ∑ i ∈ (squareNumerator q s n).support,
