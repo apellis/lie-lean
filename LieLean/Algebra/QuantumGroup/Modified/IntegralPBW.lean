@@ -18,9 +18,9 @@ Over `ℚ(v)`, `𝒜 = ℤ[v, v⁻¹]`, for `Tᵢ = T''_{i,1}` and a reduced exp
 not depend on the reduced expression ([Lus] 41.1.4 (b) for `e = 1`); `Eᵢ^{(t)} 𝒜U⁺(w, 1) ⊆
 𝒜U⁺(w, 1)` if `ℓ(sᵢ w) < ℓ(w)` ([Lus] 41.1.4 (c)); and in finite type `𝒜U⁺(w₀, 1) = 𝒜U⁺`
 ([Lus] 41.1.7). We prove these for **simply-laced** Cartan data, where the rank-two input is the
-integral `A₂` straightening of `PBW/IntegralA2.lean` (cf. [Lus] 42.1.2); Lusztig's proof of the
-rank-two case for `B₂` and `G₂` refers to his paper *Quantum groups at roots of 1*, and is not
-formalized.
+integral `A₂` straightening of `PBW/IntegralA2.lean` (cf. [Lus] 42.1.2). The extension to Cartan
+data without triple edges (rank-two input: the integral `B₂` straightening of
+`PBW/IntegralB2.lean`) is `Modified/IntegralPBWB2.lean`.
 
 ## Main results
 
