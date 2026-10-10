@@ -1924,7 +1924,12 @@ library's [Lus] 40.1.3, `rootVector_mem_adjoin_of_not_root`; all finite types). 
 maps `Modified.Phi ζ : U̇ → U⁻ ⊗ U⁺` (`π_{λ',ζ}(y⁻ x⁺) ↦ y⁻ ⊗ x⁺`, zero on the other components) and
 `Modified.triangularBasis`: for bases `(bᵢ)` of `U⁻`, `(b'ⱼ)` of `U⁺` consisting of weight vectors,
 the `bᵢ 1_λ b'ⱼ = π_{λ-|bᵢ|,λ-|b'ⱼ|}(bᵢ b'ⱼ)` (`λ ∈ X`) form a basis of `U̇` (any field, `v` not a root
-of unity). Not formalized from [Lus] 41.1: 41.1.4–41.1.7 (integral PBW bases, canonical basis), 41.1.9 (quantum Frobenius).
+of unity). **`𝒜`-basis of `𝒜U̇`** (`QuantumGroup/Modified/IntegralBasis.lean`; [Lus] 23.2.2 (b)):
+projections `projW χ : U → U_χ`, `𝒜U⁻ = Modified.aMinus`, and `Modified.aTriangularBasis`: if moreover
+`bᵢ ∈ 𝒜U⁻`, `b'ⱼ ∈ 𝒜U⁺` and the monomials `F_w`, `E_w` in divided powers have `𝒜`-coordinates (so the
+two bases are `𝒜`-bases of `𝒜U⁻ ≅ 𝒜f ≅ 𝒜U⁺`), the `bᵢ 1_λ b'ⱼ` form an `𝒜`-basis of `𝒜U̇`. No such
+basis is constructed here (Lusztig uses the canonical basis of `f`, [Lus] 14.4; in finite type the
+integral PBW bases of 41.1.4–41.1.7 would do). Not formalized from [Lus] 41.1: 41.1.4–41.1.7 (integral PBW bases, canonical basis), 41.1.9 (quantum Frobenius).
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
 [HK] §4.1): for an integrable `U_q(𝔰𝔩₂)`-module (`IntegrableSl2`, `q` nonzero, not a root of
 unity) the string decomposition `IntegrableSl2.stringEquiv : ⨁_{(n,j)} prim(n+2j) ≃ M`
