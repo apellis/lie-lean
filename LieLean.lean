@@ -347,6 +347,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
 import LieLean.Algebra.QuantumGroup.LusztigF.Reverse
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Braid
+import LieLean.Algebra.QuantumGroup.ModuleSymmetry.DividedPowers
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Integrable
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Rank1
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Rank1Formula
