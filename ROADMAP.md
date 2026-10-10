@@ -1986,10 +1986,23 @@ algebra), so braid moves preserve `𝒜U⁺(w, 1)` whenever no `aᵢⱼ aⱼᵢ 
 (`braidInvariant_of_mul_ne_three`); the conclusions of 41.1.4 (b), (c) and 41.1.7 follow from braid
 invariance alone (`*_of_braidInvariant`) and hold without triple edges
 (`span_pbwDiv_of_isReduced_of_mul_ne_three`, `qDivPow_E_mul_mem_span_pbwDiv_of_mul_ne_three`,
-`span_pbwDiv_longest_eq_of_mul_ne_three`, `coe_span_pbwDiv_longest_of_mul_ne_three`). Not formalized
-from [Lus] 41.1: 41.1.4–41.1.7 for `G₂` subdiagrams, `e = -1` for `B₂`, 41.1.5–41.1.6 (these need the
-canonical basis of `f` and the values of the form on PBW elements, [Lus] 14.4, 38.2.3), 41.1.9
-(quantum Frobenius).
+`span_pbwDiv_longest_eq_of_mul_ne_three`, `coe_span_pbwDiv_longest_of_mul_ne_three`).
+**Both signs and all four braid-operator conventions without triple edges**
+(`PBW/IntegralB2Opposite.lean`, `Modified/IntegralPBWB2Symm.lean`): reversing the B₂ relations and
+inverting `q` rescales the middle root vectors by Laurent units, so the opposite relations also
+imply integral spanning (`B2Integral.coe_orderedSpan_eq_genRing_of_op`). Reversal conjugates the
+braid operators to their inverses; hence both inverse-braid words span the integral rank-two
+subalgebra (`span_pbwDivSymm_b2`, `span_pbwDivSymm_b2_rev`, `span_pbwDivSymm_b2_braid`).
+`BraidInvariantSymm` and `braidInvariantSymm_of_mul_ne_three` give 41.1.4 (a), (c), and 41.1.7 for
+`e = -1` (`span_pbwDivSymm_of_isReduced_of_mul_ne_three`,
+`qDivPow_E_mul_mem_span_pbwDivSymm_of_mul_ne_three`,
+`coe_span_pbwDivSymm_longest_of_mul_ne_three`). The `T'_{i,1}` and `T''_{i,-1}` variants follow by
+unit rescaling (`span_pbwDivPrime_of_isReduced_of_mul_ne_three`,
+`span_pbwDivPrimeSymm_of_isReduced_of_mul_ne_three`, and the corresponding longest-element and
+left-descent theorems). These results include finite types `B`, `C`, and `F`, and do not require
+finite type except for longest-element spanning. Not formalized from [Lus] 41.1: the integral
+`G₂` input for 41.1.4 and 41.1.7; 41.1.5–41.1.6 (canonical-basis and bilinear-form results);
+41.1.9 (quantum Frobenius).
 *Next (open item): 41.1.4–41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
 compute the rank-two straightening relations among divided-power root vectors ourselves (root vectors
 via the `Tᵢ`; the pairs `E₂,E₁`; `E₁,E₁₂`; `E₁,E₁₁₂`; `E₁₁₁₂,E₂`; `E₁₂,E₁₁₂`), then divided-power

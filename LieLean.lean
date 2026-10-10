@@ -353,6 +353,7 @@ import LieLean.Algebra.QuantumGroup.Modified.IntegralBasisPBW
 import LieLean.Algebra.QuantumGroup.Modified.IntegralForm
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBW
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWB2
+import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWB2Symm
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWPrime
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWSymm
 import LieLean.Algebra.QuantumGroup.Modified.Quotient
@@ -372,6 +373,7 @@ import LieLean.Algebra.QuantumGroup.PBW.Independence
 import LieLean.Algebra.QuantumGroup.PBW.IndependenceSymm
 import LieLean.Algebra.QuantumGroup.PBW.IntegralA2
 import LieLean.Algebra.QuantumGroup.PBW.IntegralB2
+import LieLean.Algebra.QuantumGroup.PBW.IntegralB2Opposite
 import LieLean.Algebra.QuantumGroup.PBW.KostantDimension
 import LieLean.Algebra.QuantumGroup.PBW.Monomials
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2
