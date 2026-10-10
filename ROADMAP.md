@@ -1934,8 +1934,18 @@ integral PBW bases of 41.1.4–41.1.7 would do). Integral `A₂` straightening
 `β^{(Q)} α^{(P)} = Σ_n (-1)ⁿ q^{(P-n)(Q-n)+n} α^{(P-n)} γ^{(n)} β^{(Q-n)}`
 (`A2Integral.qDivPow_mul_qDivPow_eq_sum`, cf. [Lus] 42.1.2 (b), our argument), so the
 `Λ`-combinations of the `α^{(a)} γ^{(b)} β^{(d)}` are stable under left multiplication by the
-`α^{(n)}`, `β^{(n)}` (`qDivPow_α_mul_mem`, `qDivPow_β_mul_mem`). Not formalized from [Lus] 41.1:
-41.1.4–41.1.7 (integral PBW bases, canonical basis), 41.1.9 (quantum Frobenius).
+`α^{(n)}`, `β^{(n)}` (`qDivPow_α_mul_mem`, `qDivPow_β_mul_mem`). **Integral PBW bases, simply-laced
+type** (`QuantumGroup/Modified/IntegralPBW.lean`; [Lus] 41.1.4, 41.1.7, `e = 1`): divided-power PBW
+monomials `Modified.pbwDiv` (`CoxeterSystem.pbwDivMonomial` with context lemmas), `𝒜`-linearly
+independent along reduced words (`linearIndependent_pbwDiv`); for simply-laced Cartan data their
+`𝒜`-span `𝒜U⁺(w, 1)` does not depend on the reduced expression (`span_pbwDiv_of_isReduced`, 41.1.4
+(b)) and is stable under `Eᵢ^{(t)}` for left descents `i` (`qDivPow_E_mul_mem_span_pbwDiv`, 41.1.4
+(c)); in finite simply-laced type `𝒜U⁺(w₀, 1) = 𝒜U⁺` (`span_pbwDiv_longest_eq`,
+`coe_span_pbwDiv_longest`, 41.1.7). Not formalized from [Lus] 41.1: 41.1.4–41.1.7 for `B₂`/`G₂`
+subdiagrams (Lusztig's rank-two input is his paper *Quantum groups at roots of 1*), 41.1.4 (a)
+and `e = -1` (the symmetries `T'_{i,1}`, `T''_{i,-1}` are not defined), 41.1.5–41.1.6 (these need the
+canonical basis of `f` and the values of the form on PBW elements, [Lus] 14.4, 38.2.3), 41.1.9
+(quantum Frobenius).
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
 [HK] §4.1): for an integrable `U_q(𝔰𝔩₂)`-module (`IntegrableSl2`, `q` nonzero, not a root of
 unity) the string decomposition `IntegrableSl2.stringEquiv : ⨁_{(n,j)} prim(n+2j) ≃ M`

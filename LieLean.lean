@@ -350,6 +350,7 @@ import LieLean.Algebra.QuantumGroup.Modified.Basic
 import LieLean.Algebra.QuantumGroup.Modified.Commutation
 import LieLean.Algebra.QuantumGroup.Modified.IntegralBasis
 import LieLean.Algebra.QuantumGroup.Modified.IntegralForm
+import LieLean.Algebra.QuantumGroup.Modified.IntegralPBW
 import LieLean.Algebra.QuantumGroup.Modified.Quotient
 import LieLean.Algebra.QuantumGroup.Modified.RootVectors
 import LieLean.Algebra.QuantumGroup.Modified.Triangular
