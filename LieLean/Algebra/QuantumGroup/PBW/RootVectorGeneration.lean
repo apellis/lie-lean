@@ -127,8 +127,7 @@ theorem adjoin_rootVector_of_isFiniteCartan :
   apply le_antisymm
   · rw [Algebra.adjoin_le_iff]
     rintro _ ⟨n, rfl⟩
-    exact rootVector_mem_adjoin_of_not_root
-      (fun _ _ hij ↦ hD.mul_le_three hij) hv hω n n.isLt
+    exact rootVector_mem_adjoin_of_not_root hv hω n n.isLt
   · rw [Algebra.adjoin_le_iff]
     rintro _ ⟨i, rfl⟩
     obtain ⟨n, a, ha, he⟩ := exists_rootVector_eq_smul_E R hv P hD hω hw i

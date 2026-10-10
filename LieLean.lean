@@ -375,6 +375,7 @@ import LieLean.Algebra.QuantumGroup.PBW.RankTwoB2
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoB2BraidSpan
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoB2LocalSpan
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoCommutingContextSpan
+import LieLean.Algebra.QuantumGroup.PBW.RankTwoInfinite
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoRootVectors
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorWeights
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorGrading

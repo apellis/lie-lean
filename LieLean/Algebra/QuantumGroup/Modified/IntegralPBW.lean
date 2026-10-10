@@ -203,13 +203,12 @@ lemma qFactorial_vd_ne_zero (i : I) (n : ℕ) : qFactorial (𝕧 ^ D.d i) n ≠ 
   LusztigF.qFactorial_ne_zero_of_not_root (D := D) (NeZero.ne 𝕧) ratFunc_X_not_root i n
 
 /-- **The integral PBW monomials are `𝒜`-linearly independent** along a reduced word (from the
-`ℚ(v)`-linear independence of the PBW monomials; `aᵢⱼ aⱼᵢ ≤ 3` as in the library). -/
+`ℚ(v)`-linear independence of the PBW monomials), for every Cartan datum. -/
 theorem linearIndependent_pbwDiv
-    (hfin : ∀ i j, i ≠ j → D.cartanMatrix i j * D.cartanMatrix j i ≤ 3)
     {W : Type*} [Group W] {cs : CoxeterSystem D.cartanMatrix.coxeterMatrix W} {ω : List I}
     (hω : cs.IsReduced ω) : LinearIndependent 𝒜 (pbwDiv R ω) := by
   classical
-  have hli := linearIndependent_pbwMonomial_of_isReduced (R := R) ratFunc_X_not_root hfin hω
+  have hli := linearIndependent_pbwMonomial_of_isReduced (R := R) ratFunc_X_not_root hω
   rw [linearIndependent_iff'] at hli ⊢
   intro s g hg c hc
   have hs : ∀ c : Fin ω.length → ℕ,
@@ -430,11 +429,6 @@ lemma list_Ta_apply (u : List I) (x : QuantumGroup R 𝕧) :
   | nil => rfl
   | cons i u ih => simp only [List.map_cons, List.prod_cons, AlgEquiv.mul_apply, ih, Ta_apply]
 
-omit [DecidableEq I] in
-lemma simplyLaced_mul_le_three (hSL : D.cartanMatrix.IsSimplyLaced) :
-    ∀ i j, i ≠ j → D.cartanMatrix i j * D.cartanMatrix j i ≤ 3 := fun i j hij ↦ by
-  rcases hSL hij with h | h <;> rcases hSL hij.symm with h' | h' <;> rw [h, h'] <;> norm_num
-
 variable (hSL : D.cartanMatrix.IsSimplyLaced)
 
 include hSL in
@@ -554,8 +548,7 @@ lemma mul_mem_aPlus {x y : QuantumGroup R 𝕧} (hx : x ∈ aPlus R) (hy : y ∈
   | add x z _ _ hx hz => rw [add_mul]; exact add_mem hx hz
   | neg x _ hx => rw [neg_mul]; exact neg_mem hx
 
-include hSL in
-/-- The integral PBW monomials lie in `𝒜U⁺` (from [Lus] 41.1.3). -/
+/-- The integral PBW monomials lie in `𝒜U⁺` (from [Lus] 41.1.3), for every Cartan datum. -/
 lemma pbwDiv_mem_aPlus {W : Type*} [Group W]
     {cs : CoxeterSystem D.cartanMatrix.coxeterMatrix W} :
     ∀ (w p : List I), cs.IsReduced (p ++ w) → ∀ c : Fin w.length → ℕ,
@@ -571,7 +564,7 @@ lemma pbwDiv_mem_aPlus {W : Type*} [Group W]
       rwa [show (p ++ i :: w).take (p.length + 1) = p ++ [i] by
         rw [List.take_length_add_append]
         rfl] at this
-    exact list_braid_qDivPow_E_mem_aPlus (simplyLaced_mul_le_three hSL) hred _
+    exact list_braid_qDivPow_E_mem_aPlus hred _
 
 include hSL in
 /-- **[Lus] 41.1.7** (`e = 1`, simply-laced finite type): for a reduced expression of the longest
@@ -584,7 +577,7 @@ theorem span_pbwDiv_longest_eq {W : Type*} [Group W] [Finite W]
       (Algebra.adjoin 𝒜 (⋃ i, Set.range (Ed R i))).toSubmodule := by
   let S := Submodule.span 𝒜 (Set.range (pbwDiv R w))
   have hplus : ∀ c, pbwDiv R w c ∈ Algebra.adjoin 𝒜 (⋃ i, Set.range (Ed R i)) := fun c ↦ by
-    have hc := pbwDiv_mem_aPlus (R := R) hSL w [] (by simpa using hw) c
+    have hc := pbwDiv_mem_aPlus (R := R) w [] (by simpa using hw) c
     simp only [List.map_nil, List.prod_nil, AlgEquiv.one_apply] at hc
     generalize pbwDiv R w c = y at hc ⊢
     induction hc using AddSubgroup.closure_induction with
@@ -631,7 +624,7 @@ theorem coe_span_pbwDiv_longest {W : Type*} [Group W] [Finite W]
   · induction hx using Submodule.span_induction with
     | mem x hx =>
       obtain ⟨c, rfl⟩ := hx
-      simpa using pbwDiv_mem_aPlus (R := R) hSL w [] (by simpa using hw) c
+      simpa using pbwDiv_mem_aPlus (R := R) w [] (by simpa using hw) c
     | zero => exact zero_mem _
     | add x y _ _ hx hy => exact add_mem hx hy
     | smul a x _ hx => rw [laurent_smul_U]; exact smul_mem_aPlus ⟨a, rfl⟩ hx

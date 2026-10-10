@@ -157,14 +157,13 @@ weight formula, not with an identification of root-lattice graded pieces.
 See Jantzen §§8.18, 8.21; reconstructed from the two component results. -/
 theorem rootVector_mem_adjoin_and_adWeightSpace_of_isFiniteCartan [Fintype I]
     {W : Type*} [Group W] {cs : CoxeterSystem D.cartanMatrix.coxeterMatrix W}
-    (hA : D.cartanMatrix.IsFiniteCartan) {ω : List I} (hω : cs.IsReduced ω)
+    (_hA : D.cartanMatrix.IsFiniteCartan) {ω : List I} (hω : cs.IsReduced ω)
     (n : ℕ) (hn : n < ω.length) :
     CoxeterSystem.rootVector (braidEquivOfNotRoot R hv) (E R v) ω n hn ∈
         Algebra.adjoin k (Set.range (E R v)) ∧
       CoxeterSystem.rootVector (braidEquivOfNotRoot R hv) (E R v) ω n hn ∈
         adWeightSpace R v (rootVectorWeight R ω n hn) := by
-  exact ⟨rootVector_mem_adjoin_of_not_root
-    (fun _ _ hij ↦ hA.mul_le_three hij) hv hω n hn,
+  exact ⟨rootVector_mem_adjoin_of_not_root hv hω n hn,
     rootVector_mem_adWeightSpace_of_not_root hv ω n hn⟩
 
 end LieLean.QuantumGroup

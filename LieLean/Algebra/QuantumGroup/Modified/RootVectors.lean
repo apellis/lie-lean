@@ -29,9 +29,8 @@ in divided powers, i.e. the image of `𝒜f`); hence **if `x⁺ 1_ζ ∈ 𝒜U̇
   `T'_{i₁,-1} ⋯ T'_{iₙ₋₁,-1}(E_{iₙ}^{(t)}) ∈ 𝒜U⁺` (`T'_{i,-1} = Tᵢ⁻¹`), from (a) by Lusztig's
   anti-automorphism `σ` (`σ T''_{i,1} σ = T'_{i,-1}`, [Lus] 37.2.4).
 
-Both use that the root vectors lie in `U⁺` ([Lus] 40.1.3), which the library proves when
-`aᵢⱼ aⱼᵢ ≤ 3` for all `i ≠ j` (`rootVector_mem_adjoin_of_not_root`; all finite types); this
-hypothesis is inherited. The symmetries `T''_{i,-1}`, `T'_{i,1}` are not defined in the library.
+Both use that the root vectors lie in `U⁺` ([Lus] 40.1.3, `rootVector_mem_adjoin_of_not_root`,
+every Cartan datum).
 
 ## References
 
@@ -377,17 +376,15 @@ lemma list_braid_mem_aForm (ω : List I) {x : Modified R 𝕧} (hx : x ∈ aForm
     exact braid_mem_aForm i ih
 
 /-- **[Lus] 41.1.3 (a)** (`e = 1`): if `s_{i₁} ⋯ s_{iₙ₋₁} s_i` is a reduced expression, then
-`T''_{i₁,1} ⋯ T''_{iₙ₋₁,1}(E_i^{(t)}) ∈ 𝒜U⁺`. The hypothesis `aᵢⱼ aⱼᵢ ≤ 3` (all finite types)
-is that of the library's [Lus] 40.1.3 (`rootVector_mem_adjoin_of_not_root`). -/
+`T''_{i₁,1} ⋯ T''_{iₙ₋₁,1}(E_i^{(t)}) ∈ 𝒜U⁺`, for every Cartan datum. -/
 theorem list_braid_qDivPow_E_mem_aPlus
-    (hfin : ∀ i j, i ≠ j → D.cartanMatrix i j * D.cartanMatrix j i ≤ 3)
     {W : Type*} [Group W] {cs : CoxeterSystem D.cartanMatrix.coxeterMatrix W}
     {ω : List I} {i : I} (hω : cs.IsReduced (ω ++ [i])) (t : ℕ) :
     (ω.map (braidEquivOfNotRoot R ratFunc_X_not_root)).prod (qDivPow (𝕧 ^ D.d i) t (E R 𝕧 i)) ∈
       aPlus R := by
   set T := braidEquivOfNotRoot R ratFunc_X_not_root
   have hE : (ω.map T).prod (E R 𝕧 i) ∈ Algebra.adjoin 𝕂 (Set.range (E R 𝕧)) := by
-    have := rootVector_mem_adjoin_of_not_root (R := R) hfin ratFunc_X_not_root hω ω.length
+    have := rootVector_mem_adjoin_of_not_root (R := R) ratFunc_X_not_root hω ω.length
       (by simp)
     simpa [CoxeterSystem.rootVector, T] using this
   have hx : (ω.map T).prod (qDivPow (𝕧 ^ D.d i) t (E R 𝕧 i)) ∈
@@ -445,13 +442,12 @@ lemma list_braid_symm_apply (ω : List I) (y : QuantumGroup R 𝕧) :
 /-- **[Lus] 41.1.3 (b)** (`e = -1`): if `s_{i₁} ⋯ s_{iₙ₋₁} s_i` is a reduced expression, then
 `T'_{i₁,-1} ⋯ T'_{iₙ₋₁,-1}(E_i^{(t)}) ∈ 𝒜U⁺`, where `T'_{j,-1} = T''_{j,1}⁻¹`. -/
 theorem list_braid_symm_qDivPow_E_mem_aPlus
-    (hfin : ∀ i j, i ≠ j → D.cartanMatrix i j * D.cartanMatrix j i ≤ 3)
     {W : Type*} [Group W] {cs : CoxeterSystem D.cartanMatrix.coxeterMatrix W}
     {ω : List I} {i : I} (hω : cs.IsReduced (ω ++ [i])) (t : ℕ) :
     (ω.map fun j ↦ (braidEquivOfNotRoot R ratFunc_X_not_root j).symm).prod
       (qDivPow (𝕧 ^ D.d i) t (E R 𝕧 i)) ∈ aPlus R := by
   rw [list_braid_symm_apply, braidReversal_qDivPow, braidReversal_E]
-  exact braidReversal_mem_aPlus (list_braid_qDivPow_E_mem_aPlus hfin hω t)
+  exact braidReversal_mem_aPlus (list_braid_qDivPow_E_mem_aPlus hω t)
 
 end Modified
 

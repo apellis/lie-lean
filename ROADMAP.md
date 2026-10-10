@@ -1759,14 +1759,14 @@ group of a realization), if `ℓ(w sᵢ) > ℓ(w)` then `T_w(Eᵢ) ∈ U⁺` (`b
 `T_{i₁}⋯T_{iₙ₋₁}(E_{iₙ})` along every reduced word lie in `U⁺`
 (`rootVector_mem_adjoin_of_isReduced`), in particular along reduced words of `w₀`
 (`exists_longestElement_rootVectors_mem_adjoin(_of_isFiniteCartan)`), with `_of_not_root` versions.
-Hypotheses: those of `braidArtinHom` and `aᵢⱼ aⱼᵢ ≤ 3` for `i ≠ j` (implied by
-`Matrix.IsFiniteCartan`, `Matrix.IsFiniteCartan.mul_le_three`; also satisfied by the simply-laced
-affine types). The proof (reconstructed) is an abstract induction on `ℓ(w)` for any braid-liftable
+Hypotheses: those of `braidArtinHom`, for every Cartan datum ([Lus] 40.1.3). The proof (reconstructed) is an abstract induction on `ℓ(w)` for any braid-liftable
 family of algebra automorphisms (`CoxeterSystem.braidLift_apply_mem_adjoin`),
 through `w = w' u`, `w' ∈ W^{i,k}`, `u` alternating in `W_{i,k}`, reduced to the rank-two
 property `CoxeterMatrix.RankTwoRootProperty` (`rankTwoRootProperty_braidEquivOfGeneric`, from the
-`A₁ × A₁`, `A₂`, `B₂`, `G₂` computations in both orientations). Pairs with `aᵢⱼ aⱼᵢ ≥ 4` are
-not covered (their rank-two statement is not proved). In finite type the diagram hypotheses are
+`A₁ × A₁`, `A₂`, `B₂`, `G₂` computations in both orientations, and for `aᵢⱼ aⱼᵢ ≥ 4` from
+`PBW/RankTwoInfinite.lean`: [Lus] Lemma 40.1.1 for `h(i,j) = ∞`,
+`alternatingWord_prod_E_mem_adjoin_of_four_le`, following Lusztig's proof with the twisted
+commutators `X n` and the lowering identity `exists_map_rankTwoXm`, cf. [Lus] 37.2.5). In finite type the diagram hypotheses are
 derived from `Matrix.IsFiniteCartan` (`_of_isFiniteCartan`, via
 `Matrix.IsFiniteCartan.braidOuterCondition` below). **Dimensions of `U⁺_ν`**
 (`PBW/WeightDimension.lean`, `PBW/KostantDimension.lean`; [Lus] 33.1.3, [Kac] (9.7.2)):
@@ -1917,8 +1917,7 @@ from the triangular decomposition, any field, `v` not a root of unity); `𝒜U�
 `Modified.mem_aPlus_of_elt_mem_aForm` (`x⁺ 1_ζ ∈ 𝒜U̇ ⇒ x⁺ ∈ 𝒜U⁺`); [Lus] 41.1.3 (a) for `e = 1`
 (`Modified.list_braid_qDivPow_E_mem_aPlus`: `T''_{i₁,1} ⋯ T''_{iₙ₋₁,1}(E_{iₙ}^{(t)}) ∈ 𝒜U⁺` for
 `s_{i₁} ⋯ s_{iₙ}` reduced) and (b) for `e = -1` (`Modified.list_braid_symm_qDivPow_E_mem_aPlus`, via
-`σ T''_{i,1} σ = T'_{i,-1}`, [Lus] 37.2.4), under `aᵢⱼ aⱼᵢ ≤ 3` for `i ≠ j` (the hypothesis of the
-library's [Lus] 40.1.3, `rootVector_mem_adjoin_of_not_root`; all finite types). `T''_{i,-1}`,
+`σ T''_{i,1} σ = T'_{i,-1}`, [Lus] 37.2.4), for every Cartan datum. `T''_{i,-1}`,
 `T'_{i,1}` are not defined in the library.
 **Triangular basis of `U̇`** (`QuantumGroup/Modified/TriangularBasis.lean`; [Lus] 23.2.1 (b)): the
 maps `Modified.Phi ζ : U̇ → U⁻ ⊗ U⁺` (`π_{λ',ζ}(y⁻ x⁺) ↦ y⁻ ⊗ x⁺`, zero on the other components) and
@@ -2397,7 +2396,7 @@ completed steps and continuation threads are:
 - Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
   `Hecke/KazhdanLusztig/Canonical.lean`; the PBW basis is proved in every finite type,
   `finiteTypePBWBasis` (below; rank two: `a2PBWBasis`, `b2PBWBasis`), and the root vectors along reduced words lie in `U⁺` in every rank
-  with rank-two subdiagrams of finite type, `rootVector_mem_adjoin_of_isReduced`).
+  for every Cartan datum, `rootVector_mem_adjoin_of_isReduced`).
   `PBW/RootVectorWeights.lean` proves the conjugation-character formula for actual braid root
   vectors along every word (`rootVector_conj_of_not_root`), over any field at a nonzero parameter
   not a root of unity. The finite-type reduced-word result combines it with existing `U⁺`
@@ -2410,8 +2409,8 @@ completed steps and continuation threads are:
   `PBW/Monomials.lean` defines
   ordered root-vector monomials and proves their product formula and an independence criterion;
   `PBW/Independence.lean` discharges the criterion using the triangular decomposition, giving
-  `linearIndependent_pbwMonomial_of_isReduced` under the rank-two Cartan-product bounds
-  `aᵢⱼ aⱼᵢ ≤ 3` (root vectors in `U⁺`: `PBW/RootVectorsNotRoot.lean`), and `linearIndependent_pbwMonomial_of_isFiniteCartan` in finite type.
+  `linearIndependent_pbwMonomial_of_isReduced` for every Cartan datum (root vectors in `U⁺`:
+  `PBW/RootVectorsNotRoot.lean`), and `linearIndependent_pbwMonomial_of_isFiniteCartan` in finite type.
   These independence results need a nonzero, non-root-of-unity parameter, not transcendence or
   characteristic zero. `PBW/RootEnumeration.lean` proves reduced-word prefix-root enumeration
   without repetitions and all-positive-root enumeration for longest words in the classical
