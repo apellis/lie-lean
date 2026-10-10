@@ -362,6 +362,7 @@ import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Rank1Formula
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.RankTwo
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Strings
 import LieLean.Algebra.QuantumGroup.PBW.Independence
+import LieLean.Algebra.QuantumGroup.PBW.IntegralA2
 import LieLean.Algebra.QuantumGroup.PBW.KostantDimension
 import LieLean.Algebra.QuantumGroup.PBW.Monomials
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2
