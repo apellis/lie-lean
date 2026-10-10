@@ -198,6 +198,12 @@ Further proved results include:
   faithfulness of integrable modules on `U^±` (`Faithful`) and morphisms of root data
   (`RootDatumHom`).
 
+### Integral PBW status
+
+| Theorem | Source | Declarations | Hypotheses | Status |
+| --- | --- | --- | --- | --- |
+| Integral PBW span invariance, left-descent stability, longest-element spanning | [Lus] 41.1.4, 41.1.7 | `Modified.span_pbwDivSymm_b2_braid`, `braidInvariant_of_mul_ne_three`, `braidInvariantSymm_of_mul_ne_three`, `*_of_mul_ne_three` | Over `ℚ(v)`, no triple edges; finite Coxeter system for the longest-element statements | Proved for both signs and all four braid-operator conventions; `G₂` remains open |
+
 These summaries do not replace the precise hypotheses and remaining dependencies in
 [`ROADMAP.md`](ROADMAP.md). In particular, the quantum actions are not claimed faithful, and
 the finite-type and parameter hypotheses above are not claims in unrestricted generality.
