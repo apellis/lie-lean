@@ -2060,8 +2060,12 @@ and the opposite interval `D,C,B,A` both have parameter `q`; they yield arbitrar
 transports, not a full six-root symmetry. The remaining unrestricted mixed pairs are
 `D,e` and `f,A`; closure/reverse containment and the `G₂` integral braid move remain open.
 `G2DERecurrence.lean` specializes the four-root tail recurrence and checks the `D,e`
-product at `(s,r)=(2,2)` with integral coefficients. Its field-valued `deScalar` recurrence
-does not yet supply Laurent-integral coefficients for arbitrary exponents.
+product at `(s,r)=(2,2)` with integral coefficients. `G2DECancellation.lean` constructs a
+division-free polynomial satisfying the complete four-correction recurrence for every
+index. `G2DELaurent.lean` identifies its Laurent evaluator with `deScalar` and proves
+`deScalar_mem` for all `a,b,c`, without inverting quantum integers in the coefficient
+subring. Identification with the actual arbitrary divided-adjoint coefficients and
+unrestricted `D,e` ordered-span membership remain open.
 *Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
 compute the rank-two straightening relations among divided-power root vectors ourselves (root vectors
 via the `Tᵢ`; the pairs `E₂,E₁`; `E₁,E₁₂`; `E₁,E₁₁₂`; `E₁₁₁₂,E₂`; `E₁₂,E₁₁₂`), then divided-power
