@@ -349,6 +349,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.Modified.Basic
 import LieLean.Algebra.QuantumGroup.Modified.Commutation
 import LieLean.Algebra.QuantumGroup.Modified.IntegralBasis
+import LieLean.Algebra.QuantumGroup.Modified.IntegralBasisPBW
 import LieLean.Algebra.QuantumGroup.Modified.IntegralForm
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBW
 import LieLean.Algebra.QuantumGroup.Modified.Quotient
