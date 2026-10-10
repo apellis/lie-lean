@@ -1975,6 +1975,16 @@ simply-laced type. Not formalized from [Lus] 41.1: 41.1.4–41.1.7 for `B₂`/`G
 subdiagrams (Lusztig's rank-two input is his paper *Quantum groups at roots of 1*), 41.1.5–41.1.6 (these need the
 canonical basis of `f` and the values of the form on PBW elements, [Lus] 14.4, 38.2.3), 41.1.9
 (quantum Frobenius).
+*Next (open item): 41.1.4–41.1.7 for `B₂` and `G₂` subdiagrams.* Route: compute the rank-two straightening
+relations among divided-power root vectors ourselves, as for `A₂` (`IntegralA2.lean`): root vectors via the `Tᵢ`,
+their commutation relations in rank two (the pairs `E₂,E₁`; `E₁,E₁₂`; `E₁,E₁₁₂`; `E₁₁₁₂,E₂`; `E₁₂,E₁₁₂` for `G₂` and
+the `B₂` analogues), then divided-power versions, then closure of the `𝒜`-span of the divided-power PBW monomials
+under left multiplication by the `Eᵢ^{(n)}` exactly as in `IntegralPBW.lean`. Lusztig, *Quantum groups at roots
+of 1*, Geom. Dedicata 35 (1990), §5.2–5.4 contains these relations; Lentner, arXiv:1406.0865, reproduces several
+of them (e.g. `E₁₁₂ = −q²(E₂E₁^{(2)} − q⁻⁶E₁^{(2)}E₂) − qE₁₂E₁`), and arXiv:0811.0209 gives `G₂` commutators
+(two-parameter, specialize) — use them only to check our own derivations. Alternative without straightening:
+near-orthonormality of PBW monomials for Lusztig's form ([Lus] 38.2.3) plus a lattice argument; check that the
+book's statements suffice before choosing it.
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
 [HK] §4.1): for an integrable `U_q(𝔰𝔩₂)`-module (`IntegrableSl2`, `q` nonzero, not a root of
 unity) the string decomposition `IntegrableSl2.stringEquiv : ⨁_{(n,j)} prim(n+2j) ≃ M`
