@@ -2039,6 +2039,11 @@ span is contained in that subring (`orderedSpan_le_genRing`); the reverse inclus
 lies in the integral ordered span, as does arbitrary `f^{(s)}e^{(r)}`, and proves stability
 under left multiplication by every `e^{(r)}`. These mixed formulas have one exponent
 fixed at one; they do not settle the unrestricted two-exponent mixed pairs.
+`G2SquareKernel.lean` gives an arbitrary-two-exponent field identity for `C^{(s)}e^{(r)}`
+(`qDivPow_C_mul_qDivPow_e_field_sum`), using a sparse two-transition numerator recurrence.
+Its support satisfies both root-weight constraints and vanishes after `n = 3s`. The numerator
+coefficients are Laurent integral, but cancellation of the normalizing factorial `[n]_q!`
+is not proved. Consequently, this is not yet an integral mixed-pair kernel.
 These are inputs to, not a proof of, integral `G₂` spanning: the other divided-power pairs,
 closure of the integral span, and the `G₂` integral braid move remain open.
 *Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
