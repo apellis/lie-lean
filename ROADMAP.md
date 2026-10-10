@@ -1955,9 +1955,24 @@ independent along reduced words (`linearIndependent_pbwDiv`); for simply-laced C
 `coe_span_pbwDiv_longest`, 41.1.7); hence an explicit triangular `𝒜`-basis of `𝒜U̇` in
 simply-laced finite type (`QuantumGroup/Modified/IntegralBasisPBW.lean`: `pbwPlusBasis`,
 `pbwMinusBasis`, `aTriangularBasisPBW`, the elements `ω(E_c) 1_λ E_{c'}`; the hypotheses of
-23.2.2 (b) are checked for these bases). Not formalized from [Lus] 41.1: 41.1.4–41.1.7 for `B₂`/`G₂`
-subdiagrams (Lusztig's rank-two input is his paper *Quantum groups at roots of 1*), 41.1.4 (a)
-and `e = -1`, 41.1.5–41.1.6 (these need the
+23.2.2 (b) are checked for these bases). **`e = -1` and `T'_{i,1}`, `T''_{i,-1}`**
+(`QuantumGroup/PBW/IndependenceSymm.lean`, `QuantumGroup/Modified/IntegralPBWSymm.lean`,
+`QuantumGroup/Modified/IntegralPBWPrime.lean`; [Lus] 40.1.3, 40.2.1, 41.1.4, 41.1.7, 42.1.2, 42.1.4):
+the root vectors for `T'_{i,-1} = Tᵢ⁻¹` lie in `U⁺` (`rootVector_symm_mem_adjoin_of_not_root`) and
+their ordered monomials are linearly independent (`linearIndependent_pbwMonomial_symm_of_isReduced`,
+every Cartan datum; via `eq_zero_of_sum_F_pow_K_mul`); Lusztig's 42.1.2 (b) as printed
+(`A2Integral.qDivPow_mul_qDivPow_eq_sum_lusztig`, from the straightening at `v⁻¹`); the monomials
+`E_h^c = E_{i₁}^{(c₁)} T'_{i₁,-1}(E_{i₂}^{(c₂)}) ⋯` of 42.1.4 (`Modified.pbwDivSymm`) are
+`𝒜`-independent (every Cartan datum) and, in simply-laced type, span `𝒜U⁺(w, -1)` independently of
+the reduced expression (41.1.4 (a), `e = -1`: `span_pbwDivSymm_of_isReduced`), with 41.1.4 (c)
+(`qDivPow_E_mul_mem_span_pbwDivSymm`) and 41.1.7 (`coe_span_pbwDivSymm_longest`); the monomials for
+`T'_{i,1}` (`pbwDivPrime`, 41.1.4 (a), `e = 1`) and `T''_{i,-1}` (`pbwDivPrimeSymm`, 41.1.4 (b),
+`e = -1`) are `±v^m` multiples of those for `T''_{i,1}`, `T'_{i,-1}` (37.2.4), hence independent with
+the same spans (`span_pbwDivPrime`, `span_pbwDivPrimeSymm`, `span_pbwDivPrime_of_isReduced`,
+`span_pbwDivPrimeSymm_of_isReduced`, `coe_span_pbwDivPrime_longest`,
+`coe_span_pbwDivPrimeSymm_longest`). So 41.1.4 and 41.1.7 hold for both signs of `e` in
+simply-laced type. Not formalized from [Lus] 41.1: 41.1.4–41.1.7 for `B₂`/`G₂`
+subdiagrams (Lusztig's rank-two input is his paper *Quantum groups at roots of 1*), 41.1.5–41.1.6 (these need the
 canonical basis of `f` and the values of the form on PBW elements, [Lus] 14.4, 38.2.3), 41.1.9
 (quantum Frobenius).
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;

@@ -214,6 +214,72 @@ theorem qDivPow_mul_qDivPow_eq_sum (hqq : q - q⁻¹ ≠ 0) (P Q : ℕ) :
             ((-1 : k) ^ (s + 1) * q ^ (a * b + a) * qInt q (b + 1)) * hqi'
       · simp only [hsP, ↓reduceIte, add_zero, smul_zero]
 
+/-! ### Lusztig's form of the straightening ([Lus] 42.1.2 (b)) -/
+
+section Lusztig
+
+omit [Algebra k B] in
+lemma qInt_inv' (n : ℕ) : qInt q⁻¹ n = qInt q n := by
+  rw [qInt, qInt, ← Finset.sum_range_reflect]
+  refine Finset.sum_congr rfl fun s hs ↦ ?_
+  rw [Finset.mem_range] at hs
+  rw [inv_inv, mul_comm]
+  congr 2
+  omega
+
+omit [Algebra k B] in
+lemma qFactorial_inv' (n : ℕ) : qFactorial q⁻¹ n = qFactorial q n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => rw [qFactorial, qFactorial, ih, qInt_inv']
+
+/-- Divided powers do not change under `q ↦ q⁻¹`. -/
+lemma qDivPow_inv' (n : ℕ) (x : B) : qDivPow q⁻¹ n x = qDivPow q n x := by
+  rw [qDivPow, qDivPow, qFactorial_inv']
+
+/-- **[Lus] 42.1.2 (b), as printed**: if `α, β` satisfy `αγ = qγα` and `qβγ = γβ` for
+`γ = αβ - q⁻¹βα` ([Lus] 42.1.2 (a), consequences of the `A₂` Serre relations), then
+`α^{(p)} β^{(r)} = Σ_n q^{-(p-n)(r-n)} β^{(r-n)} γ^{(n)} α^{(p-n)}`. It follows from
+`qDivPow_mul_qDivPow_eq_sum` at the parameter `q⁻¹`, for the pair `β, α` and `-qγ`. -/
+theorem qDivPow_mul_qDivPow_eq_sum_lusztig (hq0 : q ≠ 0) (hqi : ∀ n : ℕ, 0 < n → qInt q n ≠ 0)
+    (hqq : q - q⁻¹ ≠ 0) {α β γ : B} (hγ : γ = α * β - q⁻¹ • (β * α))
+    (hαγ : α * γ = q • (γ * α)) (hβγ : q • (β * γ) = γ * β) (p r : ℕ) :
+    qDivPow q p α * qDivPow q r β = ∑ n ∈ range (p + 1),
+      if n ≤ r then q⁻¹ ^ ((p - n) * (r - n)) •
+        (qDivPow q (r - n) β * qDivPow q n γ * qDivPow q (p - n) α) else 0 := by
+  have hq0' : q⁻¹ ≠ 0 := inv_ne_zero hq0
+  have hqi' : ∀ n : ℕ, 0 < n → qInt q⁻¹ n ≠ 0 := fun n hn ↦ by rw [qInt_inv']; exact hqi n hn
+  have hqq' : q⁻¹ - q⁻¹⁻¹ ≠ 0 := by rw [inv_inv, ← neg_sub]; exact neg_ne_zero.2 hqq
+  have h1 : α * β = q⁻¹ • (β * α) - q⁻¹ • ((-q) • γ) := by
+    rw [hγ, smul_smul, mul_neg, inv_mul_cancel₀ hq0, neg_smul, one_smul]; abel
+  have h2 : β * ((-q) • γ) = q⁻¹ • (((-q) • γ) * β) := by
+    rw [mul_smul_comm, smul_mul_assoc, ← hβγ, smul_smul, smul_smul,
+      show q⁻¹ * -q * q = -q by field_simp]
+  have h3 : q⁻¹ • (α * ((-q) • γ)) = ((-q) • γ) * α := by
+    rw [mul_smul_comm, smul_smul, mul_neg, inv_mul_cancel₀ hq0, neg_smul, one_smul, hαγ,
+      smul_mul_assoc, neg_smul]
+  have L := qDivPow_mul_qDivPow_eq_sum hq0' hqi' h1 h2 h3 hqq' r p
+  rw [qDivPow_inv', qDivPow_inv'] at L
+  rw [L]
+  refine Finset.sum_congr rfl fun n _ ↦ ?_
+  simp only [sTerm]
+  split_ifs with hn
+  · rw [qDivPow_inv', qDivPow_inv', qDivPow_inv',
+      show qDivPow q n ((-q) • γ) = (qFactorial q n)⁻¹ • ((-q) • γ) ^ n from rfl, smul_pow,
+      smul_smul, show qDivPow q n γ = (qFactorial q n)⁻¹ • γ ^ n from rfl]
+    simp only [mul_smul_comm, smul_mul_assoc, smul_smul]
+    congr 1
+    have e1 : (-1 : k) ^ n * (-1) ^ n = 1 := by rw [← mul_pow]; norm_num
+    have e2 : q⁻¹ ^ n * q ^ n = 1 := by rw [← mul_pow, inv_mul_cancel₀ hq0, one_pow]
+    calc (-1) ^ n * q⁻¹ ^ ((r - n) * (p - n) + n) * ((qFactorial q n)⁻¹ * (-q) ^ n)
+        = ((-1) ^ n * (-1) ^ n) * (q⁻¹ ^ n * q ^ n) * (q⁻¹ ^ ((p - n) * (r - n)) *
+            (qFactorial q n)⁻¹) := by
+          rw [neg_pow, pow_add, mul_comm (r - n) (p - n)]; ring
+      _ = _ := by rw [e1, e2, one_mul, one_mul]
+  · rfl
+
+end Lusztig
+
 /-! ### Ordered spans -/
 
 section Span
