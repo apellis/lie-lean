@@ -2021,6 +2021,11 @@ using the explicit Laurent factors `q^{2j} + 1 + q^{-2j}` rather than inverse qu
 (`qDivPow_C_mul_qDivPow_A`, `qDivPow_f_mul_qDivPow_C`), with Laurent coefficient membership
 `long_pair_coeff_mem`. The cubic short-root correction has factors `[3j+1][3j+2]`; the apparent
 `[3]` denominator cancels against `[3n+3] = [3][n+1]_{q³}`.
+`IntegralG2Adjoint.lean` and `IntegralG2AdjointMonomial.lean` prove the scalar five-term
+recurrence (`adjoint_scalar`), Laurent coefficient membership (`adjointCoeff_mem`), and
+right multiplication by `e` of every five-root ordered tail monomial (`M5_e`), including
+zero-exponent boundaries. The finite-sum recurrence and resulting `f^{(s)}e^{(r)}` identity
+are not yet assembled.
 These are inputs to, not a proof of, integral `G₂` spanning: the other divided-power pairs,
 closure of the integral span, and the `G₂` integral braid move remain open.
 *Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
