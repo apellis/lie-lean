@@ -1873,6 +1873,17 @@ Eⱼ^{(n)} Eᵢ^{(r)}`, the analogue for `Fⱼ^{(n)}`, `Tᵢ(Eᵢ^{(n)}) = (-1)^
 The `Eⱼ^{(n)}` formula is proved on `i`-lowest vectors of integrable modules (higher-order Serre
 vanishing from the ordinary Serre relation and the rank-one formula `T_eq_psi_of_mem`), which
 detect `U⁺` (`plusHom_eq_zero_of_smul_lowest`); our argument.
+**Modified quantum group** (`QuantumGroup/Modified/Basic.lean`; [Lus] 23.1, 41.1.1): `Modified R v`
+(`U̇ = ⊕ ₗU_λ''`, a non-unital `k`-algebra, `v ≠ 0`), with `ₗU_λ'' = U_{λ'-λ''}/N(λ',λ'')` built from
+the torus-conjugation weight space (`adWeightSpace`) and the relations
+`(K_μ - v^{⟨μ,λ'⟩})u`, `u(K_μ - v^{⟨μ,λ''⟩})`; `Modified.elt` (`π_{λ',λ''}`), `Modified.one`
+(`1_λ`), `elt_mul_elt`, `one_mul_one_self`, `one_mul_one_of_ne`, `elt_K_mul`, `elt_mul_K`;
+automorphisms induced by pairs `(φ, σ)` with `φ(K_μ) = K_{σμ}` (`Modified.torusAut`,
+`Modified.mapHom`, multiplicative: `mapHom_mul`); Lusztig's `Tᵢ` on `U̇` (`Modified.braid`,
+`braid_elt`, `braid_one`: `Tᵢ(1_λ) = 1_{sᵢλ}`, inverse `braid_symm_elt` from `T'_{i,-1}`), the
+braid relations `Modified.isBraidLiftable_braid` and the Artin-group action
+`Modified.braidArtinHom` (`braidArtinHom_mul`), for every Cartan datum and `v ≠ 0` not a root of
+unity.
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
 [HK] §4.1): for an integrable `U_q(𝔰𝔩₂)`-module (`IntegrableSl2`, `q` nonzero, not a root of
 unity) the string decomposition `IntegrableSl2.stringEquiv : ⨁_{(n,j)} prim(n+2j) ≃ M`
