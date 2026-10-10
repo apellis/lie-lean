@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.QuantumGroup.Modified.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Pi
+import LieLean.Algebra.QuantumGroup.PBW.RootVectorGrading
 
 /-!
 # `ₗU_λ''` as Lusztig's quotient of `U`
@@ -108,51 +108,13 @@ lemma zpow_injective_of_not_root {v : k} (hv0 : v ≠ 0) (hv : ∀ n : ℕ, 0 < 
   · rfl
   · exact absurd h.symm (key b a hab)
 
-variable (R v) in
-/-- Conjugation by `K_μ`. -/
-def conjK (μ : Y) : Module.End k (QuantumGroup R v) :=
-  LinearMap.mulLeft k (K R v μ) ∘ₗ LinearMap.mulRight k (K R v (-μ))
-
-lemma conjK_apply (μ : Y) (x : QuantumGroup R v) :
-    conjK R v μ x = K R v μ * x * K R v (-μ) := by
-  simp [conjK, mul_assoc]
-
-lemma conjK_comm (μ ν : Y) : Commute (conjK R v μ) (conjK R v ν) := by
-  have key : ∀ μ ν : Y, ∀ x : QuantumGroup R v,
-      K R v μ * (K R v ν * x * K R v (-ν)) * K R v (-μ) =
-        K R v (μ + ν) * x * K R v (-(μ + ν)) := fun μ ν x ↦ by
-    have h : K R v (-ν) * K R v (-μ) = K R v (-(μ + ν)) := by
-      rw [K_add]; congr 1; abel
-    rw [← K_add, ← h]; simp only [mul_assoc]
-  ext x
-  simp only [Module.End.mul_apply, conjK_apply]
-  rw [key, key, add_comm]
-
-lemma adWeightSpace_le_eigenspace (χ : Y →+ ℤ) (μ : Y) :
-    adWeightSpace R v χ ≤ Module.End.eigenspace (conjK R v μ) (v ^ χ μ) := fun x hx ↦ by
-  rw [Module.End.mem_eigenspace_iff, conjK_apply]
-  exact conj_eq_of_mem_adWeightSpace hx μ
-
-variable (R) in
-/-- The conjugation weight spaces are independent (`v ≠ 0` not a root of unity). -/
-theorem iSupIndep_adWeightSpace (hv0 : v ≠ 0) (hv : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) :
-    iSupIndep (adWeightSpace R v) := by
-  have hind := Module.End.independent_iInf_maxGenEigenspace_of_forall_mapsTo (conjK R v)
-    (fun μ ν φ ↦ Module.End.mapsTo_maxGenEigenspace_of_comm (conjK_comm ν μ) φ)
-  let e : (Y →+ ℤ) → (Y → k) := fun χ μ ↦ v ^ χ μ
-  have he : Function.Injective e := fun χ χ' h ↦ by
-    ext μ
-    exact zpow_injective_of_not_root hv0 hv (congrFun h μ)
-  refine (hind.comp he).mono fun χ ↦ le_iInf fun μ ↦ ?_
-  exact (adWeightSpace_le_eigenspace χ μ).trans Module.End.eigenspace_le_maxGenEigenspace
-
 open scoped Classical in
 variable (R) in
 /-- `U = ⊕_χ U_χ` (`v ≠ 0` not a root of unity). -/
 theorem isInternal_adWeightSpace [NeZero v] (hv : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) :
     DirectSum.IsInternal (adWeightSpace R v) :=
   DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top
-    (iSupIndep_adWeightSpace R (NeZero.ne v) hv) (iSup_adWeightSpace R v)
+    (iSupIndep_adWeightSpace hv) (iSup_adWeightSpace R v)
 
 /-! ### Lusztig's relations -/
 
@@ -211,7 +173,7 @@ lemma sup_otherWeights (χ : Y →+ ℤ) :
 
 lemma inf_otherWeights (hv : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (χ : Y →+ ℤ) :
     adWeightSpace R v χ ⊓ otherWeights R v χ = ⊥ :=
-  ((iSupIndep_adWeightSpace R (NeZero.ne v) hv).disjoint_biSup (x := χ) (y := {χ' | χ' ≠ χ})
+  ((iSupIndep_adWeightSpace hv).disjoint_biSup (x := χ) (y := {χ' | χ' ≠ χ})
     (by simp)).eq_bot
 
 lemma mul_mem_otherWeights_left {χ : Y →+ ℤ} {a b : QuantumGroup R v}
