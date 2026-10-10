@@ -352,6 +352,7 @@ import LieLean.Algebra.QuantumGroup.Modified.IntegralForm
 import LieLean.Algebra.QuantumGroup.Modified.Quotient
 import LieLean.Algebra.QuantumGroup.Modified.RootVectors
 import LieLean.Algebra.QuantumGroup.Modified.Triangular
+import LieLean.Algebra.QuantumGroup.Modified.TriangularBasis
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Braid
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.DividedPowers
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Integrable

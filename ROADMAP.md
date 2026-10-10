@@ -1919,7 +1919,12 @@ from the triangular decomposition, any field, `v` not a root of unity); `𝒜U�
 `s_{i₁} ⋯ s_{iₙ}` reduced) and (b) for `e = -1` (`Modified.list_braid_symm_qDivPow_E_mem_aPlus`, via
 `σ T''_{i,1} σ = T'_{i,-1}`, [Lus] 37.2.4), under `aᵢⱼ aⱼᵢ ≤ 3` for `i ≠ j` (the hypothesis of the
 library's [Lus] 40.1.3, `rootVector_mem_adjoin_of_not_root`; all finite types). `T''_{i,-1}`,
-`T'_{i,1}` are not defined in the library. Not formalized from [Lus] 41.1: 41.1.4–41.1.7 (integral PBW bases, canonical basis), 41.1.9 (quantum Frobenius).
+`T'_{i,1}` are not defined in the library.
+**Triangular basis of `U̇`** (`QuantumGroup/Modified/TriangularBasis.lean`; [Lus] 23.2.1 (b)): the
+maps `Modified.Phi ζ : U̇ → U⁻ ⊗ U⁺` (`π_{λ',ζ}(y⁻ x⁺) ↦ y⁻ ⊗ x⁺`, zero on the other components) and
+`Modified.triangularBasis`: for bases `(bᵢ)` of `U⁻`, `(b'ⱼ)` of `U⁺` consisting of weight vectors,
+the `bᵢ 1_λ b'ⱼ = π_{λ-|bᵢ|,λ-|b'ⱼ|}(bᵢ b'ⱼ)` (`λ ∈ X`) form a basis of `U̇` (any field, `v` not a root
+of unity). Not formalized from [Lus] 41.1: 41.1.4–41.1.7 (integral PBW bases, canonical basis), 41.1.9 (quantum Frobenius).
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
 [HK] §4.1): for an integrable `U_q(𝔰𝔩₂)`-module (`IntegrableSl2`, `q` nonzero, not a root of
 unity) the string decomposition `IntegrableSl2.stringEquiv : ⨁_{(n,j)} prim(n+2j) ≃ M`
