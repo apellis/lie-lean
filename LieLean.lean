@@ -348,6 +348,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Reverse
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.Modified.Basic
 import LieLean.Algebra.QuantumGroup.Modified.IntegralForm
+import LieLean.Algebra.QuantumGroup.Modified.Quotient
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Braid
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.DividedPowers
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Integrable
