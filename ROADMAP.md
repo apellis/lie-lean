@@ -2024,8 +2024,9 @@ using the explicit Laurent factors `q^{2j} + 1 + q^{-2j}` rather than inverse qu
 `IntegralG2Adjoint.lean` and `IntegralG2AdjointMonomial.lean` prove the scalar five-term
 recurrence (`adjoint_scalar`), Laurent coefficient membership (`adjointCoeff_mem`), and
 right multiplication by `e` of every five-root ordered tail monomial (`M5_e`), including
-zero-exponent boundaries. The finite-sum recurrence and resulting `f^{(s)}e^{(r)}` identity
-are not yet assembled.
+zero-exponent boundaries. `IntegralG2AdjointCoeff.lean` proves the full incoming-coefficient
+recurrence with all missing-predecessor cases (`adjointCoeff_recurrence`). The finite-sum
+recurrence and resulting `f^{(s)}e^{(r)}` identity are not yet assembled.
 These are inputs to, not a proof of, integral `G₂` spanning: the other divided-power pairs,
 closure of the integral span, and the `G₂` integral braid move remain open.
 *Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
