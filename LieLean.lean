@@ -382,6 +382,7 @@ import LieLean.Algebra.QuantumGroup.PBW.IntegralG2CommutingCD
 import LieLean.Algebra.QuantumGroup.PBW.IntegralG2Divided
 import LieLean.Algebra.QuantumGroup.PBW.IntegralG2Relations
 import LieLean.Algebra.QuantumGroup.PBW.IntegralG2ShortPair
+import LieLean.Algebra.QuantumGroup.PBW.IntegralG2LongPair
 import LieLean.Algebra.QuantumGroup.PBW.KostantDimension
 import LieLean.Algebra.QuantumGroup.PBW.Monomials
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2
