@@ -1910,7 +1910,16 @@ divided powers; `Modified.aForm_eq_aFormFE`, `Modified.aForm_eq_aFormEF`, `aForm
 i.e. of the `x⁻ 1_λ x'⁺` and of the `x⁺ 1_λ x'⁻`, `x, x' ∈ 𝒜f`). Proof: every product of divided
 powers is reduced to normal form modulo the left ideal `Σ_μ U(K_μ - v^{⟨μ,λ⟩})` with the
 commutation formula ([Lus] 23.1.3) and integral coefficients; the other order via the Chevalley
-involution on `U̇` (`Modified.omegaAut`). Not formalized from [Lus] 41.1: 41.1.3, 41.1.4–41.1.7 (integral PBW bases, canonical basis), 41.1.9 (quantum Frobenius).
+involution on `U̇` (`Modified.omegaAut`).
+**Integral root vectors** (`QuantumGroup/Modified/RootVectors.lean`; [Lus] 41.1.3): the map
+`Modified.Theta ζ : U̇ → U` (`Θ_ζ(y⁻ x⁺ 1_ζ) = ε(y) x⁺`, zero on the components `ₗU_λ''`, `λ'' ≠ ζ`,
+from the triangular decomposition, any field, `v` not a root of unity); `𝒜U⁺ = Modified.aPlus`;
+`Modified.mem_aPlus_of_elt_mem_aForm` (`x⁺ 1_ζ ∈ 𝒜U̇ ⇒ x⁺ ∈ 𝒜U⁺`); [Lus] 41.1.3 (a) for `e = 1`
+(`Modified.list_braid_qDivPow_E_mem_aPlus`: `T''_{i₁,1} ⋯ T''_{iₙ₋₁,1}(E_{iₙ}^{(t)}) ∈ 𝒜U⁺` for
+`s_{i₁} ⋯ s_{iₙ}` reduced) and (b) for `e = -1` (`Modified.list_braid_symm_qDivPow_E_mem_aPlus`, via
+`σ T''_{i,1} σ = T'_{i,-1}`, [Lus] 37.2.4), under `aᵢⱼ aⱼᵢ ≤ 3` for `i ≠ j` (the hypothesis of the
+library's [Lus] 40.1.3, `rootVector_mem_adjoin_of_not_root`; all finite types). `T''_{i,-1}`,
+`T'_{i,1}` are not defined in the library. Not formalized from [Lus] 41.1: 41.1.4–41.1.7 (integral PBW bases, canonical basis), 41.1.9 (quantum Frobenius).
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
 [HK] §4.1): for an integrable `U_q(𝔰𝔩₂)`-module (`IntegrableSl2`, `q` nonzero, not a root of
 unity) the string decomposition `IntegrableSl2.stringEquiv : ⨁_{(n,j)} prim(n+2j) ≃ M`
