@@ -13,8 +13,8 @@ import LieLean.Algebra.QuantumGroup.PBW.RankTwoG2BraidSpan
 
 * `QuantumGroup.span_pbwMonomial_of_braidMove_of_not_root`: every actual Coxeter braid move
   preserves the ordered PBW span for the constructed braid automorphisms at a nonzero parameter
-  which is not a root of unity, whenever `BraidOuterCondition` holds and `aᵢⱼaⱼᵢ ≤ 3` for all
-  `i ≠ j` (the four rank-two cases `A₁ × A₁`, `A₂`, `B₂`, `G₂`, in both orientations).
+  which is not a root of unity, whenever `aᵢⱼaⱼᵢ ≤ 3` for all `i ≠ j` (the four rank-two
+  cases `A₁ × A₁`, `A₂`, `B₂`, `G₂`, in both orientations).
 * `QuantumGroup.span_pbwMonomial_of_isReduced_of_isFiniteCartan`: in finite type, reduced words
   with the same Coxeter-group product have equal ordered PBW spans ([Jan] Prop. 8.22 a),
   [Lus] Prop. 40.2.1 (b)).
@@ -75,8 +75,8 @@ include hv
 
 /-- **Braid-move invariance.** Every actual Coxeter braid move preserves the ordered PBW span
 of the constructed braid automorphisms at a non-root-of-unity parameter, assuming
-`BraidOuterCondition` and `aᵢⱼaⱼᵢ ≤ 3` for `i ≠ j` (both hold in finite type). -/
-theorem span_pbwMonomial_of_braidMove_of_not_root (hD : D.BraidOuterCondition)
+`aᵢⱼaⱼᵢ ≤ 3` for `i ≠ j` (true in finite type). -/
+theorem span_pbwMonomial_of_braidMove_of_not_root
     (hfin : ∀ i j, i ≠ j → D.cartanMatrix i j * D.cartanMatrix j i ≤ 3) {u w : List I}
     (hm : D.cartanMatrix.coxeterMatrix.BraidMove u w) :
     Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
@@ -117,7 +117,7 @@ theorem span_pbwMonomial_of_braidMove_of_not_root (hD : D.BraidOuterCondition)
       rw [hm']
       rfl
     rw [hw, hw']
-    exact (span_pbwMonomial_a2_context_of_not_root R v hij ha hb hv hD p s).symm
+    exact (span_pbwMonomial_a2_context_of_not_root R v hij ha hb hv p s).symm
   · have hm : D.cartanMatrix.coxeterMatrix i j = 4 := by
       rw [Matrix.coxeterMatrix_apply_of_ne _ hij, ha, hb]
       rfl
@@ -133,7 +133,7 @@ theorem span_pbwMonomial_of_braidMove_of_not_root (hD : D.BraidOuterCondition)
       rw [hm']
       rfl
     rw [hw, hw']
-    exact span_pbwMonomial_b2_context_of_not_root R v hij ha hb hv hD p s
+    exact span_pbwMonomial_b2_context_of_not_root R v hij ha hb hv p s
   · have hm : D.cartanMatrix.coxeterMatrix i j = 4 := by
       rw [Matrix.coxeterMatrix_apply_of_ne _ hij, ha, hb]
       rfl
@@ -149,7 +149,7 @@ theorem span_pbwMonomial_of_braidMove_of_not_root (hD : D.BraidOuterCondition)
       rw [hm']
       rfl
     rw [hw, hw']
-    exact (span_pbwMonomial_b2_context_of_not_root R v hij.symm hb ha hv hD p s).symm
+    exact (span_pbwMonomial_b2_context_of_not_root R v hij.symm hb ha hv p s).symm
   · have hm : D.cartanMatrix.coxeterMatrix i j = 6 := by
       rw [Matrix.coxeterMatrix_apply_of_ne _ hij, ha, hb]
       rfl
@@ -165,7 +165,7 @@ theorem span_pbwMonomial_of_braidMove_of_not_root (hD : D.BraidOuterCondition)
       rw [hm']
       rfl
     rw [hw, hw']
-    exact span_pbwMonomial_g2_context_of_not_root R v hij ha hb hv hD p s
+    exact span_pbwMonomial_g2_context_of_not_root R v hij ha hb hv p s
   · have hm : D.cartanMatrix.coxeterMatrix i j = 6 := by
       rw [Matrix.coxeterMatrix_apply_of_ne _ hij, ha, hb]
       rfl
@@ -181,12 +181,11 @@ theorem span_pbwMonomial_of_braidMove_of_not_root (hD : D.BraidOuterCondition)
       rw [hm']
       rfl
     rw [hw, hw']
-    exact (span_pbwMonomial_g2_context_of_not_root R v hij.symm hb ha hv hD p s).symm
+    exact (span_pbwMonomial_g2_context_of_not_root R v hij.symm hb ha hv p s).symm
 
 /-- **Reduced-word independence** ([Jan] Prop. 8.22 a)): reduced words with the same
-Coxeter-group product have the same actual ordered PBW span, under `BraidOuterCondition` and
-`aᵢⱼaⱼᵢ ≤ 3`. -/
-theorem span_pbwMonomial_of_isReduced_of_not_root (hD : D.BraidOuterCondition)
+Coxeter-group product have the same actual ordered PBW span, if `aᵢⱼaⱼᵢ ≤ 3` for `i ≠ j`. -/
+theorem span_pbwMonomial_of_isReduced_of_not_root
     (hfin : ∀ i j, i ≠ j → D.cartanMatrix i j * D.cartanMatrix j i ≤ 3) {W : Type*} [Group W]
     (cs : CoxeterSystem D.cartanMatrix.coxeterMatrix W) {u w : List I}
     (hu : cs.IsReduced u) (hw : cs.IsReduced w) (huw : cs.wordProd u = cs.wordProd w) :
@@ -195,7 +194,7 @@ theorem span_pbwMonomial_of_isReduced_of_not_root (hD : D.BraidOuterCondition)
       Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
         (braidEquivOfNotRoot R hv) (E R v) w)) :=
   CoxeterSystem.eq_of_reflTransGen_braidMove
-    (fun _ _ _ hm ↦ span_pbwMonomial_of_braidMove_of_not_root R v hv hD hfin hm)
+    (fun _ _ _ hm ↦ span_pbwMonomial_of_braidMove_of_not_root R v hv hfin hm)
     hu (CoxeterSystem.reflTransGen_braidMove_of_isReduced hu hw huw)
 
 /-- **Reduced-word independence in finite type** ([Jan] Prop. 8.22 a), [Lus] Prop. 40.2.1 (b)):
@@ -210,7 +209,6 @@ theorem span_pbwMonomial_of_isReduced_of_isFiniteCartan [Fintype I]
       Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
         (braidEquivOfNotRoot R hv) (E R v) w)) :=
   span_pbwMonomial_of_isReduced_of_not_root R v hv
-    (LusztigCartanDatum.braidOuterCondition_of_isFiniteCartan hA)
     (fun _ _ hij ↦ hA.mul_le_three hij) cs hu hw huw
 
 variable [Fintype I] (hA : D.cartanMatrix.IsFiniteCartan) {W : Type*} [Group W] [Finite W]
@@ -243,7 +241,6 @@ theorem span_pbwMonomial_longest_of_isFiniteCartan :
     rintro _ ⟨c, rfl⟩
     exact CoxeterSystem.pbwMonomial_mem _ _
       (fun n hn ↦ rootVector_mem_adjoin_of_not_root
-        (LusztigCartanDatum.braidOuterCondition_of_isFiniteCartan hA)
         (fun _ _ hij ↦ hA.mul_le_three hij) hv hw n hn) c
   · let S := Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
       (braidEquivOfNotRoot R hv) (E R v) w))

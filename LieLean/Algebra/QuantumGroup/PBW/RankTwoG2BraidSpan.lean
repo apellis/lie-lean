@@ -28,7 +28,7 @@ Levendorskii–Soibelman type between all pairs of root vectors, hence ordered s
 * `QuantumGroup.span_pbwMonomial_g2_context`,
   `QuantumGroup.span_pbwMonomial_g2_context_of_not_root`: equality in arbitrary prefix/suffix
   word context, given the six-term braid relation (supplied by the constructed automorphisms at
-  a non-root-of-unity parameter under `BraidOuterCondition`).
+  a non-root-of-unity parameter).
 
 The local results assume `v ≠ 0`, `vᵢ - vᵢ⁻¹ ≠ 0` and `[3]ᵢ! ≠ 0`.
 
@@ -376,10 +376,10 @@ theorem span_pbwMonomial_g2_context
 
 omit hq h3 Hi Hj in
 /-- At a non-root-of-unity parameter the constructed braid automorphisms satisfy the six-term
-braid relation (under `BraidOuterCondition`), so G₂ braid moves preserve ordered PBW spans in
-arbitrary word context. -/
+braid relation (`isBraidLiftable_braidEquivOfNotRoot`), so G₂ braid moves preserve ordered
+PBW spans in arbitrary word context. -/
 theorem span_pbwMonomial_g2_context_of_not_root
-    (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (hD : D.BraidOuterCondition) (p s : List I) :
+    (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (p s : List I) :
     Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
       (braidEquivOfNotRoot R hv') (E R v) (p ++ [i, j, i, j, i, j] ++ s))) =
     Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
@@ -389,10 +389,7 @@ theorem span_pbwMonomial_g2_context_of_not_root
     (shortNode_braidGeneric_of_not_root hv' i).sub_ne
     (qFactorial_ne_zero_of_not_root (NeZero.ne v) hv' i 3)
   have hLift : D.cartanMatrix.coxeterMatrix.IsBraidLiftable (braidEquivOfNotRoot R hv') :=
-    isBraidLiftable_braidEquivOfGeneric
-      (fun l ↦ (shortNode_braidGeneric_of_not_root hv' l).sub_ne)
-      (braidSerreGeneric_of_not_root hv')
-      (fun l ↦ LusztigF.qFactorial_ne_zero_of_not_root (NeZero.ne v) hv' l 3) hD
+    isBraidLiftable_braidEquivOfNotRoot R hv'
   have hm : D.cartanMatrix.coxeterMatrix i j = 6 := by
     rw [Matrix.coxeterMatrix_apply_of_ne _ hij, h, h']
     rfl

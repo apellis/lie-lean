@@ -147,7 +147,6 @@ theorem span_pbwMonomial_longest_of_isFiniteCartan_of_simplyLaced [Fintype I]
     rintro _ ⟨c, rfl⟩
     exact CoxeterSystem.pbwMonomial_mem _ _
       (fun n hn ↦ rootVector_mem_adjoin_of_not_root
-        (LusztigCartanDatum.braidOuterCondition_of_isFiniteCartan hD)
         (fun _ _ hij ↦ hD.mul_le_three hij) hv hw n hn) c
   · exact adjoin_le_span_pbwMonomial_longest_of_simplyLaced R v hv hSL cs hw hw₀
 

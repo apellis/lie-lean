@@ -3,7 +3,7 @@ Copyright (c) 2026 Alex Ellis. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
-import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
+import LieLean.Algebra.QuantumGroup.PBW.RootVectorsNotRoot
 
 /-!
 # Conjugation weights of quantum root vectors
@@ -164,7 +164,6 @@ theorem rootVector_mem_adjoin_and_adWeightSpace_of_isFiniteCartan [Fintype I]
       CoxeterSystem.rootVector (braidEquivOfNotRoot R hv) (E R v) ω n hn ∈
         adWeightSpace R v (rootVectorWeight R ω n hn) := by
   exact ⟨rootVector_mem_adjoin_of_not_root
-    (LusztigCartanDatum.braidOuterCondition_of_isFiniteCartan hA)
     (fun _ _ hij ↦ hA.mul_le_three hij) hv hω n hn,
     rootVector_mem_adWeightSpace_of_not_root hv ω n hn⟩
 

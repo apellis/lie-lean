@@ -5,6 +5,7 @@ Authors: Alex Ellis
 -/
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2BraidSpan
 import LieLean.Algebra.QuantumGroup.BraidAction.GeneralArtin
+import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Braid
 import Mathlib.Algebra.Algebra.Operations
 
 /-!
@@ -123,10 +124,10 @@ theorem span_pbwMonomial_a2_context
 
 omit Hi Hj hq in
 /-- At a non-root-of-unity parameter, the existing braid action supplies the full
-operator relation and hence contextual A₂ ordered-span equality. The repository's
-`BraidOuterCondition` is retained explicitly; no global spanning assertion is made. -/
+operator relation (`isBraidLiftable_braidEquivOfNotRoot`, every Cartan datum) and hence
+contextual A₂ ordered-span equality; no global spanning assertion is made. -/
 theorem span_pbwMonomial_a2_context_of_not_root
-    (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (hD : D.BraidOuterCondition) (p s : List I) :
+    (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (p s : List I) :
     Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
       (braidEquivOfNotRoot R hv') (E R v) (p ++ [i, j, i] ++ s))) =
     Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
@@ -141,10 +142,7 @@ theorem span_pbwMonomial_a2_context_of_not_root
   apply span_pbwMonomial_a2_context R v (braidEquivOfNotRoot R hv')
     (H i) (H j) hij h h' (shortNode_braidGeneric_of_not_root hv' i).sub_ne
   have hLift : D.cartanMatrix.coxeterMatrix.IsBraidLiftable (braidEquivOfNotRoot R hv') :=
-    isBraidLiftable_braidEquivOfGeneric
-      (fun l ↦ (shortNode_braidGeneric_of_not_root hv' l).sub_ne)
-      (braidSerreGeneric_of_not_root hv')
-      (fun l ↦ LusztigF.qFactorial_ne_zero_of_not_root (NeZero.ne v) hv' l 3) hD
+    isBraidLiftable_braidEquivOfNotRoot R hv'
   have hm : D.cartanMatrix.coxeterMatrix i j = 3 := by
     rw [Matrix.coxeterMatrix_apply_of_ne _ hij, h, h']
     rfl

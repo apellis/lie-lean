@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.QuantumGroup.PBW.KostantCounting
+import LieLean.Algebra.QuantumGroup.PBW.RootVectorsNotRoot
 
 /-!
 # Longest-word root vectors generate the positive quantum algebra
@@ -127,7 +128,6 @@ theorem adjoin_rootVector_of_isFiniteCartan :
   · rw [Algebra.adjoin_le_iff]
     rintro _ ⟨n, rfl⟩
     exact rootVector_mem_adjoin_of_not_root
-      (LusztigCartanDatum.braidOuterCondition_of_isFiniteCartan hD)
       (fun _ _ hij ↦ hD.mul_le_three hij) hv hω n n.isLt
   · rw [Algebra.adjoin_le_iff]
     rintro _ ⟨i, rfl⟩

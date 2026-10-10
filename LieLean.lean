@@ -384,6 +384,7 @@ import LieLean.Algebra.QuantumGroup.PBW.RankTwoG2BraidSpan
 import LieLean.Algebra.QuantumGroup.PBW.FiniteTypeSpan
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorGeneration
 import LieLean.Algebra.QuantumGroup.PBW.RootVectors
+import LieLean.Algebra.QuantumGroup.PBW.RootVectorsNotRoot
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
 import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
 import LieLean.Algebra.QuantumGroup.QBinomial

@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.QuantumGroup.PBW.Monomials
-import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
+import LieLean.Algebra.QuantumGroup.PBW.RootVectorsNotRoot
 import LieLean.Algebra.QuantumGroup.TriangularDecomposition
 import Mathlib.Algebra.Polynomial.Coeff
 
@@ -19,7 +19,7 @@ the Cartan datum. We prove ([Jan] Lemma 8.21 b), [Lus] 40.2.1) that the ordered 
 
 are linearly independent (`QuantumGroup.linearIndependent_pbwMonomial_of_isReduced`), under the
 hypotheses guaranteeing that the root vectors along reduced words lie in `U⁺`
-(`BraidOuterCondition` and `aᵢⱼ aⱼᵢ ≤ 3`; both hold in finite type,
+(`aᵢⱼ aⱼᵢ ≤ 3`, which holds in finite type,
 `QuantumGroup.linearIndependent_pbwMonomial_of_isFiniteCartan`). [Jan] states this in finite type
 and for the opposite order of the factors.
 
@@ -230,25 +230,24 @@ lemma braidEquivOfNotRoot_images (l : I) :
 
 section Reduced
 
-variable (hD : D.BraidOuterCondition)
-  (hfin : ∀ i j, i ≠ j → D.cartanMatrix i j * D.cartanMatrix j i ≤ 3)
+variable (hfin : ∀ i j, i ≠ j → D.cartanMatrix i j * D.cartanMatrix j i ≤ 3)
   {W : Type*} [Group W] {cs : CoxeterSystem D.cartanMatrix.coxeterMatrix W}
 
-include hD hfin in
+include hfin in
 /-- The ordered monomials in the root vectors along a reduced word lie in `U⁺`. -/
 theorem pbwMonomial_mem_adjoin_of_isReduced {ω : List I} (hω : cs.IsReduced ω)
     (c : Fin ω.length → ℕ) :
     pbwMonomial (braidEquivOfNotRoot R hv') (E R v) ω c ∈
       Algebra.adjoin k (Set.range (E R v)) :=
-  pbwMonomial_mem _ _ (fun n hn ↦ rootVector_mem_adjoin_of_not_root hD hfin hv' hω n hn) c
+  pbwMonomial_mem _ _ (fun n hn ↦ rootVector_mem_adjoin_of_not_root hfin hv' hω n hn) c
 
-include hD hfin in
+include hfin in
 /-- **Linear independence of the PBW monomials** ([Jan] Lemma 8.21 b), opposite order,
 [Lus] 40.2.1): for `v ≠ 0` not a root of unity and a reduced word `ω = i₁ ⋯ iₙ` of a Coxeter group
 with the Coxeter matrix of the Cartan datum, the ordered monomials `E_{β₁}^{c₁} ⋯ E_{βₙ}^{cₙ}` in
-the root vectors `E_{β_m} = T_{i₁} ⋯ T_{i_{m-1}}(E_{i_m})` are linearly independent. The hypotheses
-on the Cartan datum (`BraidOuterCondition` and `aᵢⱼ aⱼᵢ ≤ 3`) are those under which the root vectors
-along reduced words are known to lie in `U⁺`; they hold in finite type. -/
+the root vectors `E_{β_m} = T_{i₁} ⋯ T_{i_{m-1}}(E_{i_m})` are linearly independent. The hypothesis
+`aᵢⱼ aⱼᵢ ≤ 3` is the one under which the root vectors along reduced words are known to lie in `U⁺`
+(`rootVector_mem_adjoin_of_not_root`); it holds in finite type. -/
 theorem linearIndependent_pbwMonomial_of_isReduced {ω : List I} (hω : cs.IsReduced ω) :
     LinearIndependent k (pbwMonomial (braidEquivOfNotRoot R hv') (E R v) ω) := by
   refine linearIndependent_pbwMonomial
@@ -260,7 +259,7 @@ theorem linearIndependent_pbwMonomial_of_isReduced {ω : List I} (hω : cs.IsRed
     rw [range_plusHom]
     exact hf a
   · intro n c
-    exact pbwMonomial_mem_adjoin_of_isReduced hv' hD hfin (hω.drop n) c
+    exact pbwMonomial_mem_adjoin_of_isReduced hv' hfin (hω.drop n) c
 
 end Reduced
 
@@ -272,8 +271,6 @@ theorem linearIndependent_pbwMonomial_of_isFiniteCartan [Fintype I]
     (hA : D.cartanMatrix.IsFiniteCartan) {W : Type*} [Group W]
     {cs : CoxeterSystem D.cartanMatrix.coxeterMatrix W} {ω : List I} (hω : cs.IsReduced ω) :
     LinearIndependent k (pbwMonomial (braidEquivOfNotRoot R hv') (E R v) ω) :=
-  linearIndependent_pbwMonomial_of_isReduced hv'
-    (LusztigCartanDatum.braidOuterCondition_of_isFiniteCartan hA)
-    (fun _ _ hij ↦ hA.mul_le_three hij) hω
+  linearIndependent_pbwMonomial_of_isReduced hv' (fun _ _ hij ↦ hA.mul_le_three hij) hω
 
 end LieLean.QuantumGroup
