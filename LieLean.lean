@@ -388,6 +388,8 @@ import LieLean.Algebra.QuantumGroup.PBW.IntegralG2AdjointMonomial
 import LieLean.Algebra.QuantumGroup.PBW.IntegralG2AdjointSum
 import LieLean.Algebra.QuantumGroup.PBW.IntegralG2AdjointCoeff
 import LieLean.Algebra.QuantumGroup.PBW.IntegralG2RootMembership
+import LieLean.Algebra.QuantumGroup.PBW.IntegralG2MixedOne
+import LieLean.Algebra.QuantumGroup.PBW.IntegralG2Span
 import LieLean.Algebra.QuantumGroup.PBW.KostantDimension
 import LieLean.Algebra.QuantumGroup.PBW.Monomials
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2
