@@ -2017,6 +2017,10 @@ for right multiplication by `e`; the middle short-root formula has three terms. 
 short-short pairs `B,e` and `D,B` (`qDivPow_b_mul_qDivPow_e`, `qDivPow_D_mul_qDivPow_b`).
 Their coefficients belong to every subring containing `q` and `q⁻¹` (`short_pair_coeff_mem`),
 using the explicit Laurent factors `q^{2j} + 1 + q^{-2j}` rather than inverse quantum integers.
+`IntegralG2LongPair.lean` proves the long-long pairs `C,A` and `f,C`
+(`qDivPow_C_mul_qDivPow_A`, `qDivPow_f_mul_qDivPow_C`), with Laurent coefficient membership
+`long_pair_coeff_mem`. The cubic short-root correction has factors `[3j+1][3j+2]`; the apparent
+`[3]` denominator cancels against `[3n+3] = [3][n+1]_{q³}`.
 These are inputs to, not a proof of, integral `G₂` spanning: the other divided-power pairs,
 closure of the integral span, and the `G₂` integral braid move remain open.
 *Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
