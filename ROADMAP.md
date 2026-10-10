@@ -2013,8 +2013,12 @@ identifies these with the actual braid root vectors. `IntegralG2Divided.lean` pr
 adjacent divided-power commutations and the formulas `Ad_e`, `bd_e`, `Cd_e`, `Dd_e`, `fd_e`
 for right multiplication by `e`; the middle short-root formula has three terms. The generic
 `B2Integral.straighten_param` permits any leading commutation scalar, including inverse powers.
-These are inputs to, not a proof of, integral `G₂` spanning: arbitrary divided-power pair
-straightening, closure of the integral span, and the `G₂` integral braid move remain open.
+`IntegralG2ShortPair.lean` additionally proves arbitrary divided-power straightening for the
+short-short pairs `B,e` and `D,B` (`qDivPow_b_mul_qDivPow_e`, `qDivPow_D_mul_qDivPow_b`).
+Their coefficients belong to every subring containing `q` and `q⁻¹` (`short_pair_coeff_mem`),
+using the explicit Laurent factors `q^{2j} + 1 + q^{-2j}` rather than inverse quantum integers.
+These are inputs to, not a proof of, integral `G₂` spanning: the other divided-power pairs,
+closure of the integral span, and the `G₂` integral braid move remain open.
 *Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
 compute the rank-two straightening relations among divided-power root vectors ourselves (root vectors
 via the `Tᵢ`; the pairs `E₂,E₁`; `E₁,E₁₂`; `E₁,E₁₁₂`; `E₁₁₁₂,E₂`; `E₁₂,E₁₁₂`), then divided-power
