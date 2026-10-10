@@ -236,8 +236,8 @@ variable {k : Type*} [Field k] {q : k}
 
 /-- Uniform Laurent cancellation for the four-correction D,e scalar recurrence.
 No quantum integer or q² - 1 is inverted inside the coefficient subring. This
-statement concerns the scalar recurrence, not its identification with actual
-arbitrary divided-adjoint coefficients or unrestricted D,e ordered-span membership. -/
+statement concerns the scalar recurrence; its identification with actual divided-adjoint
+coefficients and unrestricted D,e ordered-span membership are proved in `G2DEIntegral`. -/
 theorem deScalar_mem (hq : q ≠ 0)
     (hqi : ∀ n : ℕ, 0 < n → qInt q n ≠ 0)
     (Λ : Subring k) (hqΛ : q ∈ Λ) (hiΛ : q⁻¹ ∈ Λ) (a b c : ℕ) :

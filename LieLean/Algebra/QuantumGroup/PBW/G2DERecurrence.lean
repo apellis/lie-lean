@@ -13,9 +13,8 @@ import LieLean.Algebra.QuantumGroup.PBW.G2SquareTransports
 with Laurent-integral coefficients. Both are derived from the normalized relations.
 
 `deScalar` records a field-valued scalar recurrence. Its uniform Laurent integrality
-is proved in `G2DELaurent`; identification with arbitrary divided-adjoint coefficients
-is a separate obligation.
-In particular, this module does not prove unrestricted D,e ordered-span membership.
+is proved in `G2DELaurent`. `G2DEIntegral` identifies the actual arbitrary divided-adjoint
+coefficients and proves unrestricted D,e ordered-span membership.
 -/
 
 noncomputable section
