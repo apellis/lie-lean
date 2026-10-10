@@ -1865,6 +1865,14 @@ then for `R` along `mapHom (freeCorootHom R)` (morphisms of root data intertwine
 `ω Tᵢ ω D_ζ = D_ζ Tᵢ`, `ζᵢ = -vᵢ` (`chevalley_comp_comp_diagHom`, `wordProd_F_outer`). Our own
 argument (Lusztig uses quantum Verma identities and complete reducibility).
 API change: `braidArtinHomOfNotRoot R hD hv'` (in `GeneralArtin`) → `braidArtinHomOfNotRoot R hv'`.
+**Divided powers** (`QuantumGroup/ModuleSymmetry/DividedPowers.lean`; [Lus] 37.1.3): for `v ≠ 0`
+not a root of unity, any field and root datum, `Tᵢ(Eⱼ^{(n)}) = Σ_{r+s=an} (-1)^r vᵢ^{-r} Eᵢ^{(s)}
+Eⱼ^{(n)} Eᵢ^{(r)}`, the analogue for `Fⱼ^{(n)}`, `Tᵢ(Eᵢ^{(n)}) = (-1)^n vᵢ^{-n(n-1)} Fᵢ^{(n)} K̃_{ni}`,
+`Tᵢ(Fᵢ^{(n)}) = (-1)^n vᵢ^{n(n-1)} K̃_{-ni} Eᵢ^{(n)}` and the formulas for `Tᵢ⁻¹ = T'_{i,-1}`
+(`braidEquivOfNotRoot_qDivPow_E_ne`, `_F_ne`, `_E_self`, `_F_self`, `braidEquivOfNotRoot_symm_*`).
+The `Eⱼ^{(n)}` formula is proved on `i`-lowest vectors of integrable modules (higher-order Serre
+vanishing from the ordinary Serre relation and the rank-one formula `T_eq_psi_of_mem`), which
+detect `U⁺` (`plusHom_eq_zero_of_smul_lowest`); our argument.
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
 [HK] §4.1): for an integrable `U_q(𝔰𝔩₂)`-module (`IntegrableSl2`, `q` nonzero, not a root of
 unity) the string decomposition `IntegrableSl2.stringEquiv : ⨁_{(n,j)} prim(n+2j) ≃ M`
