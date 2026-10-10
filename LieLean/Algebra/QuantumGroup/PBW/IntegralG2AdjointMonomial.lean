@@ -46,8 +46,8 @@ lemma P3_C (a b' c : ℕ) : P3 q A b C a b' c * C =
   rw [P3, mul_assoc, A2Integral.qDivPow_mul_self C c (hpi _ (by omega)), mul_smul_comm]
   rfl
 
-include hq hqi hpi H in
-lemma P3_e (a b' c : ℕ) : P3 q A b C a b' c * e =
+include hq hqi hpi in
+lemma SquareRel.P3_e (H : SquareRel q e A b C) (a b' c : ℕ) : P3 q A b C a b' c * e =
     (q⁻¹ ^ b' * (q ^ 3)⁻¹ ^ a) • (e * P3 q A b C a b' c) -
       (if b' = 0 then 0 else
         (q⁻¹ ^ (2 * (b' - 1) + 1) * qInt q 3 * qInt (q ^ 3) (a + 1)) •
@@ -66,14 +66,16 @@ lemma P3_e (a b' c : ℕ) : P3 q A b C a b' c * e =
     cases b' with
     | zero => simp [qDivPow_zero']
     | succ n =>
-      simpa only [Nat.add_one_ne_zero, ite_false, Nat.add_sub_cancel] using bd_e hq hqi H n
+      simpa only [Nat.add_one_ne_zero, ite_false, Nat.add_sub_cancel] using
+        SquareRel.bd_e hq hqi H n
   have hCe : qDivPow (q ^ 3) c C * e = e * qDivPow (q ^ 3) c C -
       (if c = 0 then 0 else ((q ^ 2 - 1) * (q ^ 3)⁻¹ ^ (c - 1)) •
         (b ^ 2 * qDivPow (q ^ 3) (c - 1) C)) := by
     cases c with
     | zero => simp [qDivPow_zero']
     | succ n =>
-      simpa only [Nat.add_one_ne_zero, ite_false, Nat.add_sub_cancel] using Cd_e hq hpi H n
+      simpa only [Nat.add_one_ne_zero, ite_false, Nat.add_sub_cancel] using
+        SquareRel.Cd_e hq hpi H n
   set P := qDivPow (q ^ 3) a A
   set Q := qDivPow q b' b
   set S := qDivPow (q ^ 3) c C
@@ -86,7 +88,7 @@ lemma P3_e (a b' c : ℕ) : P3 q A b C a b' c * e =
         (q⁻¹ ^ (2 * (b' - 1) + 1) * qInt q 3 * qInt (q ^ 3) (a + 1)) •
           P3 q A b C (a + 1) (b' - 1) c) := by
     rw [hBe, mul_sub, mul_smul_comm, sub_mul, smul_mul_assoc,
-      ← mul_assoc P e, Ad_e H a, smul_mul_assoc, smul_mul_assoc, smul_smul]
+      ← mul_assoc P e, SquareRel.Ad_e H a, smul_mul_assoc, smul_mul_assoc, smul_smul]
     split_ifs
     · simp only [mul_zero, zero_mul, sub_zero, mul_assoc]
       rfl
@@ -107,6 +109,17 @@ lemma P3_e (a b' c : ℕ) : P3 q A b C a b' c * e =
       simp only [P3, mul_assoc]
       rfl
   exact h1.trans (by rw [h2, h3]; rfl)
+
+include hq hqi hpi H in
+lemma P3_e (a b' c : ℕ) : P3 q A b C a b' c * e =
+    (q⁻¹ ^ b' * (q ^ 3)⁻¹ ^ a) • (e * P3 q A b C a b' c) -
+      (if b' = 0 then 0 else
+        (q⁻¹ ^ (2 * (b' - 1) + 1) * qInt q 3 * qInt (q ^ 3) (a + 1)) •
+          P3 q A b C (a + 1) (b' - 1) c) -
+      (if c = 0 then 0 else
+        ((q ^ 2 - 1) * (q ^ 3)⁻¹ ^ (c - 1) * qInt q (b' + 1) * qInt q (b' + 2)) •
+          P3 q A b C a (b' + 2) (c - 1)) :=
+  SquareRel.P3_e hq hqi hpi H.squareRel a b' c
 
 include hq hqi hpi H in
 /-- The five-term correction formula for an arbitrary ordered tail monomial. -/

@@ -2052,8 +2052,13 @@ in any subring containing `q,q⁻¹` (`squareCoeff_mem`), and proves arbitrary
 `C^{(s)}e^{(r)}` belongs to the ordered integral span (`qDivPow_C_mul_qDivPow_e_mem`).
 The coefficient identification needs `q ≠ 0` and nonzero positive `[n]_q`; the ordered-span
 statement additionally uses `Rel` and nonzero positive `[n]_(q³)` for the field expansion.
-These are inputs to, not a proof of, integral `G₂` spanning: the other divided-power pairs,
-closure of the integral span, and the `G₂` integral braid move remain open.
+`G2SquareTransports.lean` factors the square proof through its five required four-root
+relations (`SquareRel`), preserving the original `Rel` APIs. The shift to `B,C,D,f`
+and the opposite interval `D,C,B,A` both have parameter `q`; they yield arbitrary
+`f^{(s)}B^{(r)}` and `D^{(s)}A^{(r)}` in the original six-root ordered integral span
+(`qDivPow_f_mul_qDivPow_b_mem`, `qDivPow_D_mul_qDivPow_A_mem`). These are interval
+transports, not a full six-root symmetry. The remaining unrestricted mixed pairs are
+`D,e` and `f,A`; closure/reverse containment and the `G₂` integral braid move remain open.
 *Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
 compute the rank-two straightening relations among divided-power root vectors ourselves (root vectors
 via the `Tᵢ`; the pairs `E₂,E₁`; `E₁,E₁₂`; `E₁,E₁₁₂`; `E₁₁₁₂,E₂`; `E₁₂,E₁₁₂`), then divided-power

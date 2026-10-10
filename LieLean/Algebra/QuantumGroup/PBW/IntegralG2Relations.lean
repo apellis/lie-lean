@@ -47,6 +47,19 @@ structure Rel (q : k) (e A b C D f : B) : Prop where
     ((q ^ 2 - 1) ^ 2 / (q ^ 2 * qInt q 3)) • D ^ 3
   fD : f * D = (q ^ 3)⁻¹ • (D * f)
 
+/-- The five relations actually used by the square kernel on a four-root interval.
+No relation between the two long roots is needed. -/
+structure SquareRel (q : k) (e A b C : B) : Prop where
+  Ae : A * e = (q ^ 3)⁻¹ • (e * A)
+  Be : b * e = q⁻¹ • (e * b) - (q⁻¹ * qInt q 3) • A
+  BA : b * A = (q ^ 3)⁻¹ • (A * b)
+  Ce : C * e = e * C - (q ^ 2 - 1) • b ^ 2
+  CB : C * b = (q ^ 3)⁻¹ • (b * C)
+
+/-- Restrict the normalized relations to the first square interval. -/
+theorem Rel.squareRel {q : k} {e A b C D f : B} (H : Rel q e A b C D f) :
+    SquareRel q e A b C := ⟨H.Ae, H.Be, H.BA, H.Ce, H.CB⟩
+
 variable {q : k} {e f : B}
 
 /-- The complete normalized relations, derived from the two Serre relations. -/
