@@ -354,6 +354,7 @@ import LieLean.Algebra.QuantumGroup.Modified.IntegralForm
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBW
 import LieLean.Algebra.QuantumGroup.Modified.Quotient
 import LieLean.Algebra.QuantumGroup.Modified.RootVectors
+import LieLean.Algebra.QuantumGroup.Modified.Symmetries
 import LieLean.Algebra.QuantumGroup.Modified.Triangular
 import LieLean.Algebra.QuantumGroup.Modified.TriangularBasis
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Braid
@@ -363,6 +364,7 @@ import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Rank1
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Rank1Formula
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.RankTwo
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Strings
+import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Symmetries
 import LieLean.Algebra.QuantumGroup.PBW.Independence
 import LieLean.Algebra.QuantumGroup.PBW.IntegralA2
 import LieLean.Algebra.QuantumGroup.PBW.KostantDimension

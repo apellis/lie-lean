@@ -1917,8 +1917,20 @@ from the triangular decomposition, any field, `v` not a root of unity); `𝒜U�
 `Modified.mem_aPlus_of_elt_mem_aForm` (`x⁺ 1_ζ ∈ 𝒜U̇ ⇒ x⁺ ∈ 𝒜U⁺`); [Lus] 41.1.3 (a) for `e = 1`
 (`Modified.list_braid_qDivPow_E_mem_aPlus`: `T''_{i₁,1} ⋯ T''_{iₙ₋₁,1}(E_{iₙ}^{(t)}) ∈ 𝒜U⁺` for
 `s_{i₁} ⋯ s_{iₙ}` reduced) and (b) for `e = -1` (`Modified.list_braid_symm_qDivPow_E_mem_aPlus`, via
-`σ T''_{i,1} σ = T'_{i,-1}`, [Lus] 37.2.4), for every Cartan datum. `T''_{i,-1}`,
-`T'_{i,1}` are not defined in the library.
+`σ T''_{i,1} σ = T'_{i,-1}`, [Lus] 37.2.4), for every Cartan datum.
+**The symmetries `T'_{i,1}`, `T''_{i,-1}`** (`QuantumGroup/ModuleSymmetry/Symmetries.lean`,
+`QuantumGroup/Modified/Symmetries.lean`; [Lus] 37.1–37.2, 41.1.1–41.1.3): `braidPrimeEquiv R hv i`
+(`T'_{i,1} = ω Tᵢ ω`, [Lus] 37.2.4) and its inverse `T''_{i,-1}`, with Lusztig's values on all
+divided powers and on `K_μ` (37.1.3: `braidPrimeEquiv_qDivPow_E_self`, ...,
+`braidPrimeEquiv_symm_K`); `T''_{i,1} = T'_{i,1} ∘ D_{cᵢ}` for the diagonal automorphism with
+`cᵢⱼ = (-vᵢ)^{⟨i,j'⟩}` (`braidEquivOfNotRoot_eq_braidPrimeEquiv_diagHom`, the last formula of 37.2.4),
+`D_c Tⱼ = Tⱼ D_{sⱼ c}` (`diagHom_comp_of_hasImages`), hence words in `T'_{i,1}` (resp. `T''_{i,-1}`)
+are words in `T''_{i,1}` (resp. `T'_{i,-1}`) composed with diagonal automorphisms with scalars
+`±v^m` (`exists_list_braidPrime_eq`, `exists_list_braidPrime_symm_eq`). On `U̇`:
+`Modified.braidPrime` (`T'_{i,1}`, with `T'_{i,1}(1_λ) = 1_{sᵢλ}`; inverse `T''_{i,-1}`), preserving
+`𝒜U̇` (`braidPrime_mem_aForm`, `braidPrime_symm_mem_aForm`). [Lus] 41.1.3 (a) for `e = -1`
+(`Modified.list_braidPrime_symm_qDivPow_E_mem_aPlus`) and (b) for `e = 1`
+(`Modified.list_braidPrime_qDivPow_E_mem_aPlus`), so 41.1.3 holds in all four cases.
 **Triangular basis of `U̇`** (`QuantumGroup/Modified/TriangularBasis.lean`; [Lus] 23.2.1 (b)): the
 maps `Modified.Phi ζ : U̇ → U⁻ ⊗ U⁺` (`π_{λ',ζ}(y⁻ x⁺) ↦ y⁻ ⊗ x⁺`, zero on the other components) and
 `Modified.triangularBasis`: for bases `(bᵢ)` of `U⁻`, `(b'ⱼ)` of `U⁺` consisting of weight vectors,
@@ -1945,7 +1957,7 @@ simply-laced finite type (`QuantumGroup/Modified/IntegralBasisPBW.lean`: `pbwPlu
 `pbwMinusBasis`, `aTriangularBasisPBW`, the elements `ω(E_c) 1_λ E_{c'}`; the hypotheses of
 23.2.2 (b) are checked for these bases). Not formalized from [Lus] 41.1: 41.1.4–41.1.7 for `B₂`/`G₂`
 subdiagrams (Lusztig's rank-two input is his paper *Quantum groups at roots of 1*), 41.1.4 (a)
-and `e = -1` (the symmetries `T'_{i,1}`, `T''_{i,-1}` are not defined), 41.1.5–41.1.6 (these need the
+and `e = -1`, 41.1.5–41.1.6 (these need the
 canonical basis of `f` and the values of the form on PBW elements, [Lus] 14.4, 38.2.3), 41.1.9
 (quantum Frobenius).
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
