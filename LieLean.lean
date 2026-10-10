@@ -374,6 +374,13 @@ import LieLean.Algebra.QuantumGroup.PBW.IndependenceSymm
 import LieLean.Algebra.QuantumGroup.PBW.IntegralA2
 import LieLean.Algebra.QuantumGroup.PBW.IntegralB2
 import LieLean.Algebra.QuantumGroup.PBW.IntegralB2Opposite
+import LieLean.Algebra.QuantumGroup.PBW.G2SquareKernel
+import LieLean.Algebra.QuantumGroup.PBW.G2SquareCancellation
+import LieLean.Algebra.QuantumGroup.PBW.G2SquareNewton
+import LieLean.Algebra.QuantumGroup.PBW.G2SquareDivisibility
+import LieLean.Algebra.QuantumGroup.PBW.G2SquareRecurrence
+import LieLean.Algebra.QuantumGroup.PBW.G2SquareLaurent
+import LieLean.Algebra.QuantumGroup.PBW.G2SquareIntegral
 import LieLean.Algebra.QuantumGroup.PBW.IntegralG2Basic
 import LieLean.Algebra.QuantumGroup.PBW.IntegralG2Commuting
 import LieLean.Algebra.QuantumGroup.PBW.IntegralG2CommutingAB
