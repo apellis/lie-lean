@@ -25,10 +25,14 @@ variable {k B : Type*} [Field k] [Ring B] [Algebra k B]
   (hq : q ≠ 0) (hqi : ∀ n : ℕ, 0 < n → qInt q n ≠ 0)
   (hpi : ∀ n : ℕ, 0 < n → qInt (q ^ 3) n ≠ 0) (H : Rel q e A b C D f)
 
+lemma SquareRel.Ad_ed (H : SquareRel q e A b C) (a r : ℕ) : qDivPow (q ^ 3) a A * qDivPow q r e =
+    (q ^ 3)⁻¹ ^ (a * r) • (qDivPow q r e * qDivPow (q ^ 3) a A) :=
+  B2Integral.qDivPow_mul_qDivPow_comm H.Ae a r
+
 include H in
 lemma Ad_ed (a r : ℕ) : qDivPow (q ^ 3) a A * qDivPow q r e =
     (q ^ 3)⁻¹ ^ (a * r) • (qDivPow q r e * qDivPow (q ^ 3) a A) :=
-  B2Integral.qDivPow_mul_qDivPow_comm H.Ae a r
+  SquareRel.Ad_ed H.squareRel a r
 
 include H in
 lemma bd_Ad (b' a : ℕ) : qDivPow q b' b * qDivPow (q ^ 3) a A =
@@ -50,13 +54,17 @@ lemma fd_Dd (s d : ℕ) : qDivPow (q ^ 3) s f * qDivPow q d D =
     (q ^ 3)⁻¹ ^ (s * d) • (qDivPow q d D * qDivPow (q ^ 3) s f) :=
   B2Integral.qDivPow_mul_qDivPow_comm H.fD s d
 
+lemma SquareRel.Ad_e (H : SquareRel q e A b C) (a : ℕ) : qDivPow (q ^ 3) a A * e =
+    (q ^ 3)⁻¹ ^ a • (e * qDivPow (q ^ 3) a A) := by
+  simpa only [A2Integral.qDivPow_one', mul_one] using SquareRel.Ad_ed H a 1
+
 include H in
 lemma Ad_e (a : ℕ) : qDivPow (q ^ 3) a A * e =
-    (q ^ 3)⁻¹ ^ a • (e * qDivPow (q ^ 3) a A) := by
-  simpa only [A2Integral.qDivPow_one', mul_one] using Ad_ed H a 1
+    (q ^ 3)⁻¹ ^ a • (e * qDivPow (q ^ 3) a A) :=
+  SquareRel.Ad_e H.squareRel a
 
-include hq hqi H in
-lemma bd_e (n : ℕ) : qDivPow q (n + 1) b * e =
+include hq hqi in
+lemma SquareRel.bd_e (H : SquareRel q e A b C) (n : ℕ) : qDivPow q (n + 1) b * e =
     q⁻¹ ^ (n + 1) • (e * qDivPow q (n + 1) b) -
       (q⁻¹ ^ (2 * n + 1) * qInt q 3) • (A * qDivPow q n b) := by
   induction n with
@@ -76,8 +84,14 @@ lemma bd_e (n : ℕ) : qDivPow q (n + 1) b * e =
     all_goals (try field_simp)
     all_goals (try ring)
 
-include hq hpi H in
-lemma Cd_e (n : ℕ) : qDivPow (q ^ 3) (n + 1) C * e =
+include hq hqi H in
+lemma bd_e (n : ℕ) : qDivPow q (n + 1) b * e =
+    q⁻¹ ^ (n + 1) • (e * qDivPow q (n + 1) b) -
+      (q⁻¹ ^ (2 * n + 1) * qInt q 3) • (A * qDivPow q n b) :=
+  SquareRel.bd_e hq hqi H.squareRel n
+
+include hq hpi in
+lemma SquareRel.Cd_e (H : SquareRel q e A b C) (n : ℕ) : qDivPow (q ^ 3) (n + 1) C * e =
     e * qDivPow (q ^ 3) (n + 1) C -
       ((q ^ 2 - 1) * (q ^ 3)⁻¹ ^ n) • (b ^ 2 * qDivPow (q ^ 3) n C) := by
   induction n with
@@ -98,6 +112,12 @@ lemma Cd_e (n : ℕ) : qDivPow (q ^ 3) (n + 1) C * e =
     all_goals (try simp only [inv_pow])
     all_goals (try field_simp)
     all_goals (try ring)
+
+include hq hpi H in
+lemma Cd_e (n : ℕ) : qDivPow (q ^ 3) (n + 1) C * e =
+    e * qDivPow (q ^ 3) (n + 1) C -
+      ((q ^ 2 - 1) * (q ^ 3)⁻¹ ^ n) • (b ^ 2 * qDivPow (q ^ 3) n C) :=
+  SquareRel.Cd_e hq hpi H.squareRel n
 
 include hq hpi H in
 lemma fd_e (n : ℕ) : qDivPow (q ^ 3) (n + 1) f * e =

@@ -113,18 +113,25 @@ variable {q : k} {e A b C D f : B}
   (hq : q ≠ 0) (hqi : ∀ n : ℕ, 0 < n → qInt q n ≠ 0)
   (hpi : ∀ n : ℕ, 0 < n → qInt (q ^ 3) n ≠ 0) (H : Rel q e A b C D f)
 
-include hq hqi hpi H in
-lemma squareStepTerm_eval (i : SquareIndex) :
+include hq hqi hpi in
+lemma SquareRel.squareStepTerm_eval (H : SquareRel q e A b C) (i : SquareIndex) :
     squareEval q A b C (squareStepTerm q i) =
       (q⁻¹ ^ i.2.1 * (q ^ 3)⁻¹ ^ i.1) • (e * P3 q A b C i.1 i.2.1 i.2.2) -
         P3 q A b C i.1 i.2.1 i.2.2 * e := by
-  have hm := P3_e hq hqi hpi H i.1 i.2.1 i.2.2
+  have hm := SquareRel.P3_e hq hqi hpi H i.1 i.2.1 i.2.2
   simp only [squareStepTerm, map_add, squareEval]
   split_ifs <;> simp only [map_zero, Finsupp.linearCombination_single] <;>
     simp_all only [ite_true, ite_false] <;> abel
 
 include hq hqi hpi H in
-lemma squareNumerator_eval_mul (s n : ℕ) :
+lemma squareStepTerm_eval (i : SquareIndex) :
+    squareEval q A b C (squareStepTerm q i) =
+      (q⁻¹ ^ i.2.1 * (q ^ 3)⁻¹ ^ i.1) • (e * P3 q A b C i.1 i.2.1 i.2.2) -
+        P3 q A b C i.1 i.2.1 i.2.2 * e :=
+  SquareRel.squareStepTerm_eval hq hqi hpi H.squareRel i
+
+include hq hqi hpi in
+lemma SquareRel.squareNumerator_eval_mul (H : SquareRel q e A b C) (s n : ℕ) :
     squareEval q A b C (squareNumerator q s n) * e =
       q⁻¹ ^ (2 * n) • (e * squareEval q A b C (squareNumerator q s n)) -
         squareEval q A b C (squareNumerator q s (n + 1)) := by
@@ -133,7 +140,7 @@ lemma squareNumerator_eval_mul (s n : ℕ) :
       squareEval q A b C (squareStepTerm q i) =
         q⁻¹ ^ (2 * n) • (e * P3 q A b C i.1 i.2.1 i.2.2) -
           P3 q A b C i.1 i.2.1 i.2.2 * e := by
-    rw [squareStepTerm_eval hq hqi hpi H]
+    rw [SquareRel.squareStepTerm_eval hq hqi hpi H]
     have hg := (squareNumerator_grade q s n i (Finsupp.mem_support_iff.mp hi)).1
     rw [← inv_pow q 3, ← pow_mul, ← pow_add,
       show i.2.1 + 3 * i.1 = 2 * n by omega]
@@ -148,6 +155,13 @@ lemma squareNumerator_eval_mul (s n : ℕ) :
   rw [← Finset.smul_sum, h, smul_sub]
   simp only [smul_mul_assoc, mul_smul_comm, smul_smul]
   module
+
+include hq hqi hpi H in
+lemma squareNumerator_eval_mul (s n : ℕ) :
+    squareEval q A b C (squareNumerator q s n) * e =
+      q⁻¹ ^ (2 * n) • (e * squareEval q A b C (squareNumerator q s n)) -
+        squareEval q A b C (squareNumerator q s (n + 1)) :=
+  SquareRel.squareNumerator_eval_mul hq hqi hpi H.squareRel s n
 
 /-- The unnormalized transition coefficients are Laurent integral. Normalization is not
 covered by this statement. -/
@@ -205,12 +219,12 @@ lemma squareW_sum (s n : ℕ) : squareW q A b C s n =
 lemma squareW_zero (s : ℕ) : squareW q A b C s 0 = qDivPow (q ^ 3) s C := by
   simp [squareW, squareNumerator, squareEval, P3, qFactorial, qDivPow_zero']
 
-include hq hqi hpi H in
-lemma squareW_mul (s n : ℕ) :
+include hq hqi hpi in
+lemma SquareRel.squareW_mul (H : SquareRel q e A b C) (s n : ℕ) :
     squareW q A b C s n * e = q⁻¹ ^ (2 * n) • (e * squareW q A b C s n) -
       qInt q (n + 1) • squareW q A b C s (n + 1) := by
   have hn := hqi (n + 1) (by omega)
-  simp only [squareW, smul_mul_assoc, squareNumerator_eval_mul hq hqi hpi H,
+  simp only [squareW, smul_mul_assoc, SquareRel.squareNumerator_eval_mul hq hqi hpi H,
     smul_sub, mul_smul_comm, smul_smul, qFactorial_succ, mul_inv_rev]
   congr 1
   · congr 1
@@ -218,8 +232,25 @@ lemma squareW_mul (s n : ℕ) :
   · congr 1
     field_simp
 
+include hq hqi hpi H in
+lemma squareW_mul (s n : ℕ) :
+    squareW q A b C s n * e = q⁻¹ ^ (2 * n) • (e * squareW q A b C s n) -
+      qInt q (n + 1) • squareW q A b C s (n + 1) :=
+  SquareRel.squareW_mul hq hqi hpi H.squareRel s n
+
 lemma squareW_eq_zero (s n : ℕ) (hn : 3 * s < n) : squareW q A b C s n = 0 := by
   simp [squareW, squareNumerator_eq_zero q s n hn]
+
+include hq hqi hpi in
+/-- Arbitrary C,e straightening over the coefficient field. This does not assert Laurent
+integrality of the normalized sparse coefficients. -/
+theorem SquareRel.qDivPow_C_mul_qDivPow_e_field (H : SquareRel q e A b C) (s r : ℕ) :
+    qDivPow (q ^ 3) s C * qDivPow q r e =
+      ∑ n ∈ range (r + 1), B2Integral.sCoefParam q 1 r n •
+        (qDivPow q (r - n) e * squareW q A b C s n) := by
+  rw [← squareW_zero (q := q) (A := A) (b := b) s]
+  exact B2Integral.straighten_param hq hqi 1
+    (fun n ↦ by simpa only [one_mul] using SquareRel.squareW_mul hq hqi hpi H s n) r
 
 include hq hqi hpi H in
 /-- Arbitrary C,e straightening over the coefficient field. This does not assert Laurent
@@ -227,10 +258,25 @@ integrality of the normalized sparse coefficients. -/
 theorem qDivPow_C_mul_qDivPow_e_field (s r : ℕ) :
     qDivPow (q ^ 3) s C * qDivPow q r e =
       ∑ n ∈ range (r + 1), B2Integral.sCoefParam q 1 r n •
-        (qDivPow q (r - n) e * squareW q A b C s n) := by
-  rw [← squareW_zero (q := q) (A := A) (b := b) s]
-  exact B2Integral.straighten_param hq hqi 1
-    (fun n ↦ by simpa only [one_mul] using squareW_mul hq hqi hpi H s n) r
+        (qDivPow q (r - n) e * squareW q A b C s n) :=
+  SquareRel.qDivPow_C_mul_qDivPow_e_field hq hqi hpi H.squareRel s r
+
+include hq hqi hpi in
+/-- The same field identity as a finite sum of ordered four-root divided monomials.
+The two exponents are unrestricted. Laurent integrality is proved in `G2SquareIntegral`. -/
+theorem SquareRel.qDivPow_C_mul_qDivPow_e_field_sum (H : SquareRel q e A b C) (s r : ℕ) :
+    qDivPow (q ^ 3) s C * qDivPow q r e =
+      ∑ n ∈ range (r + 1), ∑ i ∈ (squareNumerator q s n).support,
+        (B2Integral.sCoefParam q 1 r n * squareCoeff q s n i) •
+          (qDivPow q (r - n) e * qDivPow (q ^ 3) i.1 A *
+            qDivPow q i.2.1 b * qDivPow (q ^ 3) i.2.2 C) := by
+  rw [SquareRel.qDivPow_C_mul_qDivPow_e_field hq hqi hpi H]
+  apply Finset.sum_congr rfl
+  intro n _
+  rw [squareW_sum, Finset.mul_sum, Finset.smul_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  simp only [P3, mul_smul_comm, smul_smul, mul_assoc]
 
 include hq hqi hpi H in
 /-- The same field identity as a finite sum of ordered four-root divided monomials.
@@ -240,13 +286,7 @@ theorem qDivPow_C_mul_qDivPow_e_field_sum (s r : ℕ) :
       ∑ n ∈ range (r + 1), ∑ i ∈ (squareNumerator q s n).support,
         (B2Integral.sCoefParam q 1 r n * squareCoeff q s n i) •
           (qDivPow q (r - n) e * qDivPow (q ^ 3) i.1 A *
-            qDivPow q i.2.1 b * qDivPow (q ^ 3) i.2.2 C) := by
-  rw [qDivPow_C_mul_qDivPow_e_field hq hqi hpi H]
-  apply Finset.sum_congr rfl
-  intro n _
-  rw [squareW_sum, Finset.mul_sum, Finset.smul_sum]
-  apply Finset.sum_congr rfl
-  intro i _
-  simp only [P3, mul_smul_comm, smul_smul, mul_assoc]
+            qDivPow q i.2.1 b * qDivPow (q ^ 3) i.2.2 C) :=
+  SquareRel.qDivPow_C_mul_qDivPow_e_field_sum hq hqi hpi H.squareRel s r
 
 end LieLean.QuantumGroup.G2Integral
