@@ -131,10 +131,10 @@ variable (hSL : D.cartanMatrix.IsSimplyLaced) {W : Type*} [Group W] [Finite W]
   (hw₀ : cs.wordProd w = cs.longestElement)
 
 omit [Finite W] in
-include hSL hw in
+include hw in
 lemma pbwDiv_mem_plus (c : Fin w.length → ℕ) :
     pbwDiv R w c ∈ Algebra.adjoin 𝕂 (Set.range (E R 𝕧)) :=
-  aPlus_le_plus (by simpa using pbwDiv_mem_aPlus (R := R) hSL w [] (by simpa using hw) c)
+  aPlus_le_plus (by simpa using pbwDiv_mem_aPlus (R := R) w [] (by simpa using hw) c)
 
 include hSL hw hw₀ in
 lemma plus_le_span_pbwDiv :
@@ -176,13 +176,12 @@ of a reduced expression of `w₀`. -/
 def pbwPlusBasis :
     Module.Basis (Fin w.length → ℕ) 𝕂 (Algebra.adjoin 𝕂 (Set.range (E R 𝕧))) :=
   let v : (Fin w.length → ℕ) → Algebra.adjoin 𝕂 (Set.range (E R 𝕧)) :=
-    fun c ↦ ⟨pbwDiv R w c, pbwDiv_mem_plus hSL cs hw c⟩
+    fun c ↦ ⟨pbwDiv R w c, pbwDiv_mem_plus cs hw c⟩
   Module.Basis.mk (v := v)
     (by
       refine LinearIndependent.of_comp
         (Algebra.adjoin 𝕂 (Set.range (E R 𝕧))).toSubmodule.subtype ?_
-      have hli := linearIndependent_pbwMonomial_of_isReduced (R := R) ratFunc_X_not_root
-        (simplyLaced_mul_le_three hSL) hw
+      have hli := linearIndependent_pbwMonomial_of_isReduced (R := R) ratFunc_X_not_root hw
       have hu := hli.units_smul fun c ↦ Units.mk0
         (∏ t : Fin w.length, (qFactorial (𝕧 ^ D.d w[t]) (c t))⁻¹)
         (prod_ne_zero_iff.2 fun t _ ↦ inv_ne_zero (qFactorial_vd_ne_zero _ _))
@@ -264,7 +263,7 @@ def aTriangularBasisPBW :
     rw [pbwMinusBasis_apply, ← wt_omegaAut (R := R)]
     exact map_mem_adWeightSpace (omegaAut R) (pbwDiv_mem_adWeightSpace w c)
   have haP : ∀ c, pbwDiv R w c ∈ aPlus R := fun c ↦ by
-    simpa using pbwDiv_mem_aPlus (R := R) hSL w [] (by simpa using hw) c
+    simpa using pbwDiv_mem_aPlus (R := R) w [] (by simpa using hw) c
   have hspan : ∀ x ∈ aPlus R, x ∈ Submodule.span 𝒜 (Set.range fun c ↦
       (pbwPlusBasis (R := R) hSL cs hw hw₀ c : QuantumGroup R 𝕧)) := fun x hx ↦ by
     have e : (Set.range fun c ↦ (pbwPlusBasis (R := R) hSL cs hw hw₀ c : QuantumGroup R 𝕧)) =

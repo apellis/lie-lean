@@ -136,9 +136,10 @@ theorem adjoin_le_span_pbwMonomial_longest_of_simplyLaced :
 
 /-- The actual ordered monomials of any longest reduced word span `U⁺` in finite
 simply-laced Cartan type, at every nonzero non-root-of-unity parameter over any field.
-Finite Cartan type supplies the hypotheses of actual positive root-vector membership. -/
+(Root vectors along reduced words lie in `U⁺` for every Cartan datum, so the finite-type
+hypothesis is not used.) -/
 theorem span_pbwMonomial_longest_of_isFiniteCartan_of_simplyLaced [Fintype I]
-    (hD : D.cartanMatrix.IsFiniteCartan) :
+    (_hD : D.cartanMatrix.IsFiniteCartan) :
     Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
       (braidEquivOfNotRoot R hv) (E R v) w)) =
       (Algebra.adjoin k (Set.range (E R v))).toSubmodule := by
@@ -146,8 +147,7 @@ theorem span_pbwMonomial_longest_of_isFiniteCartan_of_simplyLaced [Fintype I]
   · refine Submodule.span_le.mpr ?_
     rintro _ ⟨c, rfl⟩
     exact CoxeterSystem.pbwMonomial_mem _ _
-      (fun n hn ↦ rootVector_mem_adjoin_of_not_root
-        (fun _ _ hij ↦ hD.mul_le_three hij) hv hw n hn) c
+      (fun n hn ↦ rootVector_mem_adjoin_of_not_root hv hw n hn) c
   · exact adjoin_le_span_pbwMonomial_longest_of_simplyLaced R v hv hSL cs hw hw₀
 
 end LieLean.QuantumGroup

@@ -240,8 +240,7 @@ theorem span_pbwMonomial_longest_of_isFiniteCartan :
   · refine Submodule.span_le.mpr ?_
     rintro _ ⟨c, rfl⟩
     exact CoxeterSystem.pbwMonomial_mem _ _
-      (fun n hn ↦ rootVector_mem_adjoin_of_not_root
-        (fun _ _ hij ↦ hA.mul_le_three hij) hv hw n hn) c
+      (fun n hn ↦ rootVector_mem_adjoin_of_not_root hv hw n hn) c
   · let S := Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
       (braidEquivOfNotRoot R hv) (E R v) w))
     have h1 : (1 : QuantumGroup R v) ∈ S := CoxeterSystem.one_mem_pbwSpan _ _ w

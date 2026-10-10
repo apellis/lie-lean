@@ -10,7 +10,7 @@ import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Braid
 
 For `v ≠ 0` not a root of unity and `Tᵢ = braidEquivOfNotRoot`, the braid relations hold for every
 Cartan datum (`isBraidLiftable_braidEquivOfNotRoot`), so the results of
-`PBW/RootVectorsQuantum.lean` need only `aᵢⱼ aⱼᵢ ≤ 3` for `i ≠ j` (no `BraidOuterCondition`):
+`PBW/RootVectorsQuantum.lean` hold for every Cartan datum (no `BraidOuterCondition`):
 
 * `QuantumGroup.braidLift_E_mem_adjoin_of_not_root`: `T_w(Eᵢ) ∈ U⁺` if `ℓ(w sᵢ) > ℓ(w)`
   ([Jan] Prop. 8.20, [Lus] Lemma 40.1.2);
@@ -32,22 +32,19 @@ namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k] {I Y : Type*} [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} [NeZero v]
-  (hfin : ∀ i j, i ≠ j → D.cartanMatrix i j * D.cartanMatrix j i ≤ 3)
   {W : Type*} [Group W] {cs : CoxeterSystem D.cartanMatrix.coxeterMatrix W}
   (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1)
 
-include hfin in
 /-- `braidLift_E_mem_adjoin` for `v` not a root of unity (`Tᵢ = braidEquivOfNotRoot`), with no
-condition on the Dynkin diagram beyond `aᵢⱼ aⱼᵢ ≤ 3`. -/
+condition on the Dynkin diagram ([Lus] Lemma 40.1.2). -/
 theorem braidLift_E_mem_adjoin_of_not_root {w : W} {i : I} (hwi : ¬cs.IsRightDescent w i) :
     cs.braidLift (braidEquivOfNotRoot R hv') w (E R v i) ∈
       Algebra.adjoin k (Set.range (E R v)) :=
   CoxeterSystem.braidLift_apply_mem_adjoin (isBraidLiftable_braidEquivOfNotRoot R hv')
     (rankTwoRootProperty_braidEquivOfGeneric
       (fun i ↦ (shortNode_braidGeneric_of_not_root hv' i).sub_ne)
-      (braidSerreGeneric_of_not_root hv') hfin) hwi
+      (braidSerreGeneric_of_not_root hv')) hwi
 
-include hfin in
 /-- `braidLift_E_eq` for `v` not a root of unity (`Tᵢ = braidEquivOfNotRoot`). -/
 theorem braidLift_E_eq_of_not_root {w : W} {i j : I} (hwi : ¬cs.IsRightDescent w i)
     (h : w * cs.simple i = cs.simple j * w) :
@@ -55,9 +52,8 @@ theorem braidLift_E_eq_of_not_root {w : W} {i j : I} (hwi : ¬cs.IsRightDescent 
   CoxeterSystem.braidLift_apply_eq_of_mul_simple_eq (isBraidLiftable_braidEquivOfNotRoot R hv')
     (rankTwoRootProperty_braidEquivOfGeneric
       (fun i ↦ (shortNode_braidGeneric_of_not_root hv' i).sub_ne)
-      (braidSerreGeneric_of_not_root hv') hfin) hwi h
+      (braidSerreGeneric_of_not_root hv')) hwi h
 
-include hfin in
 /-- `rootVector_mem_adjoin_of_isReduced` for `v` not a root of unity. -/
 theorem rootVector_mem_adjoin_of_not_root {ω : List I} (hω : cs.IsReduced ω) (n : ℕ)
     (hn : n < ω.length) :
@@ -66,6 +62,6 @@ theorem rootVector_mem_adjoin_of_not_root {ω : List I} (hω : cs.IsReduced ω) 
   CoxeterSystem.rootVector_mem_adjoin (isBraidLiftable_braidEquivOfNotRoot R hv')
     (rankTwoRootProperty_braidEquivOfGeneric
       (fun i ↦ (shortNode_braidGeneric_of_not_root hv' i).sub_ne)
-      (braidSerreGeneric_of_not_root hv') hfin) hω n hn
+      (braidSerreGeneric_of_not_root hv')) hω n hn
 
 end LieLean.QuantumGroup
