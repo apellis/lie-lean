@@ -64,44 +64,48 @@ variable (t) in
 /-- The coefficient `(-1)ⁿ t^{(r-n)N - n(r-n)}` of the straightening identity. -/
 def sCoef (N r n : ℕ) : k := (-1) ^ n * t ^ ((r - n) * N) * t⁻¹ ^ (n * (r - n))
 
-/-- **Two-term straightening.** If `Wₙ a = t^{N-2n} a Wₙ - [n+1] W_{n+1}` for all `n`, then
-`W₀ a^{(r)} = Σ_{n ≤ r} (-1)ⁿ t^{(r-n)(N-n)} a^{(r-n)} Wₙ`. -/
-theorem straighten (ht0 : t ≠ 0) (hti : ∀ n : ℕ, 0 < n → qInt t n ≠ 0) (N : ℕ) {a : B}
+variable (t) in
+/-- The coefficient `(-1)ⁿ u^{r-n} t^{-n(r-n)}` with an arbitrary leading commutation scalar. -/
+def sCoefParam (u : k) (r n : ℕ) : k := (-1) ^ n * u ^ (r - n) * t⁻¹ ^ (n * (r - n))
+
+/-- **Two-term straightening.** If `Wₙ a = u t^{-2n} a Wₙ - [n+1] W_{n+1}` for all `n`, then
+`W₀ a^{(r)} = Σ_{n ≤ r} (-1)ⁿ u^{r-n} t^{-n(r-n)} a^{(r-n)} Wₙ`. -/
+theorem straighten_param (ht0 : t ≠ 0) (hti : ∀ n : ℕ, 0 < n → qInt t n ≠ 0) (u : k) {a : B}
     {W : ℕ → B}
-    (hW : ∀ n, W n * a = (t ^ N * t⁻¹ ^ (2 * n)) • (a * W n) - qInt t (n + 1) • W (n + 1))
+    (hW : ∀ n, W n * a = (u * t⁻¹ ^ (2 * n)) • (a * W n) - qInt t (n + 1) • W (n + 1))
     (r : ℕ) :
     W 0 * qDivPow t r a =
-      ∑ n ∈ range (r + 1), sCoef t N r n • (qDivPow t (r - n) a * W n) := by
+      ∑ n ∈ range (r + 1), sCoefParam t u r n • (qDivPow t (r - n) a * W n) := by
   induction r with
-  | zero => simp [sCoef, qDivPow_zero']
+  | zero => simp [sCoefParam, qDivPow_zero']
   | succ r ih =>
     have hc := hti (r + 1) (Nat.succ_pos r)
     refine smul_right_injective B hc ?_
     simp only
     have hL : qInt t (r + 1) • (W 0 * qDivPow t (r + 1) a) = W 0 * qDivPow t r a * a := by
       rw [mul_assoc, A2Integral.qDivPow_mul_self a r hc, mul_smul_comm]
-    have hT : ∀ n ∈ range (r + 1), sCoef t N r n • (qDivPow t (r - n) a * W n) * a =
-        (sCoef t N r n * (t ^ N * t⁻¹ ^ (2 * n)) * qInt t (r - n + 1)) •
+    have hT : ∀ n ∈ range (r + 1), sCoefParam t u r n • (qDivPow t (r - n) a * W n) * a =
+        (sCoefParam t u r n * (u * t⁻¹ ^ (2 * n)) * qInt t (r - n + 1)) •
             (qDivPow t (r + 1 - n) a * W n) -
-          (sCoef t N r n * qInt t (n + 1)) • (qDivPow t (r - n) a * W (n + 1)) := by
+          (sCoefParam t u r n * qInt t (n + 1)) • (qDivPow t (r - n) a * W (n + 1)) := by
       intro n hn
       have hnr : n ≤ r := Nat.lt_succ_iff.1 (mem_range.1 hn)
       rw [smul_mul_assoc, mul_assoc, hW, mul_sub, mul_smul_comm, mul_smul_comm, ← mul_assoc,
         A2Integral.qDivPow_mul_self a _ (hti _ (Nat.succ_pos _)),
         show r - n + 1 = r + 1 - n by omega, smul_mul_assoc, smul_sub, smul_smul, smul_smul,
-        smul_smul, mul_assoc (sCoef t N r n)]
+        smul_smul, mul_assoc (sCoefParam t u r n)]
     rw [hL, ih, sum_mul, sum_congr rfl hT, sum_sub_distrib, smul_sum,
-      sum_range_succ (fun n ↦ (sCoef t N r n * qInt t (n + 1)) •
+      sum_range_succ (fun n ↦ (sCoefParam t u r n * qInt t (n + 1)) •
         (qDivPow t (r - n) a * W (n + 1))) r,
-      sum_range_succ' (fun n ↦ (sCoef t N r n * (t ^ N * t⁻¹ ^ (2 * n)) * qInt t (r - n + 1)) •
+      sum_range_succ' (fun n ↦ (sCoefParam t u r n * (u * t⁻¹ ^ (2 * n)) * qInt t (r - n + 1)) •
         (qDivPow t (r + 1 - n) a * W n)) r,
       sum_range_succ' _ (r + 1), sum_range_succ _ r]
     have hmid : ∀ n ∈ range r,
-        qInt t (r + 1) • (sCoef t N (r + 1) (n + 1) •
+        qInt t (r + 1) • (sCoefParam t u (r + 1) (n + 1) •
             (qDivPow t (r + 1 - (n + 1)) a * W (n + 1))) =
-          (sCoef t N r (n + 1) * (t ^ N * t⁻¹ ^ (2 * (n + 1))) * qInt t (r - (n + 1) + 1)) •
+          (sCoefParam t u r (n + 1) * (u * t⁻¹ ^ (2 * (n + 1))) * qInt t (r - (n + 1) + 1)) •
               (qDivPow t (r + 1 - (n + 1)) a * W (n + 1)) -
-            (sCoef t N r n * qInt t (n + 1)) • (qDivPow t (r - n) a * W (n + 1)) := by
+            (sCoefParam t u r n * qInt t (n + 1)) • (qDivPow t (r - n) a * W (n + 1)) := by
       intro n hn
       have hnr : n < r := mem_range.1 hn
       obtain ⟨c, rfl⟩ : ∃ c, r = n + 1 + c := ⟨r - (n + 1), by omega⟩
@@ -111,28 +115,39 @@ theorem straighten (ht0 : t ≠ 0) (hti : ∀ n : ℕ, 0 < n → qInt t n ≠ 0)
       have key := qInt_add (t := t) (c + 1) (n + 1)
       have hinv : t⁻¹ ^ (c + 1) * t ^ (c + 1) = 1 := by
         rw [← mul_pow, inv_mul_cancel₀ ht0, one_pow]
-      simp only [sCoef, show n + 1 + c + 1 - (n + 1) = c + 1 by omega,
+      simp only [sCoefParam, show n + 1 + c + 1 - (n + 1) = c + 1 by omega,
         show n + 1 + c - (n + 1) = c by omega, show n + 1 + c - n = c + 1 by omega]
       rw [show n + 1 + c + 1 = c + 1 + (n + 1) by omega, ← key]
-      linear_combination (norm := ring_nf) (-((-1) ^ n * t ^ ((c + 1) * N) * t⁻¹ ^ (n * (c + 1)) *
+      linear_combination (norm := ring_nf) (-((-1) ^ n * u ^ (c + 1) * t⁻¹ ^ (n * (c + 1)) *
         qInt t (n + 1))) * hinv
     rw [sum_congr rfl hmid, sum_sub_distrib]
-    have h0 : qInt t (r + 1) • (sCoef t N (r + 1) 0 • (qDivPow t (r + 1 - 0) a * W 0)) =
-        (sCoef t N r 0 * (t ^ N * t⁻¹ ^ (2 * 0)) * qInt t (r - 0 + 1)) •
+    have h0 : qInt t (r + 1) • (sCoefParam t u (r + 1) 0 • (qDivPow t (r + 1 - 0) a * W 0)) =
+        (sCoefParam t u r 0 * (u * t⁻¹ ^ (2 * 0)) * qInt t (r - 0 + 1)) •
           (qDivPow t (r + 1 - 0) a * W 0) := by
       rw [smul_smul]
       congr 1
-      simp only [sCoef, pow_zero, Nat.sub_zero, one_mul, zero_mul, mul_one, add_mul, pow_add]
+      simp only [sCoefParam, pow_zero, Nat.sub_zero, one_mul, zero_mul, mul_one, pow_add]
       ring
-    have hlast : qInt t (r + 1) • (sCoef t N (r + 1) (r + 1) •
+    have hlast : qInt t (r + 1) • (sCoefParam t u (r + 1) (r + 1) •
         (qDivPow t (r + 1 - (r + 1)) a * W (r + 1))) =
-        -((sCoef t N r r * qInt t (r + 1)) • (qDivPow t (r - r) a * W (r + 1))) := by
+        -((sCoefParam t u r r * qInt t (r + 1)) • (qDivPow t (r - r) a * W (r + 1))) := by
       rw [smul_smul, Nat.sub_self, Nat.sub_self, ← neg_smul]
       congr 1
-      simp only [sCoef, Nat.sub_self, zero_mul, mul_zero, pow_zero, mul_one, pow_succ]
+      simp only [sCoefParam, Nat.sub_self, mul_zero, pow_zero, mul_one, pow_succ]
       ring
     rw [h0, hlast]
     abel
+
+/-- **Two-term straightening.** If `Wₙ a = t^{N-2n} a Wₙ - [n+1] W_{n+1}` for all `n`, then
+`W₀ a^{(r)} = Σ_{n ≤ r} (-1)ⁿ t^{(r-n)(N-n)} a^{(r-n)} Wₙ`. -/
+theorem straighten (ht0 : t ≠ 0) (hti : ∀ n : ℕ, 0 < n → qInt t n ≠ 0) (N : ℕ) {a : B}
+    {W : ℕ → B}
+    (hW : ∀ n, W n * a = (t ^ N * t⁻¹ ^ (2 * n)) • (a * W n) - qInt t (n + 1) • W (n + 1))
+    (r : ℕ) :
+    W 0 * qDivPow t r a =
+      ∑ n ∈ range (r + 1), sCoef t N r n • (qDivPow t (r - n) a * W n) := by
+  simpa only [sCoef, sCoefParam, pow_mul, Nat.mul_comm] using
+    straighten_param ht0 hti (t ^ N) hW r
 
 end Straighten
 
