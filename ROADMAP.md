@@ -1941,7 +1941,10 @@ independent along reduced words (`linearIndependent_pbwDiv`); for simply-laced C
 `𝒜`-span `𝒜U⁺(w, 1)` does not depend on the reduced expression (`span_pbwDiv_of_isReduced`, 41.1.4
 (b)) and is stable under `Eᵢ^{(t)}` for left descents `i` (`qDivPow_E_mul_mem_span_pbwDiv`, 41.1.4
 (c)); in finite simply-laced type `𝒜U⁺(w₀, 1) = 𝒜U⁺` (`span_pbwDiv_longest_eq`,
-`coe_span_pbwDiv_longest`, 41.1.7). Not formalized from [Lus] 41.1: 41.1.4–41.1.7 for `B₂`/`G₂`
+`coe_span_pbwDiv_longest`, 41.1.7); hence an explicit triangular `𝒜`-basis of `𝒜U̇` in
+simply-laced finite type (`QuantumGroup/Modified/IntegralBasisPBW.lean`: `pbwPlusBasis`,
+`pbwMinusBasis`, `aTriangularBasisPBW`, the elements `ω(E_c) 1_λ E_{c'}`; the hypotheses of
+23.2.2 (b) are checked for these bases). Not formalized from [Lus] 41.1: 41.1.4–41.1.7 for `B₂`/`G₂`
 subdiagrams (Lusztig's rank-two input is his paper *Quantum groups at roots of 1*), 41.1.4 (a)
 and `e = -1` (the symmetries `T'_{i,1}`, `T''_{i,-1}` are not defined), 41.1.5–41.1.6 (these need the
 canonical basis of `f` and the values of the form on PBW elements, [Lus] 14.4, 38.2.3), 41.1.9
