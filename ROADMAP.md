@@ -2003,7 +2003,19 @@ left-descent theorems). These results include finite types `B`, `C`, and `F`, an
 finite type except for longest-element spanning. Not formalized from [Lus] 41.1: the integral
 `G₂` input for 41.1.4 and 41.1.7; 41.1.5–41.1.6 (canonical-basis and bilinear-form results);
 41.1.9 (quantum Frobenius).
-*Next (open item): 41.1.4–41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
+**Normalized `G₂` commutation input** (`PBW/IntegralG2Basic.lean`,
+`IntegralG2Commuting{AB,BC,CD}.lean`, `IntegralG2Commuting.lean`, `IntegralG2Relations.lean`):
+all fifteen pair relations for the six root vectors `e, A=x₃/[3]!, B=x₂/[2], C=z/[3]!, D=x₁, f`
+are derived from the two Serre relations and assembled in `G2Integral.Rel`
+(`rel_of_serre`, `rel_of_not_root`). The auxiliary scalar restrictions disappear at every
+nonzero non-root-of-unity parameter, in arbitrary field characteristic. `altVec_g2_normalized`
+identifies these with the actual braid root vectors. `IntegralG2Divided.lean` proves the five
+adjacent divided-power commutations and the formulas `Ad_e`, `bd_e`, `Cd_e`, `Dd_e`, `fd_e`
+for right multiplication by `e`; the middle short-root formula has three terms. The generic
+`B2Integral.straighten_param` permits any leading commutation scalar, including inverse powers.
+These are inputs to, not a proof of, integral `G₂` spanning: arbitrary divided-power pair
+straightening, closure of the integral span, and the `G₂` integral braid move remain open.
+*Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
 compute the rank-two straightening relations among divided-power root vectors ourselves (root vectors
 via the `Tᵢ`; the pairs `E₂,E₁`; `E₁,E₁₂`; `E₁,E₁₁₂`; `E₁₁₁₂,E₂`; `E₁₂,E₁₁₂`), then divided-power
 versions, then closure of the `𝒜`-span under left multiplication by the `Eᵢ^{(n)}`; with
