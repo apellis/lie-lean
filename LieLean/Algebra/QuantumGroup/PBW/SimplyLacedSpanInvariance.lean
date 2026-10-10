@@ -74,9 +74,6 @@ theorem span_pbwMonomial_of_braidMove_of_simplyLaced {u w : List I}
     have hm' : D.cartanMatrix.coxeterMatrix j i = 3 := by
       rw [Matrix.coxeterMatrix_apply_of_ne _ hij.symm, h1, h1']
       rfl
-    have hD : D.BraidOuterCondition :=
-      ⟨hSL.braidOuterCondition.simple, hSL.braidOuterCondition.double,
-        hSL.braidOuterCondition.triple⟩
     have hw : CoxeterSystem.braidWord D.cartanMatrix.coxeterMatrix i j = [j, i, j] := by
       simp only [CoxeterSystem.braidWord]
       rw [hm]
@@ -86,7 +83,7 @@ theorem span_pbwMonomial_of_braidMove_of_simplyLaced {u w : List I}
       rw [hm']
       rfl
     rw [hw, hw']
-    exact (span_pbwMonomial_a2_context_of_not_root R v hij h1 h1' hv' hD p s).symm
+    exact (span_pbwMonomial_a2_context_of_not_root R v hij h1 h1' hv' p s).symm
 
 /-- Reduced words for the same Coxeter-group element have the same actual ordered PBW
 span in simply-laced type, at a non-root-of-unity parameter. This is span independence

@@ -2146,8 +2146,10 @@ printed proof relies on [HK] Exercise 5.13.
 crystals** (`TensorModule.nonempty_crystalEquiv`: `crystal (B₁ ⊗ B₂) ≅ Crystal.tensor (crystal B₂)
 (crystal B₁)`, factors exchanged by Lusztig's coproduct); `Crystal.equivOfE` (a bijection of
 seminormal crystals commuting with the `ẽᵢ` and weights is an isomorphism).
-Remaining for `Tᵢ`: braid relations at parameters that are roots of unity outside
-`BraidOuterCondition`; faithfulness of the Artin action; general canonical bases.
+Remaining for `Tᵢ`: faithfulness of the Artin action (not pursued); general canonical bases.
+At roots of unity the braid relations hold on Lusztig's `_S U̇` (`Modified.isBraidLiftable_braidR`,
+[Lus] 41.1.8); for `U` over a field at a root of unity (`braidEquivOfGeneric`, no divided powers)
+they are proved under `BraidOuterCondition`.
 `LusztigF/Bar.lean` constructs coefficient bar on `RatFunc K` and the semilinear ring
 involution on the actual free algebra `'f`, fixing every generator divided power and
 divided-power Serre element. Quantum factorials at `X^d` are nonzero for `d > 0`.
@@ -2329,9 +2331,11 @@ completed steps and continuation threads are:
   matrices, for every Cartan datum of finite type (`braidArtinHomOfIsFiniteCartan`) and for every
   simply-laced datum (`FiniteTypeArtin`, `FiniteCartanArtin`). For `v` not a root of unity the
   braid relations hold for every Cartan datum (`isBraidLiftable_braidEquivOfNotRoot`,
-  `braidArtinHomOfNotRoot`, `ModuleSymmetry/Braid.lean`, via integrable modules). Remaining:
-  braid relations at roots of unity outside `BraidOuterCondition`, action faithfulness, and
-  canonical bases.
+  `braidArtinHomOfNotRoot`, `ModuleSymmetry/Braid.lean`, via integrable modules). On `U̇`, `𝒜U̇`
+  and `_S U̇` for every `𝒜`-algebra `S` (roots of unity included): `Modified.isBraidLiftable_braid`,
+  `isBraidLiftable_braidA`, `isBraidLiftable_braidR` ([Lus] 41.1.1, 41.1.2, 41.1.8). Remaining:
+  action faithfulness (not pursued), canonical bases, and the relations for `U` itself over a field
+  at a root of unity outside `BraidOuterCondition`.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
@@ -2351,8 +2355,8 @@ completed steps and continuation threads are:
   `PBW/Monomials.lean` defines
   ordered root-vector monomials and proves their product formula and an independence criterion;
   `PBW/Independence.lean` discharges the criterion using the triangular decomposition, giving
-  `linearIndependent_pbwMonomial_of_isReduced` under `BraidOuterCondition` and rank-two
-  Cartan-product bounds, and `linearIndependent_pbwMonomial_of_isFiniteCartan` in finite type.
+  `linearIndependent_pbwMonomial_of_isReduced` under the rank-two Cartan-product bounds
+  `aᵢⱼ aⱼᵢ ≤ 3` (root vectors in `U⁺`: `PBW/RootVectorsNotRoot.lean`), and `linearIndependent_pbwMonomial_of_isFiniteCartan` in finite type.
   These independence results need a nonzero, non-root-of-unity parameter, not transcendence or
   characteristic zero. `PBW/RootEnumeration.lean` proves reduced-word prefix-root enumeration
   without repetitions and all-positive-root enumeration for longest words in the classical
@@ -2399,7 +2403,7 @@ completed steps and continuation threads are:
   and proves A₂ braid-span equality in arbitrary prefix/suffix context. Prefix transport
   needs only the local span equality; suffix transport additionally requires equality
   of the local composite automorphisms. The actual non-root-of-unity specialization
-  discharges this via the existing braid action, retaining `D.BraidOuterCondition`.
+  discharges this via `isBraidLiftable_braidEquivOfNotRoot` (no diagram condition).
   `PBW/RankTwoCommutingContextSpan.lean` proves the actual commuting-node length-two
   ordered-span equality and arbitrary-context transport via full automorphism equality.
   `PBW/SimplyLacedSpanInvariance.lean` uses the actual Coxeter braid-move and Matsumoto

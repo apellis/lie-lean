@@ -35,7 +35,7 @@ theorem `B2PBW.span_mono_eq_adjoin` applies to the reversed monomials as well
 * `QuantumGroup.span_pbwMonomial_b2_context`,
   `QuantumGroup.span_pbwMonomial_b2_context_of_not_root`: the equality persists in arbitrary
   prefix/suffix word context, given the full four-term braid relation (supplied by the
-  constructed braid automorphisms at a non-root-of-unity parameter under `BraidOuterCondition`).
+  constructed braid automorphisms at a non-root-of-unity parameter).
 
 The local results assume a nonzero parameter, `vᵢ - vᵢ⁻¹ ≠ 0` and `[2]ᵢ! ≠ 0`.
 
@@ -307,10 +307,10 @@ theorem span_pbwMonomial_b2_context
 
 omit hq h2 Hi Hj in
 /-- At a non-root-of-unity parameter, the constructed braid automorphisms satisfy the full B₂
-braid relation (under `BraidOuterCondition`), so B₂ braid moves preserve ordered PBW spans in
-arbitrary word context. -/
+braid relation (`isBraidLiftable_braidEquivOfNotRoot`), so B₂ braid moves preserve ordered
+PBW spans in arbitrary word context. -/
 theorem span_pbwMonomial_b2_context_of_not_root
-    (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (hD : D.BraidOuterCondition) (p s : List I) :
+    (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (p s : List I) :
     Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
       (braidEquivOfNotRoot R hv') (E R v) (p ++ [i, j, i, j] ++ s))) =
     Submodule.span k (Set.range (CoxeterSystem.pbwMonomial
@@ -319,10 +319,7 @@ theorem span_pbwMonomial_b2_context_of_not_root
     (qFactorial_ne_zero_of_not_root (NeZero.ne v) hv' i 2) (braidEquivOfNotRoot R hv')
     (braidEquivOfNotRoot_images hv' i) (braidEquivOfNotRoot_images hv' j)
   have hLift : D.cartanMatrix.coxeterMatrix.IsBraidLiftable (braidEquivOfNotRoot R hv') :=
-    isBraidLiftable_braidEquivOfGeneric
-      (fun l ↦ (shortNode_braidGeneric_of_not_root hv' l).sub_ne)
-      (braidSerreGeneric_of_not_root hv')
-      (fun l ↦ LusztigF.qFactorial_ne_zero_of_not_root (NeZero.ne v) hv' l 3) hD
+    isBraidLiftable_braidEquivOfNotRoot R hv'
   have hm : D.cartanMatrix.coxeterMatrix i j = 4 := by
     rw [Matrix.coxeterMatrix_apply_of_ne _ hij, h, h']
     rfl
