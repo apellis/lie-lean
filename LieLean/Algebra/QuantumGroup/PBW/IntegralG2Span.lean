@@ -245,4 +245,37 @@ theorem f_mul_qDivPow_A_mem (r : ℕ) :
         (D := D) (f := f) 0 (r - 2) 3 0 0 0
   · simp [longMixedAdjoint]
 
+include hq hqi hpi H hqΛ hqΛ' in
+/-- `f^{(r)} A` lies in the ordered integral span for every `r`. -/
+theorem qDivPow_f_mul_A_mem (r : ℕ) :
+    qDivPow (q ^ 3) r f * A ∈ orderedSpan q Λ e A b C D f := by
+  have hq2 : q ^ 2 - 1 ∈ Λ := sub_mem (pow_mem hqΛ _) (one_mem _)
+  have hp : q ^ 3 ∈ Λ := pow_mem hqΛ _
+  have hp' : (q ^ 3)⁻¹ ∈ Λ := by rw [← inv_pow]; exact pow_mem hqΛ' _
+  rw [qDivPow_f_mul_A hq (hqi 2 (by decide)) (hqi 3 (by decide)) hpi H]
+  refine AddSubgroup.sum_mem _ fun n _ => smul_mem_orderedSpan
+    (B2Integral.sCoef_mem hp hp' _ _ _) ?_
+  rcases n with _ | (_ | (_ | n))
+  · simpa [reverseLongMixedAdjoint, M6, M5, P3, qDivPow_zero', A2Integral.qDivPow_one'] using
+      M6_mem_orderedSpan (q := q) (Λ := Λ) (e := e) (A := A) (b := b) (C := C)
+        (D := D) (f := f) 0 1 0 0 0 r
+  · simp only [reverseLongMixedAdjoint]
+    rw [sub_mul, smul_mul_assoc, smul_mul_assoc]
+    apply sub_mem
+    · apply smul_mem_orderedSpan (mul_mem (pow_mem hqΛ _) hq2)
+      simpa [M6, M5, P3, qDivPow_zero', A2Integral.qDivPow_one'] using
+        M6_mem_orderedSpan (q := q) (Λ := Λ) (e := e) (A := A) (b := b) (C := C)
+          (D := D) (f := f) 0 0 1 0 1 (r - 1)
+    · apply smul_mem_orderedSpan (sub_mem (add_mem (pow_mem hqΛ _) (pow_mem hqΛ _)) (one_mem _))
+      simpa [M6, M5, P3, qDivPow_zero', A2Integral.qDivPow_one'] using
+        M6_mem_orderedSpan (q := q) (Λ := Λ) (e := e) (A := A) (b := b) (C := C)
+          (D := D) (f := f) 0 0 0 1 0 (r - 1)
+  · simp only [reverseLongMixedAdjoint, smul_mul_assoc]
+    apply smul_mem_orderedSpan (mul_mem (mul_mem hqΛ (pow_mem hq2 _))
+      (B2Integral.qInt_mem hqΛ hqΛ' 2))
+    simpa [M6, M5, P3, qDivPow_zero'] using
+      M6_mem_orderedSpan (q := q) (Λ := Λ) (e := e) (A := A) (b := b) (C := C)
+        (D := D) (f := f) 0 0 0 0 3 (r - 2)
+  · simp [reverseLongMixedAdjoint]
+
 end LieLean.QuantumGroup.G2Integral

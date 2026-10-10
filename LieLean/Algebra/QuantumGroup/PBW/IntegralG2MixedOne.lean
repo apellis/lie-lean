@@ -154,8 +154,13 @@ def longMixedAdjoint (q : k) (b C D f : B) : ℕ → B
   | 2 => (q * (q ^ 2 - 1) ^ 2 * qInt q 2) • qDivPow q 3 b
   | _ + 3 => 0
 
-lemma longMixedAdjoint_A (hq : q ≠ 0) (h2 : qInt q 2 ≠ 0) (h3 : qInt q 3 ≠ 0)
-    (H : Rel q e A b C D f) (n : ℕ) :
+lemma longMixedAdjoint_right (hq : q ≠ 0) (h2 : qInt q 2 ≠ 0) (h3 : qInt q 3 ≠ 0)
+    (hbA : b * A = (q ^ 3)⁻¹ • (A * b))
+    (hDA : D * A = A * D - (q ^ 2 - 1) • b ^ 2)
+    (hCA : C * A = (q ^ 3)⁻¹ • (A * C) -
+      ((q ^ 2 - 1) ^ 2 / (q ^ 2 * qInt q 3)) • b ^ 3)
+    (hfA : f * A = q ^ 3 • (A * f) + (q ^ 4 + q ^ 2 - 1) • C -
+      (q ^ 2 * (q ^ 2 - 1)) • (b * D)) (n : ℕ) :
     longMixedAdjoint q b C D f n * A =
       ((q ^ 3) ^ 1 * (q ^ 3)⁻¹ ^ (2 * n)) • (A * longMixedAdjoint q b C D f n) -
         qInt (q ^ 3) (n + 1) • longMixedAdjoint q b C D f (n + 1) := by
@@ -173,10 +178,10 @@ lemma longMixedAdjoint_A (hq : q ≠ 0) (h2 : qInt q 2 ≠ 0) (h3 : qInt q 3 ≠
   rcases n with _ | (_ | (_ | n))
   · simp only [longMixedAdjoint]
     norm_num [qInt]
-    rw [H.fA]
+    rw [hfA]
     abel
   · simp only [longMixedAdjoint, hW2, sub_mul, smul_mul_assoc,
-      mul_assoc b D A, H.DA, mul_sub, ← mul_assoc b A, H.BA, H.CA,
+      mul_assoc b D A, hDA, mul_sub, ← mul_assoc b A, hbA, hCA,
       mul_smul_comm, smul_mul_assoc, smul_sub, smul_smul]
     norm_num only
     rw [qInt_two, qInt_three hq]
@@ -187,7 +192,7 @@ lemma longMixedAdjoint_A (hq : q ≠ 0) (h2 : qInt q 2 ≠ 0) (h3 : qInt q 3 ≠
     ring
   · have hbb := mul_pow_of_mul_eq_smul (B := Bᵐᵒᵖ) (by
       simpa only [MulOpposite.op_mul, MulOpposite.op_smul] using
-        congrArg MulOpposite.op H.BA) 3
+        congrArg MulOpposite.op hbA) 3
     have hbA : b ^ 3 * A = (q ^ 3)⁻¹ ^ 3 • (A * b ^ 3) := by
       simpa only [MulOpposite.unop_mul, MulOpposite.unop_pow, MulOpposite.unop_smul,
         MulOpposite.unop_op] using congrArg MulOpposite.unop hbb
@@ -205,6 +210,39 @@ theorem f_mul_qDivPow_A (hq : q ≠ 0) (h2 : qInt q 2 ≠ 0) (h3 : qInt q 3 ≠ 
       ∑ n ∈ range (r + 1), B2Integral.sCoef (q ^ 3) 1 r n •
         (qDivPow (q ^ 3) (r - n) A * longMixedAdjoint q b C D f n) := by
   exact B2Integral.straighten (pow_ne_zero _ hq) hpi 1
-    (longMixedAdjoint_A hq h2 h3 H) r
+    (longMixedAdjoint_right hq h2 h3 H.BA H.DA H.CA H.fA) r
+
+/-- Reversal of the long-root mixed adjoint string. -/
+def reverseLongMixedAdjoint (q : k) (b C D A : B) : ℕ → B
+  | 0 => A
+  | 1 => (q ^ 2 * (q ^ 2 - 1)) • (b * D) - (q ^ 4 + q ^ 2 - 1) • C
+  | 2 => (q * (q ^ 2 - 1) ^ 2 * qInt q 2) • qDivPow q 3 D
+  | _ + 3 => 0
+
+/-- `f^{(r)} A` for arbitrary `r`, by reversal of the long-root mixed identity. -/
+theorem qDivPow_f_mul_A (hq : q ≠ 0) (h2 : qInt q 2 ≠ 0) (h3 : qInt q 3 ≠ 0)
+    (hpi : ∀ n : ℕ, 0 < n → qInt (q ^ 3) n ≠ 0) (H : Rel q e A b C D f) (r : ℕ) :
+    qDivPow (q ^ 3) r f * A =
+      ∑ n ∈ range (r + 1), B2Integral.sCoef (q ^ 3) 1 r n •
+        (reverseLongMixedAdjoint q b C D A n * qDivPow (q ^ 3) (r - n) f) := by
+  let op := MulOpposite.op (α := B)
+  have hs := longMixedAdjoint_right hq h2 h3
+    (A := op f) (b := op D) (C := op C) (D := op b) (f := op A)
+    (by simpa only [op, MulOpposite.op_mul, MulOpposite.op_smul] using congrArg op H.fD)
+    (by simpa only [op, MulOpposite.op_mul, MulOpposite.op_smul, MulOpposite.op_sub,
+      MulOpposite.op_pow] using congrArg op H.fB)
+    (by simpa only [op, MulOpposite.op_mul, MulOpposite.op_smul, MulOpposite.op_sub,
+      MulOpposite.op_pow] using congrArg op H.fC)
+    (by simpa only [op, MulOpposite.op_mul, MulOpposite.op_smul, MulOpposite.op_sub,
+      MulOpposite.op_add] using congrArg op H.fA)
+  have hrev (n : ℕ) : MulOpposite.unop (longMixedAdjoint q (op D) (op C) (op b) (op A) n) =
+      reverseLongMixedAdjoint q b C D A n := by
+    rcases n with _ | (_ | (_ | n)) <;>
+      simp [longMixedAdjoint, reverseLongMixedAdjoint, op, qDivPow]
+  have hh := congrArg MulOpposite.unop
+    (B2Integral.straighten (pow_ne_zero _ hq) hpi 1 hs r)
+  simpa only [show longMixedAdjoint q (op D) (op C) (op b) (op A) 0 = op A from rfl,
+    MulOpposite.unop_mul, Finset.unop_sum, MulOpposite.unop_smul, hrev, qDivPow,
+    MulOpposite.unop_pow, op, MulOpposite.unop_op] using hh
 
 end LieLean.QuantumGroup.G2Integral
