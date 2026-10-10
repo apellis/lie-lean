@@ -161,11 +161,6 @@ lemma IsSignPow.inv {c : I → kˣ} (h : IsSignPow v c) : IsSignPow v c⁻¹ :=
     obtain ⟨e, m, he⟩ := h.zpow_apply l (-1)
     exact ⟨e, m, by rw [Pi.inv_apply, ← zpow_neg_one, he]⟩
 
-/-- `D_c(Eᵢ^{(n)}) = cᵢⁿ Eᵢ^{(n)}`. -/
-lemma diagHom_qDivPow_E' (c : I → kˣ) (q : k) (n : ℕ) (i : I) :
-    diagHom R v c (qDivPow q n (E R v i)) = ((c i : k) ^ n) • qDivPow q n (E R v i) := by
-  simp [qDivPow, map_smul, map_pow, smul_pow, smul_smul, mul_comm]
-
 end Diagonal
 
 /-! ### `T'_{i,1}` and `T''_{i,-1}` -/
@@ -410,7 +405,7 @@ theorem exists_list_braidPrime_qDivPow_E (ω : List I) (i : I) :
         (ω.map (braidEquivOfNotRoot R hv)).prod (qDivPow (v ^ D.d i) t (E R v i)) := by
   obtain ⟨c, hc, h⟩ := exists_list_braidPrime_eq (R := R) hv ω
   obtain ⟨e, m, he⟩ := hc i
-  exact ⟨e, m, fun t ↦ by rw [h, diagHom_qDivPow_E', map_smul, he]⟩
+  exact ⟨e, m, fun t ↦ by rw [h, diagHom_qDivPow_E, map_smul, he]⟩
 
 /-- On divided powers:
 `T''_{i₁,-1} ⋯ T''_{iₙ,-1}(Eᵢ^{(t)}) = (±v^m)^t T'_{i₁,-1} ⋯ T'_{iₙ,-1}(Eᵢ^{(t)})`. -/
@@ -421,7 +416,7 @@ theorem exists_list_braidPrime_symm_qDivPow_E (ω : List I) (i : I) :
           (qDivPow (v ^ D.d i) t (E R v i)) := by
   obtain ⟨c, hc, h⟩ := exists_list_braidPrime_symm_eq (R := R) hv ω
   obtain ⟨e, m, he⟩ := hc i
-  exact ⟨e, m, fun t ↦ by rw [h, diagHom_qDivPow_E', map_smul, he]⟩
+  exact ⟨e, m, fun t ↦ by rw [h, diagHom_qDivPow_E, map_smul, he]⟩
 
 end Symmetries
 

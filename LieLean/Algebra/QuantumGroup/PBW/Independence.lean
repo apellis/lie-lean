@@ -148,34 +148,22 @@ lemma exists_neg_K_mul_F_pow (i : I) (a : ℕ) :
     rw [pow_succ, h, mul_neg, smul_mul_assoc, mul_assoc, ← mul_assoc (K R v _), hK, K_mul_F,
       mul_smul_comm, ← mul_assoc, ← pow_succ, smul_smul, neg_smul]
 
-/-- **The sum `∑ₐ Eᵢᵃ Tᵢ(U⁺)` is direct** ([Jan] Lemma 8.21 a)): if `T` is an injective algebra
-endomorphism of `U` with Lusztig's formulas for `Tᵢ` on the generators, and `uₐ ∈ U⁺` satisfy
-`∑ₐ Eᵢᵃ T(uₐ) = 0`, then all `uₐ` vanish. Requires `v` not a root of unity (triangular
-decomposition). -/
-theorem eq_zero_of_sum_E_pow_mul_map (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) {i : I}
-    {T : QuantumGroup R v →ₐ[k] QuantumGroup R v} (hT : Function.Injective T)
-    (HT : HasBraidGeneratorImages i T) (f : ℕ →₀ QuantumGroup R v)
-    (hf : ∀ a, f a ∈ (plusHom R v).range) (h : (f.sum fun a x ↦ E R v i ^ a * T x) = 0) :
+/-- **The sum `∑ₐ Fᵢᵃ K_{μₐ} U⁺` is direct**: if `uₐ ∈ U⁺` and `∑ₐ cₐ Fᵢᵃ K_{μₐ} uₐ = 0` with
+nonzero scalars `cₐ`, then all `uₐ` vanish (triangular decomposition; `v` not a root of unity). -/
+theorem eq_zero_of_sum_F_pow_K_mul (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) {i : I}
+    (c : ℕ → k) (hc : ∀ a, c a ≠ 0) (μ : ℕ → Y) (f : ℕ →₀ QuantumGroup R v)
+    (hf : ∀ a, f a ∈ (plusHom R v).range)
+    (h1 : (f.sum fun a x ↦ (c a • (F R v i ^ a * K R v (μ a))) * x) = 0) :
     f = 0 := by
-  set G : QuantumGroup R v := -(K R v (-ktilde R i) * F R v i) with hG_def
-  have hG : T G = E R v i := by
-    rw [hG_def, map_neg, map_mul, HT.map_K, HT.map_F, ite_eq_left rfl, reflY_neg_ktilde, mul_neg,
-      neg_neg, ← mul_assoc, Kt_mul_K_neg, one_mul]
-  have h1 : (f.sum fun a x ↦ G ^ a * x) = 0 := by
-    apply hT
-    rw [map_zero, ← h, Finsupp.sum, Finsupp.sum, map_sum]
-    refine Finset.sum_congr rfl fun a _ ↦ ?_
-    rw [map_mul, map_pow, hG]
   choose X hX using hf
   change ∀ a, (plusHom R v) (X a) = f a at hX
-  choose c hc hGc using fun a ↦ exists_neg_K_mul_F_pow (R := R) (v := v) i a
   set z : TriSpace k I Y := ∑ a ∈ f.support,
-    (c a • θ k i ^ a) ⊗ₜ[k] ((AddMonoidAlgebra.single (-(a • ktilde R i)) (1 : k)) ⊗ₜ[k] X a)
+    (c a • θ k i ^ a) ⊗ₜ[k] ((AddMonoidAlgebra.single (μ a) (1 : k)) ⊗ₜ[k] X a)
     with hz_def
   have hz : triMap (R := R) (v := v) z = 0 := by
     rw [← h1, hz_def, map_sum, Finsupp.sum]
     refine Finset.sum_congr rfl fun a _ ↦ ?_
-    rw [triMap_tmul, map_smul, map_pow, minusHom_θ, zeroHom_single, hX, hG_def, hGc]
+    rw [triMap_tmul, map_smul, map_pow, minusHom_θ, zeroHom_single, hX]
     simp only [smul_mul_assoc, mul_assoc]
   have hzW := mem_serreTriSubmodule_of_triMap_eq_zero R v hv' hz
   ext b
@@ -219,6 +207,30 @@ theorem eq_zero_of_sum_E_pow_mul_map (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) 
       (serreIdeal_le_ker_plusHom (R := R) (NeZero.ne v) hv' (mem_serreSubmodule.1 hzπ))
   · intro a _ hab
     rw [hπ, hℓ, ite_eq_right hab, zero_smul]
+
+/-- **The sum `∑ₐ Eᵢᵃ Tᵢ(U⁺)` is direct** ([Jan] Lemma 8.21 a)): if `T` is an injective algebra
+endomorphism of `U` with Lusztig's formulas for `Tᵢ` on the generators, and `uₐ ∈ U⁺` satisfy
+`∑ₐ Eᵢᵃ T(uₐ) = 0`, then all `uₐ` vanish. Requires `v` not a root of unity (triangular
+decomposition). -/
+theorem eq_zero_of_sum_E_pow_mul_map (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) {i : I}
+    {T : QuantumGroup R v →ₐ[k] QuantumGroup R v} (hT : Function.Injective T)
+    (HT : HasBraidGeneratorImages i T) (f : ℕ →₀ QuantumGroup R v)
+    (hf : ∀ a, f a ∈ (plusHom R v).range) (h : (f.sum fun a x ↦ E R v i ^ a * T x) = 0) :
+    f = 0 := by
+  set G : QuantumGroup R v := -(K R v (-ktilde R i) * F R v i) with hG_def
+  have hG : T G = E R v i := by
+    rw [hG_def, map_neg, map_mul, HT.map_K, HT.map_F, ite_eq_left rfl, reflY_neg_ktilde, mul_neg,
+      neg_neg, ← mul_assoc, Kt_mul_K_neg, one_mul]
+  have h1 : (f.sum fun a x ↦ G ^ a * x) = 0 := by
+    apply hT
+    rw [map_zero, ← h, Finsupp.sum, Finsupp.sum, map_sum]
+    refine Finset.sum_congr rfl fun a _ ↦ ?_
+    rw [map_mul, map_pow, hG]
+  choose c hc hGc using fun a ↦ exists_neg_K_mul_F_pow (R := R) (v := v) i a
+  refine eq_zero_of_sum_F_pow_K_mul (i := i) hv' c hc (fun a ↦ -(a • ktilde R i)) f hf ?_
+  rw [← h1]
+  refine Finset.sum_congr rfl fun a _ ↦ ?_
+  simp only [hG_def, hGc]
 
 variable (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1)
 
