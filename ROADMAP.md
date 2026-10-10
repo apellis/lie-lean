@@ -1929,7 +1929,13 @@ projections `projW χ : U → U_χ`, `𝒜U⁻ = Modified.aMinus`, and `Modified
 `bᵢ ∈ 𝒜U⁻`, `b'ⱼ ∈ 𝒜U⁺` and the monomials `F_w`, `E_w` in divided powers have `𝒜`-coordinates (so the
 two bases are `𝒜`-bases of `𝒜U⁻ ≅ 𝒜f ≅ 𝒜U⁺`), the `bᵢ 1_λ b'ⱼ` form an `𝒜`-basis of `𝒜U̇`. No such
 basis is constructed here (Lusztig uses the canonical basis of `f`, [Lus] 14.4; in finite type the
-integral PBW bases of 41.1.4–41.1.7 would do). Not formalized from [Lus] 41.1: 41.1.4–41.1.7 (integral PBW bases, canonical basis), 41.1.9 (quantum Frobenius).
+integral PBW bases of 41.1.4–41.1.7 would do). Integral `A₂` straightening
+(`QuantumGroup/PBW/IntegralA2.lean`): for `α, β` with the `A₂` Serre relations and `γ = αβ - q⁻¹βα`,
+`β^{(Q)} α^{(P)} = Σ_n (-1)ⁿ q^{(P-n)(Q-n)+n} α^{(P-n)} γ^{(n)} β^{(Q-n)}`
+(`A2Integral.qDivPow_mul_qDivPow_eq_sum`, cf. [Lus] 42.1.2 (b), our argument), so the
+`Λ`-combinations of the `α^{(a)} γ^{(b)} β^{(d)}` are stable under left multiplication by the
+`α^{(n)}`, `β^{(n)}` (`qDivPow_α_mul_mem`, `qDivPow_β_mul_mem`). Not formalized from [Lus] 41.1:
+41.1.4–41.1.7 (integral PBW bases, canonical basis), 41.1.9 (quantum Frobenius).
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
 [HK] §4.1): for an integrable `U_q(𝔰𝔩₂)`-module (`IntegrableSl2`, `q` nonzero, not a root of
 unity) the string decomposition `IntegrableSl2.stringEquiv : ⨁_{(n,j)} prim(n+2j) ≃ M`
