@@ -370,6 +370,7 @@ import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Symmetries
 import LieLean.Algebra.QuantumGroup.PBW.Independence
 import LieLean.Algebra.QuantumGroup.PBW.IndependenceSymm
 import LieLean.Algebra.QuantumGroup.PBW.IntegralA2
+import LieLean.Algebra.QuantumGroup.PBW.IntegralB2
 import LieLean.Algebra.QuantumGroup.PBW.KostantDimension
 import LieLean.Algebra.QuantumGroup.PBW.Monomials
 import LieLean.Algebra.QuantumGroup.PBW.RankTwoA2
