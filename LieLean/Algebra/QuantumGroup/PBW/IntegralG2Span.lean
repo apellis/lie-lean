@@ -76,14 +76,21 @@ variable (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0)
   (hpi : ∀ n : ℕ, 0 < n → qInt (q ^ 3) n ≠ 0)
   (H : Rel q e A b C D f) (hqΛ : q ∈ Λ) (hqΛ' : q⁻¹ ∈ Λ)
 
+include hq hqi hpi H hqΛ hqΛ' in
+/-- Arbitrary last-root/first-root divided powers lie in the ordered integral span. -/
+theorem qDivPow_f_mul_qDivPow_e_mem_all (r s : ℕ) :
+    qDivPow (q ^ 3) s f * qDivPow q r e ∈ orderedSpan q Λ e A b C D f := by
+  rw [qDivPow_f_mul_qDivPow_e_sum_all hq hqi hpi H]
+  refine AddSubgroup.sum_mem _ fun n _ => AddSubgroup.sum_mem _ fun x _ => ?_
+  exact smul_mem_orderedSpan (adjoint_straightening_coeff_mem Λ hqΛ hqΛ' _ _ _ _ _ _ _ _)
+    (M6_mem_orderedSpan _ _ _ _ _ _)
+
 include hq hd hqi hpi H hqΛ hqΛ' in
 /-- Arbitrary last-root/first-root divided powers lie in the ordered integral span. -/
 theorem qDivPow_f_mul_qDivPow_e_mem (r s : ℕ) :
     qDivPow (q ^ 3) s f * qDivPow q r e ∈ orderedSpan q Λ e A b C D f := by
-  rw [qDivPow_f_mul_qDivPow_e_sum hq hd hqi hpi H]
-  refine AddSubgroup.sum_mem _ fun n _ => AddSubgroup.sum_mem _ fun x _ => ?_
-  exact smul_mem_orderedSpan (adjoint_straightening_coeff_mem Λ hqΛ hqΛ' _ _ _ _ _ _ _ _)
-    (M6_mem_orderedSpan _ _ _ _ _ _)
+  have _ := hd
+  exact qDivPow_f_mul_qDivPow_e_mem_all hq hqi hpi H hqΛ hqΛ' r s
 
 include hq hqi H hqΛ hqΛ' in
 /-- `D e^{(r)}` lies in the ordered integral span for every `r`. -/

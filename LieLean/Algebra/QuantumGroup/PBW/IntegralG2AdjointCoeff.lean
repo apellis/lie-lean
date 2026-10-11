@@ -54,7 +54,7 @@ lemma adjointCoeff_B_step (hq : q ≠ 0) (a b c d l : ℕ) :
   ring
 
 /-- The coefficient recurrence, including every missing-predecessor boundary. -/
-lemma adjointCoeff_recurrence (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0) (a b c d l : ℕ) :
+lemma adjointCoeff_recurrence_all (hq : q ≠ 0) (a b c d l : ℕ) :
     qInt q (3 * a + 2 * b + 3 * c + d) * adjointCoeff q a b c d l =
       (if d = 0 then 0 else
         q ^ 3 * adjointCoeff q a b c (d - 1) (l + 1) * qInt q d) +
@@ -116,6 +116,25 @@ lemma adjointCoeff_recurrence (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0) (a b c d l 
     | succ a => simp only [Nat.add_one_ne_zero, ite_false, Nat.add_sub_cancel,
         adjointCoeff_B_step hq]
   rw [hF, hD, hDC, hC, hB]
-  linear_combination adjointCoeff q a b c d l * adjoint_scalar hq hd a b c d
+  linear_combination adjointCoeff q a b c d l * adjoint_scalar_all hq a b c d
+
+lemma adjointCoeff_recurrence (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0) (a b c d l : ℕ) :
+    qInt q (3 * a + 2 * b + 3 * c + d) * adjointCoeff q a b c d l =
+      (if d = 0 then 0 else
+        q ^ 3 * adjointCoeff q a b c (d - 1) (l + 1) * qInt q d) +
+      (if b = 0 then 0 else
+        q ^ (3 * l + 1) * q⁻¹ ^ (3 * c) * adjointCoeff q a (b - 1) c (d + 1) l *
+          qInt q 2 * qInt q b) +
+      (if c = 0 then 0 else
+        -(q ^ (3 * l) * q⁻¹ ^ d * adjointCoeff q a b (c - 1) (d + 2) l) *
+          qInt q 3 * qInt (q ^ 3) c) +
+      (if b ≤ 1 then 0 else
+        (q ^ 2 - 1) * (q ^ (3 * l + d) * q⁻¹ ^ (3 * c) *
+          adjointCoeff q a (b - 2) (c + 1) d l) * qInt q (b - 1) * qInt q b) +
+      (if a = 0 then 0 else
+        q ^ (3 * l + d) * q⁻¹ ^ (2 * b + 1) * adjointCoeff q (a - 1) (b + 1) c d l *
+          qInt q 3 * qInt (q ^ 3) a) := by
+  have _ := hd
+  exact adjointCoeff_recurrence_all hq a b c d l
 
 end LieLean.QuantumGroup.G2Integral

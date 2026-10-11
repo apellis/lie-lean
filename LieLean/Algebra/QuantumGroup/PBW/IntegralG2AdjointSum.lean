@@ -182,7 +182,7 @@ private lemma adjoint_lead {q : k} (hq : q ≠ 0) (n s a b c d l : ℕ)
 variable {q : k} {e A b C D f : B}
 
 /-- The two-term right-`e` recurrence for the finite G₂ adjoint sum. -/
-lemma adjointSum_e (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0)
+lemma adjointSum_e_all (hq : q ≠ 0)
     (hqi : ∀ n : ℕ, 0 < n → qInt q n ≠ 0)
     (hpi : ∀ n : ℕ, 0 < n → qInt (q ^ 3) n ≠ 0)
     (H : Rel q e A b C D f) (n s : ℕ) :
@@ -242,7 +242,7 @@ lemma adjointSum_e (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0)
     rcases x with ⟨a, b', c, d, l⟩
     have hn := ((mem_adjointIndices (n + 1) s a b' c d l).mp hx).2
     dsimp only [coeff, M, Ff, FD, FDC, FC, FB]
-    rw [smul_smul, ← hn, adjointCoeff_recurrence hq hd]
+    rw [smul_smul, ← hn, adjointCoeff_recurrence_all hq]
     simp only [add_smul, ite_not, show (1 < b') ↔ ¬ b' ≤ 1 by omega,
       ite_smul, zero_smul]
   change (∑ x ∈ adjointIndices n s, coeff x • M x) * e =
@@ -260,9 +260,19 @@ lemma adjointSum_e (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0)
   simp only [sum_add_distrib]
   abel
 
+lemma adjointSum_e (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0)
+    (hqi : ∀ n : ℕ, 0 < n → qInt q n ≠ 0)
+    (hpi : ∀ n : ℕ, 0 < n → qInt (q ^ 3) n ≠ 0)
+    (H : Rel q e A b C D f) (n s : ℕ) :
+    adjointSum q A b C D f n s * e =
+      (q ^ (3 * s) * q⁻¹ ^ (2 * n)) • (e * adjointSum q A b C D f n s) -
+        qInt q (n + 1) • adjointSum q A b C D f (n + 1) s := by
+  have _ := hd
+  exact adjointSum_e_all hq hqi hpi H n s
+
 /-- Integral-coefficient straightening of arbitrary last-root and first-root divided powers.
 The finite adjoint sum is explicit; this does not assert closure of the full ordered span. -/
-theorem qDivPow_f_mul_qDivPow_e (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0)
+theorem qDivPow_f_mul_qDivPow_e_all (hq : q ≠ 0)
     (hqi : ∀ n : ℕ, 0 < n → qInt q n ≠ 0)
     (hpi : ∀ n : ℕ, 0 < n → qInt (q ^ 3) n ≠ 0)
     (H : Rel q e A b C D f) (r s : ℕ) :
@@ -270,9 +280,32 @@ theorem qDivPow_f_mul_qDivPow_e (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0)
       ∑ n ∈ range (r + 1), B2Integral.sCoef q (3 * s) r n •
         (qDivPow q (r - n) e * adjointSum q A b C D f n s) := by
   simpa only [adjointSum_zero] using
-    B2Integral.straighten hq hqi (3 * s) (fun n => adjointSum_e hq hd hqi hpi H n s) r
+    B2Integral.straighten hq hqi (3 * s) (fun n => adjointSum_e_all hq hqi hpi H n s) r
+
+theorem qDivPow_f_mul_qDivPow_e (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0)
+    (hqi : ∀ n : ℕ, 0 < n → qInt q n ≠ 0)
+    (hpi : ∀ n : ℕ, 0 < n → qInt (q ^ 3) n ≠ 0)
+    (H : Rel q e A b C D f) (r s : ℕ) :
+    qDivPow (q ^ 3) s f * qDivPow q r e =
+      ∑ n ∈ range (r + 1), B2Integral.sCoef q (3 * s) r n •
+        (qDivPow q (r - n) e * adjointSum q A b C D f n s) := by
+  have _ := hd
+  exact qDivPow_f_mul_qDivPow_e_all hq hqi hpi H r s
 
 /-- The straightening identity with both finite sums displayed. -/
+theorem qDivPow_f_mul_qDivPow_e_sum_all (hq : q ≠ 0)
+    (hqi : ∀ n : ℕ, 0 < n → qInt q n ≠ 0)
+    (hpi : ∀ n : ℕ, 0 < n → qInt (q ^ 3) n ≠ 0)
+    (H : Rel q e A b C D f) (r s : ℕ) :
+    qDivPow (q ^ 3) s f * qDivPow q r e =
+      ∑ n ∈ range (r + 1), ∑ x ∈ adjointIndices n s,
+        (B2Integral.sCoef q (3 * s) r n *
+          adjointCoeff q x.1 x.2.1 x.2.2.1 x.2.2.2.1 x.2.2.2.2) •
+        (qDivPow q (r - n) e *
+          M5 q A b C D f x.1 x.2.1 x.2.2.1 x.2.2.2.1 x.2.2.2.2) := by
+  rw [qDivPow_f_mul_qDivPow_e_all hq hqi hpi H]
+  simp only [adjointSum, mul_sum, smul_sum, mul_smul_comm, smul_smul]
+
 theorem qDivPow_f_mul_qDivPow_e_sum (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0)
     (hqi : ∀ n : ℕ, 0 < n → qInt q n ≠ 0)
     (hpi : ∀ n : ℕ, 0 < n → qInt (q ^ 3) n ≠ 0)
@@ -283,8 +316,8 @@ theorem qDivPow_f_mul_qDivPow_e_sum (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0)
           adjointCoeff q x.1 x.2.1 x.2.2.1 x.2.2.2.1 x.2.2.2.2) •
         (qDivPow q (r - n) e *
           M5 q A b C D f x.1 x.2.1 x.2.2.1 x.2.2.2.1 x.2.2.2.2) := by
-  rw [qDivPow_f_mul_qDivPow_e hq hd hqi hpi H]
-  simp only [adjointSum, mul_sum, smul_sum, mul_smul_comm, smul_smul]
+  have _ := hd
+  exact qDivPow_f_mul_qDivPow_e_sum_all hq hqi hpi H r s
 
 /-- Every coefficient in the double-sum straightening belongs to any subring containing
 `q` and `q⁻¹`; no quantum-integer denominators remain. -/
