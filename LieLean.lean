@@ -340,6 +340,7 @@ import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Verma
 import LieLean.Algebra.QuantumGroup.LusztigF.Bar
 import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
 import LieLean.Algebra.QuantumGroup.LusztigF.BraidIntersection
+import LieLean.Algebra.QuantumGroup.LusztigF.QuotientComul
 import LieLean.Algebra.QuantumGroup.LusztigF.Basic
 import LieLean.Algebra.QuantumGroup.LusztigF.Comul
 import LieLean.Algebra.QuantumGroup.LusztigF.Form
