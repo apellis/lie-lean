@@ -2141,7 +2141,19 @@ used in 38.2.3(a); its divided-power factor has residue one, proved rather than 
 `quotientForm_integralGenerator_residue` and `quotientIntegralGenerator_mem_lattice` give
 actual simple divided-power norm congruences and lattice membership at every node;
 `integralPBWPreimage_singleton_mem_lattice` applies this to singleton PBW preimages.
-**Remaining 41.1.6 gap:** the braid-isometry/adaptedness mechanism of 38.2.1–38.2.3 has
+`LusztigF/SkewKernel.lean` proves the left-kernel generation and spanning prerequisite of
+38.1.1–38.1.2 and 38.1.6 on the original radical quotient.
+`skewDividedGenerator_eq_sum` identifies the explicit recursive adjoints with the source
+divided-power sums; `toQuotient_skewGenerator_eq_zero` proves their Serre truncation.
+`mem_quotientSkewGenerators_iff` identifies their bounded generated algebra with the
+actual left skew kernel, using proved free-algebra spanning and the boson zero-string
+projection. `exists_quotientSkewGenerators_decomposition` gives finite string expansions
+with coefficients in that algebra, and `quotientForm_divided_mul_of_mem_skewGenerators`
+discharges the kernel hypotheses for those coefficients. These results require a finite
+simple-root set but not finite Weyl group or ambient-root independence.
+**Remaining 41.1.6 gap:** positive braid intersection and arbitrary adapted-tail kernel
+membership, projected coproduct compatibility (38.1.8), and restricted braid isometry
+(38.2.1) remain unproved. The braid-isometry/adaptedness mechanism of 38.2.1–38.2.3 has
 not been connected to arbitrary reduced-word preimages, so their product norm and lattice
 membership are still open. The integral canonical-basis comparison and unique signed
 residue of 14.2.2(b) are not proved. The homogeneous norm criterion is not a construction
