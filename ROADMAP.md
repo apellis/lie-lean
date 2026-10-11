@@ -2070,6 +2070,9 @@ boundary guards and identifies the normalized sparse coefficients as
 Evaluation gives the actual ambient divided-adjoint recurrence and finite-sum equality.
 `qDivPow_D_mul_qDivPow_e_mem` then proves unrestricted `D^{(s)}e^{(r)}` membership
 in the existing ordered integral span, without assuming closure or PBW independence.
+`G2FAMixed.lean` checks the normalized `f^(2) A^(2)` product with eight Laurent-integral
+ordered terms (`qDivPow_f_two_mul_qDivPow_A_two_mem`). This is a bounded normalization
+check, not unrestricted `f,A` straightening.
 *Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
 compute the rank-two straightening relations among divided-power root vectors ourselves (root vectors
 via the `Tᵢ`; the pairs `E₂,E₁`; `E₁,E₁₂`; `E₁,E₁₁₂`; `E₁₁₁₂,E₂`; `E₁₂,E₁₁₂`), then divided-power
