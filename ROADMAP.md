@@ -2124,8 +2124,28 @@ without simply-laced, assumed closure or assumed integral-basis hypotheses.
 **Source boundary:** 41.1.5 defines `θ_h^c` as the inverse image in integral `f` of the
 `T'_{i,-1}` monomial; it is not a separate form theorem. 41.1.6 asserts membership in
 `ℒ(f)` and congruence modulo `v⁻¹ℒ(f)` to a unique canonical-basis element up to sign.
-That canonical-basis congruence, including its lattice/norm input, remains open; it does
-not follow merely from these integral bases. No Frobenius compatibility is claimed.
+`Modified/IntegralPBWPreimage.lean` now constructs this preimage in the original
+`LusztigF.quotientIntegralForm`: `quotientPlus` is the injective original positive map,
+`map_quotientIntegralForm_plus` identifies its integral image, and
+`quotientPlus_integralPBWPreimage` proves the exact `pbwDivSymm` formula for every reduced
+word. These results require finitely many simple roots for Gabber–Kac, but no finite Weyl
+group, longest word, simply-laced assumption or root independence.
+`LusztigF/QuotientLattice.lean` constructs the local coefficient ring at infinity with
+uniformizer mapping to the **original** `v⁻¹` (`v = RatFunc.X`), compares the radical and
+Serre module quotients preserving the original form, and transports the existing
+Kashiwara lattice to `f` as `quotientCrystalLattice` (a subset).
+`mem_quotientCrystalLattice_iff` proves the homogeneous norm characterization, internally
+using the extended root datum, so no ambient-root-independence assumption is needed.
+`quotientForm_divided_mul` proves the actual skew-derivation-kernel norm factorization
+used in 38.2.3(a); its divided-power factor has residue one, proved rather than assumed.
+`quotientForm_integralGenerator_residue` and `quotientIntegralGenerator_mem_lattice` give
+actual simple divided-power norm congruences and lattice membership at every node;
+`integralPBWPreimage_singleton_mem_lattice` applies this to singleton PBW preimages.
+**Remaining 41.1.6 gap:** the braid-isometry/adaptedness mechanism of 38.2.1–38.2.3 has
+not been connected to arbitrary reduced-word preimages, so their product norm and lattice
+membership are still open. The integral canonical-basis comparison and unique signed
+residue of 14.2.2(b) are not proved. The homogeneous norm criterion is not a construction
+of a general canonical basis. No Frobenius compatibility is claimed.
 Lentner, arXiv:1406.0865, and arXiv:0811.0209 (two-parameter, specialize) list some of these relations — use them only to check our
 own derivations.
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;

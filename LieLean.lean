@@ -343,6 +343,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Basic
 import LieLean.Algebra.QuantumGroup.LusztigF.Comul
 import LieLean.Algebra.QuantumGroup.LusztigF.Form
 import LieLean.Algebra.QuantumGroup.LusztigF.IntegralForm
+import LieLean.Algebra.QuantumGroup.LusztigF.QuotientLattice
 import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
 import LieLean.Algebra.QuantumGroup.LusztigF.Reverse
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
@@ -351,6 +352,7 @@ import LieLean.Algebra.QuantumGroup.Modified.Commutation
 import LieLean.Algebra.QuantumGroup.Modified.IntegralBasis
 import LieLean.Algebra.QuantumGroup.Modified.IntegralBasisPBW
 import LieLean.Algebra.QuantumGroup.Modified.IntegralBasisPBWAll
+import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWPreimage
 import LieLean.Algebra.QuantumGroup.Modified.IntegralForm
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBW
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWB2
