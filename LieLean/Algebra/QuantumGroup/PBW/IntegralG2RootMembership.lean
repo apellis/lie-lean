@@ -28,13 +28,13 @@ variable {k B : Type*} [Field k] [Ring B] [Algebra k B]
   (hΛT : ∀ c ∈ Λ, algebraMap k B c ∈ T)
   (heT : ∀ a, qDivPow q a e ∈ T) (hfT : ∀ d, qDivPow (q ^ 3) d f ∈ T)
 
-include hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT in
+include hq hqi hpi H hqΛ hqΛ' hΛT heT hfT in
 /-- Every divided adjoint sum is integral, by triangular inversion of straightening. -/
-lemma adjointSum_mem (n s : ℕ) : adjointSum q A b C D f n s ∈ T := by
+lemma adjointSum_mem_all (n s : ℕ) : adjointSum q A b C D f n s ∈ T := by
   induction n using Nat.strong_induction_on with
   | h n ih =>
     have hFE := T.mul_mem (hfT s) (heT n)
-    rw [qDivPow_f_mul_qDivPow_e hq hd hqi hpi H, sum_range_succ] at hFE
+    rw [qDivPow_f_mul_qDivPow_e_all hq hqi hpi H, sum_range_succ] at hFE
     have hrest : ∑ j ∈ range n, B2Integral.sCoef q (3 * s) n j •
         (qDivPow q (n - j) e * adjointSum q A b C D f j s) ∈ T := by
       exact T.sum_mem fun j hj => B2Integral.smul_mem_T hΛT
@@ -59,13 +59,13 @@ lemma adjointCoeff_inv_mem (a b c d l : ℕ) : (adjointCoeff q a b c d l)⁻¹ �
   rw [adjointCoeff, mul_inv, ← inv_pow, ← inv_pow]
   exact Λ.mul_mem (Λ.pow_mem (by simp) _) (Λ.pow_mem hqΛ' _)
 
-include hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT in
+include hq hqi hpi H hqΛ hqΛ' hΛT heT hfT in
 private lemma extract_adjoint_monomial (r s : ℕ) (y : AdjointIndex)
     (hy : y ∈ adjointIndices r s)
     (hrest : ∀ x ∈ adjointIndices r s, x ≠ y →
       M5 q A b C D f x.1 x.2.1 x.2.2.1 x.2.2.2.1 x.2.2.2.2 ∈ T) :
     M5 q A b C D f y.1 y.2.1 y.2.2.1 y.2.2.2.1 y.2.2.2.2 ∈ T := by
-  have hsum := adjointSum_mem hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT r s
+  have hsum := adjointSum_mem_all hq hqi hpi H hqΛ hqΛ' hΛT heT hfT r s
   rw [adjointSum, ← sum_erase_add _ _ hy] at hsum
   have hr : ∑ x ∈ (adjointIndices r s).erase y,
       adjointCoeff q x.1 x.2.1 x.2.2.1 x.2.2.2.1 x.2.2.2.2 •
@@ -79,7 +79,7 @@ private lemma extract_adjoint_monomial (r s : ℕ) (y : AdjointIndex)
     (adjointCoeff_inv_mem hqΛ' y.1 y.2.1 y.2.2.1 y.2.2.2.1 y.2.2.2.2) hh
   rwa [smul_smul, inv_mul_cancel₀ (adjointCoeff_ne_zero hq _ _ _ _ _), one_smul] at hh'
 
-include hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT in
+include hq hqi hpi H hqΛ hqΛ' hΛT heT hfT in
 /-- All four nonsimple root divided powers are integral. The simultaneous induction is on
 root height, not on the exponent, so all other factors in the extracting sum are smaller. -/
 private theorem qDivPow_roots_mem_by_height (N : ℕ) :
@@ -97,7 +97,7 @@ private theorem qDivPow_roots_mem_by_height (N : ℕ) :
     refine ⟨?_, ?_, ?_, ?_⟩
     · intro t ht
       have hmem : (t, 0, 0, 0, 0) ∈ adjointIndices (3 * t) t := by simp
-      have hh := extract_adjoint_monomial hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT
+      have hh := extract_adjoint_monomial hq hqi hpi H hqΛ hqΛ' hΛT heT hfT
         (3 * t) t (t, 0, 0, 0, 0) hmem ?_
       · simpa only [M5, P3, qDivPow_zero', mul_one] using hh
       rintro ⟨a, b', c, d, l⟩ hx hne
@@ -106,7 +106,7 @@ private theorem qDivPow_roots_mem_by_height (N : ℕ) :
       exact known a b' c d l (by omega) (by omega) (by omega) (by omega)
     · intro t ht
       have hmem : (0, t, 0, 0, 0) ∈ adjointIndices (2 * t) t := by simp
-      have hh := extract_adjoint_monomial hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT
+      have hh := extract_adjoint_monomial hq hqi hpi H hqΛ hqΛ' hΛT heT hfT
         (2 * t) t (0, t, 0, 0, 0) hmem ?_
       · simpa only [M5, P3, qDivPow_zero', mul_one, one_mul] using hh
       rintro ⟨a, b', c, d, l⟩ hx hne
@@ -115,7 +115,7 @@ private theorem qDivPow_roots_mem_by_height (N : ℕ) :
       exact known a b' c d l (by omega) (by omega) (by omega) (by omega)
     · intro t ht
       have hmem : (0, 0, t, 0, 0) ∈ adjointIndices (3 * t) (2 * t) := by simp
-      have hh := extract_adjoint_monomial hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT
+      have hh := extract_adjoint_monomial hq hqi hpi H hqΛ hqΛ' hΛT heT hfT
         (3 * t) (2 * t) (0, 0, t, 0, 0) hmem ?_
       · simpa only [M5, P3, qDivPow_zero', mul_one, one_mul] using hh
       rintro ⟨a, b', c, d, l⟩ hx hne
@@ -124,7 +124,7 @@ private theorem qDivPow_roots_mem_by_height (N : ℕ) :
       exact known a b' c d l (by omega) (by omega) (by omega) (by omega)
     · intro t ht
       have hmem : (0, 0, 0, t, 0) ∈ adjointIndices t t := by simp
-      have hh := extract_adjoint_monomial hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT
+      have hh := extract_adjoint_monomial hq hqi hpi H hqΛ hqΛ' hΛT heT hfT
         t t (0, 0, 0, t, 0) hmem ?_
       · simpa only [M5, P3, qDivPow_zero', mul_one, one_mul] using hh
       rintro ⟨a, b', c, d, l⟩ hx hne
@@ -132,12 +132,12 @@ private theorem qDivPow_roots_mem_by_height (N : ℕ) :
       simp only [ne_eq, Prod.mk.injEq] at hne
       exact known a b' c d l (by omega) (by omega) (by omega) (by omega)
 
-include hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT in
+include hq hqi hpi H hqΛ hqΛ' hΛT heT hfT in
 /-- The divided powers of all four nonsimple normalized G₂ roots lie in `T`. -/
-theorem qDivPow_roots_mem (n : ℕ) :
+theorem qDivPow_roots_mem_all (n : ℕ) :
     qDivPow (q ^ 3) n A ∈ T ∧ qDivPow q n b ∈ T ∧
       qDivPow (q ^ 3) n C ∈ T ∧ qDivPow q n D ∈ T := by
-  have hh := qDivPow_roots_mem_by_height hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT
+  have hh := qDivPow_roots_mem_by_height hq hqi hpi H hqΛ hqΛ' hΛT heT hfT
   exact ⟨(hh (4 * n)).1 n rfl, (hh (3 * n)).2.1 n rfl,
     (hh (5 * n)).2.2.1 n rfl, (hh (2 * n)).2.2.2 n rfl⟩
 
@@ -156,10 +156,10 @@ def genRing (q : k) (Λ : Subring k) (e f : B) : Subring B :=
     Set.range (fun n : ℕ => qDivPow q n e) ∪
     Set.range (fun n : ℕ => qDivPow (q ^ 3) n f))
 
-include hq hd hqi hpi H hqΛ hqΛ' in
+include hq hqi hpi H hqΛ hqΛ' in
 /-- The ordered integral span is contained in the generated integral subring.
 The reverse containment, requiring multiplicative stability, is not asserted here. -/
-theorem orderedSpan_le_genRing :
+theorem orderedSpan_le_genRing_all :
     orderedSpan q Λ e A b C D f ≤ (genRing q Λ e f).toAddSubgroup := by
   have hΛ : ∀ z ∈ Λ, algebraMap k B z ∈ genRing q Λ e f := fun z hz =>
     Subring.subset_closure (Or.inl (Or.inl ⟨z, hz, rfl⟩))
@@ -167,7 +167,7 @@ theorem orderedSpan_le_genRing :
     Subring.subset_closure (Or.inl (Or.inr ⟨n, rfl⟩))
   have hf : ∀ n, qDivPow (q ^ 3) n f ∈ genRing q Λ e f := fun n =>
     Subring.subset_closure (Or.inr ⟨n, rfl⟩)
-  have hh := qDivPow_roots_mem hq hd hqi hpi H hqΛ hqΛ' hΛ he hf
+  have hh := qDivPow_roots_mem_all hq hqi hpi H hqΛ hqΛ' hΛ he hf
   intro x hx
   induction hx using AddSubgroup.closure_induction with
   | mem x hx =>
@@ -178,5 +178,26 @@ theorem orderedSpan_le_genRing :
   | zero => exact zero_mem _
   | add x y _ _ hx hy => exact add_mem hx hy
   | neg x _ hx => exact neg_mem hx
+
+include hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT in
+/-- Compatibility form of `adjointSum_mem_all` with the original hypotheses. -/
+lemma adjointSum_mem (n s : ℕ) : adjointSum q A b C D f n s ∈ T := by
+  have _ := hd
+  exact adjointSum_mem_all hq hqi hpi H hqΛ hqΛ' hΛT heT hfT n s
+
+include hq hd hqi hpi H hqΛ hqΛ' hΛT heT hfT in
+/-- Compatibility form of `qDivPow_roots_mem_all` with the original hypotheses. -/
+theorem qDivPow_roots_mem (n : ℕ) :
+    qDivPow (q ^ 3) n A ∈ T ∧ qDivPow q n b ∈ T ∧
+      qDivPow (q ^ 3) n C ∈ T ∧ qDivPow q n D ∈ T := by
+  have _ := hd
+  exact qDivPow_roots_mem_all hq hqi hpi H hqΛ hqΛ' hΛT heT hfT n
+
+include hq hd hqi hpi H hqΛ hqΛ' in
+/-- Compatibility form of `orderedSpan_le_genRing_all` with the original hypotheses. -/
+theorem orderedSpan_le_genRing :
+    orderedSpan q Λ e A b C D f ≤ (genRing q Λ e f).toAddSubgroup := by
+  have _ := hd
+  exact orderedSpan_le_genRing_all hq hqi hpi H hqΛ hqΛ'
 
 end LieLean.QuantumGroup.G2Integral
