@@ -32,6 +32,14 @@ lemma tripleFactor_mul_qInt {q : k} (hq : q ≠ 0) (n : ℕ) :
   simp only [tripleFactor, two_mul, pow_add]
   linear_combination -(qInt q n) * hcancel
 
+lemma qInt_three_mul_all {q : k} (n : ℕ) : qInt q 3 * qInt (q ^ 3) n = qInt q (3 * n) := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [qInt_succ (v := q ^ 3) n, mul_add, mul_left_comm, ih,
+      show 3 * (n + 1) = 3 * n + 3 by omega, qInt_add, inv_pow, pow_mul]
+    ring
+
 lemma qInt_three_mul {q : k} (hd : q - q⁻¹ ≠ 0) (n : ℕ) :
     qInt q 3 * qInt (q ^ 3) n = qInt q (3 * n) := by
   apply mul_left_cancel₀ hd

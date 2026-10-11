@@ -30,7 +30,7 @@ lemma qInt_double_decomp (hq : q ≠ 0) (b : ℕ) :
     linear_combination (norm := (field_simp; ring)) q⁻¹ * qInt q (b + 1) * hh
 
 /-- The five incoming scalar coefficients for an ordered G₂ adjoint monomial. -/
-lemma adjoint_scalar (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0) (a b c d : ℕ) :
+lemma adjoint_scalar_all (hq : q ≠ 0) (a b c d : ℕ) :
     qInt q (3 * a + 2 * b + 3 * c + d) =
       q ^ (3 * a + 2 * b + 3 * c) * qInt q d +
       q ^ (3 * a + b) * q⁻¹ ^ (3 * c + d + 1) * qInt q 2 * qInt q b +
@@ -38,8 +38,8 @@ lemma adjoint_scalar (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0) (a b c d : ℕ) :
       (q ^ 2 - 1) * q ^ (3 * a) * q⁻¹ ^ (3 * c + d + 2) *
         qInt q (b - 1) * qInt q b +
       q⁻¹ ^ (2 * b + 3 * c + d) * qInt q 3 * qInt (q ^ 3) a := by
-  have ha := qInt_three_mul hd a
-  have hc := qInt_three_mul hd c
+  have ha := qInt_three_mul_all (q := q) a
+  have hc := qInt_three_mul_all (q := q) c
   have hb := qInt_double_decomp hq b
   rw [qInt_add]
   rw [show 3 * a + 2 * b + 3 * c = 3 * a + (2 * b + 3 * c) by omega]
@@ -50,6 +50,17 @@ lemma adjoint_scalar (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0) (a b c d : ℕ) :
     simp only [Nat.add_sub_cancel, pow_add, pow_one]
     field_simp
     ring
+
+lemma adjoint_scalar (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0) (a b c d : ℕ) :
+    qInt q (3 * a + 2 * b + 3 * c + d) =
+      q ^ (3 * a + 2 * b + 3 * c) * qInt q d +
+      q ^ (3 * a + b) * q⁻¹ ^ (3 * c + d + 1) * qInt q 2 * qInt q b +
+      q ^ (3 * a + 2 * b) * q⁻¹ ^ d * qInt q 3 * qInt (q ^ 3) c -
+      (q ^ 2 - 1) * q ^ (3 * a) * q⁻¹ ^ (3 * c + d + 2) *
+        qInt q (b - 1) * qInt q b +
+      q⁻¹ ^ (2 * b + 3 * c + d) * qInt q 3 * qInt (q ^ 3) a := by
+  have _ := hd
+  exact adjoint_scalar_all hq a b c d
 
 /-- Nonnegative exponent of the Laurent coefficient in the five-root adjoint family. -/
 def adjointExponent (a b c d l : ℕ) : ℕ :=
