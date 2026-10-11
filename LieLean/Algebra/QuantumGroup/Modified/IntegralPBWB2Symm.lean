@@ -291,10 +291,12 @@ def BraidInvariantSymm (R : D.RootDatum Y) : Prop :=
   ∀ u w : List I, D.cartanMatrix.coxeterMatrix.BraidMove u w →
     Submodule.span 𝒜 (Set.range (pbwDivSymm R u)) = Submodule.span 𝒜 (Set.range (pbwDivSymm R w))
 
-/-- **Braid moves preserve the integral PBW span** for Cartan data without a pair
-`aᵢⱼ aⱼᵢ = 3`. -/
-theorem braidInvariantSymm_of_mul_ne_three
-    (h3 : ∀ i j, D.cartanMatrix i j * D.cartanMatrix j i ≠ 3) : BraidInvariantSymm R := by
+/-- The local inverse six-term integral span equality supplies the remaining braid case. -/
+theorem braidInvariantSymm_of_span_pbwDivSymm_g2
+    (hG : ∀ i j, i ≠ j → D.cartanMatrix i j * D.cartanMatrix j i = 3 →
+      Submodule.span 𝒜 (Set.range (pbwDivSymm R [i, j, i, j, i, j])) =
+        Submodule.span 𝒜 (Set.range (pbwDivSymm R [j, i, j, i, j, i]))) :
+    BraidInvariantSymm R := by
   intro u w hm
   obtain ⟨p, s, i, j, hij, hmij, rfl, rfl⟩ := hm
   have hT0 := isBraidLiftable_braidEquivOfNotRoot R ratFunc_X_not_root i j hij hmij
@@ -350,7 +352,23 @@ theorem braidInvariantSymm_of_mul_ne_three
     exact CoxeterSystem.span_pbwDivMonomial_context (fun i ↦ (Ta R i).symm) (Ed R)
       (span_pbwDivSymm_b2_braid hij.symm h2' h2).symm
       (key [i, j, i, j] [j, i, j, i] (by simpa using hT0.symm)) p s
-  · exact absurd h3' (h3 i j)
+  · obtain ⟨hm, hm'⟩ := hw 3 _ _ rfl rfl (by rw [h3']; rfl)
+    have e : CoxeterSystem.braidWord D.cartanMatrix.coxeterMatrix i j =
+        [i, j, i, j, i, j] := by
+      simp only [CoxeterSystem.braidWord]; rw [hm]; rfl
+    have e' : CoxeterSystem.braidWord D.cartanMatrix.coxeterMatrix j i =
+        [j, i, j, i, j, i] := by
+      simp only [CoxeterSystem.braidWord]; rw [hm']; rfl
+    rw [e, e'] at hT0 ⊢
+    exact CoxeterSystem.span_pbwDivMonomial_context (fun i ↦ (Ta R i).symm) (Ed R)
+      (hG i j hij h3')
+      (key [i, j, i, j, i, j] [j, i, j, i, j, i] (by simpa using hT0.symm)) p s
+
+/-- **Braid moves preserve the integral PBW span** for Cartan data without a pair
+`aᵢⱼ aⱼᵢ = 3`. -/
+theorem braidInvariantSymm_of_mul_ne_three
+    (h3 : ∀ i j, D.cartanMatrix i j * D.cartanMatrix j i ≠ 3) : BraidInvariantSymm R :=
+  braidInvariantSymm_of_span_pbwDivSymm_g2 fun i j _ h ↦ absurd h (h3 i j)
 
 section BraidInvariantSymm
 
