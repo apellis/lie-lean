@@ -355,6 +355,7 @@ import LieLean.Algebra.QuantumGroup.Modified.IntegralPBW
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWB2
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWB2Symm
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWG2
+import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWGlobal
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWPrime
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWSymm
 import LieLean.Algebra.QuantumGroup.Modified.Quotient

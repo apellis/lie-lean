@@ -320,10 +320,11 @@ def BraidInvariant (R : D.RootDatum Y) : Prop :=
   ∀ u w : List I, D.cartanMatrix.coxeterMatrix.BraidMove u w →
     Submodule.span 𝒜 (Set.range (pbwDiv R u)) = Submodule.span 𝒜 (Set.range (pbwDiv R w))
 
-/-- **Braid moves preserve the integral PBW span** for Cartan data without a pair
-`aᵢⱼ aⱼᵢ = 3`. -/
-theorem braidInvariant_of_mul_ne_three
-    (h3 : ∀ i j, D.cartanMatrix i j * D.cartanMatrix j i ≠ 3) : BraidInvariant R := by
+/-- The local six-term integral span equality supplies the remaining braid case. -/
+theorem braidInvariant_of_span_pbwDiv_g2
+    (hG : ∀ i j, i ≠ j → D.cartanMatrix i j * D.cartanMatrix j i = 3 →
+      Submodule.span 𝒜 (Set.range (pbwDiv R [i, j, i, j, i, j])) =
+        Submodule.span 𝒜 (Set.range (pbwDiv R [j, i, j, i, j, i]))) : BraidInvariant R := by
   intro u w hm
   obtain ⟨p, s, i, j, hij, hmij, rfl, rfl⟩ := hm
   have hT : ((CoxeterSystem.braidWord D.cartanMatrix.coxeterMatrix i j).map (Ta R)).prod =
@@ -370,7 +371,22 @@ theorem braidInvariant_of_mul_ne_three
     rw [e, e'] at hT ⊢
     exact CoxeterSystem.span_pbwDivMonomial_context (Ta R) (Ed R)
       (span_pbwDiv_b2_braid hij.symm h2' h2).symm hT p s
-  · exact absurd h3' (h3 i j)
+  · obtain ⟨hm, hm'⟩ := hw 3 _ _ rfl rfl (by rw [h3']; rfl)
+    have e : CoxeterSystem.braidWord D.cartanMatrix.coxeterMatrix i j =
+        [i, j, i, j, i, j] := by
+      simp only [CoxeterSystem.braidWord]; rw [hm]; rfl
+    have e' : CoxeterSystem.braidWord D.cartanMatrix.coxeterMatrix j i =
+        [j, i, j, i, j, i] := by
+      simp only [CoxeterSystem.braidWord]; rw [hm']; rfl
+    rw [e, e'] at hT ⊢
+    exact CoxeterSystem.span_pbwDivMonomial_context (Ta R) (Ed R)
+      (hG i j hij h3') hT p s
+
+/-- **Braid moves preserve the integral PBW span** for Cartan data without a pair
+`aᵢⱼ aⱼᵢ = 3`. -/
+theorem braidInvariant_of_mul_ne_three
+    (h3 : ∀ i j, D.cartanMatrix i j * D.cartanMatrix j i ≠ 3) : BraidInvariant R :=
+  braidInvariant_of_span_pbwDiv_g2 fun i j _ h ↦ absurd h (h3 i j)
 
 section BraidInvariant
 
