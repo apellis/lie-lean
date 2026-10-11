@@ -2159,7 +2159,16 @@ complementary generator. `quotientLDeriv_eq_zero_iff_braid_positive` and
 directness. `Modified.quotientLDeriv_integralPBWPreimage_cons_zero` proves actual left
 skew-kernel membership of every zero-leading adapted tail for arbitrary reduced words;
 `integralPBWPreimage_cons` gives the corresponding factorization in the original quotient.
-**Remaining 41.1.6 gap:** projected coproduct compatibility (38.1.8) and restricted braid
+`LusztigF/QuotientComul.lean` descends the original twisted coproduct to the original
+radical quotient, proving rather than assuming tensor-form separation and radical descent.
+`quotientComul_braid_coideal` proves both tensor-image coideal containments of 38.1.8(a)
+for actual braid-related left-kernel vectors, using the accepted bounded-generator
+transport to prove right-kernel membership. `quotientSkewProjection_selfAdjoint` proves
+self-adjointness of the existing zero-string projection; `projectedQuotientComul_pair`
+proves that the actual projected coproduct is adjoint to multiplication on the left kernel.
+These are coproduct prerequisites, not restricted braid isometry.
+**Remaining 41.1.6 gap:** actual braid/coproduct comparison (37.3.2), projected braid
+compatibility (38.1.8(b)), and restricted braid
 isometry (38.2.1) remain unproved. Adapted-tail kernel membership is now available, but
 the isometry needed to evaluate its remaining form factor is not, so the general PBW
 product norm and lattice membership are still open. The integral canonical-basis comparison and unique signed
