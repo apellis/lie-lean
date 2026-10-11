@@ -56,12 +56,12 @@ lemma shortFactor_succ (q : k) (n : ℕ) :
 def shortCoeff (q : k) (s n : ℕ) : k :=
   q ^ (n * n) * q⁻¹ ^ (2 * s * n) * shortFactor q n
 
-lemma shortCoeff_step {q : k} (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0) (n d : ℕ) :
+lemma shortCoeff_step_all {q : k} (hq : q ≠ 0) (n d : ℕ) :
     qInt q (n + 1) * shortCoeff q (n + 1 + d) (n + 1) =
       shortCoeff q (n + 1 + d) n * q⁻¹ ^ (2 * d + 1) * qInt q 3 *
         qInt (q ^ 3) (n + 1) := by
   have hf := tripleFactor_mul_qInt hq (n + 1)
-  rw [← qInt_three_mul hd] at hf
+  rw [← qInt_three_mul_all] at hf
   have hp : q ^ (2 * n + 1) * q⁻¹ ^ (2 * (n + 1 + d)) = q⁻¹ ^ (2 * d + 1) := by
     rw [show 2 * (n + 1 + d) = (2 * n + 1) + (2 * d + 1) by omega, pow_add q⁻¹,
       ← mul_assoc, ← mul_pow, mul_inv_cancel₀ hq, one_pow, one_mul]
@@ -75,6 +75,13 @@ lemma shortCoeff_step {q : k} (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0) (n d : ℕ)
       shortFactor q n * tripleFactor q (n + 1) * hp
   rw [hc]
   linear_combination shortCoeff q (n + 1 + d) n * q⁻¹ ^ (2 * d + 1) * hf
+
+lemma shortCoeff_step {q : k} (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0) (n d : ℕ) :
+    qInt q (n + 1) * shortCoeff q (n + 1 + d) (n + 1) =
+      shortCoeff q (n + 1 + d) n * q⁻¹ ^ (2 * d + 1) * qInt q 3 *
+        qInt (q ^ 3) (n + 1) := by
+  have _ := hd
+  exact shortCoeff_step_all hq n d
 
 variable {q : k} {x z y : B}
   (hq : q ≠ 0) (hqi : ∀ n : ℕ, 0 < n → qInt q n ≠ 0)
@@ -112,7 +119,7 @@ lemma shortW_zero (s : ℕ) : shortW q z y s 0 = qDivPow q s y := by
   simp [shortW, shortCoeff, shortFactor, qDivPow_zero']
 
 include hq hqi hpi hyx hzx hyz in
-lemma shortW_mul (hd : q - q⁻¹ ≠ 0) (s n : ℕ) :
+lemma shortW_mul_all (s n : ℕ) :
     shortW q z y s n * x = (q⁻¹ ^ s * q⁻¹ ^ (2 * n)) • (x * shortW q z y s n) -
       qInt q (n + 1) • shortW q z y s (n + 1) := by
   have hz (a : ℕ) : qDivPow (q ^ 3) a z * x =
@@ -129,7 +136,7 @@ lemma shortW_mul (hd : q - q⁻¹ ≠ 0) (s n : ℕ) :
       ← mul_assoc _ x, hz, smul_mul_assoc, ← mul_assoc _ z,
       A2Integral.qDivPow_mul_self z n (hpi _ (by omega))]
     simp only [smul_mul_assoc, smul_sub, smul_smul, mul_assoc, mul_smul_comm]
-    have hc := shortCoeff_step hq hd n d
+    have hc := shortCoeff_step_all hq n d
     match_scalars
     · simp only [inv_pow]
       ring
@@ -143,13 +150,28 @@ lemma shortW_mul (hd : q - q⁻¹ ≠ 0) (s n : ℕ) :
   · simp [shortW, show ¬ n ≤ s by omega, show ¬ n + 1 ≤ s by omega]
 
 include hq hqi hpi hyx hzx hyz in
+lemma shortW_mul (hd : q - q⁻¹ ≠ 0) (s n : ℕ) :
+    shortW q z y s n * x = (q⁻¹ ^ s * q⁻¹ ^ (2 * n)) • (x * shortW q z y s n) -
+      qInt q (n + 1) • shortW q z y s (n + 1) := by
+  have _ := hd
+  exact shortW_mul_all hq hqi hpi hyx hzx hyz s n
+
+include hq hqi hpi hyx hzx hyz in
 /-- Divided-power straightening for a short-short pair with a long middle root. -/
-theorem qDivPow_short_pair (hd : q - q⁻¹ ≠ 0) (s r : ℕ) :
+theorem qDivPow_short_pair_all (s r : ℕ) :
     qDivPow q s y * qDivPow q r x =
       ∑ n ∈ range (r + 1), B2Integral.sCoefParam q (q⁻¹ ^ s) r n •
         (qDivPow q (r - n) x * shortW q z y s n) := by
   simpa only [shortW_zero] using B2Integral.straighten_param hq hqi (q⁻¹ ^ s)
-    (shortW_mul hq hqi hpi hyx hzx hyz hd s) r
+    (shortW_mul_all hq hqi hpi hyx hzx hyz s) r
+
+include hq hqi hpi hyx hzx hyz in
+theorem qDivPow_short_pair (hd : q - q⁻¹ ≠ 0) (s r : ℕ) :
+    qDivPow q s y * qDivPow q r x =
+      ∑ n ∈ range (r + 1), B2Integral.sCoefParam q (q⁻¹ ^ s) r n •
+        (qDivPow q (r - n) x * shortW q z y s n) := by
+  have _ := hd
+  exact qDivPow_short_pair_all hq hqi hpi hyx hzx hyz s r
 
 /-- Every factor of the short-pair formula is Laurent integral. -/
 lemma tripleFactor_mem (Λ : Subring k) (hqΛ : q ∈ Λ) (hqiΛ : q⁻¹ ∈ Λ) (n : ℕ) :
@@ -178,18 +200,34 @@ variable {e A b C D f : B} (H : Rel q e A b C D f)
 
 include hq hqi hpi H in
 /-- The divided-power pair `B,e` straightens through the long root `A`. -/
-theorem qDivPow_b_mul_qDivPow_e (hd : q - q⁻¹ ≠ 0) (s r : ℕ) :
+theorem qDivPow_b_mul_qDivPow_e_all (s r : ℕ) :
     qDivPow q s b * qDivPow q r e =
       ∑ n ∈ range (r + 1), B2Integral.sCoefParam q (q⁻¹ ^ s) r n •
         (qDivPow q (r - n) e * shortW q A b s n) :=
-  qDivPow_short_pair hq hqi hpi H.Be H.Ae H.BA hd s r
+  qDivPow_short_pair_all hq hqi hpi H.Be H.Ae H.BA s r
+
+include hq hqi hpi H in
+theorem qDivPow_b_mul_qDivPow_e (hd : q - q⁻¹ ≠ 0) (s r : ℕ) :
+    qDivPow q s b * qDivPow q r e =
+      ∑ n ∈ range (r + 1), B2Integral.sCoefParam q (q⁻¹ ^ s) r n •
+        (qDivPow q (r - n) e * shortW q A b s n) := by
+  have _ := hd
+  exact qDivPow_b_mul_qDivPow_e_all hq hqi hpi H s r
 
 include hq hqi hpi H in
 /-- The divided-power pair `D,B` straightens through the long root `C`. -/
-theorem qDivPow_D_mul_qDivPow_b (hd : q - q⁻¹ ≠ 0) (s r : ℕ) :
+theorem qDivPow_D_mul_qDivPow_b_all (s r : ℕ) :
     qDivPow q s D * qDivPow q r b =
       ∑ n ∈ range (r + 1), B2Integral.sCoefParam q (q⁻¹ ^ s) r n •
         (qDivPow q (r - n) b * shortW q C D s n) :=
-  qDivPow_short_pair hq hqi hpi H.DB H.CB H.DC hd s r
+  qDivPow_short_pair_all hq hqi hpi H.DB H.CB H.DC s r
+
+include hq hqi hpi H in
+theorem qDivPow_D_mul_qDivPow_b (hd : q - q⁻¹ ≠ 0) (s r : ℕ) :
+    qDivPow q s D * qDivPow q r b =
+      ∑ n ∈ range (r + 1), B2Integral.sCoefParam q (q⁻¹ ^ s) r n •
+        (qDivPow q (r - n) b * shortW q C D s n) := by
+  have _ := hd
+  exact qDivPow_D_mul_qDivPow_b_all hq hqi hpi H s r
 
 end LieLean.QuantumGroup.G2Integral

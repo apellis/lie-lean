@@ -75,21 +75,30 @@ variable {q : k} {x z y : B}
   (hzx : z * x = (q ^ 3)⁻¹ • (x * z))
   (hyz : y * z = (q ^ 3)⁻¹ • (z * y))
 
+include hq hqi in
+lemma longCoeff_step_all (n d : ℕ) :
+    qInt (q ^ 3) (n + 1) * longCoeff q (n + 1 + d) (n + 1) =
+      longCoeff q (n + 1 + d) n * (q ^ 3)⁻¹ ^ (2 * d) *
+        ((q ^ 2 - 1) ^ 2 / (q ^ 2 * qInt q 3)) *
+        (qInt q (3 * n + 1) * qInt q (3 * n + 2) * qInt q (3 * n + 3)) := by
+  have h3 := hqi 3 (by omega)
+  have hp := qInt_three_mul_all (q := q) (n + 1)
+  rw [show 3 * (n + 1) = 3 * n + 3 by omega] at hp
+  simp only [longCoeff, prod_range_succ, longStep, show n + 1 + d - 1 - n = d by omega]
+  rw [← hp]
+  field_simp
+
 include hq hd hqi in
 lemma longCoeff_step (n d : ℕ) :
     qInt (q ^ 3) (n + 1) * longCoeff q (n + 1 + d) (n + 1) =
       longCoeff q (n + 1 + d) n * (q ^ 3)⁻¹ ^ (2 * d) *
         ((q ^ 2 - 1) ^ 2 / (q ^ 2 * qInt q 3)) *
         (qInt q (3 * n + 1) * qInt q (3 * n + 2) * qInt q (3 * n + 3)) := by
-  have h3 := hqi 3 (by omega)
-  have hp := qInt_three_mul hd (n + 1)
-  rw [show 3 * (n + 1) = 3 * n + 3 by omega] at hp
-  simp only [longCoeff, prod_range_succ, longStep, show n + 1 + d - 1 - n = d by omega]
-  rw [← hp]
-  field_simp
+  have _ := hd
+  exact longCoeff_step_all hq hqi n d
 
-include hq hd hqi hpi hyx hzx hyz in
-lemma longW_mul (s n : ℕ) :
+include hq hqi hpi hyx hzx hyz in
+lemma longW_mul_all (s n : ℕ) :
     longW q z y s n * x = ((q ^ 3)⁻¹ ^ s * (q ^ 3)⁻¹ ^ (2 * n)) •
       (x * longW q z y s n) - qInt (q ^ 3) (n + 1) • longW q z y s (n + 1) := by
   have hz (a : ℕ) : qDivPow q a z * x =
@@ -116,7 +125,7 @@ lemma longW_mul (s n : ℕ) :
       qDivPow_mul_cube q z hqi]
     simp only [smul_mul_assoc, smul_sub, smul_smul, mul_assoc, mul_smul_comm,
       show 3 * (n + 1) = 3 * n + 3 by omega]
-    have hc := longCoeff_step hq hd hqi n d
+    have hc := longCoeff_step_all hq hqi n d
     match_scalars
     · simp only [inv_pow]
       ring
@@ -129,17 +138,32 @@ lemma longW_mul (s n : ℕ) :
     ring
   · simp [longW, show ¬ n ≤ s by omega, show ¬ n + 1 ≤ s by omega]
 
+include hq hd hqi hpi hyx hzx hyz in
+lemma longW_mul (s n : ℕ) :
+    longW q z y s n * x = ((q ^ 3)⁻¹ ^ s * (q ^ 3)⁻¹ ^ (2 * n)) •
+      (x * longW q z y s n) - qInt (q ^ 3) (n + 1) • longW q z y s (n + 1) := by
+  have _ := hd
+  exact longW_mul_all hq hqi hpi hyx hzx hyz s n
+
 lemma longW_zero (s : ℕ) : longW q z y s 0 = qDivPow (q ^ 3) s y := by
   simp [longW, longCoeff, qDivPow_zero']
 
-include hq hd hqi hpi hyx hzx hyz in
+include hq hqi hpi hyx hzx hyz in
 /-- Arbitrary divided-power straightening for a long-long G₂ pair. -/
-theorem qDivPow_long_pair (s r : ℕ) :
+theorem qDivPow_long_pair_all (s r : ℕ) :
     qDivPow (q ^ 3) s y * qDivPow (q ^ 3) r x =
       ∑ n ∈ range (r + 1), B2Integral.sCoefParam (q ^ 3) ((q ^ 3)⁻¹ ^ s) r n •
         (qDivPow (q ^ 3) (r - n) x * longW q z y s n) := by
   simpa only [longW_zero] using B2Integral.straighten_param (pow_ne_zero _ hq) hpi
-    ((q ^ 3)⁻¹ ^ s) (longW_mul hq hd hqi hpi hyx hzx hyz s) r
+    ((q ^ 3)⁻¹ ^ s) (longW_mul_all hq hqi hpi hyx hzx hyz s) r
+
+include hq hd hqi hpi hyx hzx hyz in
+theorem qDivPow_long_pair (s r : ℕ) :
+    qDivPow (q ^ 3) s y * qDivPow (q ^ 3) r x =
+      ∑ n ∈ range (r + 1), B2Integral.sCoefParam (q ^ 3) ((q ^ 3)⁻¹ ^ s) r n •
+        (qDivPow (q ^ 3) (r - n) x * longW q z y s n) := by
+  have _ := hd
+  exact qDivPow_long_pair_all hq hqi hpi hyx hzx hyz s r
 
 lemma longCoeff_mem (Λ : Subring k) (hqΛ : q ∈ Λ) (hqiΛ : q⁻¹ ∈ Λ) (s n : ℕ) :
     longCoeff q s n ∈ Λ := by
@@ -162,20 +186,36 @@ lemma long_pair_coeff_mem (Λ : Subring k) (hqΛ : q ∈ Λ) (hqiΛ : q⁻¹ ∈
 
 variable {e A b C D f : B} (H : Rel q e A b C D f)
 
-include hq hd hqi hpi H in
+include hq hqi hpi H in
 /-- The long pair `C,A` straightens through cubic divided powers of `B`. -/
-theorem qDivPow_C_mul_qDivPow_A (s r : ℕ) :
+theorem qDivPow_C_mul_qDivPow_A_all (s r : ℕ) :
     qDivPow (q ^ 3) s C * qDivPow (q ^ 3) r A =
       ∑ n ∈ range (r + 1), B2Integral.sCoefParam (q ^ 3) ((q ^ 3)⁻¹ ^ s) r n •
         (qDivPow (q ^ 3) (r - n) A * longW q b C s n) :=
-  qDivPow_long_pair hq hd hqi hpi H.CA H.BA H.CB s r
+  qDivPow_long_pair_all hq hqi hpi H.CA H.BA H.CB s r
 
 include hq hd hqi hpi H in
+theorem qDivPow_C_mul_qDivPow_A (s r : ℕ) :
+    qDivPow (q ^ 3) s C * qDivPow (q ^ 3) r A =
+      ∑ n ∈ range (r + 1), B2Integral.sCoefParam (q ^ 3) ((q ^ 3)⁻¹ ^ s) r n •
+        (qDivPow (q ^ 3) (r - n) A * longW q b C s n) := by
+  have _ := hd
+  exact qDivPow_C_mul_qDivPow_A_all hq hqi hpi H s r
+
+include hq hqi hpi H in
 /-- The long pair `f,C` straightens through cubic divided powers of `D`. -/
-theorem qDivPow_f_mul_qDivPow_C (s r : ℕ) :
+theorem qDivPow_f_mul_qDivPow_C_all (s r : ℕ) :
     qDivPow (q ^ 3) s f * qDivPow (q ^ 3) r C =
       ∑ n ∈ range (r + 1), B2Integral.sCoefParam (q ^ 3) ((q ^ 3)⁻¹ ^ s) r n •
         (qDivPow (q ^ 3) (r - n) C * longW q D f s n) :=
-  qDivPow_long_pair hq hd hqi hpi H.fC H.DC H.fD s r
+  qDivPow_long_pair_all hq hqi hpi H.fC H.DC H.fD s r
+
+include hq hd hqi hpi H in
+theorem qDivPow_f_mul_qDivPow_C (s r : ℕ) :
+    qDivPow (q ^ 3) s f * qDivPow (q ^ 3) r C =
+      ∑ n ∈ range (r + 1), B2Integral.sCoefParam (q ^ 3) ((q ^ 3)⁻¹ ^ s) r n •
+        (qDivPow (q ^ 3) (r - n) C * longW q D f s n) := by
+  have _ := hd
+  exact qDivPow_f_mul_qDivPow_C_all hq hqi hpi H s r
 
 end LieLean.QuantumGroup.G2Integral
