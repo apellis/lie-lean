@@ -2094,8 +2094,12 @@ for arbitrary Coxeter groups. `span_pbwDiv_longest_eq_all` and
 `coe_span_pbwDiv_longest_all` give integral spanning for a reduced word of the longest
 element when the Coxeter group is finite. These extend the existing `pbwDiv` convention
 only; all older simply-laced and no-triple-edge APIs remain available.
-*Remaining (lie-lean#126): the inverse-convention G₂ extension; forms and canonical bases
-remain separate.*
+`Modified/IntegralPBWG2Symm.lean` proves both actual inverse-convention local spans
+equal `adjoinPair`: `span_pbwDivSymm_g2` and `span_pbwDivSymm_g2_rev`, hence
+`span_pbwDivSymm_g2_braid`. Reversal conjugates the exact inverse operators, and
+opposite root normalization uses only Laurent units, without changing factor order.
+*Remaining (lie-lean#126): global inverse invariance and all-four-convention assembly;
+forms and canonical bases remain separate.*
 Lentner, arXiv:1406.0865, and arXiv:0811.0209 (two-parameter, specialize) list some of these relations — use them only to check our
 own derivations.
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
