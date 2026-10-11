@@ -2000,8 +2000,9 @@ subalgebra (`span_pbwDivSymm_b2`, `span_pbwDivSymm_b2_rev`, `span_pbwDivSymm_b2_
 unit rescaling (`span_pbwDivPrime_of_isReduced_of_mul_ne_three`,
 `span_pbwDivPrimeSymm_of_isReduced_of_mul_ne_three`, and the corresponding longest-element and
 left-descent theorems). These results include finite types `B`, `C`, and `F`, and do not require
-finite type except for longest-element spanning. Not formalized from [Lus] 41.1: the integral
-`G₂` input for 41.1.4 and 41.1.7; 41.1.5–41.1.6 (canonical-basis and bilinear-form results);
+finite type except for longest-element spanning. The current `pbwDiv` convention now also
+includes triple edges, as described below. Not formalized from [Lus] 41.1: the inverse-convention
+`G₂` extension; 41.1.5–41.1.6 (canonical-basis and bilinear-form results);
 41.1.9 (quantum Frobenius).
 **Normalized `G₂` commutation input** (`PBW/IntegralG2Basic.lean`,
 `IntegralG2Commuting{AB,BC,CD}.lean`, `IntegralG2Commuting.lean`, `IntegralG2Relations.lean`):
@@ -2085,10 +2086,16 @@ subring containing `q,q⁻¹`; in particular `q = ±1` is retained.
 `span_pbwDiv_g2` and `span_pbwDiv_g2_rev`. Exact normalized braid roots, with the
 reverse word in the opposite algebra, give the local equality `span_pbwDiv_g2_braid`.
 These hold in arbitrary ambient root data at a pair with Cartan entries `-3,-1`.
-Inverse conventions, arbitrary word contexts and the global triple-edge extension remain separate.
-*Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).*
-Transport the proved local `span_pbwDiv_g2_braid` through arbitrary prefix/suffix contexts,
-then remove the global no-triple-edge hypotheses; treat inverse conventions separately.
+`Modified/IntegralPBWGlobal.lean` transports this equality through arbitrary prefix/suffix
+contexts using the actual braid automorphisms. `braidInvariant` now holds without a
+no-triple-edge hypothesis. `span_pbwDiv_of_isReduced_all` and
+`qDivPow_E_mul_mem_span_pbwDiv_all` give reduced-word invariance and left-descent stability
+for arbitrary Coxeter groups. `span_pbwDiv_longest_eq_all` and
+`coe_span_pbwDiv_longest_all` give integral spanning for a reduced word of the longest
+element when the Coxeter group is finite. These extend the existing `pbwDiv` convention
+only; all older simply-laced and no-triple-edge APIs remain available.
+*Remaining (lie-lean#126): the inverse-convention G₂ extension; forms and canonical bases
+remain separate.*
 Lentner, arXiv:1406.0865, and arXiv:0811.0209 (two-parameter, specialize) list some of these relations — use them only to check our
 own derivations.
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
