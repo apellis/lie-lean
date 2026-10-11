@@ -2151,11 +2151,18 @@ projection. `exists_quotientSkewGenerators_decomposition` gives finite string ex
 with coefficients in that algebra, and `quotientForm_divided_mul_of_mem_skewGenerators`
 discharges the kernel hypotheses for those coefficients. These results require a finite
 simple-root set but not finite Weyl group or ambient-root independence.
-**Remaining 41.1.6 gap:** positive braid intersection and arbitrary adapted-tail kernel
-membership, projected coproduct compatibility (38.1.8), and restricted braid isometry
-(38.2.1) remain unproved. The braid-isometry/adaptedness mechanism of 38.2.1–38.2.3 has
-not been connected to arbitrary reduced-word preimages, so their product norm and lattice
-membership are still open. The integral canonical-basis comparison and unique signed
+`LusztigF/BraidIntersection.lean` proves the exact bounded-generator braid transport of
+38.1.3 via the lowering identity of 37.2.5(b), with the `e = -1` convention and reversed
+complementary generator. `quotientLDeriv_eq_zero_iff_braid_positive` and
+`mem_quotientSkewGenerators_iff_braid_positive` prove the three-space identification of
+38.1.6(a). The reverse inclusion uses actual finite skew-string spanning and triangular
+directness. `Modified.quotientLDeriv_integralPBWPreimage_cons_zero` proves actual left
+skew-kernel membership of every zero-leading adapted tail for arbitrary reduced words;
+`integralPBWPreimage_cons` gives the corresponding factorization in the original quotient.
+**Remaining 41.1.6 gap:** projected coproduct compatibility (38.1.8) and restricted braid
+isometry (38.2.1) remain unproved. Adapted-tail kernel membership is now available, but
+the isometry needed to evaluate its remaining form factor is not, so the general PBW
+product norm and lattice membership are still open. The integral canonical-basis comparison and unique signed
 residue of 14.2.2(b) are not proved. The homogeneous norm criterion is not a construction
 of a general canonical basis. No Frobenius compatibility is claimed.
 Lentner, arXiv:1406.0865, and arXiv:0811.0209 (two-parameter, specialize) list some of these relations — use them only to check our
