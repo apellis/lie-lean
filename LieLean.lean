@@ -380,6 +380,7 @@ import LieLean.Algebra.QuantumGroup.PBW.G2ExtremeAdjoint
 import LieLean.Algebra.QuantumGroup.PBW.G2FAMixed
 import LieLean.Algebra.QuantumGroup.PBW.G2PrefixSpan
 import LieLean.Algebra.QuantumGroup.PBW.G2FAIntegral
+import LieLean.Algebra.QuantumGroup.PBW.G2SpanClosure
 import LieLean.Algebra.QuantumGroup.PBW.G2DECancellation
 import LieLean.Algebra.QuantumGroup.PBW.G2DELaurent
 import LieLean.Algebra.QuantumGroup.PBW.G2DEIntegral
