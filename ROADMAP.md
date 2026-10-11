@@ -2057,8 +2057,19 @@ relations (`SquareRel`), preserving the original `Rel` APIs. The shift to `B,C,D
 and the opposite interval `D,C,B,A` both have parameter `q`; they yield arbitrary
 `f^{(s)}B^{(r)}` and `D^{(s)}A^{(r)}` in the original six-root ordered integral span
 (`qDivPow_f_mul_qDivPow_b_mem`, `qDivPow_D_mul_qDivPow_A_mem`). These are interval
-transports, not a full six-root symmetry. The remaining unrestricted mixed pairs are
-`D,e` and `f,A`; closure/reverse containment and the `G₂` integral braid move remain open.
+transports, not a full six-root symmetry. The unrestricted mixed pair `f,A`,
+closure/reverse containment and the `G₂` integral braid move remain open.
+`G2DERecurrence.lean` specializes the four-root tail recurrence and checks the `D,e`
+product at `(s,r)=(2,2)` with integral coefficients. `G2DECancellation.lean` constructs a
+division-free polynomial satisfying the complete four-correction recurrence for every
+index. `G2DELaurent.lean` identifies its Laurent evaluator with `deScalar` and proves
+`deScalar_mem` for all `a,b,c`, without inverting quantum integers in the coefficient
+subring. `G2DEIntegral.lean` proves all four incoming transitions with their natural-number
+boundary guards and identifies the normalized sparse coefficients as
+`q^(d(a-c)) deScalar q a b c` on `n=2a+b+c`, `s=a+b+2c+d`, zero off these weights.
+Evaluation gives the actual ambient divided-adjoint recurrence and finite-sum equality.
+`qDivPow_D_mul_qDivPow_e_mem` then proves unrestricted `D^{(s)}e^{(r)}` membership
+in the existing ordered integral span, without assuming closure or PBW independence.
 *Next (open item): 41.1.4 and 41.1.7 for `G₂` subdiagrams (tracking: lie-lean#126).* Route as for `B₂`:
 compute the rank-two straightening relations among divided-power root vectors ourselves (root vectors
 via the `Tᵢ`; the pairs `E₂,E₁`; `E₁,E₁₂`; `E₁,E₁₁₂`; `E₁₁₁₂,E₂`; `E₁₂,E₁₁₂`), then divided-power

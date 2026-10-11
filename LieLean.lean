@@ -375,6 +375,10 @@ import LieLean.Algebra.QuantumGroup.PBW.IntegralA2
 import LieLean.Algebra.QuantumGroup.PBW.IntegralB2
 import LieLean.Algebra.QuantumGroup.PBW.IntegralB2Opposite
 import LieLean.Algebra.QuantumGroup.PBW.G2SquareKernel
+import LieLean.Algebra.QuantumGroup.PBW.G2DERecurrence
+import LieLean.Algebra.QuantumGroup.PBW.G2DECancellation
+import LieLean.Algebra.QuantumGroup.PBW.G2DELaurent
+import LieLean.Algebra.QuantumGroup.PBW.G2DEIntegral
 import LieLean.Algebra.QuantumGroup.PBW.G2SquareCancellation
 import LieLean.Algebra.QuantumGroup.PBW.G2SquareNewton
 import LieLean.Algebra.QuantumGroup.PBW.G2SquareDivisibility
