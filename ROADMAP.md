@@ -2167,6 +2167,15 @@ transport to prove right-kernel membership. `quotientSkewProjection_selfAdjoint`
 self-adjointness of the existing zero-string projection; `projectedQuotientComul_pair`
 proves that the actual projected coproduct is adjoint to multiplication on the left kernel.
 These are coproduct prerequisites, not restricted braid isometry.
+`PositiveComul.lean` proves `comul_plusHom` and `comul_quotientPlus`: the actual full
+coproduct of the positive embedding is the original twisted coproduct with toral
+insertion on each homogeneous second leg. The free comparison holds over any field
+at a nonzero parameter; radical descent uses the existing graded Serre-ideal theorem
+over `ℚ(v)` for finite `I`. `comul_quotientPlus_of_finite_strings` gives the exact finite
+divided-power string expansion, including every string index and its toral weight.
+This supplies the full-versus-positive expansion step of the proof of 38.1.8, not
+the rank-one conjugation identity or its coefficient truncation. It neither assumes
+nor proves multiplicativity of the zero-string projected coproduct.
 **Remaining 41.1.6 gap:** actual braid/coproduct comparison (37.3.2), projected braid
 compatibility (38.1.8(b)), and restricted braid
 isometry (38.2.1) remain unproved. Adapted-tail kernel membership is now available, but
