@@ -2000,10 +2000,9 @@ subalgebra (`span_pbwDivSymm_b2`, `span_pbwDivSymm_b2_rev`, `span_pbwDivSymm_b2_
 unit rescaling (`span_pbwDivPrime_of_isReduced_of_mul_ne_three`,
 `span_pbwDivPrimeSymm_of_isReduced_of_mul_ne_three`, and the corresponding longest-element and
 left-descent theorems). These results include finite types `B`, `C`, and `F`, and do not require
-finite type except for longest-element spanning. The current `pbwDiv` convention now also
-includes triple edges, as described below. Not formalized from [Lus] 41.1: the inverse-convention
-`G₂` extension; 41.1.5–41.1.6 (canonical-basis and bilinear-form results);
-41.1.9 (quantum Frobenius).
+finite type except for longest-element spanning. All four conventions now also include triple
+edges, as described below. Canonical-basis, bilinear-form and quantum Frobenius results
+remain separate from this span extension.
 **Normalized `G₂` commutation input** (`PBW/IntegralG2Basic.lean`,
 `IntegralG2Commuting{AB,BC,CD}.lean`, `IntegralG2Commuting.lean`, `IntegralG2Relations.lean`):
 all fifteen pair relations for the six root vectors `e, A=x₃/[3]!, B=x₂/[2], C=z/[3]!, D=x₁, f`
@@ -2098,8 +2097,17 @@ only; all older simply-laced and no-triple-edge APIs remain available.
 equal `adjoinPair`: `span_pbwDivSymm_g2` and `span_pbwDivSymm_g2_rev`, hence
 `span_pbwDivSymm_g2_braid`. Reversal conjugates the exact inverse operators, and
 opposite root normalization uses only Laurent units, without changing factor order.
-*Remaining (lie-lean#126): global inverse invariance and all-four-convention assembly;
-forms and canonical bases remain separate.*
+`Modified/IntegralPBWGlobalAll.lean` completes global inverse braid invariance
+(`braidInvariantSymm`) by transporting the local G₂ equality through arbitrary word contexts.
+The existing exact Laurent-unit comparisons `span_pbwDivPrime` and `span_pbwDivPrimeSymm`
+then give arbitrary-word braid invariance for both prime conventions
+(`span_pbwDivPrime_braidMove`, `span_pbwDivPrimeSymm_braidMove`). Thus the `*_all`
+reduced-word, left-descent and finite-longest spanning theorems hold for all four actual
+conventions: `pbwDiv = T''_{i,1}`, `pbwDivSymm = T'_{i,-1}`,
+`pbwDivPrime = T'_{i,1}`, `pbwDivPrimeSymm = T''_{i,-1}`.
+All spans retain Laurent coefficients. Only longest-element spanning requires finite `W`;
+no root independence, faithfulness or finite-colour premise is added. Legacy APIs remain.
+*The global span extension is complete; forms and canonical bases remain separate.*
 Lentner, arXiv:1406.0865, and arXiv:0811.0209 (two-parameter, specialize) list some of these relations — use them only to check our
 own derivations.
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
