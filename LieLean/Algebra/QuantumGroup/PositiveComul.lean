@@ -18,7 +18,7 @@ For a homogeneous second leg of degree `ν`, the insertion is
 The direct coefficient interface `comul_quotientPlus_of_finite_strings` translates
 finite divided-power string expansions into full coproduct expansions, retaining
 all string indices and toral factors. This is the comparison step used in the proof
-of Lusztig, *Introduction to quantum groups*, 38.1.8 (printed pp. 296–297).
+of Lusztig, *Introduction to quantum groups*, 38.1.8 (printed p. 298).
 
 The rank-one intertwining identity of 37.3.2, a justified truncation for its selected
 coefficients, projected braid compatibility 38.1.8(b), and restricted braid isometry
