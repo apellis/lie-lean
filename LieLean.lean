@@ -399,6 +399,10 @@ import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Rank1Formula
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.RankTwo
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Strings
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Symmetries
+import LieLean.Algebra.QuantumGroup.PBW.ProductNorm
+import LieLean.Algebra.QuantumGroup.PBW.ProductNorm.Realization
+import LieLean.Algebra.QuantumGroup.PBW.ProductNorm.Homogeneity
+import LieLean.Algebra.QuantumGroup.PBW.ProductNorm.IntrinsicDegree
 import LieLean.Algebra.QuantumGroup.PBW.Independence
 import LieLean.Algebra.QuantumGroup.PBW.IndependenceSymm
 import LieLean.Algebra.QuantumGroup.PBW.IntegralA2
