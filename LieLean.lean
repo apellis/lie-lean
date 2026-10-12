@@ -278,6 +278,17 @@ import LieLean.Algebra.QuantumGroup.BraidAction.FiniteTypeArtin
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.ContravariantForm
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Augmentation
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Coordinates
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Derivative
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Extraction
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Intersection
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.ScalarResidue
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Strings
+import LieLean.Algebra.QuantumGroup.PBW.Crystal.Grouped
+import LieLean.Algebra.QuantumGroup.PBW.Crystal.IntegralPBW
+import LieLean.Algebra.QuantumGroup.PBW.Crystal.Signed
+import LieLean.Algebra.QuantumGroup.PBW.Crystal.Uniqueness
 import LieLean.Algebra.QuantumGroup.ShapovalovLimit
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Boson
 import LieLean.Algebra.QuantumGroup.CrystalBasis.CrystalBase
