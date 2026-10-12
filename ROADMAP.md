@@ -2207,10 +2207,22 @@ or root-independence premise is added. Source: [Lus], second printing (1994),
 and proves `RestrictedBraidConsumer.adapted_tail_pairing`,
 `adapted_pbw_pairing_recursion` and `adapted_pbw_norm_recursion` for arbitrary reduced
 words, without a tail-kernel premise. These are one-step pairing and norm recursions.
-**Remaining 41.1.6 gap:** the full PBW product norm and general lattice membership
-are still open. The integral canonical-basis comparison and unique signed
-residue of 14.2.2(b) are not proved. The homogeneous norm criterion is not a construction
-of a general canonical basis. No Frobenius compatibility is claimed.
+**Full pure-PBW pairing and quotient lattice membership** (`PBW/ProductNorm.lean`
+and `PBW/ProductNorm/{Realization,Homogeneity,IntrinsicDegree}.lean`):
+
+| Result | Source | Declarations | Hypotheses and status |
+|---|---|---|---|
+| Full pairing, product norm and infinity-ring residue one | [Lus] 38.2.3, unit-tail specialization and iteration | `PBWProductNorm.pairing`, `orthogonal`, `norm`, `norm_residue` | Original integral preimages of 41.1.5; finite simple-root set, arbitrary reduced word and exponents over `ℚ(v)`; proved |
+| Actual realization independence and intrinsic homogeneous degree | [Lus] 41.1.5; realization bridge | `preimage_realization_independent`, `signedDegree_nonneg`, `homogeneous_degree`, `homogeneous_Uw` | Arbitrary Cartan/root datum, no root independence or finite Weyl group; actual integral preimage and free-algebra homogeneous representative, not just a character equality; proved |
+| General original quotient crystal-lattice membership | Lattice part of [Lus] 41.1.6 | `mem_lattice_degree` | Same arbitrary reduced-word hypotheses; actual `quotientCrystalLattice` and computed intrinsic degree; proved |
+
+The extended realization is used internally to separate degrees, and actual preimage
+independence transfers the homogeneous representative to possibly nonregular supplied
+realizations, beyond the source ambient root-datum conventions.
+**Remaining 41.1.6 gap:** the integral canonical-basis comparison, unique signed residue
+of 14.2.2(b), and injectivity into the signed canonical basis are not proved. The
+homogeneous norm criterion is not a construction of a general canonical basis.
+No Frobenius compatibility is claimed.
 Lentner, arXiv:1406.0865, and arXiv:0811.0209 (two-parameter, specialize) list some of these relations — use them only to check our
 own derivations.
 **Kashiwara operators** (`QuantumGroup/CrystalBasis/{KashiwaraOperators,Integrable}.lean`;
