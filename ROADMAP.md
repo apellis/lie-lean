@@ -2166,7 +2166,7 @@ for actual braid-related left-kernel vectors, using the accepted bounded-generat
 transport to prove right-kernel membership. `quotientSkewProjection_selfAdjoint` proves
 self-adjointness of the existing zero-string projection; `projectedQuotientComul_pair`
 proves that the actual projected coproduct is adjoint to multiplication on the left kernel.
-These are coproduct prerequisites, not restricted braid isometry.
+These coproduct prerequisites feed the restricted braid isometry proved below.
 `PositiveComul.lean` proves `comul_plusHom` and `comul_quotientPlus`: the actual full
 coproduct of the positive embedding is the original twisted coproduct with toral
 insertion on each homogeneous second leg. The free comparison holds over any field
@@ -2196,10 +2196,19 @@ independence, integrability, expansion, compatibility, faithfulness and isometry
 are not premises. The right-string expansion is constructed; its inverse terms
 retain `(-1)^n q^(-n(n-1))` and the ordered product `K_{-ni} Fᵢ^(n) K_{sᵢ wt(ν)}`.
 Source: [Lus], second printing (1994), printed pp. 293, 297–299.
-**Remaining 41.1.6 gap:** restricted braid isometry (38.2.1) remains unproved.
-Adapted-tail kernel membership is now available, but
-the isometry needed to evaluate its remaining form factor is not, so the general PBW
-product norm and lattice membership are still open. The integral canonical-basis comparison and unique signed
+**Restricted braid isometry 38.2.1 is proved** in
+`RestrictedBraidIsometry/Isometry.lean` for the original radical-quotient form.
+`restricted_braid_isometry` applies to arbitrary, possibly inhomogeneous left-kernel
+vectors and their actual positive `T''ᵢ,₁` images. The inverse `T'ᵢ,₋₁` theorem derives
+kernel membership from positivity. No isometry, norm, expansion, finite Weyl group
+or root-independence premise is added. Source: [Lus], second printing (1994),
+38.2.1, printed pp. 300–301.
+`RestrictedBraidIsometry/PBWRecursion.lean` retains actual `Modified.integralPBWPreimage`
+and proves `RestrictedBraidConsumer.adapted_tail_pairing`,
+`adapted_pbw_pairing_recursion` and `adapted_pbw_norm_recursion` for arbitrary reduced
+words, without a tail-kernel premise. These are one-step pairing and norm recursions.
+**Remaining 41.1.6 gap:** the full PBW product norm and general lattice membership
+are still open. The integral canonical-basis comparison and unique signed
 residue of 14.2.2(b) are not proved. The homogeneous norm criterion is not a construction
 of a general canonical basis. No Frobenius compatibility is claimed.
 Lentner, arXiv:1406.0865, and arXiv:0811.0209 (two-parameter, specialize) list some of these relations — use them only to check our
