@@ -2173,12 +2173,31 @@ insertion on each homogeneous second leg. The free comparison holds over any fie
 at a nonzero parameter; radical descent uses the existing graded Serre-ideal theorem
 over `ℚ(v)` for finite `I`. `comul_quotientPlus_of_finite_strings` gives the exact finite
 divided-power string expansion, including every string index and its toral weight.
-This supplies the full-versus-positive expansion step of the proof of 38.1.8, not
-the rank-one conjugation identity or its coefficient truncation. It neither assumes
-nor proves multiplicativity of the zero-string projected coproduct.
-**Remaining 41.1.6 gap:** actual braid/coproduct comparison (37.3.2), projected braid
-compatibility (38.1.8(b)), and restricted braid
-isometry (38.2.1) remain unproved. Adapted-tail kernel membership is now available, but
+This supplies the full-versus-positive expansion step of the proof of 38.1.8.
+It neither assumes nor proves multiplicativity of the zero-string projected coproduct.
+`BraidCoproduct/` proves the finite-cutoff version of the rank-one intertwiner from
+37.3.1–37.3.2 on the actual tensor of two Chevalley-twisted Verma modules:
+`FullIntertwining.lowestPair_intertwine_all` applies to every quantum-group element
+and every tensor vector at a sufficiently large, proved cutoff. The mixed-generator
+boundaries and all Cartan factors are retained until their vanishing is proved.
+`VermaProjection.vermaQuotientEquiv` identifies the actual vector-space quotient by
+its twisted `Eᵢ` image with the left skew kernel; no quotient `U`-module is asserted.
+`tensor_coefficient_faithful` and `extract_braid_positive` give actual all-tensor
+faithfulness and extraction, not an assumed faithful family.
+**Projected braid compatibility 38.1.8(b) is proved** by
+`RightStringComparison.projected_braid_compatibility` on the original radical quotient:
+`((T p) ⊗ (T p))((P ⊗ P) r x) = (p ⊗ p)((Q ⊗ Q) r y)`, where `T = T''ᵢ,₁`,
+`p = quotientPlus`, `r = quotientComul`, `P = quotientSkewProjection`, and
+`Q = quotientRev ∘ P ∘ quotientRev`. The hypotheses are `lDerivᵢ x = 0` and the actual
+braid-image equality `T(p x) = p y`. Over `ℚ(v)`, this holds for arbitrary
+inhomogeneous inputs, a finite simple-root set with decidable equality, and an
+arbitrary Cartan/root datum on an additive commutative group. Finite type, root
+independence, integrability, expansion, compatibility, faithfulness and isometry
+are not premises. The right-string expansion is constructed; its inverse terms
+retain `(-1)^n q^(-n(n-1))` and the ordered product `K_{-ni} Fᵢ^(n) K_{sᵢ wt(ν)}`.
+Source: [Lus], second printing (1994), printed pp. 293, 297–299.
+**Remaining 41.1.6 gap:** restricted braid isometry (38.2.1) remains unproved.
+Adapted-tail kernel membership is now available, but
 the isometry needed to evaluate its remaining form factor is not, so the general PBW
 product norm and lattice membership are still open. The integral canonical-basis comparison and unique signed
 residue of 14.2.2(b) are not proved. The homogeneous norm criterion is not a construction
