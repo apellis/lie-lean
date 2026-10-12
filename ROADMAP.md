@@ -2237,9 +2237,19 @@ balancedness, canonical reduced-word independence or full 41.1.6.
 The extended realization is used internally to separate degrees, and actual preimage
 independence transfers the homogeneous representative to possibly nonregular supplied
 realizations, beyond the source ambient root-datum conventions.
-**Remaining 41.1.6 gap:** the integral canonical-basis comparison, unique signed residue
-of 14.2.2(b), and injectivity into the signed canonical basis are not proved. The
-homogeneous norm criterion is not a construction of a general canonical basis.
+**Finite-longest signed crystal coverage** (`PBW/Crystal/LongestCoverage.lean`):
+
+| Result | Source | Declarations | Hypotheses and status |
+|---|---|---|---|
+| Signed coverage, unique exponent/sign and representative-independence | Direct derivation from whole-lattice PBW spanning and the original form | `PBWSignedCrystal.original_PBW_longest_coverage`, `original_PBW_longest_unique_signed_exponent`, `original_PBW_longest_representative_independent` | Original inverse PBW preimages over `ℚ(v)`; finite simple-root set with decidable equality, actual Cartan/root datum, finite Coxeter group and reduced longest word; proved for every actual crystal residue class. Representative-independence requires neither finite Coxeter group nor longest word; it identifies tuples and signs, not word labels |
+
+This supplies full signed residue parametrization before canonical-lift comparison.
+No root-independence, regularity or positivity hypothesis is imposed.
+**Remaining 41.1.6 gap:** identification of these signed crystal residues with the integral
+canonical basis of 14.2.2(b), and hence the signed canonical-basis comparison, is not proved.
+No sign `+1`, canonical/global lifts, bar invariance, balancedness or canonical
+reduced-word-independent representatives are asserted. The homogeneous norm criterion
+is not a construction of a general canonical basis.
 No Frobenius compatibility is claimed.
 Lentner, arXiv:1406.0865, and arXiv:0811.0209 (two-parameter, specialize) list some of these relations — use them only to check our
 own derivations.

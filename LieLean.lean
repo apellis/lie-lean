@@ -287,6 +287,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.ScalarResidue
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Strings
 import LieLean.Algebra.QuantumGroup.PBW.Crystal.Grouped
 import LieLean.Algebra.QuantumGroup.PBW.Crystal.IntegralPBW
+import LieLean.Algebra.QuantumGroup.PBW.Crystal.LongestCoverage
 import LieLean.Algebra.QuantumGroup.PBW.Crystal.Signed
 import LieLean.Algebra.QuantumGroup.PBW.Crystal.Uniqueness
 import LieLean.Algebra.QuantumGroup.ShapovalovLimit
