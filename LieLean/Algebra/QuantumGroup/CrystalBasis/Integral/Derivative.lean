@@ -144,5 +144,3 @@ theorem quotientLDeriv_integralPBWPreimage_mem {W : Type*} [Group W]
 
 end Modified
 end LieLean.QuantumGroup
-
-

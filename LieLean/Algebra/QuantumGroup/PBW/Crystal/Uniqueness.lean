@@ -160,4 +160,3 @@ theorem pbw_unsigned_residue_injective {w : List I} (hw : cs.IsReduced w)
     abel
 end PBW
 end PBWSignedCrystal
-
