@@ -471,6 +471,12 @@ import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
 import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.QBinomialSeries
+import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.ActualMap
+import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.ClosedNorm
+import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.GeneratorNorm
+import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.GeneratorPairing
+import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.Isometry
+import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.PBWRecursion
 import LieLean.Algebra.QuantumGroup.RootDatumHom
 import LieLean.Algebra.QuantumGroup.Sl2
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Equivalence
