@@ -2216,6 +2216,18 @@ and `PBW/ProductNorm/{Realization,Homogeneity,IntrinsicDegree}.lean`):
 | Actual realization independence and intrinsic homogeneous degree | [Lus] 41.1.5; realization bridge | `preimage_realization_independent`, `signedDegree_nonneg`, `homogeneous_degree`, `homogeneous_Uw` | Arbitrary Cartan/root datum, no root independence or finite Weyl group; actual integral preimage and free-algebra homogeneous representative, not just a character equality; proved |
 | General original quotient crystal-lattice membership | Lattice part of [Lus] 41.1.6 | `mem_lattice_degree` | Same arbitrary reduced-word hypotheses; actual `quotientCrystalLattice` and computed intrinsic degree; proved |
 
+**Actual infinity-local PBW intersection basis** (`PBW/InfinityLattice.lean`):
+
+| Result | Source | Declarations | Hypotheses and status |
+|---|---|---|---|
+| Coefficient integrality and actual lattice-intersection basis | Direct derivation from integral pairing, orthogonality and unit norms | `PBWInfinityLattice.coefficients_integral`, `intersection_eq_span`, `mem_lattice_iff_mem_span`, `intersectionBasis`, `intersectionBasis_apply` | Original radical quotient over `ℚ(v)`, actual bar-twisted `InfinityLocalRing`, finite simple-root set and arbitrary Cartan/root datum and reduced word; proved for arbitrary finite, possibly inhomogeneous coefficients, including the empty word |
+
+The basis vectors are the original `Modified.integralPBWPreimage` family. This gives
+local coordinates on the existing lattice intersected with the PBW field span, without
+finite-Weyl-group, longest-word, root-independence, assumed-integrality or assumed-basis
+hypotheses. It does not construct a canonical/global basis or prove bar invariance,
+balancedness, canonical reduced-word independence or full 41.1.6.
+
 The extended realization is used internally to separate degrees, and actual preimage
 independence transfers the homogeneous representative to possibly nonregular supplied
 realizations, beyond the source ambient root-datum conventions.
