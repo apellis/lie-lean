@@ -2228,6 +2228,12 @@ finite-Weyl-group, longest-word, root-independence, assumed-integrality or assum
 hypotheses. It does not construct a canonical/global basis or prove bar invariance,
 balancedness, canonical reduced-word independence or full 41.1.6.
 
+**Finite-longest basis of the entire infinity lattice** (`PBW/LongestInfinityLattice.lean`):
+
+| Result | Source | Declarations | Hypotheses and status |
+|---|---|---|---|
+| Original PBW field spanning and whole-lattice basis | Direct derivation from integral longest-word spanning and the intersection basis | `PBWInfinityLattice.integral_span_longest`, `field_span_longest`, `intersection_longest_eq_lattice`, `longestBasis`, `longestBasis_apply` | Original radical quotient over `ℚ(v)`; finite simple-root set with decidable equality, Cartan/root datum on an additive commutative group, finite Coxeter group and reduced longest word; proved: an actual `InfinityLocalRing` basis of the entire original lattice with original inverse-PBW evaluation. No canonical/global identification, bar invariance, balancedness, full 41.1.6 or canonical reduced-word-independent representative is asserted |
+
 The extended realization is used internally to separate degrees, and actual preimage
 independence transfers the homogeneous representative to possibly nonregular supplied
 realizations, beyond the source ambient root-datum conventions.
