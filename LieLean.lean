@@ -415,6 +415,7 @@ import LieLean.Algebra.QuantumGroup.PBW.ProductNorm
 import LieLean.Algebra.QuantumGroup.PBW.ProductNorm.Realization
 import LieLean.Algebra.QuantumGroup.PBW.ProductNorm.Homogeneity
 import LieLean.Algebra.QuantumGroup.PBW.ProductNorm.IntrinsicDegree
+import LieLean.Algebra.QuantumGroup.PBW.ProductNorm.BarWeight
 import LieLean.Algebra.QuantumGroup.PBW.InfinityLattice
 import LieLean.Algebra.QuantumGroup.PBW.LongestInfinityLattice
 import LieLean.Algebra.QuantumGroup.PBW.Independence
