@@ -576,6 +576,7 @@ import LieLean.GroupTheory.Coxeter.Parabolic
 import LieLean.GroupTheory.Coxeter.Parabolic.CoxeterSystem
 import LieLean.GroupTheory.Coxeter.RankTwoParabolic
 import LieLean.GroupTheory.Coxeter.Squares
+import LieLean.LinearAlgebra.BilinearForm.TensorProduct
 import LieLean.LinearAlgebra.Eigenspace.Weight
 import LieLean.LinearAlgebra.ExteriorAlgebra.Koszul
 import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulExact
