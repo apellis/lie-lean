@@ -75,7 +75,7 @@ theorem evKernel_le_comap_bar (n : I → ℕ) :
   rw [Submodule.span_le]
   rintro _ ⟨g, rfl⟩
   refine Submodule.mem_sup_right (Submodule.subset_span ⟨g, ?_⟩)
-  show wordBasis 𝕂 I (powWord n g) = LusztigF.bar (wordBasis 𝕂 I (powWord n g))
+  change wordBasis 𝕂 I (powWord n g) = LusztigF.bar (wordBasis 𝕂 I (powWord n g))
   rw [← monomial_eq_wordBasis, bar_monomial]
 
 variable {R} (Λ : Dom R)
