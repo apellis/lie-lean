@@ -872,6 +872,14 @@ on `𝒪`); (e) (`KacMoody/DualityExt.lean`): `bijective_extOneRestrictedDual`,
 cocycle `x ↦ (α ↦ α ∘ c(σ x))`; dualizing twice is transport along `V ≅ V^∨∨`) and
 `nonempty_extOne_irreducibleModule_equiv` (`Ext_𝒪(L(λ), L(μ)) ≅ Ext_𝒪(L(μ), L(λ))`), with the
 functoriality `LieModule.ExtOne.mapComap`.
+**Theorem 3.3** (`KacMoody/DualVermaSocle.lean`, any GCM, characteristic zero): (a) is
+`IrreducibleModule.equivRestrictedDual`; (b) `IrreducibleModule.range_toRestrictedDual_le` (every
+nonzero submodule of `M(λ)^∨` contains the image of `L(λ)`, so it is the unique simple submodule),
+`multiplicity_restrictedDual_verma_self`, `mem_cone_of_multiplicity_restrictedDual_verma_ne_zero`;
+(c) `finrank_hom_verma_restrictedDual_verma` (`dim Hom(M(μ), M(λ)^∨) = δ_{λμ}`),
+`range_hom_verma_restrictedDual_verma`; (d) `extOne_verma_restrictedDual_verma_eq_zero`
+(`Ext_𝒪(M(μ), M(λ)^∨) = 0`, via `extOne_verma_eq_zero_of_mem_cone` and Thm. 3.2 (e)). The socle
+statement (b) is deduced from (c) instead of by dualizing `0 → N(λ) → M(λ) → L(λ) → 0`.
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and

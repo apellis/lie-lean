@@ -99,7 +99,7 @@ end General
 
 section Verma
 
-variable {ι H : Type*} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K]
+variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K]
   [AddCommGroup H] [Module K H] {A : Matrix ι ι ℤ} (P : Realization A K H)
   {X : Type*} [AddCommGroup X] [Module K X] [LieRingModule P.KacMoodyAlgebra X]
   [LieModule K P.KacMoodyAlgebra X]
