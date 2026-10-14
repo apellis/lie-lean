@@ -18,6 +18,7 @@ import LieLean.Algebra.Lie.KacMoody.BGGReciprocity
 import LieLean.Algebra.Lie.KacMoody.TranslationProjective
 import LieLean.Algebra.Lie.KacMoody.SelfDualProjective
 import LieLean.Algebra.Lie.KacMoody.ExtProjective
+import LieLean.Algebra.Lie.KacMoody.EnoughProjectives
 import LieLean.Algebra.Lie.KacMoody.BGG.Casimir
 import LieLean.Algebra.Lie.KacMoody.BGG.Character
 import LieLean.Algebra.Lie.KacMoody.BGG.Exactness
