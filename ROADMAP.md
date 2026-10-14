@@ -2059,7 +2059,8 @@ relations (`SquareRel`), preserving the original `Rel` APIs. The shift to `B,C,D
 and the opposite interval `D,C,B,A` both have parameter `q`; they yield arbitrary
 `f^{(s)}B^{(r)}` and `D^{(s)}A^{(r)}` in the original six-root ordered integral span
 (`qDivPow_f_mul_qDivPow_b_mem`, `qDivPow_D_mul_qDivPow_A_mem`). These are interval
-transports, not a full six-root symmetry. The `G₂` integral braid move remains open.
+transports, not a full six-root symmetry; the `G₂` integral braid move itself is proved below
+(`span_pbwDiv_g2_braid`, `braidInvariant`).
 `G2DERecurrence.lean` specializes the four-root tail recurrence and checks the `D,e`
 product at `(s,r)=(2,2)` with integral coefficients. `G2DECancellation.lean` constructs a
 division-free polynomial satisfying the complete four-correction recurrence for every
