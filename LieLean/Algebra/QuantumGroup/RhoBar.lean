@@ -8,8 +8,8 @@ import LieLean.Algebra.QuantumGroup.ContravariantForm
 /-!
 # The anti-automorphism `ρ̄` of `U`
 
-Lusztig's anti-automorphism `ρ̄` of `U` ([Lus] 26.1.1) is `ρ̄(u) = \overline{ρ(ū)}`, the conjugate of
-`ρ` (19.1.1) by the bar involution. On the generators,
+Lusztig's anti-automorphism `ρ̄` of `U` ([Lus] 26.1.1) is `ρ̄(u) = \overline{ρ(ū)}`, the
+conjugate of `ρ` (19.1.1) by the bar involution. On the generators,
 `ρ̄(Eᵢ) = vᵢ⁻¹ K̃ᵢ⁻¹ Fᵢ`, `ρ̄(Fᵢ) = vᵢ⁻¹ K̃ᵢ Eᵢ`, `ρ̄(K_μ) = K_μ`.
 Since `ρ̄` is linear over the ground field, we define it directly by these values, as a linear
 anti-automorphism of `U` over any field `k` (`v ≠ 0`); over `ℚ(v)` it is Lusztig's `ρ̄`.
@@ -19,7 +19,6 @@ anti-automorphism of `U` over any field `k` (`v ≠ 0`); over `ℚ(v)` it is Lus
 * `QuantumGroup.rhoBarOp`, `QuantumGroup.rhoBar`: the anti-automorphism `ρ̄`.
 * `QuantumGroup.rhoBar_mul`, `QuantumGroup.rhoBar_rhoBar`: `ρ̄` reverses products and is an
   involution.
-* `QuantumGroup.rhoBar_mem_adWeightSpace`: `ρ̄` maps `U_χ` to `U_{-χ}`.
 
 ## References
 
@@ -58,9 +57,7 @@ lemma inv_zpow_dot_mul (hv : v ≠ 0) (i : I) :
     (v ^ D.d i)⁻¹ * (v ^ D.d i)⁻¹ * v ^ D.dot i i = 1 := by
   have h := zpow_dot_mul (D := D) hv i
   rw [zpow_neg] at h
-  have h2 : v ^ D.dot i i ≠ 0 := zpow_ne_zero _ hv
-  field_simp
-  linear_combination (v ^ D.dot i i) * h
+  rw [← inv_inv (v ^ D.dot i i), ← mul_inv, ← mul_inv, h, inv_one]
 
 lemma rhoBarF_mul_rhoBarE_sub (i j : I) :
     rhoBarF R v j * rhoBarE R v i - rhoBarE R v i * rhoBarF R v j = if i = j then
