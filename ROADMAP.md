@@ -2677,6 +2677,9 @@ approached and what it would and would not make possible. The size estimates are
 
 ### D1. Canonical basis of `f` and the remainder of [Lus] 41.1.6
 
+*Scheduled by the maintainer on 2026-10-14 (issue #180); progress is recorded under "Status and
+open threads" below. The notes here describe the plan.*
+
 *Target.* Lusztig's canonical basis `B` of `f`: the elements `b ∈ 𝒜f` with `b̄ = b` and
 `b ≡ b̃ mod v⁻¹ℒ(∞)` for `b̃ ∈ B(∞)`. Equivalently, Kashiwara's global basis: the triple
 `(𝒜f, ℒ(∞), bar ℒ(∞))` is balanced. With `B`, the remaining assertion of 41.1.6 follows. That
@@ -2826,6 +2829,17 @@ completed steps and continuation threads are:
   of `L_q(λ)` is identified with the path crystal `B(λ)` (see below,
   `GrandLoop.existsUnique_equiv_pathCrystal`). Not formalized: the decomposition of crystal bases
   of arbitrary integrable `U_q(𝔤_J)`-modules into such crystals.
+- **Global basis of `f`** (D1, scheduled 2026-10-14, issue #180; [Kas91] §7, by induction on
+  the weight for every Cartan datum; [Lus] Ch. 14 for the comparison). Done:
+  `CrystalBasis/Global/BalancedTriple.lean`, the balanced-triple lemmas [Kas91] Lemma 7.1.1
+  (`balanced_coeff_int`, `balanced_coeff_zero`, `balanced_eq_zero_of_mem_span`) and
+  Lemma 7.1.2 in basis form (`exists_residueIndependent_extension`), and the scalar step of
+  Lemma 7.3.4 (`balanced_eq_of_sub_eq_smul`), over `ℚ(v)` with lattices at `v = ∞` and
+  `v = 0`. `CrystalBasis/Global/NegativeBar.lean`: bar on `U⁻` (`negBar`), the `ℤ`-form
+  `U⁻_ℤ` (`negIntegral`, bar-stable), `L(∞)⁻ = bar L(∞)` (`latInfBar`) and the divisibility
+  `x - x̄ ∈ (v - v⁻¹)U⁻_ℤ` used in Lemma 7.3.4 (`exists_sub_negBar_eq_smul`). Remaining: the
+  weight grading of `U⁻_ℤ`, the integral forms of `V(λ)` and their divided-power stability,
+  [Kas91] Prop. 6.1.3, the induction 7.3–7.5, the global basis, and the rest of 41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of

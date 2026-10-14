@@ -290,6 +290,8 @@ import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.ContravariantForm
 import LieLean.Algebra.QuantumGroup.RhoBar
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.BalancedTriple
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Augmentation
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Coordinates
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Derivative
