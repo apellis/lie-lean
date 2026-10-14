@@ -2876,8 +2876,15 @@ completed steps and continuation threads are:
   every node (`mem_hwIntegral_wt_iff`). (6.1.1)–(6.1.3) for `U⁻_ℤ` were already proved in
   `CrystalBasis/Integral/Strings.lean` (`negative_e_mem_integral`,
   `negative_component_mem_integral`, `negative_kE_mem_integral`, `negative_kF_mem_integral`),
-  and (6.1.7) in `Integral/Intersection.lean` (`fWi_mem_original_integral`). Remaining:
-  (6.1.5), Prop. 6.1.1, the induction 7.3–7.5, the global basis, and the rest of 41.1.6.
+  and (6.1.7) in `Integral/Intersection.lean` (`fWi_mem_original_integral`); Prop. 6.1.1 is
+  `exists_integer_crystal_residue_coordinates` (`Integral/Coordinates.lean`) with
+  `coeff_mem_of_sum_fWi_mem`. `Global/NegativeGlobal.lean`: `E(ν) = U⁻_ℤ ∩ U⁻_ν ∩ L(∞) ∩ L(∞)⁻`
+  (`negBalanced`), the statement `(G.1)` at `ν` (`NegGlobalAt`) and its consequences
+  Lemma 7.3.4 (`negBar_eq_of_mem`: `E(ν)` is bar-invariant) and Lemma 7.3.1, (7.3.2)
+  (`mem_span_negLift`: `U⁻_{ℤ,ν}` is the `𝒜`-span of the lifts `G(b)`), via `span_of_balanced`
+  and Prop. 6.1.1.
+  Remaining: (6.1.5), (G.2), (G.3) and the induction step 7.3.2–7.5, the global basis, and
+  the rest of 41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
