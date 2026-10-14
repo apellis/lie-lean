@@ -2040,6 +2040,10 @@ via `formFunctional_braidReversal` (`P_{-λ}(σ z) = P_λ(z)` on `U_0`) and `rho
 for `x = u 1_ζ`, `y = u' 1_ζ`, as `Λ → ∞` with `Λ' = ζ + Λ`; `ϖ`-adic limits `TendstoAtInfinity`,
 `k = A[ϖ⁻¹]`, `ϖ ↦ v⁻¹`), from 26.2.2, 26.1.2 (b), (c) and 19.3.7
 (`IrreducibleModule.exists_form_minusHom_sub_mem`, below).
+Extension of scalars (`LinearAlgebra/BilinearForm/TensorProduct.lean`, towards transferring
+[Lus] 26.3.1 from `ℚ(v)` to larger fields): a left-nondegenerate form stays left-nondegenerate after
+base change to any commutative algebra over the field (`LinearMap.BilinForm.eq_zero_of_baseChange_tmul_one_eq_zero`,
+`eq_zero_of_baseChange_equiv`); the identification of `U̇_k` with `k ⊗_{ℚ(v)} U̇_{ℚ(v)}` is not yet formalized.
 **The symmetries `T'_{i,1}`, `T''_{i,-1}`** (`QuantumGroup/ModuleSymmetry/Symmetries.lean`,
 `QuantumGroup/Modified/Symmetries.lean`; [Lus] 37.1–37.2, 41.1.1–41.1.3): `braidPrimeEquiv R hv i`
 (`T'_{i,1} = ω Tᵢ ω`, [Lus] 37.2.4) and its inverse `T''_{i,-1}`, with Lusztig's values on all
@@ -3078,6 +3082,9 @@ beyond what the general Kac–Moody results give.
 ## Upstreaming candidates
 
 (List self-contained, Mathlib-ready results here as they land.)
+
+- `LinearMap.BilinForm.eq_zero_of_baseChange_tmul_one_eq_zero`, `exists_eq_sum_tmul_basis`
+  (`LieLean/LinearAlgebra/BilinearForm/TensorProduct.lean`).
 
 - PBW: `LieLean/Algebra/Lie/UniversalEnveloping/PBW.lean`, `TensorDecomposition.lean`,
   `Filtration.lean`, `Graded.lean`, `Free.lean`, `Domain.lean`
