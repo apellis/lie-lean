@@ -16,6 +16,16 @@ Main results: every Weyl translate of a dot-dominant integral weight embeds into
 Verma module, and every integral target for a finite Weyl group embeds into such a
 Verma module. Postcomposition gives an actual injective map on Hom spaces and a
 dimension inequality. This is a reduction, not a proof of singular-block uniqueness.
+
+The first of these is [HumO] Prop. 4.3 (`exists_injective_weylDot_of_dotDominant`), together
+with its consequences `w · λ ≤ λ` (`weylDot_mem_cone_of_dotDominant`) and
+`[M(λ) : L(w · λ)] ≠ 0` (`multiplicity_weylDot_ne_zero_of_dotDominant`), for any generalized
+Cartan matrix.
+
+## References
+
+* [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
+  GSM 94, AMS 2008, §4.3.
 -/
 
 open Module LieModule CoxeterSystem
@@ -88,8 +98,10 @@ namespace KacMoodyAlgebra.VermaModule
 
 set_option maxHeartbeats 1000000 in
 -- The Coxeter-length induction elaborates dependent Verma-module maps in both pairing cases.
-/-- Reconstructed weak-dominant Verma embedding. Zero pairings give identity maps;
-positive pairings give the existing rank-one reflection embeddings. -/
+/-- Weak-dominant Verma embedding ([HumO] Prop. 4.3): if `λ + ρ` is dominant integral, then
+`M(w · λ)` embeds in `M(λ)` for every `w ∈ W`. As in the source, the embedding is a composite of
+rank-one embeddings along a reduced expression; zero pairings give identity maps. Humphreys works
+with a finite-dimensional semisimple Lie algebra; here `A` is any generalized Cartan matrix. -/
 theorem exists_injective_weylDot_of_dotDominant
     (hA : A.IsGeneralizedCartan) {Λ : Dual K H}
     (hΛ : P.IsDominantIntegral (Λ + P.rho)) (w : P.weylGroup hA) :
@@ -122,6 +134,27 @@ theorem exists_injective_weylDot_of_dotDominant
       exact ⟨φ, hφ⟩
     · obtain ⟨ψ, hψ, -⟩ := exists_injective_reflection P hA (Nat.pos_of_ne_zero hn0) hn'
       exact ⟨φ.comp ψ, hφ.comp hψ⟩
+
+omit [DecidableEq ι] in
+/-- If `λ + ρ` is dominant integral, then `w · λ ≤ λ` for every `w ∈ W` ([HumO] Prop. 4.3). -/
+theorem weylDot_mem_cone_of_dotDominant
+    (hA : A.IsGeneralizedCartan) {Λ : Dual K H}
+    (hΛ : P.IsDominantIntegral (Λ + P.rho)) (w : P.weylGroup hA) :
+    P.weylDot hA w Λ ∈ cone P Λ := by
+  obtain ⟨k, hk, hwk⟩ := P.exists_sub_apply_eq_rootOf hA hΛ w
+  refine ⟨k, hk, ?_⟩
+  rw [← hwk, weylDot]
+  abel
+
+/-- If `λ + ρ` is dominant integral, then `[M(λ) : L(w · λ)] ≠ 0` for every `w ∈ W`
+([HumO] Prop. 4.3). -/
+theorem multiplicity_weylDot_ne_zero_of_dotDominant
+    (hA : A.IsGeneralizedCartan) {Λ : Dual K H}
+    (hΛ : P.IsDominantIntegral (Λ + P.rho)) (w : P.weylGroup hA) :
+    (isCategoryO P Λ).multiplicity (P.weylDot hA w Λ) ≠ 0 := by
+  obtain ⟨φ, hφ⟩ := exists_injective_weylDot_of_dotDominant P hA hΛ w
+  refine multiplicity_ne_zero_of_hom_ne_zero P (φ := φ) fun h ↦ hwv_ne_zero P _ (hφ ?_)
+  rw [h, map_zero, _root_.zero_apply]
 
 /-- A genuine embedding into a dot-dominant Verma module for every integral weight
 when the Weyl group is finite. This reconstructed reduction includes singular targets. -/

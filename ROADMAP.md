@@ -900,6 +900,10 @@ noetherianity of `U(𝔫⁻)` is not formalized).
 **Theorem 4.2 (c)** (`KacMoody/VermaSocle.lean`, any GCM): `VermaModule.exists_nonempty_equiv_of_isAtom`
 (a simple submodule of `M(λ)` is a Verma module); (a) is `VermaModule.injective_of_ne_zero` and (b)
 the finite-type bound `VermaModule.finrank_hom_le_one_of_finite_type` (algebraically closed `K`).
+**Proposition 4.3** (`KacMoody/VermaHomSingularReduction.lean`, any GCM): for `λ + ρ` dominant
+integral, `VermaModule.exists_injective_weylDot_of_dotDominant` (`M(w·λ) ↪ M(λ)` for all `w ∈ W`,
+along a reduced expression), `VermaModule.weylDot_mem_cone_of_dotDominant` (`w·λ ≤ λ`) and
+`VermaModule.multiplicity_weylDot_ne_zero_of_dotDominant` (`[M(λ) : L(w·λ)] ≠ 0`).
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and
