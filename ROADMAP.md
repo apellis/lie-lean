@@ -853,6 +853,15 @@ part): `exists_isProjectiveO_surjective` (every finitely generated `M` in `𝒪`
 finite direct sum of modules `M(λ + nρ) ⊗ L(nρ)^*`, which is finitely generated, in `𝒪` and
 projective), via `IsProjectiveO.directSum`; reconstructed by induction on the dimension of the
 weight spaces above a generating set instead of the length. Open: the injective part of Thm. 3.8.
+**Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
+algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
+(Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and
+`VermaModule.centralCharacter_eq_iff`), `IsCategoryO.exists_strictMono_lieSubmodule`,
+`wellFoundedLT_lieSubmodule`, `wellFoundedGT_lieSubmodule` (finitely generated modules in `𝒪`
+have finite length; artinian and noetherian) and `IsCategoryO.finiteDimensional_hom`
+(`dim Hom(M, N) < ∞`). The reduction to Verma modules uses the cover of Thm. 3.8 and standard
+filtrations instead of Cor. 1.2, gluing measures in the modular lattice of submodules
+(reconstructed).
 **Standard filtrations** (`KacMoody/StandardFiltration.lean`, Humphreys GSM 94 §3.6–3.7):
 `IsStdFiltered P N s` (`N` has a Verma flag with highest weights `s`), `isStdFiltered_of_fin`,
 `exists_isStdFiltered_tensorVerma` (Thm. 3.6 for `M(Λ) ⊗ Z`); the coinvariant form of Thm. 3.7,
