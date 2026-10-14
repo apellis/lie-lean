@@ -2886,9 +2886,13 @@ completed steps and continuation threads are:
   (`negBalanced`), the statement `(G.1)` at `ν` (`NegGlobalAt`) and its consequences
   Lemma 7.3.4 (`negBar_eq_of_mem`: `E(ν)` is bar-invariant) and Lemma 7.3.1, (7.3.2)
   (`mem_span_negLift`: `U⁻_{ℤ,ν}` is the `𝒜`-span of the lifts `G(b)`), via `span_of_balanced`
-  and Prop. 6.1.1.
-  Remaining: (6.1.5), (G.2), (G.3) and the induction step 7.3.2–7.5, the global basis, and
-  the rest of 41.1.6.
+  and Prop. 6.1.1. `Global/HighestWeightGlobal.lean`: `E_λ(ν)` (`hwBalanced`), `L(λ)⁻`
+  (`latBar`), the statement `(G.2)` (`HwGlobalAt`), `B(λ)_{λ-ν}` as classes of words
+  (`hwCrystal`), Lemma 7.3.2 in residue form (`evq_negLift_sub_mem`), (7.3.4) given the vanishing
+  of Lemma 7.5.2 (`mem_span_hwLift`), and the last step of §7.5: `(G.2)` at `ν` from `(G.1)` at
+  `ν` and Lemma 7.5.2 (`hwGlobalAt_of_vanishing`).
+  Remaining: (G.3), Prop. 7.4.1, Cor. 7.4.2, Lemmas 7.5.1–7.5.2 and the induction, the global
+  basis, and the rest of 41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
