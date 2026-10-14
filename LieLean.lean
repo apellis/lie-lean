@@ -18,6 +18,7 @@ import LieLean.Algebra.Lie.KacMoody.BGGReciprocity
 import LieLean.Algebra.Lie.KacMoody.TranslationProjective
 import LieLean.Algebra.Lie.KacMoody.SelfDualProjective
 import LieLean.Algebra.Lie.KacMoody.ExtProjective
+import LieLean.Algebra.Lie.KacMoody.ExtHighestWeight
 import LieLean.Algebra.Lie.KacMoody.EnoughProjectives
 import LieLean.Algebra.Lie.KacMoody.FiniteLength
 import LieLean.Algebra.Lie.KacMoody.EnoughInjectives
