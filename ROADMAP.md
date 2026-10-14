@@ -895,6 +895,14 @@ exactness of `Hom(P(λ), −)` along a local composition series, `IsProjectiveCo
 `ProjectiveCover.nonempty_equiv_of_indecomposable` (an indecomposable projective in `𝒪` mapping onto
 `L(λ)` is `≅ P(λ)`; the surjection onto a simple module is a hypothesis since `𝒪` here is Kac's
 category, without finite generation), `IsProjectiveCover.exists_retract`.
+**Theorem 3.9 (a), (b)** (`KacMoody/ProjectiveDecomposition.lean`):
+`IsCategoryO.exists_surjective_irreducibleModule` (a nonzero finitely generated module in `𝒪` maps
+onto some `L(μ)`, via a maximal submodule from Thm. 1.11), (a)
+`ProjectiveCover.exists_nonempty_equiv_of_indecomposable` (every finitely generated indecomposable
+projective in `𝒪` is `≅ P(λ)` for some `λ`, without the surjection hypothesis) and (b)
+`ProjectiveCover.card_filter_nonempty_equiv_eq_finrank_hom` (in `V ≅ ⊕ⱼ Qⱼ` with `V` finitely
+generated projective in `𝒪` and `Qⱼ` indecomposable, `#{j | Qⱼ ≅ P(λ)} = dim Hom(V, L(λ))`), via
+`DirectSum.lieModuleHomEquiv`.
 **Dual Verma modules and Thm. 3.7** (`KacMoody/DualVerma.lean`): `isCategoryO_restrictedDual`,
 `multiplicity_restrictedDual` (`V^∨ ∈ 𝒪` with `[V^∨ : L(ν)] = [V : L(ν)]`, Humphreys §3.2),
 `finrank_primitiveVectors_restrictedDual` (`dim Hom(M(μ), V^∨) = dim (V/𝔫₋V)_μ`), the swap
