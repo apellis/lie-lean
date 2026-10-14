@@ -1958,7 +1958,9 @@ and `form_rightAct_left` (`(x u, y) = (x, y ρ̄(u))`), via `formFunctional_rho_
 `braidReversal_rho` (`σ ρ = ρ̄ σ`) and `form_sigma_sigma` (`(σ x, σ y) = (x, y)`). [Lus] 26.1.5
 (`QuantumGroup/Modified/FormPlus.lean`): `form_plusHom_leftAct_one` (`(x⁺ 1_λ, x'⁺ 1_λ) = (x, x')`),
 via `formFunctional_braidReversal` (`P_{-λ}(σ z) = P_λ(z)` on `U_0`) and `rho_plusHom_monomial`.
-Next: [Lus] 26.1.6 and the limit statements of 26.2.
+[Lus] 26.1.6 (`QuantumGroup/Modified/FormOmega.lean`): `form_map_chevalleyAut`
+(`(ω x, ω y) = (x, y)` for `ω = Modified.map (chevalleyAut R v)`, [Lus] 23.1.6), via
+`chevalley_rho` (`ω ρ = ρ ω`) and `map_leftAct`. Next: the limit statements of [Lus] 26.2.
 **The symmetries `T'_{i,1}`, `T''_{i,-1}`** (`QuantumGroup/ModuleSymmetry/Symmetries.lean`,
 `QuantumGroup/Modified/Symmetries.lean`; [Lus] 37.1–37.2, 41.1.1–41.1.3): `braidPrimeEquiv R hv i`
 (`T'_{i,1} = ω Tᵢ ω`, [Lus] 37.2.4) and its inverse `T''_{i,-1}`, with Lusztig's values on all
