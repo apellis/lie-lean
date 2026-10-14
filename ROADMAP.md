@@ -907,6 +907,15 @@ generated projective in `𝒪` and `Qⱼ` indecomposable, `#{j | Qⱼ ≅ P(λ)}
 `IsProjectiveO.exists_isStdFiltered` (every finitely generated projective in `𝒪` has a standard
 filtration: a direct summand of the cover of Thm. 3.8, via `IsStdFiltered.directSum` and
 Prop. 3.7 (b)).
+**Corollary 3.10** (`KacMoody/ProjectiveCharacter.lean`):
+`IsProjectiveO.nonempty_equiv_of_character_eq` (finitely generated projectives in `𝒪` with the same
+character are isomorphic), via `IsFGProjectiveO.nonempty_equiv_of_finrank_hom_eq` (equal
+`dim Hom(−, L(λ))` for all `λ` implies isomorphic), `IsFGProjectiveO.exists_multiset` (the summand
+counts `dim Hom(V, L(λ))` and the Verma multiplicities `Σ_λ dim Hom(V, L(λ)) (P(λ) : M(μ))`),
+`IsStdFiltered.finrank_inf_weightSpaceOfMap` and the unitriangularity lemma
+`Multiset.eq_of_forall_sum_map_eq`. Reconstructed: `P(λ)` is split off one summand at a time
+(`LieModuleHom.equivOfRetract`, `LieModuleHom.homRetractEquiv`) instead of using a full
+decomposition into indecomposables.
 **Dual Verma modules and Thm. 3.7** (`KacMoody/DualVerma.lean`): `isCategoryO_restrictedDual`,
 `multiplicity_restrictedDual` (`V^∨ ∈ 𝒪` with `[V^∨ : L(ν)] = [V : L(ν)]`, Humphreys §3.2),
 `finrank_primitiveVectors_restrictedDual` (`dim Hom(M(μ), V^∨) = dim (V/𝔫₋V)_μ`), the swap
