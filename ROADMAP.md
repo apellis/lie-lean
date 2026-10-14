@@ -1918,6 +1918,10 @@ from the triangular decomposition, any field, `v` not a root of unity); `𝒜U�
 (`Modified.list_braid_qDivPow_E_mem_aPlus`: `T''_{i₁,1} ⋯ T''_{iₙ₋₁,1}(E_{iₙ}^{(t)}) ∈ 𝒜U⁺` for
 `s_{i₁} ⋯ s_{iₙ}` reduced) and (b) for `e = -1` (`Modified.list_braid_symm_qDivPow_E_mem_aPlus`, via
 `σ T''_{i,1} σ = T'_{i,-1}`, [Lus] 37.2.4), for every Cartan datum.
+**The anti-automorphism `ρ̄`** (`QuantumGroup/RhoBar.lean`; [Lus] 26.1.1): `rhoBar R v`, the linear
+anti-automorphism of `U` with `ρ̄(Eᵢ) = vᵢ⁻¹ K̃ᵢ⁻¹ Fᵢ`, `ρ̄(Fᵢ) = vᵢ⁻¹ K̃ᵢ Eᵢ`, `ρ̄(K_μ) = K_μ`
+(`rhoBar_mul`, involution `rhoBar_rhoBar`), for `v ≠ 0`. Next: the bilinear form on `U̇` of [Lus]
+26.1.2 (issue #160).
 **The symmetries `T'_{i,1}`, `T''_{i,-1}`** (`QuantumGroup/ModuleSymmetry/Symmetries.lean`,
 `QuantumGroup/Modified/Symmetries.lean`; [Lus] 37.1–37.2, 41.1.1–41.1.3): `braidPrimeEquiv R hv i`
 (`T'_{i,1} = ω Tᵢ ω`, [Lus] 37.2.4) and its inverse `T''_{i,-1}`, with Lusztig's values on all
