@@ -447,6 +447,16 @@ theorem IsCategoryO.isCovered (hM : IsCategoryO P M) {S : Finset M}
   obtain ⟨F, hspan⟩ := hM.exists_finset_lieSpan_weightSpace_eq_top P hS
   exact isCovered_of_finrank_aboveSpan_le P hA _ M hM F hspan le_rfl
 
+omit [IsAlgClosed K] in
+/-- `M(λ + nρ) ⊗ L(nρ)^*` is finitely generated. -/
+theorem exists_finset_lieSpan_projectiveCoverAmbient'_eq_top (Λ : Dual K H) :
+    ∃ T : Finset (projectiveCoverAmbient' P hA Λ),
+      LieSubmodule.lieSpan K 𝔤 (T : Set (projectiveCoverAmbient' P hA Λ)) = ⊤ := by
+  have := IrreducibleModule.finiteDimensional (P := P) hA
+    (isDominantIntegral_nsmul_rho P (projectiveCoverShift P hA Λ))
+  exact exists_finset_lieSpan_tmul_eq_top
+    (VermaModule.lieSpan_map_hwv_eq_top LieModuleHom.id Function.surjective_id)
+
 universe w'
 
 /-- **Enough projectives in `𝒪`** (Humphreys, GSM 94, Theorem 3.8, projective part). In finite
@@ -470,17 +480,11 @@ theorem exists_isProjectiveO_surjective (hM : IsCategoryO P M) {S : Finset M}
         Function.Surjective π := by
   classical
   obtain ⟨κ, _, _, τ, π, hπ⟩ := hM.isCovered P hA hS
-  have hfg : ∀ Λ : Dual K H, ∃ T : Finset (projectiveCoverAmbient' P hA Λ),
-      LieSubmodule.lieSpan K 𝔤 (T : Set (projectiveCoverAmbient' P hA Λ)) = ⊤ := by
-    intro Λ
-    have := IrreducibleModule.finiteDimensional (P := P) hA
-      (isDominantIntegral_nsmul_rho P (projectiveCoverShift P hA Λ))
-    exact exists_finset_lieSpan_tmul_eq_top
-      (VermaModule.lieSpan_map_hwv_eq_top LieModuleHom.id Function.surjective_id)
   exact ⟨κ, inferInstance, inferInstance, τ,
     IsCategoryO.directSum _ fun j ↦ isCategoryO_projectiveCoverAmbient P hA _ _,
     IsProjectiveO.directSum fun j ↦ isProjectiveO_projectiveCoverAmbient' P hA _,
-    exists_finset_lieSpan_directSum_eq_top fun j ↦ hfg (τ j), π, hπ⟩
+    exists_finset_lieSpan_directSum_eq_top fun j ↦
+      exists_finset_lieSpan_projectiveCoverAmbient'_eq_top P hA (τ j), π, hπ⟩
 
 end Existence
 

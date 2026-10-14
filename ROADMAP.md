@@ -852,7 +852,13 @@ for large `n`; reconstructed via `ρ - wρ ∈ Q₊ \ {0}` for `w ≠ 1`,
 part): `exists_isProjectiveO_surjective` (every finitely generated `M` in `𝒪` is a quotient of a
 finite direct sum of modules `M(λ + nρ) ⊗ L(nρ)^*`, which is finitely generated, in `𝒪` and
 projective), via `IsProjectiveO.directSum`; reconstructed by induction on the dimension of the
-weight spaces above a generating set instead of the length. Open: the injective part of Thm. 3.8.
+weight spaces above a generating set instead of the length.
+**Enough injectives** (`KacMoody/EnoughInjectives.lean`, Thm. 3.8, injective part):
+`IsInjectiveO`, `surjective_restrictedDualMap` (duality is exact on injections),
+`IsProjectiveO.isInjectiveO_restrictedDual` (`Q^∨` is injective for `Q` projective, via
+`dualSwap`), `IsCategoryO.exists_strictMono_restrictedDual` (`V^∨` has finite length when `V`
+does; annihilators are strictly antitone) and `exists_isInjectiveO_injective` (every finitely
+generated `M` in `𝒪` embeds into the finitely generated injective `Q^∨`, `Q ↠ M^∨` from Thm. 3.8).
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and
