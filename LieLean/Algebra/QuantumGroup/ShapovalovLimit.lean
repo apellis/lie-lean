@@ -23,10 +23,12 @@ so `G_Λ` is the member `z = (vᵢ^{-2⟨i,Λ⟩})ᵢ` of the family of forms `G
 Lusztig's form `( , )` on `'f` (`QuantumGroup.VermaModule.form_eq_shapZ_zero`; [Lus] 1.2.13 (a)).
 Hence `G_Λ → ( , )` as `⟨i, Λ⟩ → ∞` (in the `v⁻¹`-adic sense), which is how the Shapovalov forms
 of `L_q(Λ)` for large `Λ` are compared in Kashiwara's grand loop. The computation is ours.
+In particular `(x⁻ v_Λ, y⁻ v_Λ)` in `L_q(Λ)` converges to `(x, y)`
+(`QuantumGroup.IrreducibleModule.exists_form_minusHom_sub_mem`, [Lus] Prop. 19.3.7).
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, 1.2.13, 3.1.6.
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, 1.2.13, 3.1.6, 19.3.7.
 -/
 
 open LieLean LusztigF FreeAlgebra
@@ -437,9 +439,106 @@ theorem exists_shapZ_sub_mem [Finite I] {ϖ : A}
     simp only [map_mul] at ha ⊢
     linear_combination (algebraMap A k) c * ha
 
+omit [DecidableEq I] [NeZero v] in
+/-- `zᵢ = vᵢ^{-2⟨i,Λ⟩} = ϖ^{2 dᵢ ⟨i,Λ⟩}` when `ϖ ↦ v⁻¹` and `⟨i, Λ⟩ ≥ 0`. -/
+lemma zcoef_eq_algebraMap_pow {ϖ : A} (hϖv : algebraMap A k ϖ = v⁻¹) (Λ : Y →+ ℤ) (i : I)
+    (hΛ : 0 ≤ Λ (R.coroot i)) :
+    zcoef R v Λ i = algebraMap A k (ϖ ^ (2 * D.d i * (Λ (R.coroot i)).toNat)) := by
+  obtain ⟨n, hn⟩ := Int.eq_ofNat_of_zero_le hΛ
+  rw [zcoef, hn, Int.toNat_natCast, map_pow, hϖv, ← zpow_natCast, ← zpow_natCast,
+    inv_zpow', ← zpow_mul]
+  congr 1
+  push_cast
+  ring
+
 end Estimate
 
+omit [DecidableEq I] [NeZero v] in
+lemma exists_mem_fLe (x : LusztigF k I) : ∃ N : ℕ, x ∈ fLe k I N := by
+  induction x using induction_wordBasis with
+  | zero => exact ⟨0, zero_mem _⟩
+  | add a b ha hb =>
+    obtain ⟨N, hN⟩ := ha
+    obtain ⟨N', hN'⟩ := hb
+    exact ⟨N ⊔ N', add_mem (fLe_mono le_sup_left hN) (fLe_mono le_sup_right hN')⟩
+  | smul c a ha =>
+    obtain ⟨N, hN⟩ := ha
+    exact ⟨N, Submodule.smul_mem _ c hN⟩
+  | word w => exact ⟨w.length, wordBasis_mem_fLe le_rfl⟩
+
 end VermaModule
+
+/-! ### The limit of the forms on `L_q(Λ)` -/
+
+namespace IrreducibleModule
+
+variable (hR : R.IsXRegular) (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1)
+
+/-- `(x⁻ v_Λ, y⁻ v_Λ)` in `L_q(Λ)` is the Shapovalov form `G_Λ(x, y)` of `M_q(Λ)`. -/
+lemma form_minusHom_smul_hwv (Λ : Y →+ ℤ) (x y : LusztigF k I) :
+    IrreducibleModule.form Λ hR hv' (minusHom R v x • IrreducibleModule.hwv R v Λ)
+        (minusHom R v y • IrreducibleModule.hwv R v Λ) = VermaModule.shapF R hv' Λ x y := by
+  rw [IrreducibleModule.hwv, ← Submodule.Quotient.mk_smul, ← Submodule.Quotient.mk_smul,
+    IrreducibleModule.form_mk, VermaModule.shapF_apply, VermaModule.toVerma_apply,
+    VermaModule.toVerma_apply]
+
+/-- **[Lus] Prop. 19.3.7**: for `x, y ∈ 'f`, the inner product `(x⁻ η_Λ, y⁻ η_Λ)_Λ` on `L_q(Λ)`
+converges to Lusztig's form `(x, y)` as `⟨i, Λ⟩ → ∞` for all `i`.
+
+Convergence is `ϖ`-adic: `k = A[ϖ⁻¹]` and `ϖ ↦ v⁻¹`, and for every `m` there is `M` such that the
+difference lies in `ϖ^m A` once `⟨i, Λ⟩ ≥ M` for all `i`. For `k = ℚ(v)` and
+`A = ℚ[v⁻¹]_{(v⁻¹)}` this is convergence in `ℚ((v⁻¹))`, as in the source. Lusztig states it for
+`Λ_λ = f ⧸ Σ f θᵢ^{⟨i,λ⟩+1}` with `λ` dominant; this is `L_q(λ)` for `v` transcendental
+(`FPowQuotient.equivIrreducibleModule`). Here `L_q(Λ) = M_q(Λ) ⧸ M'_q(Λ)` for arbitrary `Λ`, with
+its contravariant form `IrreducibleModule.form` (which assumes `R` is `X`-regular). The proof
+does not follow the source's induction on the degree: it applies the estimate
+`VermaModule.exists_shapZ_sub_mem`, which rests on [Lus] 3.1.6 as the source's induction does. -/
+theorem exists_form_minusHom_sub_mem [CharZero k] [Finite I] {A : Type*} [CommRing A]
+    [Algebra A k] {ϖ : A}
+    (hk : ∀ c : k, ∃ (m : ℕ) (a : A), algebraMap A k (ϖ ^ m) * c = algebraMap A k a)
+    (hϖv : algebraMap A k ϖ = v⁻¹) (x y : LusztigF k I) (m : ℕ) :
+    ∃ M : ℤ, ∀ Λ : Y →+ ℤ, (∀ i, M ≤ Λ (R.coroot i)) → ∃ a : A,
+      IrreducibleModule.form Λ hR hv' (minusHom R v x • IrreducibleModule.hwv R v Λ)
+          (minusHom R v y • IrreducibleModule.hwv R v Λ) - LusztigF.form D v x y =
+        algebraMap A k (ϖ ^ m * a) := by
+  have hϖ0 : algebraMap A k ϖ ≠ 0 := by rw [hϖv]; exact inv_ne_zero (NeZero.ne v)
+  obtain ⟨Nx, hNx⟩ := VermaModule.exists_mem_fLe x
+  obtain ⟨Ny, hNy⟩ := VermaModule.exists_mem_fLe y
+  set N := Nx ⊔ Ny
+  have hspan : ∀ z ∈ VermaModule.fLe k I N,
+      z ∈ Submodule.span k (VermaModule.latN k I A N : Set (LusztigF k I)) := by
+    intro z hz; rwa [VermaModule.span_latN]
+  obtain ⟨cx, hcx⟩ := DualLattice.exists_pow_smul_mem hk
+    (hspan x (VermaModule.fLe_mono le_sup_left hNx))
+  obtain ⟨cy, hcy⟩ := DualLattice.exists_pow_smul_mem hk
+    (hspan y (VermaModule.fLe_mono le_sup_right hNy))
+  obtain ⟨C, hC⟩ := VermaModule.exists_shapZ_sub_mem (D := D) (v := v) A hk N
+  set m' := m + C + cx + cy
+  refine ⟨m', fun Λ hΛ ↦ ?_⟩
+  have hz : ∀ i, ∃ a : A, VermaModule.zcoef R v Λ i = algebraMap A k (ϖ ^ m' * a) := by
+    intro i
+    have h0 : 0 ≤ Λ (R.coroot i) := le_trans (by positivity) (hΛ i)
+    rw [VermaModule.zcoef_eq_algebraMap_pow (R := R) (A := A) hϖv Λ i h0]
+    have hle : m' ≤ 2 * D.d i * (Λ (R.coroot i)).toNat := by
+      have := hΛ i
+      have := D.d_pos i
+      have : (m' : ℤ) ≤ ((Λ (R.coroot i)).toNat : ℤ) := by omega
+      nlinarith
+    obtain ⟨t, ht⟩ := Nat.exists_eq_add_of_le hle
+    exact ⟨ϖ ^ t, by rw [ht, pow_add]⟩
+  obtain ⟨a, ha⟩ := hC _ m' hz _ hcx _ hcy
+  rw [VermaModule.shapZ_smul_left_A, VermaModule.shapZ_smul_right_A,
+    VermaModule.shapZ_smul_left_A, VermaModule.shapZ_smul_right_A] at ha
+  refine ⟨a, ?_⟩
+  rw [form_minusHom_smul_hwv, VermaModule.shapF_eq_shapZ, VermaModule.form_eq_shapZ_zero]
+  have hpow : algebraMap A k (ϖ ^ (C + cx + cy)) ≠ 0 := by
+    rw [map_pow]; exact pow_ne_zero _ hϖ0
+  apply mul_left_cancel₀ hpow
+  simp only [map_mul, map_pow] at ha ⊢
+  rw [show m' = m + (C + cx + cy) by omega, pow_add] at ha
+  linear_combination ha
+
+end IrreducibleModule
 
 end LieLean.QuantumGroup
 

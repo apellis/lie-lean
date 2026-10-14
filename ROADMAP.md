@@ -1968,7 +1968,8 @@ and `form_rightAct_left` (`(x u, y) = (x, y ρ̄(u))`), via `formFunctional_rho_
 via `formFunctional_braidReversal` (`P_{-λ}(σ z) = P_λ(z)` on `U_0`) and `rho_plusHom_monomial`.
 [Lus] 26.1.6 (`QuantumGroup/Modified/FormOmega.lean`): `form_map_chevalleyAut`
 (`(ω x, ω y) = (x, y)` for `ω = Modified.map (chevalleyAut R v)`, [Lus] 23.1.6), via
-`chevalley_rho` (`ω ρ = ρ ω`) and `map_leftAct`. Next: the limit statements of [Lus] 26.2.
+`chevalley_rho` (`ω ρ = ρ ω`) and `map_leftAct`. Next: the limit statements of [Lus] 26.2
+(26.2.3 uses 19.3.7, `IrreducibleModule.exists_form_minusHom_sub_mem`, below).
 **The symmetries `T'_{i,1}`, `T''_{i,-1}`** (`QuantumGroup/ModuleSymmetry/Symmetries.lean`,
 `QuantumGroup/Modified/Symmetries.lean`; [Lus] 37.1–37.2, 41.1.1–41.1.3): `braidPrimeEquiv R hv i`
 (`T'_{i,1} = ω Tᵢ ω`, [Lus] 37.2.4) and its inverse `T''_{i,-1}`, with Lusztig's values on all
@@ -2546,7 +2547,9 @@ morphism assumed. `GrandLoop/RatFunc`: all hypotheses hold in Kashiwara's settin
 member `zᵢ = vᵢ^{-2⟨i,Λ⟩}` of a family of forms `G_z` with `G_z(θᵢx, y) = G_z(x, (Lᵢ - zᵢRᵢ)y)`
 (`VermaModule.shapF_θ_mul`, `shapF_eq_shapZ`; from [Lus] Prop. 3.1.6), `G_0` is Lusztig's form
 (`form_eq_shapZ_zero`, [Lus] 1.2.13 (a)), and on words of bounded length `G_z ≡ G_0` modulo `zᵢ`
-up to a fixed power of `ϖ` (`exists_shapZ_sub_mem`). `CrystalBasis/DualLattice.lean`: dual lattices
+up to a fixed power of `ϖ` (`exists_shapZ_sub_mem`). Hence [Lus] Prop. 19.3.7: `(x⁻ v_Λ, y⁻ v_Λ)` in `L_q(Λ)` converges
+`ϖ`-adically to `(x, y)` as `⟨i, Λ⟩ → ∞` (`IrreducibleModule.exists_form_minusHom_sub_mem`;
+`k = A[ϖ⁻¹]`, `ϖ ↦ v⁻¹`, which is convergence in `ℚ((v⁻¹))` for `A = ℚ[v⁻¹]_{(v⁻¹)}`). `CrystalBasis/DualLattice.lean`: dual lattices
 of bilinear forms, their stability under perturbation (`DualLattice.dual_eq_of_sub`) and
 stabilization of decreasing lattices over a discrete valuation ring (`DualLattice.exists_stable`).
 These are the inputs for the comparison of `L(λ)` with its dual lattice ([HK] Lemma 5.3.15), whose
