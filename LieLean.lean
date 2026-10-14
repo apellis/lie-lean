@@ -18,11 +18,13 @@ import LieLean.Algebra.Lie.KacMoody.BGGReciprocity
 import LieLean.Algebra.Lie.KacMoody.TranslationProjective
 import LieLean.Algebra.Lie.KacMoody.SelfDualProjective
 import LieLean.Algebra.Lie.KacMoody.ExtProjective
+import LieLean.Algebra.Lie.KacMoody.ExtHighestWeight
 import LieLean.Algebra.Lie.KacMoody.EnoughProjectives
 import LieLean.Algebra.Lie.KacMoody.FiniteLength
 import LieLean.Algebra.Lie.KacMoody.EnoughInjectives
 import LieLean.Algebra.Lie.KacMoody.ProjectiveDecomposition
 import LieLean.Algebra.Lie.KacMoody.ProjectiveStdFiltration
+import LieLean.Algebra.Lie.KacMoody.ProjectiveCharacter
 import LieLean.Algebra.Lie.KacMoody.BGG.Casimir
 import LieLean.Algebra.Lie.KacMoody.BGG.Character
 import LieLean.Algebra.Lie.KacMoody.BGG.Exactness
@@ -178,6 +180,8 @@ import LieLean.Algebra.Lie.KacMoody.TranslationComposite
 import LieLean.Algebra.Lie.KacMoody.TranslationSimple
 import LieLean.Algebra.Lie.KacMoody.DualIrreducible
 import LieLean.Algebra.Lie.KacMoody.DualVerma
+import LieLean.Algebra.Lie.KacMoody.DualityFunctor
+import LieLean.Algebra.Lie.KacMoody.DualityHom
 import LieLean.Algebra.Lie.KacMoody.TranslationSameFacet
 import LieLean.Algebra.Lie.KacMoody.TranslationSelfDual
 import LieLean.Algebra.Lie.KacMoody.TranslationShuffling

@@ -859,6 +859,15 @@ weight spaces above a generating set instead of the length.
 `dualSwap`), `IsCategoryO.exists_strictMono_restrictedDual` (`V^∨` has finite length when `V`
 does; annihilators are strictly antitone) and `exists_isInjectiveO_injective` (every finitely
 generated `M` in `𝒪` embeds into the finitely generated injective `Q^∨`, `Q ↠ M^∨` from Thm. 3.8).
+**Duality functor** (`KacMoody/DualityFunctor.lean`, Humphreys GSM 94 Thm. 3.2, any GCM,
+characteristic zero): exactness (`exists_restrictedDualMap_eq`: a functional in `V^∨` vanishing on
+`ker g` factors through `g`; `injective_restrictedDualMap`, `exact_restrictedDualMap`) and (a)
+`restrictedDoubleDualEquiv` (`V ≅ V^∨∨` for `V ∈ 𝒪`, `v ↦ (φ ↦ φ(v))`, natural by
+`restrictedDualMap_restrictedDualMap_comp`). Parts (b), (c) are `restrictedDualCentralBlockEquiv`,
+`multiplicity_restrictedDual`, `IrreducibleModule.equivRestrictedDual`. (d)
+(`KacMoody/DualityHom.lean`): `restrictedDualDirectSumEquiv` (`(⨁ᵢ Mᵢ)^∨ ≅ ⨁ᵢ Mᵢ^∨`, finite sums) and
+`IsCategoryO.indecomposable_restrictedDual`, via `restrictedDualHomEquiv` (`Hom(V, W) ≅ Hom(W^∨, V^∨)`
+on `𝒪`); (e) is open.
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and
@@ -907,6 +916,15 @@ generated projective in `𝒪` and `Qⱼ` indecomposable, `#{j | Qⱼ ≅ P(λ)}
 `IsProjectiveO.exists_isStdFiltered` (every finitely generated projective in `𝒪` has a standard
 filtration: a direct summand of the cover of Thm. 3.8, via `IsStdFiltered.directSum` and
 Prop. 3.7 (b)).
+**Corollary 3.10** (`KacMoody/ProjectiveCharacter.lean`):
+`IsProjectiveO.nonempty_equiv_of_character_eq` (finitely generated projectives in `𝒪` with the same
+character are isomorphic), via `IsFGProjectiveO.nonempty_equiv_of_finrank_hom_eq` (equal
+`dim Hom(−, L(λ))` for all `λ` implies isomorphic), `IsFGProjectiveO.exists_multiset` (the summand
+counts `dim Hom(V, L(λ))` and the Verma multiplicities `Σ_λ dim Hom(V, L(λ)) (P(λ) : M(μ))`),
+`IsStdFiltered.finrank_inf_weightSpaceOfMap` and the unitriangularity lemma
+`Multiset.eq_of_forall_sum_map_eq`. Reconstructed: `P(λ)` is split off one summand at a time
+(`LieModuleHom.equivOfRetract`, `LieModuleHom.homRetractEquiv`) instead of using a full
+decomposition into indecomposables.
 **Dual Verma modules and Thm. 3.7** (`KacMoody/DualVerma.lean`): `isCategoryO_restrictedDual`,
 `multiplicity_restrictedDual` (`V^∨ ∈ 𝒪` with `[V^∨ : L(ν)] = [V : L(ν)]`, Humphreys §3.2),
 `finrank_primitiveVectors_restrictedDual` (`dim Hom(M(μ), V^∨) = dim (V/𝔫₋V)_μ`), the swap
@@ -951,6 +969,11 @@ summand of `Θ_{s_1} ⋯ Θ_{s_k} M(λ)` and each `Θ_s` commutes with duality. 
 `nonempty_extOne_equiv_quotient_ker` (`Ext¹(C, N) ≅ Hom(A, N) / {g ∘ i}` for `0 → A → B → C → 0`
 with `B` projective in `𝒪`), so the relative `ExtOne` agrees with the `Ext¹` of projective
 resolutions in `𝒪`. The comparison of its vector-space structure with the Baer sum is not formalized.
+**Proposition 3.1** (`KacMoody/ExtHighestWeight.lean`, any GCM, characteristic zero): (a)
+`extOne_verma_eq_zero` (`Ext¹(M(λ), M) = 0` for `M` a quotient of `M(μ)` with `λ ≮ μ`), (b)
+`extOne_verma_irreducibleModule_eq_zero` (`Ext¹(M(λ), L(μ)) = 0` for `μ ≤ λ`), (c)
+`nonempty_hom_maxSubmodule_equiv_extOne` (`Hom(N(λ), L(μ)) ≅ Ext¹(L(λ), L(μ))` for `μ < λ`) and (d)
+`extOne_irreducibleModule_self_eq_zero` (`Ext¹(L(λ), L(λ)) = 0`).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
