@@ -134,12 +134,6 @@ lemma qIntZ_vd_ne_zero (i : I) {n : ℤ} (hn : n ≠ 0) : qIntZ (v ^ D.d i) n �
 
 end DividedPowers
 
-lemma pow_mem_adWeightSpace' [NeZero v] {χ : Y →+ ℤ} {x : QuantumGroup R v}
-    (hx : x ∈ adWeightSpace R v χ) (n : ℕ) : x ^ n ∈ adWeightSpace R v (n • χ) := by
-  induction n with
-  | zero => simpa using one_mem_adWeightSpace
-  | succ n ih => rw [pow_succ, succ_nsmul]; exact mul_mem_adWeightSpace ih hx
-
 /-! ### The formula on weight vectors -/
 
 section Module
@@ -435,24 +429,24 @@ variable (R v) in
 def dE (i : I) (n : ℕ) (l : Y →+ ℤ) : Modified R v :=
   elt (l + n • R.root i) l (qDivPow (v ^ D.d i) n (E R v i)) (by
     rw [add_sub_cancel_left, qDivPow]
-    exact Submodule.smul_mem _ _ (pow_mem_adWeightSpace' (E_mem_adWeightSpace i) n))
+    exact Submodule.smul_mem _ _ (pow_mem_adWeightSpace (E_mem_adWeightSpace i) n))
 
 variable (R v) in
 /-- `Fᵢ^{(n)} 1_λ`. -/
 def dF (i : I) (n : ℕ) (l : Y →+ ℤ) : Modified R v :=
   elt (l + n • -R.root i) l (qDivPow (v ^ D.d i) n (F R v i)) (by
     rw [add_sub_cancel_left, qDivPow]
-    exact Submodule.smul_mem _ _ (pow_mem_adWeightSpace' (fun μ ↦ K_mul_F R v μ i) n))
+    exact Submodule.smul_mem _ _ (pow_mem_adWeightSpace (fun μ ↦ K_mul_F R v μ i) n))
 
 lemma divPowE_mem (i : I) (n : ℕ) :
     qDivPow (v ^ D.d i) n (E R v i) ∈ adWeightSpace R v (n • R.root i) := by
   rw [qDivPow]
-  exact Submodule.smul_mem _ _ (pow_mem_adWeightSpace' (E_mem_adWeightSpace i) n)
+  exact Submodule.smul_mem _ _ (pow_mem_adWeightSpace (E_mem_adWeightSpace i) n)
 
 lemma divPowF_mem (i : I) (n : ℕ) :
     qDivPow (v ^ D.d i) n (F R v i) ∈ adWeightSpace R v (n • -R.root i) := by
   rw [qDivPow]
-  exact Submodule.smul_mem _ _ (pow_mem_adWeightSpace' (fun μ ↦ K_mul_F R v μ i) n)
+  exact Submodule.smul_mem _ _ (pow_mem_adWeightSpace (fun μ ↦ K_mul_F R v μ i) n)
 
 include hv in
 lemma elt_eq_sum_of_sub_mem {L l : Y →+ ℤ} {u : QuantumGroup R v}

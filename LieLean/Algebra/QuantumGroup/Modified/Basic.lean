@@ -73,6 +73,13 @@ omit [NeZero v] in
 lemma one_mem_adWeightSpace : (1 : QuantumGroup R v) ∈ adWeightSpace R v 0 := by
   simpa using algebraMap_mem_adWeightSpace (R := R) (v := v) 1
 
+/-- `x ^ n` has character `n χ` if `x` has character `χ`. -/
+lemma pow_mem_adWeightSpace {χ : Y →+ ℤ} {x : QuantumGroup R v}
+    (hx : x ∈ adWeightSpace R v χ) (n : ℕ) : x ^ n ∈ adWeightSpace R v (n • χ) := by
+  induction n with
+  | zero => simpa using one_mem_adWeightSpace
+  | succ n ih => rw [pow_succ, succ_nsmul]; exact mul_mem_adWeightSpace ih hx
+
 lemma mul_K_of_mem_adWeightSpace {χ : Y →+ ℤ} {x : QuantumGroup R v}
     (hx : x ∈ adWeightSpace R v χ) (μ : Y) :
     x * K R v μ = v ^ (-χ μ) • (K R v μ * x) := by

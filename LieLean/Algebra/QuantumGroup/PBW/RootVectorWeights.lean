@@ -62,6 +62,10 @@ variable {R v}
 lemma E_mem_adWeightSpace (i : I) : E R v i ∈ adWeightSpace R v (R.root i) :=
   fun μ ↦ K_mul_E R v μ i
 
+/-- Simple root vectors `Fᵢ` have the characters `-αᵢ`. -/
+lemma F_mem_adWeightSpace (i : I) : F R v i ∈ adWeightSpace R v (-R.root i) :=
+  fun μ ↦ K_mul_F R v μ i
+
 /-- The commutation definition gives the conjugation eigenvalue equation. -/
 lemma conj_eq_of_mem_adWeightSpace {χ : Y →+ ℤ} {x : QuantumGroup R v}
     (hx : x ∈ adWeightSpace R v χ) (μ : Y) :
