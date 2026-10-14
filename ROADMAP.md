@@ -2840,8 +2840,11 @@ completed steps and continuation threads are:
   `qBinomial_add_eq_sum`, since Kashiwara's relies on an identity of Andrews).
   `Global/HighestWeightIntegral.lean`: `V_ℤ(λ)` is a `U_ℤ`-module (stated after (6.1.12);
   `dF_smul_mem_hwIntegral`, `dE_smul_mem_hwIntegral`) and Prop. 6.1.3 holds for `V_ℤ(λ)` at
-  every node (`mem_hwIntegral_wt_iff`). Remaining: (6.1.1)–(6.1.5) for `U⁻_ℤ`, Prop. 6.1.1,
-  the induction 7.3–7.5, the global basis, and the rest of 41.1.6.
+  every node (`mem_hwIntegral_wt_iff`). (6.1.1)–(6.1.3) for `U⁻_ℤ` were already proved in
+  `CrystalBasis/Integral/Strings.lean` (`negative_e_mem_integral`,
+  `negative_component_mem_integral`, `negative_kE_mem_integral`, `negative_kF_mem_integral`),
+  and (6.1.7) in `Integral/Intersection.lean` (`fWi_mem_original_integral`). Remaining:
+  (6.1.5), Prop. 6.1.1, the induction 7.3–7.5, the global basis, and the rest of 41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
