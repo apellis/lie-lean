@@ -1920,8 +1920,15 @@ from the triangular decomposition, any field, `v` not a root of unity); `𝒜U�
 `σ T''_{i,1} σ = T'_{i,-1}`, [Lus] 37.2.4), for every Cartan datum.
 **The anti-automorphism `ρ̄`** (`QuantumGroup/RhoBar.lean`; [Lus] 26.1.1): `rhoBar R v`, the linear
 anti-automorphism of `U` with `ρ̄(Eᵢ) = vᵢ⁻¹ K̃ᵢ⁻¹ Fᵢ`, `ρ̄(Fᵢ) = vᵢ⁻¹ K̃ᵢ Eᵢ`, `ρ̄(K_μ) = K_μ`
-(`rhoBar_mul`, involution `rhoBar_rhoBar`), for `v ≠ 0`. Next: the bilinear form on `U̇` of [Lus]
-26.1.2 (issue #160).
+(`rhoBar_mul`, involution `rhoBar_rhoBar`), for `v ≠ 0`.
+**The bilinear form on `U̇`** (`QuantumGroup/Modified/LeftModule.lean`, `FormFunctional.lean`,
+`Form.lean`; [Lus] 26.1.2, issue #160): the left action `Modified.leftAct` of `U` on `U̇`
+(`u π_{λ',λ''}(t) = π_{λ'+χ,λ''}(ut)` for `u ∈ U_χ`, [Lus] 23.1.3); `formFunctional ζ : U → k`
+(`P_ζ(z) = (1_ζ, z 1_ζ)`, built from the triangular decomposition, with
+`P_ζ(ρ̄(x⁻) y⁻ K_μ) = v^{⟨μ,ζ⟩}(x, y)`, using `ρ̄(θ_w⁻) = v^{(ν·ν)/2} θ_{σ(w)}⁺ K̃_ν`);
+`Modified.form`, with (a) `form_one_mul_mul_one_eq_zero`, (b) `form_leftAct_left`,
+(c) `form_minusHom_leftAct_one`, (d) `form_comm` and uniqueness `eq_form`, over any field with
+`v ≠ 0` not a root of unity. Next: [Lus] 26.1.3–26.1.6 and the limit statements of 26.2.
 **The symmetries `T'_{i,1}`, `T''_{i,-1}`** (`QuantumGroup/ModuleSymmetry/Symmetries.lean`,
 `QuantumGroup/Modified/Symmetries.lean`; [Lus] 37.1–37.2, 41.1.1–41.1.3): `braidPrimeEquiv R hv i`
 (`T'_{i,1} = ω Tᵢ ω`, [Lus] 37.2.4) and its inverse `T''_{i,-1}`, with Lusztig's values on all
