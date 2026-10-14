@@ -293,6 +293,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.BalancedTriple
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeIntegralGrading
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.StringIdentity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Augmentation
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Coordinates
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Derivative
