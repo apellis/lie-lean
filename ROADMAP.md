@@ -2031,7 +2031,11 @@ and `form_rightAct_left` (`(x u, y) = (x, y ρ̄(u))`), via `formFunctional_rho_
 via `formFunctional_braidReversal` (`P_{-λ}(σ z) = P_λ(z)` on `U_0`) and `rho_plusHom_monomial`.
 [Lus] 26.1.6 (`QuantumGroup/Modified/FormOmega.lean`): `form_map_chevalleyAut`
 (`(ω x, ω y) = (x, y)` for `ω = Modified.map (chevalleyAut R v)`, [Lus] 23.1.6), via
-`chevalley_rho` (`ω ρ = ρ ω`) and `map_leftAct`. [Lus] 26.2.2
+`chevalley_rho` (`ω ρ = ρ ω`) and `map_leftAct`. Elementary identities for `u 1_λ`
+(`QuantumGroup/Modified/LeftActOne.lean`): `leftActOne`, `leftAct_mul_right` (`u (x y) = (u x) y`),
+`leftActOne_mul_leftActOne`, `form_one_mul` (`(1_ν x, y) = (x, 1_ν y)`), `one_mul_leftAct_rho_E`,
+`one_mul_leftAct_rho_F`; `F_mem_adWeightSpace`, `pow_mem_adWeightSpace` and
+`list_prod_E_mem_adWeightSpace`, `list_prod_F_mem_adWeightSpace` for every parameter `v`. [Lus] 26.2.2
 (`QuantumGroup/Modified/FormLimit.lean`): `IrreducibleModule.isContravariant_tensorForm` (the form
 `(x ⊗ x', y ⊗ y') = (x, y)_Λ (x', y')_{Λ'}` on `ʷL_q(Λ) ⊗ L_q(Λ')`, `ʷ` the twist by `ω`, is
 `ρ`-contravariant; `X`-regular root data, where Lusztig assumes `Y`-regular), via

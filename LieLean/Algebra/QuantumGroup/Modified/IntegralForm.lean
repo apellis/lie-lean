@@ -59,15 +59,6 @@ variable {I Y : Type*} [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum 
 
 /-! ### Weights of divided powers -/
 
-lemma pow_mem_adWeightSpace {χ : Y →+ ℤ} {x : QuantumGroup R 𝕧}
-    (hx : x ∈ adWeightSpace R 𝕧 χ) (n : ℕ) : x ^ n ∈ adWeightSpace R 𝕧 (n • χ) := by
-  induction n with
-  | zero => simpa using one_mem_adWeightSpace
-  | succ n ih => rw [pow_succ, succ_nsmul]; exact mul_mem_adWeightSpace ih hx
-
-lemma F_mem_adWeightSpace (i : I) : F R 𝕧 i ∈ adWeightSpace R 𝕧 (-R.root i) :=
-  fun μ ↦ K_mul_F R 𝕧 μ i
-
 lemma qDivPow_E_mem (q : 𝕂) (i : I) (n : ℕ) :
     qDivPow q n (E R 𝕧 i) ∈ adWeightSpace R 𝕧 (n • R.root i) :=
   Submodule.smul_mem _ _ (pow_mem_adWeightSpace (E_mem_adWeightSpace i) n)

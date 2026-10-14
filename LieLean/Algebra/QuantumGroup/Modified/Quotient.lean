@@ -76,7 +76,25 @@ lemma minusHom_monomial_mem_adWeightSpace (w : List I) :
   | nil => simpa using one_mem_adWeightSpace
   | cons i w ih =>
     rw [LusztigF.monomial_cons, map_mul, minusHom_θ, wordChar_cons, neg_add]
-    exact mul_mem_adWeightSpace (fun μ ↦ K_mul_F R v μ i) ih
+    exact mul_mem_adWeightSpace (F_mem_adWeightSpace i) ih
+
+/-- A word `E_{i₁} ⋯ E_{iₙ}` has character `αᵢ₁ + ⋯ + αᵢₙ`. -/
+lemma list_prod_E_mem_adWeightSpace (w : List I) :
+    (w.map (E R v)).prod ∈ adWeightSpace R v (wordChar R w) := by
+  induction w with
+  | nil => simpa using one_mem_adWeightSpace
+  | cons i w ih =>
+    rw [List.map_cons, List.prod_cons, wordChar_cons]
+    exact mul_mem_adWeightSpace (E_mem_adWeightSpace i) ih
+
+/-- A word `F_{i₁} ⋯ F_{iₙ}` has character `-(αᵢ₁ + ⋯ + αᵢₙ)`. -/
+lemma list_prod_F_mem_adWeightSpace (w : List I) :
+    (w.map (F R v)).prod ∈ adWeightSpace R v (-wordChar R w) := by
+  induction w with
+  | nil => simpa using one_mem_adWeightSpace
+  | cons i w ih =>
+    rw [List.map_cons, List.prod_cons, wordChar_cons, neg_add]
+    exact mul_mem_adWeightSpace (F_mem_adWeightSpace i) ih
 
 lemma triangular_mem_adWeightSpace (w : List I) (μ : Y) (w' : List I) :
     minusHom R v (LusztigF.monomial k w) * K R v μ * plusHom R v (LusztigF.monomial k w') ∈
