@@ -1943,7 +1943,11 @@ anti-automorphism of `U` with `ρ̄(Eᵢ) = vᵢ⁻¹ K̃ᵢ⁻¹ Fᵢ`, `ρ̄(F
 `Modified.form`, with (a) `form_one_mul_mul_one_eq_zero`, (b) `form_leftAct_left`
 (`(u x, y) = (x, ρ(u) y)`, `ρ` of [Lus] 19.1.1),
 (c) `form_minusHom_leftAct_one`, (d) `form_comm` and uniqueness `eq_form`, over any field with
-`v ≠ 0` not a root of unity. Next: [Lus] 26.1.3–26.1.6 and the limit statements of 26.2.
+`v ≠ 0` not a root of unity. [Lus] 26.1.3 (`QuantumGroup/Modified/RightModule.lean`,
+`FormRight.lean`): the right action `Modified.rightAct` (`π_{λ',λ''}(t) u = π_{λ',λ''-χ}(tu)`)
+and `form_rightAct_left` (`(x u, y) = (x, y ρ̄(u))`), via `formFunctional_rho_E_mul`
+(`P_{ζ-αᵢ}(ρ(Eᵢ) u) = P_ζ(u ρ̄(Eᵢ))`, from [Lus] 1.2.13 (a) and 3.1.6). Next: [Lus]
+26.1.4–26.1.6 and the limit statements of 26.2.
 **The symmetries `T'_{i,1}`, `T''_{i,-1}`** (`QuantumGroup/ModuleSymmetry/Symmetries.lean`,
 `QuantumGroup/Modified/Symmetries.lean`; [Lus] 37.1–37.2, 41.1.1–41.1.3): `braidPrimeEquiv R hv i`
 (`T'_{i,1} = ω Tᵢ ω`, [Lus] 37.2.4) and its inverse `T''_{i,-1}`, with Lusztig's values on all

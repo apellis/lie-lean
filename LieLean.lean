@@ -389,6 +389,7 @@ import LieLean.Algebra.QuantumGroup.Modified.Basic
 import LieLean.Algebra.QuantumGroup.Modified.Commutation
 import LieLean.Algebra.QuantumGroup.Modified.Form
 import LieLean.Algebra.QuantumGroup.Modified.FormFunctional
+import LieLean.Algebra.QuantumGroup.Modified.FormRight
 import LieLean.Algebra.QuantumGroup.Modified.IntegralBasis
 import LieLean.Algebra.QuantumGroup.Modified.IntegralBasisPBW
 import LieLean.Algebra.QuantumGroup.Modified.IntegralBasisPBWAll
@@ -405,6 +406,7 @@ import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWPrime
 import LieLean.Algebra.QuantumGroup.Modified.IntegralPBWSymm
 import LieLean.Algebra.QuantumGroup.Modified.LeftModule
 import LieLean.Algebra.QuantumGroup.Modified.Quotient
+import LieLean.Algebra.QuantumGroup.Modified.RightModule
 import LieLean.Algebra.QuantumGroup.Modified.RootVectors
 import LieLean.Algebra.QuantumGroup.Modified.Symmetries
 import LieLean.Algebra.QuantumGroup.Modified.Triangular
