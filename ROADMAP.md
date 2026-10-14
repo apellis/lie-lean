@@ -2833,8 +2833,13 @@ completed steps and continuation threads are:
   `Global/NegativeIntegralGrading.lean`: `U⁻_ℤ` is graded (`proj_mem_negIntegral`).
   `Global/HighestWeightBar.lean`: `ker(y ↦ y⁻v_λ) = J + Σᵢ 'f θᵢ^{⟨i,λ⟩+1}` (`ker_ev_eq`), the bar
   involution of `L_q(λ)` ([Kas91] (6.1.15), `hwBar`) and `V_ℤ(λ)` ((6.1.12), `hwIntegral`,
-  bar-stable). Remaining: divided-power stability of `V_ℤ(λ)`, [Kas91] Prop. 6.1.3, the
-  induction 7.3–7.5, the global basis, and the rest of 41.1.6.
+  bar-stable). `Global/StringIdentity.lean`: for integrable `U_q(𝔰𝔩₂)`-modules, [Kas91]
+  Lemma 6.1.4 (`IntegrableSl2.sum_dF_dE_eq`: `u = Σ_k (-1)^{k-n} [k-1, k-n] F^{(k)}E^{(k)}u` on
+  `M^{-n}`, `n ≥ 1`), Prop. 6.1.3 for one simple root (`IntegrableSl2.mem_integral_wt_iff`), and
+  the identity (6.1.19) (`sum_qBinomial_string`; our own proof by `q`-Vandermonde,
+  `qBinomial_add_eq_sum`, since Kashiwara's relies on an identity of Andrews). Remaining:
+  `U_ℤ`-stability of `V_ℤ(λ)`, (6.1.1)–(6.1.5) for `U⁻_ℤ`, Prop. 6.1.1, the induction
+  7.3–7.5, the global basis, and the rest of 41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
