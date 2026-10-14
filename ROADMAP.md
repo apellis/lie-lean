@@ -867,7 +867,11 @@ characteristic zero): exactness (`exists_restrictedDualMap_eq`: a functional in 
 `multiplicity_restrictedDual`, `IrreducibleModule.equivRestrictedDual`. (d)
 (`KacMoody/DualityHom.lean`): `restrictedDualDirectSumEquiv` (`(⨁ᵢ Mᵢ)^∨ ≅ ⨁ᵢ Mᵢ^∨`, finite sums) and
 `IsCategoryO.indecomposable_restrictedDual`, via `restrictedDualHomEquiv` (`Hom(V, W) ≅ Hom(W^∨, V^∨)`
-on `𝒪`); (e) is open.
+on `𝒪`); (e) (`KacMoody/DualityExt.lean`): `bijective_extOneRestrictedDual`,
+`extOneRestrictedDualEquiv` (`Ext_𝒪(M, N) ≅ Ext_𝒪(N^∨, M^∨)` for `M, N ∈ 𝒪`, induced by the dual
+cocycle `x ↦ (α ↦ α ∘ c(σ x))`; dualizing twice is transport along `V ≅ V^∨∨`) and
+`nonempty_extOne_irreducibleModule_equiv` (`Ext_𝒪(L(λ), L(μ)) ≅ Ext_𝒪(L(μ), L(λ))`), with the
+functoriality `LieModule.ExtOne.mapComap`.
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and

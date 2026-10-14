@@ -180,6 +180,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationComposite
 import LieLean.Algebra.Lie.KacMoody.TranslationSimple
 import LieLean.Algebra.Lie.KacMoody.DualIrreducible
 import LieLean.Algebra.Lie.KacMoody.DualVerma
+import LieLean.Algebra.Lie.KacMoody.DualityExt
 import LieLean.Algebra.Lie.KacMoody.DualityFunctor
 import LieLean.Algebra.Lie.KacMoody.DualityHom
 import LieLean.Algebra.Lie.KacMoody.TranslationSameFacet
