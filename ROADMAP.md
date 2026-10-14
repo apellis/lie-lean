@@ -2569,6 +2569,74 @@ For symmetrizable `A`: `U_q(𝔤)` over `ℚ(v)` (Drinfeld–Jimbo presentation 
 highest-weight modules `L_q(λ)` and equality of characters with `L(λ)` for `λ` dominant
 integral; Lusztig's canonical basis / Kashiwara's global basis if reachable.
 
+## Deferred items (not scheduled; maintainer decision 2026-10-14)
+
+Do not start these until the maintainer schedules them. The notes record how each item would be
+approached and what it would and would not make possible. The size estimates are rough.
+
+### D1. Canonical basis of `f` and the remainder of [Lus] 41.1.6
+
+*Target.* Lusztig's canonical basis `B` of `f`: the elements `b ∈ 𝒜f` with `b̄ = b` and
+`b ≡ b̃ mod v⁻¹ℒ(∞)` for `b̃ ∈ B(∞)`. Equivalently, Kashiwara's global basis: the triple
+`(𝒜f, ℒ(∞), bar ℒ(∞))` is balanced. With `B`, the remaining assertion of 41.1.6 follows. That
+assertion is the congruence of `θ_h^c` to `±b`, for a unique `b ∈ B`, modulo `v⁻¹ℒ(f)`.
+
+*Already available.*
+- `(ℒ(∞), B(∞))` as a crystal base of `U⁻` (`GrandLoop/InfinityBase`), with its polarization
+  (`GrandLoop/InfinityForm`).
+- Bar on `f` and on the integral form (`LusztigF/Bar`, `LusztigF/IntegralForm`).
+- The PBW lattice results used for 41.1.6 (`mem_lattice_degree`, `PBWSignedCrystal.*`).
+
+*Approach.* Prove the global-basis part of Kashiwara's grand loop in general, for all Cartan data
+at once, by induction on the weight:
+- the `𝒜`-forms of `L(λ)` and of `U⁻` are stable under the divided powers;
+- `E = 𝒜f ∩ ℒ(∞) ∩ bar ℒ(∞) → ℒ(∞)/v⁻¹ℒ(∞)` is injective and surjective, via the balanced-triple
+  lemma, the existing string decompositions and the bar involution;
+- then descend to `L(λ)` through the projections `π_λ`, and deduce 41.1.6.
+
+This should not be done rank by rank: rank-two bar-fixed lifts do not generalize. Estimated
+size: 15–30 PRs.
+
+*What it unlocks.*
+- 41.1.6 as printed.
+- Canonical bases of `L(λ)` and of `U̇` (the latter needs more work, [Lus] Part IV).
+- Almost-orthonormality of the canonical basis of `U̇`, which is Lusztig's route to
+  nondegeneracy of the inner product on `U̇`.
+- A precise statement of the comparison between canonical bases and indecomposable modules for
+  downstream KLR work.
+
+*What it does not unlock.*
+- Positivity of structure constants, or the identification of KLR indecomposable projectives
+  with `B` in symmetric type: these proofs are geometric and out of scope.
+- Nondegeneracy of the Khovanov–Lauda calculus: that route (Kang–Kashiwara, Brundan, Webster)
+  does not use canonical bases.
+
+### D2. [Lus] 41.1.9: compatibility of the braid group action with the quantum Frobenius map
+
+*Target.* At a root of unity, the action of the `Tᵢ` on `_S U̇` (already formalized,
+`Modified.braidArtinHomR`) is compatible with Lusztig's quantum Frobenius homomorphism.
+
+*Missing prerequisites.*
+- Higher-order quantum Serre relations.
+- The quantum Frobenius homomorphism itself, between `U̇` at an `ℓ`-th root of unity and the
+  modified algebra of the modified root datum, together with its splitting.
+- Divided-power formulas for the `Tᵢ` at roots of unity (the existing divided-power formulas are
+  generic and specialize).
+
+*Approach.*
+1. Prove the higher-order Serre relations in `𝒜f`.
+2. Construct the Frobenius homomorphism on `𝒜f`, then on `𝒜U̇`, then on `_S U̇`.
+3. Check 41.1.9 on generators using the existing divided-power formulas.
+
+Estimated size: 20–40 PRs.
+
+*What it unlocks.* Representation theory at roots of unity: Frobenius pullback, Lusztig's tensor
+product theorem and the small quantum group. It is also a possible input for categorification at
+roots of unity.
+
+*What it does not unlock.* Nothing in the current roadmap or in the downstream libraries depends
+on it. Faithfulness of the braid group action remains out of scope.
+
 ## Status and open threads
 
 The declarations listed as proved are on `master`; the explicit remaining items below are not
