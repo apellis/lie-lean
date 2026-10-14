@@ -889,6 +889,14 @@ characteristic zero): `IsContravariantForm` (symmetric, `B(x u, w) = B(u, σ(x) 
 `exists_isContravariantForm_of_surjective` (radical `φ(N(λ))`, from the Shapovalov form instead
 of the universal form on `U(𝔤)`) and `nondegenerate_iff_nonempty_equiv` (nondegenerate iff
 `V ≅ L(λ)`).
+**Simple submodules of Verma modules** (Humphreys GSM 94 §4.1): Lemma 4.1
+(`LieLean/RingTheory/Noetherian/Uniform.lean`: `Submodule.inf_span_singleton_ne_bot`, `R x` meets
+every nonzero left ideal of a left noetherian ring for `x` right regular, and
+`Submodule.inf_ne_bot_of_noZeroDivisors`); Prop. 4.1 (`KacMoody/VermaSocle.lean`, finite type,
+characteristic zero): `VermaModule.existsUnique_isAtom` (`M(λ)` has a unique simple submodule) and
+`VermaModule.exists_isAtom_le` (it lies in every nonzero submodule), from finite length and
+`VermaModule.inf_ne_bot_of_finite_type` (the Ore condition for `U(𝔫⁻)`, not Lemma 4.1, since
+noetherianity of `U(𝔫⁻)` is not formalized).
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and

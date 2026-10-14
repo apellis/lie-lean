@@ -196,6 +196,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosure
 import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosureNonintegral
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
+import LieLean.Algebra.Lie.KacMoody.VermaSocle
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
 import LieLean.Algebra.Lie.KacMoody.WeightBasis
 import LieLean.Algebra.Lie.KacMoody.WeylLength
@@ -674,3 +675,4 @@ import LieLean.RepresentationTheory.Crystal.MapDatum
 import LieLean.RepresentationTheory.Crystal.Path.Normal
 import LieLean.RingTheory.MvPolynomial.EulerIdentity
 import LieLean.RingTheory.MvPolynomial.LowestWeight
+import LieLean.RingTheory.Noetherian.Uniform
