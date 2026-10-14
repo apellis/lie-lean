@@ -880,6 +880,15 @@ nonzero submodule of `M(λ)^∨` contains the image of `L(λ)`, so it is the uni
 `range_hom_verma_restrictedDual_verma`; (d) `extOne_verma_restrictedDual_verma_eq_zero`
 (`Ext_𝒪(M(μ), M(λ)^∨) = 0`, via `extOne_verma_eq_zero_of_mem_cone` and Thm. 3.2 (e)). The socle
 statement (b) is deduced from (c) instead of by dualizing `0 → N(λ) → M(λ) → L(λ) → 0`.
+**Contravariant forms** (`KacMoody/ContravariantForm.lean`, Humphreys GSM 94 §3.14–3.15, any GCM,
+characteristic zero): `IsContravariantForm` (symmetric, `B(x u, w) = B(u, σ(x) w)`;
+`apply_rep_left` for `U(𝔤)`); Prop. 3.14 (a) `apply_eq_zero_of_ne`, (b) `eq_of_apply_eq`,
+`apply_hwv_ne_zero` (on quotients of `M(λ)`), (c) `IsContravariantForm.tmul` and
+`LinearMap.BilinForm.Nondegenerate.tmul` (over a field, no finiteness), (d) `orthogonal`, (e)
+`apply_eq_zero_of_centralBlock` (finite type, any module); Thm. 3.15
+`exists_isContravariantForm_of_surjective` (radical `φ(N(λ))`, from the Shapovalov form instead
+of the universal form on `U(𝔤)`) and `nondegenerate_iff_nonempty_equiv` (nondegenerate iff
+`V ≅ L(λ)`).
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and
