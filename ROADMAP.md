@@ -848,6 +848,11 @@ weights maximal in their dot orbit; via central blocks and Harish-Chandra linkag
 for large `n`; reconstructed via `ρ - wρ ∈ Q₊ \ {0}` for `w ≠ 1`,
 `eq_one_or_exists_sub_apply_eq_rootOf`) and `exists_isProjectiveO_surjective_verma`
 (`M(λ + nρ) ⊗ L(nρ)^* ↠ M(λ)`, the first step of Thm. 3.8).
+**Enough projectives** (`KacMoody/EnoughProjectives.lean`, Humphreys GSM 94 Thm. 3.8, projective
+part): `exists_isProjectiveO_surjective` (every finitely generated `M` in `𝒪` is a quotient of a
+finite direct sum of modules `M(λ + nρ) ⊗ L(nρ)^*`, which is finitely generated, in `𝒪` and
+projective), via `IsProjectiveO.directSum`; reconstructed by induction on the dimension of the
+weight spaces above a generating set instead of the length. Open: the injective part of Thm. 3.8.
 **Standard filtrations** (`KacMoody/StandardFiltration.lean`, Humphreys GSM 94 §3.6–3.7):
 `IsStdFiltered P N s` (`N` has a Verma flag with highest weights `s`), `isStdFiltered_of_fin`,
 `exists_isStdFiltered_tensorVerma` (Thm. 3.6 for `M(Λ) ⊗ Z`); the coinvariant form of Thm. 3.7,
