@@ -2829,9 +2829,12 @@ completed steps and continuation threads are:
   Lemma 7.3.4 (`balanced_eq_of_sub_eq_smul`), over `ℚ(v)` with lattices at `v = ∞` and
   `v = 0`. `CrystalBasis/Global/NegativeBar.lean`: bar on `U⁻` (`negBar`), the `ℤ`-form
   `U⁻_ℤ` (`negIntegral`, bar-stable), `L(∞)⁻ = bar L(∞)` (`latInfBar`) and the divisibility
-  `x - x̄ ∈ (v - v⁻¹)U⁻_ℤ` used in Lemma 7.3.4 (`exists_sub_negBar_eq_smul`). Remaining: the
-  weight grading of `U⁻_ℤ`, the integral forms of `V(λ)` and their divided-power stability,
-  [Kas91] Prop. 6.1.3, the induction 7.3–7.5, the global basis, and the rest of 41.1.6.
+  `x - x̄ ∈ (v - v⁻¹)U⁻_ℤ` used in Lemma 7.3.4 (`exists_sub_negBar_eq_smul`).
+  `Global/NegativeIntegralGrading.lean`: `U⁻_ℤ` is graded (`proj_mem_negIntegral`).
+  `Global/HighestWeightBar.lean`: `ker(y ↦ y⁻v_λ) = J + Σᵢ 'f θᵢ^{⟨i,λ⟩+1}` (`ker_ev_eq`), the bar
+  involution of `L_q(λ)` ([Kas91] (6.1.15), `hwBar`) and `V_ℤ(λ)` ((6.1.12), `hwIntegral`,
+  bar-stable). Remaining: divided-power stability of `V_ℤ(λ)`, [Kas91] Prop. 6.1.3, the
+  induction 7.3–7.5, the global basis, and the rest of 41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
