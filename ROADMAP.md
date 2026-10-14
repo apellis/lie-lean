@@ -2844,7 +2844,12 @@ completed steps and continuation threads are:
   (`balanced_coeff_int`, `balanced_coeff_zero`, `balanced_eq_zero_of_mem_span`) and
   Lemma 7.1.2 in basis form (`exists_residueIndependent_extension`), and the scalar step of
   Lemma 7.3.4 (`balanced_eq_of_sub_eq_smul`), over `ℚ(v)` with lattices at `v = ∞` and
-  `v = 0`. `CrystalBasis/Global/NegativeBar.lean`: bar on `U⁻` (`negBar`), the `ℤ`-form
+  `v = 0`. `Global/BalancedSpan.lean`: the spanning half of Lemma 7.1.1 (i) in basis form
+  (`span_of_balanced`: if residues of `g_b ∈ M ∩ L₀ ∩ L₁` cover `M ∩ L₀` modulo `v⁻¹L₀` over `ℤ`
+  and `M ∩ v⁻¹L₀ ∩ L₁ = 0`, then `M` is the `𝒜`-span of the `g_b`; Kashiwara's (7.1.1)–(7.1.2)).
+  and the residue half of Lemma 7.1.1 (ii) (`exists_int_sub_mem_of_mem_span`: elements of `L₀`
+  in the `𝒜`-span of residue-independent `g_b ∈ L₀` are `ℤ`-combinations modulo `v⁻¹L₀`).
+  `CrystalBasis/Global/NegativeBar.lean`: bar on `U⁻` (`negBar`), the `ℤ`-form
   `U⁻_ℤ` (`negIntegral`, bar-stable), `L(∞)⁻ = bar L(∞)` (`latInfBar`) and the divisibility
   `x - x̄ ∈ (v - v⁻¹)U⁻_ℤ` used in Lemma 7.3.4 (`exists_sub_negBar_eq_smul`).
   `Global/NegativeIntegralGrading.lean`: `U⁻_ℤ` is graded (`proj_mem_negIntegral`).

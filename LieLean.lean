@@ -291,6 +291,7 @@ import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.ContravariantForm
 import LieLean.Algebra.QuantumGroup.RhoBar
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.BalancedSpan
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.BalancedTriple
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightIntegral
