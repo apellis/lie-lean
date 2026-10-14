@@ -25,12 +25,12 @@ then `M ∩ L₀ ∩ L_∞ = ⊕ ℤ g_b` and `M ∩ v⁻¹L₀ ∩ L_∞ = 0`. 
 * `balanced_coeff_int`, `balanced_coeff_zero`: **Kashiwara Lemma 7.1.1 (ii)**,
   in the form: if `Σ c_b g_b` with `c_b ∈ 𝒜` lies in `L₀ ∩ L_∞`, then every `c_b` is an integer;
   if it lies in `v⁻¹L₀ ∩ L_∞`, then every `c_b` is zero;
-* `eq_zero_of_mem_span`: Lemma 7.1.1 (i) in the form `M ∩ v⁻¹L₀ ∩ L_∞ = 0`;
+* `balanced_eq_zero_of_mem_span`: Lemma 7.1.1 (i) in the form `M ∩ v⁻¹L₀ ∩ L_∞ = 0`;
 * `exists_split_of_mem_span`: `M = M ∩ L₀ + M ∩ L_∞` when the `g_b` lie in `L₀ ∩ L_∞`;
 * `exists_residueIndependent_extension`: **Kashiwara Lemma 7.1.2** in basis form: vectors of
   `(L₀ + M) ∩ (L_∞ + M)` with residues independent modulo `M` can be corrected by elements of
   `M` so that, together with the `g_b`, they lie in `L₀ ∩ L_∞` with independent residues;
-* `eq_of_sub_eq_smul`: the scalar step of [Kas91] Lemma 7.3.4: if `x, x' ∈ L₀ ∩ L_∞` and
+* `balanced_eq_of_sub_eq_smul`: the scalar step of [Kas91] Lemma 7.3.4: if `x, x' ∈ L₀ ∩ L_∞` and
   `x - x' ∈ (v - v⁻¹) M`, then `x = x'`.
 
 Lemmas 7.1.1 and 7.1.2 follow Kashiwara's statements and the structure of his proofs (the
@@ -499,7 +499,7 @@ theorem exists_residueIndependent_extension {κ : Type*}
 
 /-- A vector of the `𝒜`-span of a family with independent residues on both sides that lies in
 `v⁻¹L₀ ∩ L₁` vanishes ([Kas91] Lemma 7.1.1 (i): `M ∩ qL₀ ∩ L_∞ = 0`). -/
-theorem eq_zero_of_mem_span
+theorem balanced_eq_zero_of_mem_span
     (h₀ : ResidueIndependent InfinityLocalRing L₀ InfinityLocalRing.uniformizer g)
     (h₁ : ResidueIndependent LocalRing L₁ localX g) {x : V}
     (hx : x ∈ Submodule.span (LaurentPolynomial ℤ) (Set.range g))
@@ -513,7 +513,7 @@ theorem eq_zero_of_mem_span
 
 /-- [Kas91] Lemma 7.3.4, abstract form. If `x, x' ∈ L₀ ∩ L₁` and `x - x' = (v - v⁻¹) y` with `y`
 in the `𝒜`-span of a family with independent residues on both sides, then `x = x'`. -/
-theorem eq_of_sub_eq_smul
+theorem balanced_eq_of_sub_eq_smul
     (h₀ : ResidueIndependent InfinityLocalRing L₀ InfinityLocalRing.uniformizer g)
     (h₁ : ResidueIndependent LocalRing L₁ localX g) {x x' y : V} (hx₀ : x ∈ L₀) (hx₁ : x ∈ L₁)
     (hx₀' : x' ∈ L₀) (hx₁' : x' ∈ L₁)
@@ -527,7 +527,7 @@ theorem eq_of_sub_eq_smul
   have hy' : y = (RatFunc.X - RatFunc.X⁻¹ : 𝕂)⁻¹ • (x - x') := by
     rw [hxy, smul_smul, inv_mul_cancel₀ hne, one_smul]
   have hy0 : y = 0 := by
-    refine eq_zero_of_mem_span hsmul h₀ h₁ hy ?_ ?_
+    refine balanced_eq_zero_of_mem_span hsmul h₀ h₁ hy ?_ ?_
     · obtain ⟨u, hu⟩ := exists_inv_X_sub_eq_uniformizer_mul
       rw [hy', ← hu, algebraMap_smul, mul_smul]
       exact Submodule.smul_mem_pointwise_smul _ _ _ (L₀.smul_mem _ (sub_mem hx₀ hx₀'))
