@@ -21,7 +21,8 @@ Here `μ ≤ λ` is `μ ∈ cone P λ` (`λ - μ ∈ Q₊`).
 
 ## Main results
 
-* `Matrix.Realization.KacMoodyAlgebra.extOne_verma_eq_zero`: (a).
+* `Matrix.Realization.KacMoodyAlgebra.extOne_verma_eq_zero`: (a), from
+  `extOne_verma_eq_zero_of_mem_cone` (any weight module with weights in `μ - Q₊`).
 * `Matrix.Realization.KacMoodyAlgebra.extOne_verma_irreducibleModule_eq_zero`: (b).
 * `Matrix.Realization.KacMoodyAlgebra.nonempty_hom_maxSubmodule_equiv_extOne`: (c).
 * `Matrix.Realization.KacMoodyAlgebra.extOne_irreducibleModule_self_eq_zero`: (d).
@@ -45,18 +46,18 @@ variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K] [
 
 local notation "𝔤" => KacMoodyAlgebra P
 
-/-- **Humphreys, GSM 94, Proposition 3.1 (a).** If `M` is a highest weight module of weight `μ`
-(a quotient of `M(μ)`) and `λ ≮ μ`, then `Ext¹(M(λ), M) = 0`: every extension of `M(λ)` by `M`
-splits. Humphreys states this for `𝔤` semisimple over `ℂ`. -/
-theorem extOne_verma_eq_zero {M : Type*} [AddCommGroup M] [Module K M]
+/-- `Ext¹(M(λ), M) = 0` for a weight module `M` whose weights lie in `μ - Q₊`, if `λ ≮ μ`: every
+extension of `M(λ)` by `M` splits. This is the argument of Humphreys, GSM 94, Proposition 3.1 (a)
+and Theorem 3.3 (d). -/
+theorem extOne_verma_eq_zero_of_mem_cone {M : Type*} [AddCommGroup M] [Module K M]
     [LieRingModule P.KacMoodyAlgebra M] [LieModule K P.KacMoodyAlgebra M] {Λ μ : Dual K H}
-    (φ : VermaModule P μ →ₗ⁅K,𝔤⁆ M) (hφ : Function.Surjective φ)
+    (hM : ⨆ ν, weightSpaceOfMap M (h P) ν = ⊤)
+    (hwt : ∀ ν (x : M), x ∈ weightSpaceOfMap M (h P) ν → x ≠ 0 → ν ∈ cone P μ)
     (hΛμ : ¬ (Λ ∈ cone P μ ∧ Λ ≠ μ)) (y : ExtOne (h P) (VermaModule P Λ) M) : y = 0 := by
   obtain ⟨c, rfl⟩ := ExtOne.mk_surjective y
   set E := ExtOne.Extension c
-  have hM : IsCategoryO P M := IsCategoryO.of_surjective φ hφ
   have hE : ⨆ ν, weightSpaceOfMap E (h P) ν = ⊤ :=
-    ExtOne.Extension.iSup_weightSpaceOfMap_eq_top c hM.1 (VermaModule.isCategoryO P Λ).1
+    ExtOne.Extension.iSup_weightSpaceOfMap_eq_top c hM (VermaModule.isCategoryO P Λ).1
   -- a preimage of `v_λ` of weight `λ`
   obtain ⟨v, hv, hvv⟩ := ExtOne.exists_mem_weightSpaceOfMap_of_surjective (h P) hE
     (ExtOne.Extension.surjective_snd c) (hwv_mem_weightSpace P Λ)
@@ -73,7 +74,7 @@ theorem extOne_verma_eq_zero {M : Type*} [AddCommGroup M] [Module K M]
       exact hvi.1
     by_contra hne
     have hn0 : n ≠ 0 := fun h0 ↦ hne (by rw [← hn, h0, map_zero])
-    obtain ⟨k, hk, hkμ⟩ := VermaModule.exists_eq_sub_of_mem_weightSpace P μ φ hφ hnw hn0
+    obtain ⟨k, hk, hkμ⟩ := hwt _ n hnw hn0
     refine hΛμ ⟨⟨k + Pi.single i 1, add_nonneg hk (Pi.single_nonneg.mpr zero_le_one), ?_⟩,
       fun hΛ ↦ ?_⟩
     · rw [map_add, rootOf_single, sub_add_eq_sub_sub, ← hkμ]
@@ -92,6 +93,16 @@ theorem extOne_verma_eq_zero {M : Type*} [AddCommGroup M] [Module K M]
   have : (ExtOne.Extension.snd c).comp σ = LieModuleHom.id :=
     VermaModule.hom_ext P Λ (by rw [LieModuleHom.comp_apply, VermaModule.lift_hwv, hvv]; rfl)
   exact LieModuleHom.congr_fun this m
+
+/-- **Humphreys, GSM 94, Proposition 3.1 (a).** If `M` is a highest weight module of weight `μ`
+(a quotient of `M(μ)`) and `λ ≮ μ`, then `Ext¹(M(λ), M) = 0`: every extension of `M(λ)` by `M`
+splits. Humphreys states this for `𝔤` semisimple over `ℂ`. -/
+theorem extOne_verma_eq_zero {M : Type*} [AddCommGroup M] [Module K M]
+    [LieRingModule P.KacMoodyAlgebra M] [LieModule K P.KacMoodyAlgebra M] {Λ μ : Dual K H}
+    (φ : VermaModule P μ →ₗ⁅K,𝔤⁆ M) (hφ : Function.Surjective φ)
+    (hΛμ : ¬ (Λ ∈ cone P μ ∧ Λ ≠ μ)) (y : ExtOne (h P) (VermaModule P Λ) M) : y = 0 :=
+  extOne_verma_eq_zero_of_mem_cone P (IsCategoryO.of_surjective φ hφ).1
+    (fun _ _ hx hx0 ↦ VermaModule.exists_eq_sub_of_mem_weightSpace P μ φ hφ hx hx0) hΛμ y
 
 /-- **Humphreys, GSM 94, Proposition 3.1 (b).** If `μ ≤ λ`, then `Ext¹(M(λ), L(μ)) = 0`. -/
 theorem extOne_verma_irreducibleModule_eq_zero {Λ μ : Dual K H} (hμΛ : μ ∈ cone P Λ)
