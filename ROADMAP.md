@@ -1964,8 +1964,11 @@ via `formFunctional_braidReversal` (`P_{-λ}(σ z) = P_λ(z)` on `U_0`) and `rho
 (`QuantumGroup/Modified/FormLimit.lean`): `IrreducibleModule.isContravariant_tensorForm` (the form
 `(x ⊗ x', y ⊗ y') = (x, y)_Λ (x', y')_{Λ'}` on `ʷL_q(Λ) ⊗ L_q(Λ')`, `ʷ` the twist by `ω`, is
 `ρ`-contravariant; `X`-regular root data, where Lusztig assumes `Y`-regular), via
-`ChevalleyTwist.isContravariant_form`. Next: 26.2.3 (uses 19.3.7,
-`IrreducibleModule.exists_form_minusHom_sub_mem`, below).
+`ChevalleyTwist.isContravariant_form`. [Lus] 26.2.3:
+`IrreducibleModule.tendstoAtInfinity_tensorForm` (`(x(ξ_{-Λ} ⊗ η_{Λ'}), y(ξ_{-Λ} ⊗ η_{Λ'})) → (x, y)`
+for `x = u 1_ζ`, `y = u' 1_ζ`, as `Λ → ∞` with `Λ' = ζ + Λ`; `ϖ`-adic limits `TendstoAtInfinity`,
+`k = A[ϖ⁻¹]`, `ϖ ↦ v⁻¹`), from 26.2.2, 26.1.2 (b), (c) and 19.3.7
+(`IrreducibleModule.exists_form_minusHom_sub_mem`, below).
 **The symmetries `T'_{i,1}`, `T''_{i,-1}`** (`QuantumGroup/ModuleSymmetry/Symmetries.lean`,
 `QuantumGroup/Modified/Symmetries.lean`; [Lus] 37.1–37.2, 41.1.1–41.1.3): `braidPrimeEquiv R hv i`
 (`T'_{i,1} = ω Tᵢ ω`, [Lus] 37.2.4) and its inverse `T''_{i,-1}`, with Lusztig's values on all
