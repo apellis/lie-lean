@@ -1955,8 +1955,10 @@ and `form_rightAct_left` (`(x u, y) = (x, y ρ̄(u))`), via `formFunctional_rho_
 (`P_{ζ-αᵢ}(ρ(Eᵢ) u) = P_ζ(u ρ̄(Eᵢ))`, from [Lus] 1.2.13 (a) and 3.1.6). [Lus] 26.1.4
 (`QuantumGroup/Modified/FormSigma.lean`): `Modified.sigma` (`σ : U̇ → U̇`,
 `π_{λ',λ''}(u) ↦ π_{-λ'',-λ'}(σ u)`, [Lus] 23.1.6; `sigma_leftAct`: `σ(u x) = σ(x) σ(u)`),
-`braidReversal_rho` (`σ ρ = ρ̄ σ`) and `form_sigma_sigma` (`(σ x, σ y) = (x, y)`). Next: [Lus]
-26.1.5, 26.1.6 and the limit statements of 26.2.
+`braidReversal_rho` (`σ ρ = ρ̄ σ`) and `form_sigma_sigma` (`(σ x, σ y) = (x, y)`). [Lus] 26.1.5
+(`QuantumGroup/Modified/FormPlus.lean`): `form_plusHom_leftAct_one` (`(x⁺ 1_λ, x'⁺ 1_λ) = (x, x')`),
+via `formFunctional_braidReversal` (`P_{-λ}(σ z) = P_λ(z)` on `U_0`) and `rho_plusHom_monomial`.
+Next: [Lus] 26.1.6 and the limit statements of 26.2.
 **The symmetries `T'_{i,1}`, `T''_{i,-1}`** (`QuantumGroup/ModuleSymmetry/Symmetries.lean`,
 `QuantumGroup/Modified/Symmetries.lean`; [Lus] 37.1–37.2, 41.1.1–41.1.3): `braidPrimeEquiv R hv i`
 (`T'_{i,1} = ω Tᵢ ω`, [Lus] 37.2.4) and its inverse `T''_{i,-1}`, with Lusztig's values on all
