@@ -10,12 +10,13 @@ import LieLean.Algebra.QuantumGroup.Modified.FormFunctional
 
 Lusztig's form `(,) : U̇ × U̇ → k` ([Lus] 26.1.2) is the unique bilinear form with
 * (a) `(1_λ x 1_λ', 1_μ y 1_μ') = 0` unless `λ = μ` and `λ' = μ'`;
-* (b) `(u x, y) = (x, ρ̄(u) y)` for `u ∈ U`;
+* (b) `(u x, y) = (x, ρ(u) y)` for `u ∈ U`;
 * (c) `(x⁻ 1_λ, y⁻ 1_λ) = (x, y)` for `x, y ∈ 'f`;
 
-and it is symmetric (d). Here `U` acts on `U̇` by `Modified.leftAct` and `ρ̄` is
-`QuantumGroup.rhoBar` (26.1.1). On the components,
-`(π_{λ',λ''}(a), π_{λ',λ''}(b)) = P_{λ''}(ρ̄(a) b)` with `P_ζ = formFunctional`, and the form is
+and it is symmetric (d). Here `U` acts on `U̇` by `Modified.leftAct` and `ρ` is Lusztig's
+anti-automorphism of 19.1.1 (`QuantumGroup.rho`). In (b) the source has `ρ`; the conjugate
+`ρ̄` of 26.1.1 enters in 26.1.3, `(x u, y) = (x, y ρ̄(u))`. On the components,
+`(π_{λ',λ''}(a), π_{λ',λ''}(b)) = P_{λ''}(ρ(a) b)` with `P_ζ = formFunctional`, and the form is
 zero between different components.
 
 ## Main definitions and results
@@ -50,38 +51,38 @@ section Descend
 
 include hv
 
-lemma formFunctional_rhoBar_mul_eq_zero_left {l₁ l₂ : Y →+ ℤ} {a b : QuantumGroup R v}
+lemma formFunctional_rho_mul_eq_zero_left {l₁ l₂ : Y →+ ℤ} {a b : QuantumGroup R v}
     (ha : a ∈ modRel R v l₁ l₂) (hb : b ∈ adWeightSpace R v (l₁ - l₂)) :
-    formFunctional R v hv l₂ (rhoBar R v a * b) = 0 := by
+    formFunctional R v hv l₂ (rho R v a * b) = 0 := by
   have hv0 := NeZero.ne v
   induction ha using Submodule.span_induction with
   | mem x hx =>
     rcases hx with ⟨μ, u, hu, rfl⟩ | ⟨μ, u, hu, rfl⟩
-    · have hub : rhoBar R v u * b ∈ adWeightSpace R v 0 := by
-        simpa using mul_mem_adWeightSpace (rhoBar_mem_adWeightSpace hu) hb
-      rw [rhoBar_mul, map_sub, rhoBar_K, rhoBar_algebraMap, mul_sub, sub_mul,
+    · have hub : rho R v u * b ∈ adWeightSpace R v 0 := by
+        simpa using mul_mem_adWeightSpace (rho_mem_adWeightSpace hu) hb
+      rw [rho_mul, map_sub, rho_K, rho_algebraMap, mul_sub, sub_mul,
         ← Algebra.commutes, ← Algebra.smul_def, smul_mul_assoc, map_sub, map_smul, mul_assoc,
         hb μ, mul_smul_comm, ← mul_assoc, map_smul, formFunctional_mul_K, smul_eq_mul,
         smul_eq_mul, ← mul_assoc, ← zpow_add₀ hv0, AddMonoidHom.sub_apply, sub_add_cancel,
         sub_self]
-    · have hub : rhoBar R v u * b ∈ adWeightSpace R v 0 := by
-        simpa using mul_mem_adWeightSpace (rhoBar_mem_adWeightSpace hu) hb
-      rw [rhoBar_mul, map_sub, rhoBar_K, rhoBar_algebraMap, sub_mul, sub_mul, mul_assoc,
+    · have hub : rho R v u * b ∈ adWeightSpace R v 0 := by
+        simpa using mul_mem_adWeightSpace (rho_mem_adWeightSpace hu) hb
+      rw [rho_mul, map_sub, rho_K, rho_algebraMap, sub_mul, sub_mul, mul_assoc,
         mul_assoc, ← Algebra.smul_def, map_sub, map_smul, formFunctional_K_mul hv _ hub,
         smul_eq_mul, sub_self]
   | zero => simp
   | add x y _ _ hx hy => rw [map_add, add_mul, map_add, hx, hy, add_zero]
   | smul c x _ hx => rw [map_smul, smul_mul_assoc, map_smul, hx, smul_zero]
 
-lemma formFunctional_rhoBar_mul_eq_zero_right {l₁ l₂ : Y →+ ℤ} {a b : QuantumGroup R v}
+lemma formFunctional_rho_mul_eq_zero_right {l₁ l₂ : Y →+ ℤ} {a b : QuantumGroup R v}
     (ha : a ∈ adWeightSpace R v (l₁ - l₂)) (hb : b ∈ modRel R v l₁ l₂) :
-    formFunctional R v hv l₂ (rhoBar R v a * b) = 0 := by
+    formFunctional R v hv l₂ (rho R v a * b) = 0 := by
   have hv0 := NeZero.ne v
-  have ha' := rhoBar_mem_adWeightSpace ha
+  have ha' := rho_mem_adWeightSpace ha
   induction hb using Submodule.span_induction with
   | mem x hx =>
     rcases hx with ⟨μ, u, hu, rfl⟩ | ⟨μ, u, hu, rfl⟩
-    · have hau : rhoBar R v a * u ∈ adWeightSpace R v 0 := by
+    · have hau : rho R v a * u ∈ adWeightSpace R v 0 := by
         simpa using mul_mem_adWeightSpace ha' hu
       rw [sub_mul, mul_sub, ← Algebra.smul_def, mul_smul_comm, map_sub,
         map_smul, ← mul_assoc, mul_K_of_mem_adWeightSpace ha', smul_mul_assoc, mul_assoc,
@@ -96,38 +97,38 @@ lemma formFunctional_rhoBar_mul_eq_zero_right {l₁ l₂ : Y →+ ℤ} {a b : Qu
   | smul c x _ hx => rw [mul_smul_comm, map_smul, hx, smul_zero]
 
 variable (R v) in
-/-- `(a, b) ↦ P_{λ''}(ρ̄(a) b)` on `U_{λ'-λ''}`. -/
+/-- `(a, b) ↦ P_{λ''}(ρ(a) b)` on `U_{λ'-λ''}`. -/
 def formEltAux (p : (Y →+ ℤ) × (Y →+ ℤ)) :
     adWeightSpace R v (p.1 - p.2) →ₗ[k] adWeightSpace R v (p.1 - p.2) →ₗ[k] k :=
   ((LinearMap.mul k (QuantumGroup R v)).compr₂ (formFunctional R v hv p.2)).compl₁₂
-    (rhoBar R v ∘ₗ (adWeightSpace R v (p.1 - p.2)).subtype) (adWeightSpace R v (p.1 - p.2)).subtype
+    (rho R v ∘ₗ (adWeightSpace R v (p.1 - p.2)).subtype) (adWeightSpace R v (p.1 - p.2)).subtype
 
 lemma formEltAux_apply (p : (Y →+ ℤ) × (Y →+ ℤ)) (a b : adWeightSpace R v (p.1 - p.2)) :
-    formEltAux R v hv p a b = formFunctional R v hv p.2 (rhoBar R v a.1 * b.1) := rfl
+    formEltAux R v hv p a b = formFunctional R v hv p.2 (rho R v a.1 * b.1) := rfl
 
 variable (R v) in
 /-- The form on `ₗU_λ''` descended in the second variable. -/
 def formComp₁ (p : (Y →+ ℤ) × (Y →+ ℤ)) :
     adWeightSpace R v (p.1 - p.2) →ₗ[k] Comp R v p →ₗ[k] k :=
   (Submodule.liftQ _ (formEltAux R v hv p).flip fun _ hb ↦ LinearMap.ext fun a ↦
-    formFunctional_rhoBar_mul_eq_zero_right hv a.2 hb).flip
+    formFunctional_rho_mul_eq_zero_right hv a.2 hb).flip
 
 variable (R v) in
-/-- The form on the component `ₗU_λ''`, `(π(a), π(b)) = P_{λ''}(ρ̄(a) b)`. -/
+/-- The form on the component `ₗU_λ''`, `(π(a), π(b)) = P_{λ''}(ρ(a) b)`. -/
 def formComp (p : (Y →+ ℤ) × (Y →+ ℤ)) : Comp R v p →ₗ[k] Comp R v p →ₗ[k] k :=
   Submodule.liftQ _ (formComp₁ R v hv p) fun _ ha ↦ LinearMap.ext fun b ↦ by
     obtain ⟨b, rfl⟩ := Comp.mk_surjective R v p b
-    exact formFunctional_rhoBar_mul_eq_zero_left hv ha b.2
+    exact formFunctional_rho_mul_eq_zero_left hv ha b.2
 
 lemma formComp_mk (p : (Y →+ ℤ) × (Y →+ ℤ)) (a b : adWeightSpace R v (p.1 - p.2)) :
     formComp R v hv p (Comp.mk R v p a) (Comp.mk R v p b) =
-      formFunctional R v hv p.2 (rhoBar R v a.1 * b.1) := rfl
+      formFunctional R v hv p.2 (rho R v a.1 * b.1) := rfl
 
 end Descend
 
 variable (R v) in
 /-- **Lusztig's bilinear form on `U̇`** ([Lus] 26.1.2): `(π_{λ',λ''}(a), π_{λ',λ''}(b)) =
-P_{λ''}(ρ̄(a) b)` and different components are orthogonal. -/
+P_{λ''}(ρ(a) b)` and different components are orthogonal. -/
 def form : Modified R v →ₗ[k] Modified R v →ₗ[k] k :=
   DirectSum.toModule k _ _ fun p ↦
     (formComp R v hv p).compl₂ (DirectSum.component k _ (Comp R v) p)
@@ -135,7 +136,7 @@ def form : Modified R v →ₗ[k] Modified R v →ₗ[k] k :=
 lemma form_elt_elt_self (l₁ l₂ : Y →+ ℤ) {a b : QuantumGroup R v}
     (ha : a ∈ adWeightSpace R v (l₁ - l₂)) (hb : b ∈ adWeightSpace R v (l₁ - l₂)) :
     form R v hv (elt l₁ l₂ a ha) (elt l₁ l₂ b hb) =
-      formFunctional R v hv l₂ (rhoBar R v a * b) := by
+      formFunctional R v hv l₂ (rho R v a * b) := by
   rw [form, elt, DirectSum.toModule_lof, LinearMap.compl₂_apply, elt, DirectSum.component.lof_self]
   rfl
 
@@ -150,7 +151,7 @@ lemma form_elt_elt_of_ne {l₁ l₂ m₁ m₂ : Y →+ ℤ} (h : (l₁, l₂) �
 lemma form_elt_elt {l₁ l₂ m₁ m₂ : Y →+ ℤ} {a b : QuantumGroup R v}
     (ha : a ∈ adWeightSpace R v (l₁ - l₂)) (hb : b ∈ adWeightSpace R v (m₁ - m₂)) :
     form R v hv (elt l₁ l₂ a ha) (elt m₁ m₂ b hb) =
-      if (l₁, l₂) = (m₁, m₂) then formFunctional R v hv l₂ (rhoBar R v a * b) else 0 := by
+      if (l₁, l₂) = (m₁, m₂) then formFunctional R v hv l₂ (rho R v a * b) else 0 := by
   split_ifs with h
   · obtain ⟨rfl, rfl⟩ := Prod.mk.inj h
     exact form_elt_elt_self hv l₁ l₂ ha hb
@@ -186,9 +187,9 @@ theorem form_one_mul_mul_one_eq_zero {l₁ l₂ m₁ m₂ : Y →+ ℤ} (h : (l�
     · rw [form_elt_elt_of_ne hv (by rwa [← h₁, ← h₂])]
     all_goals simp
 
-/-- **[Lus] 26.1.2 (b)**: `(u x, y) = (x, ρ̄(u) y)` for `u ∈ U`. -/
+/-- **[Lus] 26.1.2 (b)**: `(u x, y) = (x, ρ(u) y)` for `u ∈ U`. -/
 theorem form_leftAct_left (u : QuantumGroup R v) (x y : Modified R v) :
-    form R v hv (leftAct R v hv u x) y = form R v hv x (leftAct R v hv (rhoBar R v u) y) := by
+    form R v hv (leftAct R v hv u x) y = form R v hv x (leftAct R v hv (rho R v u) y) := by
   induction u using induction_adWeightSpace with
   | h0 => simp
   | hadd u u' hu hu' => simp only [map_add, LinearMap.add_apply, hu, hu']
@@ -201,8 +202,8 @@ theorem form_leftAct_left (u : QuantumGroup R v) (x y : Modified R v) :
   | h0 => simp
   | hadd y y' hy hy' => simp only [map_add, hy, hy']
   | helt m₁ m₂ b hb =>
-    rw [leftAct_elt hv hu, leftAct_elt hv (rhoBar_mem_adWeightSpace hu), form_elt_elt,
-      form_elt_elt, rhoBar_mul, mul_assoc]
+    rw [leftAct_elt hv hu, leftAct_elt hv (rho_mem_adWeightSpace hu), form_elt_elt,
+      form_elt_elt, rho_mul, mul_assoc]
     have : ((l₁ + χ, l₂) = (m₁, m₂)) ↔ ((l₁, l₂) = (m₁ + -χ, m₂)) := by
       simp only [Prod.mk.injEq]
       constructor
@@ -223,7 +224,7 @@ theorem form_minusHom_leftAct_one (l : Y →+ ℤ) (x y : LusztigF k I) :
         leftAct_elt hv (minusHom_monomial_mem_adWeightSpace w'), form_elt_elt]
       split_ifs with h
       · rw [mul_one, mul_one, ← mul_one (minusHom R v (monomial k w')), ← K_zero R v,
-          ← mul_assoc, formFunctional_rhoBar_minusHom, map_zero, zpow_zero, one_mul]
+          ← mul_assoc, formFunctional_rho_minusHom, map_zero, zpow_zero, one_mul]
       · refine (LusztigF.form_eq_zero_of_ne D v (fun hw ↦ h ?_) (monomial_mem_weightSpace w)
           (monomial_mem_weightSpace w')).symm
         rw [wordChar_eq_rootSum, wordChar_eq_rootSum, hw]
@@ -238,8 +239,8 @@ theorem eq_of_one_leftAct {B B' : Modified R v →ₗ[k] Modified R v →ₗ[k] 
       B (one l₁ * x * one l₂) (one m₁ * y * one m₂) = 0)
     (ha' : ∀ l₁ l₂ m₁ m₂, (l₁, l₂) ≠ (m₁, m₂) → ∀ x y,
       B' (one l₁ * x * one l₂) (one m₁ * y * one m₂) = 0)
-    (hb : ∀ u x y, B (leftAct R v hv u x) y = B x (leftAct R v hv (rhoBar R v u) y))
-    (hb' : ∀ u x y, B' (leftAct R v hv u x) y = B' x (leftAct R v hv (rhoBar R v u) y))
+    (hb : ∀ u x y, B (leftAct R v hv u x) y = B x (leftAct R v hv (rho R v u) y))
+    (hb' : ∀ u x y, B' (leftAct R v hv u x) y = B' x (leftAct R v hv (rho R v u) y))
     (h : ∀ ζ z, B (one ζ) (leftAct R v hv z (one ζ)) = B' (one ζ) (leftAct R v hv z (one ζ))) :
     B = B' := by
   refine LinearMap.ext fun x ↦ LinearMap.ext fun y ↦ ?_
@@ -253,10 +254,10 @@ theorem eq_of_one_leftAct {B B' : Modified R v →ₗ[k] Modified R v →ₗ[k] 
   | helt m₁ m₂ b hB =>
     by_cases hlm : (l₁, l₂) = (m₁, m₂)
     · obtain ⟨rfl, rfl⟩ := Prod.mk.inj hlm
-      have hz : rhoBar R v a * b ∈ adWeightSpace R v ((l₂ + 0) - l₂) := by
-        simpa using mul_mem_adWeightSpace (rhoBar_mem_adWeightSpace hA) hB
-      have e : leftAct R v hv (rhoBar R v a) (elt l₁ l₂ b hB) =
-          leftAct R v hv (rhoBar R v a * b) (one l₂) := by
+      have hz : rho R v a * b ∈ adWeightSpace R v ((l₂ + 0) - l₂) := by
+        simpa using mul_mem_adWeightSpace (rho_mem_adWeightSpace hA) hB
+      have e : leftAct R v hv (rho R v a) (elt l₁ l₂ b hB) =
+          leftAct R v hv (rho R v a * b) (one l₂) := by
         rw [leftAct_mul, leftAct_one_eq_elt hv hB]
       rw [← leftAct_one_eq_elt hv hA, hb, hb', e, h]
     · have e₁ := one_mul_mul_one l₁ l₂ l₁ l₂ hA
@@ -266,12 +267,12 @@ theorem eq_of_one_leftAct {B B' : Modified R v →ₗ[k] Modified R v →ₗ[k] 
 
 /-- Properties (b), (c) of [Lus] 26.1.2 determine `(1_ζ, z 1_ζ) = P_ζ(z)`. -/
 theorem one_leftAct_one_eq_formFunctional {B : Modified R v →ₗ[k] Modified R v →ₗ[k] k}
-    (hb : ∀ u x y, B (leftAct R v hv u x) y = B x (leftAct R v hv (rhoBar R v u) y))
+    (hb : ∀ u x y, B (leftAct R v hv u x) y = B x (leftAct R v hv (rho R v u) y))
     (hc : ∀ l x y, B (leftAct R v hv (minusHom R v x) (one l))
       (leftAct R v hv (minusHom R v y) (one l)) = LusztigF.form D v x y)
     (ζ : Y →+ ℤ) (z : QuantumGroup R v) :
     B (one ζ) (leftAct R v hv z (one ζ)) = formFunctional R v hv ζ z := by
-  induction z using induction_rhoBar_minusHom with
+  induction z using induction_rho_minusHom with
   | h0 => simp
   | hadd x y hx hy => rw [map_add, LinearMap.add_apply, map_add, map_add, hx, hy]
   | hsmul c x hx => rw [map_smul, LinearMap.smul_apply, map_smul, map_smul, hx]
@@ -284,14 +285,14 @@ theorem one_leftAct_one_eq_formFunctional {B : Modified R v →ₗ[k] Modified R
       rw [one, leftAct_elt hv (K_mem_adWeightSpace μ), elt_index (add_zero ζ) rfl rfl _ h2,
         elt_K_mul ζ ζ μ h1 h2]
     rw [leftAct_mul, leftAct_mul, hK, map_smul, map_smul, map_smul, ← hb, hc,
-      formFunctional_rhoBar_minusHom, smul_eq_mul]
+      formFunctional_rho_minusHom, smul_eq_mul]
 
 /-- **Uniqueness in [Lus] 26.1.2**: a bilinear form on `U̇` with properties (a), (b), (c) is
 `Modified.form`. -/
 theorem eq_form {B : Modified R v →ₗ[k] Modified R v →ₗ[k] k}
     (ha : ∀ l₁ l₂ m₁ m₂, (l₁, l₂) ≠ (m₁, m₂) → ∀ x y,
       B (one l₁ * x * one l₂) (one m₁ * y * one m₂) = 0)
-    (hb : ∀ u x y, B (leftAct R v hv u x) y = B x (leftAct R v hv (rhoBar R v u) y))
+    (hb : ∀ u x y, B (leftAct R v hv u x) y = B x (leftAct R v hv (rho R v u) y))
     (hc : ∀ l x y, B (leftAct R v hv (minusHom R v x) (one l))
       (leftAct R v hv (minusHom R v y) (one l)) = LusztigF.form D v x y) :
     B = form R v hv :=
@@ -305,7 +306,7 @@ theorem form_comm (x y : Modified R v) : form R v hv x y = form R v hv y x := by
   have h := eq_form hv (B := (form R v hv).flip)
     (fun _ _ _ _ h x y ↦ form_one_mul_mul_one_eq_zero hv (Ne.symm h) y x)
     (fun u x y ↦ by
-      rw [LinearMap.flip_apply, LinearMap.flip_apply, form_leftAct_left, rhoBar_rhoBar])
+      rw [LinearMap.flip_apply, LinearMap.flip_apply, form_leftAct_left, rho_rho])
     (fun l x y ↦ by rw [LinearMap.flip_apply, form_minusHom_leftAct_one, LusztigF.form_comm])
   exact (LinearMap.flip_apply _ _ _).symm.trans (LinearMap.congr_fun₂ h y x)
 
