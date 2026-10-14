@@ -903,6 +903,10 @@ projective in `𝒪` is `≅ P(λ)` for some `λ`, without the surjection hypoth
 `ProjectiveCover.card_filter_nonempty_equiv_eq_finrank_hom` (in `V ≅ ⊕ⱼ Qⱼ` with `V` finitely
 generated projective in `𝒪` and `Qⱼ` indecomposable, `#{j | Qⱼ ≅ P(λ)} = dim Hom(V, L(λ))`), via
 `DirectSum.lieModuleHomEquiv`.
+**Theorem 3.10, all projectives** (`KacMoody/ProjectiveStdFiltration.lean`):
+`IsProjectiveO.exists_isStdFiltered` (every finitely generated projective in `𝒪` has a standard
+filtration: a direct summand of the cover of Thm. 3.8, via `IsStdFiltered.directSum` and
+Prop. 3.7 (b)).
 **Dual Verma modules and Thm. 3.7** (`KacMoody/DualVerma.lean`): `isCategoryO_restrictedDual`,
 `multiplicity_restrictedDual` (`V^∨ ∈ 𝒪` with `[V^∨ : L(ν)] = [V : L(ν)]`, Humphreys §3.2),
 `finrank_primitiveVectors_restrictedDual` (`dim Hom(M(μ), V^∨) = dim (V/𝔫₋V)_μ`), the swap
