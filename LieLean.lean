@@ -390,6 +390,7 @@ import LieLean.Algebra.QuantumGroup.Modified.Commutation
 import LieLean.Algebra.QuantumGroup.Modified.Form
 import LieLean.Algebra.QuantumGroup.Modified.FormFunctional
 import LieLean.Algebra.QuantumGroup.Modified.FormRight
+import LieLean.Algebra.QuantumGroup.Modified.FormSigma
 import LieLean.Algebra.QuantumGroup.Modified.IntegralBasis
 import LieLean.Algebra.QuantumGroup.Modified.IntegralBasisPBW
 import LieLean.Algebra.QuantumGroup.Modified.IntegralBasisPBWAll
