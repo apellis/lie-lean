@@ -960,6 +960,11 @@ summand of `Θ_{s_1} ⋯ Θ_{s_k} M(λ)` and each `Θ_s` commutes with duality. 
 `nonempty_extOne_equiv_quotient_ker` (`Ext¹(C, N) ≅ Hom(A, N) / {g ∘ i}` for `0 → A → B → C → 0`
 with `B` projective in `𝒪`), so the relative `ExtOne` agrees with the `Ext¹` of projective
 resolutions in `𝒪`. The comparison of its vector-space structure with the Baer sum is not formalized.
+**Proposition 3.1** (`KacMoody/ExtHighestWeight.lean`, any GCM, characteristic zero): (a)
+`extOne_verma_eq_zero` (`Ext¹(M(λ), M) = 0` for `M` a quotient of `M(μ)` with `λ ≮ μ`), (b)
+`extOne_verma_irreducibleModule_eq_zero` (`Ext¹(M(λ), L(μ)) = 0` for `μ ≤ λ`), (c)
+`nonempty_hom_maxSubmodule_equiv_extOne` (`Hom(N(λ), L(μ)) ≅ Ext¹(L(λ), L(μ))` for `μ < λ`) and (d)
+`extOne_irreducibleModule_self_eq_zero` (`Ext¹(L(λ), L(λ)) = 0`).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
