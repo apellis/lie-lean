@@ -2837,9 +2837,11 @@ completed steps and continuation threads are:
   Lemma 6.1.4 (`IntegrableSl2.sum_dF_dE_eq`: `u = Σ_k (-1)^{k-n} [k-1, k-n] F^{(k)}E^{(k)}u` on
   `M^{-n}`, `n ≥ 1`), Prop. 6.1.3 for one simple root (`IntegrableSl2.mem_integral_wt_iff`), and
   the identity (6.1.19) (`sum_qBinomial_string`; our own proof by `q`-Vandermonde,
-  `qBinomial_add_eq_sum`, since Kashiwara's relies on an identity of Andrews). Remaining:
-  `U_ℤ`-stability of `V_ℤ(λ)`, (6.1.1)–(6.1.5) for `U⁻_ℤ`, Prop. 6.1.1, the induction
-  7.3–7.5, the global basis, and the rest of 41.1.6.
+  `qBinomial_add_eq_sum`, since Kashiwara's relies on an identity of Andrews).
+  `Global/HighestWeightIntegral.lean`: `V_ℤ(λ)` is a `U_ℤ`-module (stated after (6.1.12);
+  `dF_smul_mem_hwIntegral`, `dE_smul_mem_hwIntegral`) and Prop. 6.1.3 holds for `V_ℤ(λ)` at
+  every node (`mem_hwIntegral_wt_iff`). Remaining: (6.1.1)–(6.1.5) for `U⁻_ℤ`, Prop. 6.1.1,
+  the induction 7.3–7.5, the global basis, and the rest of 41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
