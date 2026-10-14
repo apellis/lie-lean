@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.QuantumGroup.Modified.LeftModule
-import LieLean.Algebra.QuantumGroup.RhoBar
+import LieLean.Algebra.QuantumGroup.ContravariantForm
 import LieLean.Algebra.QuantumGroup.LusztigF.Reverse
 import LieLean.Algebra.QuantumGroup.GabberKac.VermaOperator
 import LieLean.Algebra.QuantumGroup.TriangularDecomposition
@@ -15,21 +15,21 @@ import LieLean.Algebra.QuantumGroup.BraidAction.CoupledSerreNegative
 
 The form `(,)` on `U̇` of [Lus] 26.1.2 is determined by the values `(1_ζ, z 1_ζ)`, `z ∈ U`,
 `ζ ∈ X`, and properties (b), (c) of 26.1.2 force
-`(1_ζ, ρ̄(x⁻) y⁻ K_μ 1_ζ) = v^{⟨μ,ζ⟩} (x, y)` for `x, y ∈ 'f`. We construct, for each `ζ`, the
+`(1_ζ, ρ(x⁻) y⁻ K_μ 1_ζ) = v^{⟨μ,ζ⟩} (x, y)` for `x, y ∈ 'f`. We construct, for each `ζ`, the
 linear functional `P_ζ : U → k` with these values, using the triangular decomposition
 `U ≅ 'f/J ⊗ k[Y] ⊗ 'f/J` (`triangularEquiv`) and the Chevalley involution to write `U` as
 `U⁺ U⁰ U⁻`. In this ordering
-`P_ζ(x⁺ K_μ y⁻) = v^{(ν·ν)/2 - ⟨μ,ν⟩ + ⟨μ,ζ⟩ - ⟨K̃_ν,ζ⟩} (σ(x), y)` for `x, y` of weight `ν`, where
-`σ` is the reversal of words and `K̃_ν = Σ νᵢ K̃ᵢ`; this is the computation behind
-`ρ̄(F_w) = v^{(ν·ν)/2} E_{σ(w)} K̃_ν` (`rhoBar_minusHom_monomial`).
+`P_ζ(x⁺ K_μ y⁻) = v^{-(ν·ν)/2 - ⟨μ,ν⟩ + ⟨μ,ζ⟩ + ⟨K̃_ν,ζ⟩} (σ(x), y)` for `x, y` of weight `ν`,
+where `σ` is the reversal of words and `K̃_ν = Σ νᵢ K̃ᵢ`; this is the computation behind
+`ρ(F_w) = v^{-(ν·ν)/2} E_{σ(w)} K̃_ν⁻¹` (`rho_minusHom_monomial`).
 
 ## Main definitions and results
 
-* `QuantumGroup.rhoBar_minusHom_monomial`: `ρ̄(θ_w⁻) = v^{(ν·ν)/2} θ_{σ(w)}⁺ K̃_ν`, `ν = |w|`.
+* `QuantumGroup.rho_minusHom_monomial`: `ρ(θ_w⁻) = v^{-(ν·ν)/2} θ_{σ(w)}⁺ K̃_ν⁻¹`, `ν = |w|`.
 * `QuantumGroup.formFunctional`: the functional `P_ζ`.
 * `QuantumGroup.formFunctional_mul_K`: `P_ζ(u K_μ) = v^{⟨μ,ζ⟩} P_ζ(u)`.
-* `QuantumGroup.formFunctional_rhoBar_minusHom`: `P_ζ(ρ̄(x⁻) y⁻ K_μ) = v^{⟨μ,ζ⟩} (x, y)`.
-* `QuantumGroup.induction_rhoBar_minusHom`: `U` is spanned by the `ρ̄(θ_w⁻) θ_{w'}⁻ K_μ`.
+* `QuantumGroup.formFunctional_rho_minusHom`: `P_ζ(ρ(x⁻) y⁻ K_μ) = v^{⟨μ,ζ⟩} (x, y)`.
+* `QuantumGroup.induction_rho_minusHom`: `U` is spanned by the `ρ(θ_w⁻) θ_{w'}⁻ K_μ`.
 
 ## References
 
@@ -147,9 +147,9 @@ lemma wordChar_eq_rootSum (w : List I) : wordChar R w = R.rootSum (wordWeight w)
 
 end Weights
 
-/-! ### `ρ̄` on `U⁻` and the Chevalley involution on `U^±` -/
+/-! ### `ρ` on `U⁻` -/
 
-section RhoBar
+section Rho
 
 variable [NeZero v]
 
@@ -159,33 +159,41 @@ lemma minusHom_monomial_mul_K (w : List I) (μ : Y) :
   rw [mul_K_of_mem_adWeightSpace (minusHom_monomial_mem_adWeightSpace w), AddMonoidHom.neg_apply,
     neg_neg, wordChar_eq_rootSum]
 
-/-- `ρ̄(θ_w⁻) = v^{(ν·ν)/2} θ_{σ(w)}⁺ K̃_ν` for a word `w` of weight `ν` ([Lus] 26.1.1; our
+/-- `ρ(θ_w⁻) = v^{-(ν·ν)/2} θ_{σ(w)}⁺ K̃_ν⁻¹` for a word `w` of weight `ν` ([Lus] 19.1.1; our
 computation). -/
-theorem rhoBar_minusHom_monomial (w : List I) :
-    rhoBar R v (minusHom R v (monomial k w)) =
-      v ^ (normSq R (wordWeight w) / 2) •
-        (plusHom R v (monomial k w.reverse) * K R v (ktildeSum R (wordWeight w))) := by
+theorem rho_minusHom_monomial (w : List I) :
+    rho R v (minusHom R v (monomial k w)) =
+      v ^ (-(normSq R (wordWeight w) / 2)) •
+        (plusHom R v (monomial k w.reverse) * K R v (-ktildeSum R (wordWeight w))) := by
   have hv := NeZero.ne v
   induction w with
   | nil => simp
   | cons i w ih =>
     have he := normSq_wordWeight_emod_two (R := R) w
-    have h1 : K R v (ktildeSum R (wordWeight w)) * (Kt R v i * E R v i) =
-        v ^ R.root i (ktildeSum R (wordWeight w) + ktilde R i) •
-          (E R v i * K R v (ktildeSum R (wordWeight w) + ktilde R i)) := by
-      rw [← mul_assoc, Kt, K_add, K_mul_E]
-    rw [monomial_cons, map_mul, minusHom_θ, rhoBar_mul, ih, rhoBar_F, rhoBarF, List.reverse_cons,
+    have h1 : K R v (-ktildeSum R (wordWeight w)) * (K R v (-ktilde R i) * E R v i) =
+        v ^ R.root i (-(ktilde R i + ktildeSum R (wordWeight w))) •
+          (E R v i * K R v (-(ktilde R i + ktildeSum R (wordWeight w)))) := by
+      rw [← mul_assoc, K_add, ← neg_add_rev, K_mul_E]
+    rw [monomial_cons, map_mul, minusHom_θ, rho_mul, ih, rho_F, rhoF, List.reverse_cons,
       monomial_append, map_mul, monomial_cons, monomial_nil, mul_one, plusHom_θ, wordWeight_cons,
-      ktildeSum_add, ktildeSum_single, one_smul, add_comm (ktilde R i), smul_mul_assoc,
-      mul_smul_comm, mul_assoc, h1, mul_smul_comm, smul_smul, smul_smul, ← mul_assoc]
+      ktildeSum_add, ktildeSum_single, one_smul, smul_mul_assoc, mul_smul_comm, mul_assoc, h1,
+      mul_smul_comm, smul_smul, smul_smul, ← mul_assoc]
     congr 1
     have hd : (2 : ℤ) * D.d i = D.dot i i := D.two_mul_d i
-    rw [normSq_single_add, map_add, root_ktilde_eq_dot, ← zpow_natCast, ← zpow_neg,
+    rw [normSq_single_add, map_neg, map_add, root_ktilde_eq_dot, ← zpow_natCast,
       ← zpow_add₀ hv, ← zpow_add₀ hv]
     congr 1
     omega
 
-end RhoBar
+/-- `ρ` maps `U_χ` to `U_{-χ}`. -/
+lemma rho_mem_adWeightSpace {χ : Y →+ ℤ} {x : QuantumGroup R v}
+    (hx : x ∈ adWeightSpace R v χ) : rho R v x ∈ adWeightSpace R v (-χ) := fun μ ↦ by
+  have h := congrArg (rho R v) (hx μ)
+  rw [rho_mul, map_smul, rho_mul, rho_K] at h
+  rw [AddMonoidHom.neg_apply, h, smul_smul, ← zpow_add₀ (NeZero.ne v), neg_add_cancel, zpow_zero,
+    one_smul]
+
+end Rho
 
 section Chevalley
 
@@ -227,9 +235,9 @@ section Functional
 
 variable (R v)
 
-/-- The scalar `v^{(ν·ν)/2 - ⟨μ,ν⟩ + ⟨μ,ζ⟩ - ⟨K̃_ν,ζ⟩}`. -/
+/-- The scalar `v^{-(ν·ν)/2 - ⟨μ,ν⟩ + ⟨μ,ζ⟩ + ⟨K̃_ν,ζ⟩}`. -/
 def formScale (ζ : Y →+ ℤ) (μ : Y) (ν : I →₀ ℕ) : k :=
-  v ^ (normSq R ν / 2 - R.rootSum ν μ + ζ μ - ζ (ktildeSum R ν))
+  v ^ (-(normSq R ν / 2) - R.rootSum ν μ + ζ μ + ζ (ktildeSum R ν))
 
 /-- The pairing `(x, y) ↦ (σ(x), c(|y|) y)` giving `P_ζ(x⁺ K_μ y⁻)`. -/
 def formPair (ζ : Y →+ ℤ) (μ : Y) : LusztigF k I →ₗ[k] LusztigF k I →ₗ[k] k :=
@@ -291,7 +299,7 @@ lemma serreTriSubmodule_le_ker_formTriLin (ζ : Y →+ ℤ) :
 
 variable (R v) in
 /-- **The functional `P_ζ`** with `P_ζ(z) = (1_ζ, z 1_ζ)` for Lusztig's form on `U̇` ([Lus]
-26.1.2): `P_ζ(x⁺ K_μ y⁻) = v^{(ν·ν)/2 - ⟨μ,ν⟩ + ⟨μ,ζ⟩ - ⟨K̃_ν,ζ⟩} (σ(x), y)` for `y` of weight `ν`
+26.1.2): `P_ζ(x⁺ K_μ y⁻) = v^{-(ν·ν)/2 - ⟨μ,ν⟩ + ⟨μ,ζ⟩ + ⟨K̃_ν,ζ⟩} (σ(x), y)` for `y` of weight `ν`
 (`formFunctional_plusHom_K_minusHom`). -/
 def formFunctional (ζ : Y →+ ℤ) : QuantumGroup R v →ₗ[k] k :=
   (serreTriSubmodule Y D v).liftQ (formTriLin R v ζ) (serreTriSubmodule_le_ker_formTriLin hv ζ) ∘ₗ
@@ -340,49 +348,49 @@ theorem formFunctional_K_mul (ζ : Y →+ ℤ) {z : QuantumGroup R v}
     formFunctional R v hv ζ (K R v μ * z) = v ^ ζ μ * formFunctional R v hv ζ z := by
   rw [hz μ, AddMonoidHom.zero_apply, zpow_zero, one_smul, formFunctional_mul_K]
 
-/-- `P_ζ(ρ̄(θ_w⁻) θ_{w'}⁻) = (θ_w, θ_{w'})`. -/
-lemma formFunctional_rhoBar_minusHom_monomial (ζ : Y →+ ℤ) (w w' : List I) :
+/-- `P_ζ(ρ(θ_w⁻) θ_{w'}⁻) = (θ_w, θ_{w'})`. -/
+lemma formFunctional_rho_minusHom_monomial (ζ : Y →+ ℤ) (w w' : List I) :
     formFunctional R v hv ζ
-        (rhoBar R v (minusHom R v (monomial k w)) * minusHom R v (monomial k w')) =
+        (rho R v (minusHom R v (monomial k w)) * minusHom R v (monomial k w')) =
       form D v (monomial k w) (monomial k w') := by
   have hv0 := NeZero.ne v
-  rw [rhoBar_minusHom_monomial, smul_mul_assoc, map_smul,
+  rw [rho_minusHom_monomial, smul_mul_assoc, map_smul,
     formFunctional_plusHom_K_minusHom_monomial, rev_monomial, List.reverse_reverse, smul_eq_mul,
     ← mul_assoc]
   by_cases hw : wordWeight w = wordWeight w'
   · have he := normSq_wordWeight_emod_two (R := R) w
-    rw [← hw, formScale, ← zpow_add₀ hv0]
-    have h0 : normSq R (wordWeight w) / 2 + (normSq R (wordWeight w) / 2 -
-        R.rootSum (wordWeight w) (ktildeSum R (wordWeight w)) + ζ (ktildeSum R (wordWeight w)) -
+    rw [← hw, formScale, ← zpow_add₀ hv0, map_neg, map_neg]
+    have h0 : -(normSq R (wordWeight w) / 2) + (-(normSq R (wordWeight w) / 2) -
+        -R.rootSum (wordWeight w) (ktildeSum R (wordWeight w)) + -ζ (ktildeSum R (wordWeight w)) +
         ζ (ktildeSum R (wordWeight w))) = 0 := by
-      change _ + (_ - normSq R (wordWeight w) + _ - _) = _
+      change _ + (_ - -normSq R (wordWeight w) + _ + _) = _
       omega
     rw [h0, zpow_zero, one_mul]
   · rw [form_eq_zero_of_ne D v hw (monomial_mem_weightSpace w) (monomial_mem_weightSpace w'),
       mul_zero]
 
-/-- **`P_ζ(ρ̄(x⁻) y⁻ K_μ) = v^{⟨μ,ζ⟩} (x, y)`** for `x, y ∈ 'f`: the values forced on
+/-- **`P_ζ(ρ(x⁻) y⁻ K_μ) = v^{⟨μ,ζ⟩} (x, y)`** for `x, y ∈ 'f`: the values forced on
 `(1_ζ, z 1_ζ)` by [Lus] 26.1.2 (b), (c). -/
-theorem formFunctional_rhoBar_minusHom (ζ : Y →+ ℤ) (x y : LusztigF k I) (μ : Y) :
-    formFunctional R v hv ζ (rhoBar R v (minusHom R v x) * minusHom R v y * K R v μ) =
+theorem formFunctional_rho_minusHom (ζ : Y →+ ℤ) (x y : LusztigF k I) (μ : Y) :
+    formFunctional R v hv ζ (rho R v (minusHom R v x) * minusHom R v y * K R v μ) =
       v ^ ζ μ * form D v x y := by
   rw [formFunctional_mul_K]
   congr 1
   have h : ((LinearMap.mul k (QuantumGroup R v)).compr₂ (formFunctional R v hv ζ)).compl₁₂
-      (rhoBar R v ∘ₗ (minusHom R v).toLinearMap) (minusHom R v).toLinearMap = form D v :=
+      (rho R v ∘ₗ (minusHom R v).toLinearMap) (minusHom R v).toLinearMap = form D v :=
     LinearMap.ext_basis (FreeAlgebra.wordBasis k I) (FreeAlgebra.wordBasis k I) fun w w' ↦ by
       simp only [LinearMap.compl₁₂_apply, LinearMap.compr₂_apply, LinearMap.mul_apply',
         LinearMap.comp_apply, AlgHom.toLinearMap_apply, wordBasis_eq_monomial]
-      exact formFunctional_rhoBar_minusHom_monomial hv ζ w w'
+      exact formFunctional_rho_minusHom_monomial hv ζ w w'
   exact LinearMap.congr_fun₂ h x y
 
 end Functional
 
-/-- `U` is spanned by the `ρ̄(θ_w⁻) θ_{w'}⁻ K_μ` ([Lus] 26.1.2, proof). -/
-theorem induction_rhoBar_minusHom [NeZero v] {P : QuantumGroup R v → Prop}
+/-- `U` is spanned by the `ρ(θ_w⁻) θ_{w'}⁻ K_μ` ([Lus] 26.1.2, proof). -/
+theorem induction_rho_minusHom [NeZero v] {P : QuantumGroup R v → Prop}
     (u : QuantumGroup R v) (h0 : P 0) (hadd : ∀ x y, P x → P y → P (x + y))
     (hsmul : ∀ (c : k) x, P x → P (c • x))
-    (hmon : ∀ w w' μ, P (rhoBar R v (minusHom R v (monomial k w)) *
+    (hmon : ∀ w w' μ, P (rho R v (minusHom R v (monomial k w)) *
       minusHom R v (monomial k w') * K R v μ)) : P u := by
   have hv0 := NeZero.ne v
   induction u using induction_plusHom_K_minusHom hv0 with
@@ -390,24 +398,16 @@ theorem induction_rhoBar_minusHom [NeZero v] {P : QuantumGroup R v → Prop}
   | hadd x y hx hy => exact hadd x y hx hy
   | hsmul c x hx => exact hsmul c x hx
   | hmon w μ w' =>
-    have hkey := rhoBar_minusHom_monomial (R := R) (v := v) w.reverse
+    have hkey := rho_minusHom_monomial (R := R) (v := v) w.reverse
     rw [List.reverse_reverse] at hkey
-    set e := normSq R (wordWeight w.reverse) / 2
+    set e := -(normSq R (wordWeight w.reverse) / 2)
     set κ := ktildeSum R (wordWeight w.reverse)
     have hE : plusHom R v (monomial k w) =
-        (v ^ e)⁻¹ • (rhoBar R v (minusHom R v (monomial k w.reverse)) * K R v (-κ)) := by
-      rw [hkey, smul_mul_assoc, mul_assoc, K_add, add_neg_cancel, K_zero, mul_one, smul_smul,
+        (v ^ e)⁻¹ • (rho R v (minusHom R v (monomial k w.reverse)) * K R v κ) := by
+      rw [hkey, smul_mul_assoc, mul_assoc, K_add, neg_add_cancel, K_zero, mul_one, smul_smul,
         inv_mul_cancel₀ (zpow_ne_zero _ hv0), one_smul]
-    rw [hE, smul_mul_assoc, smul_mul_assoc, mul_assoc _ (K R v (-κ)), K_add, mul_assoc,
+    rw [hE, smul_mul_assoc, smul_mul_assoc, mul_assoc _ (K R v κ), K_add, mul_assoc,
       K_mul_minusHom_monomial, mul_smul_comm, ← mul_assoc]
     exact hsmul _ _ (hsmul _ _ (hmon _ _ _))
-
-/-- `ρ̄` maps `U_χ` to `U_{-χ}`. -/
-lemma rhoBar_mem_adWeightSpace [NeZero v] {χ : Y →+ ℤ} {x : QuantumGroup R v}
-    (hx : x ∈ adWeightSpace R v χ) : rhoBar R v x ∈ adWeightSpace R v (-χ) := fun μ ↦ by
-  have h := congrArg (rhoBar R v) (hx μ)
-  rw [rhoBar_mul, map_smul, rhoBar_mul, rhoBar_K] at h
-  rw [AddMonoidHom.neg_apply, h, smul_smul, ← zpow_add₀ (NeZero.ne v), neg_add_cancel, zpow_zero,
-    one_smul]
 
 end LieLean.QuantumGroup
