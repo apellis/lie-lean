@@ -52,7 +52,7 @@ lemma rhoBarF_mul_K (i : I) (μ : Y) :
   rw [rhoBarF, smul_mul_assoc, mul_assoc, E_mul_K (NeZero.ne v), mul_smul_comm, ← mul_assoc,
     K_comm, mul_assoc, smul_comm, mul_smul_comm]
 
-omit [DecidableEq I] in
+omit [DecidableEq I] [NeZero v] in
 lemma inv_zpow_dot_mul (hv : v ≠ 0) (i : I) :
     (v ^ D.d i)⁻¹ * (v ^ D.d i)⁻¹ * v ^ D.dot i i = 1 := by
   have h := zpow_dot_mul (D := D) hv i
