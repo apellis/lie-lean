@@ -897,6 +897,9 @@ characteristic zero): `VermaModule.existsUnique_isAtom` (`M(λ)` has a unique si
 `VermaModule.exists_isAtom_le` (it lies in every nonzero submodule), from finite length and
 `VermaModule.inf_ne_bot_of_finite_type` (the Ore condition for `U(𝔫⁻)`, not Lemma 4.1, since
 noetherianity of `U(𝔫⁻)` is not formalized).
+**Theorem 4.2 (c)** (`KacMoody/VermaSocle.lean`, any GCM): `VermaModule.exists_nonempty_equiv_of_isAtom`
+(a simple submodule of `M(λ)` is a Verma module); (a) is `VermaModule.injective_of_ne_zero` and (b)
+the finite-type bound `VermaModule.finrank_hom_le_one_of_finite_type` (algebraically closed `K`).
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and

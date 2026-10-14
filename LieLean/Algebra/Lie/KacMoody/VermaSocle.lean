@@ -18,6 +18,8 @@ every nonzero submodule; it is therefore the socle of `M(λ)` (Humphreys, GSM 94
   simple submodule.
 * `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_isAtom_le`: there is a simple submodule
   of `M(λ)` contained in every nonzero submodule.
+* `Matrix.Realization.KacMoodyAlgebra.VermaModule.exists_nonempty_equiv_of_isAtom`: a simple
+  submodule of `M(λ)` is a Verma module (Humphreys, GSM 94, Theorem 4.2 (c); any GCM).
 
 ## Proof notes
 
@@ -32,12 +34,14 @@ since noetherianity of `U(𝔫⁻)` is not formalized. Humphreys works with semi
 ## References
 
 * J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*, GSM 94,
-  AMS 2008, §4.1.
+  AMS 2008, §4.1, §4.2.
 -/
 
 open Module
 
 namespace Matrix.Realization.KacMoodyAlgebra
+
+section FiniteType
 
 variable {ι H : Type*} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K]
   [AddCommGroup H] [Module K H] [FiniteDimensional K H] {A : Matrix ι ι ℤ}
@@ -72,5 +76,42 @@ theorem existsUnique_isAtom (Λ : Dual K H) :
   exact ⟨S, hS, fun T hT ↦ ((hT.le_iff.mp (hle T hT.1)).resolve_left hS.1).symm⟩
 
 end VermaModule
+
+end FiniteType
+
+section General
+
+variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K]
+  [AddCommGroup H] [Module K H] {A : Matrix ι ι ℤ} (P : Realization A K H)
+
+/-- **Humphreys, GSM 94, Theorem 4.2 (c).** A simple submodule of a Verma module `M(λ)` is
+itself a Verma module. No finite-type hypothesis is needed; in finite type `M(λ)` has exactly one
+simple submodule (`VermaModule.existsUnique_isAtom`). -/
+theorem VermaModule.exists_nonempty_equiv_of_isAtom {Λ : Dual K H}
+    {S : LieSubmodule K P.KacMoodyAlgebra (VermaModule P Λ)} (hS : IsAtom S) :
+    ∃ μ : Dual K H, Nonempty (VermaModule P μ ≃ₗ⁅K,P.KacMoodyAlgebra⁆ S) := by
+  have : Nontrivial S := (LieSubmodule.nontrivial_iff_ne_bot K P.KacMoodyAlgebra _).mpr hS.1
+  obtain ⟨μ, ψ, hψ⟩ := ((isCategoryO P _).lieSubmodule S).exists_lieModuleHom_verma
+  let φ := S.incl.comp ψ
+  have hφ0 : φ (hwv P μ) ≠ 0 := fun hz ↦ hψ (Subtype.ext hz)
+  have hφ : φ ≠ 0 := fun h ↦ hφ0 (by rw [h, _root_.zero_apply])
+  have hinj : Function.Injective ψ := fun a b hab ↦
+    injective_of_ne_zero P hφ (by simp only [φ, LieModuleHom.comp_apply, hab])
+  have hle : φ.range ≤ S := by
+    intro x hx
+    obtain ⟨m, rfl⟩ := (LieModuleHom.mem_range _ _).mp hx
+    exact (ψ m).2
+  have hrange : φ.range = S := by
+    rcases hS.le_iff.mp hle with h | h
+    · exact absurd ((LieSubmodule.mem_bot _).mp (h ▸ (LieModuleHom.mem_range _ _).mpr
+        ⟨hwv P μ, rfl⟩)) hφ0
+    · exact h
+  have hsurj : Function.Surjective ψ := fun s ↦ by
+    have hs : (s : VermaModule P Λ) ∈ φ.range := by rw [hrange]; exact s.2
+    obtain ⟨m, hm⟩ := (LieModuleHom.mem_range _ _).mp hs
+    exact ⟨m, Subtype.ext hm⟩
+  exact ⟨μ, ⟨LieModuleEquiv.ofBijective ψ ⟨hinj, hsurj⟩⟩⟩
+
+end General
 
 end Matrix.Realization.KacMoodyAlgebra
