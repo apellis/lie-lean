@@ -859,6 +859,12 @@ weight spaces above a generating set instead of the length.
 `dualSwap`), `IsCategoryO.exists_strictMono_restrictedDual` (`V^∨` has finite length when `V`
 does; annihilators are strictly antitone) and `exists_isInjectiveO_injective` (every finitely
 generated `M` in `𝒪` embeds into the finitely generated injective `Q^∨`, `Q ↠ M^∨` from Thm. 3.8).
+**Duality functor** (`KacMoody/DualityFunctor.lean`, Humphreys GSM 94 Thm. 3.2, any GCM,
+characteristic zero): exactness (`exists_restrictedDualMap_eq`: a functional in `V^∨` vanishing on
+`ker g` factors through `g`; `injective_restrictedDualMap`, `exact_restrictedDualMap`) and (a)
+`restrictedDoubleDualEquiv` (`V ≅ V^∨∨` for `V ∈ 𝒪`, `v ↦ (φ ↦ φ(v))`, natural by
+`restrictedDualMap_restrictedDualMap_comp`). Parts (b), (c) are `restrictedDualCentralBlockEquiv`,
+`multiplicity_restrictedDual`, `IrreducibleModule.equivRestrictedDual`; (d), (e) are open.
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and
