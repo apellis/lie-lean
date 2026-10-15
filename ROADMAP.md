@@ -994,7 +994,13 @@ criterion `nonempty_equiv_projectiveCover_of_hom` (projective, standard filtrati
 quotient occurring once), `isProjectiveO_centralBlock` and
 `exists_isStdFiltered_translation_verma`; the Hom spaces to simple modules are computed by
 adjunction, Thm. 3.9 (c) and Thm. 7.9 (reconstructed; Humphreys uses Verma's theorem and BGG
-reciprocity). The identification `x = w_λ w_μ°` is not formalized.
+reciprocity). The form `x = w_λ w_μ°` (`KacMoody/TranslationProjectiveLongest.lean`):
+`nonempty_equiv_projectiveCover_translation_verma_longest` (`T_μ^λ M(w_λ·μ) ≅ P(w_λ w_μ°·λ)`), with
+`w_λ`, `w_μ°` given by their defining properties (`IsLongestIntegral`: `w_λ ∈ W_[λ]` sends the
+positive roots integral for `λ` to negative roots; `IsLongestStabilizer`: `w_μ°` fixes `μ + ρ` and
+sends the positive roots orthogonal to `μ + ρ` to negative roots) instead of length functions, and
+their existence for regular `λ` (`exists_isLongestIntegral`, `exists_isLongestStabilizer`); the
+second assertion of 7.13 is Thm. 7.12 for `w = w_λ`.
 **Self-dual projectives** (`KacMoody/SelfDualProjective.lean`, Humphreys GSM 94 Thm. 4.10, Thm. 7.16):
 `VermaModule.maxSubmodule_eq_bot_of_isAntidominant` (antidominant Verma modules are simple, one
 direction of Thm. 4.8); for antidominant `λ` and a weight `μ` with `λ - μ` integral and `μ + ρ`
@@ -2847,10 +2853,6 @@ completed steps and continuation threads are:
     for abelian categories with a projective generator, which is not in Mathlib, and the library
     has no bundled category `𝒪_χ`. Plan: package `𝒪_χ` as a category and state 3.13 with that
     Morita statement as an explicit hypothesis, unless it can be proved directly.
-  - Prop. 7.13 in the form `x = w_λ w_μ°` (longest elements of `W_[λ]` and of `W_μ°`): the
-    projective-cover statement is `nonempty_equiv_projectiveCover_translation_verma`; the
-    identification of `x` needs the Coxeter structure of `W_[λ]` with its longest element (already
-    available for integral `λ`, where `W_[λ] = W`).
   - Independence of `Θ_s` from the choice of `μ` on the wall (§7.15): scheduled after Thm. 4.6;
     depends on the classification of projective functors (§10.8).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
