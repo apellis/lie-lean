@@ -21,6 +21,8 @@ integrable `U_{vᵢ}(𝔰𝔩₂)`-module (`QuantumGroup.nodeSl2`), so it carrie
   `ẽᵢ M^Λ ⊆ M^{Λ + αᵢ}` and `f̃ᵢ M^Λ ⊆ M^{Λ - αᵢ}` ([HK] Prop. 4.1.3 (1)).
 * `QuantumGroup.map_kashiwaraE`, `QuantumGroup.map_kashiwaraF`: the Kashiwara operators commute
   with homomorphisms of integrable `U`-modules ([HK] Prop. 4.1.3 (2)).
+* `QuantumGroup.map_weightSetProj`: the projections onto sums of weight spaces commute with
+  homomorphisms of integrable `U`-modules.
 * `QuantumGroup.kashiwaraE_eq_zero_iff`: `ẽᵢ m = 0 ↔ Eᵢ m = 0` for `m ∈ M^Λ`.
 
 The weight statements are deduced from the `ℤ`-graded ones by naturality with respect to the
@@ -270,6 +272,18 @@ lemma map_mem_nodeWt (f : M →ₗ[QuantumGroup R v] M') {n : ℤ} {m : M}
   nodeWt_induction (P := fun m ↦ f m ∈ nodeWt R v M' i n) hm (by simp)
     (fun x y hx hy ↦ by rw [map_add]; exact add_mem hx hy)
     fun Λ hΛ x hx ↦ hΛ ▸ mem_nodeWt_of_mem (map_mem_weightSpace f hx)
+
+/-- The projections onto sums of weight spaces commute with homomorphisms of integrable
+`U`-modules. -/
+lemma map_weightSetProj (f : M →ₗ[QuantumGroup R v] M') (S : Set (Y →+ ℤ)) (m : M) :
+    f (weightSetProj hv hM S m) = weightSetProj hv hM' S (f m) := by
+  classical
+  have := ext_weightSpace hM (f := (f.restrictScalars k) ∘ₗ weightSetProj hv hM S)
+    (g := weightSetProj hv hM' S ∘ₗ f.restrictScalars k) fun Λ m hm ↦ by
+      simp only [LinearMap.comp_apply, LinearMap.coe_restrictScalars,
+        weightSetProj_of_mem hv hM S hm, weightSetProj_of_mem hv hM' S (map_mem_weightSpace f hm)]
+      split_ifs <;> simp
+  exact LinearMap.congr_fun this m
 
 /-- The Kashiwara operator `ẽᵢ` commutes with homomorphisms of integrable `U`-modules
 ([HK] Prop. 4.1.3 (2)). -/

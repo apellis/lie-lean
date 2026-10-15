@@ -2436,6 +2436,9 @@ and `isSeminormal_crystal` ([HK] (4.9), (4.10), Prop. 4.2.11). Any commutative r
 ideal domain with fraction field `k` and `c` not a unit, `L ∩ M^Λ` is free of rank `dim M^Λ` and
 `B` has `dim M^Λ` elements of weight `Λ` whenever `M^Λ` is finite-dimensional
 (`IsCrystalLattice.finrank_latticeWeightSpace`, `IsCrystalBase.card_weight`; [HK] Thm. 4.2.5).
+`CrystalBasis/Equiv.lean`: crystal bases are transported along isomorphisms of integrable
+`U`-modules (`IsCrystalLattice.of_equiv`, `IsCrystalBase.of_equiv`; [HK] Prop. 4.2.8), via
+`map_weightSetProj` (weight projections commute with `U`-module maps).
 `CrystalBasis/Sl2.lean`: crystal bases at one colour
 (`IntegrableSl2.IsCrystalBase`), restriction of crystal bases of `U`-modules to every `nodeSl2`
 (`IsCrystalBase.isCrystalBase_nodeSl2`), string bases (`linearIndependent_dF`, `span_dF`: the
