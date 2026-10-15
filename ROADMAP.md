@@ -1053,6 +1053,14 @@ bundled category `𝒪_χ`.
 `extOne_verma_irreducibleModule_eq_zero` (`Ext¹(M(λ), L(μ)) = 0` for `μ ≤ λ`), (c)
 `nonempty_hom_maxSubmodule_equiv_extOne` (`Hom(N(λ), L(μ)) ≅ Ext¹(L(λ), L(μ))` for `μ < λ`) and (d)
 `extOne_irreducibleModule_self_eq_zero` (`Ext¹(L(λ), L(λ)) = 0`).
+**Remark 3.9 (∗)** (`KacMoody/DominantVermaTensor.lean`; finite type, algebraically closed
+characteristic-zero field): `finrank_hom_tensor_verma_of_isDominant`
+(`dim Hom(M(λ) ⊗ L, M(μ)) = dim L_{μ-λ}` for `λ` dominant, `L` finite-dimensional), via
+`VermaModule.multiplicity_of_isDominant` (`[M(ξ) : L(λ)] = δ_{ξλ}`), the standard filtration of
+`M(μ) ⊗ L^*` and `dim (L^*)_κ = dim L_{-κ}` (`finrank_weightSpaceOfMap_dual`). Towards
+Thm. 10.2: `weightSpace_irreducibleModule_eq_bot_of_kacKazhdanStep` (under condition (c), no
+Kac–Kazhdan step `μ → λ'` makes `λ' - λ` a weight of `L(ν)`; a norm argument replacing the
+strong linkage principle, reconstructed).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
