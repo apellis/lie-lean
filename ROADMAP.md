@@ -2899,6 +2899,10 @@ completed steps and continuation threads are:
   (`hwCrystal`), Lemma 7.3.2 in residue form (`evq_negLift_sub_mem`), (7.3.4) given the vanishing
   of Lemma 7.5.2 (`mem_span_hwLift`), and the last step of §7.5: `(G.2)` at `ν` from `(G.1)` at
   `ν` and Lemma 7.5.2 (`hwGlobalAt_of_vanishing`).
+  `Global/StringFiltration.lean`: the filtrations `(fᵢⁿU⁻)^ℤ_ν` (`negFilt`) and `(fᵢⁿV(λ))^ℤ`
+  (`hwFilt`), (6.1.2) (`df_sub_df_comp_mem_negFilt`), `fᵢ^{(n)}Pᵢx ≡ f̃ᵢⁿx` modulo `v⁻¹L(∞)` when
+  `ẽᵢx ∈ v⁻¹L(∞)` (`df_comp_sub_kF_pow_mem`), and the reduction step of Prop. 7.4.1 to
+  `n + ⟨hᵢ, λ-ν⟩ ≥ 0` (`hwFilt_le_succ`; Kashiwara cites "Prop. 7.1.3", meaning Prop. 6.1.3).
   Remaining: (G.3), Prop. 7.4.1, Cor. 7.4.2, Lemmas 7.5.1–7.5.2 and the induction, the global
   basis, and the rest of 41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
