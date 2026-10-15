@@ -301,6 +301,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightIntegral
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeGlobal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeIntegralGrading
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.StringFiltration
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.StringIdentity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Augmentation
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Coordinates
