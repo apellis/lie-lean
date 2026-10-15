@@ -1060,7 +1060,14 @@ characteristic-zero field): `finrank_hom_tensor_verma_of_isDominant`
 `M(μ) ⊗ L^*` and `dim (L^*)_κ = dim L_{-κ}` (`finrank_weightSpaceOfMap_dual`). Towards
 Thm. 10.2: `weightSpace_irreducibleModule_eq_bot_of_kacKazhdanStep` (under condition (c), no
 Kac–Kazhdan step `μ → λ'` makes `λ' - λ` a weight of `L(ν)`; a norm argument replacing the
-strong linkage principle, reconstructed).
+strong linkage principle, reconstructed). **Theorem 10.2** (same file and hypotheses):
+`tfae_projectiveCover_tensor_verma` (for `λ` dominant, `μ - λ` integral: `P(μ)` is a summand of
+some `M(λ) ⊗ L` iff `Hom(M(λ) ⊗ L, L(μ)) ≠ 0` for some `L` iff `⟨μ + ρ, α^∨⟩ ≤ 0` whenever
+`α > 0`, `⟨λ + ρ, α^∨⟩ = 0`), with (b) ⇒ (c) `hom_tensor_verma_irreducibleModule_eq_zero` (via
+Thm. 4.6) and (c) ⇒ (b) with multiplicity one
+`finrank_hom_tensor_verma_irreducibleModule_eq_one` (`dim Hom(M(λ) ⊗ L(ν), L(μ)) = 1`, `ν`
+dominant in `W(μ - λ)`; Kac–Kazhdan steps and the norm estimate instead of Thm. 5.1,
+reconstructed).
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,
