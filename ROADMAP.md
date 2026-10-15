@@ -444,7 +444,9 @@ Kazhdan–Lusztig theory (`Hecke/KazhdanLusztig*.lean`, [KL]'s normalization
 ([KL] (2.2.c)), `klPoly_simple_mul_left`, `coeff_zero_klPoly`, `klMu_eq_one`,
 `klPoly_inv_inv`, `specializeOne_klBasis`; Soergel's normalization up to `v ↦ v⁻¹`
 (`coeff_toFinsupp_klBasis_eq_zero`). Parabolic KL theory (`KazhdanLusztig/{Canonical,Parabolic,
-ParabolicRelations}.lean`): an abstract Lusztig lemma `existsUnique_canonical`; bar involution
+ParabolicRelations}.lean`): an abstract Lusztig lemma `existsUnique_canonical` and [Lus]
+Lemma 24.2.1 for families over posets with finite intervals
+(`LaurentPolynomial.IsLusztigFamily.existsUnique`, `KazhdanLusztig/CanonicalFamily.lean`); bar involution
 `parabolicBar` on the induced modules (Deodhar's `u = q` and `u = -1`),
 `existsUnique_parabolicKLBasis`, `parabolicKLPoly` (support, degree bound), Deodhar's relations
 `parabolicKLPoly_sgn` (alternating sums of `P_{y,d}`) and `parabolicKLPoly_ind`
@@ -3238,7 +3240,8 @@ beyond what the general Kac–Moody results give.
   (`LieLean/LinearAlgebra/Eigenspace/Weight.lean`).
 - Crystal lemmas: highest-weight elements, injectivity of strict morphisms, `Crystal.sigma`
   (`Crystal/Path/{Isomorphism,Decomposition}.lean`).
-- Lusztig's lemma on canonical bases (`Hecke/KazhdanLusztig/Canonical.lean`).
+- Lusztig's lemma on canonical bases (`Hecke/KazhdanLusztig/Canonical.lean`) and [Lus] Lemma
+  24.2.1 for families over posets with finite intervals (`.../CanonicalFamily.lean`).
 - Abstract crystals: `LieLean/RepresentationTheory/Crystal/{Basic,Tensor,Normal,WeylAction,
   Character,Subcrystal}.lean`.
 - Tits cone and fundamental chamber (`LinearAlgebra/Matrix/Cartan/TitsCone*.lean`).
