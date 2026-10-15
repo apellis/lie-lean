@@ -21,8 +21,10 @@ element
 ```
 (`Module.Basis.IsBarTriangular.existsUnique_canonical`). This is the abstract form of the
 existence and uniqueness of the Kazhdan–Lusztig basis ([KL] Thm. 1.1), of Deodhar's parabolic
-Kazhdan–Lusztig bases ([Deo] §2–3), and of Lusztig's canonical bases ([Lus] Lemma 24.2.1,
-[Du]).
+Kazhdan–Lusztig bases ([Deo] §2–3), and of Lusztig's canonical bases (cf. [Lus] Lemma 24.2.1,
+[Du]). Lusztig's lemma itself, a statement about families of Laurent polynomials indexed by a
+poset with finite intervals, is `LaurentPolynomial.IsLusztigFamily.existsUnique`
+(`Hecke/KazhdanLusztig/CanonicalFamily.lean`).
 
 If moreover the matrix of `ψ` is *graded* by a function `ℓ : I → ℤ` — the coefficient of `b_j` in
 `ψ(b_i)` is supported in degrees `n` with `|n| ≤ ℓ(i) - ℓ(j)` and `n ≡ ℓ(i) - ℓ(j) (mod 2)`
@@ -440,7 +442,7 @@ private theorem exists_fixed (i : ι) (S : Finset ι) (hSi : ∀ j ∈ S, j < i)
       exact (Finset.ne_of_mem_erase hk) (hmin k hk' hkl.le))
   exact h.exists_step i S hSi hSup hj c hci hc0 hcS hψc
 
-/-- **Existence in Lusztig's lemma** ([KL] Thm. 1.1, [Lus] Lemma 24.2.1): there is a
+/-- **Existence in Lusztig's lemma** ([KL] Thm. 1.1, cf. [Lus] Lemma 24.2.1): there is a
 `ψ`-invariant element `c ∈ b_i + Σ_{j < i} v⁻¹ ℤ[v⁻¹] b_j`, whose coefficients are moreover
 graded by `ℓ`. -/
 theorem exists_canonical (i : ι) : ∃ c : V, ψ c = c ∧ b.repr c i = 1 ∧
@@ -463,7 +465,7 @@ theorem exists_canonical (i : ι) : ∃ c : V, ψ c = c ∧ b.repr c i = 1 ∧
     · rw [hc0 j hji fun h' ↦ hj ((hS j).mp h')]
       exact ⟨isNeg_zero, fun h' ↦ absurd rfl h', isBounded_zero _⟩
 
-/-- **Lusztig's lemma** ([KL] Thm. 1.1, [Deo] Prop. 3.2, [Lus] Lemma 24.2.1): for every
+/-- **Lusztig's lemma** ([KL] Thm. 1.1, [Deo] Prop. 3.2, cf. [Lus] Lemma 24.2.1): for every
 `i` there is a unique `ψ`-invariant element `c` with `[b_i] c = 1` and `[b_j] c ∈ v⁻¹ ℤ[v⁻¹]` for
 `j ≠ i`. -/
 theorem existsUnique_canonical (i : ι) :
