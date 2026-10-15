@@ -501,21 +501,23 @@ def GlobalBelow (ν : I →₀ ℕ) : Prop :=
 
 /-- **[Kas91] Prop. 7.4.1** at `(λ, i, n, ν)`, in basis form: `(fᵢⁿV(λ))^ℤ_{λ-ν}` is the `𝒜`-span
 of vectors `g_k ∈ (fᵢⁿV(λ))^ℤ_{λ-ν}` with independent residues in `L(λ)/v⁻¹L(λ)` and in
-`L(λ)⁻/vL(λ)⁻`, whose residues are the elements `f̃ᵢⁿ f̃_{u_k} u_λ` of `f̃ᵢⁿB(λ)`. -/
+`L(λ)⁻/vL(λ)⁻`, whose residues are the elements `f̃ᵢⁿ f̃_{u_k} u_λ` of `f̃ᵢⁿB(λ)`, with words
+`iⁿu_k` of weight `ν`. -/
 def HwFiltGlobalAt (Λ : Dom R) (i : I) (n : ℕ) (ν : I →₀ ℕ) : Prop :=
   ∃ (ι : Type u) (g : ι → IrreducibleModule R 𝕧 Λ.1) (u : ι → List I),
     (∀ k, g k ∈ hwFilt Λ i n ν) ∧
     ResidueIndependent A (lat hvt hR A Λ) ϖ g ∧
     ResidueIndependent LocalRing (latBar hR Λ) localX g ∧
     (∀ x ∈ hwFilt Λ i n ν, x ∈ Submodule.span (LaurentPolynomial ℤ) (Set.range g)) ∧
-    ∀ k, g k - fW hvt hR Λ (List.replicate n i ++ u k) ∈ ϖ • lat hvt hR A Λ
+    (∀ k, g k - fW hvt hR Λ (List.replicate n i ++ u k) ∈ ϖ • lat hvt hR A Λ) ∧
+    ∀ k, wordWeight (List.replicate n i ++ u k) = ν
 
 /-- `(fᵢⁿV(λ))^ℤ_{λ-ν} = 0` for `n > νᵢ`: the empty family. -/
 lemma hwFiltGlobalAt_of_lt (Λ : Dom R) (i : I) {n : ℕ} {ν : I →₀ ℕ} (hn : ν i < n) :
     HwFiltGlobalAt hR Λ i n ν := by
   refine ⟨PEmpty.{u + 1}, PEmpty.elim, PEmpty.elim, fun k ↦ k.elim,
     ⟨fun k ↦ k.elim, fun _ _ _ k ↦ k.elim⟩, ⟨fun k ↦ k.elim, fun _ _ _ k ↦ k.elim⟩,
-    fun x hx ↦ ?_, fun k ↦ k.elim⟩
+    fun x hx ↦ ?_, fun k ↦ k.elim, fun k ↦ k.elim⟩
   rw [hwFilt_eq_bot Λ hn hx]
   exact zero_mem _
 
@@ -524,13 +526,13 @@ lemma hwFiltGlobalAt_of_lt (Λ : Dom R) (i : I) {n : ℕ} {ν : I →₀ ℕ} (h
 lemma hwFiltGlobalAt_of_neg {Λ : Dom R} {i : I} {n : ℕ} {ν : I →₀ ℕ}
     (hneg : (Λ.1 - R.rootSum ν) (R.coroot i) + n < 0) (h : HwFiltGlobalAt hR Λ i (n + 1) ν) :
     HwFiltGlobalAt hR Λ i n ν := by
-  obtain ⟨ι, g, u, hgF, hg₀, hg₁, hspan, hgu⟩ := h
-  refine ⟨ι, g, fun k ↦ i :: u k, fun k ↦ hwFilt_antitone Λ i (Nat.le_succ n) ν (hgF k), hg₀,
-    hg₁, fun x hx ↦ hspan x (hwFilt_le_succ hR Λ i hneg hx), fun k ↦ ?_⟩
-  have e : List.replicate n i ++ i :: u k = List.replicate (n + 1) i ++ u k := by
+  obtain ⟨ι, g, u, hgF, hg₀, hg₁, hspan, hgu, hgw⟩ := h
+  have e : ∀ k, List.replicate n i ++ i :: u k = List.replicate (n + 1) i ++ u k := fun k ↦ by
     rw [List.replicate_succ', List.append_assoc, List.singleton_append]
-  rw [e]
-  exact hgu k
+  refine ⟨ι, g, fun k ↦ i :: u k, fun k ↦ hwFilt_antitone Λ i (Nat.le_succ n) ν (hgF k), hg₀,
+    hg₁, fun x hx ↦ hspan x (hwFilt_le_succ hR Λ i hneg hx), fun k ↦ ?_, fun k ↦ ?_⟩
+  · rw [e]; exact hgu k
+  · rw [e]; exact hgw k
 
 variable (hfund : ∀ j : I, ∃ Λ : Dom R, ∀ i, Λ.1 (R.coroot i) = if i = j then 1 else 0)
 
@@ -548,7 +550,7 @@ theorem hwFiltGlobalAt_step {Λ : Dom R} {i : I} {n : ℕ} {ν : I →₀ ℕ} (
     (hP : HwFiltGlobalAt hR Λ i (n + 1) ν) : HwFiltGlobalAt hR Λ i n ν := by
   classical
   set μ := ν - Finsupp.single i n with hμ
-  obtain ⟨ι, g, u, hgF, hg₀, hg₁, hspan, hgu⟩ := hP
+  obtain ⟨ι, g, u, hgF, hg₀, hg₁, hspan, hgu, hgw⟩ := hP
   set N := Submodule.span (LaurentPolynomial ℤ) (Set.range g) with hN
   have hNF : ∀ x ∈ hwFilt Λ i (n + 1) ν, x ∈ N := hspan
   have hFN : ∀ x ∈ N, x ∈ hwFilt Λ i (n + 1) ν := fun x hx ↦
@@ -682,7 +684,7 @@ theorem hwFiltGlobalAt_step {Λ : Dom R} {i : I} {n : ℕ} {ν : I →₀ ℕ} (
       (residueIndependent_mod_of_sub_mem _
         (fun c ↦ (Submodule.restrictScalars_mem _ _ _).2 (hNK _ (hy'f c))) hr₁)
   refine ⟨ι ⊕ T, Sum.elim g y', Sum.elim (fun k ↦ i :: u k) (fun c ↦ (w c).1), ?_, hr₀', hr₁',
-    ?_, ?_⟩
+    ?_, ?_, ?_⟩
   · rintro (k | c)
     · exact hwFilt_antitone Λ i (Nat.le_succ n) ν (hgF k)
     · change y' c ∈ _
@@ -747,6 +749,13 @@ theorem hwFiltGlobalAt_step {Λ : Dom R} {i : I} {n : ℕ} {ν : I →₀ ℕ} (
           ((y c - f' c) - z c) + (f' c - fW hvt hR Λ (List.replicate n i ++ (w c).1)) := by abel
       rw [e]
       exact add_mem (hzsub c) (hf'sub c)
+  · rintro (k | c)
+    · change wordWeight (List.replicate n i ++ i :: u k) = ν
+      rw [← List.singleton_append, ← List.append_assoc, ← List.replicate_succ']
+      exact hgw k
+    · change wordWeight (List.replicate n i ++ (w c).1) = ν
+      rw [LusztigF.wordWeight_append, GrandLoop.wordWeight_replicate, (w c).2, ← hμν, add_comm]
+      simp
 
 include hfund in
 /-- **[Kas91] Prop. 7.4.1.** Under the induction hypothesis of [Kas91] §7 at the weights below
@@ -780,7 +789,7 @@ vanishes. -/
 theorem hwFilt_eq_zero_of_mem {ν : I →₀ ℕ} (hIH : GlobalBelow hR ν) (Λ : Dom R) (i : I) {n : ℕ}
     (hn : 1 ≤ n) {x : IrreducibleModule R 𝕧 Λ.1} (hx : x ∈ hwFilt Λ i n ν)
     (hxϖ : x ∈ ϖ • lat hvt hR A Λ) (hx₁ : x ∈ latBar hR Λ) : x = 0 := by
-  obtain ⟨ι, g, u, -, hg₀, hg₁, hspan, -⟩ := hwFiltGlobalAt hR hfund hIH Λ i hn
+  obtain ⟨ι, g, u, -, hg₀, hg₁, hspan, -, -⟩ := hwFiltGlobalAt hR hfund hIH Λ i hn
   exact balanced_eq_zero_of_mem_span (hw_laurent_smul_eq Λ) hg₀ hg₁ (hspan x hx) hxϖ hx₁
 
 include hfund in
@@ -791,7 +800,7 @@ theorem exists_hwFilt_sub_mem {ν : I →₀ ℕ} (hIH : GlobalBelow hR ν) (Λ 
     (hx₀ : x ∈ lat hvt hR A Λ) :
     ∃ y ∈ hwFilt Λ i n ν, y ∈ lat hvt hR A Λ ∧ y ∈ latBar hR Λ ∧
       x - y ∈ ϖ • lat hvt hR A Λ := by
-  obtain ⟨ι, g, u, hgF, hg₀, hg₁, hspan, -⟩ := hwFiltGlobalAt hR hfund hIH Λ i hn
+  obtain ⟨ι, g, u, hgF, hg₀, hg₁, hspan, -, -⟩ := hwFiltGlobalAt hR hfund hIH Λ i hn
   obtain ⟨y, hy, hxy⟩ := exists_int_sub_mem_of_mem_span (hw_laurent_smul_eq Λ) hg₀
     (hspan x hx) hx₀
   have key : ∀ y ∈ Submodule.span ℤ (Set.range g),
