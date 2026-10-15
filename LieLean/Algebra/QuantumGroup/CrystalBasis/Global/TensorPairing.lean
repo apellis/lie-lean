@@ -181,7 +181,7 @@ lemma tensor_ext_hwWt {φ ψ : TwL Λ ⊗[𝕂] IrreducibleModule R 𝕧 Λ.1 �
   | smul c a _ ha => rw [tmul_smul, map_smul, map_smul, ha]
 
 omit [Finite I] in
-private lemma act_E_tmul {M₁ M₂ : Type*} [AddCommGroup M₁] [Module 𝕂 M₁]
+lemma TensorModule.act_E_tmul {M₁ M₂ : Type*} [AddCommGroup M₁] [Module 𝕂 M₁]
     [Module (QuantumGroup R 𝕧) M₁]
     [IsScalarTower 𝕂 (QuantumGroup R 𝕧) M₁] [AddCommGroup M₂] [Module 𝕂 M₂]
     [Module (QuantumGroup R 𝕧) M₂] [IsScalarTower 𝕂 (QuantumGroup R 𝕧) M₂] (i : I)
@@ -191,7 +191,7 @@ private lemma act_E_tmul {M₁ M₂ : Type*} [AddCommGroup M₁] [Module 𝕂 M�
   TensorModule.E_smul_tmul i x y
 
 omit [Finite I] in
-private lemma act_F_tmul {M₁ M₂ : Type*} [AddCommGroup M₁] [Module 𝕂 M₁]
+lemma TensorModule.act_F_tmul {M₁ M₂ : Type*} [AddCommGroup M₁] [Module 𝕂 M₁]
     [Module (QuantumGroup R 𝕧) M₁]
     [IsScalarTower 𝕂 (QuantumGroup R 𝕧) M₁] [AddCommGroup M₂] [Module 𝕂 M₂]
     [Module (QuantumGroup R 𝕧) M₂] [IsScalarTower 𝕂 (QuantumGroup R 𝕧) M₂] (i : I)
@@ -201,7 +201,7 @@ private lemma act_F_tmul {M₁ M₂ : Type*} [AddCommGroup M₁] [Module 𝕂 M�
   TensorModule.F_smul_tmul i x y
 
 omit [Finite I] in
-private lemma act_K_tmul {M₁ M₂ : Type*} [AddCommGroup M₁] [Module 𝕂 M₁]
+lemma TensorModule.act_K_tmul {M₁ M₂ : Type*} [AddCommGroup M₁] [Module 𝕂 M₁]
     [Module (QuantumGroup R 𝕧) M₁]
     [IsScalarTower 𝕂 (QuantumGroup R 𝕧) M₁] [AddCommGroup M₂] [Module 𝕂 M₂]
     [Module (QuantumGroup R 𝕧) M₂] [IsScalarTower 𝕂 (QuantumGroup R 𝕧) M₂] (μ : Y)
@@ -230,7 +230,7 @@ lemma tensorPairing_comp_act_E (i : I) :
     tensorPairing hR Λ ∘ₗ TensorModule.act R 𝕧 _ _ (E R 𝕧 i) =
       counit R 𝕧 (E R 𝕧 i) • tensorPairing hR Λ := by
   refine tensor_ext_hwWt hR Λ fun m μ y hy ↦ ?_
-  rw [LinearMap.comp_apply, act_E_tmul, ChevalleyTwist.smul_toTwist,
+  rw [LinearMap.comp_apply, TensorModule.act_E_tmul, ChevalleyTwist.smul_toTwist,
     ChevalleyTwist.smul_toTwist, chevalley_E, chevalley_K, map_add, tensorPairing_tmul,
     tensorPairing_tmul, counit_E, zero_smul, LinearMap.zero_apply, tensorPairingOp_of_mem hR Λ hy,
     LinearMap.map_smul _ (tensorPairingCoef D μ), formL_F_smul_left, smul_eq_mul]
@@ -261,8 +261,8 @@ lemma tensorPairing_comp_act_F (i : I) :
   have hFm : formL hvt hR Λ m (F R 𝕧 i • y) =
       𝕧 ^ D.d i * formL hvt hR Λ (E R 𝕧 i • m) (K R 𝕧 (-ktilde R i) • y) := by
     rw [hs, formL_F_smul_left, ← formL_K_smul_left, hs]
-  rw [LinearMap.comp_apply, act_F_tmul, ChevalleyTwist.smul_toTwist, chevalley_F, map_add,
-    tensorPairing_tmul, tensorPairing_tmul, counit_F, zero_smul, LinearMap.zero_apply,
+  rw [LinearMap.comp_apply, TensorModule.act_F_tmul, ChevalleyTwist.smul_toTwist, chevalley_F,
+    map_add, tensorPairing_tmul, tensorPairing_tmul, counit_F, zero_smul, LinearMap.zero_apply,
     tensorPairingOp_of_mem hR Λ (K_smul_mem_weightSpace hy _), tensorPairingOp_of_mem hR Λ hFy,
     tensorPairingCoef_add_single, LinearMap.map_smul _ (tensorPairingCoef D μ),
     LinearMap.map_smul _ (tensorPairingCoef D μ * -(𝕧 ^ D.d i)⁻¹), hFm, smul_eq_mul, smul_eq_mul]
@@ -274,7 +274,7 @@ lemma tensorPairing_comp_act_K (ν : Y) :
     tensorPairing hR Λ ∘ₗ TensorModule.act R 𝕧 _ _ (K R 𝕧 ν) =
       counit R 𝕧 (K R 𝕧 ν) • tensorPairing hR Λ := by
   refine tensor_ext_hwWt hR Λ fun m μ y hy ↦ ?_
-  rw [LinearMap.comp_apply, act_K_tmul, ChevalleyTwist.smul_toTwist, chevalley_K,
+  rw [LinearMap.comp_apply, TensorModule.act_K_tmul, ChevalleyTwist.smul_toTwist, chevalley_K,
     tensorPairing_tmul, LinearMap.smul_apply, tensorPairing_tmul, counit_K, one_smul,
     tensorPairingOp_of_mem hR Λ (K_smul_mem_weightSpace hy _), tensorPairingOp_of_mem hR Λ hy,
     LinearMap.map_smul _ (tensorPairingCoef D μ), LinearMap.map_smul _ (tensorPairingCoef D μ),
@@ -324,7 +324,7 @@ lemma eq_zero_of_counit_equivariant {φ : TwL Λ ⊗[𝕂] IrreducibleModule R �
     | hwv => exact h₁
     | F i a _ =>
       have h := hφ (E R 𝕧 i) (ChevalleyTwist.toTwist R 𝕧 _ a ⊗ₜ[𝕂] IrreducibleModule.hwv R 𝕧 Λ.1)
-      rwa [act_E_tmul, IrreducibleModule.E_smul_hwv, tmul_zero, add_zero,
+      rwa [TensorModule.act_E_tmul, IrreducibleModule.E_smul_hwv, tmul_zero, add_zero,
         ChevalleyTwist.smul_toTwist, chevalley_E,
         counit_E, zero_mul] at h
   have hall : ∀ y (x : TwL Λ), φ (x ⊗ₜ[𝕂] y) = 0 := by
@@ -341,8 +341,9 @@ lemma eq_zero_of_counit_equivariant {φ : TwL Λ ⊗[𝕂] IrreducibleModule R �
       intro x
       have hF := hφ (F R 𝕧 i) (x ⊗ₜ[𝕂] a)
       have hK := hφ (K R 𝕧 (-ktilde R i)) ((K R 𝕧 (ktilde R i) • F R 𝕧 i • x) ⊗ₜ[𝕂] a)
-      rw [act_K_tmul, ← mul_smul, K_add, neg_add_cancel, K_zero, one_smul, ha, mul_zero] at hK
-      rwa [act_F_tmul, map_add, hK, zero_add, counit_F, zero_mul] at hF
+      rw [TensorModule.act_K_tmul, ← mul_smul, K_add, neg_add_cancel, K_zero, one_smul, ha,
+        mul_zero] at hK
+      rwa [TensorModule.act_F_tmul, map_add, hK, zero_add, counit_F, zero_mul] at hF
   exact TensorProduct.ext' fun x y ↦ hall y x
 
 /-- **[Lus] Prop. 25.1.4 (a)**, uniqueness. -/
