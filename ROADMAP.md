@@ -2800,6 +2800,22 @@ completed steps and continuation threads are:
   Cartan space by `ker_bggDiff_eq_range`, using actual lowering powers modulo boundaries
   and Casimir vanishing. The theorem does not cover nonsymmetrizable GCM or arbitrary Cartan
   dimension; these extensions remain open.
+- **Open items of [HumO] Ch. 3, 4, 7** (M12, tracking issue #7; order of work: Thm. 4.6 for
+  arbitrary weights, then the items below):
+  - Thm. 4.6 (Verma's embedding `M(s_α·λ) ↪ M(λ)` for every positive root `α` and arbitrary `λ`,
+    §4.7): in progress.
+  - Prop. 3.13 (`𝒪_χ` is equivalent to the finite-dimensional right modules over `End(P)` for a
+    projective generator `P`): not formalized. Humphreys refers the proof to Bass's Morita theorem
+    for abelian categories with a projective generator, which is not in Mathlib, and the library
+    has no bundled category `𝒪_χ`. Plan: package `𝒪_χ` as a category and state 3.13 with that
+    Morita statement as an explicit hypothesis, unless it can be proved directly.
+  - Prop. 7.13 in the form `x = w_λ w_μ°` (longest elements of `W_[λ]` and of `W_μ°`): the
+    projective-cover statement is `nonempty_equiv_projectiveCover_translation_verma`; the
+    identification of `x` needs the Coxeter structure of `W_[λ]` with its longest element (already
+    available for integral `λ`, where `W_[λ] = W`).
+  - Independence of `Θ_s` from the choice of `μ` on the wall (§7.15): scheduled after Thm. 4.6;
+    depends on the classification of projective functors (§10.8).
+  - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
   (`shiftedHarishChandraEquiv`) are proved in finite type over characteristic-zero fields, as
