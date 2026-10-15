@@ -2953,7 +2953,19 @@ completed steps and continuation threads are:
   `(fⱼU⁻)^ℤ` of the same `b ∈ B(∞)` coincide), under the same hypothesis, with (7.5.3)
   (`exists_starU_eq_f_of_evq_eq_zero`: `ker(u ↦ u u_λ) ∩ U⁻_ν = U⁻fₖ` on the wall `⟨hₖ, λ⟩ = 0`),
   `U⁻_ℤ* = U⁻_ℤ`, `(L(∞)⁻)* = L(∞)⁻` and `U⁻_ℤ ∩ fₖU⁻ ⊆ (fₖU⁻)^ℤ` (`mem_negFilt_of_eq_f`).
-  Remaining: (G.3), Lemma 7.5.2 and the induction, the global basis, and the rest of 41.1.6.
+  `Global/NegativeFiltrationSpan.lean`: `U⁻_{ℤ,ν} = Σᵢ (fᵢU⁻)^ℤ_ν` for `ν ≠ 0` and
+  `U⁻_{ℤ,0} = 𝒜 · 1` (used before (7.5.6); `mem_iSup_negFilt`, `mem_span_one_of_mem_Uw_zero`), and
+  `(fᵢU⁻)^ℤ_ν = {x ∈ U⁻_{ℤ,ν} | x₀ = 0}` (`mem_negFilt_iff_comp_zero`).
+  `Global/GlobalInduction.lean`: **the induction of §7.5**. Under the induction hypothesis: the
+  lifts `G(b)`, `b ∈ B(∞)_ν` ((7.5.4), `negGlobalLift`), which are bar-invariant
+  (`negBar_eq_of_mem_negFilt`) and span `U⁻_{ℤ,ν}` ((7.5.6), `mem_span_negGlobalLift`); `(G.1)` at
+  `ν` (`negGlobalAt_of_globalBelow`); `(G.3)` for `n = 1` (`negLift_mem_negFilt`); **Lemma 7.5.2**
+  (`evq_negLift_eq_zero`). By induction on the weight (`globalAt`): **`(G.1)` at every weight**,
+  for every Cartan datum with finite index set (`negGlobalAt`), and **`(G.2)` at every weight**
+  and every dominant `λ` (`hwGlobalAt`; `X`-regular root data with fundamental weights, where
+  Lusztig assumes `Y`-regular). These isomorphisms define Kashiwara's global bases of `U⁻` and
+  of `V(λ)`. `(G.3)` is proved for `n = 1`, the case the induction uses.
+  Remaining: the comparison with Lusztig's canonical basis ([Lus] 14.4) and the rest of 41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
