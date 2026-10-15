@@ -2820,6 +2820,16 @@ printed proof relies on [HK] Exercise 5.13.
 crystals** (`TensorModule.nonempty_crystalEquiv`: `crystal (B₁ ⊗ B₂) ≅ Crystal.tensor (crystal B₂)
 (crystal B₁)`, factors exchanged by Lusztig's coproduct); `Crystal.equivOfE` (a bijection of
 seminormal crystals commuting with the `ẽᵢ` and weights is an isomorphism).
+`CrystalBasis/TensorProductRuleIntegrable.lean`: **[HK] Thm. 4.4.1 for arbitrary integrable
+modules** (HK state it for `𝒪_int`; no finite-dimensionality), at `c = ϖ` for a local ring `A`
+with `k = A[ϖ⁻¹]`, `ϖ ↦ v⁻¹`: `L₁ ⊗ L₂` is a crystal lattice
+(`TensorModule.isCrystalLattice_tensor`; freeness from `A`-bases of `L₁`, `L₂`), `B₁ ⊗ B₂` is an `A/ϖA`-basis of its reduction
+(`TensorModule.linearIndependent_base`, `span_base_eq_top`), every element of a crystal base is the
+class of a string vector (`IsCrystalBase.exists_string`, [HK] Prop. 4.2.11 (3)), the tensor
+product rule (`TensorModule.fQ_tmulL_integrable`, `eQ_tmulL_integrable`, from the local rule
+`kashiwaraF_tmul_sub_mem` instead of [HK] Thm. 4.4.3), the crystal base
+(`TensorModule.isCrystalBase_tensor_integrable`) and its crystal
+(`TensorModule.nonempty_crystalEquiv_integrable`: `crystal (B₁ ⊗ B₂) ≅ crystal B₂ ⊗ crystal B₁`).
 `Crystal/TensorHighestWeight.lean`: [HK] Cor. 4.4.4 for seminormal crystals
 (`Crystal.IsSeminormal.isHighestWeight_tensor_iff`: `b₁ ⊗ b₂` is maximal iff `ẽᵢ b₁ = 0` and
 `εᵢ(b₂) ≤ ⟨hᵢ, wt b₁⟩` for all `i`; `isHighestWeight_fst_of_isHighestWeight_tensor`: part (2)).
@@ -3329,7 +3339,9 @@ completed steps and continuation threads are:
   summands; the decomposition `M ≅ ⊕ⱼ L_q(λⱼ)` comes from complete reducibility, [HK] Thm. 3.5.4,
   `IsCategoryOInt.exists_linearEquiv_dfinsupp`); consequently the crystal of such a crystal base
   is `⊔ⱼ B(λⱼ)` with highest weight elements the `u_{λⱼ}` ([Kas] (4.6),
-  `GrandLoop.exists_crystalEquiv_sigma_of_isCategoryOInt`). For
+  `GrandLoop.exists_crystalEquiv_sigma_of_isCategoryOInt`). The tensor product of crystal bases
+  ([HK] Thm. 4.4.1) is proved for arbitrary integrable modules, not only finite-dimensional ones
+  (`TensorModule.isCrystalBase_tensor_integrable`, `nonempty_crystalEquiv_integrable`). For
   `B(∞)`: the crystal `crystalInf`, `B(∞)* = B(∞)`, the strict embeddings `Ψᵢ` ([Kas93a]
   Thm. 2.2.1 (i)) and the Kashiwara–Saito characterization (`equivInf`) are proved, for `A/ϖA`
   formally real. **Comparison with path crystals** ([Kas96] Thms. 3.1, 3.2, 4.1), for `A/ϖA`
