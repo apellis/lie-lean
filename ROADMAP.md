@@ -3006,8 +3006,12 @@ completed steps and continuation threads are:
   (`QuasiR/Uniqueness.lean`, `quasiR_unique`: a family in `U⁻_ν ⊗ U⁺_ν` with `Θ'_0 = 1 ⊗ 1`
   satisfying the `Eᵢ`-identities is `quasiR`), via `eq_zero_of_forall_E_commute`, 3.1.6, the
   independence of the `y⁻ K_μ` (`mem_serreIdeal_of_minusHom_mul_K_add`) and 1.2.15
-  (`eq_zero_of_forall_quotientRDeriv_eq_zero`). Remaining: 4.1.3 (`ΘΘ̄ = 1`, which needs the
-  bar involution of `U`).
+  (`eq_zero_of_forall_quotientRDeriv_eq_zero`). The bar involution of `U` ([Lus] 3.1.12,
+  `QuantumGroup/BarInvolution.lean`: `barHom`, semilinear, `Eᵢ ↦ Eᵢ`, `Fᵢ ↦ Fᵢ`,
+  `K_μ ↦ K_{-μ}`, `barHom_barHom`, compatible with the bar of `f` along `x ↦ x^±`) and of
+  `U ⊗ U` (`barTensor`); [Lus] 4.1.3 componentwise (`QuasiR/Inverse.lean`,
+  `sum_quasiR_mul_barTensor`, `sum_barTensor_mul_quasiR`: `Σ_{ν'+ν''=ν} Θ_{ν'} Θ̄_{ν''} =
+  Σ_{ν'+ν''=ν} Θ̄_{ν'} Θ_{ν''} = δ_{ν,0}`), following Lusztig's argument.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of

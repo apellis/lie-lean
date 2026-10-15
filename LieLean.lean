@@ -216,6 +216,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.LeadingAction
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
+import LieLean.Algebra.QuantumGroup.BarInvolution
 import LieLean.Algebra.QuantumGroup.BaseChange
 import LieLean.Algebra.QuantumGroup.Basic
 import LieLean.Algebra.QuantumGroup.BraidCoproduct.FiniteIntertwining
@@ -539,6 +540,7 @@ import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
 import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.QuasiR.Basic
+import LieLean.Algebra.QuantumGroup.QuasiR.Inverse
 import LieLean.Algebra.QuantumGroup.QuasiR.Theorem
 import LieLean.Algebra.QuantumGroup.QuasiR.Uniqueness
 import LieLean.Algebra.QuantumGroup.QBinomialSeries
