@@ -1559,8 +1559,11 @@ image of an injective Levi morphism from a path crystal `B_J(ν)` of the standar
 the crystal of the crystal base of an integrable `U_q(𝔤_J)`-module; the two agree by the
 identification of `B_J(ν)` with crystal-base crystals (Kashiwara, Joseph), which is
 `GrandLoop.existsUnique_equiv_pathCrystal` (crystal bases of the `L_q(λ)` exist and are unique,
-`GrandLoop.isCrystalBase`, `GrandLoop.eq_base_of_isCrystalBase`); the decomposition of the crystal
-base of an arbitrary integrable module into such crystals is not formalized.
+`GrandLoop.isCrystalBase`, `GrandLoop.eq_base_of_isCrystalBase`). The crystal of a crystal base of
+a module in `𝒪_int` is a disjoint union of the crystals `B(λⱼ)` and is normal
+(`GrandLoop.exists_crystalEquiv_sigma_of_isCategoryOInt`,
+`GrandLoop.isNormal_crystal_of_isCategoryOInt`; see M15). Not formalized: restriction of crystal
+bases to `U_q(𝔤_J)`, and crystal bases of integrable modules outside `𝒪_int`.
 `IsNormal.reflectionPerm_mul_pow`
 (the Coxeter relations `(SᵢSⱼ)^{mᵢⱼ} = 1`, [Kas94] Thm. 7.2.2, transported along Levi morphisms
 from `pathBraidRelations` on the rank-two Levi path crystals; rank-two finite type from
@@ -2699,6 +2702,15 @@ and for `M` in `𝒪_int` by `GrandLoop.finite_summandsAbove_of_isCategoryOInt`)
 ones. [HK] repeat this step; with infinitely many summands the repetition is a Zorn's lemma
 argument on partial splittings (`GrandLoop.SplitStage`, `GrandLoop.exists_isLatticeIso`). The
 strategy is [HK]'s, with projections onto summands in place of complements; the details are ours.
+`CrystalDecomposition`: **the crystal of a crystal base in `𝒪_int`** ([Kas] §4.5, (4.6)): for `M`
+in `𝒪_int` with a crystal base `(L, B)`, the crystal of `B` is isomorphic to the disjoint union
+`⊔ⱼ B(λⱼ)` of the crystals of the `L_q(λⱼ)`, and its highest weight elements are exactly the images
+of the `u_{λⱼ}`, of weight `λⱼ` (`GrandLoop.exists_crystalEquiv_sigma_of_isCategoryOInt`); hence it
+is normal relative to the path model (`GrandLoop.isNormal_crystal_of_isCategoryOInt`, `_'` for the
+standard real realization, `_ratFunc` over `ℚ(v)` with no hypothesis left). Ingredients: an
+isomorphism of crystal bases ([HK] Def. 4.2.9 (2)) induces an isomorphism of crystals
+(`IsCrystalBase.crystalEquivOfEquiv`), and the crystal of `(⊕ⱼ Lⱼ, ⊔ⱼ Bⱼ)` is `Crystal.sigma`
+of the crystals of the `(Lⱼ, Bⱼ)` (`IsCrystalBase.sigmaCrystalEquiv`).
 `CrystalBasis/StringComparison.lean`, `GrandLoop/{InfinityString,InfinityCompare}`: towards `B(∞)`
 ([Jan] 10.4–10.9 in this library's conventions). For `x = Σⱼ Fᵢ^{(j)} ηⱼ` with small components
 `f̃ᵢ Fᵢ^{(a)} x ≡ Fᵢ^{(a+1)} x` (`IntegrableSl2.IsKashiwaraStable.fTilde_dF_sub_mem`); `ᵢr ∘ rⱼ = rⱼ ∘ ᵢr`
@@ -3028,8 +3040,10 @@ completed steps and continuation threads are:
   unions and tensor products of normal crystals are normal, and Kashiwara's Weyl group action
   exists on every normal crystal (`Crystal.IsNormal.weylAction`). The crystal of the crystal base
   of `L_q(λ)` is identified with the path crystal `B(λ)` (see below,
-  `GrandLoop.existsUnique_equiv_pathCrystal`). Not formalized: the decomposition of crystal bases
-  of arbitrary integrable `U_q(𝔤_J)`-modules into such crystals.
+  `GrandLoop.existsUnique_equiv_pathCrystal`), and the crystal of a crystal base of a module in
+  `𝒪_int` is a disjoint union of the `B(λⱼ)`, hence normal
+  (`GrandLoop.isNormal_crystal_of_isCategoryOInt`). Not formalized: restriction of crystal bases to
+  `U_q(𝔤_J)` ([Kas] Prop. 4.3) and crystal bases of integrable modules outside `𝒪_int`.
 - **Global basis of `f`** (D1, scheduled 2026-10-14, issue #180; [Kas91] §7, by induction on
   the weight for every Cartan datum; [Lus] Ch. 14 for the comparison). Done:
   `CrystalBasis/Global/BalancedTriple.lean`, the balanced-triple lemmas [Kas91] Lemma 7.1.1
@@ -3298,7 +3312,9 @@ completed steps and continuation threads are:
   `ShapovalovLimit`, `GrandLoop/{Stable,Dual,Purity}`). Uniqueness of crystal bases of every
   module in `𝒪_int` ([HK] Thm. 5.2.1, `GrandLoop.exists_equiv_of_isCategoryOInt`, any number of
   summands; the decomposition `M ≅ ⊕ⱼ L_q(λⱼ)` comes from complete reducibility, [HK] Thm. 3.5.4,
-  `IsCategoryOInt.exists_linearEquiv_dfinsupp`). For
+  `IsCategoryOInt.exists_linearEquiv_dfinsupp`); consequently the crystal of such a crystal base
+  is `⊔ⱼ B(λⱼ)` with highest weight elements the `u_{λⱼ}` ([Kas] (4.6),
+  `GrandLoop.exists_crystalEquiv_sigma_of_isCategoryOInt`). For
   `B(∞)`: the crystal `crystalInf`, `B(∞)* = B(∞)`, the strict embeddings `Ψᵢ` ([Kas93a]
   Thm. 2.2.1 (i)) and the Kashiwara–Saito characterization (`equivInf`) are proved, for `A/ϖA`
   formally real. **Comparison with path crystals** ([Kas96] Thms. 3.1, 3.2, 4.1), for `A/ϖA`
