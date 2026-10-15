@@ -2114,7 +2114,9 @@ the uniqueness in 26.1.2), `Modified.form_nondegenerate_of_baseChange` and
 `Modified.form_nondegenerate_of_transcendental` (nondegeneracy over `ℚ(v)` implies nondegeneracy
 over any characteristic-zero field at any parameter transcendental over `ℚ`, e.g. `X⁻¹`, `(tX)⁻¹`
 with `t² = -1` in an algebraic closure of `ℚ(X)`: `transcendental_inv_X`,
-`transcendental_inv_mul_X`). Nondegeneracy over `ℚ(v)` itself ([Lus] 26.3.1) is not proved.
+`transcendental_inv_mul_X`). Nondegeneracy over `ℚ(v)` itself follows from [Lus] 26.3.1 (a)
+(`Modified.eq_zero_of_forall_form_eq_zero`, `R.IsXRegular` and `hY`; see the global-basis thread
+below).
 **The symmetries `T'_{i,1}`, `T''_{i,-1}`** (`QuantumGroup/ModuleSymmetry/Symmetries.lean`,
 `QuantumGroup/Modified/Symmetries.lean`; [Lus] 37.1–37.2, 41.1.1–41.1.3): `braidPrimeEquiv R hv i`
 (`T'_{i,1} = ω Tᵢ ω`, [Lus] 37.2.4) and its inverse `T''_{i,-1}`, with Lusztig's values on all
@@ -3231,8 +3233,18 @@ completed steps and continuation threads are:
   (`modifiedCanonical_sub_mem_span`: `b ◇_ζ b'' - b''⁻ b⁺ 1_ζ` is a combination of `b₂⁻ b₁⁺ 1_ζ`
   with `tr |b₁| < tr |b|`, `tr |b₂| < tr |b''|`, cf. 25.2.1 (e); Lusztig uses `b⁺ b''⁻ 1_ζ`) and
   `Module.Basis.ofUnitriangular` (`LinearAlgebra/Basis/Unitriangular.lean`).
-  Remaining: [Lus] 26.3.1. Then: remove `hY` via [Lus] 25.2.2 (pass to the simply connected root
-  datum, 23.2.5); the statements above are phrased so that 25.2.2 transfers them.
+  `CrystalBasis/Global/ModifiedCanonicalForm.lean`: **[Lus] Thm. 26.3.1 (a)** (same hypotheses
+  `R.IsXRegular`, `hY`): `(b ◇_ζ b'', b₁ ◇_{ζ₁} b₁'') ≡ δ_{ζ,ζ₁} δ_{b,b₁} δ_{b'',b₁''}` modulo
+  `v⁻¹A`, `A` the local ring at `v = ∞` (`Modified.form_modifiedCanonical_sub_mem`, basis form
+  `Modified.form_modifiedCanonicalBasis_sub_mem`), via the statement (c) of its proof
+  (`isNegLaurent_tensorIrrForm_tensorCanonical_sub`, from 24.3.3 (b) and 19.3.3) and the limit
+  26.2.3; hence Lusztig's form on `U̇` is nondegenerate over `ℚ(v)`
+  (`Modified.eq_zero_of_forall_form_eq_zero`; our own deduction, by formal reality of
+  `A/v⁻¹A = ℚ`) and at every parameter transcendental over `ℚ`
+  (`Modified.eq_zero_of_forall_form_eq_zero_of_transcendental`).
+  Remaining: [Lus] 26.3.1 (b) (characterization of `B ∪ -B`). Then: remove `hY` via [Lus] 25.2.2
+  (pass to the simply connected root datum, 23.2.5); the statements above are phrased so that
+  25.2.2 transfers them.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
