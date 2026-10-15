@@ -3165,6 +3165,12 @@ completed steps and continuation threads are:
   `ξ'' ↦ ξ' ⊗ ξ` (`tensorEmbTw_act`, `tensorEmbTw_hwv`, `eq_tensorEmbTw`), with coordinates
   `f(b; b₁, b₂)` (`repr_tensorEmbTw`, `isIntInv_repr_tensorEmbTw_evq`,
   `repr_tensorEmbTw_evq_one`).
+  `CrystalBasis/Global/TensorTransition.lean`: `ξ_{-λ} ⊗ η_{λ'}` generates `ʷΛ_λ ⊗ Λ_{λ'}`
+  (`exists_act_tmul_hwv_eq`, the generation part of [Lus] 23.3.6, proved directly by applying
+  the `Eᵢ`, `Fᵢ`, `K_μ`; our own route), the map `t = (1 ⊗ δ_{λ'} ⊗ 1)(χ' ⊗ χ)` of [Lus] 25.1.5
+  (`tensorTransition`, `tensorTransition_act`, `tensorTransition_hwv`) and **[Lus] Lemma 25.1.6**
+  (`tensorTransition_sub_mem_tensorLatNeg`, `tensorTransition_mem_tensorLatNeg`,
+  `surjective_tensorTransition`; coordinates `repr_tensorTransition_sub`), `X`-regular root data.
   Remaining: [Lus] 25.2.1, 26.3.1.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
