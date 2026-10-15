@@ -305,8 +305,10 @@ theorem Modified.mem_signedCanonicalBasis_iff (β : Modified R 𝕧) :
       linarith
     -- so exactly one `n_t` is nonzero, and it is `±1`
     obtain ⟨t₀, ht₀, hne⟩ : ∃ t₀ ∈ S, n t₀ ≠ 0 := by
-      by_contra h
-      push_neg at h
+      by_contra hne
+      have h : ∀ t ∈ S, n t = 0 := fun t ht ↦ by
+        by_contra h''
+        exact hne ⟨t, ht, h''⟩
       have h0 : ∑ t ∈ S, n t ^ 2 = 0 := Finset.sum_eq_zero fun t ht ↦ by rw [h t ht]; ring
       rw [h0] at hZ
       exact zero_ne_one hZ
@@ -338,13 +340,13 @@ theorem Modified.mem_signedCanonicalBasis_iff (β : Modified R 𝕧) :
   · rintro ⟨t, rfl | rfl⟩
     · obtain ⟨a, ha⟩ := form_modifiedCanonicalBasis_sub_mem hR hY t t
       refine ⟨modifiedCanonicalBasis_mem_aForm hR hY t, bar_modifiedCanonicalBasis hR hY t, a, ?_⟩
-      rw [_root_.map_add, _root_.map_one, ← ha, if_pos rfl]
-      ring
+      rw [_root_.map_add, _root_.map_one, ← ha]
+      simp
     · obtain ⟨a, ha⟩ := form_modifiedCanonicalBasis_sub_mem hR hY t t
       refine ⟨neg_mem (modifiedCanonicalBasis_mem_aForm hR hY t), ?_, a, ?_⟩
       · rw [map_neg, bar_modifiedCanonicalBasis]
-      · rw [map_neg, LinearMap.neg_apply, map_neg, neg_neg, _root_.map_add, _root_.map_one, ← ha,
-          if_pos rfl]
-        ring
+      · simp only [map_neg, LinearMap.neg_apply, neg_neg]
+        rw [_root_.map_add, _root_.map_one, ← ha]
+        simp
 
 end LieLean.QuantumGroup
