@@ -452,6 +452,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.RatFunc
 import LieLean.Algebra.QuantumGroup.LusztigF.Reverse
 import LieLean.Algebra.QuantumGroup.LusztigF.Serre
 import LieLean.Algebra.QuantumGroup.LusztigF.SkewKernel
+import LieLean.Algebra.QuantumGroup.Modified.Bar
 import LieLean.Algebra.QuantumGroup.Modified.BaseChange
 import LieLean.Algebra.QuantumGroup.Modified.Basic
 import LieLean.Algebra.QuantumGroup.Modified.Commutation
