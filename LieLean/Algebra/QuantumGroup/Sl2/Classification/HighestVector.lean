@@ -115,6 +115,65 @@ theorem exists_last_nonzero_pow_of_q_commute (hq0 : q ≠ 0)
   · rw [← Module.End.mul_apply, ← pow_succ', hsucc]
     exact hN
 
+omit [FiniteDimensional k M] in
+/-- `K Tⁿ = qⁿ Tⁿ K` for a q-commuting pair. -/
+theorem mul_pow_eq_smul_of_q_commute (hcomm : K * T = q • (T * K)) (n : ℕ) :
+    K * T ^ n = q ^ n • (T ^ n * K) := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [pow_succ, ← mul_assoc, ih, smul_mul_assoc, mul_assoc, hcomm, mul_smul_comm, smul_smul,
+      ← mul_assoc, ← pow_succ, pow_succ]
+
+/-- In finite dimension, an endomorphism `T` q-commuting with an injective `K` is nilpotent if
+`q` has infinite multiplicative order. On the stable range `N` of `T`, both `T` and `K` are
+bijective and `det K · det T = q^{dim N} det T · det K`, so `N = 0`. This determinant argument is
+reconstructed here; it replaces Jantzen's argument with irreducible polynomials (Lemma 2.1). -/
+theorem isNilpotent_of_q_commute (hK : Function.Injective K)
+    (hq : ∀ n : ℕ, 0 < n → q ^ n ≠ 1) (hcomm : K * T = q • (T * K)) : IsNilpotent T := by
+  obtain ⟨n, hn⟩ := Filter.eventually_atTop.mp T.eventually_iInf_range_pow_eq
+  set N := LinearMap.range (T ^ n) with hN
+  have hsucc : LinearMap.range (T ^ (n + 1)) = N :=
+    (hn (n + 1) (by omega)).symm.trans (hn n le_rfl)
+  have hTN : ∀ x ∈ N, T x ∈ N := by
+    rintro _ ⟨x, rfl⟩
+    exact hsucc ▸ ⟨x, by rw [pow_succ', Module.End.mul_apply]⟩
+  have hKN : ∀ x ∈ N, K x ∈ N := by
+    rintro _ ⟨x, rfl⟩
+    refine ⟨q ^ n • K x, ?_⟩
+    rw [map_smul, ← Module.End.mul_apply, ← Module.End.mul_apply,
+      mul_pow_eq_smul_of_q_commute hcomm n, LinearMap.smul_apply]
+  set T' := T.restrict hTN
+  set K' := K.restrict hKN
+  have hT' : Function.Surjective T' := by
+    rintro ⟨y, hy⟩
+    rw [← hsucc] at hy
+    obtain ⟨x, rfl⟩ := hy
+    refine ⟨⟨(T ^ n) x, x, rfl⟩, Subtype.ext ?_⟩
+    change T ((T ^ n) x) = (T ^ (n + 1)) x
+    rw [pow_succ', Module.End.mul_apply]
+  have hdetT : LinearMap.det T' ≠ 0 := by
+    rw [Ne, LinearMap.det_eq_zero_iff_ker_ne_bot, not_not]
+    exact LinearMap.ker_eq_bot.2 (LinearMap.injective_iff_surjective.2 hT')
+  have hdetK : LinearMap.det K' ≠ 0 := by
+    rw [Ne, LinearMap.det_eq_zero_iff_ker_ne_bot, not_not]
+    exact LinearMap.ker_eq_bot.2 fun x y h ↦ Subtype.ext (hK (congrArg Subtype.val h))
+  have hc : K' * T' = q • (T' * K') := by
+    ext x
+    change K (T (x : M)) = q • T (K (x : M))
+    rw [← Module.End.mul_apply, hcomm]
+    rfl
+  have hd := congrArg LinearMap.det hc
+  rw [LinearMap.det_smul, map_mul, map_mul, mul_comm (LinearMap.det T')] at hd
+  have hq1 : q ^ Module.finrank k N = 1 := by
+    have := mul_right_cancel₀ (mul_ne_zero hdetK hdetT) (hd.symm.trans (one_mul _).symm)
+    exact this
+  have hN0 : N = ⊥ := by
+    by_contra h
+    have := Submodule.nontrivial_iff_ne_bot.2 h
+    exact hq _ Module.finrank_pos hq1
+  exact ⟨n, LinearMap.range_eq_bot.1 hN0⟩
+
 /-- Over an algebraically closed field, an injective `K` q-commuting with `T`
 has a nonzero eigenvector killed by `T`, provided `q` has infinite multiplicative
 order. The elementary eigenvector proof is reconstructed here. -/

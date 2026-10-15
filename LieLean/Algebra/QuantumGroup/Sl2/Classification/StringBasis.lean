@@ -122,10 +122,10 @@ theorem F_string_span_eq_top (hv : v ≠ 0) (ρ : Sl2 v →ₐ[k] Module.End k M
     simpa [hbot] using hmem
   · exact htop
 
-/-- Every nonzero finite-dimensional irreducible representation over an algebraically closed
-field has a highest-string basis. Both signs `σ² = 1` are retained, and no highest vector or
+/-- Every nonzero finite-dimensional irreducible representation over any field has a
+highest-string basis. Both signs `σ² = 1` are retained, and no highest vector or
 weight/type-1 assumption is imposed. The proof is reconstructed from Jantzen, Ch. 2. -/
-theorem exists_highestString_basis [FiniteDimensional k M] [Nontrivial M] [IsAlgClosed k]
+theorem exists_highestString_basis [FiniteDimensional k M] [Nontrivial M]
     (hv : v ≠ 0) (hv' : ∀ r : ℕ, 0 < r → v ^ r ≠ 1)
     (ρ : Sl2 v →ₐ[k] Module.End k M)
     (hρ : ∀ W : Submodule k M, (∀ (u : Sl2 v) x, x ∈ W → ρ u x ∈ W) →

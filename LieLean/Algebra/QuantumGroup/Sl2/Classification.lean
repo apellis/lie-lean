@@ -15,7 +15,7 @@ classification, without assuming type-1 weights or a highest vector.
 ## Main results
 
 * `QuantumGroup.Sl2.exists_highestVector`: every nonzero finite-dimensional representation
-  over an algebraically closed field has a highest vector when the parameter has infinite order.
+  over any field has a highest vector when the parameter has infinite order.
 * `QuantumGroup.Sl2.E_apply_F_pow_succ`: the raising action on an arbitrary highest string.
 * `QuantumGroup.Sl2.exists_highestString`: the highest eigenvalue is `σ v^n`, where `σ² = 1`,
   and the lowering string has length `n+1`.
@@ -69,17 +69,6 @@ private theorem inv_sq_pow_ne_one (hv' : ∀ r : ℕ, 0 < r → v ^ r ≠ 1)
   apply sq_pow_ne_one hv' r hr
   simpa only [inv_pow, inv_inv, inv_one] using congrArg Inv.inv h
 
-/-- Existence of a highest vector in every nonzero finite-dimensional representation.
-No irreducibility or weight decomposition is assumed. The argument uses a `K₁` eigenvector
-and termination of its `E` string; it is reconstructed from the standard Ch. 2 argument. -/
-theorem exists_highestVector [FiniteDimensional k M] [Nontrivial M] [IsAlgClosed k]
-    (hv : v ≠ 0) (hv' : ∀ r : ℕ, 0 < r → v ^ r ≠ 1)
-    (ρ : Sl2 v →ₐ[k] Module.End k M) :
-    ∃ (a : k) (m : M), a ≠ 0 ∧ m ≠ 0 ∧
-      ρ (K sl2RootDatum v 1) m = a • m ∧ ρ (E sl2RootDatum v ()) m = 0 := by
-  exact Module.End.exists_highestWeight_of_q_commute _ _ (K_injective ρ) (v ^ 2)
-    (pow_ne_zero _ hv) (sq_pow_ne_one hv') (rep_K_mul_E ρ)
-
 /-- Every `F` iterate of a `K₁` eigenvector has its expected eigenvalue. -/
 theorem K_apply_F_pow (ρ : Sl2 v →ₐ[k] Module.End k M) {a : k} {m : M}
     (hm : ρ (K sl2RootDatum v 1) m = a • m) (r : ℕ) :
@@ -127,6 +116,108 @@ theorem E_apply_F_pow_succ (hv : v ≠ 0) (ρ : Sl2 v →ₐ[k] Module.End k M)
     sub_zero, map_sub, map_smul, smul_smul, smul_sub, sub_smul, mul_assoc,
     mul_sub] using h
 
+/-- `E` kills `K_μ m` whenever it kills `m`. -/
+theorem E_apply_K_eq_zero (hv : v ≠ 0) (ρ : Sl2 v →ₐ[k] Module.End k M) {m : M}
+    (hE : ρ (E sl2RootDatum v ()) m = 0) (μ : ℤ) :
+    ρ (E sl2RootDatum v ()) (ρ (K sl2RootDatum v μ) m) = 0 := by
+  have h := congrArg (fun u : Sl2 v => ρ u m) (K_mul_E sl2RootDatum v μ ())
+  simp only [map_mul, map_smul, Module.End.mul_apply, LinearMap.smul_apply, hE, map_zero] at h
+  exact (smul_eq_zero.mp h.symm).resolve_left (zpow_ne_zero _ hv)
+
+/-- The raising operator on `F^{r+1} m` for a vector `m` killed by `E`, which need not be a
+weight vector. This is the representation form of `QuantumGroup.E_mul_F_pow_sub`. -/
+theorem E_apply_F_pow_succ_of_E (hv : v ≠ 0) (ρ : Sl2 v →ₐ[k] Module.End k M) {m : M}
+    (hE : ρ (E sl2RootDatum v ()) m = 0) (r : ℕ) :
+    ρ (E sl2RootDatum v ()) ((ρ (F sl2RootDatum v ()) ^ (r + 1)) m) =
+      (qInt v (r + 1) * (v - v⁻¹)⁻¹) • (ρ (F sl2RootDatum v ()) ^ r)
+        (v⁻¹ ^ r • ρ (K sl2RootDatum v 1) m - v ^ r • ρ (K sl2RootDatum v (-1)) m) := by
+  have h := congrArg (fun u : Sl2 v => ρ u m)
+    (E_mul_F_pow_sub (R := sl2RootDatum) hv () r)
+  simpa only [map_sub, map_mul, map_pow, map_smul, LinearMap.sub_apply,
+    Module.End.mul_apply, LinearMap.smul_apply, sl2Datum_d, pow_one,
+    Kt, sl2RootDatum_ktilde, hE, map_zero, sub_zero] using h
+
+/-- If a nonzero vector killed by `E` is also killed by some power of `F`, then there is a nonzero
+weight vector killed by `E`. Induction on the power: if `m` is killed by `F^{r+1}`, then
+`m' = v^{-r} K m - v^r K⁻¹ m` is killed by `E` and `F^r`; if `m' = 0`, then `K² m = v^{2r} m` and
+`m` or `K m + v^r m` is a weight vector. This replaces Jantzen's Prop. 2.3 (diagonalizability
+of `K`); the argument is reconstructed. -/
+theorem exists_highestVector_of_F_pow_eq_zero (hv : v ≠ 0)
+    (hv' : ∀ r : ℕ, 0 < r → v ^ r ≠ 1) (ρ : Sl2 v →ₐ[k] Module.End k M) (s : ℕ) :
+    ∀ m : M, m ≠ 0 → ρ (E sl2RootDatum v ()) m = 0 → (ρ (F sl2RootDatum v ()) ^ s) m = 0 →
+      ∃ (a : k) (m : M), a ≠ 0 ∧ m ≠ 0 ∧
+        ρ (K sl2RootDatum v 1) m = a • m ∧ ρ (E sl2RootDatum v ()) m = 0 := by
+  have hden : v - v⁻¹ ≠ 0 := by
+    intro h
+    apply hv' 2 two_pos
+    have h' := sub_eq_zero.mp h
+    calc
+      v ^ 2 = v * v := pow_two v
+      _ = v * v⁻¹ := by rw [← h']
+      _ = 1 := mul_inv_cancel₀ hv
+  induction s with
+  | zero =>
+    intro m hm0 _ h
+    exact absurd (by simpa using h) hm0
+  | succ r ih =>
+    intro m hm0 hE hz
+    set Kp := ρ (K sl2RootDatum v 1)
+    set Kn := ρ (K sl2RootDatum v (-1))
+    set m' := v⁻¹ ^ r • Kp m - v ^ r • Kn m with hm'
+    have hEm' : ρ (E sl2RootDatum v ()) m' = 0 := by
+      rw [hm', map_sub, map_smul, map_smul, E_apply_K_eq_zero hv ρ hE,
+        E_apply_K_eq_zero hv ρ hE, smul_zero, smul_zero, sub_zero]
+    by_cases h' : m' = 0
+    · have hKn : Kp (Kn m) = m := by
+        rw [← Module.End.mul_apply, ← map_mul, K_mul_K_neg, map_one, Module.End.one_apply]
+      have hKK : Kp (Kp m) = (v ^ r * v ^ r) • m := by
+        have h2 := congrArg Kp h'
+        rw [map_sub, map_smul, map_smul, hKn, map_zero, sub_eq_zero] at h2
+        calc Kp (Kp m) = v ^ r • (v⁻¹ ^ r • Kp (Kp m)) := by
+              rw [smul_smul, inv_pow, mul_inv_cancel₀ (pow_ne_zero _ hv), one_smul]
+          _ = (v ^ r * v ^ r) • m := by rw [h2, smul_smul]
+      by_cases hw : Kp m + v ^ r • m = 0
+      · refine ⟨-v ^ r, m, neg_ne_zero.2 (pow_ne_zero _ hv), hm0, ?_, hE⟩
+        rw [neg_smul, ← sub_eq_zero, sub_neg_eq_add]
+        exact hw
+      · refine ⟨v ^ r, Kp m + v ^ r • m, pow_ne_zero _ hv, hw, ?_, ?_⟩
+        · rw [map_add, map_smul, hKK, smul_add, smul_smul, add_comm]
+        · rw [map_add, map_smul, E_apply_K_eq_zero hv ρ hE, hE, smul_zero, add_zero]
+    · have hc : qInt v (r + 1) * (v - v⁻¹)⁻¹ ≠ 0 :=
+        mul_ne_zero (qInt_ne_zero hv (hv' _ (by omega))) (inv_ne_zero hden)
+      have h := E_apply_F_pow_succ_of_E hv ρ hE r
+      rw [hz, map_zero] at h
+      exact ih m' h' hEm' ((smul_eq_zero.mp h.symm).resolve_left hc)
+
+/-- Existence of a highest vector in every nonzero finite-dimensional representation, over any
+field. No irreducibility or weight decomposition is assumed. `E` and `F` act nilpotently
+(`Module.End.isNilpotent_of_q_commute`), so some nonzero `m` is killed by `E` and a power of `F`,
+and `exists_highestVector_of_F_pow_eq_zero` applies. Jantzen (*Lectures on quantum groups*,
+§2.2–2.3) uses an eigenvector of `K` over an algebraically closed field, or diagonalizability of
+`K` (Prop. 2.3); the argument here is reconstructed. -/
+theorem exists_highestVector [FiniteDimensional k M] [Nontrivial M]
+    (hv : v ≠ 0) (hv' : ∀ r : ℕ, 0 < r → v ^ r ≠ 1)
+    (ρ : Sl2 v →ₐ[k] Module.End k M) :
+    ∃ (a : k) (m : M), a ≠ 0 ∧ m ≠ 0 ∧
+      ρ (K sl2RootDatum v 1) m = a • m ∧ ρ (E sl2RootDatum v ()) m = 0 := by
+  classical
+  obtain ⟨n, hn⟩ := Module.End.isNilpotent_of_q_commute (K_injective ρ) (sq_pow_ne_one hv')
+    (rep_K_mul_E ρ)
+  obtain ⟨s, hs⟩ := Module.End.isNilpotent_of_q_commute (K_injective ρ) (inv_sq_pow_ne_one hv')
+    (rep_K_mul_F ρ)
+  obtain ⟨x, hx⟩ := exists_ne (0 : M)
+  have hex : ∃ j, (ρ (E sl2RootDatum v ()) ^ j) x = 0 := ⟨n, by rw [hn]; rfl⟩
+  have hj : Nat.find hex ≠ 0 := by
+    intro h
+    have := Nat.find_spec hex
+    rw [h, pow_zero, Module.End.one_apply] at this
+    exact hx this
+  refine exists_highestVector_of_F_pow_eq_zero hv hv' ρ s
+    ((ρ (E sl2RootDatum v ()) ^ (Nat.find hex - 1)) x)
+    (Nat.find_min hex (by omega)) ?_ (by rw [hs]; rfl)
+  rw [← Module.End.mul_apply, ← pow_succ', Nat.sub_add_cancel (Nat.pos_of_ne_zero hj)]
+  exact Nat.find_spec hex
+
 /-- The terminal relation quantizes the highest eigenvalue: its square is `v^(2n)`.
 This standard finite-string argument (Jantzen, Ch. 2) is reconstructed here. -/
 theorem highest_eigenvalue_sq (hv : v ≠ 0)
@@ -158,7 +249,7 @@ theorem highest_eigenvalue_sq (hv : v ≠ 0)
 /-- A highest vector in a finite-dimensional representation has eigenvalue `σ v^n`
 with `σ² = 1`, and its nonzero `F` string has length `n+1`. Both signs are retained;
 no type-1 hypothesis is imposed. The finite-string proof is reconstructed from Ch. 2. -/
-theorem exists_highestString [FiniteDimensional k M] [Nontrivial M] [IsAlgClosed k]
+theorem exists_highestString [FiniteDimensional k M] [Nontrivial M]
     (hv : v ≠ 0) (hv' : ∀ r : ℕ, 0 < r → v ^ r ≠ 1)
     (ρ : Sl2 v →ₐ[k] Module.End k M) :
     ∃ (n : ℕ) (σ : k) (m : M), σ ^ 2 = 1 ∧ m ≠ 0 ∧

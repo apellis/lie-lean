@@ -2714,12 +2714,14 @@ of Kashiwara's. No full quantum-algebra bar, general-rank global basis, integer 
 arbitrary specialization is asserted.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `LieLean.QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
-irreducible representation over an algebraically closed field, for nonzero `v` of infinite
-multiplicative order, with some `simpleRep v n σ`, `σ² = 1`. Both signs are retained; no
-characteristic-zero or type-1 hypothesis is imposed. Parameter uniqueness
+irreducible representation over any field, for nonzero `v` of infinite multiplicative order,
+with some `simpleRep v n σ`, `σ² = 1` ([Jan] Thm. 2.6, same generality). Both signs are retained;
+no characteristic-zero or type-1 hypothesis is imposed. The highest vector comes from nilpotence
+of `E`, `F` (`Module.End.isNilpotent_of_q_commute`, a determinant argument) and an induction on
+the length of `F`-strings (`Sl2.exists_highestVector_of_F_pow_eq_zero`) instead of Jantzen's
+Prop. 2.3. Parameter uniqueness
 (`Sl2/Classification/Uniqueness.lean`, `LieLean.QuantumGroup.Sl2.simpleRep_equiv_iff`) proves that
-`L(n, σ)` and `L(m, τ)` are equivalent exactly when `n = m` and `σ = τ`; this part needs
-only a field, not algebraic closedness. Thus the finite-dimensional classification is complete
+`L(n, σ)` and `L(m, τ)` are equivalent exactly when `n = m` and `σ = τ`. Thus the finite-dimensional classification is complete
 up to equivalence under the stated generic-parameter hypotheses. Classification of arbitrary
 infinite-dimensional simple modules is not claimed. Future simplification: unify the two
 q-integer families in

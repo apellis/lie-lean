@@ -28,11 +28,12 @@ namespace LieLean.QuantumGroup.Sl2
 
 variable {k M : Type*} [Field k] [AddCommGroup M] [Module k M] {v : k}
 
-/-- Every nonzero finite-dimensional irreducible representation over an algebraically closed
-field is equivalent to one of the existing `simpleRep` representations. Both signs `σ² = 1`
-are retained, with no characteristic or type-1 restriction. The highest-string intertwining
-argument is reconstructed from Jantzen, Ch. 2. -/
-theorem exists_equiv_simpleRep [IsAlgClosed k] [FiniteDimensional k M] [Nontrivial M]
+/-- Every nonzero finite-dimensional irreducible representation over any field is equivalent to
+one of the existing `simpleRep` representations (Jantzen, *Lectures on quantum groups*,
+Thm. 2.6, over an arbitrary field with `q` not a root of unity). Both signs `σ² = 1` are retained,
+with no characteristic or type-1 restriction. The highest-string intertwining argument is
+reconstructed from Jantzen, Ch. 2. -/
+theorem exists_equiv_simpleRep [FiniteDimensional k M] [Nontrivial M]
     (hv : v ≠ 0) (hv' : ∀ r : ℕ, 0 < r → v ^ r ≠ 1)
     (ρ : Sl2 v →ₐ[k] Module.End k M)
     (hρ : ∀ W : Submodule k M, (∀ (u : Sl2 v) x, x ∈ W → ρ u x ∈ W) →
@@ -157,9 +158,10 @@ theorem irreducible_of_equiv_simpleRep (hv : v ≠ 0)
 
 /-- Classification of nonzero finite-dimensional irreducible quantum sl₂ representations:
 irreducibility is equivalent to being linearly intertwined with some `simpleRep L(n,σ)`,
-where `σ² = 1`. No type-1 or highest-vector hypothesis is imposed. This is the finite-
-dimensional exhaustion statement from Jantzen, Ch. 2, reconstructed here. -/
-theorem irreducible_iff_equiv_simpleRep [IsAlgClosed k] [FiniteDimensional k M]
+where `σ² = 1`, over any field. No type-1 or highest-vector hypothesis is imposed. This is the
+finite-dimensional exhaustion statement of Jantzen, *Lectures on quantum groups*, Thm. 2.6, with
+the same hypotheses on the field and on `v`; the proof is reconstructed. -/
+theorem irreducible_iff_equiv_simpleRep [FiniteDimensional k M]
     [Nontrivial M] (hv : v ≠ 0) (hv' : ∀ r : ℕ, 0 < r → v ^ r ≠ 1)
     (ρ : Sl2 v →ₐ[k] Module.End k M) :
     (∀ W : Submodule k M, (∀ (u : Sl2 v) x, x ∈ W → ρ u x ∈ W) →
