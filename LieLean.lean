@@ -344,7 +344,10 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.DirectSum
 import LieLean.Algebra.QuantumGroup.CrystalBasis.DualLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Equiv
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Basic
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.CrystalBaseIsomorphism
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.DirectSumAut
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.DirectSumExistence
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.DirectSumNormalize
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.DirectSumUniqueness
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Dual
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Embedding
