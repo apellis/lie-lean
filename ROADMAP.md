@@ -3159,6 +3159,12 @@ completed steps and continuation threads are:
   proved directly by applying the `Eᵢ`, `Fᵢ`, `K_μ` rather than through 23.3.6), and
   `δ_λ(b⁺ξ ⊗ b'⁻η)` is `1` for `b = b' = 1` and in `v⁻¹ℤ[v⁻¹]` otherwise (b)
   (`tensorPairing_tensorBasis_one`, `isNegLaurent_tensorPairing_tensorBasis`, from 19.3.3).
+  `CrystalBasis/Global/TensorEmbTwist.lean`: **[Lus] Prop. 25.1.3**: `χ' : ʷΛ_{λ+λ'} →
+  ʷΛ_{λ'} ⊗ ʷΛ_λ` (`tensorEmbTw`, `χ` followed by the flip and the twists; equivariance from
+  `Δ ∘ ω = ᵗ(ω ⊗ ω) ∘ Δ`, `tensorTwistEquiv_act`) is the unique homomorphism with
+  `ξ'' ↦ ξ' ⊗ ξ` (`tensorEmbTw_act`, `tensorEmbTw_hwv`, `eq_tensorEmbTw`), with coordinates
+  `f(b; b₁, b₂)` (`repr_tensorEmbTw`, `isIntInv_repr_tensorEmbTw_evq`,
+  `repr_tensorEmbTw_evq_one`).
   Remaining: [Lus] 25.2.1, 26.3.1.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
