@@ -360,6 +360,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.DualLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Equiv
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Basic
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.CrystalBaseIsomorphism
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.CrystalBaseUniqueness
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.DirectSumAut
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.DirectSumExistence
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.DirectSumNormalize

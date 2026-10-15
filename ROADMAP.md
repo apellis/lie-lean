@@ -2650,14 +2650,20 @@ decomposition (`GrandLoop.free_lat`) and `B(λ)` linearly independent by `D(r)`
 `mem_smul_lat_of_eK_of_ne`, `mem_lat_of_eK_of_ne`) and [HK] Lemma 5.2.4 for `⊕ⱼ V(λⱼ)`, any family
 (`exists_sub_smul_hwv_mem_smul_dsSum`, `exists_sub_smul_hwv_mem_dsSum`, `GrandLoop.eq_dsSum`;
 freeness of `L'` not needed), with the relative criterion `mem_lat_of_kashiwaraE_stable`.
-`DirectSumAut`, `DirectSumNormalize`, `CrystalBaseIsomorphism`: **[HK] Thm. 5.2.1 for finitely many
-summands** (`GrandLoop.exists_equiv_of_isCrystalBase`): if `ψ : ⊕ⱼ V(λⱼ) ≃ M` with `J` finite, every
-crystal base `(L, B)` of `M` is the image of `(⊕ⱼ L(λⱼ), ⊔ⱼ B(λⱼ))` under an isomorphism
-`⊕ⱼ V(λⱼ) ≃ M` (lattices and bases; `GrandLoop.exists_autEquiv_of_isCrystalBase` for `M = ⊕ⱼ V(λⱼ)`).
-The automorphisms `GrandLoop.autEquiv` extend linear automorphisms of the span of the `v_{λⱼ}` of
-one weight; `GrandLoop.exists_normalize` moves these `v_{λⱼ}` onto lifts of elements of `B`, and
-`GrandLoop.exists_isLatticeIso_of_split` is the induction on the summands of maximal weight (the
-strategy of [HK], with projections onto summands in place of complements; details ours).
+`DirectSumAut`, `DirectSumNormalize`, `CrystalBaseIsomorphism`, `CrystalBaseUniqueness`:
+**[HK] Thm. 5.2.1** (`GrandLoop.exists_equiv_of_isCategoryOInt`): for `M` in `𝒪_int` and a crystal
+base `(L, B)` of `M` there are dominant `λⱼ` and an isomorphism `⊕ⱼ V(λⱼ) ≃ M` mapping
+`⊕ⱼ L(λⱼ)` onto `L` and `⊔ⱼ B(λⱼ)` onto `B`, with any number of summands. The form with a given
+isomorphism `ψ : ⊕ⱼ V(λⱼ) ≃ M` is `GrandLoop.exists_equiv_of_isCrystalBase`
+(`GrandLoop.exists_autEquiv_of_isCrystalBase` for `M = ⊕ⱼ V(λⱼ)`), under the hypothesis that each
+summand lies below finitely many summands (`GrandLoop.summandsAbove`; automatic for finite `J`,
+and for `M` in `𝒪_int` by `GrandLoop.finite_summandsAbove_of_isCategoryOInt`). The automorphisms
+`GrandLoop.autEquiv` extend linear automorphisms of the span of the `v_{λⱼ}` of one weight;
+`GrandLoop.exists_normalize` moves these `v_{λⱼ}` onto lifts of elements of `B`, and
+`GrandLoop.IsSplit.exists_pullback` splits off the summands of a maximal weight among the remaining
+ones. [HK] repeat this step; with infinitely many summands the repetition is a Zorn's lemma
+argument on partial splittings (`GrandLoop.SplitStage`, `GrandLoop.exists_isLatticeIso`). The
+strategy is [HK]'s, with projections onto summands in place of complements; the details are ours.
 `CrystalBasis/StringComparison.lean`, `GrandLoop/{InfinityString,InfinityCompare}`: towards `B(∞)`
 ([Jan] 10.4–10.9 in this library's conventions). For `x = Σⱼ Fᵢ^{(j)} ηⱼ` with small components
 `f̃ᵢ Fᵢ^{(a)} x ≡ Fᵢ^{(a+1)} x` (`IntegrableSl2.IsKashiwaraStable.fTilde_dF_sub_mem`); `ᵢr ∘ rⱼ = rⱼ ∘ ᵢr`
@@ -3239,12 +3245,9 @@ completed steps and continuation threads are:
   `L_q(λ)` for every dominant `λ`, for `v` transcendental and a discrete valuation ring
   `A ⊆ k = A[ϖ⁻¹]`, `ϖ ↦ v⁻¹`. The printed proof has gaps (the uniform bound in Lemmas 5.3.7, 5.3.8;
   Exercise 5.13, used in Lemma 5.3.15), which are filled by our own arguments (`GrandLoop/PropA`,
-  `ShapovalovLimit`, `GrandLoop/{Stable,Dual,Purity}`). Uniqueness for finite direct sums
-  `M ≅ ⊕ⱼ V(λⱼ)` ([HK] Thm. 5.2.1, intermediate form with `J` finite and the isomorphism given:
-  `GrandLoop.exists_equiv_of_isCrystalBase`). Remaining: [HK] Thm. 5.2.1 with infinitely many
-  summands (`M` in `𝒪_int`; [HK] order the summands by maximal weights and apply the finite step
-  repeatedly, which needs a limit argument weight space by weight space); the decomposition
-  `M ≅ ⊕ⱼ L_q(λⱼ)` itself is supplied by complete reducibility ([HK] Thm. 3.5.4,
+  `ShapovalovLimit`, `GrandLoop/{Stable,Dual,Purity}`). Uniqueness of crystal bases of every
+  module in `𝒪_int` ([HK] Thm. 5.2.1, `GrandLoop.exists_equiv_of_isCategoryOInt`, any number of
+  summands; the decomposition `M ≅ ⊕ⱼ L_q(λⱼ)` comes from complete reducibility, [HK] Thm. 3.5.4,
   `IsCategoryOInt.exists_linearEquiv_dfinsupp`). For
   `B(∞)`: the crystal `crystalInf`, `B(∞)* = B(∞)`, the strict embeddings `Ψᵢ` ([Kas93a]
   Thm. 2.2.1 (i)) and the Kashiwara–Saito characterization (`equivInf`) are proved, for `A/ϖA`
