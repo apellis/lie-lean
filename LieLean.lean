@@ -430,6 +430,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorIntegrable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorModuleCrystal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorPiece
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorProductRule
+import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorProductRuleIntegrable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorRule
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorSl2
 import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorStrings

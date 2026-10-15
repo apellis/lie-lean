@@ -187,7 +187,7 @@ include hinj hϖ0 hk hL₁ hL₂ hB₁ hB₁' hB₂ hB₂'
 
 omit [Module.Free A L₁] [Module.Free A L₂] hinj hϖ0 hk hL₁ hL₂ hB₂ hB₂' in
 /-- The coordinate functional `L₁ → A/ϖA` of `b ∈ B₁`. -/
-private lemma exists_coord (b : B₁) :
+lemma exists_coord (b : B₁) :
     ∃ p : L₁ →ₗ[A] A ⧸ Ideal.span {ϖ}, ∀ x : L₁, ∀ hx : Submodule.Quotient.mk x ∈ B₁,
       ((⟨_, hx⟩ : B₁) = b → p x = 1) ∧ ((⟨_, hx⟩ : B₁) ≠ b → p x = 0) := by
   let bas := Module.Basis.mk hB₁ (by rw [Subtype.range_coe, hB₁'])
