@@ -19,9 +19,11 @@ Let `U = U_q(𝔤)` (`QuantumGroup R v`), `v` not a root of unity.
   hence (for `v` transcendental over `ℚ`, `L̃_q(Λ) ≅ L_q(Λ)`) through `L_q(Λ)`
   (`QuantumGroup.IrreducibleModule.lift`).
 * **Adjoints.** If `M` is an integrable module with finite-dimensional weight spaces and a
-  nondegenerate symmetric contravariant form, and `N` an integrable module with a contravariant
-  form, then every `U`-linear `Φ : M → N` has a `U`-linear adjoint `Ψ : N → M`,
-  `(Ψ n, m) = (n, Φ m)` (`QuantumGroup.adjoint`), constructed weight space by weight space.
+  nondegenerate symmetric contravariant form, and `N` is integrable, then every contravariant
+  pairing `P : N × M → k` (`P(u n, m) = P(n, ρ(u) m)`, `QuantumGroup.IsContravariantPairing`) has a
+  `U`-linear adjoint `Ψ : N → M`, `(Ψ n, m) = P(n, m)` (`QuantumGroup.adjoint`), constructed weight
+  space by weight space. For a contravariant form on `N` and a `U`-linear `Φ : M → N`,
+  `P(n, m) = (n, Φ m)` gives the adjoint of `Φ`.
 
 These are the maps `Φ_{λ,μ} : V(λ+μ) → V(λ) ⊗ V(μ)` and `Ψ_{λ,μ} = Φ_{λ,μ}^*` of Kashiwara's
 grand loop ([HK] §5.3, (5.6)–(5.8)), constructed in `QuantumGroup.tensorEmb`,
@@ -113,23 +115,34 @@ variable [Finite I] [CharZero k] (hvt : Transcendental ℚ v) (hR : R.IsXRegular
   (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) (hΛ : ∀ i, 0 ≤ Λ (R.coroot i))
   (hN : IsIntegrable R v N) (w : N) (hw : w ∈ weightSpace R v N Λ) (hE : ∀ i, E R v i • w = 0)
 
-/-- The universal property of `L_q(Λ)` for `Λ` dominant: `v_Λ ↦ w` for a primitive vector `w` of
-weight `Λ` in an integrable module (`v` transcendental over `ℚ`, so that `L̃_q(Λ) ≅ L_q(Λ)`). -/
-def lift : IrreducibleModule R v Λ →ₗ[QuantumGroup R v] N :=
+/-- The universal property of `L_q(Λ)` for `Λ` dominant: `v_Λ ↦ w` for a vector `w` of weight `Λ`
+with `Eᵢ w = 0` and `Fᵢ^{⟨i,Λ⟩+1} w = 0` (`v` transcendental over `ℚ`, so that
+`L̃_q(Λ) ≅ L_q(Λ)`). -/
+def liftOfFPow (hF : ∀ i, F R v i ^ ((Λ (R.coroot i)).toNat + 1) • w = 0) :
+    IrreducibleModule R v Λ →ₗ[QuantumGroup R v] N :=
   (VermaModule.fPowSubmodule R v Λ).liftQ (VermaModule.lift w hE (mem_weightSpace.1 hw))
       (by
         rw [VermaModule.fPowSubmodule, Submodule.span_le]
         rintro _ ⟨i, rfl⟩
         rw [SetLike.mem_coe, LinearMap.mem_ker, LinearMap.map_smul, VermaModule.lift_hwv]
-        exact F_pow_smul_eq_zero_of_primitive hv' hN hw hE i) ∘ₗ
+        exact hF i) ∘ₗ
     (FPowQuotient.equivIrreducibleModule hvt hR hv' hΛ).symm.toLinearMap
 
-@[simp] lemma lift_hwv : lift hvt hR hv' hΛ hN w hw hE (hwv R v Λ) = w := by
+@[simp] lemma liftOfFPow_hwv (hF : ∀ i, F R v i ^ ((Λ (R.coroot i)).toNat + 1) • w = 0) :
+    liftOfFPow hvt hR hv' hΛ w hw hE hF (hwv R v Λ) = w := by
   have : (FPowQuotient.equivIrreducibleModule hvt hR hv' hΛ).symm (hwv R v Λ) =
       Submodule.Quotient.mk (VermaModule.hwv R v Λ) := by
     rw [LinearEquiv.symm_apply_eq]
     rfl
-  simp [lift, this]
+  simp [liftOfFPow, this]
+
+/-- The universal property of `L_q(Λ)` for `Λ` dominant: `v_Λ ↦ w` for a primitive vector `w` of
+weight `Λ` in an integrable module (`v` transcendental over `ℚ`, so that `L̃_q(Λ) ≅ L_q(Λ)`). -/
+def lift : IrreducibleModule R v Λ →ₗ[QuantumGroup R v] N :=
+  liftOfFPow hvt hR hv' hΛ w hw hE (F_pow_smul_eq_zero_of_primitive hv' hN hw hE)
+
+@[simp] lemma lift_hwv : lift hvt hR hv' hΛ hN w hw hE (hwv R v Λ) = w :=
+  liftOfFPow_hwv hvt hR hv' hΛ w hw hE _
 
 end IrreducibleModule
 
@@ -153,9 +166,37 @@ structure IsGoodForm (B : LinearMap.BilinForm k M) : Prop where
   symm : ∀ m m', B m m' = B m' m
   nondegenerate : ∀ m, (∀ m', B m m' = 0) → m = 0
 
+variable (R v) in
+/-- A pairing `P : N × M → k` is contravariant if `P(u n, m) = P(n, ρ(u) m)`. -/
+def IsContravariantPairing (P : N →ₗ[k] M →ₗ[k] k) : Prop :=
+  ∀ (u : QuantumGroup R v) (n : N) (m : M), P (u • n) m = P n (rho R v u • m)
+
+include hv' in
+/-- Weight spaces of different weights are orthogonal for a contravariant pairing. -/
+theorem IsContravariantPairing.eq_zero_of_ne {P : N →ₗ[k] M →ₗ[k] k}
+    (hP : IsContravariantPairing R v P) {Λ Λ' : Y →+ ℤ} (h : Λ ≠ Λ') {n : N} {m : M}
+    (hn : n ∈ weightSpace R v N Λ) (hm : m ∈ weightSpace R v M Λ') : P n m = 0 := by
+  obtain ⟨μ, hμ⟩ := DFunLike.ne_iff.1 h
+  have e := hP (K R v μ) n m
+  rw [rho_K, hn μ, hm μ, map_smul, LinearMap.smul_apply, map_smul, smul_eq_mul,
+    smul_eq_mul] at e
+  have hne : v ^ Λ μ ≠ v ^ Λ' μ := by
+    intro he
+    refine zpow_ne_one_of_not_root hv' (sub_ne_zero.2 hμ) ?_
+    rw [zpow_sub₀ (NeZero.ne v), he, div_self (zpow_ne_zero _ (NeZero.ne v))]
+  have : (v ^ Λ μ - v ^ Λ' μ) * P n m = 0 := by rw [sub_mul, e, sub_self]
+  exact (mul_eq_zero.1 this).resolve_left (sub_ne_zero.2 hne)
+
+/-- The pairing `(n, m) ↦ B(n, Φ m)` of a contravariant form `B` on `N` and a `U`-linear
+`Φ : M → N` is contravariant. -/
+lemma IsContravariant.isContravariantPairing_compl₂ {BN : LinearMap.BilinForm k N}
+    (hBN : IsContravariant R v BN) (Φ : M →ₗ[QuantumGroup R v] N) :
+    IsContravariantPairing R v (BN.compl₂ (Φ.restrictScalars k)) := fun u n m ↦ by
+  simp only [LinearMap.compl₂_apply, LinearMap.coe_restrictScalars, map_smul]
+  exact hBN u n (Φ m)
+
 variable {hv'} {BM : LinearMap.BilinForm k M} (hB : IsGoodForm (R := R) (v := v) BM)
-  {BN : LinearMap.BilinForm k N} (hN : IsIntegrable R v N) (hBN : IsContravariant R v BN)
-  (Φ : M →ₗ[QuantumGroup R v] N)
+  (hN : IsIntegrable R v N) {P : N →ₗ[k] M →ₗ[k] k}
 
 include hv' hB in
 /-- A nondegenerate symmetric contravariant form is nondegenerate on each weight space. -/
@@ -176,37 +217,36 @@ lemma IsGoodForm.nondegenerate_restrict (Λ : Y →+ ℤ) :
   exact ⟨fun x hx ↦ key x hx, fun y hy ↦ key y fun x ↦ by rw [hB.symm]; exact hy x⟩
 
 variable (hv') in
-/-- The adjoint on one weight space: `n ↦ Ψ n ∈ M^Λ` with `(Ψ n, m) = (n, Φ m)` for `m ∈ M^Λ`. -/
-def adjointWeight (BN : LinearMap.BilinForm k N) (Λ : Y →+ ℤ) : weightSpace R v N Λ →ₗ[k] M :=
+/-- The adjoint on one weight space: `n ↦ Ψ n ∈ M^Λ` with `(Ψ n, m) = P(n, m)` for `m ∈ M^Λ`. -/
+def adjointWeight (P : N →ₗ[k] M →ₗ[k] k) (Λ : Y →+ ℤ) : weightSpace R v N Λ →ₗ[k] M :=
   haveI := hB.finiteDimensional Λ
   (weightSpace R v M Λ).subtype ∘ₗ
     ((BM.restrict (weightSpace R v M Λ)).toDual
       (hB.nondegenerate_restrict (hv' := hv') Λ)).symm.toLinearMap ∘ₗ
-    (BN.compl₂ ((Φ.restrictScalars k) ∘ₗ (weightSpace R v M Λ).subtype)) ∘ₗ
-    (weightSpace R v N Λ).subtype
+    (P.compl₂ (weightSpace R v M Λ).subtype) ∘ₗ (weightSpace R v N Λ).subtype
 
 lemma adjointWeight_mem (Λ : Y →+ ℤ) (n : weightSpace R v N Λ) :
-    adjointWeight hv' hB Φ BN Λ n ∈ weightSpace R v M Λ := by
+    adjointWeight hv' hB P Λ n ∈ weightSpace R v M Λ := by
   simp [adjointWeight]
 
 lemma form_adjointWeight (Λ : Y →+ ℤ) (n : weightSpace R v N Λ) {m : M}
-    (hm : m ∈ weightSpace R v M Λ) : BM (adjointWeight hv' hB Φ BN Λ n) m = BN n (Φ m) := by
+    (hm : m ∈ weightSpace R v M Λ) : BM (adjointWeight hv' hB P Λ n) m = P n m := by
   have := hB.finiteDimensional Λ
   have := LinearMap.BilinForm.apply_toDual_symm_apply
     (hB := hB.nondegenerate_restrict (hv' := hv') Λ)
-    ((BN.compl₂ ((Φ.restrictScalars k) ∘ₗ (weightSpace R v M Λ).subtype)) n) ⟨m, hm⟩
+    ((P.compl₂ (weightSpace R v M Λ).subtype) n) ⟨m, hm⟩
   simpa [adjointWeight] using this
 
 variable (hv') in
 open scoped Classical in
-/-- The adjoint of `Φ : M → N`: `(Ψ n, m) = (n, Φ m)`. -/
-def adjoint (BN : LinearMap.BilinForm k N) : N →ₗ[k] M :=
-  DirectSum.toModule k (Y →+ ℤ) M (adjointWeight hv' hB Φ BN) ∘ₗ
+/-- The adjoint of a pairing `P : N × M → k` with respect to `B`: `(Ψ n, m) = P(n, m)`. -/
+def adjoint (P : N →ₗ[k] M →ₗ[k] k) : N →ₗ[k] M :=
+  DirectSum.toModule k (Y →+ ℤ) M (adjointWeight hv' hB P) ∘ₗ
     (LinearEquiv.ofBijective (DirectSum.coeLinearMap (weightSpace R v N))
       (isInternal_weightSpace hv' hN)).symm.toLinearMap
 
 lemma adjoint_of_mem {Λ : Y →+ ℤ} {n : N} (hn : n ∈ weightSpace R v N Λ) :
-    adjoint hv' hB hN Φ BN n = adjointWeight hv' hB Φ BN Λ ⟨n, hn⟩ := by
+    adjoint hv' hB hN P n = adjointWeight hv' hB P Λ ⟨n, hn⟩ := by
   classical
   have h : (LinearEquiv.ofBijective (DirectSum.coeLinearMap (weightSpace R v N))
       (isInternal_weightSpace hv' hN)).symm n =
@@ -216,9 +256,11 @@ lemma adjoint_of_mem {Λ : Y →+ ℤ} {n : N} (hn : n ∈ weightSpace R v N Λ)
   simp only [adjoint, LinearMap.comp_apply, LinearEquiv.coe_coe, h]
   exact DirectSum.toModule_lof k Λ _
 
-include hBN in
-/-- **The adjoint property** `(Ψ n, m) = (n, Φ m)`. -/
-theorem form_adjoint (n : N) (m : M) : BM (adjoint hv' hB hN Φ BN n) m = BN n (Φ m) := by
+variable (hP : IsContravariantPairing R v P)
+include hP
+
+/-- **The adjoint property** `(Ψ n, m) = P(n, m)`. -/
+theorem form_adjoint (n : N) (m : M) : BM (adjoint hv' hB hN P n) m = P n m := by
   have hn : n ∈ ⨆ Λ, weightSpace R v N Λ := by rw [hN.iSup_weightSpace_eq_top]; trivial
   induction hn using Submodule.iSup_induction' with
   | mem Λ n hn =>
@@ -226,35 +268,34 @@ theorem form_adjoint (n : N) (m : M) : BM (adjoint hv' hB hN Φ BN n) m = BN n (
       rw [hB.isIntegrable.iSup_weightSpace_eq_top]; trivial
     induction hm using Submodule.iSup_induction' with
     | mem Λ' m hm =>
-      rw [adjoint_of_mem hB hN Φ hn]
+      rw [adjoint_of_mem hB hN hn]
       by_cases h : Λ = Λ'
-      · subst h; exact form_adjointWeight hB Φ Λ _ hm
-      · rw [hB.isContravariant.eq_zero_of_ne h (adjointWeight_mem hB Φ Λ _) hm hv',
-          hBN.eq_zero_of_ne h hn (map_mem_weightSpace Φ hm) hv']
+      · subst h; exact form_adjointWeight hB Λ _ hm
+      · rw [hB.isContravariant.eq_zero_of_ne h (adjointWeight_mem hB Λ _) hm hv',
+          hP.eq_zero_of_ne hv' h hn hm]
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, map_add, map_add, ha, hb]
+    | add a b _ _ ha hb => rw [map_add, map_add, ha, hb]
   | zero => simp
   | add a b _ _ ha hb => rw [map_add, map_add, LinearMap.add_apply, ha, hb, map_add,
       LinearMap.add_apply]
 
-include hBN in
 /-- The adjoint is `U`-linear. -/
 theorem adjoint_smul (u : QuantumGroup R v) (n : N) :
-    adjoint hv' hB hN Φ BN (u • n) = u • adjoint hv' hB hN Φ BN n := by
+    adjoint hv' hB hN P (u • n) = u • adjoint hv' hB hN P n := by
   rw [← sub_eq_zero]
   refine hB.nondegenerate _ fun m ↦ ?_
-  rw [map_sub, LinearMap.sub_apply, form_adjoint hB hN hBN, hBN, ← map_smul,
-    hB.isContravariant, form_adjoint hB hN hBN, sub_self]
+  rw [map_sub, LinearMap.sub_apply, form_adjoint hB hN hP, hP, hB.isContravariant,
+    form_adjoint hB hN hP, sub_self]
 
 variable (hv') in
 /-- The adjoint as a `U`-module map. -/
 def adjointHom : N →ₗ[QuantumGroup R v] M where
-  toFun := adjoint hv' hB hN Φ BN
+  toFun := adjoint hv' hB hN P
   map_add' := map_add _
-  map_smul' := adjoint_smul hB hN hBN Φ
+  map_smul' := adjoint_smul hB hN hP
 
 @[simp] lemma adjointHom_apply (n : N) :
-    adjointHom hv' hB hN hBN Φ n = adjoint hv' hB hN Φ BN n := rfl
+    adjointHom hv' hB hN hP n = adjoint hv' hB hN P n := rfl
 
 end Adjoint
 
@@ -419,7 +460,8 @@ def tensorProj :
     (TensorModule.isIntegrable
       (IrreducibleModule.isIntegrable hR (pow_ne_one_of_transcendental' hvt) hΛ₁)
       (IrreducibleModule.isIntegrable hR (pow_ne_one_of_transcendental' hvt) hΛ₂))
-    (isContravariant_tensorForm hvt hR) (tensorEmb hvt hR hΛ₁ hΛ₂)
+    ((isContravariant_tensorForm hvt hR).isContravariantPairing_compl₂
+      (tensorEmb hvt hR hΛ₁ hΛ₂))
 
 /-- `(Ψ z, x) = (z, Φ x)`. -/
 theorem form_tensorProj (z : TensorModule k (IrreducibleModule R v Λ₁) (IrreducibleModule R v Λ₂))
@@ -431,7 +473,8 @@ theorem form_tensorProj (z : TensorModule k (IrreducibleModule R v Λ₁) (Irred
     (TensorModule.isIntegrable
       (IrreducibleModule.isIntegrable hR (pow_ne_one_of_transcendental' hvt) hΛ₁)
       (IrreducibleModule.isIntegrable hR (pow_ne_one_of_transcendental' hvt) hΛ₂))
-    (isContravariant_tensorForm hvt hR) (tensorEmb hvt hR hΛ₁ hΛ₂) z x
+    ((isContravariant_tensorForm hvt hR).isContravariantPairing_compl₂
+      (tensorEmb hvt hR hΛ₁ hΛ₂)) z x
 
 /-- `Ψ ∘ Φ = 1` ([HK] (5.7)). -/
 theorem tensorProj_tensorEmb (x : IrreducibleModule R v (Λ₁ + Λ₂)) :
