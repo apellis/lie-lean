@@ -1524,7 +1524,11 @@ q-binomials (`QBinomial.lean`); Lusztig's `'f` (`LusztigF k I := FreeAlgebra k I
 `serreIdeal_le_radical` ([Lus] 1.4.3; `_ratFunc` over `ℚ(v)`); `QuantumGroup R v` (presentation,
 `lift`), Hopf algebra (`instBialgebra`, `instHopfAlgebra`); triangular decomposition
 `LieLean.QuantumGroup.triangularEquiv` (`U ≅ ('f ⊗ k[Y] ⊗ 'f)/W`), `plusHom_eq_zero_iff`
-(`U^± ≅ 'f/J`), `zeroHom_injective`. **Quantum Gabber–Kac** ([Lus] Thm. 33.1.3;
+(`U^± ≅ 'f/J`), `zeroHom_injective`. Base change along a field extension `L / K`
+(`QuantumGroup/BaseChange.lean`): `baseChangeEquiv : L ⊗_K U_K(v) ≃ U_L(v)` as `L`-algebras, with
+`toBaseChange` compatible with `x ↦ x^±`, `ρ` and the conjugation weights; Lusztig's form on `'f`
+commutes with the coefficient map (`LusztigF.form_mapCoeffs`, `LusztigF/MapCoeffs.lean`).
+**Quantum Gabber–Kac** ([Lus] Thm. 33.1.3;
 `QuantumGroup/GabberKac*.lean`): `LusztigF.radical_eq_serreIdeal_ratFunc` (over `ℚ(v)`),
 `radical_eq_serreIdeal` (char-0 `k`, `v` transcendental), `toQuotient_eq_zero_iff_mem_serreIdeal`
 (`f` is presented by the quantum Serre relations; with `plusHom_eq_zero_iff`, `f ≅ U^±`). Proof
