@@ -2966,6 +2966,14 @@ completed steps and continuation threads are:
   Lusztig assumes `Y`-regular). These isomorphisms define Kashiwara's global bases of `U⁻` and
   of `V(λ)`. `(G.3)` is proved for `n = 1`, the case the induction uses.
   Remaining: the comparison with Lusztig's canonical basis ([Lus] 14.4) and the rest of 41.1.6.
+- **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
+  components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
+  [Lus] 4.1.2 (b) for every basis of `f_ν` (`quasiR_eq_sum`), `Θ_0 = 1 ⊗ 1` (`quasiR_zero`) and
+  the existence part of 4.1.2 (a), component by component, on the generators
+  (`quasiR_E`, `quasiR_E_of_eq_zero`, `quasiR_F`, `quasiR_F_of_eq_zero`, `quasiR_K`); our own
+  proof via the exchange identity `sum_tmul_dualBasis_of_adjoint` for dual bases. The completion
+  of `U ⊗ U` is not formalized (`Θ` is used weight by weight). Remaining: the uniqueness part
+  of 4.1.2 (a), and 4.1.3 (`ΘΘ̄ = 1`, which needs the bar involution of `U`).
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
