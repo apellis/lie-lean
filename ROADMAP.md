@@ -1068,6 +1068,19 @@ Thm. 4.6) and (c) ⇒ (b) with multiplicity one
 `finrank_hom_tensor_verma_irreducibleModule_eq_one` (`dim Hom(M(λ) ⊗ L(ν), L(μ)) = 1`, `ν`
 dominant in `W(μ - λ)`; Kac–Kazhdan steps and the norm estimate instead of Thm. 5.1,
 reconstructed).
+**Proposition 10.1** (`KacMoody/ExactFunctorO.lean`): an exact functor `F` on `𝒪` enters only
+through the class of modules it kills, `IsSerreClassO` (zero modules, isomorphisms, and
+`F M = 0 ⇔ F N = 0 ∧ F (M/N) = 0` for `N ⊆ M ∈ 𝒪`); translation functors
+`pr_{χ₂}(pr_{χ₁}(−) ⊗ Z)`, `Z ∈ 𝒪`, give such classes (`isSerreClassO_centralTranslation`).
+(a) `IsSerreClassO.of_forall_multiplicity` (`F` kills a finitely generated `M` if it kills each
+composition factor), (b) `IsSerreClassO.irreducibleModule_of_multiplicity_ne_zero` (`F M = 0`
+kills every composition factor), (c) `IsSerreClassO.of_verma_of_isDominant` (`F M(λ) = 0` for
+`λ` dominant kills every finitely generated `M` whose composition factors are `L(w·λ)`,
+`w ∈ W_[λ]`, the block of `λ` by Thm. 4.9); finite type, finite-dimensional Cartan,
+algebraically closed characteristic-zero field for (a), (c). The input to (c) is the Example of
+§5.1, `VermaModule.exists_injective_weylDot_of_isDominant` (`M(w·λ) ↪ M(λ)` for `λ` dominant,
+`w ∈ W_[λ]`, via Thm. 4.6 and the dominant form of Prop. 3.5,
+`IsDominant.exists_sub_weylDot_eq_rootOf`). (a) inducts on quotients instead of length.
 The translation-on-Verma target is Humphreys GSM 94 Thm. 7.6 (`λ, μ` antidominant, `μ` in the
 closure of the facet of `λ`), here in the integral case. Casimir eigenvalues are not identified with
 finer linkage classes. Kac–Kazhdan and Jantzen (`KacMoody/KacKazhdan/*.lean`,

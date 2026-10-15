@@ -183,6 +183,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationAdjunction
 import LieLean.Algebra.Lie.KacMoody.TranslationComposite
 import LieLean.Algebra.Lie.KacMoody.TranslationSimple
 import LieLean.Algebra.Lie.KacMoody.DominantVermaTensor
+import LieLean.Algebra.Lie.KacMoody.ExactFunctorO
 import LieLean.Algebra.Lie.KacMoody.DualIrreducible
 import LieLean.Algebra.Lie.KacMoody.DualVerma
 import LieLean.Algebra.Lie.KacMoody.DualVermaSocle
