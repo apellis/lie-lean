@@ -3039,7 +3039,16 @@ completed steps and continuation threads are:
   `Global/SignedBijection.lean` (our own proof): [Lus] Thm. 14.3.2 (c), the bijections
   `π_{i,n} : 𝐁_{i;0} → 𝐁_{i;n}` (`existsUnique_df_sub_mem_span`, `signedStringMap`,
   `signedStringMap_bijective`), with `π_{i,n}(±G(b)) = ±G(f̃ᵢⁿ b)` (`signedStringMap_signed`).
-  Remaining: 14.3.2 (b), (d), the choice of signs ([Lus] 14.4.2–14.4.3) and the rest of 41.1.6.
+  `Global/CanonicalBasis.lean` (our own proofs): Lusztig's choice of signs, the subsets `B_ν` of
+  [Lus] 14.4.2 (`canonicalBasisAt`, `mem_canonicalBasisAt_iff`) and the canonical basis
+  `B = ⊔_ν B_ν` (`canonicalBasis`); **`B_ν = {G(b) | b ∈ B(∞)_ν}`** (`canonicalBasisAt_eq_range`,
+  `mem_canonicalBasis_iff`), the one lemma identifying Lusztig's `B` with Kashiwara's global basis;
+  [Lus] 14.3.3 (`signedBasis_diff_eq_iUnion`), `𝐁 = B ∪ (-B)` (`signedBasis_eq_union`) and
+  Thm. 14.4.3 (a)–(e) (`canonicalBasisAt_inter_neg`, `canonicalBasisAt_inter_neg_starU`,
+  `starU_image_canonicalBasisAt`, `linearIndependent_canonicalBasis(_laurent)`,
+  `span_canonicalBasis(_laurent)`, `linearIndependent_canonicalBasisAt(_laurent)`,
+  `span_canonicalBasisAt(_laurent)`).
+  Remaining: 14.3.2 (b), (d) and the rest of 41.1.6.
 - **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
   components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
   [Lus] 4.1.2 (b) for every basis of `f_ν` (`quasiR_eq_sum`), `Θ_0 = 1 ⊗ 1` (`quasiR_zero`) and

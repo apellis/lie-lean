@@ -300,6 +300,7 @@ import LieLean.Algebra.QuantumGroup.ContravariantForm
 import LieLean.Algebra.QuantumGroup.RhoBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.BalancedSpan
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.BalancedTriple
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.CanonicalBasis
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.FiltrationGlobal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.GlobalInduction
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightBar
