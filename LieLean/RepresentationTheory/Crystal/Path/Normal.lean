@@ -17,17 +17,16 @@ finite type, the restriction of `B` to the colours in `J` is isomorphic to the c
 crystal base of an integrable `U_q(𝔤_J)`-module, i.e. is a disjoint union of crystals `B_J(ν)` of
 irreducible highest weight modules.
 
-Crystal bases of `U_q`-modules are not formalized in this library. We define normality relative
-to Littelmann's path model [Lit95] instead (`Crystal.IsNormal`): `B` is seminormal and, for every
-`J : Finset ι` such that the principal submatrix `A_J` is of finite type (Mathlib's
-`Matrix.IsFiniteCartan`), every element of `B` lies in the image of an injective Levi morphism
-(`Crystal.IsLeviHom`) `B_J(ν) → B` from the path crystal `B_J(ν)` of a dominant integral weight
-`ν` of the standard realization of `A_J` (`Crystal.leviPathCrystal`). This agrees with
-Kashiwara's definition by the theorems identifying `B_J(ν)` with the crystal of the crystal base
-of the irreducible `U_q(𝔤_J)`-module of highest weight `ν` (Kashiwara; Joseph), which are not
-formalized here. Since `B_J(ν)` is connected and a Levi morphism intertwines the operators of
-the colours in `J`, its image is a `J`-component of `B`; so the condition says that every
-`J`-component of `B` is a copy of some `B_J(ν)`.
+We define normality relative to Littelmann's path model [Lit95] (`Crystal.IsNormal`): `B` is
+seminormal and, for every `J : Finset ι` such that the principal submatrix `A_J` is of finite type
+(Mathlib's `Matrix.IsFiniteCartan`), every element of `B` lies in the image of an injective Levi
+morphism (`Crystal.IsLeviHom`) `B_J(ν) → B` from the path crystal `B_J(ν)` of a dominant integral
+weight `ν` of the standard realization of `A_J` (`Crystal.leviPathCrystal`). This agrees with
+Kashiwara's definition by the theorems identifying `B_J(ν)` with the crystal of the crystal base of
+the irreducible `U_q(𝔤_J)`-module of highest weight `ν` (Kashiwara; Joseph), proved in
+`LieLean.QuantumGroup.GrandLoop.existsUnique_equiv_pathCrystal`. Since `B_J(ν)` is connected and a
+Levi morphism intertwines the operators of the colours in `J`, its image is a `J`-component of `B`;
+so the condition says that every `J`-component of `B` is a copy of some `B_J(ν)`.
 
 ## Main definitions
 
@@ -324,8 +323,10 @@ be isomorphic to the crystal of the crystal base of an integrable `U_q(𝔤_J)`-
 by the theorems identifying `B_J(ν)` with the crystal of the crystal base of the irreducible
 `U_q(𝔤_J)`-module of highest weight `ν` (Kashiwara; Joseph); this identification is
 `LieLean.QuantumGroup.GrandLoop.existsUnique_equiv_pathCrystal` (for a root datum of `A_J` with a
-morphism of Cartan data to the realization), while the decomposition of the crystal base of an
-integrable module into such crystals is not formalized here. -/
+morphism of Cartan data to the realization). The crystal of a crystal base of a module in
+`𝒪_int` is a disjoint union of such crystals and is normal in this sense
+(`LieLean.QuantumGroup.GrandLoop.isNormal_crystal_of_isCategoryOInt`); restriction of crystal
+bases to the subalgebras `U_q(𝔤_J)` is not formalized. -/
 structure IsNormal (C : Crystal (P.cartanDatum hA) B) : Prop where
   isSeminormal : C.IsSeminormal
   exists_leviHom : ∀ J : Finset ι, (A.submatrix ((↑) : J → ι) (↑)).IsFiniteCartan → ∀ b : B,
