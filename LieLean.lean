@@ -542,6 +542,7 @@ import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.QuasiR.Basic
 import LieLean.Algebra.QuantumGroup.QuasiR.Inverse
+import LieLean.Algebra.QuantumGroup.QuasiR.TensorAction
 import LieLean.Algebra.QuantumGroup.QuasiR.Theorem
 import LieLean.Algebra.QuantumGroup.QuasiR.Uniqueness
 import LieLean.Algebra.QuantumGroup.QBinomialSeries
