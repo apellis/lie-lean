@@ -1583,7 +1583,12 @@ Verma,Integrable}.lean`, `Sl2/SimpleModule.lean`): weight spaces and their indep
 `U_q(sl₂)` identities (`E_mul_F_pow_sub`) and simple modules `Sl2.simpleRep` (irreducible);
 quantum Verma modules `VermaModule.equivSerreQuotient : 'f/J ≃ M_q(Λ)`, weight spaces,
 unique maximal submodule, `IrreducibleModule` (= `L_q(Λ)`, `isSimpleModule`); `IsIntegrable`,
-`FPowQuotient.isIntegrable` (`L̃_q(Λ)`), `IrreducibleModule.isIntegrable` (Λ dominant). Braid
+`FPowQuotient.isIntegrable` (`L̃_q(Λ)`), `IrreducibleModule.isIntegrable` (Λ dominant). The
+category `𝒪_int` (`QuantumGroup/CategoryOInt.lean`; [HK] Def. 3.2.3, `IsCategoryOInt`), maximal
+weights (`IsCategoryOInt.exists_maximal`) and [HK] Cor. 3.4.8: an integrable highest weight module
+of highest weight `Λ` has `Λ` dominant and is `≅ L_q(Λ)` (`nonempty_equiv_irreducibleModule_of_span`),
+and every simple module in `𝒪_int` is `≅ L_q(Λ)`, `Λ` dominant
+(`IsCategoryOInt.exists_nonempty_equiv_of_isSimpleModule`; `v` transcendental). Braid
 action (`BraidAction*.lean`, Lusztig's `T''_{i,1}`): `rankOneBraidEquiv` (rank one), relations
 (a)–(d) involving `i` and the mixed ones `braidEi_mul_braidFj_sub`.
 `BraidAction/Isolated.lean` constructs `isolatedBraidEquiv` at an isolated Dynkin node in
@@ -3199,7 +3204,8 @@ completed steps and continuation threads are:
   `GrandLoop.exists_equiv_of_isCrystalBase`). Remaining: [HK] Thm. 5.2.1 with infinitely many
   summands (`M` in `𝒪_int`; [HK] order the summands by maximal weights and apply the finite step
   repeatedly, which needs a limit argument weight space by weight space), and complete
-  reducibility of the modules in `𝒪_int` ([HK] Thm. 3.5.4), which supplies the decomposition. For
+  reducibility of the modules in `𝒪_int` ([HK] Thm. 3.5.4; Cor. 3.4.8 is done), which supplies
+  the decomposition. For
   `B(∞)`: the crystal `crystalInf`, `B(∞)* = B(∞)`, the strict embeddings `Ψᵢ` ([Kas93a]
   Thm. 2.2.1 (i)) and the Kashiwara–Saito characterization (`equivInf`) are proved, for `A/ϖA`
   formally real. **Comparison with path crystals** ([Kas96] Thms. 3.1, 3.2, 4.1), for `A/ϖA`
