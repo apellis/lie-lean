@@ -3134,15 +3134,16 @@ completed steps and continuation threads are:
   `L(λ) ⊗ L(λ')` have coordinates in that ring (`repr_mem_of_mem_lat`, `repr_mem_of_mem_LL`).
   `CrystalBasis/Global/TensorEmbCoordinates.lean`: `𝒜 ∩ A ⊆ ℤ[v⁻¹]`
   (`isIntInv_of_algebraMap_eq`), the `𝒜`-integrality of [Lus] 23.2.3 for
-  `χ : L_q(λ+λ') → L_q(λ) ⊗ L_q(λ')` (`repr_tensorEmb_evq_mem_range`) and **[Lus] Prop. 25.1.2
-  (b)** for root data with fundamental weights (`isIntInv_repr_tensorEmb_evq`: the coordinates
-  `f(b; b₁, b₂)` of `χ(b⁻η'')` lie in `ℤ[v⁻¹]`). The `ℤ[v⁻¹]`-integrality goes through
-  Kashiwara's lattice and `χ(L(λ+λ')) ⊆ L(λ) ⊗ L(λ')` instead of Lusztig's 18.1.4 (our own
-  route); the hypothesis `hfund` (fundamental weights) comes from the grand loop and is not in
-  [Lus].
-  Remaining: remove `hfund` from 25.1.2 (b) (planned: transfer from the root datum
-  `freeCoroot R`, which has fundamental weights, since `L_q(λ)`, `χ` and `B(λ)` depend only on
-  the pairings `⟨i, λ⟩`); [Lus] 25.2.1, 26.3.1.
+  `χ : L_q(λ+λ') → L_q(λ) ⊗ L_q(λ')` (`repr_tensorEmb_evq_mem_range`) and [Lus] Prop. 25.1.2 (b)
+  for root data with fundamental weights (`isIntInv_repr_tensorEmb_evq_of_fund`). The
+  `ℤ[v⁻¹]`-integrality goes through Kashiwara's lattice and `χ(L(λ+λ')) ⊆ L(λ) ⊗ L(λ')` instead
+  of Lusztig's 18.1.4 (our own route). `CrystalBasis/Global/TensorEmbTransfer.lean`: `L_q(λ)`,
+  `χ` and `B(λ)` depend only on the pairings `⟨i, λ⟩` (`hwTransfer`,
+  `tensorTransfer_tensorEmb_ev`, `repr_tensorTransfer`), so the statement transfers from the root
+  datum `freeCoroot R`, which has fundamental weights: **[Lus] Prop. 25.1.2 (b)**
+  (`isIntInv_repr_tensorEmb_evq`: the coordinates `f(b; b₁, b₂)` of `χ(b⁻η'')` lie in `ℤ[v⁻¹]`)
+  for every `X`-regular root datum (Lusztig assumes `Y`-regular).
+  Remaining: [Lus] 25.2.1, 26.3.1.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of

@@ -21,8 +21,8 @@ asserts `f(b; b₁, b₂) ∈ ℤ[v⁻¹]`.
 * `isIntInv_of_algebraMap_eq`: `𝒜 ∩ A ⊆ ℤ[v⁻¹]` inside `ℚ(v)`, `A` the local ring at `v = ∞`.
 * `repr_tensorEmb_evq_mem_range`: the coordinates `f(b; b₁, b₂)` of `χ(x⁻η'')` for
   `x ∈ U⁻_ℤ` lie in `𝒜` (cf. [Lus] 23.2.3).
-* `isIntInv_repr_tensorEmb_evq`: **[Lus] Prop. 25.1.2 (b)** for root data with fundamental
-  weights (an intermediate statement, see below).
+* `isIntInv_repr_tensorEmb_evq_of_fund`: **[Lus] Prop. 25.1.2 (b)** for root data with
+  fundamental weights (an intermediate statement, see below).
 
 ## Proof
 
@@ -36,7 +36,7 @@ meet in `ℤ[v⁻¹]`. Lusztig obtains the second property from his lattice `ℒ
 
 Kashiwara's lattice is that of the grand loop, which assumes that the root datum has
 fundamental weights (`hfund`). The statement here carries this extra hypothesis, which is not
-in [Lus]; its removal is tracked in `ROADMAP.md`.
+in [Lus]; `TensorEmbTransfer.lean` removes it (`isIntInv_repr_tensorEmb_evq`).
 
 ## References
 
@@ -225,8 +225,8 @@ coordinates `f(b; b₁, b₂)` of `χ(b⁻η'')` in the basis `b₁⁻η ⊗ b�
 
 This is an intermediate statement: Lusztig assumes `Y`-regular root data (here `X`-regular), and
 the extra hypothesis `hfund` (fundamental weights) comes from our route through Kashiwara's
-lattice. Its removal is tracked in `ROADMAP.md`. -/
-theorem isIntInv_repr_tensorEmb_evq {x : Um D 𝕧} (hx : x ∈ canonicalBasis D)
+lattice. It is removed in `isIntInv_repr_tensorEmb_evq`. -/
+theorem isIntInv_repr_tensorEmb_evq_of_fund {x : Um D 𝕧} (hx : x ∈ canonicalBasis D)
     (p : canonicalBasisHW D Λ₁ × canonicalBasisHW D Λ₂) :
     IsIntInv ((tensorHWBasis hR Λ₁ Λ₂).repr
       (tensorEmb hvt hR Λ₁.2 Λ₂.2 (evq hvt (Λ₁ + Λ₂) x)) p) := by
