@@ -2919,8 +2919,13 @@ completed steps and continuation threads are:
   (`hwFilt`), (6.1.2) (`df_sub_df_comp_mem_negFilt`), `fᵢ^{(n)}Pᵢx ≡ f̃ᵢⁿx` modulo `v⁻¹L(∞)` when
   `ẽᵢx ∈ v⁻¹L(∞)` (`df_comp_sub_kF_pow_mem`), and the reduction step of Prop. 7.4.1 to
   `n + ⟨hᵢ, λ-ν⟩ ≥ 0` (`hwFilt_le_succ`; Kashiwara cites "Prop. 7.1.3", meaning Prop. 6.1.3).
-  Remaining: (G.3), Prop. 7.4.1, Cor. 7.4.2, Lemmas 7.5.1–7.5.2 and the induction, the global
-  basis, and the rest of 41.1.6.
+  `Global/FiltrationGlobal.lean`: **Prop. 7.4.1** (`hwFiltGlobalAt`, basis form `HwFiltGlobalAt`:
+  `(fᵢⁿV(λ))^ℤ_{λ-ν}` is the `𝒜`-span of vectors with independent residues in `L(λ)/v⁻¹L(λ)` and
+  `L(λ)⁻/vL(λ)⁻`, the first lying in `f̃ᵢⁿB(λ)`; the two halves of (7.4.1):
+  `hwFilt_eq_zero_of_mem`, `exists_hwFilt_sub_mem`), under the part of `(G_{l-1})` used in its
+  proof (`GlobalBelow`: `(G.1)`, Lemma 7.5.2 and `(G.3)` for `n = 1` at lower weights).
+  Remaining: (G.3), Cor. 7.4.2, Lemmas 7.5.1–7.5.2 and the induction, the global basis, and the
+  rest of 41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
