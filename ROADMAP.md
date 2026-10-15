@@ -3048,7 +3048,14 @@ completed steps and continuation threads are:
   `starU_image_canonicalBasisAt`, `linearIndependent_canonicalBasis(_laurent)`,
   `span_canonicalBasis(_laurent)`, `linearIndependent_canonicalBasisAt(_laurent)`,
   `span_canonicalBasisAt(_laurent)`).
-  Remaining: 14.3.2 (b), (d) and the rest of 41.1.6.
+  `Global/CanonicalHighestWeight.lean` (Lusztig's deduction from 14.3.2): the subsets `°𝐁_{i;n}`
+  of [Lus] 14.3.1 (`signedBasisGeRight`, `signedBasisAtRight`, `signedBasisGeRight_eq_image`),
+  [Lus] Thm. 14.3.2 (b) weight by weight over `ℚ(v)` (`mem_rightRange_iff_mem_span`), the subset
+  `B(λ)` of [Lus] 14.4.11 (`canonicalBasisHW`, `mem_canonicalBasisHW_iff`) and **Thm. 14.4.11**:
+  `b ↦ b⁻η` maps `B(λ)` bijectively onto a basis of `L_q(λ)` (`canonicalBasisHWBasis`,
+  `injOn_evq_canonicalBasisHW`) and kills `B - B(λ)` (`evq_eq_zero_of_notMem_canonicalBasisHW`),
+  for `X`-regular root data (Lusztig assumes `Y`-regular).
+  Remaining: 14.3.2 (d) and the rest of 41.1.6.
 - **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
   components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
   [Lus] 4.1.2 (b) for every basis of `f_ν` (`quasiR_eq_sum`), `Θ_0 = 1 ⊗ 1` (`quasiR_zero`) and
