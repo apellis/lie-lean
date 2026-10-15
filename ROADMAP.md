@@ -3014,8 +3014,11 @@ completed steps and continuation threads are:
   (`signedBasis_eq_iUnion`); the `G(b)`, `b ∈ B(∞)_ν`, are a basis of `U⁻_ν` over `ℚ(v)` and of
   `U⁻_{ℤ,ν}` over `𝒜` (`linearIndependent_negGlobal(_laurent)`, `mem_span_negGlobal(_field)`),
   so 14.2.3 (a) holds weight by weight.
-  Remaining: the subsets `𝐁_{i;n}` (14.3), the choice of signs ([Lus] 14.4.2–14.4.3) and the
-  rest of 41.1.6.
+  `Global/SignedSubsets.lean` (our own proofs): `(G.3)` for all `n` (`negGlobal_mem_negFilt`),
+  the subsets `𝐁_{i;≥n}`, `𝐁_{i;n}` of [Lus] 14.3.1 (`signedBasisGe`, `signedBasisAt`, the `±G(b)`
+  with `εᵢ(b) ≥ n`, resp. `= n`) and [Lus] Thm. 14.3.2 (a) weight by weight over `𝒜` and `ℚ(v)`
+  (`negFilt_eq_span`, `mem_range_iff_mem_span`).
+  Remaining: 14.3.2 (b), (c), the choice of signs ([Lus] 14.4.2–14.4.3) and the rest of 41.1.6.
 - **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
   components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
   [Lus] 4.1.2 (b) for every basis of `f_ν` (`quasiR_eq_sum`), `Θ_0 = 1 ⊗ 1` (`quasiR_zero`) and
