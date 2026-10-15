@@ -305,6 +305,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.BalancedSpan
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.BalancedTriple
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.CanonicalBasis
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.CanonicalHighestWeight
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.CanonicalTriangular
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.FiltrationGlobal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.GlobalInduction
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightBar
