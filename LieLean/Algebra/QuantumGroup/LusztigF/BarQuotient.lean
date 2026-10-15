@@ -113,6 +113,25 @@ theorem serreBar_qDivPow (d n : ℕ) (i : I) :
       (toSerreBarQuotient D (θ (RatFunc K) i)) := by
   simp [QuantumGroup.qDivPow, serreBar_smul, QuantumGroup.bar_qFactorial]
 
+/-- The coefficient bar fixes every ordered free monomial. -/
+theorem bar_monomial (w : List I) : bar (monomial (RatFunc K) w) = monomial (RatFunc K) w := by
+  induction w with
+  | nil => simp
+  | cons i w ih => simp only [monomial_cons, map_mul, bar_θ, ih]
+
+/-- Coefficient bar preserves each root-lattice degree in the free algebra. -/
+theorem bar_mem_weightSpace {ν : I →₀ ℕ} {x : LusztigF (RatFunc K) I}
+    (hx : x ∈ weightSpace (RatFunc K) ν) : bar x ∈ weightSpace (RatFunc K) ν := by
+  induction hx using Submodule.span_induction with
+  | mem x hx =>
+    obtain ⟨w, hw, rfl⟩ := hx
+    rw [bar_monomial]
+    exact Submodule.subset_span ⟨w, hw, rfl⟩
+  | zero => simpa only [map_zero] using (weightSpace (RatFunc K) ν).zero_mem
+  | add x y _ _ hx hy => simpa only [map_add] using (weightSpace (RatFunc K) ν).add_mem hx hy
+  | smul c x _ hx => simpa only [bar_smul] using
+      (weightSpace (RatFunc K) ν).smul_mem (RatFunc.bar c) hx
+
 section Radical
 
 variable [Finite I] [DecidableEq I]

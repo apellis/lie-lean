@@ -216,6 +216,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.LeadingAction
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.Weights.OfMap
+import LieLean.Algebra.QuantumGroup.BarInvolution
 import LieLean.Algebra.QuantumGroup.BaseChange
 import LieLean.Algebra.QuantumGroup.Basic
 import LieLean.Algebra.QuantumGroup.BraidCoproduct.FiniteIntertwining
@@ -308,6 +309,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeFiltrationGlobal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeFiltrationSpan
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeGlobal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeIntegralGrading
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.SignedBasis
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.StringFiltration
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.StringIdentity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Augmentation
@@ -363,6 +365,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropDFG
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Purity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.RatFunc
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Stable
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.StrictHom
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Tensor
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Uniqueness
 import LieLean.Algebra.QuantumGroup.CrystalBasis.HighestWeightLattice
@@ -450,6 +453,10 @@ import LieLean.Algebra.QuantumGroup.Modified.Quotient
 import LieLean.Algebra.QuantumGroup.Modified.RightModule
 import LieLean.Algebra.QuantumGroup.Modified.RootVectors
 import LieLean.Algebra.QuantumGroup.Modified.Symmetries
+import LieLean.Algebra.QuantumGroup.Modified.TensorQuotientQuasiR
+import LieLean.Algebra.QuantumGroup.Modified.TensorVerma
+import LieLean.Algebra.QuantumGroup.Modified.TensorVermaIntegral
+import LieLean.Algebra.QuantumGroup.Modified.TensorVermaQuasiR
 import LieLean.Algebra.QuantumGroup.Modified.Triangular
 import LieLean.Algebra.QuantumGroup.Modified.TriangularBasis
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Braid
@@ -539,6 +546,9 @@ import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
 import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.QuasiR.Basic
+import LieLean.Algebra.QuantumGroup.QuasiR.Inverse
+import LieLean.Algebra.QuantumGroup.QuasiR.TensorAction
+import LieLean.Algebra.QuantumGroup.QuasiR.TensorInvolution
 import LieLean.Algebra.QuantumGroup.QuasiR.Theorem
 import LieLean.Algebra.QuantumGroup.QuasiR.Uniqueness
 import LieLean.Algebra.QuantumGroup.QBinomialSeries
@@ -634,6 +644,7 @@ import LieLean.RepresentationTheory.Crystal.KashiwaraSaito
 import LieLean.RepresentationTheory.Crystal.Similarity
 import LieLean.RepresentationTheory.Crystal.SimilarityComparison
 import LieLean.RepresentationTheory.Crystal.SimilarityEmbedding
+import LieLean.RepresentationTheory.Crystal.StrictHomConnected
 import LieLean.RepresentationTheory.Crystal.Extremal
 import LieLean.RepresentationTheory.Crystal.TensorPower
 import LieLean.RepresentationTheory.Crystal.Path.Basic
