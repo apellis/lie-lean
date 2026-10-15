@@ -3102,7 +3102,12 @@ completed steps and continuation threads are:
   `x - b₁⁺ξ_{-λ} ⊗ b₁'⁻η_{λ'} ∈ v⁻¹ℒ` (`existsUnique_tensorCanonical`; uniqueness proved directly
   rather than from (d)), with the triangularity (b) (`repr_tensorCanonical_self`,
   `tensorLt_of_repr_tensorCanonical_ne_zero`, `isNegLaurent_repr_tensorCanonical`).
-  Remaining: 24.3.3 (c), (d).
+  `CrystalBasis/Global/TensorCanonicalBasis.lean`: **[Lus] Thm. 24.3.3 (c), (d)**: the
+  `(b₁ ◇ b₁')_{λ,λ'}` form a `ℚ(v)`-basis of `ʷL_q(λ) ⊗ L_q(λ')` (`tensorCanonicalBasis`), an
+  `𝒜`-basis of `𝒜ℒ` and a `ℤ[v⁻¹]`-basis of `ℒ` (`mem_tensorLatA_iff`,
+  `mem_tensorLat_iff_canonical`), and `ℒ ∩ Ψ(ℒ) → ℒ/v⁻¹ℒ` is an isomorphism
+  (`bijective_tensorLatResidue`), by triangularity as Lusztig indicates.
+  Remaining: [Lus] 25.1.2 (b), 25.2.1, 26.3.1.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
