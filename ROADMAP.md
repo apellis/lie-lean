@@ -3015,7 +3015,11 @@ completed steps and continuation threads are:
   `K_μ ↦ K_{-μ}`, `barHom_barHom`, compatible with the bar of `f` along `x ↦ x^±`) and of
   `U ⊗ U` (`barTensor`); [Lus] 4.1.3 componentwise (`QuasiR/Inverse.lean`,
   `sum_quasiR_mul_barTensor`, `sum_barTensor_mul_quasiR`: `Σ_{ν'+ν''=ν} Θ_{ν'} Θ̄_{ν''} =
-  Σ_{ν'+ν''=ν} Θ̄_{ν'} Θ_{ν''} = δ_{ν,0}`), following Lusztig's argument.
+  Σ_{ν'+ν''=ν} Θ̄_{ν'} Θ_{ν''} = δ_{ν,0}`), following Lusztig's argument. The action of `Θ` on
+  `M ⊗ M'` for `M'` with the finiteness property of `𝒞^{hi}` ([Lus] 3.4.7,
+  `IsPlusLocallyNilpotent`; 24.1.1, `QuasiR/TensorAction.lean`, `quasiRAct`), `Δ̄ = barComul`,
+  and [Lus] Lemma 24.1.2 (`act_quasiRAct`: `Δ(u)Θ = ΘΔ̄(u)`; `act_quasiRAct_barPair`:
+  `u Ξ(z) = Ξ(ū z)` for `Ξ = Θ ∘ (¯ ⊗ ¯)`, 24.1.3).
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
