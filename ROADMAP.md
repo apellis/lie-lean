@@ -3171,6 +3171,14 @@ completed steps and continuation threads are:
   (`tensorTransition`, `tensorTransition_act`, `tensorTransition_hwv`) and **[Lus] Lemma 25.1.6**
   (`tensorTransition_sub_mem_tensorLatNeg`, `tensorTransition_mem_tensorLatNeg`,
   `surjective_tensorTransition`; coordinates `repr_tensorTransition_sub`), `X`-regular root data.
+  `CrystalBasis/Global/TensorTransitionCanonical.lean`: `B(λ) ⊆ B(λ'+λ)`
+  (`canonicalBasisHW_subset_add`), `Ψ(ξ ⊗ η) = ξ ⊗ η` (`tensorPsi_hwv`), **[Lus] Lemma 25.1.9**
+  (`tensorTransition_tensorPsi`: `tΨ = Ψt`), `t(v⁻¹ℒ) ⊆ v⁻¹ℒ`
+  (`tensorTransition_mem_tensorLatNeg_of_mem`), **[Lus] Lemma 25.1.7**
+  (`tensorTransition_tensorCanonical_sub_mem`, `tensorTransition_tensorCanonical_mem`) and
+  **[Lus] Prop. 25.1.10** (`tensorTransition_tensorCanonical`: `t` maps
+  `(b ◇ b'')_{λ'+λ,λ'+λ''}` to `(b ◇ b'')_{λ,λ''}` for `b ∈ B(λ)`, `b'' ∈ B(λ'')`;
+  `tensorTransition_tensorCanonical_eq_zero`: to `0` otherwise).
   Remaining: [Lus] 25.2.1, 26.3.1.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness

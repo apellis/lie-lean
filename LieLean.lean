@@ -333,6 +333,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorEmbTwist
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorPairing
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorTransition
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorTransitionCanonical
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Augmentation
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Coordinates
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Derivative
