@@ -3028,7 +3028,10 @@ completed steps and continuation threads are:
   `M ⊗ M'` for `M'` with the finiteness property of `𝒞^{hi}` ([Lus] 3.4.7,
   `IsPlusLocallyNilpotent`; 24.1.1, `QuasiR/TensorAction.lean`, `quasiRAct`), `Δ̄ = barComul`,
   and [Lus] Lemma 24.1.2 (`act_quasiRAct`: `Δ(u)Θ = ΘΔ̄(u)`; `act_quasiRAct_barPair`:
-  `u Ξ(z) = Ξ(ū z)` for `Ξ = Θ ∘ (¯ ⊗ ¯)`, 24.1.3).
+  `u Ξ(z) = Ξ(ū z)` for `Ξ = Θ ∘ (¯ ⊗ ¯)`, 24.1.3). [Lus] Prop. 24.1.4
+  (`Modified/TensorVermaQuasiR.lean`, `Modified.quasiRAct_mem_vermaTensorLattice`): `Θ` preserves
+  `ʷ𝒜M_Λ ⊗_𝒜 𝒜M_{Λ'}`, with `VermaModule.isPlusLocallyNilpotent` (3.4.7 for `M_Λ`) and the bar
+  involution `VermaModule.bar` of `M_Λ`.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
