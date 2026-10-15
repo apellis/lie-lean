@@ -156,7 +156,7 @@ variable {R v}
 @[simp] theorem baseChangeEquiv_tmul (c : L) (x : QuantumGroup R v) :
     baseChangeEquiv (L := L) R v (c ⊗ₜ x) = c • toBaseChange R v x := by
   rw [Algebra.smul_def]
-  show baseChangeHom (L := L) R v (c ⊗ₜ x) = _
+  change baseChangeHom (L := L) R v (c ⊗ₜ x) = _
   exact Algebra.TensorProduct.lift_tmul _ _ _ c x
 
 theorem baseChangeEquiv_one_tmul (x : QuantumGroup R v) :
