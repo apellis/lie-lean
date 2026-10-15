@@ -692,6 +692,7 @@ import LieLean.RepresentationTheory.Crystal.Path.Stability
 import LieLean.RepresentationTheory.Crystal.Realization
 import LieLean.RepresentationTheory.Crystal.Subcrystal
 import LieLean.RepresentationTheory.Crystal.Tensor
+import LieLean.RepresentationTheory.Crystal.TensorHighestWeight
 import LieLean.RepresentationTheory.Crystal.WeylAction
 import LieLean.RepresentationTheory.Crystal.WeylGroupAction
 import LieLean.RepresentationTheory.Crystal.BraidA2
