@@ -934,6 +934,12 @@ via the Kac–Kazhdan criterion instead of Jantzen's sum formula, reconstructed)
 `VermaModule.multiplicity_weylDot_ne_zero_iff_bruhatLE` (for `λ` antidominant, integral and
 regular, `[M(w·λ) : L(w'·λ)] ≠ 0` iff `w' ≤ w` in the Bruhat order; reduction to the dominant
 weight `w₀·λ` and order reversal by `w₀`).
+**Extensions of Verma modules** (`KacMoody/ExtVerma.lean`, Humphreys GSM 94 Thm. 6.5; same
+hypotheses): (a) `VermaModule.isStronglyLinked_of_extOne_ne_zero` (`Ext¹_𝒪(M(μ), M(λ)) ≠ 0`
+implies `μ ↑ λ`, `μ ≠ λ`), (b) `VermaModule.bruhatLT_of_extOne_ne_zero` (for `λ` dominant
+integral, `Ext¹_𝒪(M(w'·λ), M(w·λ)) ≠ 0` implies `w < w'`, so `ℓ(w) < ℓ(w')`); `Ext¹_𝒪` is
+`LieModule.ExtOne`. Via projectivity of `P(μ)` and an induction along its standard filtration
+(`IsStdFiltered.exists_section_or_eq_zero`, reconstructed).
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and
