@@ -904,6 +904,14 @@ the finite-type bound `VermaModule.finrank_hom_le_one_of_finite_type` (algebraic
 integral, `VermaModule.exists_injective_weylDot_of_dotDominant` (`M(w·λ) ↪ M(λ)` for all `w ∈ W`,
 along a reduced expression), `VermaModule.weylDot_mem_cone_of_dotDominant` (`w·λ ≤ λ`) and
 `VermaModule.multiplicity_weylDot_ne_zero_of_dotDominant` (`[M(λ) : L(w·λ)] ≠ 0`).
+**Theorem 4.6** (`KacMoody/VermaEmbedding.lean`; finite type, finite-dimensional Cartan,
+characteristic zero): `VermaModule.exists_injective_reflectionOf` (`M(λ - nβ) ↪ M(λ)` for a positive
+root `β` and any weight `λ` with `⟨λ + ρ, β^∨⟩ = n ∈ ℕ`). The integral regular case
+(`exists_injective_reflectionOf_of_regular`) comes from `exists_injective_of_bruhatLE`
+(reconstructed); the general case is the density argument of §4.7: the Verma action depends
+affinely on `λ` (`exists_affine_lie`), embeddings correspond to non-injectivity of `primMap`, and
+`LinearMap.not_injective_add_sum_smul_of_forall_int` (`LinearAlgebra/LinearMap/IntegralPoints.lean`,
+Combinatorial Nullstellensatz) replaces the Zariski topology.
 **Simplicity criterion** (`KacMoody/VermaSimple.lean`, Humphreys GSM 94 Thm. 4.4, Thm. 4.8;
 finite type, algebraically closed characteristic-zero field):
 `VermaModule.maxSubmodule_eq_bot_iff_isAntidominant` (`M(λ)` is simple iff `λ` is antidominant);
@@ -2800,10 +2808,8 @@ completed steps and continuation threads are:
   Cartan space by `ker_bggDiff_eq_range`, using actual lowering powers modulo boundaries
   and Casimir vanishing. The theorem does not cover nonsymmetrizable GCM or arbitrary Cartan
   dimension; these extensions remain open.
-- **Open items of [HumO] Ch. 3, 4, 7** (M12, tracking issue #7; order of work: Thm. 4.6 for
-  arbitrary weights, then the items below):
-  - Thm. 4.6 (Verma's embedding `M(s_α·λ) ↪ M(λ)` for every positive root `α` and arbitrary `λ`,
-    §4.7): in progress.
+- **Open items of [HumO] Ch. 3, 4, 7** (M12, tracking issue #7; Thm. 4.6 is done,
+  `VermaModule.exists_injective_reflectionOf`):
   - Prop. 3.13 (`𝒪_χ` is equivalent to the finite-dimensional right modules over `End(P)` for a
     projective generator `P`): not formalized. Humphreys refers the proof to Bass's Morita theorem
     for abelian categories with a projective generator, which is not in Mathlib, and the library
