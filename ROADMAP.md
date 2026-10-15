@@ -2977,6 +2977,11 @@ completed steps and continuation threads are:
   and every dominant `λ` (`hwGlobalAt`; `X`-regular root data with fundamental weights, where
   Lusztig assumes `Y`-regular). These isomorphisms define Kashiwara's global bases of `U⁻` and
   of `V(λ)`. `(G.3)` is proved for `n = 1`, the case the induction uses.
+  Integrality towards the comparison (`LusztigF/IntegralPairing.lean`, our own algebraic proofs;
+  Lusztig's are geometric): [Lus] 1.4.2 (`comul_fDivPow`), 14.2.6 (a) (`comul_mem_fIntegralTensor`:
+  `r(𝒜'f) ⊆ 𝒜'f ⊗ 𝒜'f`), `(θᵢ^{(n)}, θᵢ^{(n)}) ∈ ℤ[[v⁻¹]]` (`coefU_mem_intSeriesInf`, 1.4.4) and
+  14.2.6 (b) (`form_mem_intLaurentInf`, `quotientForm_mem_intLaurentInf`:
+  `(𝒜f, 𝒜f) ⊆ ℤ((v⁻¹)) ∩ ℚ(v)`).
   Remaining: the comparison with Lusztig's canonical basis ([Lus] 14.4) and the rest of 41.1.6.
 - **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
   components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
