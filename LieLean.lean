@@ -326,6 +326,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorCanonical
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorCanonicalBasis
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorEmbCoordinates
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorEmbCounit
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorEmbTransfer
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Augmentation
