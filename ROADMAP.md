@@ -3152,6 +3152,13 @@ completed steps and continuation threads are:
   `CrystalBasis/Global/TensorEmbCounit.lean`: the counit form `y⁻η ↦ ε(y)` on `L_q(λ)`
   (`hwCounit`, the coordinate at `1 ∈ B(λ)`), `(ε ⊗ 1)χ(y⁻η'') = y⁻η'` and **[Lus] Prop. 25.1.2
   (c)** (`repr_tensorEmb_evq_one`: `f(b; 1, b₂) = δ_{b,b₂}`).
+  `CrystalBasis/Global/TensorPairing.lean`: **[Lus] Prop. 25.1.4** for `X`-regular root data:
+  `δ_λ : ʷΛ_λ ⊗ Λ_λ → ℚ(v)`, `δ_λ(x ⊗ y) = c_ν (x, y)` on `(Λ_λ)_{λ-ν}` with
+  `c_ν = ∏ᵢ (-vᵢ⁻¹)^{νᵢ}` (`tensorPairing`), is the unique counit-equivariant map with
+  `δ_λ(ξ ⊗ η) = 1` (a) (`tensorPairing_act`, `tensorPairing_hwv`, `eq_tensorPairing`; uniqueness
+  proved directly by applying the `Eᵢ`, `Fᵢ`, `K_μ` rather than through 23.3.6), and
+  `δ_λ(b⁺ξ ⊗ b'⁻η)` is `1` for `b = b' = 1` and in `v⁻¹ℤ[v⁻¹]` otherwise (b)
+  (`tensorPairing_tensorBasis_one`, `isNegLaurent_tensorPairing_tensorBasis`, from 19.3.3).
   Remaining: [Lus] 25.2.1, 26.3.1.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
