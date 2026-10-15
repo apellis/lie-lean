@@ -2091,8 +2091,13 @@ are words in `T''_{i,1}` (resp. `T'_{i,-1}`) composed with diagonal automorphism
 maps `Modified.Phi ζ : U̇ → U⁻ ⊗ U⁺` (`π_{λ',ζ}(y⁻ x⁺) ↦ y⁻ ⊗ x⁺`, zero on the other components) and
 `Modified.triangularBasis`: for bases `(bᵢ)` of `U⁻`, `(b'ⱼ)` of `U⁺` consisting of weight vectors,
 the `bᵢ 1_λ b'ⱼ = π_{λ-|bᵢ|,λ-|b'ⱼ|}(bᵢ b'ⱼ)` (`λ ∈ X`) form a basis of `U̇` (any field, `v` not a root
-of unity). **`𝒜`-basis of `𝒜U̇`** (`QuantumGroup/Modified/IntegralBasis.lean`; [Lus] 23.2.2 (b)):
-projections `projW χ : U → U_χ`, `𝒜U⁻ = Modified.aMinus`, and `Modified.aTriangularBasis`: if moreover
+of unity). **`U̇ 1_ζ` and Verma modules** (`QuantumGroup/Modified/TensorVerma.lean`; [Lus] 23.1.4,
+23.3.1 (c)): `Modified.weightAct` (`π_{λ',ζ}(u) ↦ u m` on a vector `m` of weight `ζ`) and
+`Modified.vermaTensorEquiv : U̇ 1_{Λ'-Λ} ≃ ʷM_Λ ⊗ M_{Λ'}`, `u 1_{Λ'-Λ} ↦ u (ξ ⊗ η)`
+(`smul_vermaTensorHwv_eq_zero_iff`, `surjective_smul_vermaTensorHwv`), any field, `v` not a root of
+unity; Lusztig works over `ℚ(v)`. **`𝒜`-basis of `𝒜U̇`**
+(`QuantumGroup/Modified/IntegralBasis.lean`; [Lus] 23.2.2 (b)): projections `projW χ : U → U_χ`,
+`𝒜U⁻ = Modified.aMinus`, and `Modified.aTriangularBasis`: if moreover
 `bᵢ ∈ 𝒜U⁻`, `b'ⱼ ∈ 𝒜U⁺` and the monomials `F_w`, `E_w` in divided powers have `𝒜`-coordinates (so the
 two bases are `𝒜`-bases of `𝒜U⁻ ≅ 𝒜f ≅ 𝒜U⁺`), the `bᵢ 1_λ b'ⱼ` form an `𝒜`-basis of `𝒜U̇`.
 The constructor is general; an unconditional finite-type instance now appears in

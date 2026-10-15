@@ -452,6 +452,7 @@ import LieLean.Algebra.QuantumGroup.Modified.Quotient
 import LieLean.Algebra.QuantumGroup.Modified.RightModule
 import LieLean.Algebra.QuantumGroup.Modified.RootVectors
 import LieLean.Algebra.QuantumGroup.Modified.Symmetries
+import LieLean.Algebra.QuantumGroup.Modified.TensorVerma
 import LieLean.Algebra.QuantumGroup.Modified.Triangular
 import LieLean.Algebra.QuantumGroup.Modified.TriangularBasis
 import LieLean.Algebra.QuantumGroup.ModuleSymmetry.Braid
