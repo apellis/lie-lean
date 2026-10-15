@@ -904,6 +904,11 @@ the finite-type bound `VermaModule.finrank_hom_le_one_of_finite_type` (algebraic
 integral, `VermaModule.exists_injective_weylDot_of_dotDominant` (`M(w·λ) ↪ M(λ)` for all `w ∈ W`,
 along a reduced expression), `VermaModule.weylDot_mem_cone_of_dotDominant` (`w·λ ≤ λ`) and
 `VermaModule.multiplicity_weylDot_ne_zero_of_dotDominant` (`[M(λ) : L(w·λ)] ≠ 0`).
+**Simplicity criterion** (`KacMoody/VermaSimple.lean`, Humphreys GSM 94 Thm. 4.4, Thm. 4.8;
+finite type, algebraically closed characteristic-zero field):
+`VermaModule.maxSubmodule_eq_bot_iff_isAntidominant` (`M(λ)` is simple iff `λ` is antidominant);
+the converse direction uses the Kac–Kazhdan criterion instead of Verma embeddings for nonsimple
+roots (reconstructed).
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and
