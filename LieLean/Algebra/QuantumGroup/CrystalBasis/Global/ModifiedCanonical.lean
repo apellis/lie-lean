@@ -21,7 +21,8 @@ all dominant `λ, λ''` with `λ'' - λ = ζ`, `b ∈ B(λ)` and `b'' ∈ B(λ''
 
 ## Main results
 
-* `existsUnique_modifiedCanonical`, `modTensorAct_modifiedCanonical`: [Lus] Thm. 25.2.1 (a).
+* `existsUnique_modifiedCanonical`, `modTensorAct_modifiedCanonical`,
+  `modifiedCanonical_mem_aForm`: [Lus] Thm. 25.2.1 (a).
 * `modTensorAct_modifiedCanonical_eq_zero`: [Lus] Thm. 25.2.1 (b).
 * `eq_zero_of_modTensorAct_eq_zero`: an element of `U̇1_ζ` acting by zero on
   `ξ_{-λ} ⊗ η_{λ''}` for all large `λ, λ''` with `λ'' - λ = ζ` is zero.
@@ -47,7 +48,10 @@ of `triDepth a b ⊆ f ⊗ f` under `[y] ⊗ [x] ↦ y⁻x⁺(ξ ⊗ η)` (`exis
 of degree `≤ ⟨i, λ⟩` lies in `B(λ)`). As in Lusztig's proof, the passage from large `λ, λ''` to
 arbitrary ones is [Lus] 25.1.10 (`tensorTransition_tensorCanonical`).
 
-Integrality (`b ◇_ζ b'' ∈ 𝒜U̇`) and parts (c), (d) of 25.2.1 are not proved here.
+For integrality (`modifiedCanonical_mem_aForm`), the element `y⁻x⁺(ξ ⊗ η)` above is chosen in
+`ʷ𝒜M_λ ⊗_𝒜 𝒜M_{λ''}`, lifting the `𝒜`-coordinates of `(b ◇ b'')_{λ,λ''}` along `b ↦ b⁻η`, and
+[Lus] 23.3.2 (a) (`leftActOne_mem_aForm_iff`) applies. Parts (c), (d) of 25.2.1 are not proved
+here.
 
 ## References
 
@@ -604,39 +608,83 @@ lemma weightSpace_le_degSpan {ν : I →₀ ℕ} {N : ℕ} (hν : ν.degree < N)
   rw [← degree_wordWeight, w.2]
   exact hν
 
-omit [Finite I] in
-/-- `x⁻η_λ` for `x ∈ U⁻_ν` with `tr ν < N` is the image of an element of `vermaDegSpan N`. -/
-lemma exists_mkQ_eq_evq (Λ : Dom R) {ν : I →₀ ℕ} {N : ℕ} (hν : ν.degree < N) {x : Um D 𝕧}
-    (hx : x ∈ Uw D 𝕧 ν) :
-    ∃ p ∈ vermaDegSpan R 𝕧 Λ.1 N, (VermaModule.maxSubmodule R 𝕧 Λ.1).mkQ p = evq hvt Λ x := by
+variable (R) in
+/-- `x ↦ x⁻η_λ`, `U⁻ → M_λ`. -/
+def vermaMinus (Λ : Y →+ ℤ) (x : Um D 𝕧) : VermaModule R 𝕧 Λ :=
+  quotientMinus R (negativeQuotientEquiv D x) • VermaModule.hwv R 𝕧 Λ
+
+lemma vermaMinus_mk (Λ : Y →+ ℤ) (y : LusztigF 𝕂 I) :
+    vermaMinus R Λ (Submodule.Quotient.mk y : Um D 𝕧) = VermaModule.toVerma R 𝕧 Λ y := by
+  rw [VermaModule.toVerma_apply]
+  rfl
+
+lemma mkQ_vermaMinus (Λ : Dom R) (x : Um D 𝕧) :
+    (VermaModule.maxSubmodule R 𝕧 Λ.1).mkQ (vermaMinus R Λ.1 x) = evq hvt Λ x := by
+  obtain ⟨y, rfl⟩ := Submodule.Quotient.mk_surjective _ x
+  rw [vermaMinus_mk]
+  rfl
+
+/-- `x⁻η_λ` for `x ∈ U⁻_ν` with `tr ν < N` lies in `vermaDegSpan N`. -/
+lemma vermaMinus_mem_vermaDegSpan (Λ : Y →+ ℤ) {ν : I →₀ ℕ} {N : ℕ} (hν : ν.degree < N)
+    {x : Um D 𝕧} (hx : x ∈ Uw D 𝕧 ν) : vermaMinus R Λ x ∈ vermaDegSpan R 𝕧 Λ N := by
   obtain ⟨y, hy, rfl⟩ := hx
-  exact ⟨_, ⟨y, weightSpace_le_degSpan hν hy, rfl⟩, rfl⟩
+  change vermaMinus R Λ (Submodule.Quotient.mk y) ∈ _
+  rw [vermaMinus_mk]
+  exact ⟨y, weightSpace_le_degSpan hν hy, rfl⟩
+
+/-- `x⁻η_λ` for `x ∈ 𝒜f` lies in `𝒜M_λ`. -/
+lemma vermaMinus_mem_vermaLattice (Λ : Y →+ ℤ) {x : Um D 𝕧} (hx : x ∈ negIntegral D) :
+    vermaMinus R Λ x ∈ vermaLattice R Λ := by
+  have key : ∀ z ∈ quotientIntegralForm D, ∀ m ∈ vermaLattice R Λ,
+      quotientMinus R z • m ∈ vermaLattice R Λ := by
+    intro z hz
+    induction hz using Algebra.adjoin_induction with
+    | mem z hz =>
+      obtain ⟨i, n, rfl⟩ := hz
+      intro m hm
+      rw [quotientIntegralGenerator, map_qDivPow', quotientMinus_θ]
+      exact qDivPow_F_smul_mem_vermaLattice i n hm
+    | algebraMap c =>
+      intro m hm
+      rw [show algebraMap (LaurentPolynomial ℤ) (Quotient D 𝕧) c =
+        algebraMap 𝕂 (Quotient D 𝕧) (integralLaurentEval c) from rfl, AlgHom.commutes,
+        algebraMap_smul]
+      exact laurent_smul_mem_laurentSpan ⟨c, rfl⟩ hm
+    | add a b _ _ ha hb =>
+      intro m hm
+      rw [map_add, add_smul]
+      exact add_mem (ha m hm) (hb m hm)
+    | mul a b _ _ ha hb =>
+      intro m hm
+      rw [_root_.map_mul, mul_smul]
+      exact ha _ (hb m hm)
+  exact key _ hx _ (mem_laurentSpan_of_mem ⟨[], by rw [fPow_nil, one_smul]⟩)
 
 include hR in
-/-- The basis vectors `b⁺ξ_{-λ} ⊗ b''⁻η_{λ''}` with `tr |b|, tr |b''| < N` lie in the image of
-`tensorDepth N N`. -/
-lemma tensorBasis_mem_map_tensorDepth (Λ Λ'' : Dom R) {N : ℕ}
-    (h : canonicalBasisHW D Λ × canonicalBasisHW D Λ'') (h₁ : (hwbWt Λ h.1).degree < N)
-    (h₂ : (hwbWt Λ'' h.2).degree < N) :
-    tensorBasis hR Λ Λ'' h ∈ (tensorDepth R Λ.1 Λ''.1 N N).map (tensorIrrProj Λ Λ'') := by
-  obtain ⟨p, hp, ep⟩ := exists_mkQ_eq_evq Λ h₁ (mem_Uw_cbWt _)
-  obtain ⟨q, hq, eq⟩ := exists_mkQ_eq_evq Λ'' h₂ (mem_Uw_cbWt _)
-  refine ⟨_, tmul_mem_tensorDepth hp hq, ?_⟩
-  rw [tensorIrrProj_mk_tmul, tensorBasis_apply, ← ep, ← eq]
+/-- `b⁺ξ_{-λ} ⊗ b''⁻η_{λ''}` is the image of `ʷ(b⁻ξ) ⊗ b''⁻η` in `ʷM_λ ⊗ M_{λ''}`. -/
+lemma tensorBasis_eq_tensorIrrProj (Λ Λ'' : Dom R)
+    (h : canonicalBasisHW D Λ × canonicalBasisHW D Λ'') :
+    tensorBasis hR Λ Λ'' h = tensorIrrProj Λ Λ'' (TensorModule.mk _ _
+      (ChevalleyTwist.toTwist R 𝕧 _ (vermaMinus R Λ.1 h.1) ⊗ₜ[𝕂] vermaMinus R Λ''.1 h.2)) := by
+  rw [tensorIrrProj_mk_tmul, tensorBasis_apply, ← mkQ_vermaMinus, ← mkQ_vermaMinus]
   rfl
 
 include hR in
 /-- `(b ◇ b'')_{λ,λ''}` is a `y⁻x⁺(ξ_{-λ} ⊗ η_{λ''})` with `[y] ⊗ [x] ∈ triDepth N N`, if
-`tr |b|, tr |b''| < N`. -/
+`tr |b|, tr |b''| < N`, and `y⁻x⁺(ξ_{-λ} ⊗ η_{λ''})` can be taken in `ʷ𝒜M_λ ⊗_𝒜 𝒜M_{λ''}`. -/
 lemma exists_triAct_tensorCanonical (Λ Λ'' : Dom R) {N : ℕ}
     (h₀ : canonicalBasisHW D Λ × canonicalBasisHW D Λ'') (h₁ : (hwbWt Λ h₀.1).degree < N)
     (h₂ : (hwbWt Λ'' h₀.2).degree < N) :
     ∃ z ∈ triDepth D N N,
+      triAct R hvn_ratFunc Λ.1 Λ''.1 z ∈ vermaTensorLattice R Λ.1 Λ''.1 ∧
       tensorIrrProj Λ Λ'' (triAct R hvn_ratFunc Λ.1 Λ''.1 z) = tensorCanonical hR Λ Λ'' h₀ := by
-  have hT : tensorCanonical hR Λ Λ'' h₀ ∈
-      (tensorDepth R Λ.1 Λ''.1 N N).map (tensorIrrProj Λ Λ'') := by
-    refine Submodule.span_le.2 ?_ ((tensorBasisIdx hR Λ Λ'').mem_span_repr_support _)
-    rintro _ ⟨h, hh, rfl⟩
+  set c := (tensorBasisIdx hR Λ Λ'').repr (tensorCanonical hR Λ Λ'' h₀)
+  set L : TensorIdx Λ Λ'' → TensorModule 𝕂 (ChevalleyTwist R 𝕧 (VermaModule R 𝕧 Λ.1))
+      (VermaModule R 𝕧 Λ''.1) := fun h ↦ TensorModule.mk _ _
+    (ChevalleyTwist.toTwist R 𝕧 _ (vermaMinus R Λ.1 h.1) ⊗ₜ[𝕂] vermaMinus R Λ''.1 h.2)
+  have hsupp : ∀ h ∈ c.support,
+      (hwbWt Λ h.1).degree < N ∧ (hwbWt Λ'' h.2).degree < N := by
+    intro h hh
     have hd : (hwbWt Λ h.1).degree ≤ (hwbWt Λ h₀.1).degree ∧
         (hwbWt Λ'' h.2).degree ≤ (hwbWt Λ'' h₀.2).degree := by
       by_cases he : h = h₀
@@ -645,10 +693,33 @@ lemma exists_triAct_tensorCanonical (Λ Λ'' : Dom R) {N : ℕ}
       · have hl := tensorLt_of_repr_tensorCanonical_ne_zero hR Λ Λ'' he
           (Finsupp.mem_support_iff.1 hh)
         exact ⟨hl.2.1.le, hl.2.2.le⟩
-    exact tensorBasis_mem_map_tensorDepth hR Λ Λ'' h (hd.1.trans_lt h₁) (hd.2.trans_lt h₂)
-  obtain ⟨m, hm, hmT⟩ := hT
-  obtain ⟨z, hz, rfl⟩ := exists_triAct_eq Λ.1 Λ''.1 N N hm
-  exact ⟨z, hz, hmT⟩
+    exact ⟨hd.1.trans_lt h₁, hd.2.trans_lt h₂⟩
+  have hm : c.sum (fun h a ↦ a • L h) ∈ tensorDepth R Λ.1 Λ''.1 N N :=
+    Submodule.sum_mem _ fun h hh ↦ Submodule.smul_mem _ _
+      (tmul_mem_tensorDepth (vermaMinus_mem_vermaDegSpan _ (hsupp h hh).1 (mem_Uw_cbWt _))
+        (vermaMinus_mem_vermaDegSpan _ (hsupp h hh).2 (mem_Uw_cbWt _)))
+  have hmL : c.sum (fun h a ↦ a • L h) ∈ vermaTensorLattice R Λ.1 Λ''.1 := by
+    refine Submodule.sum_mem _ fun h _ ↦ ?_
+    have hc : IsLaurent (c h) := by
+      rw [show c h = _ from repr_tensorCanonical hR Λ Λ'' h₀ h]
+      split_ifs
+      · exact ⟨_, rfl⟩
+      · exact ⟨0, map_zero _⟩
+    exact laurent_smul_mem_laurentSpan hc (tmul_mem_vermaTensorLattice
+      (vermaMinus_mem_vermaLattice _ (negIntegral_of_mem_canonicalBasis
+        (canonicalBasisHW_subset D Λ h.1.2)))
+      (vermaMinus_mem_vermaLattice _ (negIntegral_of_mem_canonicalBasis
+        (canonicalBasisHW_subset D Λ'' h.2.2))))
+  have hproj : tensorIrrProj Λ Λ'' (c.sum fun h a ↦ a • L h) =
+      tensorCanonical hR Λ Λ'' h₀ := by
+    conv_rhs => rw [← (tensorBasisIdx hR Λ Λ'').linearCombination_repr
+      (tensorCanonical hR Λ Λ'' h₀)]
+    rw [Finsupp.linearCombination_apply]
+    simp only [Finsupp.sum, map_sum, map_smul, L]
+    refine Finset.sum_congr rfl fun h _ ↦ ?_
+    exact congrArg (c h • ·) (tensorBasis_eq_tensorIrrProj hR Λ Λ'' h).symm
+  obtain ⟨z, hz, ez⟩ := exists_triAct_eq Λ.1 Λ''.1 N N hm
+  exact ⟨z, hz, ez ▸ hmL, ez ▸ hproj⟩
 
 /-- `t(y⁻x⁺(ξ_{-λ'-λ} ⊗ η_{λ'+λ''})) = y⁻x⁺(ξ_{-λ} ⊗ η_{λ''})`. -/
 lemma tensorTransition_tensorIrrProj_triAct (Λ Λ' Λ'' : Dom R) (z : fQ ⊗[𝕂] fQ) :
@@ -713,12 +784,12 @@ theorem eq_zero_of_modTensorAct_eq_zero {ζ : Y →+ ℤ} {u : Modified R 𝕧}
     (fun i ↦ hle n (le_max_left _ _) _ (hΛ'' i)) hn h0
 
 include hR hY in
-/-- **[Lus] Thm. 25.2.1 (a), (b)**, existence: there is `u ∈ U̇1_ζ` with
+/-- **[Lus] Thm. 25.2.1 (a), (b)**, existence: there is `u ∈ U̇1_ζ ∩ 𝒜U̇` with
 `u(ξ_{-λ} ⊗ η_{λ''}) = (b ◇ b'')_{λ,λ''}` for all dominant `λ, λ''` with `λ'' - λ = ζ`,
 `b ∈ B(λ)`, `b'' ∈ B(λ'')`, and `u(ξ_{-λ} ⊗ η_{λ''}) = 0` if `b ∉ B(λ)` or `b'' ∉ B(λ'')`. -/
 theorem exists_modifiedCanonical (ζ : Y →+ ℤ) {b b'' : Um D 𝕧} (hb : b ∈ canonicalBasis D)
     (hb'' : b'' ∈ canonicalBasis D) :
-    ∃ u ∈ LinearMap.range (leftActOne R hvn_ratFunc ζ),
+    ∃ u ∈ LinearMap.range (leftActOne R hvn_ratFunc ζ), u ∈ aForm R ∧
       (∀ (Λ Λ'' : Dom R) (_ : Λ''.1 - Λ.1 = ζ) (h₁ : b ∈ canonicalBasisHW D Λ)
         (h₂ : b'' ∈ canonicalBasisHW D Λ''),
         modTensorAct Λ Λ'' u = tensorCanonical hR Λ Λ'' (⟨b, h₁⟩, ⟨b'', h₂⟩)) ∧
@@ -734,14 +805,17 @@ theorem exists_modifiedCanonical (ζ : Y →+ ℤ) {b b'' : Um D 𝕧} (hb : b �
       mem_canonicalBasisHW_of_cbWt Λ hb'' fun i ↦ by have := hΛ i; omega⟩
   have works : ∀ Λ Λ'' : Dom R, ∀ (h₁ : b ∈ canonicalBasisHW D Λ)
       (h₂ : b'' ∈ canonicalBasisHW D Λ''), ∃ z ∈ triDepth D N N,
+        triAct R hvn_ratFunc Λ.1 Λ''.1 z ∈ vermaTensorLattice R Λ.1 Λ''.1 ∧
         tensorIrrProj Λ Λ'' (triAct R hvn_ratFunc Λ.1 Λ''.1 z) =
           tensorCanonical hR Λ Λ'' (⟨b, h₁⟩, ⟨b'', h₂⟩) := fun Λ Λ'' h₁ h₂ ↦
     exists_triAct_tensorCanonical hR Λ Λ'' (⟨b, h₁⟩, ⟨b'', h₂⟩) hN₁ hN₂
   obtain ⟨Λ₀, Λ₀'', hζ₀, hΛ₀, hΛ₀''⟩ := exists_dom_pair hY ζ N
   have hb₀ := (hmem Λ₀ hΛ₀).1
   have hb₀'' := (hmem Λ₀'' hΛ₀'').2
-  obtain ⟨z₀, hz₀, e₀⟩ := works Λ₀ Λ₀'' hb₀ hb₀''
-  refine ⟨leftActOne R hvn_ratFunc ζ (triMul R hvn_ratFunc z₀), ⟨_, rfl⟩, ?_⟩
+  obtain ⟨z₀, hz₀, hL₀, e₀⟩ := works Λ₀ Λ₀'' hb₀ hb₀''
+  refine ⟨leftActOne R hvn_ratFunc ζ (triMul R hvn_ratFunc z₀), ⟨_, rfl⟩, ?_, ?_⟩
+  · rw [← hζ₀]
+    exact (leftActOne_mem_aForm_iff Λ₀.1 Λ₀''.1 _).2 hL₀
   have key : ∀ Λ Λ'' : Dom R, Λ''.1 - Λ.1 = ζ → ∃ z₁ : fQ ⊗[𝕂] fQ,
       ∃ (h₁ : b ∈ canonicalBasisHW D (Λ₀ + Λ)) (h₂ : b'' ∈ canonicalBasisHW D (Λ₀ + Λ'')),
         tensorIrrProj (Λ₀ + Λ) (Λ₀ + Λ'') (triAct R hvn_ratFunc (Λ₀ + Λ).1 (Λ₀ + Λ'').1 z₁) =
@@ -756,7 +830,7 @@ theorem exists_modifiedCanonical (ζ : Y →+ ℤ) {b b'' : Um D 𝕧} (hb : b �
       omega
     have h₁ : b ∈ canonicalBasisHW D (Λ₀ + Λ) := (hmem _ (hlarge Λ)).1
     have h₂ : b'' ∈ canonicalBasisHW D (Λ₀ + Λ'') := (hmem _ (hlarge Λ'')).2
-    obtain ⟨z₁, hz₁, e₁⟩ := works (Λ₀ + Λ) (Λ₀ + Λ'') h₁ h₂
+    obtain ⟨z₁, hz₁, -, e₁⟩ := works (Λ₀ + Λ) (Λ₀ + Λ'') h₁ h₂
     refine ⟨z₁, h₁, h₂, e₁, ?_⟩
     have eP : Λ₀ + Λ = Λ + Λ₀ := Subtype.ext (by rw [Dom.add_val, Dom.add_val, add_comm])
     have eQ : Λ₀ + Λ'' = Λ + Λ₀'' := Subtype.ext (by
@@ -802,7 +876,7 @@ theorem existsUnique_modifiedCanonical (ζ : Y →+ ℤ) {b b'' : Um D 𝕧}
       ∀ (Λ Λ'' : Dom R) (_ : Λ''.1 - Λ.1 = ζ) (h₁ : b ∈ canonicalBasisHW D Λ)
         (h₂ : b'' ∈ canonicalBasisHW D Λ''),
         modTensorAct Λ Λ'' u = tensorCanonical hR Λ Λ'' (⟨b, h₁⟩, ⟨b'', h₂⟩) := by
-  obtain ⟨u, hu, ha, -⟩ := exists_modifiedCanonical hR hY ζ hb hb''
+  obtain ⟨u, hu, -, ha, -⟩ := exists_modifiedCanonical hR hY ζ hb hb''
   refine ⟨u, ⟨hu, ha⟩, fun u' ⟨hu', ha'⟩ ↦ ?_⟩
   rw [← sub_eq_zero]
   refine eq_zero_of_modTensorAct_eq_zero hR hY (sub_mem hu' hu)
@@ -827,6 +901,11 @@ theorem modifiedCanonical_mem_range (ζ : Y →+ ℤ) {b b'' : Um D 𝕧} (hb : 
     modifiedCanonical hR hY ζ hb hb'' ∈ LinearMap.range (leftActOne R hvn_ratFunc ζ) :=
   (exists_modifiedCanonical hR hY ζ hb hb'').choose_spec.1
 
+/-- **[Lus] Thm. 25.2.1 (a)**: `b ◇_ζ b'' ∈ 𝒜U̇`. -/
+theorem modifiedCanonical_mem_aForm (ζ : Y →+ ℤ) {b b'' : Um D 𝕧} (hb : b ∈ canonicalBasis D)
+    (hb'' : b'' ∈ canonicalBasis D) : modifiedCanonical hR hY ζ hb hb'' ∈ aForm R :=
+  (exists_modifiedCanonical hR hY ζ hb hb'').choose_spec.2.1
+
 /-- **[Lus] Thm. 25.2.1 (a)**: `(b ◇_ζ b'')(ξ_{-λ} ⊗ η_{λ''}) = (b ◇ b'')_{λ,λ''}` for
 `λ'' - λ = ζ`, `b ∈ B(λ)`, `b'' ∈ B(λ'')`. -/
 theorem modTensorAct_modifiedCanonical (ζ : Y →+ ℤ) {b b'' : Um D 𝕧}
@@ -834,7 +913,7 @@ theorem modTensorAct_modifiedCanonical (ζ : Y →+ ℤ) {b b'' : Um D 𝕧}
     (hζ : Λ''.1 - Λ.1 = ζ) (h₁ : b ∈ canonicalBasisHW D Λ) (h₂ : b'' ∈ canonicalBasisHW D Λ'') :
     modTensorAct Λ Λ'' (modifiedCanonical hR hY ζ hb hb'') =
       tensorCanonical hR Λ Λ'' (⟨b, h₁⟩, ⟨b'', h₂⟩) :=
-  (exists_modifiedCanonical hR hY ζ hb hb'').choose_spec.2.1 Λ Λ'' hζ h₁ h₂
+  (exists_modifiedCanonical hR hY ζ hb hb'').choose_spec.2.2.1 Λ Λ'' hζ h₁ h₂
 
 /-- **[Lus] Thm. 25.2.1 (b)**: `(b ◇_ζ b'')(ξ_{-λ} ⊗ η_{λ''}) = 0` for `λ'' - λ = ζ` if
 `b ∉ B(λ)` or `b'' ∉ B(λ'')`. -/
@@ -842,7 +921,7 @@ theorem modTensorAct_modifiedCanonical_eq_zero (ζ : Y →+ ℤ) {b b'' : Um D �
     (hb : b ∈ canonicalBasis D) (hb'' : b'' ∈ canonicalBasis D) (Λ Λ'' : Dom R)
     (hζ : Λ''.1 - Λ.1 = ζ) (h : b ∉ canonicalBasisHW D Λ ∨ b'' ∉ canonicalBasisHW D Λ'') :
     modTensorAct Λ Λ'' (modifiedCanonical hR hY ζ hb hb'') = 0 :=
-  (exists_modifiedCanonical hR hY ζ hb hb'').choose_spec.2.2 Λ Λ'' hζ h
+  (exists_modifiedCanonical hR hY ζ hb hb'').choose_spec.2.2.2 Λ Λ'' hζ h
 
 end Main
 
