@@ -54,26 +54,32 @@ variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : Lusztig
   (ψ : (Π₀ j, IrreducibleModule R v (Λ j).1) ≃ₗ[QuantumGroup R v] M)
 
 variable (hvt hR A) in
+/-- The direct sum `⊕ⱼ L(λⱼ)` of the lattices `L(λⱼ)`, a lattice of `⊕ⱼ L_q(λⱼ)`. -/
+abbrev dsSum : Submodule A (Π₀ j, IrreducibleModule R v (Λ j).1) :=
+  dfinsuppLattice (M := fun j ↦ IrreducibleModule R v (Λ j).1) fun j ↦ lat hvt hR A (Λ j)
+
+variable (hvt hR A) in
 /-- The lattice `ψ(⊕ⱼ L(λⱼ))` of `M`, for an isomorphism `ψ : ⊕ⱼ L_q(λⱼ) ≃ M`. -/
 def dsLattice : Submodule A M :=
-  (dfinsuppLattice fun j ↦ lat hvt hR A (Λ j)).comap
-    ((ψ.symm.toLinearMap.restrictScalars k).restrictScalars A)
+  (dsSum hvt hR A Λ).comap ((ψ.symm.restrictScalars k).toLinearMap.restrictScalars A)
 
 lemma mem_dsLattice_iff (m : M) :
-    m ∈ dsLattice hvt hR A Λ ψ ↔ ψ.symm m ∈ dfinsuppLattice fun j ↦ lat hvt hR A (Λ j) :=
+    m ∈ dsLattice hvt hR A Λ ψ ↔ ψ.symm m ∈ dsSum hvt hR A Λ :=
   Iff.rfl
 
 lemma mem_dsLattice_iff' (x : Π₀ j, IrreducibleModule R v (Λ j).1) :
-    x ∈ (dfinsuppLattice fun j ↦ lat hvt hR A (Λ j)) ↔ ψ x ∈ dsLattice hvt hR A Λ ψ := by
-  rw [mem_dsLattice_iff, LinearEquiv.symm_apply_apply]
+    x ∈ dsSum hvt hR A Λ ↔ (ψ.restrictScalars k) x ∈ dsLattice hvt hR A Λ ψ := by
+  rw [mem_dsLattice_iff]
+  exact iff_of_eq (congrArg (· ∈ dsSum hvt hR A Λ) (ψ.symm_apply_apply x).symm)
+
+variable [DecidableEq J]
 
 variable (hvt hR A ϖ) in
 /-- The subset `ψ̄(⊔ⱼ B(λⱼ))` of `ψ(⊕ⱼ L(λⱼ)) / ϖ ψ(⊕ⱼ L(λⱼ))`. -/
 def dsBase : Set (dsLattice hvt hR A Λ ψ ⧸
     (Ideal.span {ϖ} • ⊤ : Submodule A (dsLattice hvt hR A Λ ψ))) :=
-  IntegrableSl2.quotEquiv (ψ.restrictScalars k)
-      (mem_dsLattice_iff' (hvt := hvt) (hR := hR) (A := A) Λ ψ) ϖ ''
-    dfinsuppBase (fun j ↦ lat hvt hR A (Λ j)) ϖ
+  IntegrableSl2.quotEquiv (ψ.restrictScalars k) (mem_dsLattice_iff' Λ ψ) ϖ ''
+    dfinsuppBase (M := fun j ↦ IrreducibleModule R v (Λ j).1) (fun j ↦ lat hvt hR A (Λ j)) ϖ
       fun j ↦ IrreducibleModule.base hR (pow_ne_one_of_transcendental' hvt) (Λ j).2 A ϖ
 
 variable [Finite I] [IsDomain A] [IsDiscreteValuationRing A]
@@ -83,31 +89,33 @@ variable [Finite I] [IsDomain A] [IsDiscreteValuationRing A]
   (hfund : ∀ j : I, ∃ Λ : Dom R, ∀ i, Λ.1 (R.coroot i) = if i = j then 1 else 0)
   (hM : IsIntegrable R v M)
 
+include hinj hϖ hϖv hk hfund
+
+omit [DecidableEq J] in
 /-- `ψ(⊕ⱼ L(λⱼ))` is a crystal lattice of `M`. -/
 theorem isCrystalLattice_dsLattice :
     IsCrystalLattice (pow_ne_one_of_transcendental' hvt) hM (dsLattice hvt hR A Λ ψ) :=
-  (IsCrystalLattice.dfinsupp fun j ↦
+  (IsCrystalLattice.dfinsupp (M := fun j ↦ IrreducibleModule R v (Λ j).1) fun j ↦
     isCrystalLattice_lat (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund (Λ j)).of_equiv hM ψ
     (mem_dsLattice_iff' Λ ψ)
 
 /-- `(ψ(⊕ⱼ L(λⱼ)), ψ̄(⊔ⱼ B(λⱼ)))` is a crystal base of `M`. -/
-theorem isCrystalBase_dsBase [DecidableEq J] :
+theorem isCrystalBase_dsBase :
     IsCrystalBase (isCrystalLattice_dsLattice Λ ψ hinj hϖ hϖv hk hfund hM) ϖ
       (dsBase hvt hR A ϖ Λ ψ) :=
-  (IsCrystalBase.dfinsupp (not_isUnit_ϖ hϖ) fun j ↦
-    isCrystalBaseHW hvt hR hinj hϖ hϖv hk hfund (Λ j)).of_equiv hM ψ
+  (IsCrystalBase.dfinsupp (M := fun j ↦ IrreducibleModule R v (Λ j).1) (not_isUnit_ϖ hϖ)
+    fun j ↦ isCrystalBaseHW hvt hR hinj hϖ hϖv hk hfund (Λ j)).of_equiv hM ψ
     (mem_dsLattice_iff' Λ ψ) fun _ ↦
-      ((IntegrableSl2.quotEquiv (ψ.restrictScalars k) (mem_dsLattice_iff' (hvt := hvt) (hR := hR)
-        (A := A) Λ ψ) ϖ).injective.mem_set_image).symm
+      ((IntegrableSl2.quotEquiv (ψ.restrictScalars k) (mem_dsLattice_iff' Λ ψ)
+        ϖ).injective.mem_set_image).symm
 
 /-- **Hong–Kang, Theorem 5.1.2.** If `M ≅ ⊕ⱼ L_q(λⱼ)` with every `λⱼ` dominant, then `M` has a
 crystal base `(L, B)` with `L = ψ(⊕ⱼ L(λⱼ))`; by `isCrystalBase_dsBase` one can take
 `B = ψ̄(⊔ⱼ B(λⱼ))`, so that `ψ` identifies `(L, B)` with `(⊕ⱼ L(λⱼ), ⊔ⱼ B(λⱼ))`. -/
-theorem exists_isCrystalBase_of_equiv [DecidableEq J] :
+theorem exists_isCrystalBase_of_equiv :
     ∃ (L : Submodule A M) (hL : IsCrystalLattice (pow_ne_one_of_transcendental' hvt) hM L)
       (B : Set (L ⧸ (Ideal.span {ϖ} • ⊤ : Submodule A L))),
-      IsCrystalBase hL ϖ B ∧
-        ∀ m, m ∈ L ↔ ψ.symm m ∈ dfinsuppLattice fun j ↦ lat hvt hR A (Λ j) :=
+      IsCrystalBase hL ϖ B ∧ ∀ m, m ∈ L ↔ ψ.symm m ∈ dsSum hvt hR A Λ :=
   ⟨_, _, _, isCrystalBase_dsBase Λ ψ hinj hϖ hϖv hk hfund hM, mem_dsLattice_iff Λ ψ⟩
 
 end GrandLoop
