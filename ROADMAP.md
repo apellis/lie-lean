@@ -2432,7 +2432,11 @@ basis `B` of the `A/cA`-module `L/cL` of classes of weight vectors with `ẽᵢB
 `f̃ᵢ b = b' ↔ ẽᵢ b' = b`), the crystal `IsCrystalBase.crystal` over
 `LusztigCartanDatum.RootDatum.crystalDatum` (for `c` not a unit; weights unique, `IsCrystalBase.wt_eq`),
 and `isSeminormal_crystal` ([HK] (4.9), (4.10), Prop. 4.2.11). Any commutative ring `A` and
-`c ∈ A` (Kashiwara: `A₀ ⊆ ℚ(q)`, `c = q`). `CrystalBasis/Sl2.lean`: crystal bases at one colour
+`c ∈ A` (Kashiwara: `A₀ ⊆ ℚ(q)`, `c = q`). `CrystalBasis/Dimension.lean`: for `A` a principal
+ideal domain with fraction field `k` and `c` not a unit, `L ∩ M^Λ` is free of rank `dim M^Λ` and
+`B` has `dim M^Λ` elements of weight `Λ` whenever `M^Λ` is finite-dimensional
+(`IsCrystalLattice.finrank_latticeWeightSpace`, `IsCrystalBase.card_weight`; [HK] Thm. 4.2.5).
+`CrystalBasis/Sl2.lean`: crystal bases at one colour
 (`IntegrableSl2.IsCrystalBase`), restriction of crystal bases of `U`-modules to every `nodeSl2`
 (`IsCrystalBase.isCrystalBase_nodeSl2`), string bases (`linearIndependent_dF`, `span_dF`: the
 `F^{(j)} ηₜ` form a basis of `M` when the `ηₜ` form bases of the primitive spaces) and existence

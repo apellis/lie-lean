@@ -64,19 +64,6 @@ variable [NeZero v] {M : Type*} [AddCommGroup M] [Module k M] [Module (QuantumGr
   [IsScalarTower k (QuantumGroup R v) M] (hv : ∀ n : ℕ, 0 < n → v ^ n ≠ 1)
   (hM : IsIntegrable R v M) (i : I)
 
-lemma weightSetProj_singleton_mem (Λ : Y →+ ℤ) (m : M) :
-    weightSetProj hv hM {Λ} m ∈ weightSpace R v M Λ := by
-  have hm : m ∈ ⨆ Λ', weightSpace R v M Λ' := by rw [hM.iSup_weightSpace_eq_top]; trivial
-  induction hm using Submodule.iSup_induction' with
-  | mem Λ' m hm =>
-    classical
-    rw [weightSetProj_of_mem hv hM _ hm]
-    split_ifs with h
-    · rw [Set.mem_singleton_iff] at h; exact h ▸ hm
-    · exact zero_mem _
-  | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
-
 /-- The projection onto `M^{Λ - αᵢ}` after `f̃ᵢ` is `f̃ᵢ` after the projection onto `M^Λ`. -/
 lemma weightSetProj_singleton_kashiwaraF (Λ : Y →+ ℤ) (m : M) :
     weightSetProj hv hM {Λ - R.root i} (kashiwaraF R v M hv hM i m) =
