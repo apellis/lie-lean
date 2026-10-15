@@ -2439,6 +2439,11 @@ ideal domain with fraction field `k` and `c` not a unit, `L ∩ M^Λ` is free of
 `CrystalBasis/Equiv.lean`: crystal bases are transported along isomorphisms of integrable
 `U`-modules (`IsCrystalLattice.of_equiv`, `IsCrystalBase.of_equiv`; [HK] Prop. 4.2.8), via
 `map_weightSetProj` (weight projections commute with `U`-module maps).
+`CrystalBasis/DirectSum.lean`: direct sums `⊕ⱼ Mⱼ` (`Π₀ j, Mⱼ`, any index type) of integrable
+modules are integrable (`isIntegrable_dfinsupp`); crystal bases `(Lⱼ, Bⱼ)` give the crystal base
+`(⊕ⱼ Lⱼ, ⊔ⱼ Bⱼ)` (`IsCrystalBase.dfinsupp`, `c` not a unit), and conversely a crystal base of this
+form restricts to crystal bases of the summands when the `Lⱼ` are free (`IsCrystalBase.of_dfinsupp`)
+([HK] Thm. 4.2.10, stated there for two or countably many summands).
 `CrystalBasis/Sl2.lean`: crystal bases at one colour
 (`IntegrableSl2.IsCrystalBase`), restriction of crystal bases of `U`-modules to every `nodeSl2`
 (`IsCrystalBase.isCrystalBase_nodeSl2`), string bases (`linearIndependent_dF`, `span_dF`: the

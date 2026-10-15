@@ -326,6 +326,7 @@ import LieLean.Algebra.QuantumGroup.ShapovalovLimit
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Boson
 import LieLean.Algebra.QuantumGroup.CrystalBasis.CrystalBase
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Dimension
+import LieLean.Algebra.QuantumGroup.CrystalBasis.DirectSum
 import LieLean.Algebra.QuantumGroup.CrystalBasis.DualLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Equiv
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Basic
