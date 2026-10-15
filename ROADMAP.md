@@ -1033,6 +1033,21 @@ summand of `Θ_{s_1} ⋯ Θ_{s_k} M(λ)` and each `Θ_s` commutes with duality. 
 `nonempty_extOne_equiv_quotient_ker` (`Ext¹(C, N) ≅ Hom(A, N) / {g ∘ i}` for `0 → A → B → C → 0`
 with `B` projective in `𝒪`), so the relative `ExtOne` agrees with the `Ext¹` of projective
 resolutions in `𝒪`. The comparison of its vector-space structure with the Baer sum is not formalized.
+**Proposition 3.13** (`KacMoody/ProjectiveGeneratorO.lean`; finite type, algebraically closed
+characteristic-zero field): `IsProjectiveGeneratorO P Q χ` (`Q` finitely generated projective in
+`𝒪`, in the block `χ`, mapping nonzero to every `L(μ)` with `χ_μ = χ`); every finitely generated
+`M` in `𝒪_χ` is a quotient of some `Qⁿ` (`IsProjectiveGeneratorO.exists_surjective`);
+`Hom(Q, −)` is fully faithful on `𝒪_χ` (`IsProjectiveGeneratorO.homMap_bijective`,
+`homMapEquiv`: `Hom(M, N) ≃ Hom_E(Hom(Q, M), Hom(Q, N))` for `M` in `𝒪_χ`, any `N`) and
+essentially surjective onto finite-dimensional right `E`-modules, `E = End(Q)`
+(`IsProjectiveGeneratorO.exists_linearEquiv_homMap`); `⊕_{w ∈ W} P(w·λ)` is a projective
+generator of the block of `χ_λ` (`isProjectiveGeneratorO_weylDot`, generally
+`isProjectiveGeneratorO_directSum`). Humphreys cites Bass's Morita theorem; it is replaced by a
+direct argument through finite presentations by copies of `Q`
+(`Algebra/Lie/ProjectiveGenerator.lean`: the ring `End_L(Q)`, `Hom(Q, M)` as a right
+`End(Q)`-module, `LieModuleHom.homMap_bijective`, `LieModuleHom.nonempty_linearEquiv_homMap`,
+for Lie modules over any commutative ring). The statement is unbundled: the library has no
+bundled category `𝒪_χ`.
 **Proposition 3.1** (`KacMoody/ExtHighestWeight.lean`, any GCM, characteristic zero): (a)
 `extOne_verma_eq_zero` (`Ext¹(M(λ), M) = 0` for `M` a quotient of `M(μ)` with `λ ≮ μ`), (b)
 `extOne_verma_irreducibleModule_eq_zero` (`Ext¹(M(λ), L(μ)) = 0` for `μ ≤ λ`), (c)
@@ -2864,11 +2879,10 @@ completed steps and continuation threads are:
   dimension; these extensions remain open.
 - **Open items of [HumO] Ch. 3, 4, 7** (M12, tracking issue #7; Thm. 4.6 is done,
   `VermaModule.exists_injective_reflectionOf`):
-  - Prop. 3.13 (`𝒪_χ` is equivalent to the finite-dimensional right modules over `End(P)` for a
-    projective generator `P`): not formalized. Humphreys refers the proof to Bass's Morita theorem
-    for abelian categories with a projective generator, which is not in Mathlib, and the library
-    has no bundled category `𝒪_χ`. Plan: package `𝒪_χ` as a category and state 3.13 with that
-    Morita statement as an explicit hypothesis, unless it can be proved directly.
+  - Prop. 3.13 is done (`KacMoody/ProjectiveGeneratorO.lean`, M12 above), unbundled: full
+    faithfulness and essential surjectivity of `Hom(P, −)` onto finite-dimensional right
+    `End(P)`-modules, by a direct argument replacing Humphreys' citation of Bass's Morita theorem.
+    A bundled category `𝒪_χ` and the equivalence of categories are not formalized.
   - Independence of `Θ_s` from the choice of `μ` on the wall (§7.15): scheduled after Thm. 4.6;
     depends on the classification of projective functors (§10.8).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
@@ -3293,6 +3307,9 @@ beyond what the general Kac–Moody results give.
 
 (List self-contained, Mathlib-ready results here as they land.)
 
+- `DirectSum.toLieModule`, the ring `End_L(Q)` and `Hom(Q, −)` as a functor to right
+  `End(Q)`-modules (`LieLean/Algebra/Lie/ProjectiveGenerator.lean`).
+
 - `LinearMap.BilinForm.eq_zero_of_baseChange_tmul_one_eq_zero`, `exists_eq_sum_tmul_basis`
   (`LieLean/LinearAlgebra/BilinearForm/TensorProduct.lean`).
 
@@ -3336,7 +3353,7 @@ beyond what the general Kac–Moody results give.
   affine hyperplane polynomials); `Matrix.jantzenSpace`, `Matrix.sum_finrank_jantzenSpace`
   (Jantzen order formula for matrices over `K[X]`, `Jantzen/OrderFormula.lean`).
 - `LieLean/GroupTheory/Coxeter/Squares.lean` (Bruhat squares, BGG signs);
-  `IsSl2Triple.eq_zero_of_toEnd_e_pow_eq_zero` (`BGG/Sl2.lean`); `DirectSum.toLieModule`.
+  `IsSl2Triple.eq_zero_of_toEnd_e_pow_eq_zero` (`BGG/Sl2.lean`).
 - `Submodule.finrank_span_le_of_comp_ratHom`, `LinearMap.finrank_range_eq_of_ker_eq`
   (`QuantumGroup/IrreducibleCharacter/Rank.lean`).
 - Kostant's codifferential/Laplacian framework (`KacMoody/Kostant/Laplacian.lean`), `cocycleMap`.
