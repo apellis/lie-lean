@@ -919,6 +919,12 @@ finite type, algebraically closed characteristic-zero field):
 `VermaModule.maxSubmodule_eq_bot_iff_isAntidominant` (`M(λ)` is simple iff `λ` is antidominant);
 the converse direction uses the Kac–Kazhdan criterion instead of Verma embeddings for nonsimple
 roots (reconstructed).
+**Corollary 4.8** (`KacMoody/ProjectiveSocle.lean`, same hypotheses):
+`ProjectiveCover.nonempty_equiv_irreducibleModule_of_isAtom` (for `λ` antidominant and
+`w ∈ W_[λ]`, every simple submodule of `P(w·λ)` is `≅ L(λ)`, i.e. the socle of `P(w·λ)` is a
+direct sum of copies of `L(λ)`), via `IsStdFiltered.exists_injective_of_isAtom` (a simple
+submodule embeds into a factor of a standard filtration); that the factors lie in the
+`W_[λ]`-linkage class comes from BGG reciprocity and the Kac–Kazhdan criterion.
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and

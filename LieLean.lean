@@ -27,6 +27,7 @@ import LieLean.Algebra.Lie.KacMoody.EnoughInjectives
 import LieLean.Algebra.Lie.KacMoody.ProjectiveDecomposition
 import LieLean.Algebra.Lie.KacMoody.ProjectiveStdFiltration
 import LieLean.Algebra.Lie.KacMoody.ProjectiveCharacter
+import LieLean.Algebra.Lie.KacMoody.ProjectiveSocle
 import LieLean.Algebra.Lie.KacMoody.BGG.Casimir
 import LieLean.Algebra.Lie.KacMoody.BGG.Character
 import LieLean.Algebra.Lie.KacMoody.BGG.Exactness
