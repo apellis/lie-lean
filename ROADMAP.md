@@ -1001,6 +1001,13 @@ positive roots integral for `λ` to negative roots; `IsLongestStabilizer`: `w_μ
 sends the positive roots orthogonal to `μ + ρ` to negative roots) instead of length functions, and
 their existence for regular `λ` (`exists_isLongestIntegral`, `exists_isLongestStabilizer`); the
 second assertion of 7.13 is Thm. 7.12 for `w = w_λ`.
+**Theorem 7.11** (`KacMoody/TranslationProjectiveCover.lean`, same hypotheses on `λ, μ`):
+`nonempty_equiv_projectiveCover_translation_projectiveCover` (`T_μ^λ P(w·μ) ≅ P(w·λ)` for
+`w ∈ W_[λ]` with `w·μ` in the upper closure of the facet of `w·λ`), via
+`ProjectiveCover.isFGProjectiveO` (`P(λ)` is cyclic, `ProjectiveCover.centralBlock_eq_top`: it lies
+in the block of `χ_λ`), `exists_finset_lieSpan_centralTranslation_eq_top` and
+`IsFGProjectiveO.nonempty_equiv_of_finrank_hom_eq`; the uniqueness of `w·λ` uses the root-lattice
+comparison of Thm. 7.9 instead of Prop. 7.3.
 **Self-dual projectives** (`KacMoody/SelfDualProjective.lean`, Humphreys GSM 94 Thm. 4.10, Thm. 7.16):
 `VermaModule.maxSubmodule_eq_bot_of_isAntidominant` (antidominant Verma modules are simple, one
 direction of Thm. 4.8); for antidominant `λ` and a weight `μ` with `λ - μ` integral and `μ + ρ`
@@ -3037,6 +3044,10 @@ completed steps and continuation threads are:
   (`Modified/TensorQuotientQuasiR.lean`, `Modified.quasiRAct_mem_fPowQuotientTensorLattice`,
   for `Λ_λ = FPowQuotient`; general quotients `quasiRAct_mem_quotTensorLattice`), via naturality
   of `Θ` (`quasiRAct_map`); no regularity or dominance hypothesis.
+  [Lus] 24.3.2, `Ψ² = 1` (`QuasiR/TensorInvolution.lean`, `quasiRAct_barPair_involutive`):
+  for involutions `ψ₁`, `ψ₂` compatible with the bar involution, `Ψ = Θ ∘ (ψ₁ ⊗ ψ₂)` is an
+  involution of `M ⊗ M'`, from `(ψ₁ ⊗ ψ₂)Θ = Θ̄(ψ₁ ⊗ ψ₂)` and `ΘΘ̄ = 1` on `M ⊗ M'`
+  (`quasiRAct_finsum_barTensor`).
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
