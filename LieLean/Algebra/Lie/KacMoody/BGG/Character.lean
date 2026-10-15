@@ -31,11 +31,14 @@ using `ch M(λ) = e^λ ∏_{α > 0} (1 - e^{-α})^{-mult α}`.
   `(-1)^{ℓ(w)} ch M(w · Λ)`.
 * `Matrix.Realization.KacMoodyAlgebra.hsum_vermaAltFamily`:
   `∑_{w ∈ W} (-1)^{ℓ(w)} ch M(w · Λ) = ch L(Λ)`.
+* `KacMoodyAlgebra.IrreducibleModule.finrank_weightSpace_eq_finsum_kostantPartition`:
+  Kostant's weight multiplicity formula `dim L(Λ)_μ = ∑_{w ∈ W} (-1)^{ℓ(w)} K(w · Λ - μ)`
+  ([HumO] Cor. 2.4).
 
 ## References
 
 * [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
-  GSM 94, AMS 2008, §2.4, §6.1.
+  GSM 94, AMS 2008, §2.4, Cor. 2.4, §6.1.
 * [Kac] V. G. Kac, *Infinite dimensional Lie algebras*, 3rd ed., CUP 1990, §10.4.
 * [Kum] S. Kumar, *Kac–Moody groups, their flag varieties and representation theory*, Progr.
   Math. 204, Birkhäuser 2002, Thm. 2.2.1, Thm. 9.1.3.
@@ -155,5 +158,20 @@ theorem finsum_neg_one_pow_finrank_weightSpace (μ : Dual K H) :
   simp only [SummableFamily.coeff_hsum, vermaAltFamily_apply,
     HahnSeries.coeff_smul, smul_eq_mul] at this
   exact this
+
+include hS in
+/-- **Kostant's weight multiplicity formula** (Humphreys, GSM 94, Corollary 2.4): for a
+symmetrizable generalized Cartan matrix, `Λ` dominant integral and any weight `μ`,
+`dim L(Λ)_μ = ∑_{w ∈ W} (-1)^{ℓ(w)} K(w · Λ - μ)`, where `K` is Kostant's partition function
+(`kostantPartition`; Humphreys writes `p(μ - w · Λ)`) and `w · Λ = w(Λ + ρ) - ρ`. Only finitely
+many terms are nonzero. Humphreys states this for a finite-dimensional semisimple Lie algebra over
+`ℂ` and `μ ≤ Λ`; for other `μ` both sides vanish. -/
+theorem IrreducibleModule.finrank_weightSpace_eq_finsum_kostantPartition (μ : Dual K H) :
+    (finrank K (weightSpaceOfMap (IrreducibleModule P Λ) (h P) μ) : ℤ) =
+      ∑ᶠ w : P.weylGroup hA, (-1) ^ (P.coxeterSystem hA).length w *
+        (kostantPartition P (P.weylDot hA w Λ - μ) : ℤ) := by
+  rw [← finsum_neg_one_pow_finrank_weightSpace P hA hΛ hS μ]
+  refine finsum_congr fun w ↦ ?_
+  rw [← VermaModule.finrank_weightSpace_sub P (P.weylDot hA w Λ), sub_sub_cancel]
 
 end Matrix.Realization.KacMoodyAlgebra
