@@ -3035,6 +3035,10 @@ completed steps and continuation threads are:
   (`Modified/TensorQuotientQuasiR.lean`, `Modified.quasiRAct_mem_fPowQuotientTensorLattice`,
   for `Λ_λ = FPowQuotient`; general quotients `quasiRAct_mem_quotTensorLattice`), via naturality
   of `Θ` (`quasiRAct_map`); no regularity or dominance hypothesis.
+  [Lus] 24.3.2, `Ψ² = 1` (`QuasiR/TensorInvolution.lean`, `quasiRAct_barPair_involutive`):
+  for involutions `ψ₁`, `ψ₂` compatible with the bar involution, `Ψ = Θ ∘ (ψ₁ ⊗ ψ₂)` is an
+  involution of `M ⊗ M'`, from `(ψ₁ ⊗ ψ₂)Θ = Θ̄(ψ₁ ⊗ ψ₂)` and `ΘΘ̄ = 1` on `M ⊗ M'`
+  (`quasiRAct_finsum_barTensor`).
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
