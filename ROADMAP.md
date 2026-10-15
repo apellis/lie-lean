@@ -2943,8 +2943,11 @@ completed steps and continuation threads are:
   `Global/NegativeFiltrationGlobal.lean`: **Cor. 7.4.2** (`negFiltGlobalAt`, basis form
   `NegFiltGlobalAt`; (7.4.5): `negFilt_eq_zero_of_mem`, `exists_negFilt_sub_mem`) under the same
   hypothesis, transported from Prop. 7.4.1 along `u ↦ u u_λ` for `λ ≫ 0`.
-  Remaining: (G.3), Lemmas 7.5.1–7.5.2 and the induction, the global basis, and the rest of
-  41.1.6.
+  `Global/LiftUniqueness.lean`: **Lemma 7.5.1** (`eq_of_mem_negFilt`: lifts in `(fᵢU⁻)^ℤ` and
+  `(fⱼU⁻)^ℤ` of the same `b ∈ B(∞)` coincide), under the same hypothesis, with (7.5.3)
+  (`exists_starU_eq_f_of_evq_eq_zero`: `ker(u ↦ u u_λ) ∩ U⁻_ν = U⁻fₖ` on the wall `⟨hₖ, λ⟩ = 0`),
+  `U⁻_ℤ* = U⁻_ℤ`, `(L(∞)⁻)* = L(∞)⁻` and `U⁻_ℤ ∩ fₖU⁻ ⊆ (fₖU⁻)^ℤ` (`mem_negFilt_of_eq_f`).
+  Remaining: (G.3), Lemma 7.5.2 and the induction, the global basis, and the rest of 41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
