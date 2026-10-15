@@ -3036,7 +3036,10 @@ completed steps and continuation threads are:
   the subsets `𝐁_{i;≥n}`, `𝐁_{i;n}` of [Lus] 14.3.1 (`signedBasisGe`, `signedBasisAt`, the `±G(b)`
   with `εᵢ(b) ≥ n`, resp. `= n`) and [Lus] Thm. 14.3.2 (a) weight by weight over `𝒜` and `ℚ(v)`
   (`negFilt_eq_span`, `mem_range_iff_mem_span`).
-  Remaining: 14.3.2 (b), (c), the choice of signs ([Lus] 14.4.2–14.4.3) and the rest of 41.1.6.
+  `Global/SignedBijection.lean` (our own proof): [Lus] Thm. 14.3.2 (c), the bijections
+  `π_{i,n} : 𝐁_{i;0} → 𝐁_{i;n}` (`existsUnique_df_sub_mem_span`, `signedStringMap`,
+  `signedStringMap_bijective`), with `π_{i,n}(±G(b)) = ±G(f̃ᵢⁿ b)` (`signedStringMap_signed`).
+  Remaining: 14.3.2 (b), (d), the choice of signs ([Lus] 14.4.2–14.4.3) and the rest of 41.1.6.
 - **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
   components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
   [Lus] 4.1.2 (b) for every basis of `f_ν` (`quasiR_eq_sum`), `Θ_0 = 1 ⊗ 1` (`quasiR_zero`) and
