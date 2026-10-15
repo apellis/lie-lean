@@ -2095,7 +2095,11 @@ of unity). **`U̇ 1_ζ` and Verma modules** (`QuantumGroup/Modified/TensorVerma.
 23.3.1 (c)): `Modified.weightAct` (`π_{λ',ζ}(u) ↦ u m` on a vector `m` of weight `ζ`) and
 `Modified.vermaTensorEquiv : U̇ 1_{Λ'-Λ} ≃ ʷM_Λ ⊗ M_{Λ'}`, `u 1_{Λ'-Λ} ↦ u (ξ ⊗ η)`
 (`smul_vermaTensorHwv_eq_zero_iff`, `surjective_smul_vermaTensorHwv`), any field, `v` not a root of
-unity; Lusztig works over `ℚ(v)`. **`𝒜`-basis of `𝒜U̇`**
+unity; Lusztig works over `ℚ(v)`. Over `ℚ(v)` it restricts to a bijection from `𝒜U̇ 1_ζ`
+onto `ʷ𝒜M_Λ ⊗_𝒜 𝒜M_{Λ'}` ([Lus] 23.3.2 (a); `QuantumGroup/Modified/TensorVermaIntegral.lean`:
+`Modified.leftActOne_mem_aForm_iff`, `vermaTensorEquiv_mem_iff`; `𝒜M_Λ = Modified.vermaLattice`,
+stable under the `Eᵢ^{(n)}` by `qDivPow_E_smul_mem_vermaLattice`; `Fᵢ^{(n)}` on tensor products,
+`TensorModule.qDivPow_F_smul_tmul`). **`𝒜`-basis of `𝒜U̇`**
 (`QuantumGroup/Modified/IntegralBasis.lean`; [Lus] 23.2.2 (b)): projections `projW χ : U → U_χ`,
 `𝒜U⁻ = Modified.aMinus`, and `Modified.aTriangularBasis`: if moreover
 `bᵢ ∈ 𝒜U⁻`, `b'ⱼ ∈ 𝒜U⁺` and the monomials `F_w`, `E_w` in divided powers have `𝒜`-coordinates (so the
