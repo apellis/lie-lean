@@ -995,6 +995,13 @@ quotient occurring once), `isProjectiveO_centralBlock` and
 `exists_isStdFiltered_translation_verma`; the Hom spaces to simple modules are computed by
 adjunction, Thm. 3.9 (c) and Thm. 7.9 (reconstructed; Humphreys uses Verma's theorem and BGG
 reciprocity). The identification `x = w_λ w_μ°` is not formalized.
+**Theorem 7.11** (`KacMoody/TranslationProjectiveCover.lean`, same hypotheses on `λ, μ`):
+`nonempty_equiv_projectiveCover_translation_projectiveCover` (`T_μ^λ P(w·μ) ≅ P(w·λ)` for
+`w ∈ W_[λ]` with `w·μ` in the upper closure of the facet of `w·λ`), via
+`ProjectiveCover.isFGProjectiveO` (`P(λ)` is cyclic, `ProjectiveCover.centralBlock_eq_top`: it lies
+in the block of `χ_λ`), `exists_finset_lieSpan_centralTranslation_eq_top` and
+`IsFGProjectiveO.nonempty_equiv_of_finrank_hom_eq`; the uniqueness of `w·λ` uses the root-lattice
+comparison of Thm. 7.9 instead of Prop. 7.3.
 **Self-dual projectives** (`KacMoody/SelfDualProjective.lean`, Humphreys GSM 94 Thm. 4.10, Thm. 7.16):
 `VermaModule.maxSubmodule_eq_bot_of_isAntidominant` (antidominant Verma modules are simple, one
 direction of Thm. 4.8); for antidominant `λ` and a weight `μ` with `λ - μ` integral and `μ + ρ`
