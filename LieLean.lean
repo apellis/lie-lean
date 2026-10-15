@@ -320,6 +320,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.SignedSubsets
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.StringFiltration
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.StringIdentity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorBar
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorCanonical
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Augmentation
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Coordinates

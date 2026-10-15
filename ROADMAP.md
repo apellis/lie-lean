@@ -3095,7 +3095,14 @@ completed steps and continuation threads are:
   basis `b⁺ξ_{-λ} ⊗ b'⁻η_{λ'}` (`tensorBasis`) has coefficients in `𝒜`
   (`isLaurent_repr_tensorPsi`), diagonal entries `1` (`repr_tensorPsi_self`) and is triangular
   for a refinement of Lusztig's order (`repr_tensorPsi_eq_zero`, `TensorLower`) ([Lus] 24.3.2).
-  Remaining: the canonical basis of `ʷL_q(λ) ⊗ L_q(λ')` (24.3.3).
+  `CrystalBasis/Global/TensorCanonical.lean`: Lusztig's order on `B(λ) × B(λ')` (`TensorLt`,
+  24.3.1; `TensorIdx` is locally finite), the hypotheses of Lemma 24.2.1 for `ρ`
+  (`isLusztigMatrix_tensorRho`, 24.3.2), the family `π` (`tensorPi`) and **[Lus] Thm. 24.3.3 (a),
+  (b)**: `(b₁ ◇ b₁')_{λ,λ'}` (`tensorCanonical`) is the unique `x ∈ ℒ` with `Ψ(x) = x` and
+  `x - b₁⁺ξ_{-λ} ⊗ b₁'⁻η_{λ'} ∈ v⁻¹ℒ` (`existsUnique_tensorCanonical`; uniqueness proved directly
+  rather than from (d)), with the triangularity (b) (`repr_tensorCanonical_self`,
+  `tensorLt_of_repr_tensorCanonical_ne_zero`, `isNegLaurent_repr_tensorCanonical`).
+  Remaining: 24.3.3 (c), (d).
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
