@@ -304,6 +304,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.GeneralArtin
 import LieLean.Algebra.QuantumGroup.BraidAction.FiniteTypeArtin
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.CategoryOInt
+import LieLean.Algebra.QuantumGroup.CategoryOIntTensor
 import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.CompleteReducibility
 import LieLean.Algebra.QuantumGroup.ContravariantForm
@@ -409,6 +410,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.RatFunc
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Stable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.StrictHom
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Tensor
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.TensorDecomposition
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Uniqueness
 import LieLean.Algebra.QuantumGroup.CrystalBasis.HighestWeightLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integrable
