@@ -3091,7 +3091,11 @@ completed steps and continuation threads are:
   `ʷL_q(λ)` (`twBar`, 24.3.1) and Lusztig's `Ψ = Θ ∘ (¯ ⊗ ¯)` on `ʷL_q(λ) ⊗ L_q(λ')`
   ([Lus] 24.3.2: `tensorPsi`, `tensorPsi_tensorPsi`, `tensorPsi_smul`, `act_tensorPsi`), with the
   weight triangularity of the components `Θ_ν` (`actPair_quasiR_mem_tensorWt`,
-  `actPair_quasiR_eq_zero`). Remaining: the canonical basis of `ʷL_q(λ) ⊗ L_q(λ')` (24.3.3).
+  `actPair_quasiR_eq_zero`). `CrystalBasis/Global/TensorLattice.lean`: the matrix of `Ψ` in the
+  basis `b⁺ξ_{-λ} ⊗ b'⁻η_{λ'}` (`tensorBasis`) has coefficients in `𝒜`
+  (`isLaurent_repr_tensorPsi`), diagonal entries `1` (`repr_tensorPsi_self`) and is triangular
+  for a refinement of Lusztig's order (`repr_tensorPsi_eq_zero`, `TensorLower`) ([Lus] 24.3.2).
+  Remaining: the canonical basis of `ʷL_q(λ) ⊗ L_q(λ')` (24.3.3).
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
