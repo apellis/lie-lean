@@ -16,6 +16,8 @@ import LieLean.Algebra.Lie.KacMoody.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.BGG
 import LieLean.Algebra.Lie.KacMoody.BGGReciprocity
 import LieLean.Algebra.Lie.KacMoody.TranslationProjective
+import LieLean.Algebra.Lie.KacMoody.TranslationProjectiveCover
+import LieLean.Algebra.Lie.KacMoody.TranslationProjectiveLongest
 import LieLean.Algebra.Lie.KacMoody.SelfDualProjective
 import LieLean.Algebra.Lie.KacMoody.ExtProjective
 import LieLean.Algebra.Lie.KacMoody.ExtHighestWeight
