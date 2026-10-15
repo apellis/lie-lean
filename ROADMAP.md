@@ -2051,7 +2051,14 @@ for `x = u 1_ζ`, `y = u' 1_ζ`, as `Λ → ∞` with `Λ' = ζ + Λ`; `ϖ`-adic
 Extension of scalars (`LinearAlgebra/BilinearForm/TensorProduct.lean`, towards transferring
 [Lus] 26.3.1 from `ℚ(v)` to larger fields): a left-nondegenerate form stays left-nondegenerate after
 base change to any commutative algebra over the field (`LinearMap.BilinForm.eq_zero_of_baseChange_tmul_one_eq_zero`,
-`eq_zero_of_baseChange_equiv`); the identification of `U̇_k` with `k ⊗_{ℚ(v)} U̇_{ℚ(v)}` is not yet formalized.
+`eq_zero_of_baseChange_equiv`). `QuantumGroup/Modified/BaseChange.lean`: for a field extension
+`L / K`, `Modified.baseChangeEquiv : L ⊗_K U̇_K ≃ U̇_L` (via the triangular bases of 23.2.1 (b)),
+`Modified.form_baseChangeEquiv` (the form on `U̇_L` is the base change of the form on `U̇_K`, by
+the uniqueness in 26.1.2), `Modified.form_nondegenerate_of_baseChange` and
+`Modified.form_nondegenerate_of_transcendental` (nondegeneracy over `ℚ(v)` implies nondegeneracy
+over any characteristic-zero field at any parameter transcendental over `ℚ`, e.g. `X⁻¹`, `(tX)⁻¹`
+with `t² = -1` in an algebraic closure of `ℚ(X)`: `transcendental_inv_X`,
+`transcendental_inv_mul_X`). Nondegeneracy over `ℚ(v)` itself ([Lus] 26.3.1) is not proved.
 **The symmetries `T'_{i,1}`, `T''_{i,-1}`** (`QuantumGroup/ModuleSymmetry/Symmetries.lean`,
 `QuantumGroup/Modified/Symmetries.lean`; [Lus] 37.1–37.2, 41.1.1–41.1.3): `braidPrimeEquiv R hv i`
 (`T'_{i,1} = ω Tᵢ ω`, [Lus] 37.2.4) and its inverse `T''_{i,-1}`, with Lusztig's values on all
