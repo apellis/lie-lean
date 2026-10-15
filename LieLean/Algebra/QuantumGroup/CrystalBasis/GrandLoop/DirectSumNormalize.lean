@@ -9,15 +9,16 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.DirectSumAut
 /-!
 # Normalizing the highest weight vectors of `⊕ⱼ V(λⱼ)` against a crystal base
 
-Let `N = ⊕ⱼ V(λⱼ)`, `J` finite, be a direct sum of irreducible highest weight modules
-`V(λ) = L_q(λ)` with dominant highest weights, and let `(L, B)` be a crystal base of `N`. This file
-contains the step of the uniqueness theorem for crystal bases ([HK] Thm. 5.2.1) which splits off the
-summands of a maximal highest weight.
+Let `N = ⊕ⱼ V(λⱼ)` be a direct sum of irreducible highest weight modules `V(λ) = L_q(λ)` with
+dominant highest weights, and let `(L, B)` be a crystal base of `N`. This file contains the step of
+the uniqueness theorem for crystal bases ([HK] Thm. 5.2.1) which splits off the summands of a
+maximal highest weight.
 
-The standing hypotheses on a finite set `S` of summands are: `L` is stable under the projection
-onto the summands in `S` (`hPS`), and `L` and `⊕ⱼ L(λⱼ)` contain the same vectors among those with
-no component in `S` (`hoff`). Let `λ = λ_{j₀}` be maximal among the `λⱼ`, `j ∈ S`, and different
-from the `λⱼ`, `j ∉ S`, and let `T = {j ∈ S | λⱼ = λ}`.
+The standing hypotheses on a set `S` of summands, possibly infinite, are: `L` is stable under the
+projection onto the summands in `S` (`hPS`), and `L` and `⊕ⱼ L(λⱼ)` contain the same vectors among
+those with no component in `S` (`hoff`). Let `λ = λ_{j₀}` be maximal among the `λⱼ`, `j ∈ S`, and
+different from the `λⱼ`, `j ∉ S`, and let `T = {j ∈ S | λⱼ = λ}`, a finite set. The weight space of
+`N` of weight `λ` is assumed finite-dimensional.
 
 ## Main results
 
@@ -172,22 +173,6 @@ abbrev QDS (L : Submodule A (Π₀ j, IrreducibleModule R v (Λ j).1)) (ϖ : A) 
   @HasQuotient.Quotient L (Submodule A L)
     (@Submodule.hasQuotient A L _ (Submodule.addCommGroup L) _) (Ideal.span {ϖ} • ⊤)
 
-include hvt hR in
-/-- The weight spaces of a finite direct sum of the `V(λⱼ)` are finite-dimensional. -/
-lemma finiteDimensional_weightSpace_ds [Finite J] (μ : Y →+ ℤ) :
-    FiniteDimensional k (weightSpace R v (Π₀ j, IrreducibleModule R v (Λ j).1) μ) := by
-  have := Fintype.ofFinite J
-  have hfd : ∀ j, FiniteDimensional k (weightSpace R v (IrreducibleModule R v (Λ j).1) μ) :=
-    fun j ↦ IrreducibleModule.finiteDimensional_weightSpace hR
-      (pow_ne_one_of_transcendental' hvt) μ
-  let f : weightSpace R v (Π₀ j, IrreducibleModule R v (Λ j).1) μ →ₗ[k]
-      ∀ j, weightSpace R v (IrreducibleModule R v (Λ j).1) μ :=
-    LinearMap.pi fun j ↦ ((DFinsupp.lapply (R := QuantumGroup R v)
-      (M := fun j ↦ IrreducibleModule R v (Λ j).1) j).restrictScalars k).restrict
-        fun x hx ↦ map_mem_weightSpace (DFinsupp.lapply j) hx
-  exact Module.Finite.of_injective f fun x y h ↦
-    Subtype.ext (DFinsupp.ext fun j ↦ congrArg Subtype.val (congrFun h j))
-
 omit [CharZero k] in
 /-- `A` is a fraction ring of `k` under the hypotheses of the grand loop. -/
 lemma isFractionRing_of [IsDomain A] (hinj : Function.Injective (algebraMap A k))
@@ -201,22 +186,6 @@ lemma isFractionRing_of [IsDomain A] (hinj : Function.Injective (algebraMap A k)
     rw [map_pow, hϖv]
     exact pow_ne_zero _ (inv_ne_zero (NeZero.ne v))
   exact ⟨a, ϖ ^ m, by rw [← ha, mul_div_cancel_left₀ _ h0]⟩
-
-omit [DecidableEq I] [NeZero v] [CharZero k] in
-include hR in
-/-- A finite nonempty set of summands has one whose highest weight is maximal among them. -/
-lemma exists_maximal [Finite J] (S : Finset J) (hS : S.Nonempty) :
-    ∃ j₀ ∈ S, ∀ j ∈ S, ∀ ν : I →₀ ℕ, (Λ j).1 = (Λ j₀).1 + R.rootSum ν → ν = 0 := by
-  let r : J → J → Prop := fun a b ↦ ∃ ν : I →₀ ℕ, ν ≠ 0 ∧ (Λ a).1 = (Λ b).1 + R.rootSum ν
-  have : IsTrans J r := ⟨fun a b c ⟨ν, hν, hab⟩ ⟨ν', _, hbc⟩ ↦
-    ⟨ν' + ν, fun h ↦ hν (add_eq_zero.1 h).2, by rw [hab, hbc, R.rootSum_add]; abel⟩⟩
-  have : Std.Irrefl r := ⟨fun a ⟨ν, hν, h⟩ ↦ hν
-    (LusztigCartanDatum.RootDatum.rootSum_injective hR (by
-      rw [R.rootSum_zero]
-      simpa using h))⟩
-  obtain ⟨j₀, hj₀, hmin⟩ :=
-    (Finite.wellFounded_of_trans_of_irrefl r).has_min (S : Set J) (Finset.coe_nonempty.2 hS)
-  exact ⟨j₀, hj₀, fun j hj ν h ↦ by_contra fun hν ↦ hmin j hj ⟨ν, hν, h⟩⟩
 
 omit [DecidableEq I] [NeZero v] [CharZero k] in
 /-- Nonzero vectors in distinct summands of a direct sum are linearly independent. -/
@@ -269,7 +238,7 @@ lemma map_mem_smul_of_mem' {M : Type*} [AddCommGroup M] [Module k M] [Module A M
 
 section Maximal
 
-variable {Λ} {S : Finset J} {j₀ : J}
+variable {Λ} {S : Set J} {j₀ : J}
   (hmax : ∀ j ∈ S, ∀ ν : I →₀ ℕ, (Λ j).1 = (Λ j₀).1 + R.rootSum ν → ν = 0)
 include hmax
 
@@ -299,7 +268,7 @@ lemma eq_zero_of_mem_weightSpace_of_ne {j : J} (hj : j ∈ S) (hne : (Λ j).1 �
   rw [h, R.rootSum_zero, sub_zero] at hν
   exact hne hν.symm
 
-variable [DecidableEq J]
+variable [DecidablePred (· ∈ S)]
 
 include hvt in
 /-- The components in `S` of a vector of weight `λ_{j₀} + αᵢ` vanish. -/
@@ -313,10 +282,11 @@ lemma projDS_eq_zero_of_mem_weightSpace_add_root (i : I)
       (map_mem_weightSpace (DFinsupp.lapply (R := QuantumGroup R v) j) hx)
   · rfl
 
+omit [DecidablePred (· ∈ S)] in
 include hvt hR in
 /-- A vector of weight `λ_{j₀}` with components only in `S` lies in the span of the highest weight
 vectors `v_{λⱼ}`, `j ∈ S`, `λⱼ = λ_{j₀}`. -/
-lemma mem_hwSpan_of_mem_weightSpace {T : Finset J}
+lemma mem_hwSpan_of_mem_weightSpace [DecidableEq J] {T : Finset J}
     (hTS : ∀ j ∈ S, (Λ j).1 = (Λ j₀).1 → j ∈ T) {x : Π₀ j, IrreducibleModule R v (Λ j).1}
     (hx : x ∈ weightSpace R v _ (Λ j₀).1) (hxS : ∀ j, j ∉ S → x j = 0) :
     x ∈ hwSpan v Λ T := by
@@ -406,12 +376,12 @@ variable [Finite I] [IsDomain A] [IsDiscreteValuationRing A]
   (hk : ∀ c : k, ∃ (m : ℕ) (a : A), algebraMap A k (ϖ ^ m) * c = algebraMap A k a)
   (hfund : ∀ j : I, ∃ Λ : Dom R, ∀ i, Λ.1 (R.coroot i) = if i = j then 1 else 0)
   [DecidableEq J] {Λ}
-  {L : Submodule A (Π₀ j, IrreducibleModule R v (Λ j).1)} {S : Finset J}
+  {L : Submodule A (Π₀ j, IrreducibleModule R v (Λ j).1)} {S : Set J} [DecidablePred (· ∈ S)]
   (hPS : ∀ x ∈ L, projDS Λ (· ∈ S) x ∈ L)
   (hoff : ∀ x : Π₀ j, IrreducibleModule R v (Λ j).1,
     (∀ j ∈ S, x j = 0) → (x ∈ L ↔ x ∈ dsSum hvt hR A Λ))
 
-omit [NeZero v] [CharZero k] [Finite I] [IsDomain A] [IsDiscreteValuationRing A] in
+omit [NeZero v] [CharZero k] [Finite I] [IsDomain A] [IsDiscreteValuationRing A] [DecidableEq J] in
 include hPS in
 /-- `L` is stable under the projection onto the summands outside `S`. -/
 lemma projDS_notMem_mem {x : Π₀ j, IrreducibleModule R v (Λ j).1} (hx : x ∈ L) :
@@ -421,7 +391,7 @@ lemma projDS_notMem_mem {x : Π₀ j, IrreducibleModule R v (Λ j).1} (hx : x �
   rw [h]
   exact sub_mem hx (hPS x hx)
 
-omit [Finite I] [IsDomain A] [IsDiscreteValuationRing A] in
+omit [Finite I] [IsDomain A] [IsDiscreteValuationRing A] [DecidableEq J] in
 include hPS hoff in
 /-- For vectors with no components in `S`, `ϖ L` and `ϖ ⊕ⱼ L(λⱼ)` agree. -/
 lemma mem_smul_iff_mem_smul_dsSum {y : Π₀ j, IrreducibleModule R v (Λ j).1}
@@ -451,7 +421,7 @@ lemma mem_smul_iff_mem_smul_dsSum {y : Π₀ j, IrreducibleModule R v (Λ j).1}
 variable {hL : IsCrystalLattice (pow_ne_one_of_transcendental' hvt) (isIntDS hvt hR Λ) L}
   {B : Set (QDS L ϖ)}
 
-omit [Finite I] [IsDomain A] [IsDiscreteValuationRing A] in
+omit [Finite I] [IsDomain A] [IsDiscreteValuationRing A] [DecidableEq J] in
 include hPS in
 /-- Let `λ_{j₀}` be maximal among the `λⱼ`, `j ∈ S`, and let `x ∈ L` be a vector of weight
 `λ_{j₀}` whose class lies in `B`. If `ẽᵢ x ∉ ϖ L` for some `i`, then the components of `x` in `S`
@@ -485,6 +455,7 @@ lemma projDS_mem_smul_of_eDS_notMem {j₀ : J}
   rwa [map_sub, LinearMap.restrictScalars_apply, LinearMap.restrictScalars_apply, h0, zero_sub,
     neg_mem_iff] at this
 
+omit [DecidableEq J] in
 include hinj hϖ hϖv hk hfund hPS hoff in
 /-- If `x ∈ L` has weight `μ ≠ λⱼ` for all `j ∉ S` and `ẽᵢ x ∈ ϖ L` for all `i`, then the
 components of `x` outside `S` lie in `ϖ L` ([HK] Lemma 5.2.2 (1) for the summands outside `S`). -/
@@ -514,6 +485,7 @@ lemma projDS_notMem_mem_smul_of_eDS_mem {μ : Y →+ ℤ} (hne : ∀ j ∉ S, (�
       (map_mem_weightSpace (DFinsupp.lapply (R := QuantumGroup R v) j) hyw)
       fun i ↦ eDS_apply Λ i y j ▸ (mem_smul_dsSum Λ).1 (hey i) j
 
+omit [DecidableEq J] in
 include hinj hϖ hϖv hk hfund hPS hoff in
 /-- Let `λ_{j₀}` be maximal among the `λⱼ`, `j ∈ S`, and different from the `λⱼ`, `j ∉ S`. A vector
 `x ∈ L` of weight `λ_{j₀}` whose class lies in `B` has its components in `S` or its components
@@ -568,66 +540,35 @@ lemma exists_normalize_of_family {μ : Y →+ ℤ} {T : Finset J} (hT : ∀ j �
     rw [autEquiv_symm_apply]
     exact hle (hW y hyL hyT)
 
-include hinj hϖ hϖv hk hfund hPS hoff in
-/-- Normalization of the highest weight vectors of maximal weight. Let `λ = λ_{j₀}` be maximal
-among the `λⱼ`, `j ∈ S`, and different from the `λⱼ`, `j ∉ S`, and let `T` be the set of `j ∈ S`
-with `λⱼ = λ`. There is a `k`-linear automorphism `g` of the span of the `v_{λⱼ}`, `j ∈ T`, such
-that the induced automorphism of `⊕ⱼ V(λⱼ)` maps each `v_{λⱼ}`, `j ∈ T`, to a vector of `L` whose
-class lies in `B`, and maps `⊕ⱼ L(λⱼ)` onto the vectors of `L` in that span (cf. the proof of
-[HK] Thm. 5.2.1). -/
-theorem exists_normalize [Finite J] {j₀ : J}
+omit [Finite I] in
+include hinj hϖ hϖv hk hPS in
+/-- Let `λ = λ_{j₀}` be maximal among the `λⱼ`, `j ∈ S`, and let `x b ∈ L` be lifts of weight
+vectors of the elements `b ∈ B`. The vectors of `L` in the span of the `v_{λⱼ}`, `j ∈ T`, lie in the
+`A`-span of the components in `S` of those lifts of weight `λ` whose components in `S` are not in
+`ϖ L` (by Nakayama's lemma). -/
+lemma le_span_of_maximal {j₀ : J}
+    [FiniteDimensional k (weightSpace R v (Π₀ j, IrreducibleModule R v (Λ j).1) (Λ j₀).1)]
     (hmax : ∀ j ∈ S, ∀ ν : I →₀ ℕ, (Λ j).1 = (Λ j₀).1 + R.rootSum ν → ν = 0)
-    (hne : ∀ j ∉ S, (Λ j).1 ≠ (Λ j₀).1) (hB : IsCrystalBase hL ϖ B) {T : Finset J}
+    (hB : IsCrystalBase hL ϖ B) {T : Finset J}
     (hT : ∀ j ∈ T, (Λ j).1 = (Λ j₀).1) (hTS : ∀ j ∈ S, (Λ j).1 = (Λ j₀).1 → j ∈ T)
-    (hTsub : T ⊆ S) :
-    ∃ g : hwSpan v Λ T ≃ₗ[k] hwSpan v Λ T,
-      (∀ j ∈ T, ∃ h : autEquiv hvt hR Λ hT g
-          (DFinsupp.single j (IrreducibleModule.hwv R v (Λ j).1)) ∈ L,
-        (Submodule.Quotient.mk (⟨_, h⟩ : L) : QDS L ϖ) ∈ B) ∧
-      ∀ x ∈ L, x ∈ hwSpan v Λ T → (autEquiv hvt hR Λ hT g).symm x ∈ dsSum hvt hR A Λ := by
+    (hTsub : ∀ j ∈ T, j ∈ S) (x : B → L)
+    (hxw : ∀ b, (x b : Π₀ j, IrreducibleModule R v (Λ j).1) ∈ weightSpace R v _ (hB.wt b))
+    (hxb : ∀ b, Submodule.Quotient.mk (x b) = b.1) :
+    L ⊓ (hwSpan v Λ T).restrictScalars A ≤ Submodule.span A (Set.range fun
+      b : {b : B // hB.wt b = (Λ j₀).1 ∧ projDS Λ (· ∈ S) (x b).1 ∉ ϖ • L} ↦
+        projDS Λ (· ∈ S) (x b.1).1) := by
   classical
   have hv' := pow_ne_one_of_transcendental' hvt
-  have hc : ¬IsUnit ϖ := not_isUnit_ϖ hϖ
-  have : FaithfulSMul A k := (faithfulSMul_iff_algebraMap_injective A k).2 hinj
   have : IsFractionRing A k := isFractionRing_of hinj hϖv hk
-  have : Module.IsTorsionFree A (Π₀ j, IrreducibleModule R v (Λ j).1) :=
-    Module.IsTorsionFree.trans_faithfulSMul A k _
-  have : FiniteDimensional k (weightSpace R v (Π₀ j, IrreducibleModule R v (Λ j).1) (Λ j₀).1) :=
-    finiteDimensional_weightSpace_ds (hvt := hvt) (hR := hR) Λ _
-  choose x hxw hxb using hB.exists_mk_eq
-  -- supports and weights
   have hS : ∀ y : Π₀ j, IrreducibleModule R v (Λ j).1, ∀ j, j ∉ S →
       projDS Λ (· ∈ S) y j = 0 := fun y j hj ↦ by rw [projDS_apply]; simp [hj]
   have hhw : ∀ y : Π₀ j, IrreducibleModule R v (Λ j).1,
       y ∈ weightSpace R v _ (Λ j₀).1 → projDS Λ (· ∈ S) y ∈ hwSpan v Λ T := fun y hy ↦
     mem_hwSpan_of_mem_weightSpace (hvt := hvt) (hR := hR) hmax hTS
       (map_mem_weightSpace (projDS Λ (· ∈ S)) hy) (hS y)
-  -- the lifts of the elements of `B` of weight `λ` with a nonzero component in `S`
   let ι := {b : B // hB.wt b = (Λ j₀).1 ∧ projDS Λ (· ∈ S) (x b).1 ∉ ϖ • L}
   let u : ι → Π₀ j, IrreducibleModule R v (Λ j).1 := fun b ↦ projDS Λ (· ∈ S) (x b.1).1
-  have hu_mem : ∀ b, u b ∈ L := fun b ↦ hPS _ (x b.1).2
-  have hxw' : ∀ b : ι, ((x b.1).1 : Π₀ j, IrreducibleModule R v (Λ j).1) ∈
-      weightSpace R v _ (Λ j₀).1 := fun b ↦ by have := hxw b.1; rwa [b.2.1] at this
-  have hu_hw : ∀ b, u b ∈ hwSpan v Λ T := fun b ↦ hhw _ (hxw' b)
-  have hu_mk : ∀ b, (Submodule.Quotient.mk (⟨u b, hu_mem b⟩ : L) : QDS L ϖ) = b.1.1 := by
-    intro b
-    have hxB : (Submodule.Quotient.mk (⟨(x b.1).1, (x b.1).2⟩ : L) : QDS L ϖ) ∈ B := by
-      rw [Subtype.coe_eta, hxb]; exact b.1.2
-    have h := (projDS_mem_smul_or hinj hϖ hϖv hk hfund hPS hoff hmax hne hB (x b.1).2
-      (hxw' b) hxB).resolve_left b.2.2
-    rw [← hxb b.1]
-    refine (IntegrableSl2.mk_eq_mk_iff ϖ _ _).2 ?_
-    have h2 := projDS_add_projDS_not Λ (· ∈ S) (x b.1).1
-    have h3 : u b - (x b.1).1 = -projDS Λ (fun j ↦ ¬j ∈ S) (x b.1).1 := by
-      calc u b - (x b.1).1 = u b - (projDS Λ (· ∈ S) (x b.1).1 +
-            projDS Λ (fun j ↦ ¬j ∈ S) (x b.1).1) := by rw [h2]
-        _ = _ := by simp only [u]; abel
-    rw [h3]
-    exact neg_mem h
-  have hliA : LinearIndependent A u :=
-    hB.linearIndependent_of_mk hc u hu_mem (fun b ↦ b.1) Subtype.val_injective hu_mk
-  have hlik : LinearIndependent k u := (LinearIndependent.iff_fractionRing A k).1 hliA
-  -- `L ∩ span(v_{λⱼ}, j ∈ T)` is the `A`-span of the `u b`
+  have hu_hw : ∀ b, u b ∈ hwSpan v Λ T := fun b ↦ hhw _ (by have := hxw b.1; rwa [b.2.1] at this)
   set W : Submodule A (Π₀ j, IrreducibleModule R v (Λ j).1) :=
     L ⊓ (hwSpan v Λ T).restrictScalars A with hW
   have hsmulW : ∀ z ∈ ϖ • L, z ∈ hwSpan v Λ T → z ∈ (Ideal.span {ϖ} : Ideal A) • W := by
@@ -647,11 +588,6 @@ theorem exists_normalize [Finite J] {j₀ : J}
       simp only [P, LinearMap.comp_apply, weightSetProj_of_mem hv' _ _ (hxw b),
         Set.mem_singleton_iff]
       split_ifs <;> simp
-  have hPhw : ∀ b : B, P (x b) ∈ hwSpan v Λ T := fun b ↦ by
-    rw [hPx]
-    split_ifs with h
-    · exact hhw _ (by have := hxw b; rwa [h] at this)
-    · exact zero_mem _
   have hW_le : W ≤ Submodule.span A (Set.range u) := by
     have hfg : W.FG := Submodule.FG.of_le (hL.fg_latticeWeightSpace (Λ j₀).1)
       fun w hw ↦ ⟨hw.1, mem_weightSpace_of_mem_hwSpan hT hw.2⟩
@@ -691,7 +627,7 @@ theorem exists_normalize [Finite J] {j₀ : J}
       simp only [P, LinearMap.comp_apply,
         weightSetProj_of_mem hv' _ _ (mem_weightSpace_of_mem_hwSpan hT hw.2),
         Set.mem_singleton_iff, ↓reduceIte]
-      exact projDS_eq_self_of_mem_hwSpan _ (fun j hj ↦ hTsub hj) hw.2
+      exact projDS_eq_self_of_mem_hwSpan _ (fun j hj ↦ hTsub j hj) hw.2
     have h1 := map_mem_smul_of_mem' (f := P) hPL hsum
     rw [map_sub, map_sum, hPw] at h1
     simp only [LinearMap.map_smul_of_tower] at h1
@@ -706,6 +642,69 @@ theorem exists_normalize [Finite J] {j₀ : J}
     refine Submodule.mem_sup.2 ⟨∑ i, a i • d (g i),
       Submodule.sum_mem _ fun i _ ↦ Submodule.smul_mem _ _ (hd _), z, hsmulW z hzL hzT, ?_⟩
     rw [hz]; abel
+  exact hW_le
+
+include hinj hϖ hϖv hk hfund hPS hoff in
+/-- Normalization of the highest weight vectors of maximal weight. Let `λ = λ_{j₀}` be maximal
+among the `λⱼ`, `j ∈ S`, and different from the `λⱼ`, `j ∉ S`, and let `T` be the set of `j ∈ S`
+with `λⱼ = λ`. There is a `k`-linear automorphism `g` of the span of the `v_{λⱼ}`, `j ∈ T`, such
+that the induced automorphism of `⊕ⱼ V(λⱼ)` maps each `v_{λⱼ}`, `j ∈ T`, to a vector of `L` whose
+class lies in `B`, and maps `⊕ⱼ L(λⱼ)` onto the vectors of `L` in that span (cf. the proof of
+[HK] Thm. 5.2.1). -/
+theorem exists_normalize {j₀ : J}
+    [FiniteDimensional k (weightSpace R v (Π₀ j, IrreducibleModule R v (Λ j).1) (Λ j₀).1)]
+    (hmax : ∀ j ∈ S, ∀ ν : I →₀ ℕ, (Λ j).1 = (Λ j₀).1 + R.rootSum ν → ν = 0)
+    (hne : ∀ j ∉ S, (Λ j).1 ≠ (Λ j₀).1) (hB : IsCrystalBase hL ϖ B) {T : Finset J}
+    (hT : ∀ j ∈ T, (Λ j).1 = (Λ j₀).1) (hTS : ∀ j ∈ S, (Λ j).1 = (Λ j₀).1 → j ∈ T)
+    (hTsub : ∀ j ∈ T, j ∈ S) :
+    ∃ g : hwSpan v Λ T ≃ₗ[k] hwSpan v Λ T,
+      (∀ j ∈ T, ∃ h : autEquiv hvt hR Λ hT g
+          (DFinsupp.single j (IrreducibleModule.hwv R v (Λ j).1)) ∈ L,
+        (Submodule.Quotient.mk (⟨_, h⟩ : L) : QDS L ϖ) ∈ B) ∧
+      ∀ x ∈ L, x ∈ hwSpan v Λ T → (autEquiv hvt hR Λ hT g).symm x ∈ dsSum hvt hR A Λ := by
+  classical
+  have hv' := pow_ne_one_of_transcendental' hvt
+  have hc : ¬IsUnit ϖ := not_isUnit_ϖ hϖ
+  have : FaithfulSMul A k := (faithfulSMul_iff_algebraMap_injective A k).2 hinj
+  have : IsFractionRing A k := isFractionRing_of hinj hϖv hk
+  have : Module.IsTorsionFree A (Π₀ j, IrreducibleModule R v (Λ j).1) :=
+    Module.IsTorsionFree.trans_faithfulSMul A k _
+  choose x hxw hxb using hB.exists_mk_eq
+  -- supports and weights
+  have hS : ∀ y : Π₀ j, IrreducibleModule R v (Λ j).1, ∀ j, j ∉ S →
+      projDS Λ (· ∈ S) y j = 0 := fun y j hj ↦ by rw [projDS_apply]; simp [hj]
+  have hhw : ∀ y : Π₀ j, IrreducibleModule R v (Λ j).1,
+      y ∈ weightSpace R v _ (Λ j₀).1 → projDS Λ (· ∈ S) y ∈ hwSpan v Λ T := fun y hy ↦
+    mem_hwSpan_of_mem_weightSpace (hvt := hvt) (hR := hR) hmax hTS
+      (map_mem_weightSpace (projDS Λ (· ∈ S)) hy) (hS y)
+  -- the lifts of the elements of `B` of weight `λ` with a nonzero component in `S`
+  let ι := {b : B // hB.wt b = (Λ j₀).1 ∧ projDS Λ (· ∈ S) (x b).1 ∉ ϖ • L}
+  let u : ι → Π₀ j, IrreducibleModule R v (Λ j).1 := fun b ↦ projDS Λ (· ∈ S) (x b.1).1
+  have hu_mem : ∀ b, u b ∈ L := fun b ↦ hPS _ (x b.1).2
+  have hxw' : ∀ b : ι, ((x b.1).1 : Π₀ j, IrreducibleModule R v (Λ j).1) ∈
+      weightSpace R v _ (Λ j₀).1 := fun b ↦ by have := hxw b.1; rwa [b.2.1] at this
+  have hu_hw : ∀ b, u b ∈ hwSpan v Λ T := fun b ↦ hhw _ (hxw' b)
+  have hu_mk : ∀ b, (Submodule.Quotient.mk (⟨u b, hu_mem b⟩ : L) : QDS L ϖ) = b.1.1 := by
+    intro b
+    have hxB : (Submodule.Quotient.mk (⟨(x b.1).1, (x b.1).2⟩ : L) : QDS L ϖ) ∈ B := by
+      rw [Subtype.coe_eta, hxb]; exact b.1.2
+    have h := (projDS_mem_smul_or hinj hϖ hϖv hk hfund hPS hoff hmax hne hB (x b.1).2
+      (hxw' b) hxB).resolve_left b.2.2
+    rw [← hxb b.1]
+    refine (IntegrableSl2.mk_eq_mk_iff ϖ _ _).2 ?_
+    have h2 := projDS_add_projDS_not Λ (· ∈ S) (x b.1).1
+    have h3 : u b - (x b.1).1 = -projDS Λ (fun j ↦ ¬j ∈ S) (x b.1).1 := by
+      calc u b - (x b.1).1 = u b - (projDS Λ (· ∈ S) (x b.1).1 +
+            projDS Λ (fun j ↦ ¬j ∈ S) (x b.1).1) := by rw [h2]
+        _ = _ := by simp only [u]; abel
+    rw [h3]
+    exact neg_mem h
+  have hliA : LinearIndependent A u :=
+    hB.linearIndependent_of_mk hc u hu_mem (fun b ↦ b.1) Subtype.val_injective hu_mk
+  have hlik : LinearIndependent k u := (LinearIndependent.iff_fractionRing A k).1 hliA
+  -- `L ∩ span(v_{λⱼ}, j ∈ T)` is the `A`-span of the `u b`
+  have hW_le := le_span_of_maximal (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hPS hmax hB hT hTS hTsub
+    x hxw hxb
   have hspank : ∀ y ∈ hwSpan v Λ T, y ∈ Submodule.span k (Set.range u) := by
     intro y hy
     obtain ⟨a, ha, hay⟩ := exists_smul_mem_of_span_eq_top hL.span_eq_top y
@@ -717,8 +716,11 @@ theorem exists_normalize [Finite J] {j₀ : J}
       rw [← algebraMap_smul k a y, smul_smul, inv_mul_cancel₀ ha', one_smul]
     rw [this]
     exact Submodule.smul_mem _ _ h2
-  exact exists_normalize_of_family hT u hu_mem hu_hw
-    (fun b ↦ by rw [hu_mk]; exact b.1.2) hlik hspank fun y hyL hyT ↦ hW_le ⟨hyL, hyT⟩
+  have hu_B : ∀ b, (Submodule.Quotient.mk (⟨u b, hu_mem b⟩ : L) : QDS L ϖ) ∈ B := fun b ↦
+    (congrArg (· ∈ B) (hu_mk b)).mpr b.1.2
+  have hWu : ∀ y ∈ L, y ∈ hwSpan v Λ T → y ∈ Submodule.span A (Set.range u) :=
+    fun y hyL hyT ↦ hW_le ⟨hyL, hyT⟩
+  exact exists_normalize_of_family hT u hu_mem hu_hw hu_B hlik hspank hWu
 
 end Split
 
