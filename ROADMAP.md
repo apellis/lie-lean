@@ -2900,8 +2900,11 @@ completed steps and continuation threads are:
   `L(λ)⁻/vL(λ)⁻`, the first lying in `f̃ᵢⁿB(λ)`; the two halves of (7.4.1):
   `hwFilt_eq_zero_of_mem`, `exists_hwFilt_sub_mem`), under the part of `(G_{l-1})` used in its
   proof (`GlobalBelow`: `(G.1)`, Lemma 7.5.2 and `(G.3)` for `n = 1` at lower weights).
-  Remaining: (G.3), Cor. 7.4.2, Lemmas 7.5.1–7.5.2 and the induction, the global basis, and the
-  rest of 41.1.6.
+  `Global/NegativeFiltrationGlobal.lean`: **Cor. 7.4.2** (`negFiltGlobalAt`, basis form
+  `NegFiltGlobalAt`; (7.4.5): `negFilt_eq_zero_of_mem`, `exists_negFilt_sub_mem`) under the same
+  hypothesis, transported from Prop. 7.4.1 along `u ↦ u u_λ` for `λ ≫ 0`.
+  Remaining: (G.3), Lemmas 7.5.1–7.5.2 and the induction, the global basis, and the rest of
+  41.1.6.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
