@@ -116,6 +116,7 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.Weights
 import LieLean.Algebra.Lie.KacMoody.Projective
 import LieLean.Algebra.Lie.KacMoody.ProjectiveCover
 import LieLean.Algebra.Lie.KacMoody.ProjectiveCoverHom
+import LieLean.Algebra.Lie.KacMoody.ProjectiveGeneratorO
 import LieLean.Algebra.Lie.KacMoody.RootSpace
 import LieLean.Algebra.Lie.KacMoody.RootSpaceDim
 import LieLean.Algebra.Lie.KacMoody.Serre
@@ -205,6 +206,7 @@ import LieLean.Algebra.Lie.KacMoody.VermaWeights
 import LieLean.Algebra.Lie.KacMoody.WeightBasis
 import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.Algebra.Lie.LocallyNilpotent
+import LieLean.Algebra.Lie.ProjectiveGenerator
 import LieLean.Algebra.Lie.Quotient
 import LieLean.Algebra.Lie.RelativeExt
 import LieLean.Algebra.Lie.Sl2
