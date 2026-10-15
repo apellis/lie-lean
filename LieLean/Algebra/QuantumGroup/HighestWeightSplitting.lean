@@ -129,12 +129,6 @@ variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : Lusztig
 
 /-! ### The `ρ`-twisted dual -/
 
-/-- `ρ(x^n) = ρ(x)^n`. -/
-lemma rho_pow (x : QuantumGroup R v) (n : ℕ) : rho R v (x ^ n) = rho R v x ^ n := by
-  induction n with
-  | zero => simp
-  | succ n ih => rw [pow_succ, rho_mul, ih, pow_succ']
-
 namespace RhoDual
 
 instance : AddCommGroup (RhoDual R v M) := inferInstanceAs (AddCommGroup (Module.Dual k M))
@@ -194,40 +188,40 @@ lemma exists_rhoF_pow_smul {μ : Y →+ ℤ} {m : M} (hm : m ∈ weightSpace R v
       ← pow_succ, smul_smul]
 
 /-- The functional `g ∘ pr_Λ` on `M`, for `g` a functional on `M^Λ`. -/
-def weightFunctional {Λ : Y →+ ℤ} (g : Module.Dual k (weightSpace R v M Λ)) : RhoDual R v M :=
+def weightSpaceFunctional {Λ : Y →+ ℤ} (g : Module.Dual k (weightSpace R v M Λ)) : RhoDual R v M :=
   RhoDual.toDual.symm (g ∘ₗ (weightSetProj hv' hM {Λ}).codRestrict _
     (weightSetProj_singleton_mem hv' hM Λ))
 
 variable {Λ : Y →+ ℤ} (g : Module.Dual k (weightSpace R v M Λ))
 
-lemma weightFunctional_of_mem {m : M} (hm : m ∈ weightSpace R v M Λ) :
-    RhoDual.toDual (weightFunctional hv' hM g) m = g ⟨m, hm⟩ := by
-  simp only [weightFunctional, LinearEquiv.apply_symm_apply, LinearMap.comp_apply]
+lemma weightSpaceFunctional_of_mem {m : M} (hm : m ∈ weightSpace R v M Λ) :
+    RhoDual.toDual (weightSpaceFunctional hv' hM g) m = g ⟨m, hm⟩ := by
+  simp only [weightSpaceFunctional, LinearEquiv.apply_symm_apply, LinearMap.comp_apply]
   congr 1
   exact Subtype.ext (weightSetProj_singleton_of_mem hv' hM hm)
 
-lemma weightFunctional_of_ne {Λ' : Y →+ ℤ} (h : Λ' ≠ Λ) {m : M}
-    (hm : m ∈ weightSpace R v M Λ') : RhoDual.toDual (weightFunctional hv' hM g) m = 0 := by
+lemma weightSpaceFunctional_of_ne {Λ' : Y →+ ℤ} (h : Λ' ≠ Λ) {m : M}
+    (hm : m ∈ weightSpace R v M Λ') : RhoDual.toDual (weightSpaceFunctional hv' hM g) m = 0 := by
   classical
-  simp only [weightFunctional, LinearEquiv.apply_symm_apply, LinearMap.comp_apply]
+  simp only [weightSpaceFunctional, LinearEquiv.apply_symm_apply, LinearMap.comp_apply]
   have : (weightSetProj hv' hM {Λ}).codRestrict _ (weightSetProj_singleton_mem hv' hM Λ) m =
       0 := Subtype.ext (by simp [weightSetProj_of_mem hv' hM _ hm, h])
   rw [this, map_zero]
 
-lemma K_smul_weightFunctional (μ : Y) :
-    K R v μ • weightFunctional hv' hM g = v ^ Λ μ • weightFunctional hv' hM g := by
-  have := ext_weightSpace hM (f := RhoDual.toDual (K R v μ • weightFunctional hv' hM g))
-    (g := RhoDual.toDual (v ^ Λ μ • weightFunctional hv' hM g)) fun Λ' m hm ↦ by
+lemma K_smul_weightSpaceFunctional (μ : Y) :
+    K R v μ • weightSpaceFunctional hv' hM g = v ^ Λ μ • weightSpaceFunctional hv' hM g := by
+  have := ext_weightSpace hM (f := RhoDual.toDual (K R v μ • weightSpaceFunctional hv' hM g))
+    (g := RhoDual.toDual (v ^ Λ μ • weightSpaceFunctional hv' hM g)) fun Λ' m hm ↦ by
       rw [RhoDual.toDual_smul, rho_K, hm μ, map_smul, map_smul, LinearMap.smul_apply]
       by_cases h : Λ' = Λ
       · subst h; rfl
-      · rw [weightFunctional_of_ne hv' hM g h hm, smul_zero, smul_zero]
+      · rw [weightSpaceFunctional_of_ne hv' hM g h hm, smul_zero, smul_zero]
   exact RhoDual.toDual.injective this
 
 variable (hmax : ∀ i, weightSpace R v M (Λ + R.root i) = ⊥)
 include hmax
 
-lemma E_smul_weightFunctional (i : I) : E R v i • weightFunctional hv' hM g = 0 := by
+lemma E_smul_weightSpaceFunctional (i : I) : E R v i • weightSpaceFunctional hv' hM g = 0 := by
   refine RhoDual.toDual.injective (ext_weightSpace hM fun Λ' m hm ↦ ?_)
   rw [RhoDual.toDual_smul, rho_E, rhoE, smul_assoc, mul_smul, map_zero, LinearMap.zero_apply]
   have hF := F_smul_mem_weightSpace hm i
@@ -236,12 +230,17 @@ lemma E_smul_weightFunctional (i : I) : E R v i • weightFunctional hv' hM g = 
     rw [hmax i, Submodule.mem_bot] at this
     simp [this]
   · rw [map_smul, Kt_smul_of_mem_weightSpace hF, map_smul,
-      weightFunctional_of_ne hv' hM g h hF, smul_zero, smul_zero]
+      weightSpaceFunctional_of_ne hv' hM g h hF, smul_zero, smul_zero]
 
 include hv' in
-lemma F_pow_smul_weightFunctional (hΛ : ∀ i, 0 ≤ Λ (R.coroot i)) (i : I) :
-    F R v i ^ ((Λ (R.coroot i)).toNat + 1) • weightFunctional hv' hM g = 0 := by
+lemma F_pow_smul_weightSpaceFunctional (hΛ : ∀ i, 0 ≤ Λ (R.coroot i)) (i : I) :
+    F R v i ^ ((Λ (R.coroot i)).toNat + 1) • weightSpaceFunctional hv' hM g = 0 := by
   set b := (Λ (R.coroot i)).toNat + 1
+  have rho_pow : ∀ (x : QuantumGroup R v) (n : ℕ), rho R v (x ^ n) = rho R v x ^ n := by
+    intro x n
+    induction n with
+    | zero => simp
+    | succ n ih => rw [pow_succ, rho_mul, ih, pow_succ']
   refine RhoDual.toDual.injective (ext_weightSpace hM fun Λ' m hm ↦ ?_)
   rw [RhoDual.toDual_smul, rho_pow, rho_F, map_zero, LinearMap.zero_apply]
   obtain ⟨c, hc⟩ := exists_rhoF_pow_smul hm i b
@@ -268,7 +267,7 @@ lemma F_pow_smul_weightFunctional (hΛ : ∀ i, 0 ≤ Λ (R.coroot i)) (i : I) :
         rw [nodeSl2_E]
         exact this
     rw [h0, map_zero, smul_zero, smul_zero]
-  · rw [weightFunctional_of_ne hv' hM g h hmem, smul_zero, smul_zero]
+  · rw [weightSpaceFunctional_of_ne hv' hM g h hmem, smul_zero, smul_zero]
 
 end Functional
 
@@ -283,13 +282,13 @@ variable (hv' : ∀ n : ℕ, 0 < n → v ^ n ≠ 1) [Finite I] [CharZero k]
 
 /-- The map `L_q(Λ) → M*`, `v_Λ ↦ g ∘ pr_Λ`. -/
 def dualEmb : IrreducibleModule R v Λ →ₗ[QuantumGroup R v] RhoDual R v M :=
-  IrreducibleModule.liftOfFPow hvt hR hv' hΛ (weightFunctional hv' hM g)
-    (fun μ ↦ K_smul_weightFunctional hv' hM g μ) (E_smul_weightFunctional hv' hM g hmax)
-    (F_pow_smul_weightFunctional hv' hM g hmax hΛ)
+  IrreducibleModule.liftOfFPow hvt hR hv' hΛ (weightSpaceFunctional hv' hM g)
+    (fun μ ↦ K_smul_weightSpaceFunctional hv' hM g μ) (E_smul_weightSpaceFunctional hv' hM g hmax)
+    (F_pow_smul_weightSpaceFunctional hv' hM g hmax hΛ)
 
 lemma dualEmb_hwv :
     dualEmb hv' hvt hR hM hΛ g hmax (IrreducibleModule.hwv R v Λ) =
-      weightFunctional hv' hM g :=
+      weightSpaceFunctional hv' hM g :=
   IrreducibleModule.liftOfFPow_hwv _ _ _ _ _ _ _ _
 
 /-- The pairing `M × L_q(Λ) → k`, `(m, x) ↦ ι(x)(m)`. -/
@@ -329,7 +328,7 @@ theorem exists_map_eq_hwv_of_maximal {w : M} (hw : w ∈ weightSpace R v M Λ) (
   set j := IrreducibleModule.lift hvt hR hv' hΛ hM w hw hE
   set P := dualProj hv' hvt hR hM hΛ g hmax
   have h1 : IrreducibleModule.form Λ hR hv' (P w) (IrreducibleModule.hwv R v Λ) = 1 := by
-    rw [form_dualProj, dualEmb_hwv, weightFunctional_of_mem hv' hM g hw, hg]
+    rw [form_dualProj, dualEmb_hwv, weightSpaceFunctional_of_mem hv' hM g hw, hg]
   have hne : P ∘ₗ j ≠ 0 := fun h ↦ by
     have e := LinearMap.congr_fun h (IrreducibleModule.hwv R v Λ)
     rw [LinearMap.comp_apply, IrreducibleModule.lift_hwv, LinearMap.zero_apply] at e
