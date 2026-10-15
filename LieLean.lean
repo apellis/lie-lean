@@ -307,7 +307,9 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.CanonicalHighestWeight
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.FiltrationGlobal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.GlobalInduction
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightBar
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightCoordinates
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightGlobal
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightInnerProduct
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightIntegral
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.LiftUniqueness
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeBar
@@ -323,7 +325,15 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.StringFiltration
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.StringIdentity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorCanonical
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorCanonicalBasis
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorEmbCoordinates
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorEmbCounit
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorEmbTransfer
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorEmbTwist
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorLattice
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorPairing
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorTransition
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorTransitionCanonical
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Augmentation
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Coordinates
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Derivative

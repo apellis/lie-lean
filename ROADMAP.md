@@ -3074,6 +3074,12 @@ completed steps and continuation threads are:
   `b ↦ b⁻η` maps `B(λ)` bijectively onto a basis of `L_q(λ)` (`canonicalBasisHWBasis`,
   `injOn_evq_canonicalBasisHW`) and kills `B - B(λ)` (`evq_eq_zero_of_notMem_canonicalBasisHW`),
   for `X`-regular root data (Lusztig assumes `Y`-regular).
+  `Global/HighestWeightInnerProduct.lean`: `ρ(Fᵢ^{(n)}) V_ℤ(λ) ⊆ V_ℤ(λ)` (cf. 19.3.2,
+  `rho_qDivPow_F_smul_mem_hwIntegral`), `(V_ℤ(λ), V_ℤ(λ)) ⊆ 𝒜` (`isLaurent_formL`) and
+  **[Lus] Prop. 19.3.3** (`isNegLaurent_formL_evq_sub`: `(b⁻η, b'⁻η) - δ_{b,b'} ∈ v⁻¹ℤ[v⁻¹]` for
+  `b, b' ∈ B(λ)`, `X`-regular root data); the congruence modulo `v⁻¹` comes from Kashiwara's
+  `(L(λ), B(λ))` instead of Lusztig's 19.1.4 (our own route), with fundamental weights, and is
+  transferred from `freeCoroot R` (`formL_hwTransfer`).
   Remaining: 14.3.2 (d) and the rest of 41.1.6.
 - **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
   components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
@@ -3121,7 +3127,59 @@ completed steps and continuation threads are:
   `x - b₁⁺ξ_{-λ} ⊗ b₁'⁻η_{λ'} ∈ v⁻¹ℒ` (`existsUnique_tensorCanonical`; uniqueness proved directly
   rather than from (d)), with the triangularity (b) (`repr_tensorCanonical_self`,
   `tensorLt_of_repr_tensorCanonical_ne_zero`, `isNegLaurent_repr_tensorCanonical`).
-  Remaining: 24.3.3 (c), (d).
+  `CrystalBasis/Global/TensorCanonicalBasis.lean`: **[Lus] Thm. 24.3.3 (c), (d)**: the
+  `(b₁ ◇ b₁')_{λ,λ'}` form a `ℚ(v)`-basis of `ʷL_q(λ) ⊗ L_q(λ')` (`tensorCanonicalBasis`), an
+  `𝒜`-basis of `𝒜ℒ` and a `ℤ[v⁻¹]`-basis of `ℒ` (`mem_tensorLatA_iff`,
+  `mem_tensorLat_iff_canonical`), and `ℒ ∩ Ψ(ℒ) → ℒ/v⁻¹ℒ` is an isomorphism
+  (`bijective_tensorLatResidue`), by triangularity as Lusztig indicates.
+  `CrystalBasis/Global/HighestWeightCoordinates.lean`: coordinates in the basis `b⁻η` of
+  `L_q(λ)` (`canonicalBasisHWBasis`) and in the product basis `b₁⁻η ⊗ b₂⁻η'` of
+  `L_q(λ) ⊗ L_q(λ')` (`tensorHWBasis`): vectors of `V_ℤ(λ)` have coordinates in `𝒜`
+  (`repr_mem_of_mem_hwIntegral`), and, with fundamental weights, `L(λ)` is spanned by the `b⁻η`
+  over the local ring at `v = ∞` (`lat_le_span`, Nakayama), so vectors of `L(λ)` and of
+  `L(λ) ⊗ L(λ')` have coordinates in that ring (`repr_mem_of_mem_lat`, `repr_mem_of_mem_LL`).
+  `CrystalBasis/Global/TensorEmbCoordinates.lean`: `𝒜 ∩ A ⊆ ℤ[v⁻¹]`
+  (`isIntInv_of_algebraMap_eq`), the `𝒜`-integrality of [Lus] 23.2.3 for
+  `χ : L_q(λ+λ') → L_q(λ) ⊗ L_q(λ')` (`repr_tensorEmb_evq_mem_range`) and [Lus] Prop. 25.1.2 (b)
+  for root data with fundamental weights (`isIntInv_repr_tensorEmb_evq_of_fund`). The
+  `ℤ[v⁻¹]`-integrality goes through Kashiwara's lattice and `χ(L(λ+λ')) ⊆ L(λ) ⊗ L(λ')` instead
+  of Lusztig's 18.1.4 (our own route). `CrystalBasis/Global/TensorEmbTransfer.lean`: `L_q(λ)`,
+  `χ` and `B(λ)` depend only on the pairings `⟨i, λ⟩` (`hwTransfer`,
+  `tensorTransfer_tensorEmb_ev`, `repr_tensorTransfer`), so the statement transfers from the root
+  datum `freeCoroot R`, which has fundamental weights: **[Lus] Prop. 25.1.2 (b)**
+  (`isIntInv_repr_tensorEmb_evq`: the coordinates `f(b; b₁, b₂)` of `χ(b⁻η'')` lie in `ℤ[v⁻¹]`)
+  for every `X`-regular root datum (Lusztig assumes `Y`-regular).
+  `CrystalBasis/Global/TensorEmbCounit.lean`: the counit form `y⁻η ↦ ε(y)` on `L_q(λ)`
+  (`hwCounit`, the coordinate at `1 ∈ B(λ)`), `(ε ⊗ 1)χ(y⁻η'') = y⁻η'` and **[Lus] Prop. 25.1.2
+  (c)** (`repr_tensorEmb_evq_one`: `f(b; 1, b₂) = δ_{b,b₂}`).
+  `CrystalBasis/Global/TensorPairing.lean`: **[Lus] Prop. 25.1.4** for `X`-regular root data:
+  `δ_λ : ʷΛ_λ ⊗ Λ_λ → ℚ(v)`, `δ_λ(x ⊗ y) = c_ν (x, y)` on `(Λ_λ)_{λ-ν}` with
+  `c_ν = ∏ᵢ (-vᵢ⁻¹)^{νᵢ}` (`tensorPairing`), is the unique counit-equivariant map with
+  `δ_λ(ξ ⊗ η) = 1` (a) (`tensorPairing_act`, `tensorPairing_hwv`, `eq_tensorPairing`; uniqueness
+  proved directly by applying the `Eᵢ`, `Fᵢ`, `K_μ` rather than through 23.3.6), and
+  `δ_λ(b⁺ξ ⊗ b'⁻η)` is `1` for `b = b' = 1` and in `v⁻¹ℤ[v⁻¹]` otherwise (b)
+  (`tensorPairing_tensorBasis_one`, `isNegLaurent_tensorPairing_tensorBasis`, from 19.3.3).
+  `CrystalBasis/Global/TensorEmbTwist.lean`: **[Lus] Prop. 25.1.3**: `χ' : ʷΛ_{λ+λ'} →
+  ʷΛ_{λ'} ⊗ ʷΛ_λ` (`tensorEmbTw`, `χ` followed by the flip and the twists; equivariance from
+  `Δ ∘ ω = ᵗ(ω ⊗ ω) ∘ Δ`, `tensorTwistEquiv_act`) is the unique homomorphism with
+  `ξ'' ↦ ξ' ⊗ ξ` (`tensorEmbTw_act`, `tensorEmbTw_hwv`, `eq_tensorEmbTw`), with coordinates
+  `f(b; b₁, b₂)` (`repr_tensorEmbTw`, `isIntInv_repr_tensorEmbTw_evq`,
+  `repr_tensorEmbTw_evq_one`).
+  `CrystalBasis/Global/TensorTransition.lean`: `ξ_{-λ} ⊗ η_{λ'}` generates `ʷΛ_λ ⊗ Λ_{λ'}`
+  (`exists_act_tmul_hwv_eq`, the generation part of [Lus] 23.3.6, proved directly by applying
+  the `Eᵢ`, `Fᵢ`, `K_μ`; our own route), the map `t = (1 ⊗ δ_{λ'} ⊗ 1)(χ' ⊗ χ)` of [Lus] 25.1.5
+  (`tensorTransition`, `tensorTransition_act`, `tensorTransition_hwv`) and **[Lus] Lemma 25.1.6**
+  (`tensorTransition_sub_mem_tensorLatNeg`, `tensorTransition_mem_tensorLatNeg`,
+  `surjective_tensorTransition`; coordinates `repr_tensorTransition_sub`), `X`-regular root data.
+  `CrystalBasis/Global/TensorTransitionCanonical.lean`: `B(λ) ⊆ B(λ'+λ)`
+  (`canonicalBasisHW_subset_add`), `Ψ(ξ ⊗ η) = ξ ⊗ η` (`tensorPsi_hwv`), **[Lus] Lemma 25.1.9**
+  (`tensorTransition_tensorPsi`: `tΨ = Ψt`), `t(v⁻¹ℒ) ⊆ v⁻¹ℒ`
+  (`tensorTransition_mem_tensorLatNeg_of_mem`), **[Lus] Lemma 25.1.7**
+  (`tensorTransition_tensorCanonical_sub_mem`, `tensorTransition_tensorCanonical_mem`) and
+  **[Lus] Prop. 25.1.10** (`tensorTransition_tensorCanonical`: `t` maps
+  `(b ◇ b'')_{λ'+λ,λ'+λ''}` to `(b ◇ b'')_{λ,λ''}` for `b ∈ B(λ)`, `b'' ∈ B(λ'')`;
+  `tensorTransition_tensorCanonical_eq_zero`: to `0` otherwise).
+  Remaining: [Lus] 25.2.1, 26.3.1.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
