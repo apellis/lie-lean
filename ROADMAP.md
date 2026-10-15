@@ -940,6 +940,13 @@ implies `μ ↑ λ`, `μ ≠ λ`), (b) `VermaModule.bruhatLT_of_extOne_ne_zero` 
 integral, `Ext¹_𝒪(M(w'·λ), M(w·λ)) ≠ 0` implies `w < w'`, so `ℓ(w) < ℓ(w')`); `Ext¹_𝒪` is
 `LieModule.ExtOne`. Via projectivity of `P(μ)` and an induction along its standard filtration
 (`IsStdFiltered.exists_section_or_eq_zero`, reconstructed).
+**Translation of standard filtrations** (`KacMoody/TranslationStdFiltration.lean`, Humphreys
+GSM 94 Cor. 7.6; hypotheses of Thm. 7.6, arbitrary antidominant `λ, μ`):
+`exists_isStdFiltered_translation_of_isAntidominant` (if `X ∈ 𝒪` lies in the block of `χ_λ` and
+has a standard filtration, so does `T_λ^μ X`), by induction along the filtration with exactness
+of translation (`IsStdFiltered.exists_isStdFiltered_centralTranslation`,
+`nonempty_equiv_map_centralTranslation`) and Thm. 7.6 for the factors, which lie in `W·λ` by
+Harish-Chandra (`IsStdFiltered.centralCharacter_eq`).
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and
