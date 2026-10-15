@@ -536,6 +536,7 @@ import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.QuasiR.Basic
 import LieLean.Algebra.QuantumGroup.QuasiR.Theorem
+import LieLean.Algebra.QuantumGroup.QuasiR.Uniqueness
 import LieLean.Algebra.QuantumGroup.QBinomialSeries
 import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.ActualMap
 import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.ClosedNorm

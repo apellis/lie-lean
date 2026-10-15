@@ -2976,8 +2976,12 @@ completed steps and continuation threads are:
   the existence part of 4.1.2 (a), component by component, on the generators
   (`quasiR_E`, `quasiR_E_of_eq_zero`, `quasiR_F`, `quasiR_F_of_eq_zero`, `quasiR_K`); our own
   proof via the exchange identity `sum_tmul_dualBasis_of_adjoint` for dual bases. The completion
-  of `U ⊗ U` is not formalized (`Θ` is used weight by weight). Remaining: the uniqueness part
-  of 4.1.2 (a), and 4.1.3 (`ΘΘ̄ = 1`, which needs the bar involution of `U`).
+  of `U ⊗ U` is not formalized (`Θ` is used weight by weight). The uniqueness part of 4.1.2 (a)
+  (`QuasiR/Uniqueness.lean`, `quasiR_unique`: a family in `U⁻_ν ⊗ U⁺_ν` with `Θ'_0 = 1 ⊗ 1`
+  satisfying the `Eᵢ`-identities is `quasiR`), via `eq_zero_of_forall_E_commute`, 3.1.6, the
+  independence of the `y⁻ K_μ` (`mem_serreIdeal_of_minusHom_mul_K_add`) and 1.2.15
+  (`eq_zero_of_forall_quotientRDeriv_eq_zero`). Remaining: 4.1.3 (`ΘΘ̄ = 1`, which needs the
+  bar involution of `U`).
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
