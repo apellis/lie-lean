@@ -3008,7 +3008,14 @@ completed steps and continuation threads are:
   5.1.3, the integrality 14.2.6 (b) and the injectivity in `(G.1)`. These are the conditions
   defining Lusztig's signed basis `𝐁` ([Lus] 14.2.3), so this is the one lemma identifying the
   homogeneous elements of `𝐁` with the `±G(b)`; later results only use properties of `G(b)`.
-  Remaining: the choice of signs ([Lus] 14.4.2–14.4.3) and the rest of 41.1.6.
+  `Global/SignedCanonical.lean` (our own proofs): Lusztig's `𝐁` itself (`signedBasis`, 14.2.3,
+  no homogeneity assumed) is `{±G(b)}` (`mem_signedBasis_iff`, via [Kas91] Prop. 5.1.3 for
+  inhomogeneous elements, `mem_latInf_of_formU_mem`); [Lus] 14.2.5 (a)
+  (`signedBasis_eq_iUnion`); the `G(b)`, `b ∈ B(∞)_ν`, are a basis of `U⁻_ν` over `ℚ(v)` and of
+  `U⁻_{ℤ,ν}` over `𝒜` (`linearIndependent_negGlobal(_laurent)`, `mem_span_negGlobal(_field)`),
+  so 14.2.3 (a) holds weight by weight.
+  Remaining: the subsets `𝐁_{i;n}` (14.3), the choice of signs ([Lus] 14.4.2–14.4.3) and the
+  rest of 41.1.6.
 - **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
   components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
   [Lus] 4.1.2 (b) for every basis of `f_ν` (`quasiR_eq_sum`), `Θ_0 = 1 ⊗ 1` (`quasiR_zero`) and
