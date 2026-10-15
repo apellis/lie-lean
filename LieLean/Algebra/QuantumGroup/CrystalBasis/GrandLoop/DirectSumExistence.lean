@@ -73,9 +73,10 @@ section Transport
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   {R : D.RootDatum Y} {v : k} [NeZero v] {hv : ∀ n : ℕ, 0 < n → v ^ n ≠ 1}
   {J : Type*} {N : J → Type*} [∀ j, AddCommGroup (N j)] [∀ j, Module k (N j)]
-  [∀ j, Module (QuantumGroup R v) (N j)] [∀ j, IsScalarTower k (QuantumGroup R v) (N j)]
+  [∀ j, Module (QuantumGroup R v) (N j)] [hNk : ∀ j, IsScalarTower k (QuantumGroup R v) (N j)]
   {hN : ∀ j, IsIntegrable R v (N j)}
-  {A : Type*} [CommRing A] [Algebra A k] [∀ j, Module A (N j)] [∀ j, IsScalarTower A k (N j)]
+  {A : Type*} [CommRing A] [Algebra A k] [∀ j, Module A (N j)]
+  [hNA : ∀ j, IsScalarTower A k (N j)]
   {L : ∀ j, Submodule A (N j)}
   {M : Type*} [AddCommGroup M] [Module k M] [Module (QuantumGroup R v) M]
   [IsScalarTower k (QuantumGroup R v) M] [Module A M] [IsScalarTower A k M]
@@ -88,12 +89,13 @@ theorem IsCrystalBase.exists_of_dfinsupp_equiv (hM : IsIntegrable R v M)
     (hB : ∀ j, IsCrystalBase (hL j) c (B j)) :
     ∃ (L' : Submodule A M) (hL' : IsCrystalLattice hv hM L')
       (B' : Set (L' ⧸ (Ideal.span {c} • ⊤ : Submodule A L'))),
-      IsCrystalBase hL' c B' ∧ ∀ m, m ∈ L' ↔ ψ.symm m ∈ dfinsuppLattice L := by
+      IsCrystalBase hL' c B' ∧
+        ∀ m, m ∈ L' ↔ ψ.symm m ∈ (dfinsuppLattice L : Submodule A (Π₀ j, N j)) := by
   classical
   let L' : Submodule A M :=
     (dfinsuppLattice L).comap ((ψ.symm.restrictScalars k).toLinearMap.restrictScalars A)
-  have hLL' : ∀ x, x ∈ dfinsuppLattice L ↔ ψ x ∈ L' := fun x ↦ by
-    change _ ↔ ψ.symm (ψ x) ∈ _
+  have hLL' : ∀ x, x ∈ (dfinsuppLattice L : Submodule A (Π₀ j, N j)) ↔ ψ x ∈ L' := fun x ↦ by
+    change _ ↔ ψ.symm (ψ x) ∈ (dfinsuppLattice L : Submodule A (Π₀ j, N j))
     rw [ψ.symm_apply_apply]
   exact ⟨L', _, _, (IsCrystalBase.dfinsupp hc hB).of_equiv hM ψ hLL' fun _ ↦
     ((IntegrableSl2.quotEquiv (ψ.restrictScalars k) hLL' c).injective.mem_set_image).symm,
@@ -132,9 +134,12 @@ theorem exists_isCrystalBase_of_equiv
     ∃ (L : Submodule A M) (hL : IsCrystalLattice (pow_ne_one_of_transcendental' hvt) hM L)
       (B : Set (L ⧸ (Ideal.span {ϖ} • ⊤ : Submodule A L))),
       IsCrystalBase hL ϖ B ∧ ∀ m, m ∈ L ↔ ψ.symm m ∈ dsSum hvt hR A Λ :=
-  IsCrystalBase.exists_of_dfinsupp_equiv (N := fun j ↦ IrreducibleModule R v (Λ j).1) hM ψ
-    (not_isUnit_ϖ hϖ) fun j ↦ isCrystalBaseHW hvt hR hinj hϖ hϖv hk hfund (Λ j)
+  IsCrystalBase.exists_of_dfinsupp_equiv (N := fun j ↦ IrreducibleModule R v (Λ j).1)
+    (hNk := fun j ↦ IrreducibleModule.instIsScalarTower (Λ j).1)
+    (hNA := fun j ↦ IrreducibleModule.instIsScalarTowerOfAlgebra (Λ j).1) hM ψ (not_isUnit_ϖ hϖ)
+    fun j ↦ isCrystalBaseHW hvt hR hinj hϖ hϖv hk hfund (Λ j)
 
 end GrandLoop
 
 end LieLean.QuantumGroup
+
