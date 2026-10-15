@@ -2632,6 +2632,11 @@ decomposition (`GrandLoop.free_lat`) and `B(λ)` linearly independent by `D(r)`
 `Uniqueness`: a crystal lattice of `L_q(λ)` with `L_λ = A v_λ` is `L(λ)` (`GrandLoop.eq_lat_of_isCrystalLattice`,
 [HK] Lemma 5.2.2 (2)), and a crystal base `(L(λ), B)` with `v_λ + ϖ L(λ) ∈ B` has `B = B(λ)`
 (`GrandLoop.eq_base_of_isCrystalBase`, [HK] Lemma 5.2.3; our argument uses that `B(λ) ⊆ B` spans).
+`DirectSumUniqueness`: [HK] Lemma 5.2.2 (1) (`GrandLoop.exists_sub_smul_hwv_mem_smul_lat`:
+`U(λ) = F v_λ`; `GrandLoop.exists_sub_smul_hwv_mem_lat`: `W(λ) = F(q) v_λ + L(λ)`; on weight vectors
+`mem_smul_lat_of_eK_of_ne`, `mem_lat_of_eK_of_ne`) and [HK] Lemma 5.2.4 for `⊕ⱼ V(λⱼ)`, any family
+(`exists_sub_smul_hwv_mem_smul_dsSum`, `exists_sub_smul_hwv_mem_dsSum`, `GrandLoop.eq_dsSum`;
+freeness of `L'` not needed), with the relative criterion `mem_lat_of_kashiwaraE_stable`.
 `CrystalBasis/StringComparison.lean`, `GrandLoop/{InfinityString,InfinityCompare}`: towards `B(∞)`
 ([Jan] 10.4–10.9 in this library's conventions). For `x = Σⱼ Fᵢ^{(j)} ηⱼ` with small components
 `f̃ᵢ Fᵢ^{(a)} x ≡ Fᵢ^{(a+1)} x` (`IntegrableSl2.IsKashiwaraStable.fTilde_dF_sub_mem`); `ᵢr ∘ rⱼ = rⱼ ∘ ᵢr`
