@@ -194,6 +194,7 @@ import LieLean.Algebra.Lie.KacMoody.UpperClosure
 import LieLean.Algebra.Lie.KacMoody.UpperClosureNonintegral
 import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosure
 import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosureNonintegral
+import LieLean.Algebra.Lie.KacMoody.VermaEmbedding
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaSimple
@@ -591,6 +592,7 @@ import LieLean.LinearAlgebra.ExteriorAlgebra.Koszul
 import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulExact
 import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulSupport
 import LieLean.LinearAlgebra.Filtered.Exactness
+import LieLean.LinearAlgebra.LinearMap.IntegralPoints
 import LieLean.LinearAlgebra.Matrix.Cartan.AffineWeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.BraidOuter
 import LieLean.LinearAlgebra.Matrix.Cartan.FiniteRankTwo
