@@ -3256,9 +3256,14 @@ completed steps and continuation threads are:
   (`Modified.eq_zero_of_forall_form_eq_zero`; our own deduction, by formal reality of
   `A/v⁻¹A = ℚ`) and at every parameter transcendental over `ℚ`
   (`Modified.eq_zero_of_forall_form_eq_zero_of_transcendental`).
-  Remaining: [Lus] 26.3.1 (b) (characterization of `B ∪ -B`). Then: remove `hY` via [Lus] 25.2.2
-  (pass to the simply connected root datum, 23.2.5); the statements above are phrased so that
-  25.2.2 transfers them.
+  `CrystalBasis/Global/ModifiedCanonicalSigned.lean`: **[Lus] Thm. 26.3.1 (b)** (same hypotheses
+  `R.IsXRegular`, `hY`): `β ∈ U̇` lies in `B ∪ (-B)` if and only if `β ∈ 𝒜U̇`, `β̄ = β` and
+  `(β, β) ∈ 1 + v⁻¹A` (`Modified.mem_signedCanonicalBasis_iff`, the set of these `β` being
+  `Modified.signedCanonicalBasis`), via `Modified.exists_repr_modifiedCanonicalBasis_eq_algebraMap`
+  (`(x, x) ∈ A` forces the coordinates of `x` in `B` into `A`, our own scaling argument in place of
+  the leading-coefficient step of 14.2.2 (b)).
+  Remaining: remove `hY` via [Lus] 25.2.2 (pass to the simply connected root datum, 23.2.5); the
+  statements above are phrased so that 25.2.2 transfers them.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
