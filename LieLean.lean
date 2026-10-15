@@ -345,6 +345,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityCompare
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityForm
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityKS
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinitySimilarity
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.HighestWeightForm
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.HighestWeightSimilarity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.HighestWeightTensor
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.InfinityLattice

@@ -2607,6 +2607,13 @@ decomposition (`GrandLoop.free_lat`) and `B(λ)` linearly independent by `D(r)`
 (`GrandLoop.linearIndependent_base`). `DirectSumExistence`: [HK] Thm. 5.1.2, a module
 `M ≅ ⊕ⱼ L_q(λⱼ)` has the crystal base `(ψ(⊕ⱼ L(λⱼ)), ψ̄(⊔ⱼ B(λⱼ)))`
 (`IsCrystalBase.exists_of_dfinsupp_equiv`, `GrandLoop.exists_isCrystalBase_of_equiv`).
+`HighestWeightForm`: polarization of `(L(λ), B(λ))` for the contravariant form with
+`(v_λ, v_λ) = 1`: `(L(λ), L(λ)) ⊆ A` ([HK] Lemma 5.1.5, `GrandLoop.formL_mem`),
+`(f̃ᵢu, w) ≡ (u, ẽᵢw)` ((5.3), `formL_fK_sub_eK_mem`), `B(λ)` orthonormal modulo `ϖ`
+(Lemma 5.1.6, `formL_fW_fW`), `L(λ) = {u | (u, L(λ)) ⊆ A}` (Prop. 5.1.7 (5.4),
+`mem_lat_iff_formL_mem`) and, for `A/ϖA` formally real, `L(λ) = {u | (u, u) ∈ A}`
+((5.5), `mem_lat_iff_formL_self_mem`); via the string formulas
+`IsContravariant.exists_strings` (`(F^{(j)}η, F^{(j)}ζ) = cⱼ(n)(η, ζ)`, `cⱼ(n) ∈ 1 + ϖA`).
 `Uniqueness`: a crystal lattice of `L_q(λ)` with `L_λ = A v_λ` is `L(λ)` (`GrandLoop.eq_lat_of_isCrystalLattice`,
 [HK] Lemma 5.2.2 (2)), and a crystal base `(L(λ), B)` with `v_λ + ϖ L(λ) ∈ B` has `B = B(λ)`
 (`GrandLoop.eq_base_of_isCrystalBase`, [HK] Lemma 5.2.3; our argument uses that `B(λ) ⊆ B` spans).
