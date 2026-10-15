@@ -2604,7 +2604,9 @@ discrete valuation ring `A ⊆ k = A[ϖ⁻¹]` with `ϖ ↦ v⁻¹`, `v` transce
 `Existence`: **existence of crystal bases** ([HK] Thm. 5.1.1): `(L(λ), B(λ))` is a crystal base of
 `L_q(λ)` for every dominant `λ` (`GrandLoop.isCrystalBase`), with `L(λ)` free over `A` by its weight
 decomposition (`GrandLoop.free_lat`) and `B(λ)` linearly independent by `D(r)`
-(`GrandLoop.linearIndependent_base`).
+(`GrandLoop.linearIndependent_base`). `DirectSumExistence`: [HK] Thm. 5.1.2, a module
+`M ≅ ⊕ⱼ L_q(λⱼ)` has the crystal base `(ψ(⊕ⱼ L(λⱼ)), ψ̄(⊔ⱼ B(λⱼ)))`
+(`IsCrystalBase.exists_of_dfinsupp_equiv`, `GrandLoop.exists_isCrystalBase_of_equiv`).
 `Uniqueness`: a crystal lattice of `L_q(λ)` with `L_λ = A v_λ` is `L(λ)` (`GrandLoop.eq_lat_of_isCrystalLattice`,
 [HK] Lemma 5.2.2 (2)), and a crystal base `(L(λ), B)` with `v_λ + ϖ L(λ) ∈ B` has `B = B(λ)`
 (`GrandLoop.eq_base_of_isCrystalBase`, [HK] Lemma 5.2.3; our argument uses that `B(λ) ⊆ B` spans).
