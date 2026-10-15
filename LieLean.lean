@@ -299,6 +299,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.FiniteTypeArtin
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.CategoryOInt
 import LieLean.Algebra.QuantumGroup.Character
+import LieLean.Algebra.QuantumGroup.CompleteReducibility
 import LieLean.Algebra.QuantumGroup.ContravariantForm
 import LieLean.Algebra.QuantumGroup.RhoBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.BalancedSpan

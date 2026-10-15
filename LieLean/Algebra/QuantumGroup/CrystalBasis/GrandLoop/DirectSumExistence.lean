@@ -40,23 +40,13 @@ namespace LieLean.QuantumGroup
 
 namespace IrreducibleModule
 
-/-! ### Instances on `L_q(λ)` stated directly
+/-! ### Scalar extensions of `L_q(λ)` stated directly
 
-Instance search does not find the quotient instances of `L_q(λ)` for a family `j ↦ L_q(λⱼ)`
-(it cannot unify `L_q(λⱼ)` with a quotient `?M j ⧸ ?N j`), so they are restated for
-`IrreducibleModule`, which is enough for `Π₀ j, L_q(λⱼ)`. -/
+As for the instances after `IrreducibleModule`, instance search does not find these for a family
+`j ↦ L_q(λⱼ)`. -/
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   {R : D.RootDatum Y} {v : k} (Λ : Y →+ ℤ)
-
-instance instAddCommGroup : AddCommGroup (IrreducibleModule R v Λ) := inferInstance
-
-instance instModule : Module (QuantumGroup R v) (IrreducibleModule R v Λ) := inferInstance
-
-instance instModuleField : Module k (IrreducibleModule R v Λ) := inferInstance
-
-instance instIsScalarTower : IsScalarTower k (QuantumGroup R v) (IrreducibleModule R v Λ) :=
-  inferInstance
 
 instance (priority := low) instModuleOfAlgebra {A : Type*} [CommRing A] [Algebra A k] :
     Module A (IrreducibleModule R v Λ) := inferInstance

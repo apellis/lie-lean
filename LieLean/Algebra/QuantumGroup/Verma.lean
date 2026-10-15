@@ -581,6 +581,25 @@ variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : Lusztig
 abbrev IrreducibleModule (Λ : Y →+ ℤ) : Type _ :=
   VermaModule R v Λ ⧸ VermaModule.maxSubmodule R v Λ
 
+namespace IrreducibleModule
+
+/-! Instance search does not find the quotient instances of `L_q(Λ)` for a family `j ↦ L_q(Λⱼ)`
+(it cannot unify `L_q(Λⱼ)` with a quotient `?M j ⧸ ?N j`), so they are restated for
+`IrreducibleModule`, which is enough for `Π₀ j, L_q(Λⱼ)`. -/
+
+variable {R v} (Λ : Y →+ ℤ)
+
+instance instAddCommGroup : AddCommGroup (IrreducibleModule R v Λ) := inferInstance
+
+instance instModule : Module (QuantumGroup R v) (IrreducibleModule R v Λ) := inferInstance
+
+instance instModuleField : Module k (IrreducibleModule R v Λ) := inferInstance
+
+instance instIsScalarTower : IsScalarTower k (QuantumGroup R v) (IrreducibleModule R v Λ) :=
+  inferInstance
+
+end IrreducibleModule
+
 variable {R v} [NeZero v]
 
 /-- `L_q(Λ)` is a simple `U`-module, for an `X`-regular root datum and `v` not a root of unity. -/
