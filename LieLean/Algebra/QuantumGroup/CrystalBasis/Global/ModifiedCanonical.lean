@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorTransitionCanonical
+import LieLean.Algebra.QuantumGroup.Modified.Bar
 
 /-!
 # The elements `b ◇_ζ b''` of `U̇`
@@ -11,7 +12,8 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorTransitionCanonica
 Over `ℚ(v)`, for `ζ ∈ X` and `b, b'' ∈ B`, Lusztig's element `b ◇_ζ b''` of `U̇` ([Lus] 25.2.1)
 is the unique `u ∈ U̇1_ζ` with `u(ξ_{-λ} ⊗ η_{λ''}) = (b ◇ b'')_{λ,λ''}` in `ʷΛ_λ ⊗ Λ_{λ''}` for
 all dominant `λ, λ''` with `λ'' - λ = ζ`, `b ∈ B(λ)` and `b'' ∈ B(λ'')`; moreover
-`u(ξ_{-λ} ⊗ η_{λ''}) = 0` if `b ∉ B(λ)` or `b'' ∉ B(λ'')`.
+`u(ξ_{-λ} ⊗ η_{λ''}) = 0` if `b ∉ B(λ)` or `b'' ∉ B(λ'')`. It lies in `𝒜U̇` and is fixed by
+the bar involution of `U̇`.
 
 ## Main definitions
 
@@ -24,6 +26,8 @@ all dominant `λ, λ''` with `λ'' - λ = ζ`, `b ∈ B(λ)` and `b'' ∈ B(λ''
 * `existsUnique_modifiedCanonical`, `modTensorAct_modifiedCanonical`,
   `modifiedCanonical_mem_aForm`: [Lus] Thm. 25.2.1 (a).
 * `modTensorAct_modifiedCanonical_eq_zero`: [Lus] Thm. 25.2.1 (b).
+* `bar_modifiedCanonical`: [Lus] Thm. 25.2.1 (c), with `modTensorAct_bar`
+  (`ū(ξ_{-λ} ⊗ η_{λ''}) = Ψ(u(ξ_{-λ} ⊗ η_{λ''}))`).
 * `eq_zero_of_modTensorAct_eq_zero`: an element of `U̇1_ζ` acting by zero on
   `ξ_{-λ} ⊗ η_{λ''}` for all large `λ, λ''` with `λ'' - λ = ζ` is zero.
 
@@ -50,12 +54,12 @@ arbitrary ones is [Lus] 25.1.10 (`tensorTransition_tensorCanonical`).
 
 For integrality (`modifiedCanonical_mem_aForm`), the element `y⁻x⁺(ξ ⊗ η)` above is chosen in
 `ʷ𝒜M_λ ⊗_𝒜 𝒜M_{λ''}`, lifting the `𝒜`-coordinates of `(b ◇ b'')_{λ,λ''}` along `b ↦ b⁻η`, and
-[Lus] 23.3.2 (a) (`leftActOne_mem_aForm_iff`) applies. Parts (c), (d) of 25.2.1 are not proved
-here.
+[Lus] 23.3.2 (a) (`leftActOne_mem_aForm_iff`) applies. Part (d) of 25.2.1 is not proved here.
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, 23.3, 25.1.10, 25.2.1.
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, 23.1.8, 23.3, 24.3.2,
+  25.1.10, 25.2.1.
 -/
 
 noncomputable section
@@ -922,6 +926,29 @@ theorem modTensorAct_modifiedCanonical_eq_zero (ζ : Y →+ ℤ) {b b'' : Um D �
     (hζ : Λ''.1 - Λ.1 = ζ) (h : b ∉ canonicalBasisHW D Λ ∨ b'' ∉ canonicalBasisHW D Λ'') :
     modTensorAct Λ Λ'' (modifiedCanonical hR hY ζ hb hb'') = 0 :=
   (exists_modifiedCanonical hR hY ζ hb hb'').choose_spec.2.2.2 Λ Λ'' hζ h
+
+/-- `ū(ξ_{-λ} ⊗ η_{λ''}) = Ψ(u(ξ_{-λ} ⊗ η_{λ''}))` for `u ∈ U̇1_ζ` and `λ'' - λ = ζ`, with `ū` the
+bar involution of `U̇` ([Lus] 23.1.8) and `Ψ` that of `ʷΛ_λ ⊗ Λ_{λ''}` ([Lus] 24.3.2); this is the
+computation in Lusztig's proof of 25.2.1 (c). -/
+theorem modTensorAct_bar {ζ : Y →+ ℤ} (Λ Λ'' : Dom R) (hζ : Λ''.1 - Λ.1 = ζ)
+    {u : Modified R 𝕧} (hu : u ∈ LinearMap.range (leftActOne R hvn_ratFunc ζ)) :
+    modTensorAct Λ Λ'' (Modified.bar R u) = tensorPsi hR Λ Λ'' (modTensorAct Λ Λ'' u) := by
+  obtain ⟨x, rfl⟩ := hu
+  rw [Modified.bar_leftActOne, modTensorAct_leftActOne Λ Λ'' hζ,
+    modTensorAct_leftActOne Λ Λ'' hζ, tensorPsi_act_hwv]
+
+/-- **[Lus] Thm. 25.2.1 (c)**: `b ◇_ζ b''` is fixed by the bar involution of `U̇`. -/
+theorem bar_modifiedCanonical (ζ : Y →+ ℤ) {b b'' : Um D 𝕧} (hb : b ∈ canonicalBasis D)
+    (hb'' : b'' ∈ canonicalBasis D) :
+    Modified.bar R (modifiedCanonical hR hY ζ hb hb'') = modifiedCanonical hR hY ζ hb hb'' := by
+  have hu := modifiedCanonical_mem_range hR hY ζ hb hb''
+  refine (existsUnique_modifiedCanonical hR hY ζ hb hb'').unique ⟨?_, fun Λ Λ'' hζ h₁ h₂ ↦ ?_⟩
+    ⟨hu, fun Λ Λ'' hζ h₁ h₂ ↦ modTensorAct_modifiedCanonical hR hY ζ hb hb'' Λ Λ'' hζ h₁ h₂⟩
+  · obtain ⟨x, hx⟩ := hu
+    exact ⟨barHom R x, by rw [← hx, Modified.bar_leftActOne]⟩
+  · rw [modTensorAct_bar hR Λ Λ'' hζ hu,
+      modTensorAct_modifiedCanonical hR hY ζ hb hb'' Λ Λ'' hζ h₁ h₂]
+    exact tensorPsi_tensorCanonical hR Λ Λ'' (⟨b, h₁⟩, ⟨b'', h₂⟩)
 
 end Main
 
