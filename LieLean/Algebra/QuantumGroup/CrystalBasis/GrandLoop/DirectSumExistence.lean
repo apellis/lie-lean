@@ -58,10 +58,10 @@ instance instModuleField : Module k (IrreducibleModule R v Λ) := inferInstance
 instance instIsScalarTower : IsScalarTower k (QuantumGroup R v) (IrreducibleModule R v Λ) :=
   inferInstance
 
-instance instModuleOfAlgebra {A : Type*} [CommRing A] [Algebra A k] :
+instance (priority := low) instModuleOfAlgebra {A : Type*} [CommRing A] [Algebra A k] :
     Module A (IrreducibleModule R v Λ) := inferInstance
 
-instance instIsScalarTowerOfAlgebra {A : Type*} [CommRing A] [Algebra A k] :
+instance (priority := low) instIsScalarTowerOfAlgebra {A : Type*} [CommRing A] [Algebra A k] :
     IsScalarTower A k (IrreducibleModule R v Λ) := inferInstance
 
 end IrreducibleModule
