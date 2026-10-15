@@ -3143,6 +3143,9 @@ completed steps and continuation threads are:
   datum `freeCoroot R`, which has fundamental weights: **[Lus] Prop. 25.1.2 (b)**
   (`isIntInv_repr_tensorEmb_evq`: the coordinates `f(b; b₁, b₂)` of `χ(b⁻η'')` lie in `ℤ[v⁻¹]`)
   for every `X`-regular root datum (Lusztig assumes `Y`-regular).
+  `CrystalBasis/Global/TensorEmbCounit.lean`: the counit form `y⁻η ↦ ε(y)` on `L_q(λ)`
+  (`hwCounit`, the coordinate at `1 ∈ B(λ)`), `(ε ⊗ 1)χ(y⁻η'') = y⁻η'` and **[Lus] Prop. 25.1.2
+  (c)** (`repr_tensorEmb_evq_one`: `f(b; 1, b₂) = δ_{b,b₂}`).
   Remaining: [Lus] 25.2.1, 26.3.1.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
