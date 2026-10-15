@@ -2676,6 +2676,9 @@ printed proof relies on [HK] Exercise 5.13.
 crystals** (`TensorModule.nonempty_crystalEquiv`: `crystal (B₁ ⊗ B₂) ≅ Crystal.tensor (crystal B₂)
 (crystal B₁)`, factors exchanged by Lusztig's coproduct); `Crystal.equivOfE` (a bijection of
 seminormal crystals commuting with the `ẽᵢ` and weights is an isomorphism).
+`Crystal/TensorHighestWeight.lean`: [HK] Cor. 4.4.4 for seminormal crystals
+(`Crystal.IsSeminormal.isHighestWeight_tensor_iff`: `b₁ ⊗ b₂` is maximal iff `ẽᵢ b₁ = 0` and
+`εᵢ(b₂) ≤ ⟨hᵢ, wt b₁⟩` for all `i`; `isHighestWeight_fst_of_isHighestWeight_tensor`: part (2)).
 Remaining for `Tᵢ`: faithfulness of the Artin action (not pursued); general canonical bases.
 At roots of unity the braid relations hold on Lusztig's `_S U̇` (`Modified.isBraidLiftable_braidR`,
 [Lus] 41.1.8); for `U` over a field at a root of unity (`braidEquivOfGeneric`, no divided powers)
