@@ -313,6 +313,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightGlobal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightInnerProduct
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightIntegral
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.LiftUniqueness
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.ModifiedCanonical
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeFiltrationGlobal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeFiltrationSpan
