@@ -196,6 +196,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosure
 import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosureNonintegral
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
+import LieLean.Algebra.Lie.KacMoody.VermaSimple
 import LieLean.Algebra.Lie.KacMoody.VermaSocle
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
 import LieLean.Algebra.Lie.KacMoody.WeightBasis
