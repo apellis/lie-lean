@@ -82,6 +82,29 @@ lemma weightSetProj_of_mem (S : Set (Y →+ ℤ)) {Λ : Y →+ ℤ} {m : M}
   · exact DirectSum.coeLinearMap_of (A := weightSpace R v M) Λ ⟨m, hm⟩
   · exact map_zero _
 
+/-- The projection onto `{Λ}` lands in `M^Λ`. -/
+lemma weightSetProj_singleton_mem (Λ : Y →+ ℤ) (m : M) :
+    weightSetProj hv hM {Λ} m ∈ weightSpace R v M Λ := by
+  classical
+  have hm : m ∈ ⨆ Λ', weightSpace R v M Λ' := by
+    rw [hM.iSup_weightSpace_eq_top]
+    trivial
+  induction hm using Submodule.iSup_induction' with
+  | mem Λ' m hm =>
+    rw [weightSetProj_of_mem hv hM _ hm]
+    split_ifs with h
+    · rwa [Set.mem_singleton_iff.mp h] at hm
+    · exact zero_mem _
+  | zero => rw [map_zero]; exact zero_mem _
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+
+/-- The projection onto `{Λ}` is the identity on `M^Λ`. -/
+lemma weightSetProj_singleton_of_mem {Λ : Y →+ ℤ} {m : M} (hm : m ∈ weightSpace R v M Λ) :
+    weightSetProj hv hM {Λ} m = m := by
+  classical
+  rw [weightSetProj_of_mem hv hM _ hm]
+  simp
+
 omit [NeZero v] in
 include hM in
 /-- Linear maps agreeing on all weight vectors of an integrable module are equal. -/
