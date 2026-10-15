@@ -26,6 +26,15 @@ for Humphreys' Theorem 10.2 (which modules `P(μ)` occur in `M(λ) ⊗ L`).
   `dim Hom(M(λ) ⊗ L, M(μ)) = dim L_{μ - λ}`.
 * `weightSpace_irreducibleModule_eq_bot_of_kacKazhdanStep`: under condition (c) of
   Theorem 10.2, no Kac–Kazhdan step `μ → λ'` gives a weight `λ' - λ` of `L(ν)`.
+* `tfae_projectiveCover_tensor_verma`: **Humphreys, Theorem 10.2**: for `λ` dominant and
+  `μ - λ` integral, `P(μ)` is a summand of some `M(λ) ⊗ L` iff `Hom(M(λ) ⊗ L, L(μ)) ≠ 0` for some
+  `L` iff `⟨μ + ρ, α^∨⟩ ≤ 0` for all `α > 0` with `⟨λ + ρ, α^∨⟩ = 0`. The two main implications
+  are `hom_tensor_verma_irreducibleModule_eq_zero` and
+  `finrank_hom_tensor_verma_irreducibleModule_eq_one` (multiplicity one for `L = L(ν)`).
+
+The proof of (c) ⇒ (b) avoids the strong linkage principle (Theorem 5.1), which is not
+formalized: a composition factor `L(μ')` of `M(μ)`, `μ' ≠ μ`, lies below a Kac–Kazhdan step
+`μ → λ'`, and a norm estimate shows that `λ' - λ` is not a weight of `L(ν)`.
 
 Finite type, finite-dimensional Cartan subalgebra, algebraically closed field of characteristic
 zero. Humphreys works over `ℂ`.
@@ -136,6 +145,14 @@ theorem LieSubmodule.nonempty_subquotientEquivMap (N N' : LieSubmodule R L M) :
   change (⟨_, _⟩ : N'.map (LieSubmodule.Quotient.mk' N)) = 0 ↔ _
   rw [Subtype.ext_iff]
   exact LieSubmodule.Quotient.mk_eq_zero'
+
+/-- Left composition with `f`, as a linear map `Hom(Q, M) → Hom(Q, N)`. -/
+def _root_.LieModuleHom.homCompLeftₗ {Q N : Type*} [AddCommGroup Q] [Module R Q] [LieRingModule L Q]
+    [LieModule R L Q] [AddCommGroup N] [Module R N] [LieRingModule L N] [LieModule R L N]
+    (f : M →ₗ⁅R,L⁆ N) : (Q →ₗ⁅R,L⁆ M) →ₗ[R] (Q →ₗ⁅R,L⁆ N) where
+  toFun g := f.comp g
+  map_add' g g' := by ext; simp
+  map_smul' c g := by ext; simp
 
 end Generic
 
@@ -338,6 +355,277 @@ theorem weightSpace_irreducibleModule_eq_bot_of_kacKazhdanStep {Λ μ Λ' ν : D
   have hnpos : (0 : ℚ) < n := by exact_mod_cast hn
   have : (0 : ℚ) < (n : ℚ) * ((n : ℚ) - c) * (2 / S'.ε i) + m := by positivity
   linarith
+
+omit [IsAlgClosed K] in
+include hA in
+/-- `L(ν)_x` is one-dimensional for `x` in the Weyl group orbit of a dominant integral `ν`. -/
+theorem finrank_weightSpace_irreducibleModule_of_apply_eq {ν x : Dual K H}
+    (hν : P.IsDominantIntegral ν) {w : Dual K H ≃ₗ[K] Dual K H}
+    (hw : w ∈ P.weylGroup hA.isGeneralizedCartan) (hx : w x = ν) :
+    finrank K (weightSpaceOfMap (IrreducibleModule P ν) (h P) x) = 1 := by
+  have := IrreducibleModule.finiteDimensional hA hν
+  have h := rank_weightSpace_weylGroup hA.isGeneralizedCartan
+    (isIntegrable_of_finiteDimensional hA (V := IrreducibleModule P ν)) hw x
+  rw [hx] at h
+  rw [← IrreducibleModule.finrank_weightSpace_self P ν]
+  exact congrArg Cardinal.toNat h.symm
+
+include hA in
+/-- For `λ` dominant and `L` finite-dimensional, `M(λ) ⊗ L` is a finitely generated projective
+module in `𝒪` (Humphreys, GSM 94, §3.8 and §10.2). -/
+theorem isFGProjectiveO_tensor_verma {Λ : Dual K H} (hΛ : P.IsDominant hA.isGeneralizedCartan Λ)
+    {L : Type (max u₁ u₂)} [AddCommGroup L] [Module K L] [LieRingModule 𝔤 L] [LieModule K 𝔤 L]
+    [FiniteDimensional K L] : IsFGProjectiveO P (VermaModule P Λ ⊗[K] L) where
+  isProjectiveO := IsProjectiveO.tensorProduct P (VermaModule.isProjectiveO P hA hΛ)
+    (isCategoryO_of_finiteDimensional hA)
+  isCategoryO := (VermaModule.isCategoryO P Λ).tensorProduct (isCategoryO_of_finiteDimensional hA)
+  fg := exists_finset_lieSpan_tmul_eq_top
+    (VermaModule.lieSpan_map_hwv_eq_top (P := P) (Λ := Λ) LieModuleHom.id Function.surjective_id)
+
+include hA in
+/-- A nonzero morphism `g` from a finitely generated `V ∈ 𝒪` to `Y ∈ 𝒪` gives a simple quotient
+`L(ξ)` of `V` that is a composition factor of `Y` (step (4) of Humphreys, GSM 94, §10.3): take a
+simple quotient of the image of `g`. -/
+theorem exists_surjective_irreducibleModule_of_ne_zero {V Y : Type*} [AddCommGroup V]
+    [Module K V] [LieRingModule 𝔤 V] [LieModule K 𝔤 V] [AddCommGroup Y] [Module K Y]
+    [LieRingModule 𝔤 Y] [LieModule K 𝔤 Y] {S : Finset V}
+    (hS : LieSubmodule.lieSpan K 𝔤 (S : Set V) = ⊤) (hY : IsCategoryO P Y)
+    {g : V →ₗ⁅K,𝔤⁆ Y} (hg : g ≠ 0) :
+    ∃ ξ : Dual K H, ∃ φ : V →ₗ⁅K,𝔤⁆ IrreducibleModule P ξ, Function.Surjective φ ∧
+      hY.multiplicity ξ ≠ 0 := by
+  classical
+  let g' : V →ₗ⁅K,𝔤⁆ g.range :=
+    g.codRestrict g.range fun m ↦ (LieModuleHom.mem_range _ _).mpr ⟨m, rfl⟩
+  have hg' : Function.Surjective g' := by
+    rintro ⟨y, hy⟩
+    obtain ⟨m, rfl⟩ := (LieModuleHom.mem_range _ _).mp hy
+    exact ⟨m, rfl⟩
+  have : Nontrivial g.range := by
+    obtain ⟨v, hv⟩ : ∃ v, g v ≠ 0 := by
+      by_contra h
+      push Not at h
+      exact hg (LieModuleHom.ext h)
+    exact ⟨⟨g' v, 0, fun h ↦ hv (congrArg Subtype.val h)⟩⟩
+  have hSR : LieSubmodule.lieSpan K 𝔤 ((S.image g' : Finset g.range) : Set g.range) = ⊤ := by
+    have hle : LieSubmodule.lieSpan K 𝔤 (S : Set V) ≤
+        (LieSubmodule.lieSpan K 𝔤 ((S.image g' : Finset g.range) : Set g.range)).comap g' :=
+      LieSubmodule.lieSpan_le.mpr fun s hs ↦ LieSubmodule.subset_lieSpan
+        (Finset.mem_coe.mpr (Finset.mem_image_of_mem g' (Finset.mem_coe.mp hs)))
+    rw [hS] at hle
+    rw [eq_top_iff]
+    rintro y -
+    obtain ⟨v, rfl⟩ := hg' y
+    exact hle (LieSubmodule.mem_top v)
+  obtain ⟨ξ, φ, hφ⟩ := (hY.lieSubmodule g.range).exists_surjective_irreducibleModule P hA hSR
+  refine ⟨ξ, φ.comp g', hφ.comp hg', ?_⟩
+  have h1 := hY.multiplicity_eq_add g.range ξ
+  have h2 := IsCategoryO.multiplicity_eq_add_of_exact ((hY.lieSubmodule g.range).lieSubmodule φ.ker)
+    (hY.lieSubmodule g.range) (IrreducibleModule.isCategoryO P ξ) φ.ker.incl φ
+    Subtype.val_injective (LieSubmodule.range_incl _).symm hφ ξ
+  simp only [IrreducibleModule.multiplicity_eq, ↓reduceIte] at h2
+  omega
+
+include hA in
+/-- If a finitely generated projective `V ∈ 𝒪` maps onto `L(ξ)` and `[Y : L(ξ)] ≠ 0`, then
+`Hom(V, Y) ≠ 0`: `P(ξ)` is a summand of `V` and `dim Hom(P(ξ), Y) = [Y : L(ξ)]` (Humphreys,
+GSM 94, Theorem 3.9). -/
+theorem IsFGProjectiveO.finrank_hom_ne_zero_of_multiplicity {V : Type (max u₁ u₂)}
+    [AddCommGroup V] [Module K V] [LieRingModule 𝔤 V] [LieModule K 𝔤 V]
+    (hV : IsFGProjectiveO P V) {ξ : Dual K H} {φ : V →ₗ⁅K,𝔤⁆ IrreducibleModule P ξ}
+    (hφ : Function.Surjective φ) {Y : Type*} [AddCommGroup Y] [Module K Y] [LieRingModule 𝔤 Y]
+    [LieModule K 𝔤 Y] (hY : IsCategoryO P Y) (hξ : hY.multiplicity ξ ≠ 0) :
+    finrank K (V →ₗ⁅K,𝔤⁆ Y) ≠ 0 := by
+  obtain ⟨s, r, hrs⟩ := hV.exists_retract hA φ hφ
+  rw [hV.finrank_hom_eq_add hA hrs hY, ProjectiveCover.finrank_hom_eq_multiplicity P ξ hA hY]
+  omega
+
+include hA in
+/-- **Humphreys, GSM 94, Theorem 10.2, (c) ⇒ (b), with multiplicity one** (steps (3)–(7) of
+§10.3). Let `λ` be dominant with `μ - λ` integral, and suppose `⟨μ + ρ, α^∨⟩ ≤ 0` for every
+positive root `α` with `⟨λ + ρ, α^∨⟩ = 0`. If `ν` is the dominant integral weight in `W(μ - λ)`,
+then `dim Hom(M(λ) ⊗ L(ν), L(μ)) = 1`; by Theorem 3.9 (b) this is the number of summands
+`P(μ)` of `M(λ) ⊗ L(ν)`. The proof replaces Humphreys' appeal to the strong linkage principle
+(Theorem 5.1) by a Kac–Kazhdan step and the norm estimate
+`weightSpace_irreducibleModule_eq_bot_of_kacKazhdanStep` (reconstructed). -/
+theorem finrank_hom_tensor_verma_irreducibleModule_eq_one {Λ μ ν : Dual K H}
+    (hΛ : P.IsDominant hA.isGeneralizedCartan Λ) (hint : ∀ j, ∃ z : ℤ, (μ - Λ) (P.coroot j) = z)
+    (hc : ∀ v i, P.IsPosRoot hA.isGeneralizedCartan v i →
+      P.corootPairing hA.isGeneralizedCartan (Λ + P.rho) v i = 0 →
+      ∀ n : ℤ, P.corootPairing hA.isGeneralizedCartan (μ + P.rho) v i = n → n ≤ 0)
+    (hν : P.IsDominantIntegral ν) {w : Dual K H ≃ₗ[K] Dual K H}
+    (hw : w ∈ P.weylGroup hA.isGeneralizedCartan) (hνw : ν = w (μ - Λ)) :
+    finrank K (VermaModule P Λ ⊗[K] IrreducibleModule P ν →ₗ⁅K,𝔤⁆ IrreducibleModule P μ) =
+      1 := by
+  classical
+  have := IrreducibleModule.finiteDimensional hA hν
+  have hV := isFGProjectiveO_tensor_verma P hA hΛ (L := IrreducibleModule P ν)
+  have h1 : finrank K (VermaModule P Λ ⊗[K] IrreducibleModule P ν →ₗ⁅K,𝔤⁆ VermaModule P μ) =
+      1 := by
+    rw [finrank_hom_tensor_verma_of_isDominant P hA hΛ μ]
+    exact finrank_weightSpace_irreducibleModule_of_apply_eq P hA hν hw hνw.symm
+  let π : VermaModule P μ →ₗ⁅K,𝔤⁆ IrreducibleModule P μ :=
+    LieSubmodule.Quotient.mk' (VermaModule.maxSubmodule P μ)
+  have hπ : Function.Surjective π := LieSubmodule.Quotient.surjective_mk' _
+  have hsurj : Function.Surjective
+      (π.homCompLeftₗ (Q := VermaModule P Λ ⊗[K] IrreducibleModule P ν)) := fun φ ↦
+    hV.isProjectiveO (VermaModule.isCategoryO P μ) (IrreducibleModule.isCategoryO P μ) π hπ φ
+  have := hV.finiteDimensional_hom (VermaModule.isCategoryO P μ)
+  have := hV.finiteDimensional_hom (IrreducibleModule.isCategoryO P μ)
+  have hle := LinearMap.finrank_range_le
+    (π.homCompLeftₗ (Q := VermaModule P Λ ⊗[K] IrreducibleModule P ν))
+  rw [LinearMap.range_eq_top.mpr hsurj, finrank_top, h1] at hle
+  have hne : finrank K (VermaModule P Λ ⊗[K] IrreducibleModule P ν →ₗ⁅K,𝔤⁆
+      IrreducibleModule P μ) ≠ 0 := by
+    intro h0
+    have hsub := Module.finrank_zero_iff.mp h0
+    obtain ⟨g, hg⟩ := Module.finrank_pos_iff_exists_ne_zero.mp (h1 ▸ Nat.one_pos)
+    obtain ⟨ξ, φ, hφ, hξ⟩ := exists_surjective_irreducibleModule_of_ne_zero P hA
+      hV.fg.choose_spec (VermaModule.isCategoryO P μ) hg
+    have hξμ : ξ ≠ μ := by
+      rintro rfl
+      obtain ⟨x, hx⟩ := hφ (IrreducibleModule.hwv P ξ)
+      rw [Subsingleton.elim φ 0, _root_.zero_apply] at hx
+      exact IrreducibleModule.hwv_ne_zero P ξ hx.symm
+    obtain ⟨d, hd, hpos⟩ := hA.exists_posDef
+    have hsymm : (diagonal d * A).IsSymm := by
+      simpa [IsHermitian, IsSymm] using hpos.isHermitian
+    obtain ⟨Λ', hstep, hΛ'⟩ := VermaModule.exists_kacKazhdanStep_of_multiplicity_ne_zero P
+      (Symmetrization.ofDiagonal d hd hsymm) hA.isGeneralizedCartan hξμ hξ
+    have h2 := hV.finrank_hom_ne_zero_of_multiplicity P hA hφ (VermaModule.isCategoryO P Λ') hΛ'
+    rw [finrank_hom_tensor_verma_of_isDominant P hA hΛ Λ'] at h2
+    apply h2
+    rw [show weightSpaceOfMap (IrreducibleModule P ν) (h P) (Λ' - Λ) = ⊥ from
+      weightSpace_irreducibleModule_eq_bot_of_kacKazhdanStep P hA hΛ hint hc hν hw hνw _ hstep]
+    exact finrank_bot K _
+  omega
+
+include hA in
+/-- **Humphreys, GSM 94, Theorem 10.2, (b) ⇒ (c)** (steps (1)–(2) of §10.3). Let `λ` be dominant,
+`L` finite-dimensional and `α > 0` a root with `⟨λ + ρ, α^∨⟩ = 0` and `⟨μ + ρ, α^∨⟩ = n > 0`.
+Then every morphism `M(λ) ⊗ L → L(μ)` vanishes: by Remark 3.9 (∗) and `W`-invariance of weight
+multiplicities, composition with the embedding `M(μ - nα) ↪ M(μ)` of Theorem 4.6 is a bijection
+on Hom spaces out of `M(λ) ⊗ L`, so every morphism to `M(μ)` lands in `N(μ)`. -/
+theorem hom_tensor_verma_irreducibleModule_eq_zero {Λ μ : Dual K H}
+    (hΛ : P.IsDominant hA.isGeneralizedCartan Λ) {L : Type*} [AddCommGroup L] [Module K L]
+    [LieRingModule 𝔤 L] [LieModule K 𝔤 L] [FiniteDimensional K L]
+    {v : P.weylGroup hA.isGeneralizedCartan} {i : ι} (hv : P.IsPosRoot hA.isGeneralizedCartan v i)
+    (hΛ0 : P.corootPairing hA.isGeneralizedCartan (Λ + P.rho) v i = 0) {n : ℕ} (hn : 0 < n)
+    (hμn : P.corootPairing hA.isGeneralizedCartan (μ + P.rho) v i = n)
+    (φ : VermaModule P Λ ⊗[K] L →ₗ⁅K,𝔤⁆ IrreducibleModule P μ) : φ = 0 := by
+  classical
+  have hA' := hA.isGeneralizedCartan
+  set α := (v : Dual K H ≃ₗ[K] Dual K H) (P.root i)
+  have hL : IsCategoryO P L := isCategoryO_of_finiteDimensional hA
+  have hL' : IsCategoryO P (Module.Dual K L) := isCategoryO_of_finiteDimensional hA
+  have hVp := IsProjectiveO.tensorProduct.{max u₁ u₂} P (VermaModule.isProjectiveO P hA hΛ) hL'
+  have hVO : IsCategoryO P (VermaModule P Λ ⊗[K] L) :=
+    (VermaModule.isCategoryO P Λ).tensorProduct hL
+  obtain ⟨S, hS⟩ := exists_finset_lieSpan_tmul_eq_top (W := L)
+    (VermaModule.lieSpan_map_hwv_eq_top (P := P) (Λ := Λ) LieModuleHom.id Function.surjective_id)
+  obtain ⟨ψ, hψ⟩ := VermaModule.exists_injective_reflectionOf P hA hv hμn
+  -- `s_α (μ - λ) = μ - n α - λ`
+  have hpair : P.corootPairing hA' (μ - Λ) v i = n := by
+    have h := corootPairing_sub (P := P) (hA := hA') (μ + P.rho) (Λ + P.rho) v i
+    rw [add_sub_add_right_eq_sub, hμn, hΛ0, sub_zero] at h
+    exact h
+  have hrefl : ((P.reflectionOf hA' v i : P.weylGroup hA') : Dual K H ≃ₗ[K] Dual K H) (μ - Λ) =
+      μ - n • α - Λ := by
+    rw [reflectionOf_apply', hpair, Nat.cast_smul_eq_nsmul]
+    abel
+  have hdim : finrank K (VermaModule P Λ ⊗[K] L →ₗ⁅K,𝔤⁆ VermaModule P (μ - n • α)) =
+      finrank K (VermaModule P Λ ⊗[K] L →ₗ⁅K,𝔤⁆ VermaModule P μ) := by
+    rw [finrank_hom_tensor_verma_of_isDominant P hA hΛ, finrank_hom_tensor_verma_of_isDominant P hA
+      hΛ, ← hrefl]
+    exact congrArg Cardinal.toNat (rank_weightSpace_weylGroup hA'
+      (isIntegrable_of_finiteDimensional hA (V := L)) (P.reflectionOf hA' v i).2 (μ - Λ))
+  have := hVO.finiteDimensional_hom P hS (VermaModule.isCategoryO P μ)
+  have := hVO.finiteDimensional_hom P hS (VermaModule.isCategoryO P (μ - n • α))
+  have hinj : Function.Injective (ψ.homCompLeftₗ (Q := VermaModule P Λ ⊗[K] L)) :=
+    fun g g' hgg ↦ LieModuleHom.ext fun x ↦ hψ (LieModuleHom.congr_fun hgg x)
+  have hbij := (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim).mp hinj
+  -- the image of `ψ` is a proper submodule of `M(μ)`
+  have hne : ψ.range ≠ ⊤ := by
+    intro htop
+    let e := LieModuleEquiv.ofBijective ψ ⟨hψ, (LieModuleHom.range_eq_top _).mp htop⟩
+    have hm := IsCategoryO.multiplicity_congr (VermaModule.isCategoryO P (μ - n • α))
+      (VermaModule.isCategoryO P μ) e μ
+    rw [VermaModule.multiplicity_self] at hm
+    have hc1 : μ ∈ cone P (μ - n • α) :=
+      VermaModule.mem_cone_of_multiplicity_ne_zero (by rw [hm]; exact one_ne_zero)
+    obtain ⟨k₀, hk₀, hαk⟩ := hv
+    have hc2 : μ - n • α ∈ cone P μ := ⟨n • k₀, nsmul_nonneg hk₀ n, by rw [map_nsmul, ← hαk]⟩
+    have h0 : n • α = 0 := by
+      have := eq_of_mem_cone_of_mem_cone hc2 hc1
+      rwa [sub_eq_self] at this
+    rw [smul_eq_zero] at h0
+    rcases h0 with h0 | h0
+    · omega
+    · exact P.linearIndependent_root.ne_zero i
+        ((v : Dual K H ≃ₗ[K] Dual K H).map_eq_zero_iff.mp h0)
+  have hrange : ψ.range ≤ VermaModule.maxSubmodule P μ :=
+    (VermaModule.le_maxSubmodule_iff P μ _).mpr hne
+  let π : VermaModule P μ →ₗ⁅K,𝔤⁆ IrreducibleModule P μ :=
+    LieSubmodule.Quotient.mk' (VermaModule.maxSubmodule P μ)
+  obtain ⟨g, rfl⟩ := hVp (VermaModule.isCategoryO P μ) (IrreducibleModule.isCategoryO P μ) π
+    (LieSubmodule.Quotient.surjective_mk' _) φ
+  obtain ⟨g', rfl⟩ := hbij g
+  ext x
+  change π (ψ (g' x)) = 0
+  exact LieSubmodule.Quotient.mk_eq_zero'.mpr
+    (hrange ((LieModuleHom.mem_range _ _).mpr ⟨g' x, rfl⟩))
+
+include hA in
+/-- **Humphreys, GSM 94, Theorem 10.2.** Let `λ` be dominant and `μ - λ` integral. Then the
+following are equivalent:
+(a) for some finite-dimensional `L`, `P(μ)` is a direct summand of `M(λ) ⊗ L`;
+(b) for some finite-dimensional `L`, `Hom(M(λ) ⊗ L, L(μ)) ≠ 0`;
+(c) `⟨μ + ρ, α^∨⟩ ≤ 0` for every positive root `α` with `⟨λ + ρ, α^∨⟩ = 0`.
+A direct summand is recorded as a retraction `r ∘ s = id`. The multiplicity statement (`P(μ)`
+occurs once in `M(λ) ⊗ L(ν)`) is `finrank_hom_tensor_verma_irreducibleModule_eq_one`. Humphreys
+works over `ℂ`; here the field is algebraically closed of characteristic zero. -/
+theorem tfae_projectiveCover_tensor_verma {Λ μ : Dual K H}
+    (hΛ : P.IsDominant hA.isGeneralizedCartan Λ) (hint : ∀ j, ∃ z : ℤ, (μ - Λ) (P.coroot j) = z) :
+    List.TFAE [
+      ∃ (L : Type (max u₁ u₂)) (_ : AddCommGroup L) (_ : Module K L) (_ : LieRingModule 𝔤 L)
+        (_ : LieModule K 𝔤 L) (_ : FiniteDimensional K L)
+        (s : ProjectiveCover P hA μ →ₗ⁅K,𝔤⁆ VermaModule P Λ ⊗[K] L)
+        (r : VermaModule P Λ ⊗[K] L →ₗ⁅K,𝔤⁆ ProjectiveCover P hA μ), r.comp s = LieModuleHom.id,
+      ∃ (L : Type (max u₁ u₂)) (_ : AddCommGroup L) (_ : Module K L) (_ : LieRingModule 𝔤 L)
+        (_ : LieModule K 𝔤 L) (_ : FiniteDimensional K L)
+        (φ : VermaModule P Λ ⊗[K] L →ₗ⁅K,𝔤⁆ IrreducibleModule P μ), φ ≠ 0,
+      ∀ v i, P.IsPosRoot hA.isGeneralizedCartan v i →
+        P.corootPairing hA.isGeneralizedCartan (Λ + P.rho) v i = 0 →
+        ∀ n : ℤ, P.corootPairing hA.isGeneralizedCartan (μ + P.rho) v i = n → n ≤ 0] := by
+  tfae_have 1 → 2 := by
+    rintro ⟨L, _, _, _, _, _, s, r, hrs⟩
+    refine ⟨L, inferInstance, inferInstance, inferInstance, inferInstance, inferInstance,
+      (ProjectiveCover.π P hA μ).comp r, fun h0 ↦ ?_⟩
+    obtain ⟨x, hx⟩ := ProjectiveCover.surjective_π P hA μ (IrreducibleModule.hwv P μ)
+    have h := LieModuleHom.congr_fun h0 (s x)
+    rw [LieModuleHom.comp_apply, ← LieModuleHom.comp_apply r s, hrs, LieModuleHom.id_apply, hx,
+      _root_.zero_apply] at h
+    exact IrreducibleModule.hwv_ne_zero P μ h
+  tfae_have 2 → 3 := by
+    rintro ⟨L, _, _, _, _, _, φ, hφ⟩ v i hv hΛ0 n hn
+    by_contra hlt
+    push Not at hlt
+    refine hφ (hom_tensor_verma_irreducibleModule_eq_zero P hA hΛ hv hΛ0 (n := n.toNat)
+      (by omega) ?_ φ)
+    rw [hn, ← Int.cast_natCast, Int.toNat_of_nonneg hlt.le]
+  tfae_have 3 → 1 := by
+    intro hc
+    have := P.finite_weylGroup hA
+    obtain ⟨w, hw⟩ := exists_dominantIntegral_weylGroup P hA.isGeneralizedCartan hint
+    have h1 := finrank_hom_tensor_verma_irreducibleModule_eq_one P hA hΛ hint hc hw w.2 rfl
+    have := IrreducibleModule.finiteDimensional hA hw
+    have hV := isFGProjectiveO_tensor_verma P hA hΛ (L := IrreducibleModule P (w.val (μ - Λ)))
+    have := hV.finiteDimensional_hom (IrreducibleModule.isCategoryO P μ)
+    obtain ⟨φ, hφ⟩ := Module.finrank_pos_iff_exists_ne_zero.mp (h1 ▸ Nat.one_pos)
+    obtain ⟨s, r, hrs⟩ := hV.exists_retract hA φ
+      (surjective_of_ne_zero_irreducibleModule P hφ)
+    exact ⟨IrreducibleModule P (w.val (μ - Λ)), inferInstance, inferInstance, inferInstance,
+      inferInstance, inferInstance, s, r, hrs⟩
+  tfae_finish
 
 end Dominant
 
