@@ -3086,6 +3086,12 @@ completed steps and continuation threads are:
   for involutions `ψ₁`, `ψ₂` compatible with the bar involution, `Ψ = Θ ∘ (ψ₁ ⊗ ψ₂)` is an
   involution of `M ⊗ M'`, from `(ψ₁ ⊗ ψ₂)Θ = Θ̄(ψ₁ ⊗ ψ₂)` and `ΘΘ̄ = 1` on `M ⊗ M'`
   (`quasiRAct_finsum_barTensor`).
+  `CrystalBasis/Global/TensorBar.lean`: [Lus] 19.3.4 (`hwBar_smul_U`: the bar involution of
+  `L_q(λ)` satisfies `(u m)‾ = ū m̄`; our own check on generators), the bar involution of
+  `ʷL_q(λ)` (`twBar`, 24.3.1) and Lusztig's `Ψ = Θ ∘ (¯ ⊗ ¯)` on `ʷL_q(λ) ⊗ L_q(λ')`
+  ([Lus] 24.3.2: `tensorPsi`, `tensorPsi_tensorPsi`, `tensorPsi_smul`, `act_tensorPsi`), with the
+  weight triangularity of the components `Θ_ν` (`actPair_quasiR_mem_tensorWt`,
+  `actPair_quasiR_eq_zero`). Remaining: the canonical basis of `ʷL_q(λ) ⊗ L_q(λ')` (24.3.3).
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
