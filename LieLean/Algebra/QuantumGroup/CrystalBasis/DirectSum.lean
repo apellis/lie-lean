@@ -37,7 +37,7 @@ namespace LieLean.QuantumGroup
 
 variable {k I Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] {D : LusztigCartanDatum I}
   {R : D.RootDatum Y} {v : k}
-  {ι : Type*} [DecidableEq ι] {M : ι → Type*} [∀ i, AddCommGroup (M i)] [∀ i, Module k (M i)]
+  {ι : Type*} {M : ι → Type*} [∀ i, AddCommGroup (M i)] [∀ i, Module k (M i)]
   [∀ i, Module (QuantumGroup R v) (M i)] [∀ i, IsScalarTower k (QuantumGroup R v) (M i)]
 
 /-! ### Integrability -/
@@ -84,10 +84,11 @@ variable {A : Type*} [CommRing A] [∀ j, Module A (M j)] (L : ∀ j, Submodule 
 def dfinsuppLattice : Submodule A (Π₀ j, M j) :=
   ⨅ j, (L j).comap (DFinsupp.lapply j)
 
-omit [DecidableEq ι] in
 variable {L} in
 lemma mem_dfinsuppLattice {m : Π₀ j, M j} : m ∈ dfinsuppLattice L ↔ ∀ j, m j ∈ L j := by
   simp [dfinsuppLattice]
+
+variable [DecidableEq ι]
 
 variable {L} in
 lemma single_mem_dfinsuppLattice {j : ι} {x : M j} (hx : x ∈ L j) :
@@ -201,8 +202,8 @@ noncomputable def dfinsuppQuotIncl' (j : ι) :
 
 /-- `L / cL → Lⱼ / cLⱼ` as a map of `A / cA`-modules. -/
 noncomputable def dfinsuppQuotProj' (j : ι) :
-    (dfinsuppLattice L ⧸ (Ideal.span {c} • ⊤ : Submodule A (dfinsuppLattice L))) →ₗ[A ⧸ Ideal.span {c}]
-      (L j ⧸ (Ideal.span {c} • ⊤ : Submodule A (L j))) :=
+    (dfinsuppLattice L ⧸ (Ideal.span {c} • ⊤ : Submodule A (dfinsuppLattice L)))
+      →ₗ[A ⧸ Ideal.span {c}] (L j ⧸ (Ideal.span {c} • ⊤ : Submodule A (L j))) :=
   (dfinsuppQuotProj L c j).extendScalarsOfSurjective Ideal.Quotient.mk_surjective
 
 @[simp] lemma dfinsuppQuotIncl'_apply (j : ι) (b) :
@@ -265,6 +266,7 @@ omit [Algebra A k] [∀ j, IsScalarTower A k (M j)] in
 /-- The direct sum of crystal lattices is a crystal lattice ([HK] Thm. 4.2.10 (1)). -/
 theorem IsCrystalLattice.dfinsupp (hL : ∀ j, IsCrystalLattice hv (hM j) (L j)) :
     IsCrystalLattice hv (isIntegrable_dfinsupp hM) (dfinsuppLattice L) := by
+  classical
   have := fun j ↦ (hL j).free
   refine
     { span_eq_top := eq_top_iff.2 fun m _ ↦ ?_
@@ -298,6 +300,7 @@ theorem IsCrystalLattice.of_dfinsupp
     (hLs : IsCrystalLattice hv (isIntegrable_dfinsupp hM) (dfinsuppLattice L))
     (hfree : ∀ j, Module.Free A (L j)) (j : ι) : IsCrystalLattice hv (hM j) (L j) where
   span_eq_top := by
+    classical
     have h := congrArg (Submodule.map (DFinsupp.lapply (R := k) (M := M) j)) hLs.span_eq_top
     rw [Submodule.map_span, Submodule.map_top,
       LinearMap.range_eq_top.2 fun m ↦ ⟨DFinsupp.single j m, by simp⟩] at h
@@ -306,14 +309,19 @@ theorem IsCrystalLattice.of_dfinsupp
     exact mem_dfinsuppLattice.1 hx j
   free := hfree j
   weightSetProj_mem S m hm := by
+    classical
     have h := mem_dfinsuppLattice.1 (hLs.weightSetProj_mem S _ (single_mem_dfinsuppLattice hm)) j
     rwa [weightSetProj_dfinsupp_apply, DFinsupp.single_eq_same] at h
   kashiwaraE_mem i m hm := by
+    classical
     have h := mem_dfinsuppLattice.1 (hLs.kashiwaraE_mem i _ (single_mem_dfinsuppLattice hm)) j
     rwa [kashiwaraE_dfinsupp_apply, DFinsupp.single_eq_same] at h
   kashiwaraF_mem i m hm := by
+    classical
     have h := mem_dfinsuppLattice.1 (hLs.kashiwaraF_mem i _ (single_mem_dfinsuppLattice hm)) j
     rwa [kashiwaraF_dfinsupp_apply, DFinsupp.single_eq_same] at h
+
+variable [DecidableEq ι]
 
 lemma IsCrystalLattice.eQ_dfinsuppQuotIncl
     (hLs : IsCrystalLattice hv (isIntegrable_dfinsupp hM) (dfinsuppLattice L))
@@ -321,7 +329,8 @@ lemma IsCrystalLattice.eQ_dfinsuppQuotIncl
     hLs.eQ c i (dfinsuppQuotIncl L c j b) = dfinsuppQuotIncl L c j ((hL j).eQ c i b) := by
   obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ b
   exact congrArg Submodule.Quotient.mk
-    (Subtype.ext (map_kashiwaraE hv (hM j) i (isIntegrable_dfinsupp hM) (DFinsupp.lsingle j) x).symm)
+    (Subtype.ext
+      (map_kashiwaraE hv (hM j) i (isIntegrable_dfinsupp hM) (DFinsupp.lsingle j) x).symm)
 
 lemma IsCrystalLattice.fQ_dfinsuppQuotIncl
     (hLs : IsCrystalLattice hv (isIntegrable_dfinsupp hM) (dfinsuppLattice L))
@@ -329,7 +338,8 @@ lemma IsCrystalLattice.fQ_dfinsuppQuotIncl
     hLs.fQ c i (dfinsuppQuotIncl L c j b) = dfinsuppQuotIncl L c j ((hL j).fQ c i b) := by
   obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ b
   exact congrArg Submodule.Quotient.mk
-    (Subtype.ext (map_kashiwaraF hv (hM j) i (isIntegrable_dfinsupp hM) (DFinsupp.lsingle j) x).symm)
+    (Subtype.ext
+      (map_kashiwaraF hv (hM j) i (isIntegrable_dfinsupp hM) (DFinsupp.lsingle j) x).symm)
 
 variable {c : A}
 
