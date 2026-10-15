@@ -316,6 +316,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightInnerProduc
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.HighestWeightIntegral
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.LiftUniqueness
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.ModifiedCanonical
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.ModifiedCanonicalBasis
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeFiltrationGlobal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeFiltrationSpan
@@ -640,6 +641,7 @@ import LieLean.GroupTheory.Coxeter.Parabolic
 import LieLean.GroupTheory.Coxeter.Parabolic.CoxeterSystem
 import LieLean.GroupTheory.Coxeter.RankTwoParabolic
 import LieLean.GroupTheory.Coxeter.Squares
+import LieLean.LinearAlgebra.Basis.Unitriangular
 import LieLean.LinearAlgebra.BilinearForm.TensorProduct
 import LieLean.LinearAlgebra.Eigenspace.Weight
 import LieLean.LinearAlgebra.ExteriorAlgebra.Koszul

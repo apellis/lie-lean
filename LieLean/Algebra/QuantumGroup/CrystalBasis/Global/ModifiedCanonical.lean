@@ -54,7 +54,8 @@ arbitrary ones is [Lus] 25.1.10 (`tensorTransition_tensorCanonical`).
 
 For integrality (`modifiedCanonical_mem_aForm`), the element `y⁻x⁺(ξ ⊗ η)` above is chosen in
 `ʷ𝒜M_λ ⊗_𝒜 𝒜M_{λ''}`, lifting the `𝒜`-coordinates of `(b ◇ b'')_{λ,λ''}` along `b ↦ b⁻η`, and
-[Lus] 23.3.2 (a) (`leftActOne_mem_aForm_iff`) applies. Part (d) of 25.2.1 is not proved here.
+[Lus] 23.3.2 (a) (`leftActOne_mem_aForm_iff`) applies. Part (d) of 25.2.1 is in
+`ModifiedCanonicalBasis.lean`.
 
 ## References
 
