@@ -534,6 +534,8 @@ import LieLean.Algebra.QuantumGroup.PBW.RootVectorsNotRoot
 import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
 import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
 import LieLean.Algebra.QuantumGroup.QBinomial
+import LieLean.Algebra.QuantumGroup.QuasiR.Basic
+import LieLean.Algebra.QuantumGroup.QuasiR.Theorem
 import LieLean.Algebra.QuantumGroup.QBinomialSeries
 import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.ActualMap
 import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.ClosedNorm
