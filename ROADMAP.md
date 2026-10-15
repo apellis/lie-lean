@@ -3220,9 +3220,15 @@ completed steps and continuation threads are:
   `𝒜U⁻`, hence the triangular bases `b⁻ 1_λ b'⁺` of `U̇` over `ℚ(v)` and of `𝒜U̇` over `𝒜`
   ([Lus] 23.2.1 (b), 23.2.2 (b) with `B`: `Modified.triangularBasisCanonical`,
   `Modified.aTriangularBasisCanonical`).
-  Remaining: [Lus] 25.2.1 (d); 26.3.1. Then: remove `hY` via [Lus] 25.2.2 (pass to the
-  simply connected root datum, 23.2.5); the statements above are phrased so that 25.2.2 transfers
-  them.
+  `CrystalBasis/Global/ModifiedCanonicalBasis.lean`: **[Lus] Thm. 25.2.1 (d)** (same hypotheses
+  `R.IsXRegular`, `hY`): the `b ◇_ζ b''` form a `ℚ(v)`-basis of `U̇`
+  (`Modified.modifiedCanonicalBasis`) and an `𝒜`-basis of `𝒜U̇`
+  (`Modified.aModifiedCanonicalBasis`), by unitriangularity with respect to the triangular bases
+  (`modifiedCanonical_sub_mem_span`: `b ◇_ζ b'' - b''⁻ b⁺ 1_ζ` is a combination of `b₂⁻ b₁⁺ 1_ζ`
+  with `tr |b₁| < tr |b|`, `tr |b₂| < tr |b''|`, cf. 25.2.1 (e); Lusztig uses `b⁺ b''⁻ 1_ζ`) and
+  `Module.Basis.ofUnitriangular` (`LinearAlgebra/Basis/Unitriangular.lean`).
+  Remaining: [Lus] 26.3.1. Then: remove `hY` via [Lus] 25.2.2 (pass to the simply connected root
+  datum, 23.2.5); the statements above are phrased so that 25.2.2 transfers them.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
