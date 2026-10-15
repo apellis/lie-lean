@@ -12,9 +12,9 @@ import LieLean.LinearAlgebra.Matrix.Cartan.IntegralWeylGroupAntidominant
 /-!
 # The socle of an indecomposable projective
 
-Humphreys, GSM 94, Corollary 4.8: for `λ` antidominant and `w ∈ W_[λ]`, the socle of `P(w·λ)` is
-a direct sum of copies of `L(λ)`. Since the socle is the sum of the simple submodules, this says
-that every simple submodule of `P(w·λ)` is isomorphic to `L(λ)`, which is the form proved here.
+Humphreys, GSM 94, Corollary 4.8, in the form proved here: for antidominant `λ` and `w ∈ W_[λ]`,
+each simple submodule of `P(w·λ)` is isomorphic to `L(λ)`. As `soc P(w·λ)` is the sum of the simple
+submodules, `soc P(w·λ)` is then a direct sum of copies of `L(λ)`.
 
 ## Main results
 
@@ -201,7 +201,7 @@ theorem eq_of_multiplicity_ne_zero_of_isAntidominant {lam ξ μ : Dual K H}
   rw [hzξ, weylDot, hzfix, add_sub_cancel_right]
 
 /-- **Humphreys, GSM 94, Corollary 4.8.** Let `λ` be antidominant and `w ∈ W_[λ]`. Then every
-simple submodule of `P(w·λ)` is isomorphic to `L(λ)`; that is, the socle of `P(w·λ)` is a direct
+simple submodule of `P(w·λ)` is isomorphic to `L(λ)`; equivalently, `soc P(w·λ)` is a direct
 sum of copies of `L(λ)`. Finite type, finite-dimensional Cartan subalgebra, algebraically closed
 field of characteristic zero (Humphreys works over `ℂ`). -/
 theorem ProjectiveCover.nonempty_equiv_irreducibleModule_of_isAtom {lam : Dual K H}
