@@ -1103,7 +1103,9 @@ criterion `maxSubmodule_eq_bot_iff_kacKazhdan`, generic simplicity. BGG (`KacMoo
 `W·Λ`, any GCM, via sl₂-projectivity rather than the Ore condition), squares lemma
 `bruhatSign_square`, the BGG complex `bggDiff` with `bggDiff_comp_bggDiff` (`d² = 0`),
 exactness of `C₁ → C₀ → L(Λ) → 0` (`ker_bggAugmentation`), Euler characteristic
-`hsum_vermaAltFamily`. `BGG/Minimality.lean` identifies the actual degree-zero nilradical
+`hsum_vermaAltFamily`, and Kostant's weight multiplicity formula ([HumO] Cor. 2.4,
+`IrreducibleModule.finrank_weightSpace_eq_finsum_kostantPartition`:
+`dim L(Λ)_μ = ∑_{w ∈ W} (-1)^{ℓ(w)} K(w·Λ - μ)`, symmetrizable GCM). `BGG/Minimality.lean` identifies the actual degree-zero nilradical
 homology with coinvariants (`BGGMinimality.homologyZeroEquivCoinvariants`), proves
 `H₀(𝔫₋, M(μ)) ≃ K` for every highest weight (`BGGMinimality.VermaModule.homologyZeroEquiv`),
 and proves that the actual BGG differential induces zero on degree-zero nilradical homology
