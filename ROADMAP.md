@@ -3074,6 +3074,12 @@ completed steps and continuation threads are:
   `b ↦ b⁻η` maps `B(λ)` bijectively onto a basis of `L_q(λ)` (`canonicalBasisHWBasis`,
   `injOn_evq_canonicalBasisHW`) and kills `B - B(λ)` (`evq_eq_zero_of_notMem_canonicalBasisHW`),
   for `X`-regular root data (Lusztig assumes `Y`-regular).
+  `Global/HighestWeightInnerProduct.lean`: `ρ(Fᵢ^{(n)}) V_ℤ(λ) ⊆ V_ℤ(λ)` (cf. 19.3.2,
+  `rho_qDivPow_F_smul_mem_hwIntegral`), `(V_ℤ(λ), V_ℤ(λ)) ⊆ 𝒜` (`isLaurent_formL`) and
+  **[Lus] Prop. 19.3.3** (`isNegLaurent_formL_evq_sub`: `(b⁻η, b'⁻η) - δ_{b,b'} ∈ v⁻¹ℤ[v⁻¹]` for
+  `b, b' ∈ B(λ)`, `X`-regular root data); the congruence modulo `v⁻¹` comes from Kashiwara's
+  `(L(λ), B(λ))` instead of Lusztig's 19.1.4 (our own route), with fundamental weights, and is
+  transferred from `freeCoroot R` (`formL_hwTransfer`).
   Remaining: 14.3.2 (d) and the rest of 41.1.6.
 - **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
   components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
