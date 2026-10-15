@@ -2986,7 +2986,13 @@ completed steps and continuation threads are:
   `r(𝒜'f) ⊆ 𝒜'f ⊗ 𝒜'f`), `(θᵢ^{(n)}, θᵢ^{(n)}) ∈ ℤ[[v⁻¹]]` (`coefU_mem_intSeriesInf`, 1.4.4) and
   14.2.6 (b) (`form_mem_intLaurentInf`, `quotientForm_mem_intLaurentInf`:
   `(𝒜f, 𝒜f) ⊆ ℤ((v⁻¹)) ∩ ℚ(v)`).
-  Remaining: the comparison with Lusztig's canonical basis ([Lus] 14.4) and the rest of 41.1.6.
+  Signed global basis (`Global/SignedBasis.lean`, our own algebraic proof):
+  `mem_signedGlobal_iff` characterizes `±G(b)`, `b ∈ B(∞)_ν`, as the `x ∈ U⁻_ν` with `x ∈ U⁻_ℤ`,
+  `x̄ = x` and `(x, x) ∈ 1 + v⁻¹ℤ[[v⁻¹]]` (`formU_negGlobal_self`), via [Kas91] Prop. 5.1.2,
+  5.1.3, the integrality 14.2.6 (b) and the injectivity in `(G.1)`. These are the conditions
+  defining Lusztig's signed basis `𝐁` ([Lus] 14.2.3), so this is the one lemma identifying the
+  homogeneous elements of `𝐁` with the `±G(b)`; later results only use properties of `G(b)`.
+  Remaining: the choice of signs ([Lus] 14.4.2–14.4.3) and the rest of 41.1.6.
 - **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
   components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
   [Lus] 4.1.2 (b) for every basis of `f_ν` (`quasiR_eq_sum`), `Θ_0 = 1 ⊗ 1` (`quasiR_zero`) and
