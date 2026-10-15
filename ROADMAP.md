@@ -3196,17 +3196,20 @@ completed steps and continuation threads are:
   `ζ ∈ X` and `b, b'' ∈ B`, `b ◇_ζ b''` (`modifiedCanonical`) is the unique `u ∈ U̇1_ζ` with
   `u(ξ_{-λ} ⊗ η_{λ''}) = (b ◇ b'')_{λ,λ''}` whenever `λ'' - λ = ζ`, `b ∈ B(λ)`, `b'' ∈ B(λ'')`
   (`existsUnique_modifiedCanonical`, `modTensorAct_modifiedCanonical`), and
-  `u(ξ_{-λ} ⊗ η_{λ''}) = 0` otherwise (`modTensorAct_modifiedCanonical_eq_zero`). Uniqueness
+  `u(ξ_{-λ} ⊗ η_{λ''}) = 0` otherwise (`modTensorAct_modifiedCanonical_eq_zero`); moreover
+  `b ◇_ζ b'' ∈ 𝒜U̇` (`modifiedCanonical_mem_aForm`, via [Lus] 23.3.2(a)). Uniqueness
   uses our own route in place of 23.3.8: the bifiltration of `ʷM_λ ⊗ M_{λ''}` by degrees
   (`tensorDepth`, `exists_triAct_eq`) and injectivity of `ʷM_λ ⊗ M_{λ''} → ʷΛ_λ ⊗ Λ_{λ''}` in
   degrees `≤ ⟨i, λ⟩, ⟨i, λ''⟩` (`eq_zero_of_tensorIrrProj_eq_zero`). Hypothesis: Lusztig assumes
   `Y`-regular; the statements assume `hY` (dominant `λ` with all `⟨i, λ⟩` arbitrarily large), which
   follows from `Y`-regularity, together with `R.IsXRegular` for the global basis of `Λ_λ`. `hY`
   cannot be dropped: for an `X`-regular datum of type affine `A₁` with dependent `i ∈ Y`, every
-  dominant `λ` has `⟨i, λ⟩ = 0` and uniqueness fails (module docstring). Open item: the
-  statement without `hY` (Lusztig's 25.2.2, via the simply connected root datum and 23.2.5) is for
-  the maintainer to decide.
-  Remaining: the rest of [Lus] 25.2.1 (integrality, (c), (d)), 26.3.1.
+  dominant `λ` has `⟨i, λ⟩ = 0` and uniqueness fails (module docstring). `hY` holds for every
+  `Y`-regular datum, in particular for every `X`-regular datum of finite type (the Cartan matrix
+  is invertible, so the `i ∈ Y` are linearly independent).
+  Remaining: [Lus] 25.2.1 (c), (d); 26.3.1. Then: remove `hY` via [Lus] 25.2.2 (pass to the
+  simply connected root datum, 23.2.5); the statements above are phrased so that 25.2.2 transfers
+  them.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
