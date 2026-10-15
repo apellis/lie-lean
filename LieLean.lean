@@ -362,6 +362,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.PropDFG
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Purity
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.RatFunc
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Stable
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.StrictHom
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Tensor
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Uniqueness
 import LieLean.Algebra.QuantumGroup.CrystalBasis.HighestWeightLattice
@@ -633,6 +634,7 @@ import LieLean.RepresentationTheory.Crystal.KashiwaraSaito
 import LieLean.RepresentationTheory.Crystal.Similarity
 import LieLean.RepresentationTheory.Crystal.SimilarityComparison
 import LieLean.RepresentationTheory.Crystal.SimilarityEmbedding
+import LieLean.RepresentationTheory.Crystal.StrictHomConnected
 import LieLean.RepresentationTheory.Crystal.Extremal
 import LieLean.RepresentationTheory.Crystal.TensorPower
 import LieLean.RepresentationTheory.Crystal.Path.Basic
