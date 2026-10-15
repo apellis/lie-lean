@@ -1105,7 +1105,10 @@ criterion `maxSubmodule_eq_bot_iff_kacKazhdan`, generic simplicity. BGG (`KacMoo
 exactness of `C₁ → C₀ → L(Λ) → 0` (`ker_bggAugmentation`), Euler characteristic
 `hsum_vermaAltFamily`, and Kostant's weight multiplicity formula ([HumO] Cor. 2.4,
 `IrreducibleModule.finrank_weightSpace_eq_finsum_kostantPartition`:
-`dim L(Λ)_μ = ∑_{w ∈ W} (-1)^{ℓ(w)} K(w·Λ - μ)`, symmetrizable GCM). `BGG/Minimality.lean` identifies the actual degree-zero nilradical
+`dim L(Λ)_μ = ∑_{w ∈ W} (-1)^{ℓ(w)} K(w·Λ - μ)`, symmetrizable GCM), and Weyl's dimension
+formula ([HumO] Thm. 2.5, `KacMoody/DimensionFormula.lean`,
+`IrreducibleModule.finrank_eq_prod_div`: `dim L(Λ) = ∏_{α ∈ Δ₊} (Λ + ρ | α) / (ρ | α)` for `A` of
+finite type, by Humphreys' formal differentiation `AddMonoidAlgebra.augDeriv` on `ℤ[𝔥*]`). `BGG/Minimality.lean` identifies the actual degree-zero nilradical
 homology with coinvariants (`BGGMinimality.homologyZeroEquivCoinvariants`), proves
 `H₀(𝔫₋, M(μ)) ≃ K` for every highest weight (`BGGMinimality.VermaModule.homologyZeroEquiv`),
 and proves that the actual BGG differential induces zero on degree-zero nilradical homology
