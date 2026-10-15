@@ -3211,6 +3211,11 @@ completed steps and continuation threads are:
   dominant `λ` has `⟨i, λ⟩ = 0` and uniqueness fails (module docstring). `hY` holds for every
   `Y`-regular datum, in particular for every `X`-regular datum of finite type (the Cartan matrix
   is invertible, so the `i ∈ Y` are linearly independent).
+  `CrystalBasis/Global/CanonicalTriangular.lean`: the canonical basis `B` of `f` gives bases
+  `b⁺`, `b⁻` of `U⁺`, `U⁻` (`canonicalPlusBasis`, `canonicalMinusBasis`) with `𝒜`-span `𝒜U⁺`,
+  `𝒜U⁻`, hence the triangular bases `b⁻ 1_λ b'⁺` of `U̇` over `ℚ(v)` and of `𝒜U̇` over `𝒜`
+  ([Lus] 23.2.1 (b), 23.2.2 (b) with `B`: `Modified.triangularBasisCanonical`,
+  `Modified.aTriangularBasisCanonical`).
   Remaining: [Lus] 25.2.1 (d); 26.3.1. Then: remove `hY` via [Lus] 25.2.2 (pass to the
   simply connected root datum, 23.2.5); the statements above are phrased so that 25.2.2 transfers
   them.
