@@ -3398,8 +3398,21 @@ completed steps and continuation threads are:
   `Modified.aColumnCanonicalBasis` are bases of the existing `U̇` and `𝒜U̇`, with `IsXRegular`
   but no target `hY`. Their vectors are `columnCanonical`; the proof transports the
   unitriangular expansion through `columnEquiv` and uses the integral triangular coordinates.
-  Remaining: agreement with `modifiedCanonical` under its valid hypotheses, and
-  bilinear-form transport to the general endpoints of 26.3.1.
+  **Normalized form and endpoints** ([Lus] 26.3.1(a–b)): `Modified.form_columnEquiv`
+  transports the existing normalized form. `Modified.form_columnCanonical_sub_mem` and
+  `Modified.form_columnCanonicalBasis_sub_mem` prove almost orthonormality without target `hY`.
+  The actual transported basis gives nondegeneracy over `ℚ(v)` and at transcendental parameters
+  (`Modified.eq_zero_of_forall_form_eq_zero_of_isXRegular`,
+  `Modified.eq_zero_of_forall_form_eq_zero_of_transcendental_of_isXRegular`).
+  `Modified.exists_repr_columnCanonicalBasis_eq_algebraMap` gives local-ring coordinates when
+  the self-pairing lies in `InfinityLocalRing`; `Modified.mem_signedColumnCanonicalBasis_iff`
+  proves the signed characterization with only `IsXRegular`. Local-ring pairing/coordinate
+  integrality is not a Laurent-integer-valued pairing claim; the integral-form condition and
+  the integral basis are over `ℤ[v,v⁻¹]`.
+  **Agreement under valid hypotheses:** `Modified.columnCanonicalBasis_eq_modifiedCanonicalBasis`
+  and `columnCanonical_eq_modifiedCanonical`, by the signed characterization and triangular
+  leading coefficients. The old APIs are retained as compatibility statements.
+  Remaining route hypothesis for the general printed 26.3.1: `IsXRegular`.
   The original dominant-tensor uniqueness characterization retains `hY`.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness

@@ -28,10 +28,11 @@ is almost orthonormal for Lusztig's form. Consequently the form is nondegenerate
 * `Modified.form_modifiedCanonical_sub_mem`: **[Lus] Thm. 26.3.1 (a)** for the old construction;
   `Modified.form_modifiedCanonicalBasis_sub_mem` is the same statement for the basis
   `Modified.modifiedCanonicalBasis` of [Lus] 25.2.1 (d).
-* `Modified.eq_zero_of_forall_form_eq_zero`: Lusztig's form on `U̇` over `ℚ(v)` is
+* `Modified.eq_zero_of_forall_form_eq_zero_of_isXRegular`: Lusztig's form on `U̇` over `ℚ(v)` is
   nondegenerate, a consequence of 26.3.1 (a) (our own short deduction: the reduction of an
   almost orthonormal basis modulo `v⁻¹` is orthonormal for a form with values in the formally
-  real field `ℚ`); `Modified.eq_zero_of_forall_form_eq_zero_of_transcendental` transfers this to
+  real field `ℚ`);
+  `Modified.eq_zero_of_forall_form_eq_zero_of_transcendental_of_isXRegular` transfers this to
   any parameter transcendental over `ℚ` in a field of characteristic zero.
 
 ## Hypotheses
@@ -40,8 +41,8 @@ Lusztig states 26.3.1 for every root datum, reducing to the simply connected cas
 the transported family requires only `X`-regularity: the same-column comparison of normalized
 forms and the free-coroot auxiliary datum remove target `hY` from its pairing statements.
 The old construction and its tensor characterization still assume `hY` (dominant `λ` with
-all `⟨i, λ⟩` arbitrarily large), as in `existsUnique_modifiedCanonical`. The nondegeneracy
-statements below still use that old basis and retain `hY`.
+all `⟨i, λ⟩` arbitrarily large), as in `existsUnique_modifiedCanonical`. Nondegeneracy uses the
+transported basis and needs no target `hY`; the old APIs remain as compatibility corollaries.
 
 ## References
 
@@ -354,111 +355,6 @@ theorem Modified.form_modifiedCanonicalBasis_sub_mem
   congr 1
   exact if_congr (by simp [Prod.ext_iff, Subtype.ext_iff]) rfl rfl
 
-include hR hY in
-/-- Lusztig's form on `U̇` over `ℚ(v)` is nondegenerate: a consequence of the almost
-orthonormality [Lus] 26.3.1 (a) (our own deduction; Lusztig does not state it separately).
-
-After scaling, the coordinates of `x` in the canonical basis lie in `A` and are not all in
-`v⁻¹A`; by 26.3.1 (a), `(x, x)` is then congruent to a nonzero sum of squares modulo `v⁻¹A`, which
-cannot vanish since `A/v⁻¹A = ℚ` is formally real. Extra hypotheses `R.IsXRegular` and `hY`
-(route-only, from 25.2.1). -/
-theorem Modified.eq_zero_of_forall_form_eq_zero (x : Modified R 𝕧)
-    (hx : ∀ y, Modified.form R 𝕧 hvn_ratFunc x y = 0) : x = 0 := by
-  classical
-  set e := modifiedCanonicalBasis hR hY
-  set c := e.repr x
-  set S := c.support
-  set F := Modified.form R 𝕧 hvn_ratFunc
-  have hirr : Irreducible (ϖ : A) := irreducible_localX
-  have hϖ0 : algebraMap A 𝕂 ϖ ≠ 0 := by
-    rw [InfinityLocalRing.algebraMap_uniformizer]
-    exact inv_ne_zero RatFunc.X_ne_zero
-  by_contra hne
-  have hS : S.Nonempty :=
-    Finsupp.support_nonempty_iff.2 fun h ↦ hne (e.repr.map_eq_zero_iff.1 h)
-  -- clear denominators
-  choose m d hd using fun t ↦ InfinityLocalRing.exists_pow_mul (c t)
-  set M := S.sup m
-  have hd' : ∀ t ∈ S, algebraMap A 𝕂 (ϖ ^ M) * c t =
-      algebraMap A 𝕂 (ϖ ^ (M - m t) * d t) := by
-    intro t ht
-    rw [_root_.map_mul, ← hd, ← mul_assoc, ← _root_.map_mul, ← pow_add,
-      Nat.sub_add_cancel (Finset.le_sup ht)]
-  have hd0 : ∀ t ∈ S, ϖ ^ (M - m t) * d t ≠ 0 := by
-    intro t ht h
-    have := hd' t ht
-    rw [h, map_zero, mul_eq_zero, map_pow] at this
-    rcases this with h1 | h1
-    · exact pow_ne_zero _ hϖ0 h1
-    · exact Finsupp.mem_support_iff.1 ht h1
-  choose! n u hu using fun t (ht : t ∈ S) ↦
-    IsDiscreteValuationRing.eq_unit_mul_pow_irreducible (hd0 t ht) hirr
-  -- divide by the smallest power of `ϖ`
-  obtain ⟨t₀, ht₀, hmin⟩ := S.exists_min_image n hS
-  set f : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D → A :=
-    fun t ↦ (u t : A) * ϖ ^ (n t - n t₀)
-  have hc : ∀ t ∈ S, algebraMap A 𝕂 (ϖ ^ M) * c t =
-      algebraMap A 𝕂 (ϖ ^ n t₀) * algebraMap A 𝕂 (f t) := by
-    intro t ht
-    rw [hd' t ht, hu t ht, ← _root_.map_mul]
-    congr 1
-    rw [mul_left_comm, ← pow_add, Nat.add_sub_cancel' (hmin t ht)]
-  set y := ∑ t ∈ S, algebraMap A 𝕂 (f t) • e t
-  have hy : algebraMap A 𝕂 (ϖ ^ n t₀) • y = algebraMap A 𝕂 (ϖ ^ M) • x := by
-    conv_rhs => rw [← e.linearCombination_repr x, Finsupp.linearCombination_apply]
-    rw [Finsupp.sum, Finset.smul_sum, Finset.smul_sum]
-    refine Finset.sum_congr rfl fun t ht ↦ ?_
-    rw [smul_smul, smul_smul, hc t ht]
-  have hyy : F y y = 0 := by
-    have h := congrArg (fun z ↦ F z z) hy
-    simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, hx, mul_zero] at h
-    have h0 : algebraMap A 𝕂 (ϖ ^ n t₀) ≠ 0 := by
-      rw [map_pow]
-      exact pow_ne_zero _ hϖ0
-    simpa [h0, hϖ0] using h
-  -- `(y, y) ≡ Σ_t f_t²`
-  choose a ha using form_modifiedCanonicalBasis_sub_mem hR hY
-  have hF : ∀ t t', F (e t) (e t') =
-      (if t = t' then 1 else 0) + algebraMap A 𝕂 (ϖ * a t t') := fun t t' ↦ by
-    rw [← ha t t']
-    ring
-  have hexp : F y y = ∑ t ∈ S, ∑ t' ∈ S,
-      algebraMap A 𝕂 (f t) * (algebraMap A 𝕂 (f t') * F (e t') (e t)) := by
-    simp only [y, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
-      Finset.mul_sum]
-  have hsum : F y y = algebraMap A 𝕂 (∑ t ∈ S, f t ^ 2 +
-      ϖ * ∑ t ∈ S, ∑ t' ∈ S, f t * f t' * a t' t) := by
-    rw [hexp, _root_.map_add, map_sum, _root_.map_mul, map_sum, Finset.mul_sum,
-      ← Finset.sum_add_distrib]
-    refine Finset.sum_congr rfl fun t ht ↦ ?_
-    simp only [hF, mul_add, Finset.sum_add_distrib, mul_ite, mul_one, mul_zero,
-      Finset.sum_ite_eq', ht, ↓reduceIte, map_sum, Finset.mul_sum, _root_.map_mul, map_pow]
-    congr 1
-    · ring
-    · exact Finset.sum_congr rfl fun t' _ ↦ by ring
-  -- the residue of `Σ_t f_t²` vanishes, so `ϖ ∣ f_{t₀} = u_{t₀}`, a unit
-  rw [hyy, eq_comm, ← map_zero (algebraMap A 𝕂)] at hsum
-  have hsum' := congrArg (Ideal.Quotient.mk (Ideal.span {(ϖ : A)}))
-    (InfinityLocalRing.injective_algebraMap hsum)
-  rw [_root_.map_add, _root_.map_mul, Ideal.Quotient.eq_zero_iff_mem.2
-    (Ideal.mem_span_singleton_self _), zero_mul, add_zero, map_zero, map_sum] at hsum'
-  simp only [map_pow] at hsum'
-  have h₀ := eq_zero_of_sum_sq_eq_zero S _ hsum' t₀ ht₀
-  rw [Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton] at h₀
-  simp only [f, Nat.sub_self, pow_zero, mul_one] at h₀
-  exact hirr.not_isUnit (isUnit_of_dvd_unit h₀ (u t₀).isUnit)
-
-
-include hR hY in
-/-- Lusztig's form on `U̇` is nondegenerate over any field of characteristic zero, at any
-parameter transcendental over `ℚ` (from the case `ℚ(v)`, `Modified.eq_zero_of_forall_form_eq_zero`,
-by `Modified.form_nondegenerate_of_transcendental`). -/
-theorem Modified.eq_zero_of_forall_form_eq_zero_of_transcendental {L : Type*} [Field L]
-    [CharZero L] {w : L} (hw : Transcendental ℚ w) [NeZero w] (x : Modified R w)
-    (hx : ∀ y, Modified.form R w (fun _ hn ↦ LusztigF.pow_ne_one_of_transcendental hw hn) x y = 0) :
-    x = 0 :=
-  form_nondegenerate_of_transcendental (eq_zero_of_forall_form_eq_zero hR hY) hw x hx
-
 end Orthonormal
 
 end LieLean.QuantumGroup
@@ -578,5 +474,140 @@ theorem form_columnCanonical_mem (ζ ζ₁ : Y →+ ℤ) {b b'' b₁ b₁'' : Um
   refine ⟨ϖ * a + if ζ = ζ₁ ∧ b = b₁ ∧ b'' = b₁'' then 1 else 0, ?_⟩
   rw [_root_.map_add, ← ha]
   split_ifs <;> simp
+
+open Classical in
+/-- [Lus] 26.3.1(a) for the transported basis of Corollary 25.2.3. -/
+theorem form_columnCanonicalBasis_sub_mem
+    (t t' : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D) :
+    ∃ a : A, form R 𝕧 hvn_ratFunc (columnCanonicalBasis hR t)
+        (columnCanonicalBasis hR t') - (if t = t' then 1 else 0) =
+      algebraMap A 𝕂 (ϖ * a) := by
+  obtain ⟨ζ, b, b''⟩ := t
+  obtain ⟨ζ₁, b₁, b₁''⟩ := t'
+  obtain ⟨a, ha⟩ := form_columnCanonical_sub_mem hR ζ ζ₁ b.2 b''.2 b₁.2 b₁''.2
+  refine ⟨a, ?_⟩
+  rw [columnCanonicalBasis_apply, columnCanonicalBasis_apply, ← ha]
+  congr 1
+  exact if_congr (by simp [Prod.ext_iff, Subtype.ext_iff]) rfl rfl
+
+include hR in
+/-- Nondegeneracy over `ℚ(v)`, deduced from [Lus] 26.3.1(a) by scaling the coordinates
+in the transported basis and reducing a sum of squares modulo `v⁻¹A`.
+`IsXRegular` remains a route hypothesis; no target dominant-weight hypothesis is used. -/
+theorem eq_zero_of_forall_form_eq_zero_of_isXRegular (x : Modified R 𝕧)
+    (hx : ∀ y, Modified.form R 𝕧 hvn_ratFunc x y = 0) : x = 0 := by
+  classical
+  set e := columnCanonicalBasis hR
+  set c := e.repr x
+  set S := c.support
+  set F := Modified.form R 𝕧 hvn_ratFunc
+  have hirr : Irreducible (ϖ : A) := irreducible_localX
+  have hϖ0 : algebraMap A 𝕂 ϖ ≠ 0 := by
+    rw [InfinityLocalRing.algebraMap_uniformizer]
+    exact inv_ne_zero RatFunc.X_ne_zero
+  by_contra hne
+  have hS : S.Nonempty :=
+    Finsupp.support_nonempty_iff.2 fun h ↦ hne (e.repr.map_eq_zero_iff.1 h)
+  -- clear denominators
+  choose m d hd using fun t ↦ InfinityLocalRing.exists_pow_mul (c t)
+  set M := S.sup m
+  have hd' : ∀ t ∈ S, algebraMap A 𝕂 (ϖ ^ M) * c t =
+      algebraMap A 𝕂 (ϖ ^ (M - m t) * d t) := by
+    intro t ht
+    rw [_root_.map_mul, ← hd, ← mul_assoc, ← _root_.map_mul, ← pow_add,
+      Nat.sub_add_cancel (Finset.le_sup ht)]
+  have hd0 : ∀ t ∈ S, ϖ ^ (M - m t) * d t ≠ 0 := by
+    intro t ht h
+    have := hd' t ht
+    rw [h, map_zero, mul_eq_zero, map_pow] at this
+    rcases this with h1 | h1
+    · exact pow_ne_zero _ hϖ0 h1
+    · exact Finsupp.mem_support_iff.1 ht h1
+  choose! n u hu using fun t (ht : t ∈ S) ↦
+    IsDiscreteValuationRing.eq_unit_mul_pow_irreducible (hd0 t ht) hirr
+  -- divide by the smallest power of `ϖ`
+  obtain ⟨t₀, ht₀, hmin⟩ := S.exists_min_image n hS
+  set f : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D → A :=
+    fun t ↦ (u t : A) * ϖ ^ (n t - n t₀)
+  have hc : ∀ t ∈ S, algebraMap A 𝕂 (ϖ ^ M) * c t =
+      algebraMap A 𝕂 (ϖ ^ n t₀) * algebraMap A 𝕂 (f t) := by
+    intro t ht
+    rw [hd' t ht, hu t ht, ← _root_.map_mul]
+    congr 1
+    rw [mul_left_comm, ← pow_add, Nat.add_sub_cancel' (hmin t ht)]
+  set y := ∑ t ∈ S, algebraMap A 𝕂 (f t) • e t
+  have hy : algebraMap A 𝕂 (ϖ ^ n t₀) • y = algebraMap A 𝕂 (ϖ ^ M) • x := by
+    conv_rhs => rw [← e.linearCombination_repr x, Finsupp.linearCombination_apply]
+    rw [Finsupp.sum, Finset.smul_sum, Finset.smul_sum]
+    refine Finset.sum_congr rfl fun t ht ↦ ?_
+    rw [smul_smul, smul_smul, hc t ht]
+  have hyy : F y y = 0 := by
+    have h := congrArg (fun z ↦ F z z) hy
+    simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, hx, mul_zero] at h
+    have h0 : algebraMap A 𝕂 (ϖ ^ n t₀) ≠ 0 := by
+      rw [map_pow]
+      exact pow_ne_zero _ hϖ0
+    simpa [h0, hϖ0] using h
+  -- `(y, y) ≡ Σ_t f_t²`
+  choose a ha using form_columnCanonicalBasis_sub_mem hR
+  have hF : ∀ t t', F (e t) (e t') =
+      (if t = t' then 1 else 0) + algebraMap A 𝕂 (ϖ * a t t') := fun t t' ↦ by
+    rw [← ha t t']
+    ring
+  have hexp : F y y = ∑ t ∈ S, ∑ t' ∈ S,
+      algebraMap A 𝕂 (f t) * (algebraMap A 𝕂 (f t') * F (e t') (e t)) := by
+    simp only [y, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+      Finset.mul_sum]
+  have hsum : F y y = algebraMap A 𝕂 (∑ t ∈ S, f t ^ 2 +
+      ϖ * ∑ t ∈ S, ∑ t' ∈ S, f t * f t' * a t' t) := by
+    rw [hexp, _root_.map_add, map_sum, _root_.map_mul, map_sum, Finset.mul_sum,
+      ← Finset.sum_add_distrib]
+    refine Finset.sum_congr rfl fun t ht ↦ ?_
+    simp only [hF, mul_add, Finset.sum_add_distrib, mul_ite, mul_one, mul_zero,
+      Finset.sum_ite_eq', ht, ↓reduceIte, map_sum, Finset.mul_sum, _root_.map_mul, map_pow]
+    congr 1
+    · ring
+    · exact Finset.sum_congr rfl fun t' _ ↦ by ring
+  -- the residue of `Σ_t f_t²` vanishes, so `ϖ ∣ f_{t₀} = u_{t₀}`, a unit
+  rw [hyy, eq_comm, ← map_zero (algebraMap A 𝕂)] at hsum
+  have hsum' := congrArg (Ideal.Quotient.mk (Ideal.span {(ϖ : A)}))
+    (InfinityLocalRing.injective_algebraMap hsum)
+  rw [_root_.map_add, _root_.map_mul, Ideal.Quotient.eq_zero_iff_mem.2
+    (Ideal.mem_span_singleton_self _), zero_mul, add_zero, map_zero, map_sum] at hsum'
+  simp only [map_pow] at hsum'
+  have h₀ := eq_zero_of_sum_sq_eq_zero S _ hsum' t₀ ht₀
+  rw [Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton] at h₀
+  simp only [f, Nat.sub_self, pow_zero, mul_one] at h₀
+  exact hirr.not_isUnit (isUnit_of_dvd_unit h₀ (u t₀).isUnit)
+
+include hR in
+/-- Nondegeneracy at a transcendental parameter over a characteristic-zero field,
+by scalar extension of the rational-function case. No target `hY` is needed. -/
+theorem eq_zero_of_forall_form_eq_zero_of_transcendental_of_isXRegular
+    {L : Type*} [Field L] [CharZero L] {w : L} (hw : Transcendental ℚ w) [NeZero w]
+    (x : Modified R w)
+    (hx : ∀ y, form R w (fun _ hn ↦ LusztigF.pow_ne_one_of_transcendental hw hn) x y = 0) :
+    x = 0 :=
+  form_nondegenerate_of_transcendental
+    (eq_zero_of_forall_form_eq_zero_of_isXRegular hR) hw x hx
+
+variable (hY : ∀ N : ℕ, ∃ Λ : Dom R, ∀ i, (N : ℤ) ≤ Λ.1 (R.coroot i))
+
+include hR hY in
+/-- Compatibility form of nondegeneracy with the hypotheses of the old construction.
+The stronger theorem `eq_zero_of_forall_form_eq_zero_of_isXRegular` does not require `hY`. -/
+theorem eq_zero_of_forall_form_eq_zero (x : Modified R 𝕧)
+    (hx : ∀ y, form R 𝕧 hvn_ratFunc x y = 0) : x = 0 := by
+  have _ := hY
+  exact eq_zero_of_forall_form_eq_zero_of_isXRegular hR x hx
+
+include hR hY in
+/-- Compatibility form of transcendental nondegeneracy for the old construction. -/
+theorem eq_zero_of_forall_form_eq_zero_of_transcendental {L : Type*} [Field L]
+    [CharZero L] {w : L} (hw : Transcendental ℚ w) [NeZero w] (x : Modified R w)
+    (hx : ∀ y, form R w (fun _ hn ↦ LusztigF.pow_ne_one_of_transcendental hw hn) x y = 0) :
+    x = 0 := by
+  have _ := hY
+  exact eq_zero_of_forall_form_eq_zero_of_transcendental_of_isXRegular hR hw x hx
 end Modified
 end LieLean.QuantumGroup

@@ -237,12 +237,13 @@ Further proved results include:
     form over `ℚ(v)` and at every parameter transcendental over `ℚ` in a field of characteristic
     zero (`Modified.eq_zero_of_forall_form_eq_zero`,
     `Modified.eq_zero_of_forall_form_eq_zero_of_transcendental`).
-  - **Hypotheses of 25.2.1 and 26.3.1.** These results assume `R.IsXRegular` and
-    `hY : ∀ N, ∃ λ dominant, ∀ i, N ≤ ⟨i, λ⟩`. Lusztig proves 25.2.1 for `Y`-regular root data,
-    which satisfy `hY`, and 26.3.1 for every root datum, by reduction to the simply connected case
-    ([Lus] 25.2.2). `hY` holds for every `X`-regular root datum of finite type; it is a hypothesis
-    of the current basis/form proof route. The original dominant-tensor uniqueness
-    characterization retains `hY`; general construction via 25.2.2 is a separate endpoint.
+  - **Hypotheses of 25.2.1 and 26.3.1.** The original construction and dominant-tensor
+    uniqueness in 25.2.1 assume `R.IsXRegular` and
+    `hY : ∀ N, ∃ λ dominant, ∀ i, N ≤ ⟨i, λ⟩`; that uniqueness retains `hY`.
+    Lusztig proves 25.2.1 for `Y`-regular root data, which satisfy `hY`, and 26.3.1 for every
+    root datum, by reduction to the simply connected case ([Lus] 25.2.2).
+    The transported construction, 26.3.1(a–b), and nondegeneracy below need only `R.IsXRegular`:
+    this remains a route hypothesis not present in the general printed statement.
   - **Column transport ([Lus] 23.2.5, 25.2.2).** `Modified.columnEquiv` and its integral
     restriction `Modified.aColumnEquiv` compare fixed columns along root-datum maps, without
     regularity or `hY`. For `R.IsXRegular`, `Modified.columnCanonical` transports the element
@@ -250,8 +251,14 @@ Further proved results include:
     and bar invariance are proved. The auxiliary datum is not the printed simply connected
     datum. The transported family is a basis over `ℚ(v)` and `𝒜` ([Lus] Cor. 25.2.3;
     `Modified.columnCanonicalBasis`, `Modified.aColumnCanonicalBasis`), by transporting
-    the unitriangular expansion. Agreement with `modifiedCanonical` under `hY` and form
-    transport remain open.
+    the unitriangular expansion. `Modified.form_columnEquiv` preserves the normalized form;
+    `form_columnCanonical_sub_mem` and `mem_signedColumnCanonicalBasis_iff` prove 26.3.1(a–b)
+    without target `hY`. Nondegeneracy over `ℚ(v)` and at transcendental parameters is proved by
+    `eq_zero_of_forall_form_eq_zero_of_isXRegular` and its transcendental variant.
+    Pairing and coordinate integrality here mean `InfinityLocalRing`, not Laurent-integer
+    pairing values; the integral basis and the integral-form condition use `ℤ[v,v⁻¹]`.
+    `columnCanonical_eq_modifiedCanonical` proves agreement under valid `hY`, using the signed
+    characterization and triangular leading coefficients. The old APIs remain available.
   - **Not formalized:** [Lus] 14.3.2 (d); the congruence part of 41.1.6 (PBW elements are
     congruent to `±b`, `b` in the canonical basis, modulo `v⁻¹ℒ`; the lattice part is proved, see
     the table below); 41.1.9 (compatibility with the quantum Frobenius map, deferred item D2 of the

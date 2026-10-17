@@ -31,7 +31,8 @@ from `b ◇_ζ b'' ∈ 𝒜U̇` and [Lus] 23.2.2 (b) (`Modified.aTriangularBasis
 * `Modified.columnCanonicalBasis`, `Modified.aColumnCanonicalBasis`: **[Lus] Cor. 25.2.3**,
   for the transported family, with `IsXRegular` but no target `hY`. The free-coroot auxiliary
   datum is distinct from the printed simply connected datum; its use is justified by the
-  generalized column comparison. Agreement with the old construction remains separate.
+  generalized column comparison. `ModifiedCanonicalSigned` proves agreement with the old
+  construction under its valid `hY` hypothesis.
 
 ## References
 

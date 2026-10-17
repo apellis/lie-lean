@@ -9,7 +9,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.ModifiedCanonicalForm
 # A characterization of `B ∪ (-B)` in `U̇`
 
 Over `ℚ(v)`, let `A = ℚ[[v⁻¹]] ∩ ℚ(v)` be the local ring at `v = ∞` (`InfinityLocalRing`) and
-`B` the canonical basis of `U̇` ([Lus] 25.2.1, `Modified.modifiedCanonicalBasis`). [Lus]
+`B` the canonical basis of `U̇` ([Lus] Cor. 25.2.3, `Modified.columnCanonicalBasis`). [Lus]
 Thm. 26.3.1 (b) states that `β ∈ U̇` lies in `B ∪ (-B)` if and only if `β ∈ 𝒜U̇`, `β̄ = β` and
 `(β, β) ∈ 1 + v⁻¹A`.
 
@@ -20,10 +20,12 @@ Thm. 26.3.1 (b) states that `β ∈ U̇` lies in `B ∪ (-B)` if and only if `β
 
 ## Main results
 
-* `Modified.exists_repr_modifiedCanonicalBasis_eq_algebraMap`: if `(x, x) ∈ A`, the coordinates
+* `Modified.exists_repr_columnCanonicalBasis_eq_algebraMap`: if `(x, x) ∈ A`, the coordinates
   of `x` in the canonical basis lie in `A` (a consequence of 26.3.1 (a)).
-* `Modified.mem_signedCanonicalBasis_iff`: **[Lus] Thm. 26.3.1 (b)**, the set above is
+* `Modified.mem_signedColumnCanonicalBasis_iff`: **[Lus] Thm. 26.3.1 (b)**, the set above is
   `B ∪ (-B)`.
+* `Modified.columnCanonicalBasis_eq_modifiedCanonicalBasis`,
+  `columnCanonical_eq_modifiedCanonical`: agreement with the old construction under `hY`.
 
 ## Proof
 
@@ -37,10 +39,12 @@ step replaced by the scaling argument of `Modified.eq_zero_of_forall_form_eq_zer
 
 ## Hypotheses
 
-Lusztig states 26.3.1 with no assumption on the root datum. Here the root datum is `X`-regular
-and satisfies `hY` (dominant `λ` with all `⟨i, λ⟩` arbitrarily large). Both are hypotheses of
-the current route, inherited from the construction of `B` in 25.2.1
-(`existsUnique_modifiedCanonical`); removing `hY` via [Lus] 25.2.2 is tracked in the roadmap.
+Lusztig states 26.3.1 with no assumption on the root datum. Here `X`-regularity remains a
+route hypothesis, but the transported basis removes target `hY`. Agreement with the old
+construction is proved under its valid `hY` (arbitrarily large dominant weights), using the
+signed characterization and unitriangular leading coefficients. The old APIs are retained.
+The integral-form condition uses `ℤ[v,v⁻¹]`; coordinate integrality below is in the different
+ring `A = InfinityLocalRing` and does not assert Laurent-integer-valued form pairings.
 
 ## References
 
@@ -125,17 +129,69 @@ lemma Modified.repr_bar_modifiedCanonicalBasis (x : Modified R 𝕧)
     rw [Modified.bar_smul, bar_modifiedCanonicalBasis]
   rw [h, Module.Basis.repr_linearCombination, Finsupp.mapRange_apply]
 
-include hR hY in
+/-- Integral-form membership for the transported basis of [Lus] Cor. 25.2.3. -/
+lemma Modified.columnCanonicalBasis_mem_aForm
+    (t : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D) :
+    columnCanonicalBasis hR t ∈ aForm R := by
+  obtain ⟨ζ, b, b''⟩ := t
+  rw [columnCanonicalBasis_apply]
+  exact columnCanonical_mem_aForm hR ζ b.2 b''.2
+
+/-- Bar invariance for the transported basis, following [Lus] 25.2.2. -/
+lemma Modified.bar_columnCanonicalBasis (t : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D) :
+    Modified.bar R (columnCanonicalBasis hR t) = columnCanonicalBasis hR t := by
+  obtain ⟨ζ, b, b''⟩ := t
+  rw [columnCanonicalBasis_apply]
+  exact bar_columnCanonical hR ζ b.2 b''.2
+
+lemma Modified.aColumnCanonicalBasis_coe
+    (t : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D) :
+    (aColumnCanonicalBasis hR t : Modified R 𝕧) = columnCanonicalBasis hR t := by
+  obtain ⟨ζ, b, b''⟩ := t
+  rw [aColumnCanonicalBasis_apply, columnCanonicalBasis_apply]
+
+/-- The `ℚ(v)`-coordinates of an element of `𝒜U̇` in the canonical basis are its
+`𝒜`-coordinates. -/
+lemma Modified.repr_columnCanonicalBasis_coe (x : (aForm R).toSubmodule)
+    (t : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D) :
+    (columnCanonicalBasis hR).repr x t =
+      LusztigF.integralLaurentEval ((aColumnCanonicalBasis hR).repr x t) := by
+  have hx : (x : Modified R 𝕧) = Finsupp.linearCombination 𝕂 (columnCanonicalBasis hR)
+      (((aColumnCanonicalBasis hR).repr x).mapRange LusztigF.integralLaurentEval
+        (map_zero _)) := by
+    conv_lhs => rw [← (aColumnCanonicalBasis hR).linearCombination_repr x]
+    rw [Finsupp.linearCombination_apply, Finsupp.linearCombination_apply,
+      Finsupp.sum_mapRange_index (by simp), Finsupp.sum, Finsupp.sum,
+      Submodule.coe_sum]
+    refine Finset.sum_congr rfl fun s _ ↦ ?_
+    rw [Submodule.coe_smul, aColumnCanonicalBasis_coe, Modified.laurent_smul]
+  rw [hx, Module.Basis.repr_linearCombination, Finsupp.mapRange_apply]
+
+/-- The coordinates of `x̄` in the canonical basis are the bar conjugates of those of `x`. -/
+lemma Modified.repr_bar_columnCanonicalBasis (x : Modified R 𝕧)
+    (t : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D) :
+    (columnCanonicalBasis hR).repr (Modified.bar R x) t =
+      RatFunc.bar ((columnCanonicalBasis hR).repr x t) := by
+  have h : Modified.bar R x = Finsupp.linearCombination 𝕂 (columnCanonicalBasis hR)
+      (((columnCanonicalBasis hR).repr x).mapRange RatFunc.bar (map_zero _)) := by
+    conv_lhs => rw [← (columnCanonicalBasis hR).linearCombination_repr x]
+    rw [Finsupp.linearCombination_apply, Finsupp.linearCombination_apply,
+      Finsupp.sum_mapRange_index (by simp), Finsupp.sum, Finsupp.sum, map_sum]
+    refine Finset.sum_congr rfl fun s _ ↦ ?_
+    rw [Modified.bar_smul, bar_columnCanonicalBasis]
+  rw [h, Module.Basis.repr_linearCombination, Finsupp.mapRange_apply]
+
+include hR in
 /-- If `(x, x) ∈ A`, the coordinates of `x` in the canonical basis of `U̇` lie in `A`. This is
 a consequence of the almost orthonormality [Lus] 26.3.1 (a) (our own deduction, by the scaling
-argument of `Modified.eq_zero_of_forall_form_eq_zero`). Extra hypotheses `R.IsXRegular` and
-`hY` (route hypotheses, from 25.2.1). -/
-theorem Modified.exists_repr_modifiedCanonicalBasis_eq_algebraMap (x : Modified R 𝕧) {a₀ : A}
+argument of `Modified.eq_zero_of_forall_form_eq_zero`). The remaining route hypothesis is
+`R.IsXRegular`; no target `hY` is used. -/
+theorem Modified.exists_repr_columnCanonicalBasis_eq_algebraMap (x : Modified R 𝕧) {a₀ : A}
     (hxx : Modified.form R 𝕧 hvn_ratFunc x x = algebraMap A 𝕂 a₀)
     (s : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D) :
-    ∃ a : A, (modifiedCanonicalBasis hR hY).repr x s = algebraMap A 𝕂 a := by
+    ∃ a : A, (columnCanonicalBasis hR).repr x s = algebraMap A 𝕂 a := by
   classical
-  set e := modifiedCanonicalBasis hR hY
+  set e := columnCanonicalBasis hR
   set c := e.repr x
   set S := c.support
   set F := Modified.form R 𝕧 hvn_ratFunc
@@ -203,7 +259,7 @@ theorem Modified.exists_repr_modifiedCanonicalBasis_eq_algebraMap (x : Modified 
     simp only [map_pow, _root_.map_mul] at h ⊢
     linear_combination h
   -- `(y, y) ≡ Σ_t f_t²`
-  choose a ha using form_modifiedCanonicalBasis_sub_mem hR hY
+  choose a ha using form_columnCanonicalBasis_sub_mem hR
   have hF : ∀ t t', F (e t) (e t') =
       (if t = t' then 1 else 0) + algebraMap A 𝕂 (ϖ * a t t') := fun t t' ↦ by
     rw [← ha t t']
@@ -237,30 +293,29 @@ theorem Modified.exists_repr_modifiedCanonicalBasis_eq_algebraMap (x : Modified 
   exact hirr.not_isUnit (isUnit_of_dvd_unit h₀ (u t₀).isUnit)
 
 /-- **[Lus] Thm. 26.3.1 (b)**: `β ∈ U̇` lies in `B ∪ (-B)` if and only if `β ∈ 𝒜U̇`, `β̄ = β` and
-`(β, β) ∈ 1 + v⁻¹A`, where `B` is the canonical basis `modifiedCanonicalBasis` of [Lus] 25.2.1
+`(β, β) ∈ 1 + v⁻¹A`, where `B` is `columnCanonicalBasis` of [Lus] Cor. 25.2.3
 and `A` the local ring at `v = ∞`.
 
-Lusztig states this with no assumption on the root datum. Here `R.IsXRegular` and `hY` are
-hypotheses of the current route, inherited from the construction of `B`
-(`existsUnique_modifiedCanonical`); removing `hY` via [Lus] 25.2.2 is tracked in the roadmap. -/
-theorem Modified.mem_signedCanonicalBasis_iff (β : Modified R 𝕧) :
+Lusztig states this with no assumption on the root datum. Here `R.IsXRegular` remains
+a route hypothesis; the transported basis needs no target `hY`. -/
+theorem Modified.mem_signedColumnCanonicalBasis_iff (β : Modified R 𝕧) :
     β ∈ signedCanonicalBasis R ↔
-      ∃ t, β = modifiedCanonicalBasis hR hY t ∨ β = -modifiedCanonicalBasis hR hY t := by
+      ∃ t, β = columnCanonicalBasis hR t ∨ β = -columnCanonicalBasis hR t := by
   classical
   constructor
   · rintro ⟨hβ, hbar, a₀, hform⟩
     -- the coordinates of `β` are integers
-    have hint : ∀ t, ∃ n : ℤ, (modifiedCanonicalBasis hR hY).repr β t = n := by
+    have hint : ∀ t, ∃ n : ℤ, (columnCanonicalBasis hR).repr β t = n := by
       intro t
-      obtain ⟨a, ha⟩ := exists_repr_modifiedCanonicalBasis_eq_algebraMap hR hY β hform t
-      have hp : (modifiedCanonicalBasis hR hY).repr β t = _ :=
-        repr_modifiedCanonicalBasis_coe hR hY ⟨β, hβ⟩ t
+      obtain ⟨a, ha⟩ := exists_repr_columnCanonicalBasis_eq_algebraMap hR β hform t
+      have hp : (columnCanonicalBasis hR).repr β t = _ :=
+        repr_columnCanonicalBasis_coe hR ⟨β, hβ⟩ t
       obtain ⟨n, hn⟩ := (isIntInv_of_algebraMap_eq _ a (ha.symm.trans hp)).exists_int_sub
       rw [← hp] at hn
       refine ⟨n, sub_eq_zero.1 (hn.eq_zero_of_bar_eq ?_)⟩
-      rw [map_sub, map_intCast, ← repr_bar_modifiedCanonicalBasis, hbar]
+      rw [map_sub, map_intCast, ← repr_bar_columnCanonicalBasis, hbar]
     choose n hn using hint
-    set e := modifiedCanonicalBasis hR hY
+    set e := columnCanonicalBasis hR
     set S := (e.repr β).support
     set F := Modified.form R 𝕧 hvn_ratFunc
     have hβ' : β = ∑ t ∈ S, algebraMap A 𝕂 (n t) • e t := by
@@ -269,7 +324,7 @@ theorem Modified.mem_signedCanonicalBasis_iff (β : Modified R 𝕧) :
       refine Finset.sum_congr rfl fun t _ ↦ ?_
       rw [hn t, map_intCast]
     -- `(β, β) ≡ Σ_t n_t²`
-    choose a ha using form_modifiedCanonicalBasis_sub_mem hR hY
+    choose a ha using form_columnCanonicalBasis_sub_mem hR
     have hF : ∀ t t', F (e t) (e t') =
         (if t = t' then 1 else 0) + algebraMap A 𝕂 (ϖ * a t t') := fun t t' ↦ by
       rw [← ha t t']
@@ -338,15 +393,98 @@ theorem Modified.mem_signedCanonicalBasis_iff (β : Modified R 𝕧) :
     · right
       rw [hβe, show n t₀ = -1 by linarith, Int.cast_neg, Int.cast_one, neg_smul, one_smul]
   · rintro ⟨t, rfl | rfl⟩
-    · obtain ⟨a, ha⟩ := form_modifiedCanonicalBasis_sub_mem hR hY t t
-      refine ⟨modifiedCanonicalBasis_mem_aForm hR hY t, bar_modifiedCanonicalBasis hR hY t, a, ?_⟩
+    · obtain ⟨a, ha⟩ := form_columnCanonicalBasis_sub_mem hR t t
+      refine ⟨columnCanonicalBasis_mem_aForm hR t, bar_columnCanonicalBasis hR t, a, ?_⟩
       rw [_root_.map_add, _root_.map_one, ← ha]
       simp
-    · obtain ⟨a, ha⟩ := form_modifiedCanonicalBasis_sub_mem hR hY t t
-      refine ⟨neg_mem (modifiedCanonicalBasis_mem_aForm hR hY t), ?_, a, ?_⟩
-      · rw [map_neg, bar_modifiedCanonicalBasis]
+    · obtain ⟨a, ha⟩ := form_columnCanonicalBasis_sub_mem hR t t
+      refine ⟨neg_mem (columnCanonicalBasis_mem_aForm hR t), ?_, a, ?_⟩
+      · rw [map_neg, bar_columnCanonicalBasis]
       · simp only [map_neg, LinearMap.neg_apply, neg_neg]
         rw [_root_.map_add, _root_.map_one, ← ha]
         simp
+
+
+/-- Agreement of the column-transported family with the construction of [Lus] 25.2.1
+under its valid dominant-weight hypothesis. The signed characterization of 26.3.1(b)
+identifies the vector up to sign and label; unitriangular leading coefficients fix both. -/
+theorem Modified.columnCanonicalBasis_eq_modifiedCanonicalBasis :
+    columnCanonicalBasis hR = modifiedCanonicalBasis hR hY := by
+  classical
+  have hold : ∀ t, modifiedCanonicalBasis hR hY t - triangularBasisOne R t ∈
+      Submodule.span 𝕂 (triangularBasisOne R ''
+        {s | canonicalPairDegree D s < canonicalPairDegree D t}) := by
+    rintro ⟨ζ, b, b''⟩
+    simpa only [modifiedCanonicalBasis_apply] using
+      modifiedCanonical_sub_mem_span_lt hR hY (ζ, b, b'')
+  have hcol : ∀ t, columnCanonicalBasis hR t - triangularBasisOne R t ∈
+      Submodule.span 𝕂 (triangularBasisOne R ''
+        {s | canonicalPairDegree D s < canonicalPairDegree D t}) := by
+    rintro ⟨ζ, b, b''⟩
+    simpa only [columnCanonicalBasis_apply] using columnCanonical_sub_mem_span_lt hR (ζ, b, b'')
+  have ho : ∀ {i j}, canonicalPairDegree D j ≤ canonicalPairDegree D i →
+      (triangularBasisOne R).repr (modifiedCanonicalBasis hR hY j) i =
+        Finsupp.single j 1 i :=
+    fun hij ↦ (triangularBasisOne R).repr_apply_of_unitriangular hold hij
+  have hc : ∀ {i j}, canonicalPairDegree D j ≤ canonicalPairDegree D i →
+      (triangularBasisOne R).repr (columnCanonicalBasis hR j) i =
+        Finsupp.single j 1 i :=
+    fun hij ↦ (triangularBasisOne R).repr_apply_of_unitriangular hcol hij
+  apply DFunLike.ext
+  intro t
+  have hmem : modifiedCanonicalBasis hR hY t ∈ signedCanonicalBasis R := by
+    obtain ⟨a, ha⟩ := form_modifiedCanonicalBasis_sub_mem hR hY t t
+    refine ⟨modifiedCanonicalBasis_mem_aForm hR hY t,
+      bar_modifiedCanonicalBasis hR hY t, a, ?_⟩
+    rw [_root_.map_add, _root_.map_one, ← ha]
+    simp
+  obtain ⟨s, hs⟩ := (mem_signedColumnCanonicalBasis_iff hR _).1 hmem
+  have hts : t = s := by
+    by_contra hne
+    rcases le_total (canonicalPairDegree D t) (canonicalPairDegree D s) with hle | hle
+    · rcases hs with hs | hs
+      · have h := congrArg (fun x ↦ (triangularBasisOne R).repr x s) hs
+        rw [ho hle, hc le_rfl] at h
+        simp [hne] at h
+      · have h := congrArg (fun x ↦ (triangularBasisOne R).repr x s) hs
+        rw [map_neg, Finsupp.neg_apply, ho hle, hc le_rfl] at h
+        simp [hne] at h
+    · rcases hs with hs | hs
+      · have h := congrArg (fun x ↦ (triangularBasisOne R).repr x t) hs
+        rw [ho le_rfl, hc hle] at h
+        simp [Ne.symm hne] at h
+      · have h := congrArg (fun x ↦ (triangularBasisOne R).repr x t) hs
+        rw [map_neg, Finsupp.neg_apply, ho le_rfl, hc hle] at h
+        simp [Ne.symm hne] at h
+  subst s
+  rcases hs with hs | hs
+  · exact hs.symm
+  · have h := congrArg (fun x ↦ (triangularBasisOne R).repr x t) hs
+    rw [map_neg, Finsupp.neg_apply, ho le_rfl, hc le_rfl] at h
+    norm_num at h
+
+/-- The column family agrees pointwise with [Lus] 25.2.1 when the old construction applies. -/
+theorem columnCanonical_eq_modifiedCanonical (ζ : Y →+ ℤ) {b b'' : Um D 𝕧}
+    (hb : b ∈ canonicalBasis D) (hb'' : b'' ∈ canonicalBasis D) :
+    columnCanonical hR ζ hb hb'' = modifiedCanonical hR hY ζ hb hb'' := by
+  have h := congrArg (fun e ↦ e (ζ, ⟨b, hb⟩, ⟨b'', hb''⟩))
+    (Modified.columnCanonicalBasis_eq_modifiedCanonicalBasis hR hY)
+  simpa only [columnCanonicalBasis_apply, modifiedCanonicalBasis_apply] using h
+
+/-- Coordinate integrality in the local ring for the old construction, as a consequence
+of the transported-basis statement and agreement. -/
+theorem Modified.exists_repr_modifiedCanonicalBasis_eq_algebraMap (x : Modified R 𝕧) {a₀ : A}
+    (hxx : Modified.form R 𝕧 hvn_ratFunc x x = algebraMap A 𝕂 a₀)
+    (s : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D) :
+    ∃ a : A, (modifiedCanonicalBasis hR hY).repr x s = algebraMap A 𝕂 a := by
+  rw [← columnCanonicalBasis_eq_modifiedCanonicalBasis hR hY]
+  exact exists_repr_columnCanonicalBasis_eq_algebraMap hR x hxx s
+
+/-- [Lus] 26.3.1(b) for the old construction, recovered by agreement with the transported basis. -/
+theorem Modified.mem_signedCanonicalBasis_iff (β : Modified R 𝕧) :
+    β ∈ signedCanonicalBasis R ↔
+      ∃ t, β = modifiedCanonicalBasis hR hY t ∨ β = -modifiedCanonicalBasis hR hY t := by
+  rw [← columnCanonicalBasis_eq_modifiedCanonicalBasis hR hY]
+  exact mem_signedColumnCanonicalBasis_iff hR β
 
 end LieLean.QuantumGroup
