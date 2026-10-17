@@ -28,11 +28,15 @@ from `b ◇_ζ b'' ∈ 𝒜U̇` and [Lus] 23.2.2 (b) (`Modified.aTriangularBasis
 * `exists_modifiedCanonical_eq_triMul`: the corresponding statement in `U̇` (cf. [Lus] 25.2.1 (e)).
 * `modifiedCanonical_sub_mem_span`: unitriangularity with respect to the triangular basis.
 * `Modified.modifiedCanonicalBasis`, `Modified.aModifiedCanonicalBasis`: **[Lus] Thm. 25.2.1 (d)**.
+* `Modified.columnCanonicalBasis`, `Modified.aColumnCanonicalBasis`: **[Lus] Cor. 25.2.3**,
+  for the transported family, with `IsXRegular` but no target `hY`. The free-coroot auxiliary
+  datum is distinct from the printed simply connected datum; its use is justified by the
+  generalized column comparison. Agreement with the old construction remains separate.
 
 ## References
 
 * [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, 23.2.1, 23.2.2, 23.3.1,
-  24.3.3, 25.2.1.
+  24.3.3, 25.2.1–25.2.3.
 -/
 
 noncomputable section
@@ -450,5 +454,83 @@ theorem Modified.aModifiedCanonicalBasis_apply (ζ : Y →+ ℤ) (b b'' : canoni
   rw [aModifiedCanonicalBasis, Module.Basis.ofUnitriangular_apply]
 
 end Basis
+
+/-! ### The transported bases without target `hY` -/
+
+/-- The triangular expansion transports through the column equivalence of §23.2.5. -/
+theorem exists_columnCanonical_eq_triMul (ζ : Y →+ ℤ) {b b'' : Um D 𝕧}
+    (hb : b ∈ canonicalBasis D) (hb'' : b'' ∈ canonicalBasis D) :
+    ∃ z ∈ triDepth D (cbWt D ⟨b, hb⟩).degree (cbWt D ⟨b'', hb''⟩).degree,
+      columnCanonical hR ζ hb hb'' =
+        leftActOne R hvn_ratFunc ζ (triMul R hvn_ratFunc (b'' ⊗ₜ[𝕂] b + z)) := by
+  obtain ⟨z, hz, he⟩ := exists_modifiedCanonical_eq_triMul
+    (isXRegular_freeCoroot hR) exists_dom_freeCoroot (ζ.comp R.freeCorootHom.toHom) hb hb''
+  refine ⟨z, hz, ?_⟩
+  unfold columnCanonical
+  have hs : (⟨modifiedCanonical (isXRegular_freeCoroot hR) exists_dom_freeCoroot
+      (ζ.comp R.freeCorootHom.toHom) hb hb'',
+      modifiedCanonical_mem_range (isXRegular_freeCoroot hR) exists_dom_freeCoroot
+        (ζ.comp R.freeCorootHom.toHom) hb hb''⟩ :
+      LinearMap.range (leftActOne R.freeCoroot hvn_ratFunc (ζ.comp R.freeCorootHom.toHom))) =
+      ⟨leftActOne R.freeCoroot hvn_ratFunc (ζ.comp R.freeCorootHom.toHom)
+        (triMul R.freeCoroot hvn_ratFunc (b'' ⊗ₜ[𝕂] b + z)), _, rfl⟩ :=
+    Subtype.ext he
+  rw [hs, columnEquiv_triMul]
+
+include hR in
+/-- Unitriangularity of the transported family, with no target dominant-weight hypothesis. -/
+lemma columnCanonical_sub_mem_span_lt
+    (t : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D) :
+    columnCanonical hR t.1 t.2.1.2 t.2.2.2 - triangularBasisOne R t ∈
+      Submodule.span 𝕂 (triangularBasisOne R ''
+        {s | canonicalPairDegree D s < canonicalPairDegree D t}) := by
+  obtain ⟨z, hz, he⟩ := exists_columnCanonical_eq_triMul hR t.1 t.2.1.2 t.2.2.2
+  rw [he, map_add, map_add, leftActOne_triMul_tmul, add_sub_cancel_left]
+  refine Submodule.span_mono (Set.image_mono fun s hs ↦ ?_)
+    (leftActOne_triMul_mem_span t.1 hz)
+  change s.1 = t.1 ∧ (cbWt D s.2.1).degree < (cbWt D t.2.1).degree ∧
+    (cbWt D s.2.2).degree < (cbWt D t.2.2).degree at hs
+  simp only [Set.mem_ofPred_eq, canonicalPairDegree]
+  omega
+
+/-- **Lusztig Corollary 25.2.3**, rational basis obtained by §25.2.2 column transport.
+The existing global-basis input requires `IsXRegular`; no target `hY` is used. -/
+def Modified.columnCanonicalBasis :
+    Module.Basis ((Y →+ ℤ) × canonicalBasis D × canonicalBasis D) 𝕂 (Modified R 𝕧) :=
+  (triangularBasisOne R).ofUnitriangular (columnCanonical_sub_mem_span_lt hR)
+
+/-- The rational transported basis evaluates to `columnCanonical`. -/
+theorem Modified.columnCanonicalBasis_apply (ζ : Y →+ ℤ) (b b'' : canonicalBasis D) :
+    columnCanonicalBasis hR (ζ, b, b'') = columnCanonical hR ζ b.2 b''.2 :=
+  Module.Basis.ofUnitriangular_apply _ _ _
+
+include hR in
+lemma columnCanonical_sub_mem_aSpan_lt
+    (t : (Y →+ ℤ) × canonicalBasis D × canonicalBasis D) :
+    (⟨columnCanonical hR t.1 t.2.1.2 t.2.2.2,
+        columnCanonical_mem_aForm hR t.1 t.2.1.2 t.2.2.2⟩ : (aForm R).toSubmodule) -
+      aTriangularBasisOne R t ∈ Submodule.span 𝒜 (aTriangularBasisOne R ''
+        {s | canonicalPairDegree D s < canonicalPairDegree D t}) := by
+  have h𝕂 := (triangularBasisOne R).mem_span_image.1 (columnCanonical_sub_mem_span_lt hR t)
+  rw [Module.Basis.mem_span_image]
+  intro s hs
+  by_contra hst
+  apply Finsupp.mem_support_iff.1 (Finset.mem_coe.1 hs)
+  apply LusztigF.integralLaurentEval_injective
+  rw [map_zero, ← repr_triangularBasisOne_coe, Submodule.coe_sub, aTriangularBasisOne_apply]
+  by_contra hne
+  exact hst (h𝕂 (Finset.mem_coe.2 (Finsupp.mem_support_iff.2 hne)))
+
+/-- **Lusztig Corollary 25.2.3**, the integral transported canonical basis of `𝒜U̇`.
+The target datum requires `IsXRegular` but not `hY`. -/
+def Modified.aColumnCanonicalBasis :
+    Module.Basis ((Y →+ ℤ) × canonicalBasis D × canonicalBasis D) 𝒜 (aForm R).toSubmodule :=
+  (aTriangularBasisOne R).ofUnitriangular (columnCanonical_sub_mem_aSpan_lt hR)
+
+/-- The integral transported basis has the same vectors as the rational one. -/
+theorem Modified.aColumnCanonicalBasis_apply (ζ : Y →+ ℤ) (b b'' : canonicalBasis D) :
+    (aColumnCanonicalBasis hR (ζ, b, b'') : Modified R 𝕧) =
+      columnCanonical hR ζ b.2 b''.2 := by
+  rw [aColumnCanonicalBasis, Module.Basis.ofUnitriangular_apply]
 
 end LieLean.QuantumGroup
