@@ -1,8 +1,8 @@
 # Errata
 
-Errata to the source texts found during the formalization. Codes: **M** misprint; **F→T** false as printed,
-with a corrected statement proved; **G** gap in the proof of a true statement. These are what the formalization
-turned up; they are not a complete review of the texts.
+Errata and proof clarifications arising during the formalization. Codes: **M** misprint; **F→T** false
+as printed, with a corrected statement proved; **G** gap in the proof of a true statement. Notes not
+established as errata are labelled separately. These entries are not a complete review of the texts.
 
 ## [Lus] G. Lusztig, *Introduction to Quantum Groups*
 
@@ -12,23 +12,46 @@ turned up; they are not a complete review of the texts.
 
 ## [HK] J. Hong, S.-J. Kang, *Introduction to Quantum Groups and Crystal Bases*, GSM 42
 
-1. **Proof of Prop. 5.3.9, via Lemmas 5.3.7–5.3.8 [G].** The descending induction on `N` in
-   `ẽᵢ L(μ)_{depth r} ⊆ ϖ^{-N} L(μ)` is run for all sufficiently large `μ` at once, with a bound
-   on `N` that is uniform in `μ`. The uniformity is justified by identifying `Σ_α V(λ)_{λ−α}`
-   with `Σ_α V(μ)_{μ−α}` compatibly with `ẽᵢ`, `f̃ᵢ`.
-   No such identification exists: the two `ẽᵢ`-actions differ already for `𝔰𝔩₂`. The statement of
-   Prop. 5.3.9 is unaffected. The library runs the induction on a finite set of weights, the
-   given weight together with the fundamental weights, which is all that the two steps of
-   Lemma 5.3.8 use (`CrystalBasis/GrandLoop/PropA.lean`: `GrandLoop.eT_smul_mem_LL` for 5.3.7,
-   `GrandLoop.step₁`, `GrandLoop.step₂` for 5.3.8, `GrandLoop.propA_add_two` for 5.3.9).
-2. **Proof of Lemma 5.3.15 [G].** The printed proof relies on Exercise 5.13, whose solution is not
-   given in the book. The library proves what the lemma needs: for `λ` large, the lattices
-   `Λ_λ = {y ∈ U⁻_ν | y v_λ ∈ L(λ)}` do not depend on `λ` (`GrandLoop.exists_stLat_eq`), and neither
-   do their duals for the Shapovalov forms `(x v_λ, y v_λ)` (`GrandLoop.exists_dual_stLat_eq`, via
-   the limit of the Shapovalov form, `VermaModule.exists_shapZ_sub_mem`). From these it derives
-   `Ψ(L(λ₁) ⊗ v_{λ₂}) ⊆ L(λ₁ + λ₂)` for `λ₁` large (`GrandLoop.tensorProj_tmul_hwv_mem`) and the
-   lemma itself (`GrandLoop.tensorProj_mem_lat_of_large`; files
-   `CrystalBasis/GrandLoop/{Stable,Dual,Purity,Projection}.lean`).
+1. **Proof of Prop. 5.3.9, via Lemmas 5.3.7–5.3.8: false auxiliary identification, local repair.**
+   The bounded-depth identification asserted on p. 102 and used for the uniform denominator bound
+   on p. 107 is required to commute with the ordinary operators `eᵢ`, `fᵢ`; compatibility with the
+   Kashiwara operators is then inferred. The ordinary-action assertion is false already for
+   `𝔰𝔩₂`: on a highest vector of `V(m)`, `e f v_m = [m] v_m`, so an identification of the highest
+   lines commuting with both operators would force `[m] = [n]` for distinct large `m`, `n`.
+   This does not refute compatibility of the truncated Kashiwara actions: in rank one their
+   divided-power arrows agree on common top string segments whenever the arrows stay inside
+   those segments. The earlier claim here that the rank-one `ẽ`-actions differ was incorrect.
+
+   The defect is in this auxiliary justification, not in the conclusion of Prop. 5.3.9 (p. 109).
+   Fix the depth and the target weight, and take the finite set consisting of that weight and
+   the fundamental weights, as already introduced on p. 107. A maximum of finitely many
+   denominator bounds supplies the initial exponent. The two tensor steps of Lemma 5.3.8
+   (pp. 108–109) can be run on this finite set: the first improves the bound at the intermediate
+   sums, and the second brings the improvement back to each selected weight, including the
+   fundamental weights. No old bound on the intermediate sums is needed. Descending on the
+   exponent gives `A(r)` for the arbitrary target weight, without an identification of distinct
+   highest-weight modules. This is a local repair of the induction, implemented in
+   `CrystalBasis/GrandLoop/PropA.lean` (`GrandLoop.eT_smul_mem_LL`, `GrandLoop.step₁`,
+   `GrandLoop.step₂`, `GrandLoop.propA_add_two`); it does not disprove the numbered results.
+2. **Lemma 5.3.15 and Exercise 5.13: proof clarification, not a confirmed erratum.** The proof
+   on pp. 112–113 explicitly delegates its dual-lattice comparison to Exercise 5.13 (p. 117).
+   Part (a) asks for a projection-image equality with the first highest weight sufficiently
+   large; part (b) asks for a dual-membership equivalence with the second sufficiently large,
+   using (a). An omitted exercise solution does not by itself establish a proof gap. No false
+   assertion or circular argument has been established here. Reconstruction of the requested
+   implication from (a) to (b), including the change of large factor using only inputs available
+   at that induction stage, remains partial.
+
+   The library supplies an independent stable-lattice argument in the finite-index,
+   generic-parameter, discrete-valuation-ring setting. For `λ` large, the lattices
+   `Λ_λ = {y ∈ U⁻_ν | y v_λ ∈ L(λ)}` stabilize (`GrandLoop.exists_stLat_eq`), as do their duals
+   for the Shapovalov forms (`GrandLoop.exists_dual_stLat_eq`, using
+   `VermaModule.exists_shapZ_sub_mem`). This gives the bounded-depth projection inclusion
+   (`GrandLoop.tensorProj_tmul_hwv_mem`) and Lemma 5.3.15 (`GrandLoop.tensorProj_mem_lat_of_large`;
+   `CrystalBasis/GrandLoop/{Stable,Dual,Purity,Projection}.lean`). The library reverses the book's
+   tensor order and uses an inverse-parameter uniformizer; its large first factor corresponds
+   to the book's large second factor. This independent proof does not certify the requested
+   exercise derivation, nor does it make the exercise an erratum.
 
 ## [Kas91] M. Kashiwara, *On crystal bases of the q-analogue of universal enveloping algebras*, Duke Math. J. 63 (1991)
 
