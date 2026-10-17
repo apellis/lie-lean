@@ -250,9 +250,9 @@ lemma wt_topHW (Λ : Dom R) :
 module in `𝒪_int` and `(L, B)` a crystal base of `M`. Then the crystal of `B` is isomorphic to the
 disjoint union `⊔ⱼ B(λⱼ)` of the crystals of the crystal bases `(L(λⱼ), B(λⱼ))` of the `L_q(λⱼ)`,
 for dominant weights `λⱼ` (indexed by a set of submodules of `M`), and the highest weight elements
-of `B` are exactly the images of the `u_{λⱼ}`, of weight `λⱼ`. Kashiwara states the
-correspondence between irreducible summands of `M`, connected components of `B` and highest weight
-elements of `B` schematically. -/
+of `B` are exactly the images of the `u_{λⱼ}`, of weight `λⱼ`; moreover `M ≅ ⊕ⱼ L_q(λⱼ)`
+([HK] Thm. 5.2.1). Kashiwara states the correspondence between irreducible summands of `M`,
+connected components of `B` and highest weight elements of `B` schematically. -/
 theorem exists_crystalEquiv_sigma_of_isCategoryOInt (hO : IsCategoryOInt R v M)
     (hB : IsCrystalBase hL ϖ B) :
     ∃ (s : Set (Submodule (QuantumGroup R v) M)) (Λ : s → Dom R)
@@ -260,14 +260,15 @@ theorem exists_crystalEquiv_sigma_of_isCategoryOInt (hO : IsCategoryOInt R v M)
         (hB.crystal (not_isUnit_ϖ hϖ))),
       (∀ b, (hB.crystal (not_isUnit_ϖ hϖ)).IsHighestWeight b ↔
         ∃ j, b = Φ ⟨j, topHW hvt hR hinj hϖ (Λ j)⟩) ∧
-      ∀ j, (hB.crystal (not_isUnit_ϖ hϖ)).wt (Φ ⟨j, topHW hvt hR hinj hϖ (Λ j)⟩) = (Λ j).1 := by
+      (∀ j, (hB.crystal (not_isUnit_ϖ hϖ)).wt (Φ ⟨j, topHW hvt hR hinj hϖ (Λ j)⟩) = (Λ j).1) ∧
+      Nonempty ((Π₀ j, IrreducibleModule R v (Λ j).1) ≃ₗ[QuantumGroup R v] M) := by
   classical
   obtain ⟨s, Λ, Ψ, hΨ, hBB⟩ := exists_equiv_of_isCategoryOInt hinj hϖ hϖv hk hfund hO hB
   have hc := not_isUnit_ϖ hϖ
   have hB₀ := fun j ↦ isCrystalBaseHW hvt hR hinj hϖ hϖv hk hfund (Λ j)
   let Φ := (IsCrystalBase.sigmaCrystalEquiv hc hB₀).trans
     ((IsCrystalBase.dfinsupp hc hB₀).crystalEquivOfEquiv hB hc Ψ hΨ hBB)
-  refine ⟨s, Λ, Φ, fun b ↦ ?_, fun j ↦ ?_⟩
+  refine ⟨s, Λ, Φ, fun b ↦ ?_, fun j ↦ ?_, ⟨Ψ⟩⟩
   · obtain ⟨⟨j, b₀⟩, rfl⟩ := Φ.toEquiv.surjective b
     rw [Crystal.Equiv.coe_toEquiv, ← Crystal.Equiv.coe_toStrictHom,
       Crystal.StrictHom.isHighestWeight_apply_iff, Crystal.isHighestWeight_sigma_iff]
