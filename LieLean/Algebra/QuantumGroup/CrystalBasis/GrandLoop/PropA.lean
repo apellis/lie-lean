@@ -10,10 +10,14 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Head
 
 We prove `A(r)`: `ẽᵢ L(λ)_{depth r} ⊆ L(λ)` ([HK] Prop. 5.3.9), by a descending induction on `N`
 in `ẽᵢ L(μ)_{depth r} ⊆ ϖ^{-N} L(μ)` ([HK] Lemmas 5.3.7, 5.3.8). Our argument differs from [HK] in
-one point: [HK] run the induction for all `μ ≫ 0` simultaneously, using a uniform bound justified by
-an identification `Σ V(λ)_{λ-α} ≅ Σ V(μ)_{μ-α}` "commuting with `ẽᵢ`, `f̃ᵢ`", which does not hold
-(already for `𝔰𝔩₂` the actions of `ẽ` differ). We run it instead on the finite set consisting of the
-given weight and the fundamental weights, which is all that the two steps of [HK] Lemma 5.3.8 use.
+one point: [HK] run the induction for all `μ ≫ 0` simultaneously. The uniform bound on p. 107
+relies on the bounded-depth identification asserted on p. 102, required to commute with the ordinary
+operators `eᵢ`, `fᵢ`. This auxiliary assertion fails already for `𝔰𝔩₂`, since `e f v_m = [m] v_m`
+depends on the highest weight. By contrast, the truncated rank-one Kashiwara arrows agree on common
+top string segments whenever they stay inside those segments. We run the induction on the finite
+set of the given weight and the fundamental weights: a finite maximum gives the initial bound,
+and the two steps of Lemma 5.3.8 (pp. 108–109) improve it on this set via intermediate sums.
+This is a local repair of the argument, not a change to Prop. 5.3.9 (p. 109); see `ERRATA.md`.
 
 ## Main definitions
 

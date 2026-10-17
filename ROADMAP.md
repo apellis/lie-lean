@@ -2672,8 +2672,9 @@ with `S f̃ᵢ ≡ f̃ᵢ S` (`GrandLoop.Sh_fT_sub_mem`; Lemma 5.3.6), the tenso
 (`fTw_fund`, for a fundamental weight).
 `PropA`: `A(r)` (`GrandLoop.propA_zero`, `propA_one`, `propA_add_two`; [HK] Lemmas 5.3.7, 5.3.8,
 Prop. 5.3.9), by descending induction on `N` in `ẽᵢ L(μ) ⊆ ϖ^{-N} L(μ)` over the finite set of the
-given weight and the fundamental weights (the uniform bound used in [HK] is not justified there;
-see the module docstring).
+given weight and the fundamental weights. This locally repairs the false ordinary-operator
+identification used to justify [HK]'s uniform bound; it does not refute the truncated rank-one
+Kashiwara compatibility or Prop. 5.3.9 (see the module docstring and `ERRATA.md`).
 `PropB`: `B(r)` (`GrandLoop.propB_zero`, `propB_one`, `propB_add_two`; [HK] Lemma 5.3.11,
 Prop. 5.3.12), with `G(r)` (`GrandLoop.PropG`) and `S f̃_w (v ⊗ v) ≡ f̃_w v` (`Sh_fTw_sub`).
 `Stable`: the lattices `Λ_λ = {y ∈ U⁻_ν | y v_λ ∈ L(λ)}` (`GrandLoop.stLat`): `Fᵢ L(λ) ⊆
@@ -2682,8 +2683,10 @@ Prop. 5.3.12), with `G(r)` (`GrandLoop.PropG`) and `S f̃_w (v ⊗ v) ≡ f̃_w 
 valuation ring, `Λ_λ` is independent of `λ` for `λ` large (`GrandLoop.exists_stLat_eq`).
 `Dual`: on `U⁻_ν` the Shapovalov forms `G_λ` (`GrandLoop.gF`) and Lusztig's form `G_0`
 (`GrandLoop.g0`, nondegenerate by quantum Gabber–Kac, `nondegenerate_g0`); for `λ` large the dual
-of the stable lattice for `G_λ` equals its dual for `G_0` (`GrandLoop.exists_dual_stLat_eq`; our
-proof of [HK] Exercise 5.13). Generic inputs in `DualLattice`
+of the stable lattice for `G_λ` equals its dual for `G_0` (`GrandLoop.exists_dual_stLat_eq`). This
+independent stable-lattice argument supplies the comparison needed for [HK] Lemma 5.3.15; it does
+not derive Exercise 5.13(b) from (a); that reconstruction remains partial (see `ERRATA.md`).
+Generic inputs in `DualLattice`
 (`exists_pow_smul_mem_of_mem_dual`, `exists_pow_smul_mem_dual`).
 `Purity`: the map `S' : M ⊗ V(λ₂) → M`, `x ⊗ y ↦ (v_{λ₂}, y) x` (`GrandLoop.tensorTail`,
 `Fᵢ`-equivariant up to `vᵢ^{-⟨i,λ₂⟩}`), and `Ψ(L(λ₁)_{λ₁-ν} ⊗ v_{λ₂}) ⊆ L(λ₁ + λ₂)` for `λ₁`
@@ -3385,9 +3388,12 @@ completed steps and continuation threads are:
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
   `L_q(λ)` for every dominant `λ`, for `v` transcendental and a discrete valuation ring
-  `A ⊆ k = A[ϖ⁻¹]`, `ϖ ↦ v⁻¹`. The printed proof has gaps (the uniform bound in Lemmas 5.3.7, 5.3.8;
-  Exercise 5.13, used in Lemma 5.3.15), which are filled by our own arguments (`GrandLoop/PropA`,
-  `ShapovalovLimit`, `GrandLoop/{Stable,Dual,Purity}`). Uniqueness of crystal bases of every
+  `A ⊆ k = A[ϖ⁻¹]`, `ϖ ↦ v⁻¹`. `GrandLoop/PropA` locally repairs the false auxiliary
+  ordinary-operator identification used for the uniform bound in Lemmas 5.3.7–5.3.8, without
+  changing Prop. 5.3.9. For Lemma 5.3.15, the library uses an independent stable-lattice proof
+  (`ShapovalovLimit`, `GrandLoop/{Stable,Dual,Purity}`), not a reconstruction of the explicitly
+  delegated Exercise 5.13(b)-from-(a) argument. That reconstruction remains partial; the exercise
+  is not a confirmed proof gap (see `ERRATA.md`). Uniqueness of crystal bases of every
   module in `𝒪_int` ([HK] Thm. 5.2.1, `GrandLoop.exists_equiv_of_isCategoryOInt`, any number of
   summands; the decomposition `M ≅ ⊕ⱼ L_q(λⱼ)` comes from complete reducibility, [HK] Thm. 3.5.4,
   `IsCategoryOInt.exists_linearEquiv_dfinsupp`); consequently the crystal of such a crystal base
