@@ -93,9 +93,15 @@ Further proved results include:
   Weyl-group action on `B(Λ)` are proved for every generalized Cartan matrix (the `B₂`/`G₂` braid
   relations by folding). Normal crystals are defined relative to the path model
   (`Crystal.IsNormal`): path crystals, disjoint unions and tensor products of normal crystals are
-  normal, and the Weyl group acts on every normal crystal (`Crystal.IsNormal.weylAction`). The
-  identification of path crystals with crystals of crystal bases is not formalized; arbitrary
-  continuous dominant paths are not covered.
+  normal, and the Weyl group acts on every normal crystal (`Crystal.IsNormal.weylAction`). Path
+  crystals are identified with crystals of crystal bases (Kashiwara, *Similarity of crystal
+  bases*, Thm. 4.1): over `ℚ(v)`, for every Cartan datum with finite index set and every dominant
+  weight `λ` of its extended root datum, there is a unique crystal isomorphism from the crystal of
+  the crystal base of `L_q(λ)` to Littelmann's `B(λ)` sending the highest weight element to the
+  straight-line path (`GrandLoop.existsUnique_equiv_pathCrystal_ratFunc`; the general form
+  `GrandLoop.existsUnique_equiv_pathCrystal` is over a discrete valuation ring with formally real
+  residue field). Hence the crystal of `L_q(λ)` is normal (`GrandLoop.isNormal_crystalHW_ratFunc`).
+  Arbitrary continuous dominant paths are not covered.
 * **Quantum groups:** finite-dimensional generic quantum `sl₂` classification; Lusztig's `Tᵢ`
   at every node under explicit nonvanishing hypotheses (in particular, nonzero parameter not a
   root of unity); the `G₂` length-six relation; and Artin actions for every finite-type Cartan
@@ -178,8 +184,8 @@ Further proved results include:
   longest-word spanning (`span_pbwMonomial_longest_of_isFiniteCartan`) in every finite type.
   Consequently `finiteTypePBWBasis`, `finiteTypeNegativePBWBasis` and `finiteTypeFullPBWBasis`
   (`U⁺`, `U⁻`, `U`) hold for every Cartan datum of finite type, over any field, at every
-  nonzero parameter which is not a root of unity. Faithfulness and general-rank global bases
-  remain open.
+  nonzero parameter which is not a root of unity. Global and canonical bases are proved in every
+  rank (see below); faithfulness of the braid group action is not formalized.
 - **Symmetries of integrable modules (rank one):** `QuantumGroup/ModuleSymmetry/Strings` and
   `Rank1` treat integrable `U_q(𝔰𝔩₂)`-modules abstractly (`IntegrableSl2`, Lusztig's category
   `C'`): every weight vector is a sum of `F^{(j)} η`, `η` primitive; Lusztig's symmetry
@@ -188,9 +194,56 @@ Further proved results include:
   `ModuleSymmetry/Integrable`: on every integrable `U`-module these symmetries satisfy
   `Tᵢ(u m) = Tᵢ(u) Tᵢ(m)` for Lusztig's automorphisms `Tᵢ` of `U` (`nodeSl2_T_smul`,
   [Lus] 37.1.2).
-- **Kashiwara operators:** the string decomposition of integrable `U_q(𝔰𝔩₂)`-modules and the
-  Kashiwara operators `ẽᵢ`, `f̃ᵢ` on integrable `U`-modules (`QuantumGroup/CrystalBasis/`), the first
-  step towards crystal bases.
+- **Crystal bases:** the string decomposition of integrable `U_q(𝔰𝔩₂)`-modules, the Kashiwara
+  operators `ẽᵢ`, `f̃ᵢ` on integrable `U`-modules (`QuantumGroup/CrystalBasis/`), and
+  Kashiwara's grand loop (Hong–Kang, *Introduction to quantum groups and crystal bases*, §5.3,
+  `GrandLoop.allProp`): existence and uniqueness of the crystal base `(L(λ), B(λ))` of `L_q(λ)` for
+  every dominant `λ` (`GrandLoop.isCrystalBase`), crystal bases of modules in `𝒪_int`, the tensor
+  product rule for arbitrary integrable modules (`TensorModule.isCrystalBase_tensor_integrable`),
+  the crystal base `(L(∞), B(∞))` of `U⁻`, `B(∞)* = B(∞)` and the Kashiwara–Saito
+  characterization of `B(∞)` (`GrandLoop.equivInf`). Lattices are at `v = ∞`, matching Lusztig's
+  coproduct. Two gaps in the printed grand loop are recorded in [`ERRATA.md`](ERRATA.md). Not
+  formalized: Kashiwara, *On crystal bases*, Prop. 4.2 (decomposition of `L_q(λ) ⊗ L_q(μ)`),
+  Prop. 4.3 (restriction to `U_q(𝔤_J)`) and Prop. 7.1, and crystal bases of integrable modules
+  outside `𝒪_int`.
+- **Global and canonical bases** (`QuantumGroup/CrystalBasis/Global/`; over `ℚ(v)`, every Cartan
+  datum with finite index set):
+  - Kashiwara's global bases (Kashiwara, Duke Math. J. 63 (1991), §7): the statement (G.1) at
+    every weight (`negGlobalAt`: `U⁻_ℤ ∩ U⁻_ν ∩ L(∞) ∩ L(∞)⁻ → L_ℤ(∞)_ν / v⁻¹L_ℤ(∞)_ν` is
+    bijective) and (G.2) for every dominant `λ` (`hwGlobalAt`; `X`-regular root data with
+    fundamental weights).
+  - Lusztig's canonical basis of `f` is Kashiwara's global basis: the signed basis of [Lus] 14.2.3
+    is `{±G(b)}` (`mem_signedBasis_iff`), and the canonical basis of [Lus] 14.4.2 is
+    `B_ν = {G(b) | b ∈ B(∞)_ν}` (`canonicalBasisAt_eq_range`). Also [Lus] 14.2.5 (a), 14.3.1,
+    Thm. 14.3.2 (a)–(c), 14.3.3 and Thm. 14.4.3 (a)–(e) (bases of `f` over `ℚ(v)` and of `𝒜f`
+    over `𝒜 = ℤ[v, v⁻¹]`, stability under `σ`).
+  - Canonical basis of `L_q(λ)`: [Lus] Thm. 14.4.11 (`canonicalBasisHWBasis`,
+    `evq_eq_zero_of_notMem_canonicalBasisHW`) and Prop. 19.3.3 (`isNegLaurent_formL_evq_sub`:
+    `(b⁻η, b'⁻η) − δ_{b,b'} ∈ v⁻¹ℤ[v⁻¹]`), for `X`-regular root data (`R.IsXRegular`; Lusztig
+    assumes `Y`-regular).
+  - Canonical bases of `ʷL_q(λ) ⊗ L_q(λ')`: [Lus] Thm. 24.3.3 (a)–(d) (`tensorCanonical`,
+    `tensorCanonicalBasis`), with 25.1.2–25.1.4, 25.1.6, 25.1.7, 25.1.9 and 25.1.10.
+  - Canonical basis of `U̇`: [Lus] Thm. 25.2.1 (a)–(d) (`existsUnique_modifiedCanonical`,
+    `bar_modifiedCanonical`, `Modified.modifiedCanonicalBasis`, `Modified.aModifiedCanonicalBasis`);
+    the triangular bases of 23.2.1 (b), 23.2.2 (b) built from `B`
+    (`Modified.aTriangularBasisCanonical`).
+  - Lusztig's form on `U̇` ([Lus] 26.1.1–26.1.6, `QuantumGroup.rhoBar`, `Modified.form`,
+    `Modified.eq_form`), Lemma 26.2.2 and Prop. 26.2.3
+    (`IrreducibleModule.tendstoAtInfinity_tensorForm`), over fields with `v ≠ 0` not a root of
+    unity (26.2.3 in characteristic zero); Thm. 26.3.1 (a) (`Modified.form_modifiedCanonical_sub_mem`, almost orthonormality) and
+    (b) (`Modified.mem_signedCanonicalBasis_iff`); and, as a consequence, nondegeneracy of the
+    form over `ℚ(v)` and at every parameter transcendental over `ℚ` in a field of characteristic
+    zero (`Modified.eq_zero_of_forall_form_eq_zero`,
+    `Modified.eq_zero_of_forall_form_eq_zero_of_transcendental`).
+  - **Hypotheses of 25.2.1 and 26.3.1.** These results assume `R.IsXRegular` and
+    `hY : ∀ N, ∃ λ dominant, ∀ i, N ≤ ⟨i, λ⟩`. Lusztig proves 25.2.1 for `Y`-regular root data,
+    which satisfy `hY`, and 26.3.1 for every root datum, by reduction to the simply connected case
+    ([Lus] 25.2.2). `hY` holds for every `X`-regular root datum of finite type; it is a hypothesis
+    of the current proof route, and its removal via 25.2.2 is an open roadmap item.
+  - **Not formalized:** [Lus] 14.3.2 (d); the congruence part of 41.1.6 (PBW elements are
+    congruent to `±b`, `b` in the canonical basis, modulo `v⁻¹ℒ`; the lattice part is proved, see
+    the table below); 41.1.9 (compatibility with the quantum Frobenius map, deferred item D2 of the
+    roadmap).
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`
   satisfy all braid relations, with no condition on the Dynkin diagram
   (`isBraidLiftable_braidEquivOfNotRoot`, `braidArtinHomOfNotRoot`; [Lus] 39.4.3), via the
