@@ -197,6 +197,7 @@ import LieLean.Algebra.Lie.KacMoody.DualityHom
 import LieLean.Algebra.Lie.KacMoody.TranslationSameFacet
 import LieLean.Algebra.Lie.KacMoody.TranslationSelfDual
 import LieLean.Algebra.Lie.KacMoody.TranslationShuffling
+import LieLean.Algebra.Lie.KacMoody.TranslationStdFiltration
 import LieLean.Algebra.Lie.KacMoody.TranslationMultiplicity
 import LieLean.Algebra.Lie.KacMoody.TranslationNonintegral
 import LieLean.Algebra.Lie.KacMoody.UpperClosure

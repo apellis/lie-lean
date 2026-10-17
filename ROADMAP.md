@@ -940,6 +940,13 @@ implies `μ ↑ λ`, `μ ≠ λ`), (b) `VermaModule.bruhatLT_of_extOne_ne_zero` 
 integral, `Ext¹_𝒪(M(w'·λ), M(w·λ)) ≠ 0` implies `w < w'`, so `ℓ(w) < ℓ(w')`); `Ext¹_𝒪` is
 `LieModule.ExtOne`. Via projectivity of `P(μ)` and an induction along its standard filtration
 (`IsStdFiltered.exists_section_or_eq_zero`, reconstructed).
+**Translation of standard filtrations** (`KacMoody/TranslationStdFiltration.lean`, Humphreys
+GSM 94 Cor. 7.6; hypotheses of Thm. 7.6, arbitrary antidominant `λ, μ`):
+`exists_isStdFiltered_translation_of_isAntidominant` (if `X ∈ 𝒪` lies in the block of `χ_λ` and
+has a standard filtration, so does `T_λ^μ X`), by induction along the filtration with exactness
+of translation (`IsStdFiltered.exists_isStdFiltered_centralTranslation`,
+`nonempty_equiv_map_centralTranslation`) and Thm. 7.6 for the factors, which lie in `W·λ` by
+Harish-Chandra (`IsStdFiltered.centralCharacter_eq`).
 **Finite length** (`KacMoody/FiniteLength.lean`, Humphreys GSM 94 Thm. 1.11; finite type,
 algebraically closed characteristic-zero field): `VermaModule.exists_strictMono_lieSubmodule`
 (Humphreys' measure `dim(N ∩ ⊕_w M(λ)_{w·λ})`, via central characters on subquotients and
@@ -1833,7 +1840,9 @@ the odd-degree Chevalley factor, and both centre-first quartic Serre relations. 
 the original Serre relations proves both neighbor-first quadratic relations with the explicit
 additional hypothesis qᵢ⁴ + 1 ≠ 0. This is a boundary of the reconstructed proof, not a
 necessity claim. Ambient rank, compatible toral lattice and field characteristic remain
-unrestricted. No G₂ automorphism or length-six action is claimed.
+unrestricted. This file claims no G₂ automorphism or length-six action; the length-six relation
+and the G₂ action are proved in `BraidAction/TripleEdgeRelation.lean` and
+`BraidAction/TripleEdgeArtin.lean` (below).
 `BraidAction/Diagonal.lean` proves the diagonal relation
 `[Tᵢ(Eⱼ), Tᵢ(Fⱼ)] = (K_{sᵢ j̃} - K_{-sᵢ j̃})/(vⱼ - vⱼ⁻¹)` (`braidEj_mul_braidFj_sub`) for
 **every** Cartan entry `aᵢⱼ`, in arbitrary ambient rank, assuming only `v ≠ 0`,
@@ -1993,7 +2002,9 @@ prove degreewise and global spanning and construct the genuine ordered-monomial 
 at a transcendental parameter in characteristic zero. This includes type `G₂` under those
 parameter hypotheses, without a separate six-variable operator model. Spanning and bases at
 arbitrary non-root-of-unity parameters are proved by straightening (see `PBW/FiniteTypeSpan`
-below); canonical bases remain open.
+below). Canonical bases are constructed by the global-basis route (Kashiwara's §7 induction,
+then Lusztig's Ch. 14 comparison) in every rank; see "Global basis of `f`" under "Status and
+open threads".
 `BraidAction/BraidRelationsGeneral.lean`, `BraidAction/DoubleEdgeGeneral.lean` and
 `BraidAction/GeneralArtin.lean` prove braid relations for the general `Tᵢ` in arbitrary rank:
 length three at a simple edge when no third node meets both ends, with arbitrary Cartan entries
@@ -2205,8 +2216,10 @@ stable under the `Eᵢ^{(n)}` by `qDivPow_E_smul_mem_vermaLattice`; `Fᵢ^{(n)}`
 `bᵢ ∈ 𝒜U⁻`, `b'ⱼ ∈ 𝒜U⁺` and the monomials `F_w`, `E_w` in divided powers have `𝒜`-coordinates (so the
 two bases are `𝒜`-bases of `𝒜U⁻ ≅ 𝒜f ≅ 𝒜U⁺`), the `bᵢ 1_λ b'ⱼ` form an `𝒜`-basis of `𝒜U̇`.
 The constructor is general; an unconditional finite-type instance now appears in
-`IntegralBasisPBWAll.lean` below. Lusztig uses the canonical basis of `f` ([Lus] 14.4); here
-we instead use integral PBW bases. Integral `A₂` straightening
+`IntegralBasisPBWAll.lean` below. Lusztig uses the canonical basis of `f` ([Lus] 14.4); both
+versions are proved: with integral PBW bases (`aTriangularBasisPBWAll`, finite type) and with
+the canonical basis (`Modified.aTriangularBasisCanonical`,
+`CrystalBasis/Global/CanonicalTriangular.lean`, every Cartan datum with finite index set). Integral `A₂` straightening
 (`QuantumGroup/PBW/IntegralA2.lean`): for `α, β` with the `A₂` Serre relations and `γ = αβ - q⁻¹βα`,
 `β^{(Q)} α^{(P)} = Σ_n (-1)ⁿ q^{(P-n)(Q-n)+n} α^{(P-n)} γ^{(n)} β^{(Q-n)}`
 (`A2Integral.qDivPow_mul_qDivPow_eq_sum`, cf. [Lus] 42.1.2 (b), our argument), so the
@@ -2839,7 +2852,8 @@ product rule (`TensorModule.fQ_tmulL_integrable`, `eQ_tmulL_integrable`, from th
 `Crystal/TensorHighestWeight.lean`: [HK] Cor. 4.4.4 for seminormal crystals
 (`Crystal.IsSeminormal.isHighestWeight_tensor_iff`: `b₁ ⊗ b₂` is maximal iff `ẽᵢ b₁ = 0` and
 `εᵢ(b₂) ≤ ⟨hᵢ, wt b₁⟩` for all `i`; `isHighestWeight_fst_of_isHighestWeight_tensor`: part (2)).
-Remaining for `Tᵢ`: faithfulness of the Artin action (not pursued); general canonical bases.
+Remaining for `Tᵢ`: faithfulness of the Artin action (not pursued); the congruence part of
+[Lus] 41.1.6 (comparison of PBW elements with the canonical basis, which is now available).
 At roots of unity the braid relations hold on Lusztig's `_S U̇` (`Modified.isBraidLiftable_braidR`,
 [Lus] 41.1.8); for `U` over a field at a root of unity (`braidEquivOfGeneric`, no divided powers)
 they are proved under `BraidOuterCondition`.
@@ -2856,9 +2870,10 @@ divided-power-generated integral subalgebras in both quotients. They span the ge
 algebras over `ℚ(X)` and are bar-stable, with restricted Laurent-semilinear ring involutions.
 Serre results allow arbitrary index types; radical construction and spanning use decidable
 equality, and radical bar additionally retains finite index. This does not prove freeness,
-an integral basis or a scalar-extension isomorphism. The global-basis target still needs
-crystal lattices, residue bases and proved balancedness; the stronger integer integral-basis
-statement remains distinct. No arbitrary scalar specialization is inferred.
+an integral basis or a scalar-extension isomorphism. Global bases, and with them `𝒜`-bases of
+the integral form (the canonical basis, [Lus] Thm. 14.4.3), are constructed in
+`CrystalBasis/Global/` (see "Global basis of `f`" under "Status and open threads"). No
+arbitrary scalar specialization is inferred.
 The radical descent retains the existing radical-equals-Serre-ideal theorem's finite-index
 and characteristic-zero/generic-parameter hypotheses.
 `Sl2/CrystalLattice.lean` constructs the actual divided-power basis of every type-1
@@ -2875,8 +2890,8 @@ actual projection `L ∩ bar(L) ∩ V_{ℚ[X,X⁻¹]} → L/XL`. Its unique glob
 the represented divided powers of the highest vector and are bar-fixed. This is a proved
 rational balanced triple for every positive type-1 rank-one module `simpleRep X n 1`,
 including `n=0`, not an assumed balancedness interface. The argument is reconstructed independently
-of Kashiwara's. No full quantum-algebra bar, general-rank global basis, integer integral basis or
-arbitrary specialization is asserted.
+of Kashiwara's. This rank-one file asserts nothing in general rank; the general-rank global
+bases are in `CrystalBasis/Global/`.
 Finite-dimensional quantum `sl₂` exhaustion (`Sl2/Classification/Equivalence.lean`):
 `LieLean.QuantumGroup.Sl2.irreducible_iff_equiv_simpleRep` identifies every nonzero finite-dimensional
 irreducible representation over any field, for nonzero `v` of infinite multiplicative order,
@@ -2903,44 +2918,60 @@ For symmetrizable `A`: `U_q(𝔤)` over `ℚ(v)` (Drinfeld–Jimbo presentation 
 `𝔥`, or Lusztig's `K_μ`), Hopf algebra structure, triangular decomposition; Lusztig's algebra
 `f` with its bilinear form and the quantum Serre relations; Lusztig's braid group action `Tᵢ`;
 highest-weight modules `L_q(λ)` and equality of characters with `L(λ)` for `λ` dominant
-integral; Lusztig's canonical basis / Kashiwara's global basis if reachable.
+integral; Lusztig's canonical basis / Kashiwara's global basis (proved for `f`, `L_q(λ)` and
+`U̇`; see "Global basis of `f`" under "Status and open threads").
 
-## Deferred items (not scheduled; maintainer decision 2026-10-14)
+## Deferred and scheduled items
 
-Do not start these until the maintainer schedules them. The notes record how each item would be
-approached and what it would and would not make possible. The size estimates are rough.
+D2 is deferred (maintainer decision 2026-10-14): do not start it until the maintainer schedules
+it. D1 was scheduled by the maintainer on 2026-10-14 (issue #180) and is largely done. The notes
+record how each item is approached and what it does and does not make possible.
 
 ### D1. Canonical basis of `f` and the remainder of [Lus] 41.1.6
 
-*Scheduled by the maintainer on 2026-10-14 (issue #180); progress is recorded under "Status and
-open threads" below. The notes here describe the plan.*
+*Status.* Scheduled 2026-10-14 (issue #180). The canonical bases of `f`, `L_q(λ)` and `U̇` are
+proved; the congruence part of 41.1.6 and 14.3.2 (d) remain. Declarations are listed under
+"Global basis of `f`" in "Status and open threads".
 
 *Target.* Lusztig's canonical basis `B` of `f`: the elements `b ∈ 𝒜f` with `b̄ = b` and
 `b ≡ b̃ mod v⁻¹ℒ(∞)` for `b̃ ∈ B(∞)`. Equivalently, Kashiwara's global basis: the triple
 `(𝒜f, ℒ(∞), bar ℒ(∞))` is balanced. With `B`, the remaining assertion of 41.1.6 follows. That
 assertion is the congruence of `θ_h^c` to `±b`, for a unique `b ∈ B`, modulo `v⁻¹ℒ(f)`.
 
-*Already available.*
-- `(ℒ(∞), B(∞))` as a crystal base of `U⁻` (`GrandLoop/InfinityBase`), with its polarization
-  (`GrandLoop/InfinityForm`).
-- Bar on `f` and on the integral form (`LusztigF/Bar`, `LusztigF/IntegralForm`).
-- The PBW lattice results used for 41.1.6 (`mem_lattice_degree`, `PBWSignedCrystal.*`).
+*Done.* Over `ℚ(v)`, for every Cartan datum with finite index set:
+- Kashiwara's global bases by the induction of [Kas91] §7: `(G.1)` at every weight
+  (`negGlobalAt`) and `(G.2)` for every dominant `λ` (`hwGlobalAt`; `X`-regular root data with
+  fundamental weights).
+- Lusztig's signed basis and canonical basis of `f`, identified with the global basis
+  (`mem_signedBasis_iff`, `canonicalBasisAt_eq_range`): [Lus] 14.2.3, 14.2.5 (a), 14.3.1,
+  Thm. 14.3.2 (a)–(c), 14.3.3, Thm. 14.4.3 (a)–(e).
+- The canonical basis of `L_q(λ)`: [Lus] Thm. 14.4.11 (`canonicalBasisHWBasis`) and Prop. 19.3.3
+  (`isNegLaurent_formL_evq_sub`), for `X`-regular root data.
+- The canonical basis of `U̇` and its almost orthonormality: [Lus] Thm. 24.3.3, Thm. 25.2.1
+  (a)–(d) (`Modified.modifiedCanonicalBasis`, `Modified.aModifiedCanonicalBasis`), Thm. 26.3.1
+  (a), (b) (`Modified.form_modifiedCanonical_sub_mem`, `Modified.mem_signedCanonicalBasis_iff`)
+  and nondegeneracy of Lusztig's form on `U̇` (`Modified.eq_zero_of_forall_form_eq_zero`), under
+  `R.IsXRegular` and the route hypothesis `hY`.
+- The PBW side of 41.1.6: PBW elements lie in the lattice (`mem_lattice_degree`) with unit norm
+  (`PBWProductNorm.norm`), and in finite type they form a basis of the whole lattice with unique
+  signed crystal residues (`PBWInfinityLattice.longestBasis`,
+  `PBWSignedCrystal.original_PBW_longest_unique_signed_exponent`).
 
-*Approach.* Prove the global-basis part of Kashiwara's grand loop in general, for all Cartan data
-at once, by induction on the weight:
-- the `𝒜`-forms of `L(λ)` and of `U⁻` are stable under the divided powers;
-- `E = 𝒜f ∩ ℒ(∞) ∩ bar ℒ(∞) → ℒ(∞)/v⁻¹ℒ(∞)` is injective and surjective, via the balanced-triple
-  lemma, the existing string decompositions and the bar involution;
-- then descend to `L(λ)` through the projections `π_λ`, and deduce 41.1.6.
+*Remaining.*
+- [Lus] 41.1.6, congruence part: identify the signed crystal residues of the PBW elements with
+  the canonical basis, giving `θ_h^c ≡ ±b mod v⁻¹ℒ` for a unique `b ∈ B` (see "Remaining 41.1.6
+  gap" above).
+- [Lus] Thm. 14.3.2 (d).
+- Removal of `hY` from 25.2.1 and 26.3.1 via [Lus] 25.2.2 (listed under "Status and open
+  threads").
 
-This should not be done rank by rank: rank-two bar-fixed lifts do not generalize. Estimated
-size: 15–30 PRs.
+*Approach followed.* The global-basis part of Kashiwara's grand loop was proved for all Cartan
+data at once, by induction on the weight ([Kas91] §7.5), not rank by rank (rank-two bar-fixed
+lifts do not generalize); Lusztig's Ch. 14 statements were then derived from Kashiwara's `(G.1)`,
+and the canonical bases of `L_q(λ)` and `U̇` follow Lusztig's Ch. 14, 19 and 23–26.
 
-*What it unlocks.*
+*What the remaining part unlocks.*
 - 41.1.6 as printed.
-- Canonical bases of `L(λ)` and of `U̇` (the latter needs more work, [Lus] Part IV).
-- Almost-orthonormality of the canonical basis of `U̇`, which is Lusztig's route to
-  nondegeneracy of the inner product on `U̇`.
 - A precise statement of the comparison between canonical bases and indecomposable modules for
   downstream KLR work.
 
@@ -3073,8 +3104,9 @@ completed steps and continuation threads are:
   of `L_q(λ)` is identified with the path crystal `B(λ)` (see below,
   `GrandLoop.existsUnique_equiv_pathCrystal`), and the crystal of a crystal base of a module in
   `𝒪_int` is a disjoint union of the `B(λⱼ)`, hence normal
-  (`GrandLoop.isNormal_crystal_of_isCategoryOInt`). Not formalized: restriction of crystal bases to
-  `U_q(𝔤_J)` ([Kas] Prop. 4.3) and crystal bases of integrable modules outside `𝒪_int`.
+  (`GrandLoop.isNormal_crystal_of_isCategoryOInt`). Not formalized (issue #34): the decomposition
+  of `L_q(λ) ⊗ L_q(μ)` ([Kas] Prop. 4.2), restriction of crystal bases to `U_q(𝔤_J)` ([Kas]
+  Prop. 4.3), [Kas] Prop. 7.1, and crystal bases of integrable modules outside `𝒪_int`.
 - **Global basis of `f`** (D1, scheduled 2026-10-14, issue #180; [Kas91] §7, by induction on
   the weight for every Cartan datum; [Lus] Ch. 14 for the comparison). Done:
   `CrystalBasis/Global/BalancedTriple.lean`, the balanced-triple lemmas [Kas91] Lemma 7.1.1
@@ -3376,13 +3408,15 @@ completed steps and continuation threads are:
   `braidArtinHomOfNotRoot`, `ModuleSymmetry/Braid.lean`, via integrable modules). On `U̇`, `𝒜U̇`
   and `_S U̇` for every `𝒜`-algebra `S` (roots of unity included): `Modified.isBraidLiftable_braid`,
   `isBraidLiftable_braidA`, `isBraidLiftable_braidR` ([Lus] 41.1.1, 41.1.2, 41.1.8). Remaining:
-  action faithfulness (not pursued), canonical bases, and the relations for `U` itself over a field
-  at a root of unity outside `BraidOuterCondition`.
+  action faithfulness (not pursued), the congruence part of [Lus] 41.1.6, and the relations for
+  `U` itself over a field at a root of unity outside `BraidOuterCondition`.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
   `IsCategoryO.weightBasis` now use it, preserving their original index types and public names.
-- Later: canonical bases (finite type: PBW basis via `Tᵢ` + Lusztig's lemma
-  `Hecke/KazhdanLusztig/Canonical.lean`; the PBW basis is proved in every finite type,
+- Canonical bases are proved in every rank by the global-basis route ("Global basis of `f`"
+  above). A finite-type route through PBW bases and Lusztig's lemma
+  (`Hecke/KazhdanLusztig/Canonical.lean`) is not needed for them; its PBW ingredients are
+  used for 41.1.6 (the PBW basis is proved in every finite type,
   `finiteTypePBWBasis` (below; rank two: `a2PBWBasis`, `b2PBWBasis`), and the root vectors along reduced words lie in `U⁺` in every rank
   for every Cartan datum, `rootVector_mem_adjoin_of_isReduced`).
   `PBW/RootVectorWeights.lean` proves the conjugation-character formula for actual braid root
