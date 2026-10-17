@@ -2979,8 +2979,9 @@ assertion is the congruence of `θ_h^c` to `±b`, for a unique `b ∈ B`, modulo
   the canonical basis, giving `θ_h^c ≡ ±b mod v⁻¹ℒ` for a unique `b ∈ B` (see "Remaining 41.1.6
   gap" above).
 - [Lus] Thm. 14.3.2 (d).
-- Removal of `hY` from 25.2.1 and 26.3.1 via [Lus] 25.2.2 (listed under "Status and open
-  threads").
+- General basis/form construction without `hY` via [Lus] 25.2.2 (listed under "Status and open
+  threads"). The fixed-column and integral comparisons and the transported integral,
+  bar-fixed element are proved; the original dominant-tensor uniqueness still requires `hY`.
 
 *Approach followed.* The global-basis part of Kashiwara's grand loop was proved for all Cartan
 data at once, by induction on the weight ([Kas91] §7.5), not rank by rank (rank-two bar-fixed
@@ -3382,8 +3383,18 @@ completed steps and continuation threads are:
   `Modified.signedCanonicalBasis`), via `Modified.exists_repr_modifiedCanonicalBasis_eq_algebraMap`
   (`(x, x) ∈ A` forces the coordinates of `x` in `B` into `A`, our own scaling argument in place of
   the leading-coefficient step of 14.2.2 (b)).
-  Remaining: remove `hY` via [Lus] 25.2.2 (pass to the simply connected root datum, 23.2.5); the
-  statements above are phrased so that 25.2.2 transfers them.
+  **Column comparison and integral restriction** ([Lus] 23.2.5): `Modified.columnEquiv`,
+  `Modified.columnEquiv_leftActOne`, `Modified.columnEquiv_mem_aForm_iff`, and
+  `Modified.aColumnEquiv` compare the actual fixed columns and their integral intersections
+  along root-datum maps, without regularity or `hY`. **Element construction** following
+  25.2.2: `Modified.columnCanonical` transports from the free-coroot auxiliary datum; with
+  `R.IsXRegular` but no target `hY`, it lies in the specified column and integral form and is
+  bar-fixed (`columnCanonical_mem_range`, `columnCanonical_mem_aForm`, `bar_columnCanonical`).
+  This auxiliary datum is not the printed simply connected datum; it preserves `IsXRegular`
+  and has arbitrarily large dominant weights, so the generalized column comparison applies.
+  Remaining: prove a basis theorem for this construction, agreement with `modifiedCanonical`
+  under its valid hypotheses, and bilinear-form transport to the general endpoints of 26.3.1.
+  The original dominant-tensor uniqueness characterization retains `hY`.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of
