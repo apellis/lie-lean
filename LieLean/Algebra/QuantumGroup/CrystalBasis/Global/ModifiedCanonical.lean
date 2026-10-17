@@ -56,9 +56,9 @@ canonical element from the free-coroot auxiliary datum, which preserves `IsXRegu
 arbitrarily large dominant weights. This is not the printed simply connected datum. Its use is
 justified by the generalized column comparison, following the method of 25.2.2. Membership in
 the column, integrality and bar invariance are proved; `ModifiedCanonicalBasis` proves that
-these elements form rational and integral bases without target `hY`. Agreement with the old
-construction under `hY` and bilinear-form transport remain separate obligations. The original
-dominant-tensor characterization and its uniqueness retain `hY`.
+these elements form rational and integral bases without target `hY`. `ModifiedCanonicalForm`
+proves normalized form transport; `ModifiedCanonicalSigned` proves agreement with the old
+construction under `hY`. The dominant-tensor characterization and its uniqueness retain `hY`.
 
 ## Implementation notes
 
