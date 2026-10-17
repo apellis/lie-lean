@@ -22,6 +22,9 @@ the bar involution of `U̇`.
 * `modTensorAct`: `u ↦ u(ξ_{-λ} ⊗ η_{λ''})`, `U̇ → ʷΛ_λ ⊗ Λ_{λ''}`.
 * `modifiedCanonical`: the element `b ◇_ζ b''`.
 * `Modified.columnEquiv`: the fixed-column comparison of [Lus] 23.2.5.
+* `Modified.columnEquiv_mem_aForm_iff`, `Modified.aColumnEquiv`: its integral restriction.
+* `Modified.columnCanonical`: transport from the free-coroot auxiliary datum, with no `hY`
+  on the target; it lies in the specified column and integral form and is fixed by bar.
 
 ## Main results
 
@@ -47,8 +50,14 @@ of `Λ_λ` used here is the one constructed for `X`-regular root data (`R.IsXReg
 assumes `Y`-regular).
 
 The column comparison has neither regularity hypothesis nor `hY`. It works over any field
-at a non-root-of-unity parameter. It is the linear comparison needed for 25.2.2; its
-integral restriction and canonical-basis transport are not asserted here.
+at a non-root-of-unity parameter. It is the linear comparison needed for 25.2.2.
+The integral restriction is `aColumnEquiv`. The construction `columnCanonical` transports the
+canonical element from the free-coroot auxiliary datum, which preserves `IsXRegular` and has
+arbitrarily large dominant weights. This is not the printed simply connected datum. Its use is
+justified by the generalized column comparison, following the method of 25.2.2. Membership in
+the column, integrality and bar invariance are proved; a basis theorem, agreement with the old
+construction under `hY`, and bilinear-form transport remain separate obligations. The original
+dominant-tensor characterization and its uniqueness retain `hY`.
 
 ## Implementation notes
 
@@ -1122,3 +1131,193 @@ theorem leftActOne_mapHom_eq_zero_iff (φ : R.Hom R') (ζ : Y' →+ ℤ)
     rw [hz, map_zero, Submodule.coe_zero]
 
 end LieLean.QuantumGroup.Modified
+
+/-! ### Integral columns and transport from the free-coroot datum -/
+
+namespace LieLean.QuantumGroup.Modified
+
+local notation "𝕂" => RatFunc ℚ
+local notation "𝕧" => (RatFunc.X : RatFunc ℚ)
+local notation "𝒜" => LaurentPolynomial ℤ
+attribute [local instance] neZero_ratFunc_X
+
+variable {I Y Y' : Type*} [AddCommGroup Y] [AddCommGroup Y'] [DecidableEq I]
+  {D : LusztigCartanDatum I} (R : D.RootDatum Y) (R' : D.RootDatum Y')
+
+/-- The root-datum map preserves the divided-power triangular generators. -/
+lemma mapHom_fePow (φ : R.Hom R') (w w' : List (I × ℕ)) :
+    QuantumGroup.mapHom 𝕧 φ (fPow R w * ePow R w') = fPow R' w * ePow R' w' := by
+  simp [fPow, ePow, qDivPow, map_list_prod, List.map_map, Function.comp_def]
+
+/-- The root-datum map sends the integral triangular span onto its target counterpart. -/
+lemma mapHom_fePowSpan (φ : R.Hom R') :
+    (fePowSpan R).map (QuantumGroup.mapHom 𝕧 φ).toLinearMap.toAddMonoidHom.toIntLinearMap =
+      fePowSpan R' := by
+  rw [fePowSpan, laurentSpan, Submodule.map_span]
+  congr 1
+  ext x
+  constructor
+  · rintro ⟨_, ⟨n, _, ⟨w, w', rfl⟩, rfl⟩, rfl⟩
+    exact ⟨n, _, ⟨w, w', rfl⟩, by simp [mapHom_fePow]⟩
+  · rintro ⟨n, _, ⟨w, w', rfl⟩, rfl⟩
+    refine ⟨(𝕧 ^ n) • (fPow R w * ePow R w'), ⟨n, _, ⟨w, w', rfl⟩, rfl⟩, ?_⟩
+    simp [mapHom_fePow]
+
+/-- Every integral element in a column has a lift in the divided-power triangular span. -/
+lemma exists_fePowSpan_leftActOne (ζ : Y →+ ℤ) {x : Modified R 𝕧}
+    (hx : x ∈ LinearMap.range (leftActOne R ratFunc_X_not_root ζ)) (ha : x ∈ aForm R) :
+    ∃ u ∈ fePowSpan R, leftActOne R ratFunc_X_not_root ζ u = x := by
+  obtain ⟨u, rfl⟩ := hx
+  have ht : u • vermaTensorHwv R 𝕧 0 ζ ∈ vermaTensorLattice R 0 ζ := by
+    apply (leftActOne_mem_aForm_iff 0 ζ u).1
+    simpa using ha
+  obtain ⟨u', hu', he⟩ := mem_fePowImage.1 (vermaTensorLattice_le_fePowImage ht)
+  refine ⟨u', hu', ?_⟩
+  have hz : (u' - u) • vermaTensorHwv R 𝕧 0 ζ = 0 := by rw [sub_smul, he, sub_self]
+  have := (smul_vermaTensorHwv_eq_zero_iff ratFunc_X_not_root 0 ζ _).1 hz
+  simpa only [sub_zero, map_sub, sub_eq_zero] using this
+
+/-- **Lusztig §23.2.5**: the column comparison preserves and reflects integrality.
+The source uses a simply connected datum; the same triangular-span argument applies to any
+morphism of the existing root data. Neither regularity nor `hY` is required. -/
+theorem columnEquiv_mem_aForm_iff (φ : R.Hom R') (ζ : Y' →+ ℤ)
+    (x : LinearMap.range (leftActOne R ratFunc_X_not_root (ζ.comp φ.toHom))) :
+    (columnEquiv R R' ratFunc_X_not_root φ ζ x : Modified R' 𝕧) ∈ aForm R' ↔
+      (x : Modified R 𝕧) ∈ aForm R := by
+  constructor
+  · intro hx
+    obtain ⟨u', hu', he⟩ := exists_fePowSpan_leftActOne R' ζ
+      (columnEquiv R R' ratFunc_X_not_root φ ζ x).property hx
+    rw [← mapHom_fePowSpan R R' φ] at hu'
+    obtain ⟨u, hu, rfl⟩ := hu'
+    have hcol : columnEquiv R R' ratFunc_X_not_root φ ζ
+        ((leftActOne R ratFunc_X_not_root (ζ.comp φ.toHom)).rangeRestrict u) =
+          columnEquiv R R' ratFunc_X_not_root φ ζ x := by
+      apply Subtype.ext
+      exact (columnEquiv_leftActOne R R' ratFunc_X_not_root φ ζ u).trans he
+    have he' := (columnEquiv R R' ratFunc_X_not_root φ ζ).injective hcol
+    rw [← he']
+    exact leftActOne_mem_aForm_of_mem_fePowSpan _ hu
+  · intro hx
+    obtain ⟨u, hu, he⟩ := exists_fePowSpan_leftActOne R (ζ.comp φ.toHom) x.property hx
+    have he' : (leftActOne R ratFunc_X_not_root (ζ.comp φ.toHom)).rangeRestrict u = x :=
+      Subtype.ext he
+    rw [← he']
+    change (columnEquiv R R' ratFunc_X_not_root φ ζ
+      ⟨leftActOne R ratFunc_X_not_root (ζ.comp φ.toHom) u, u, rfl⟩ : Modified R' 𝕧) ∈ _
+    rw [columnEquiv_leftActOne]
+    apply leftActOne_mem_aForm_of_mem_fePowSpan
+    rw [← mapHom_fePowSpan R R' φ]
+    exact ⟨u, hu, rfl⟩
+
+local instance columnLaurentAlgebra : Algebra 𝒜 𝕂 := LusztigF.integralLaurentEval.toAlgebra
+
+local instance columnLaurentTower (S : D.RootDatum Y) : IsScalarTower 𝒜 𝕂 (Modified S 𝕧) :=
+  ⟨fun a c x ↦ mul_smul (LusztigF.integralLaurentEval a) c x⟩
+
+/-- The intersection of the integral form with a right column. -/
+def aColumn (ζ : Y →+ ℤ) :
+    Submodule 𝒜 (LinearMap.range (leftActOne R ratFunc_X_not_root ζ)) :=
+  (aForm R).toSubmodule.comap
+    ((LinearMap.range (leftActOne R ratFunc_X_not_root ζ)).subtype.restrictScalars 𝒜)
+
+/-- The integral restriction of the column comparison, Lusztig §23.2.5. -/
+def aColumnEquiv (φ : R.Hom R') (ζ : Y' →+ ℤ) :
+    aColumn R (ζ.comp φ.toHom) ≃ₗ[𝒜] aColumn R' ζ :=
+  ((columnEquiv R R' ratFunc_X_not_root φ ζ).restrictScalars 𝒜).ofSubmodules
+    (aColumn R (ζ.comp φ.toHom)) (aColumn R' ζ) <| by
+      ext y
+      constructor
+      · rintro ⟨x, hx, rfl⟩
+        exact (columnEquiv_mem_aForm_iff R R' φ ζ x).2 hx
+      · intro hy
+        change (y : Modified R' 𝕧) ∈ aForm R' at hy
+        refine ⟨(columnEquiv R R' ratFunc_X_not_root φ ζ).symm y, ?_,
+          (columnEquiv R R' ratFunc_X_not_root φ ζ).apply_symm_apply y⟩
+        apply (columnEquiv_mem_aForm_iff R R' φ ζ _).1
+        simpa using hy
+
+@[simp] theorem aColumnEquiv_apply (φ : R.Hom R') (ζ : Y' →+ ℤ)
+    (x : aColumn R (ζ.comp φ.toHom)) :
+    (aColumnEquiv R R' φ ζ x : LinearMap.range (leftActOne R' ratFunc_X_not_root ζ)) =
+      columnEquiv R R' ratFunc_X_not_root φ ζ x := rfl
+
+/-- The root-datum map commutes with the bar involution. -/
+lemma mapHom_barHom (φ : R.Hom R') (u : QuantumGroup R 𝕧) :
+    QuantumGroup.mapHom 𝕧 φ (barHom R u) = barHom R' (QuantumGroup.mapHom 𝕧 φ u) := by
+  induction u using QuantumGroup.induction_on with
+  | algebraMap c => simp [barHom_algebraMap]
+  | E i => simp
+  | F i => simp
+  | K μ => simp
+  | add x y hx hy => simp only [map_add, hx, hy]
+  | mul x y hx hy => simp only [_root_.map_mul, hx, hy]
+
+/-- The column comparison sends bar-fixed elements to bar-fixed elements. -/
+theorem bar_columnEquiv_of_bar_eq (φ : R.Hom R') (ζ : Y' →+ ℤ)
+    (x : LinearMap.range (leftActOne R ratFunc_X_not_root (ζ.comp φ.toHom)))
+    (hx : bar R x = x) :
+    bar R' (columnEquiv R R' ratFunc_X_not_root φ ζ x) =
+      (columnEquiv R R' ratFunc_X_not_root φ ζ x : Modified R' 𝕧) := by
+  obtain ⟨_, u, rfl⟩ := x
+  rw [bar_leftActOne] at hx
+  have he : (⟨leftActOne R ratFunc_X_not_root (ζ.comp φ.toHom) (barHom R u), _, rfl⟩ :
+      LinearMap.range (leftActOne R ratFunc_X_not_root (ζ.comp φ.toHom))) =
+      ⟨leftActOne R ratFunc_X_not_root (ζ.comp φ.toHom) u, _, rfl⟩ := Subtype.ext hx
+  have ht := congrArg (fun y ↦
+    (columnEquiv R R' ratFunc_X_not_root φ ζ y : Modified R' 𝕧)) he
+  rw [columnEquiv_leftActOne, columnEquiv_leftActOne, mapHom_barHom] at ht
+  rw [columnEquiv_leftActOne, bar_leftActOne]
+  exact ht
+
+end LieLean.QuantumGroup.Modified
+
+namespace LieLean.QuantumGroup
+open GrandLoop LusztigF Modified
+local notation "𝕂" => RatFunc ℚ
+local notation "𝕧" => (RatFunc.X : RatFunc ℚ)
+attribute [local instance] neZero_ratFunc_X
+variable {I Y : Type*} [Finite I] [DecidableEq I] [AddCommGroup Y]
+  {D : LusztigCartanDatum I} {R : D.RootDatum Y}
+
+omit [Finite I] [DecidableEq I] in
+/-- The auxiliary free-coroot datum has arbitrarily large dominant weights. -/
+lemma exists_dom_freeCoroot (N : ℕ) :
+    ∃ Λ : Dom R.freeCoroot, ∀ i, (N : ℤ) ≤ Λ.1 (R.freeCoroot.coroot i) := by
+  obtain ⟨Λ, hΛ⟩ := R.exists_le_freeCoroot N
+  exact ⟨⟨Λ, fun i ↦ le_trans (Int.natCast_nonneg N) (hΛ i)⟩, hΛ⟩
+
+/-- Column transport of the canonical element from the free-coroot auxiliary datum,
+following the construction in Lusztig §25.2.2. This auxiliary datum is not the printed simply
+connected datum: it preserves `IsXRegular`, and the generalized column comparison applies to
+its projection to `R`. No sufficiently-large-dominant-weight hypothesis is required on `R`.
+Agreement with `modifiedCanonical` is a separate comparison statement. -/
+def Modified.columnCanonical (hR : R.IsXRegular) (ζ : Y →+ ℤ)
+    {b b'' : Um D 𝕧} (hb : b ∈ canonicalBasis D) (hb'' : b'' ∈ canonicalBasis D) : Modified R 𝕧 :=
+  columnEquiv R.freeCoroot R ratFunc_X_not_root R.freeCorootHom ζ
+    ⟨modifiedCanonical (isXRegular_freeCoroot hR) exists_dom_freeCoroot
+      (ζ.comp R.freeCorootHom.toHom) hb hb'',
+      modifiedCanonical_mem_range (isXRegular_freeCoroot hR) exists_dom_freeCoroot
+        (ζ.comp R.freeCorootHom.toHom) hb hb''⟩
+
+/-- The transported element belongs to the specified right column. -/
+theorem Modified.columnCanonical_mem_range (hR : R.IsXRegular) (ζ : Y →+ ℤ)
+    {b b'' : Um D 𝕧} (hb : b ∈ canonicalBasis D) (hb'' : b'' ∈ canonicalBasis D) :
+    columnCanonical hR ζ hb hb'' ∈ LinearMap.range (leftActOne R ratFunc_X_not_root ζ) :=
+  (columnEquiv R.freeCoroot R ratFunc_X_not_root R.freeCorootHom ζ _).property
+
+/-- The transported element is integral, by the integral restriction in §23.2.5. -/
+theorem Modified.columnCanonical_mem_aForm (hR : R.IsXRegular) (ζ : Y →+ ℤ)
+    {b b'' : Um D 𝕧} (hb : b ∈ canonicalBasis D) (hb'' : b'' ∈ canonicalBasis D) :
+    columnCanonical hR ζ hb hb'' ∈ aForm R :=
+  (columnEquiv_mem_aForm_iff R.freeCoroot R R.freeCorootHom ζ _).2
+    (modifiedCanonical_mem_aForm (isXRegular_freeCoroot hR) exists_dom_freeCoroot _ hb hb'')
+
+/-- The transported element is fixed by bar. -/
+theorem Modified.bar_columnCanonical (hR : R.IsXRegular) (ζ : Y →+ ℤ)
+    {b b'' : Um D 𝕧} (hb : b ∈ canonicalBasis D) (hb'' : b'' ∈ canonicalBasis D) :
+    bar R (columnCanonical hR ζ hb hb'') = columnCanonical hR ζ hb hb'' :=
+  bar_columnEquiv_of_bar_eq R.freeCoroot R R.freeCorootHom ζ _
+    (bar_modifiedCanonical (isXRegular_freeCoroot hR) exists_dom_freeCoroot _ hb hb'')
+
+end LieLean.QuantumGroup

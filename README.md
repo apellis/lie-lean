@@ -241,7 +241,15 @@ Further proved results include:
     `hY : ∀ N, ∃ λ dominant, ∀ i, N ≤ ⟨i, λ⟩`. Lusztig proves 25.2.1 for `Y`-regular root data,
     which satisfy `hY`, and 26.3.1 for every root datum, by reduction to the simply connected case
     ([Lus] 25.2.2). `hY` holds for every `X`-regular root datum of finite type; it is a hypothesis
-    of the current proof route, and its removal via 25.2.2 is an open roadmap item.
+    of the current basis/form proof route. The original dominant-tensor uniqueness
+    characterization retains `hY`; general construction via 25.2.2 is a separate endpoint.
+  - **Column transport ([Lus] 23.2.5, 25.2.2).** `Modified.columnEquiv` and its integral
+    restriction `Modified.aColumnEquiv` compare fixed columns along root-datum maps, without
+    regularity or `hY`. For `R.IsXRegular`, `Modified.columnCanonical` transports the element
+    from the free-coroot auxiliary datum, without `hY` on `R`; column membership, integrality
+    and bar invariance are proved. The auxiliary datum is not the printed simply connected
+    datum. A basis theorem, agreement with `modifiedCanonical` under `hY`, and form transport
+    remain open.
   - **Not formalized:** [Lus] 14.3.2 (d); the congruence part of 41.1.6 (PBW elements are
     congruent to `±b`, `b` in the canonical basis, modulo `v⁻¹ℒ`; the lattice part is proved, see
     the table below); 41.1.9 (compatibility with the quantum Frobenius map, deferred item D2 of the
