@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.TensorTransitionCanonical
+import LieLean.Algebra.QuantumGroup.RootDatumHom
 import LieLean.Algebra.QuantumGroup.Modified.Bar
 
 /-!
@@ -20,6 +21,7 @@ the bar involution of `U̇`.
 * `tensorIrrProj`: the projection `ʷM_λ ⊗ M_{λ''} → ʷΛ_λ ⊗ Λ_{λ''}`.
 * `modTensorAct`: `u ↦ u(ξ_{-λ} ⊗ η_{λ''})`, `U̇ → ʷΛ_λ ⊗ Λ_{λ''}`.
 * `modifiedCanonical`: the element `b ◇_ζ b''`.
+* `Modified.columnEquiv`: the fixed-column comparison of [Lus] 23.2.5.
 
 ## Main results
 
@@ -30,16 +32,23 @@ the bar involution of `U̇`.
   (`ū(ξ_{-λ} ⊗ η_{λ''}) = Ψ(u(ξ_{-λ} ⊗ η_{λ''}))`).
 * `eq_zero_of_modTensorAct_eq_zero`: an element of `U̇1_ζ` acting by zero on
   `ξ_{-λ} ⊗ η_{λ''}` for all large `λ, λ''` with `λ'' - λ = ζ` is zero.
+* `Modified.columnEquiv_leftActOne`, `Modified.columnEquiv_mul`: the column comparison is
+  induced by the root-datum algebra map and intertwines its left action ([Lus] 23.2.5).
 
 ## Hypotheses
 
-Lusztig assumes the root datum `Y`-regular. The results here assume instead `hY`: for every `N`
+For the characterization in 25.2.1, Lusztig assumes the root datum `Y`-regular.
+The characterization here assumes instead `hY`: for every `N`
 there is a dominant `λ` with `⟨i, λ⟩ ≥ N` for all `i`. It follows from `Y`-regularity and is the
 form in which the proof uses it. It cannot be dropped: in type affine `A₁` with `Y = X = ℤ²`,
 `i ↦ (1, 0), (-1, 0)` and `i' ↦ (2, 0), (-2, 1)` (an `X`-regular root datum), every dominant `λ`
 has `⟨i, λ⟩ = 0`, so `1_ζ` and `1_ζ + F_i 1_ζ` both satisfy (a) for `b = b'' = 1`. The global basis
 of `Λ_λ` used here is the one constructed for `X`-regular root data (`R.IsXRegular`, where Lusztig
 assumes `Y`-regular).
+
+The column comparison has neither regularity hypothesis nor `hY`. It works over any field
+at a non-root-of-unity parameter. It is the linear comparison needed for 25.2.2; its
+integral restriction and canonical-basis transport are not asserted here.
 
 ## Implementation notes
 
@@ -954,3 +963,162 @@ theorem bar_modifiedCanonical (ζ : Y →+ ℤ) {b b'' : Um D 𝕧} (hb : b ∈ 
 end Main
 
 end LieLean.QuantumGroup
+
+/-! ### Fixed-column comparison for the reduction in [Lus] 25.2.2 -/
+
+namespace LieLean.QuantumGroup.Modified
+
+open TensorProduct
+
+variable {k I Y Y' : Type*} [Field k] [AddCommGroup Y] [AddCommGroup Y']
+  [DecidableEq I] {D : LusztigCartanDatum I} (R : D.RootDatum Y) (R' : D.RootDatum Y')
+  {v : k} [NeZero v] (hv : ∀ n : ℕ, 0 < n → v ^ n ≠ 1)
+
+local notation "fQ" => LusztigF k I ⧸ serreSubmodule D v
+
+/-- Triangular coordinates on a fixed right column of the modified quantum group. -/
+def columnTriangularEquiv (ζ : Y →+ ℤ) :
+    fQ ⊗[k] fQ ≃ₗ[k] LinearMap.range (leftActOne R hv ζ) :=
+  LinearEquiv.ofBijective
+    (((leftActOne R hv ζ).rangeRestrict).comp (triMul R hv)) <| by
+    refine ⟨(injective_iff_map_eq_zero _).2 ?_, ?_⟩
+    · intro z hz
+      have hz' : leftActOne R hv ζ (triMul R hv z) = 0 := congrArg Subtype.val hz
+      have hact : triAct R hv 0 ζ z = 0 := by
+        apply (smul_vermaTensorHwv_eq_zero_iff hv 0 ζ _).2
+        simpa using hz'
+      exact (injective_iff_map_eq_zero _).1 (bijective_triAct hv 0 ζ).1 z hact
+    · rintro ⟨_, u, rfl⟩
+      obtain ⟨z, hz⟩ := exists_leftActOne_eq_triMul hv ζ u
+      exact ⟨z, Subtype.ext hz.symm⟩
+
+@[simp] theorem columnTriangularEquiv_apply (ζ : Y →+ ℤ) (z : fQ ⊗[k] fQ) :
+    (columnTriangularEquiv R hv ζ z : Modified R v) = leftActOne R hv ζ (triMul R hv z) :=
+  rfl
+
+/-- The fixed-column comparison of Lusztig §23.2.5. The source weight is the pullback of
+`ζ`; no injectivity or surjectivity on the set of all weights is required. Lusztig uses a
+simply connected source over `ℚ(v)`; triangular coordinates give the same comparison for
+any morphism of the existing root data over a field at a non-root-of-unity parameter. -/
+def columnEquiv (φ : R.Hom R') (ζ : Y' →+ ℤ) :
+    LinearMap.range (leftActOne R hv (ζ.comp φ.toHom)) ≃ₗ[k]
+      LinearMap.range (leftActOne R' hv ζ) :=
+  (columnTriangularEquiv R hv (ζ.comp φ.toHom)).symm.trans
+    (columnTriangularEquiv R' hv ζ)
+
+@[simp] theorem columnEquiv_triMul (φ : R.Hom R') (ζ : Y' →+ ℤ) (z : fQ ⊗[k] fQ) :
+    (columnEquiv R R' hv φ ζ
+      ⟨leftActOne R hv (ζ.comp φ.toHom) (triMul R hv z), _, rfl⟩ : Modified R' v) =
+      leftActOne R' hv ζ (triMul R' hv z) := by
+  change ((columnTriangularEquiv R' hv ζ)
+    ((columnTriangularEquiv R hv (ζ.comp φ.toHom)).symm
+      (columnTriangularEquiv R hv (ζ.comp φ.toHom) z)) : Modified R' v) = _
+  rw [LinearEquiv.symm_apply_apply, columnTriangularEquiv_apply]
+
+omit [NeZero v] in
+/-- The root-datum map preserves the positive and negative word embeddings. -/
+lemma mapHom_minus_plus (φ : R.Hom R') (y x : LusztigF k I) :
+    QuantumGroup.mapHom v φ (minusHom R v y * plusHom R v x) =
+      minusHom R' v y * plusHom R' v x := by
+  have hm : (QuantumGroup.mapHom v φ).comp (minusHom R v) = minusHom R' v := by
+    apply FreeAlgebra.hom_ext
+    funext i
+    simp [minusHom]
+  have hp : (QuantumGroup.mapHom v φ).comp (plusHom R v) = plusHom R' v := by
+    apply FreeAlgebra.hom_ext
+    funext i
+    simp [plusHom]
+  rw [_root_.map_mul (QuantumGroup.mapHom v φ), ← AlgHom.comp_apply, hm, ← AlgHom.comp_apply, hp]
+
+/-- The column comparison is induced by the root-datum algebra homomorphism, as in
+Lusztig §23.2.5. In particular, it is not merely an arbitrary vector-space equivalence. -/
+theorem columnEquiv_leftActOne (φ : R.Hom R') (ζ : Y' →+ ℤ) (u : QuantumGroup R v) :
+    (columnEquiv R R' hv φ ζ ⟨leftActOne R hv (ζ.comp φ.toHom) u, u, rfl⟩ :
+      Modified R' v) = leftActOne R' hv ζ (QuantumGroup.mapHom v φ u) := by
+  let T : QuantumGroup R v →ₗ[k] Modified R' v :=
+    (LinearMap.range (leftActOne R' hv ζ)).subtype.comp
+      ((columnEquiv R R' hv φ ζ).toLinearMap.comp
+        (leftActOne R hv (ζ.comp φ.toHom)).rangeRestrict)
+  change T u = _
+  induction VermaModule.mem_triangularSpan_of u (NeZero.ne v) using Submodule.span_induction with
+  | mem u hu =>
+    obtain ⟨w, μ, w', rfl⟩ := hu
+    have hroot : R'.rootSum (LusztigF.wordWeight w') (φ.toHom μ) =
+        R.rootSum (LusztigF.wordWeight w') μ := by
+      simp [LusztigCartanDatum.RootDatum.rootSum, φ.root_map]
+    have hnorm (S : D.RootDatum Y) (ξ : Y →+ ℤ) :
+        leftActOne S hv ξ
+          (minusHom S v (LusztigF.monomial k w) * K S v μ *
+            plusHom S v (LusztigF.monomial k w')) =
+        (v ^ S.rootSum (LusztigF.wordWeight w') μ * v ^ ξ μ) •
+          leftActOne S hv ξ (minusHom S v (LusztigF.monomial k w) *
+            plusHom S v (LusztigF.monomial k w')) := by
+      rw [mul_assoc, K_mul_plusHom_of_mem (LusztigF.monomial_mem_weightSpace w') μ,
+        mul_smul_comm, map_smul, ← mul_assoc, leftActOne_mul_K, smul_smul]
+    have ht : T (minusHom R v (LusztigF.monomial k w) *
+        plusHom R v (LusztigF.monomial k w')) =
+        leftActOne R' hv ζ (minusHom R' v (LusztigF.monomial k w) *
+          plusHom R' v (LusztigF.monomial k w')) :=
+      columnEquiv_triMul R R' hv φ ζ
+        (Submodule.Quotient.mk (LusztigF.monomial k w) ⊗ₜ
+          Submodule.Quotient.mk (LusztigF.monomial k w'))
+    have hT : T (minusHom R v (LusztigF.monomial k w) * K R v μ *
+        plusHom R v (LusztigF.monomial k w')) =
+        (v ^ R.rootSum (LusztigF.wordWeight w') μ * v ^ ζ (φ.toHom μ)) •
+          T (minusHom R v (LusztigF.monomial k w) *
+            plusHom R v (LusztigF.monomial k w')) := by
+      have he : (leftActOne R hv (ζ.comp φ.toHom)).rangeRestrict
+          (minusHom R v (LusztigF.monomial k w) * K R v μ *
+            plusHom R v (LusztigF.monomial k w')) =
+          (v ^ R.rootSum (LusztigF.wordWeight w') μ * v ^ ζ (φ.toHom μ)) •
+          (leftActOne R hv (ζ.comp φ.toHom)).rangeRestrict
+            (minusHom R v (LusztigF.monomial k w) *
+              plusHom R v (LusztigF.monomial k w')) :=
+        Subtype.ext (hnorm R (ζ.comp φ.toHom))
+      change (columnEquiv R R' hv φ ζ _ : Modified R' v) = _
+      rw [he, map_smul]
+      rfl
+    rw [hT, ht]
+    have hm : QuantumGroup.mapHom v φ (minusHom R v (LusztigF.monomial k w)) =
+        minusHom R' v (LusztigF.monomial k w) := by
+      simpa using mapHom_minus_plus R R' φ (LusztigF.monomial k w) 1
+    have hp : QuantumGroup.mapHom v φ (plusHom R v (LusztigF.monomial k w')) =
+        plusHom R' v (LusztigF.monomial k w') := by
+      simpa using mapHom_minus_plus R R' φ 1 (LusztigF.monomial k w')
+    rw [_root_.map_mul (QuantumGroup.mapHom v φ), _root_.map_mul (QuantumGroup.mapHom v φ), hm, hp,
+      mapHom_K, mul_assoc,
+      K_mul_plusHom_of_mem (LusztigF.monomial_mem_weightSpace w') (φ.toHom μ),
+      mul_smul_comm, map_smul, ← mul_assoc, leftActOne_mul_K, smul_smul, hroot]
+  | zero => simp
+  | add x y _ _ hx hy => simp only [map_add, hx, hy]
+  | smul c x _ hx => simp only [map_smul, hx]
+
+/-- The column comparison intertwines the left action through the root-datum algebra map. -/
+theorem columnEquiv_mul (φ : R.Hom R') (ζ : Y' →+ ℤ) (a u : QuantumGroup R v) :
+    (columnEquiv R R' hv φ ζ
+      ⟨leftActOne R hv (ζ.comp φ.toHom) (a * u), a * u, rfl⟩ : Modified R' v) =
+      leftAct R' v hv (QuantumGroup.mapHom v φ a)
+        (columnEquiv R R' hv φ ζ
+          ⟨leftActOne R hv (ζ.comp φ.toHom) u, u, rfl⟩ : Modified R' v) := by
+  rw [columnEquiv_leftActOne, columnEquiv_leftActOne, _root_.map_mul (QuantumGroup.mapHom v φ),
+    leftActOne_apply, leftAct_mul, leftActOne_apply]
+
+/-- The root-datum algebra map reflects vanishing in each corresponding right column. -/
+theorem leftActOne_mapHom_eq_zero_iff (φ : R.Hom R') (ζ : Y' →+ ℤ)
+    (u : QuantumGroup R v) :
+    leftActOne R' hv ζ (QuantumGroup.mapHom v φ u) = 0 ↔
+      leftActOne R hv (ζ.comp φ.toHom) u = 0 := by
+  rw [← columnEquiv_leftActOne R R' hv φ ζ u]
+  constructor
+  · intro h
+    have he : columnEquiv R R' hv φ ζ
+        ⟨leftActOne R hv (ζ.comp φ.toHom) u, u, rfl⟩ = 0 := Subtype.ext h
+    have hz := (columnEquiv R R' hv φ ζ).injective
+      (he.trans (map_zero _).symm)
+    exact congrArg Subtype.val hz
+  · intro h
+    have hz : (⟨leftActOne R hv (ζ.comp φ.toHom) u, u, rfl⟩ :
+        LinearMap.range (leftActOne R hv (ζ.comp φ.toHom))) = 0 := Subtype.ext h
+    rw [hz, map_zero, Submodule.coe_zero]
+
+end LieLean.QuantumGroup.Modified
