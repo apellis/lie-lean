@@ -30,7 +30,8 @@ The tensor product is in `𝒪_int` by `TensorModule.isCategoryOInt`.
 ## Main result
 
 * `GrandLoop.nonempty_tensor_equiv_dfinsupp`: `L_q(μ) ⊗ L_q(ν) ≅ ⊕_b L_q(ν + wt b)`, the sum over
-  the `b ∈ B(μ)` with `εᵢ(b) ≤ ⟨i, ν⟩` for all `i`.
+  the `b ∈ B(μ)` with `εᵢ(b) ≤ ⟨i, ν⟩` for all `i`, under the hypotheses of the grand loop;
+  `GrandLoop.nonempty_tensor_equiv_dfinsupp_ratFunc` over `ℚ(v)` with no hypothesis left.
 
 With the library's (Lusztig's) coproduct the two tensor factors are exchanged compared with
 Kashiwara's: his `V(λ) ⊗ V(μ)` corresponds to `L_q(μ) ⊗ L_q(ν)` with `ν = λ`.
@@ -42,6 +43,22 @@ Kashiwara's: his `V(λ) ⊗ V(μ)` corresponds to `L_q(μ) ⊗ L_q(ν)` with `ν
 -/
 
 noncomputable section
+
+namespace DFinsupp
+
+variable {S Ω J K : Type*} [Semiring S] (M : Ω → Type*) [∀ w, AddCommMonoid (M w)]
+  [∀ w, Module S (M w)]
+
+/-- Reindexing a direct sum along an equivalence of index sets that matches the summands: if
+`e : J ≃ K` and `g (e j) = f j` for all `j`, then `⊕_{k ∈ K} M (g k) ≅ ⊕_{j ∈ J} M (f j)`. -/
+def domLCongrOfEq (f : J → Ω) (g : K → Ω) (e : J ≃ K) (h : ∀ j, g (e j) = f j) :
+    (Π₀ k, M (g k)) ≃ₗ[S] Π₀ j, M (f j) := by
+  classical
+  obtain rfl : g = fun k ↦ f (e.symm k) :=
+    funext fun k ↦ by rw [← h (e.symm k), e.apply_symm_apply]
+  exact (DFinsupp.domLCongr (M := fun j ↦ M (f j)) e).symm
+
+end DFinsupp
 
 namespace Crystal
 
@@ -155,7 +172,8 @@ with `k = A[ϖ⁻¹]` and `ϖ ↦ v⁻¹` (the hypotheses of the grand loop). -/
 theorem nonempty_tensor_equiv_dfinsupp (μ ν : Dom R) :
     Nonempty ((Π₀ b : {b // ∀ i, (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).ε i b ≤
           ((ν.1 (R.coroot i) : ℤ) : WithBot ℤ)},
-        IrreducibleModule R v (ν.1 + (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).wt b)) ≃ₗ[QuantumGroup R v]
+        IrreducibleModule R v (ν.1 + (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).wt b)) ≃ₗ[
+          QuantumGroup R v]
       TensorModule k (IrreducibleModule R v μ.1) (IrreducibleModule R v ν.1)) := by
   obtain ⟨s, Λ, Ξ, ⟨Ψ⟩⟩ := exists_crystalEquiv_sigma_tensor hinj hϖ hϖv hk hfund μ ν
   obtain ⟨e, he⟩ := Crystal.exists_equiv_isHighestWeight_tensor
@@ -165,15 +183,39 @@ theorem nonempty_tensor_equiv_dfinsupp (μ ν : Dom R) :
     (isSeminormal_crystalHW hvt hR hinj hϖ hϖv hk hfund ν)
     (fun j ↦ isHighestWeight_crystalHW_iff hinj hϖ hϖv hk hfund (Λ j))
     (isHighestWeight_crystalHW_iff hinj hϖ hϖv hk hfund ν) Ξ
-  have hwt : ∀ b, ν.1 + (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).wt b.1 = (Λ (e.symm b)).1 :=
-    fun b ↦ by
-      refine Eq.symm ((wt_topHW hinj hϖ hϖv hk hfund (Λ (e.symm b))).symm.trans
-        ((he (e.symm b)).trans ?_))
-      exact congrArg (fun x ↦ ν.1 + (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).wt x.1)
-        (e.apply_symm_apply b)
-  exact ⟨(DFinsupp.mapRange.linearEquiv fun b ↦ IrreducibleModule.equivOfEq (hwt b)).trans
-    ((DFinsupp.domLCongr e).symm.trans Ψ)⟩
+  have hwt : ∀ j, ν.1 + (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).wt (e j).1 = (Λ j).1 :=
+    fun j ↦ (he j).symm.trans (wt_topHW hinj hϖ hϖv hk hfund (Λ j))
+  exact ⟨(DFinsupp.domLCongrOfEq (fun Λ' : Y →+ ℤ ↦ IrreducibleModule R v Λ')
+    (fun j ↦ (Λ j).1) _ e hwt).trans Ψ⟩
 
 end GrandLoop
 
 end LieLean.QuantumGroup
+
+/-! ### Kashiwara's setting `ℚ(v)` -/
+
+namespace LieLean.QuantumGroup.GrandLoop
+
+variable {I : Type*} [Fintype I] [DecidableEq I] {D : LusztigCartanDatum I}
+
+/-- **[Kas] Prop. 4.2** in Kashiwara's setting: `k = ℚ(v)`, `A` the local ring at `v = ∞`,
+`ϖ = v⁻¹`, every Cartan datum with finite index set and the root datum
+`LusztigCartanDatum.extendedRootDatum`, with no hypothesis left. For dominant `μ`, `ν`,
+`L_q(μ) ⊗ L_q(ν) ≅ ⊕_b L_q(ν + wt b)`, the sum over the `b ∈ B(μ)` with `εᵢ(b) ≤ ⟨i, ν⟩` for
+every `i`. -/
+theorem nonempty_tensor_equiv_dfinsupp_ratFunc (μ ν : Dom D.extendedRootDatum) :
+    Nonempty ((Π₀ b : {b // ∀ i, (crystalHW transcendental_vInf D.isXRegular_extendedRootDatum
+            injective_algebraMap_localRing localX_mem_maximalIdeal algebraMap_localX
+            exists_pow_localX_mul D.exists_fundamental_extendedRootDatum μ).ε i b ≤
+          ((ν.1 (D.extendedRootDatum.coroot i) : ℤ) : WithBot ℤ)},
+        IrreducibleModule D.extendedRootDatum vInf (ν.1 +
+          (crystalHW transcendental_vInf D.isXRegular_extendedRootDatum
+            injective_algebraMap_localRing localX_mem_maximalIdeal algebraMap_localX
+            exists_pow_localX_mul D.exists_fundamental_extendedRootDatum μ).wt b)) ≃ₗ[
+          QuantumGroup D.extendedRootDatum vInf]
+      TensorModule (RatFunc ℚ) (IrreducibleModule D.extendedRootDatum vInf μ.1)
+        (IrreducibleModule D.extendedRootDatum vInf ν.1)) :=
+  nonempty_tensor_equiv_dfinsupp injective_algebraMap_localRing localX_mem_maximalIdeal
+    algebraMap_localX exists_pow_localX_mul D.exists_fundamental_extendedRootDatum μ ν
+
+end LieLean.QuantumGroup.GrandLoop

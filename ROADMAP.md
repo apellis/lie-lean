@@ -2744,7 +2744,21 @@ is normal relative to the path model (`GrandLoop.isNormal_crystal_of_isCategoryO
 standard real realization, `_ratFunc` over `ℚ(v)` with no hypothesis left). Ingredients: an
 isomorphism of crystal bases ([HK] Def. 4.2.9 (2)) induces an isomorphism of crystals
 (`IsCrystalBase.crystalEquivOfEquiv`), and the crystal of `(⊕ⱼ Lⱼ, ⊔ⱼ Bⱼ)` is `Crystal.sigma`
-of the crystals of the `(Lⱼ, Bⱼ)` (`IsCrystalBase.sigmaCrystalEquiv`).
+of the crystals of the `(Lⱼ, Bⱼ)` (`IsCrystalBase.sigmaCrystalEquiv`). The same theorem returns the
+module isomorphism `⊕ⱼ L_q(λⱼ) ≅ M` ([HK] Thm. 5.2.1). `QuantumGroup/CategoryOIntTensor.lean`:
+`L_q(Λ)` lies in `𝒪_int` for dominant `Λ` (`IrreducibleModule.isCategoryOInt`) and `𝒪_int` is
+closed under tensor products (`TensorModule.isCategoryOInt`, via the weight pieces
+`M₁_{Λ₁} ⊗ M₂_{Λ₂}`). `GrandLoop/TensorDecomposition.lean`: **[Kas] Prop. 4.2**
+(`GrandLoop.nonempty_tensor_equiv_dfinsupp`): for dominant `μ`, `ν`,
+`L_q(μ) ⊗ L_q(ν) ≅ ⊕_b L_q(ν + wt b)` as `U`-modules, over the `b ∈ B(μ)` with
+`εᵢ(b) ≤ ⟨i, ν⟩` for all `i`. Kashiwara's `V(λ) ⊗ V(μ)` corresponds to `L_q(μ) ⊗ L_q(λ)` here,
+since the library's coproduct is Lusztig's. The theorem is stated under the grand-loop hypotheses
+(`v` transcendental, a discrete valuation ring `A` with `ϖ ↦ v⁻¹`, fundamental weights);
+`GrandLoop.nonempty_tensor_equiv_dfinsupp_ratFunc` is Kashiwara's setting `ℚ(v)` with no
+hypothesis left. Ingredients: the tensor product rule
+(`TensorModule.isCrystalBase_tensor_integrable`, `TensorModule.nonempty_crystalEquiv_integrable`),
+the crystal decomposition above, and the highest weight elements of a tensor product of crystals
+(`Crystal.exists_equiv_isHighestWeight_tensor`, from [Kas] Lemma 4.1).
 `CrystalBasis/StringComparison.lean`, `GrandLoop/{InfinityString,InfinityCompare}`: towards `B(∞)`
 ([Jan] 10.4–10.9 in this library's conventions). For `x = Σⱼ Fᵢ^{(j)} ηⱼ` with small components
 `f̃ᵢ Fᵢ^{(a)} x ≡ Fᵢ^{(a+1)} x` (`IntegrableSl2.IsKashiwaraStable.fTilde_dF_sub_mem`); `ᵢr ∘ rⱼ = rⱼ ∘ ᵢr`
@@ -3104,9 +3118,10 @@ completed steps and continuation threads are:
   of `L_q(λ)` is identified with the path crystal `B(λ)` (see below,
   `GrandLoop.existsUnique_equiv_pathCrystal`), and the crystal of a crystal base of a module in
   `𝒪_int` is a disjoint union of the `B(λⱼ)`, hence normal
-  (`GrandLoop.isNormal_crystal_of_isCategoryOInt`). Not formalized (issue #34): the decomposition
-  of `L_q(λ) ⊗ L_q(μ)` ([Kas] Prop. 4.2), restriction of crystal bases to `U_q(𝔤_J)` ([Kas]
-  Prop. 4.3), [Kas] Prop. 7.1, and crystal bases of integrable modules outside `𝒪_int`.
+  (`GrandLoop.isNormal_crystal_of_isCategoryOInt`). The decomposition of `L_q(μ) ⊗ L_q(ν)`
+  ([Kas] Prop. 4.2) is proved (`GrandLoop.nonempty_tensor_equiv_dfinsupp`, see M15). Not
+  formalized (issue #34): restriction of crystal bases to `U_q(𝔤_J)` ([Kas] Prop. 4.3),
+  [Kas] Prop. 7.1, and crystal bases of integrable modules outside `𝒪_int`.
 - **Global basis of `f`** (D1, scheduled 2026-10-14, issue #180; [Kas91] §7, by induction on
   the weight for every Cartan datum; [Lus] Ch. 14 for the comparison). Done:
   `CrystalBasis/Global/BalancedTriple.lean`, the balanced-triple lemmas [Kas91] Lemma 7.1.1
