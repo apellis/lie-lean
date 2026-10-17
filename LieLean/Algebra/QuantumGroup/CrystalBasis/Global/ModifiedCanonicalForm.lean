@@ -22,7 +22,10 @@ is almost orthonormal for Lusztig's form. Consequently the form is nondegenerate
 * `isNegLaurent_tensorIrrForm_tensorCanonical_sub`: the elements `(b ◇ b'')_{λ,λ''}` of
   `ʷΛ_λ ⊗ Λ_{λ''}` are almost orthonormal for the form of [Lus] 26.2.1, modulo `v⁻¹ℤ[v⁻¹]`
   (the statement (c) in the proof of [Lus] 26.3.1).
-* `Modified.form_modifiedCanonical_sub_mem`: **[Lus] Thm. 26.3.1 (a)**;
+* `Modified.form_columnEquiv`: the normalized form is preserved by the column comparison.
+* `Modified.form_columnCanonical_sub_mem`: **[Lus] Thm. 26.3.1 (a)** for the transported
+  family, without target `hY`; `Modified.form_columnCanonical_mem` gives local-ring integrality.
+* `Modified.form_modifiedCanonical_sub_mem`: **[Lus] Thm. 26.3.1 (a)** for the old construction;
   `Modified.form_modifiedCanonicalBasis_sub_mem` is the same statement for the basis
   `Modified.modifiedCanonicalBasis` of [Lus] 25.2.1 (d).
 * `Modified.eq_zero_of_forall_form_eq_zero`: Lusztig's form on `U̇` over `ℚ(v)` is
@@ -34,9 +37,11 @@ is almost orthonormal for Lusztig's form. Consequently the form is nondegenerate
 ## Hypotheses
 
 Lusztig states 26.3.1 for every root datum, reducing to the simply connected case by 25.2.2. Here
-the root datum is `X`-regular and satisfies `hY` (dominant `λ` with all `⟨i, λ⟩` arbitrarily
-large), as in [Lus] 25.2.1 (`existsUnique_modifiedCanonical`); removing `hY` via [Lus] 25.2.2 is
-tracked in the roadmap.
+the transported family requires only `X`-regularity: the same-column comparison of normalized
+forms and the free-coroot auxiliary datum remove target `hY` from its pairing statements.
+The old construction and its tensor characterization still assume `hY` (dominant `λ` with
+all `⟨i, λ⟩` arbitrarily large), as in `existsUnique_modifiedCanonical`. The nondegeneracy
+statements below still use that old basis and retain `hY`.
 
 ## References
 
@@ -456,4 +461,122 @@ theorem Modified.eq_zero_of_forall_form_eq_zero_of_transcendental {L : Type*} [F
 
 end Orthonormal
 
+end LieLean.QuantumGroup
+
+/-! ### Normalized form transport and the general column family -/
+
+noncomputable section
+namespace LieLean.QuantumGroup
+open Modified
+variable {k I Y Y' : Type*} [Field k] [AddCommGroup Y] [AddCommGroup Y']
+  [DecidableEq I] {D : LusztigCartanDatum I} {R : D.RootDatum Y} {R' : D.RootDatum Y'}
+  {v : k} [NeZero v] (hv : ∀ n : ℕ, 0 < n → v ^ n ≠ 1)
+
+omit hv in
+/-- Root-datum morphisms intertwine the contravariant anti-automorphism. -/
+lemma mapHom_rho (φ : R.Hom R') (u : QuantumGroup R v) :
+    mapHom v φ (rho R v u) = rho R' v (mapHom v φ u) := by
+  induction u using QuantumGroup.induction_on with
+  | algebraMap c => simp
+  | E i => simp [rhoE, Kt, Hom.map_ktilde]
+  | F i => simp [rhoF, Hom.map_ktilde]
+  | K μ => simp
+  | add x y hx hy => simp only [map_add, hx, hy]
+  | mul x y hx hy => simp only [rho_mul, _root_.map_mul, hx, hy]
+
+/-- The normalization functional commutes with a root-datum morphism and weight pullback.
+The proof uses its values on the spanning elements `ρ(x⁻) y⁻ K_μ`. -/
+lemma formFunctional_mapHom (φ : R.Hom R') (ζ : Y' →+ ℤ) (u : QuantumGroup R v) :
+    formFunctional R' v hv ζ (mapHom v φ u) =
+      formFunctional R v hv (ζ.comp φ.toHom) u := by
+  have hm (x : LusztigF k I) : mapHom v φ (minusHom R v x) = minusHom R' v x := by
+    simpa using mapHom_minus_plus R R' φ x 1
+  induction u using induction_rho_minusHom with
+  | h0 => simp
+  | hadd x y hx hy => simp only [map_add, hx, hy]
+  | hsmul c x hx => simp only [map_smul, hx]
+  | hmon w w' μ =>
+    rw [_root_.map_mul (mapHom v φ), _root_.map_mul (mapHom v φ), mapHom_rho, hm, hm, mapHom_K,
+      formFunctional_rho_minusHom, formFunctional_rho_minusHom]
+    rfl
+
+namespace Modified
+/-- Pairing two elements of one column reduces to the normalized functional,
+by contravariance and the half-algebra normalization of [Lus] 26.1.2. -/
+lemma form_leftActOne_eq_formFunctional (ζ : Y →+ ℤ) (u u' : QuantumGroup R v) :
+    form R v hv (leftActOne R hv ζ u) (leftActOne R hv ζ u') =
+      formFunctional R v hv ζ (rho R v u * u') := by
+  rw [leftActOne_apply, leftActOne_apply, form_leftAct_left, ← leftAct_mul]
+  exact one_leftAct_one_eq_formFunctional hv (form_leftAct_left hv)
+    (form_minusHom_leftAct_one hv) ζ _
+
+/-- The column comparison of [Lus] 23.2.5 preserves the normalized form. This justifies
+the same-column reduction in the proof of [Lus] 26.3.1(a). The comparison holds for any
+root-datum morphism over a field at a non-root-of-unity parameter; it requires neither
+regularity nor sufficiently large dominant weights. -/
+theorem form_columnEquiv (φ : R.Hom R') (ζ : Y' →+ ℤ)
+    (x y : LinearMap.range (leftActOne R hv (ζ.comp φ.toHom))) :
+    form R' v hv (columnEquiv R R' hv φ ζ x) (columnEquiv R R' hv φ ζ y) =
+      form R v hv x y := by
+  obtain ⟨_, u, rfl⟩ := x
+  obtain ⟨_, u', rfl⟩ := y
+  rw [columnEquiv_leftActOne, columnEquiv_leftActOne,
+    form_leftActOne_eq_formFunctional, form_leftActOne_eq_formFunctional,
+    ← mapHom_rho, ← _root_.map_mul, formFunctional_mapHom]
+end Modified
+end LieLean.QuantumGroup
+namespace LieLean.QuantumGroup
+open GrandLoop LusztigF Modified
+local notation "𝕂" => RatFunc ℚ
+local notation "𝕧" => (RatFunc.X : RatFunc ℚ)
+local notation "A" => InfinityLocalRing
+local notation "ϖ" => InfinityLocalRing.uniformizer
+local instance : NeZero 𝕧 := ⟨RatFunc.X_ne_zero⟩
+variable {I Y : Type*} [Finite I] [DecidableEq I] [AddCommGroup Y]
+  {D : LusztigCartanDatum I} {R : D.RootDatum Y} (hR : R.IsXRegular)
+
+namespace Modified
+
+/-- Distinct original target columns are orthogonal; no identification of weights is used. -/
+theorem form_columnCanonical_of_ne {ζ ζ₁ : Y →+ ℤ} (hζ : ζ ≠ ζ₁)
+    {b b'' b₁ b₁'' : Um D 𝕧} (hb : b ∈ canonicalBasis D) (hb'' : b'' ∈ canonicalBasis D)
+    (hb₁ : b₁ ∈ canonicalBasis D) (hb₁'' : b₁'' ∈ canonicalBasis D) :
+    form R 𝕧 hvn_ratFunc (columnCanonical hR ζ hb hb'')
+      (columnCanonical hR ζ₁ hb₁ hb₁'') = 0 := by
+  obtain ⟨u, hu⟩ := columnCanonical_mem_range hR ζ hb hb''
+  obtain ⟨u₁, hu₁⟩ := columnCanonical_mem_range hR ζ₁ hb₁ hb₁''
+  rw [← hu, ← hu₁]
+  exact form_leftActOne_leftActOne_of_ne hζ u u₁
+
+open Classical in
+/-- [Lus] 26.3.1(a) for the column-transported canonical family, without target `hY`.
+After separating distinct target columns, `form_columnEquiv` reduces to the free-coroot
+auxiliary datum. This datum supplies dominant weights and preserves `IsXRegular`; it is not
+the simply connected datum of the printed proof. `IsXRegular` remains a route hypothesis. -/
+theorem form_columnCanonical_sub_mem (ζ ζ₁ : Y →+ ℤ) {b b'' b₁ b₁'' : Um D 𝕧}
+    (hb : b ∈ canonicalBasis D) (hb'' : b'' ∈ canonicalBasis D)
+    (hb₁ : b₁ ∈ canonicalBasis D) (hb₁'' : b₁'' ∈ canonicalBasis D) :
+    ∃ a : A, form R 𝕧 hvn_ratFunc (columnCanonical hR ζ hb hb'')
+        (columnCanonical hR ζ₁ hb₁ hb₁'') -
+          (if ζ = ζ₁ ∧ b = b₁ ∧ b'' = b₁'' then 1 else 0) = algebraMap A 𝕂 (ϖ * a) := by
+  by_cases hζ : ζ = ζ₁
+  · subst ζ₁
+    simp only [columnCanonical, form_columnEquiv, true_and]
+    exact form_modifiedCanonical_sub_mem_of_eq (isXRegular_freeCoroot hR)
+      exists_dom_freeCoroot (ζ.comp R.freeCorootHom.toHom) hb hb'' hb₁ hb₁''
+  · exact ⟨0, by simp [hζ, form_columnCanonical_of_ne hR hζ]⟩
+
+/-- Pairings of the column-transported canonical family lie in the local ring at infinity,
+as a consequence of [Lus] 26.3.1(a), with no target `hY` hypothesis. -/
+theorem form_columnCanonical_mem (ζ ζ₁ : Y →+ ℤ) {b b'' b₁ b₁'' : Um D 𝕧}
+    (hb : b ∈ canonicalBasis D) (hb'' : b'' ∈ canonicalBasis D)
+    (hb₁ : b₁ ∈ canonicalBasis D) (hb₁'' : b₁'' ∈ canonicalBasis D) :
+    ∃ a : A, form R 𝕧 hvn_ratFunc (columnCanonical hR ζ hb hb'')
+      (columnCanonical hR ζ₁ hb₁ hb₁'') = algebraMap A 𝕂 a := by
+  classical
+  obtain ⟨a, ha⟩ := form_columnCanonical_sub_mem hR ζ ζ₁ hb hb'' hb₁ hb₁''
+  refine ⟨ϖ * a + if ζ = ζ₁ ∧ b = b₁ ∧ b'' = b₁'' then 1 else 0, ?_⟩
+  rw [_root_.map_add, ← ha]
+  split_ifs <;> simp
+end Modified
 end LieLean.QuantumGroup
