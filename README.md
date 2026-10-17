@@ -202,7 +202,8 @@ Further proved results include:
   product rule for arbitrary integrable modules (`TensorModule.isCrystalBase_tensor_integrable`),
   the crystal base `(L(∞), B(∞))` of `U⁻`, `B(∞)* = B(∞)` and the Kashiwara–Saito
   characterization of `B(∞)` (`GrandLoop.equivInf`). Lattices are at `v = ∞`, matching Lusztig's
-  coproduct. Two gaps in the printed grand loop are recorded in [`ERRATA.md`](ERRATA.md). Also
+  coproduct. [`ERRATA.md`](ERRATA.md) distinguishes a locally repaired auxiliary identification
+  in the printed grand loop from an exercise derivation whose reconstruction remains partial. Also
   Kashiwara, *On crystal bases*, Prop. 4.2: `L_q(μ) ⊗ L_q(ν) ≅ ⊕_b L_q(ν + wt b)` over the
   `b ∈ B(μ)` with `εᵢ(b) ≤ ⟨i, ν⟩` (`GrandLoop.nonempty_tensor_equiv_dfinsupp`, and `_ratFunc`
   over `ℚ(v)` with no hypothesis left; tensor factors in Lusztig's order). Not formalized: Kashiwara, *On crystal bases*, Prop. 4.3 (restriction to
