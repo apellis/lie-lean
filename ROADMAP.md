@@ -2980,8 +2980,10 @@ assertion is the congruence of `θ_h^c` to `±b`, for a unique `b ∈ B`, modulo
   gap" above).
 - [Lus] Thm. 14.3.2 (d).
 - General basis/form construction without `hY` via [Lus] 25.2.2 (listed under "Status and open
-  threads"). The fixed-column and integral comparisons and the transported integral,
-  bar-fixed element are proved; the original dominant-tensor uniqueness still requires `hY`.
+  threads"). The fixed-column and integral comparisons, transported integral bar-fixed
+  elements, and their rational and integral bases are proved for `IsXRegular`, without target
+  `hY`; agreement with the old construction and form transport remain. The original
+  dominant-tensor uniqueness still requires `hY`.
 
 *Approach followed.* The global-basis part of Kashiwara's grand loop was proved for all Cartan
 data at once, by induction on the weight ([Kas91] §7.5), not rank by rank (rank-two bar-fixed
@@ -3392,8 +3394,12 @@ completed steps and continuation threads are:
   bar-fixed (`columnCanonical_mem_range`, `columnCanonical_mem_aForm`, `bar_columnCanonical`).
   This auxiliary datum is not the printed simply connected datum; it preserves `IsXRegular`
   and has arbitrarily large dominant weights, so the generalized column comparison applies.
-  Remaining: prove a basis theorem for this construction, agreement with `modifiedCanonical`
-  under its valid hypotheses, and bilinear-form transport to the general endpoints of 26.3.1.
+  **Transported bases** ([Lus] Cor. 25.2.3): `Modified.columnCanonicalBasis` and
+  `Modified.aColumnCanonicalBasis` are bases of the existing `U̇` and `𝒜U̇`, with `IsXRegular`
+  but no target `hY`. Their vectors are `columnCanonical`; the proof transports the
+  unitriangular expansion through `columnEquiv` and uses the integral triangular coordinates.
+  Remaining: agreement with `modifiedCanonical` under its valid hypotheses, and
+  bilinear-form transport to the general endpoints of 26.3.1.
   The original dominant-tensor uniqueness characterization retains `hY`.
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness

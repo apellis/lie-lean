@@ -248,8 +248,10 @@ Further proved results include:
     regularity or `hY`. For `R.IsXRegular`, `Modified.columnCanonical` transports the element
     from the free-coroot auxiliary datum, without `hY` on `R`; column membership, integrality
     and bar invariance are proved. The auxiliary datum is not the printed simply connected
-    datum. A basis theorem, agreement with `modifiedCanonical` under `hY`, and form transport
-    remain open.
+    datum. The transported family is a basis over `ℚ(v)` and `𝒜` ([Lus] Cor. 25.2.3;
+    `Modified.columnCanonicalBasis`, `Modified.aColumnCanonicalBasis`), by transporting
+    the unitriangular expansion. Agreement with `modifiedCanonical` under `hY` and form
+    transport remain open.
   - **Not formalized:** [Lus] 14.3.2 (d); the congruence part of 41.1.6 (PBW elements are
     congruent to `±b`, `b` in the canonical basis, modulo `v⁻¹ℒ`; the lattice part is proved, see
     the table below); 41.1.9 (compatibility with the quantum Frobenius map, deferred item D2 of the
