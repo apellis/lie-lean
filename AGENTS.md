@@ -110,7 +110,9 @@ lake build LieLean.Algebra.Lie.Foo   # a single module
   scripts/AxiomAudit.lean` checks this for every declaration of the library (CI runs it after
   the build); `scripts/check_axioms.sh Decl.name …` prints the axioms of individual declarations.
 - Audit statements as well as proofs: non-vacuous hypotheses, correct quantifiers, no accidental
-  specialization.
+  specialization. `scripts/NonVacuity.lean` (run by CI) applies each headline theorem to concrete
+  data with every hypothesis proved; when a headline theorem is added or its hypotheses change,
+  add or update its example there.
 
 ## Workflow
 
