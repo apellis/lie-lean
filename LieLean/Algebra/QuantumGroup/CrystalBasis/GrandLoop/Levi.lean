@@ -56,7 +56,7 @@ weights above each weight: its weights are those of `M`, and `Q_J₊ ⊆ Q₊`. 
 theorem HasFiniteWeightsAbove.leviRestrict (h : HasFiniteWeightsAbove R v M) :
     HasFiniteWeightsAbove (R.comap e) v (LeviRestrict R v e M) := fun Λ ↦ by
   refine ((h Λ).preimage (Finsupp.embDomain_injective e).injOn).subset fun ν hν ↦ ?_
-  simp only [Set.mem_preimage, Set.mem_setOf_eq] at hν ⊢
+  simp only [Set.mem_preimage, Set.mem_ofPred_eq] at hν ⊢
   rwa [weightSpace_leviRestrict, LusztigCartanDatum.RootDatum.comap_rootSum] at hν
 
 variable [NeZero v] {hv : ∀ n : ℕ, 0 < n → v ^ n ≠ 1} {hM : IsIntegrable R v M}
