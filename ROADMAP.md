@@ -2533,8 +2533,10 @@ realizations, beyond the source ambient root-datum conventions.
 
 This supplies full signed residue parametrization before canonical-lift comparison.
 No root-independence, regularity or positivity hypothesis is imposed.
-**Remaining 41.1.6 gap:** identification of these signed crystal residues with the integral
-canonical basis of 14.2.2(b), and hence the signed canonical-basis comparison, is not proved.
+**41.1.6, congruence part:** proved (`PBW/Crystal/CanonicalCongruence.lean`,
+`PBWSignedCrystal.existsUnique_canonical_congruence`): every PBW element is congruent modulo
+`v⁻¹ℒ(∞)` to `±b` for a unique `b ∈ B` and a unique sign, for every reduced word, via
+`B = {G(b)}` (`mem_canonicalBasis_iff`). The paragraph below describes the earlier residue results.
 No sign `+1`, canonical/global lifts, bar invariance, balancedness or canonical
 reduced-word-independent representatives are asserted. The homogeneous norm criterion
 is not a construction of a general canonical basis.
@@ -2878,8 +2880,8 @@ product rule (`TensorModule.fQ_tmulL_integrable`, `eQ_tmulL_integrable`, from th
 `Crystal/TensorHighestWeight.lean`: [HK] Cor. 4.4.4 for seminormal crystals
 (`Crystal.IsSeminormal.isHighestWeight_tensor_iff`: `b₁ ⊗ b₂` is maximal iff `ẽᵢ b₁ = 0` and
 `εᵢ(b₂) ≤ ⟨hᵢ, wt b₁⟩` for all `i`; `isHighestWeight_fst_of_isHighestWeight_tensor`: part (2)).
-Remaining for `Tᵢ`: faithfulness of the Artin action (not pursued); the congruence part of
-[Lus] 41.1.6 (comparison of PBW elements with the canonical basis, which is now available).
+Remaining for `Tᵢ`: faithfulness of the Artin action (not pursued). [Lus] 41.1.6 is proved
+(`PBWSignedCrystal.existsUnique_canonical_congruence`).
 At roots of unity the braid relations hold on Lusztig's `_S U̇` (`Modified.isBraidLiftable_braidR`,
 [Lus] 41.1.8); for `U` over a field at a root of unity (`braidEquivOfGeneric`, no divided powers)
 they are proved under `BraidOuterCondition`.
@@ -2956,7 +2958,7 @@ record how each item is approached and what it does and does not make possible.
 ### D1. Canonical basis of `f` and the remainder of [Lus] 41.1.6
 
 *Status.* Scheduled 2026-10-14 (issue #180). The canonical bases of `f`, `L_q(λ)` and `U̇` are
-proved; the congruence part of 41.1.6 and 14.3.2 (d) remain. Declarations are listed under
+proved, and so is 41.1.6 (`existsUnique_canonical_congruence`); 14.3.2 (d) remains. Declarations are listed under
 "Global basis of `f`" in "Status and open threads".
 
 *Target.* Lusztig's canonical basis `B` of `f`: the elements `b ∈ 𝒜f` with `b̄ = b` and
@@ -2984,9 +2986,6 @@ assertion is the congruence of `θ_h^c` to `±b`, for a unique `b ∈ B`, modulo
   `PBWSignedCrystal.original_PBW_longest_unique_signed_exponent`).
 
 *Remaining.*
-- [Lus] 41.1.6, congruence part: identify the signed crystal residues of the PBW elements with
-  the canonical basis, giving `θ_h^c ≡ ±b mod v⁻¹ℒ` for a unique `b ∈ B` (see "Remaining 41.1.6
-  gap" above).
 - [Lus] Thm. 14.3.2 (d).
 - The original dominant-tensor uniqueness characterization of the canonical basis of `U̇` still
   requires `hY`. The general basis and form construction via [Lus] 25.2.2 is proved for
@@ -3251,7 +3250,8 @@ completed steps and continuation threads are:
   `b, b' ∈ B(λ)`, `X`-regular root data); the congruence modulo `v⁻¹` comes from Kashiwara's
   `(L(λ), B(λ))` instead of Lusztig's 19.1.4 (our own route), with fundamental weights, and is
   transferred from `freeCoroot R` (`formL_hwTransfer`).
-  Remaining: 14.3.2 (d) and the rest of 41.1.6.
+  [Lus] 41.1.6, congruence part: `PBWSignedCrystal.existsUnique_canonical_congruence`.
+  Remaining: 14.3.2 (d).
 - **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
   components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
   [Lus] 4.1.2 (b) for every basis of `f_ν` (`quasiR_eq_sum`), `Θ_0 = 1 ⊗ 1` (`quasiR_zero`) and
@@ -3470,7 +3470,7 @@ completed steps and continuation threads are:
   `braidArtinHomOfNotRoot`, `ModuleSymmetry/Braid.lean`, via integrable modules). On `U̇`, `𝒜U̇`
   and `_S U̇` for every `𝒜`-algebra `S` (roots of unity included): `Modified.isBraidLiftable_braid`,
   `isBraidLiftable_braidA`, `isBraidLiftable_braidR` ([Lus] 41.1.1, 41.1.2, 41.1.8). Remaining:
-  action faithfulness (not pursued), the congruence part of [Lus] 41.1.6, and the relations for
+  action faithfulness (not pursued) and the relations for
   `U` itself over a field at a root of unity outside `BraidOuterCondition`.
 - **Weight-basis cleanup**: `KacMoody/WeightBasis.lean` provides the shared
   `IsHDiagonalizable.weightBasis` construction. `diagWeightBasis` and
