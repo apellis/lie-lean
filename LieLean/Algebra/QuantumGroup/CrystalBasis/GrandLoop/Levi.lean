@@ -105,7 +105,7 @@ variable {M : Type*} [AddCommGroup M] [Module k M] [Module (QuantumGroup R v) M]
   {hL : IsCrystalLattice (pow_ne_one_of_transcendental' hvt) hM L}
   {B : Set (L ⧸ (Ideal.span {ϖ} • ⊤ : Submodule A L))}
 
-include hinj hϖ hϖv hk hfund in
+include hinj hϖ hϖv hk hfund hR in
 /-- **Restriction to a Levi subalgebra** ([Kas] Prop. 4.3, (4.6)) for a module `M` in `𝒪_int` with a
 crystal base `(L, B)`: `M ≅ ⊕_b L_q^J(wt b)` as `U(R.comap e)`-modules, the sum running over the
 `b ∈ B` with `ẽ_{e j} b = 0` for every `j ∈ J`. -/
@@ -153,7 +153,8 @@ theorem nonempty_leviRestrict_equiv_dfinsupp (μ : Dom R) :
         IrreducibleModule (R.comap e) v ((crystalHW hvt hR hinj hϖ hϖv hk hfund μ).wt b)) ≃ₗ[
           QuantumGroup (R.comap e) v]
       LeviRestrict R v e (IrreducibleModule R v μ.1)) :=
-  nonempty_leviRestrict_equiv_dfinsupp_of_isCategoryOInt hinj hϖ hϖv hk hfund e
+  nonempty_leviRestrict_equiv_dfinsupp_of_isCategoryOInt (hvt := hvt) (hR := hR) hinj hϖ hϖv hk
+    hfund e
     (IrreducibleModule.isCategoryOInt hR (pow_ne_one_of_transcendental' hvt) μ.2)
     (isCrystalBaseHW hvt hR hinj hϖ hϖv hk hfund μ)
 
