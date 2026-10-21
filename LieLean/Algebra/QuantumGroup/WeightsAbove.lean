@@ -143,9 +143,11 @@ theorem isSemisimpleModule_of_hasFiniteWeightsAbove : IsSemisimpleModule (Quantu
   rw [eq_top_iff]
   intro m _
   have hm : m ∈ ⨆ Λ, weightSpace R v M Λ := hM.iSup_weightSpace_eq_top ▸ Submodule.mem_top
-  exact Submodule.iSup_induction _ hm
-    (fun Λ y hy ↦ Submodule.mem_iSup_of_mem ⟨Λ, ⟨y, hy⟩⟩ (Submodule.mem_span_singleton_self y))
-    (zero_mem _) fun _ _ h h' ↦ add_mem h h'
+  have hle : ⨆ Λ, weightSpace R v M Λ ≤ (⨆ x : Σ Λ, weightSpace R v M Λ,
+      Submodule.span (QuantumGroup R v) {(x.2 : M)}).restrictScalars k :=
+    iSup_le fun Λ y hy ↦
+      Submodule.mem_iSup_of_mem ⟨Λ, ⟨y, hy⟩⟩ (Submodule.mem_span_singleton_self y)
+  exact hle hm
 
 include hv' hM hfd hab hvt hR in
 /-- **Complete reducibility** ([HK] Thm. 3.5.4) for an integrable module `M` with
