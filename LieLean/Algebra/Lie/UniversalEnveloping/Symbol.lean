@@ -119,7 +119,7 @@ lemma toGr_ι_ne_zero [Nontrivial R] [Module.Free R L] {x : L} (hx : x ≠ 0) :
   rw [AlgHom.commutes, lift_ι_apply, Algebra.algebraMap_self, RingHom.id_apply,
     zero_apply] at h
   rw [h, map_zero] at hr
-  exact hx (ι_injective R L (by rw [LieHom.map_zero]; exact hr.symm))
+  exact hx (ι_injective R L (by rw [map_zero]; exact hr.symm))
 
 instance instNoZeroDivisorsAssociatedGraded [NoZeroDivisors R] [Module.Free R L] :
     NoZeroDivisors (AssociatedGraded R L) :=
