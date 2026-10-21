@@ -3136,8 +3136,10 @@ completed steps and continuation threads are:
   `𝒪_int` is a disjoint union of the `B(λⱼ)`, hence normal
   (`GrandLoop.isNormal_crystal_of_isCategoryOInt`). The decomposition of `L_q(μ) ⊗ L_q(ν)`
   ([Kas] Prop. 4.2) is proved (`GrandLoop.nonempty_tensor_equiv_dfinsupp`, see M15). Not
-  formalized (issue #34): restriction of crystal bases to `U_q(𝔤_J)` ([Kas] Prop. 4.3),
-  [Kas] Prop. 7.1, and crystal bases of integrable modules outside `𝒪_int`.
+  formalized (issue #34): restriction of crystal bases to `U_q(𝔤_J)` ([Kas] Prop. 4.3), and
+  crystal bases of integrable modules outside `𝒪_int`. [Kas] Prop. 7.1: (i) ⇒ (ii) only
+  (`Crystal.IsNormal.isNormalRankTwo`). The converse is stated without proof in [Kas]; by the
+  maintainer's decision (2026-10-21) it is recorded as unproved in the source and not formalized.
 - **Global basis of `f`** (D1, scheduled 2026-10-14, issue #180; [Kas91] §7, by induction on
   the weight for every Cartan datum; [Lus] Ch. 14 for the comparison). Done:
   `CrystalBasis/Global/BalancedTriple.lean`, the balanced-triple lemmas [Kas91] Lemma 7.1.1
