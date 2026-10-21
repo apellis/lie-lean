@@ -208,8 +208,12 @@ Further proved results include:
   `b ∈ B(μ)` with `εᵢ(b) ≤ ⟨i, ν⟩` (`GrandLoop.nonempty_tensor_equiv_dfinsupp`, and `_ratFunc`
   over `ℚ(v)` with no hypothesis left; tensor factors in Lusztig's order). Kashiwara, *On crystal bases*, Prop. 7.1: only (i) ⇒ (ii)
   (`Crystal.IsNormal.isNormalRankTwo`); the converse, that normality for all `J` with at most two
-  elements implies normality, is stated there without proof and is not formalized. Not formalized:
-  Prop. 4.3 (restriction to `U_q(𝔤_J)`), and crystal bases of integrable modules outside `𝒪_int`.
+  elements implies normality, is stated there without proof and is not formalized. Kashiwara,
+  *On crystal bases*, Prop. 4.3: a crystal base of an integrable module is a crystal base of its
+  restriction to `U_q(𝔤_J)` (`IsCrystalBase.leviRestrict`), and the restriction of `L_q(λ)` is
+  `⊕_b L_{q,J}(wt b)` over the `b ∈ B(λ)` with `ẽⱼ b = 0` for all `j ∈ J`
+  (`GrandLoop.nonempty_leviRestrict_equiv_dfinsupp`, and `_ratFunc` over `ℚ(v)`). Not formalized:
+  crystal bases of integrable modules outside `𝒪_int`.
 - **Global and canonical bases** (`QuantumGroup/CrystalBasis/Global/`; over `ℚ(v)`, every Cartan
   datum with finite index set):
   - Kashiwara's global bases (Kashiwara, Duke Math. J. 63 (1991), §7): the statement (G.1) at
