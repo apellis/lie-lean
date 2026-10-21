@@ -155,10 +155,9 @@ theorem nonempty_leviRestrict_equiv_dfinsupp_of_isCategoryOInt (hO : IsCategoryO
       LeviRestrict R v e M) := by
   obtain ⟨s, Λ, f, hwt, ⟨Ψ⟩⟩ :=
     exists_equiv_leviRestrict_of_isCategoryOInt (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund e hO hB
-  refine ⟨LinearEquiv.trans ?_ Ψ⟩
-  exact DFinsupp.domLCongrOfEq (S := QuantumGroup (R.comap e) v)
+  exact ⟨(DFinsupp.domLCongrOfEq (S := QuantumGroup (R.comap e) v)
     (fun Λ' : Y →+ ℤ ↦ IrreducibleModule (R.comap e) v Λ') (fun j : s ↦ (Λ j).1)
-    (fun b : {b : B // ∀ j, hB.e (e j) b = none} ↦ hB.wt b.1) f hwt
+    (fun b : {b : B // ∀ j, hB.e (e j) b = none} ↦ hB.wt b.1) f hwt).trans Ψ⟩
 
 end Generic
 
