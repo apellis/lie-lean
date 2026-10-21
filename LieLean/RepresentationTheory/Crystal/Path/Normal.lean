@@ -53,8 +53,8 @@ so the condition says that every `J`-component of `B` is a copy of some `B_J(ν)
 ## References
 
 * [Kas] M. Kashiwara, *On crystal bases*, CMS Conf. Proc. 16 (1995), §7.6 (normal crystals;
-  Prop. 7.1: it suffices to consider `J` with at most two elements, stated without proof), §11, Thm. 11.1 (the action of
-  the Weyl group).
+  Prop. 7.1: it suffices to consider `J` with at most two elements, stated without proof), §11,
+  Thm. 11.1 (the action of the Weyl group).
 * [Kas94] M. Kashiwara, *Crystal bases of modified quantized enveloping algebra*, Duke Math. J.
   **73** (1994), 383–413, §1.5 (normal crystals), §7.1 (the reflections `Sᵢ`), Thm. 7.2.2 (the
   braid relations).
