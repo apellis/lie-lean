@@ -89,13 +89,13 @@ theorem levi_relations :
   K_mul_E μ j := K_mul_E R v μ (e j)
   K_mul_F μ j := K_mul_F R v μ (e j)
   E_mul_F j j' := by
-    show E R v (e j) * F R v (e j') - F R v (e j') * E R v (e j) = _
+    change E R v (e j) * F R v (e j') - F R v (e j') * E R v (e j) = _
     rw [E_mul_F_sub]
-    by_cases h : j = j'
+    simp only [e.injective.eq_iff]
+    split_ifs with h
     · subst h
-      rw [if_pos rfl, if_pos rfl]
       rfl
-    · rw [if_neg (e.injective.ne h), if_neg h]
+    · rfl
   serre_E _ _ h := serre_E R v (e.injective.ne h)
   serre_F _ _ h := serre_F R v (e.injective.ne h)
 
@@ -148,14 +148,15 @@ omit [IsScalarTower k (QuantumGroup R v) M] in
 instance : Module (QuantumGroup (R.comap e) v) (LeviRestrict R v e M) :=
   (Module.compHom M (leviHom R v e).toRingHom : Module (QuantumGroup (R.comap e) v) M)
 
-omit [IsScalarTower k (QuantumGroup R v) M] in
+omit [Module k M] [IsScalarTower k (QuantumGroup R v) M] in
 lemma leviRestrict_smul (u : QuantumGroup (R.comap e) v) (m : LeviRestrict R v e M) :
     u • m = (leviHom R v e u • (m : M) : M) := rfl
 
 instance : IsScalarTower k (QuantumGroup (R.comap e) v) (LeviRestrict R v e M) where
   smul_assoc c u m := by
-    change leviHom R v e (c • u) • (m : M) = c • (leviHom R v e u • (m : M))
-    rw [map_smul, smul_assoc]
+    have h := @smul_assoc k (QuantumGroup R v) M _ _ _ _ c (leviHom R v e u) m
+    rw [← map_smul (leviHom R v e) c u] at h
+    exact h
 
 variable {R v e M}
 
@@ -174,7 +175,6 @@ lemma K_smul_leviRestrict (μ : Y) (m : LeviRestrict R v e M) :
     K (R.comap e) v μ • m = (K R v μ • (m : M) : M) := by
   rw [leviRestrict_smul, leviHom_K]
 
-omit [IsScalarTower k (QuantumGroup R v) M] in
 /-- The weight spaces of the restriction are those of `M`. -/
 theorem weightSpace_leviRestrict (Λ : Y →+ ℤ) :
     weightSpace (R.comap e) v (LeviRestrict R v e M) Λ = weightSpace R v M Λ := by
@@ -182,7 +182,6 @@ theorem weightSpace_leviRestrict (Λ : Y →+ ℤ) :
   show (∀ μ, K (R.comap e) v μ • m = v ^ Λ μ • m) ↔ ∀ μ, K R v μ • (m : M) = v ^ Λ μ • (m : M)
   exact forall_congr' fun μ ↦ by rw [K_smul_leviRestrict]; rfl
 
-omit [IsScalarTower k (QuantumGroup R v) M] in
 /-- The restriction of an integrable module is integrable. -/
 theorem IsIntegrable.leviRestrict (hM : IsIntegrable R v M) :
     IsIntegrable (R.comap e) v (LeviRestrict R v e M) where
@@ -198,8 +197,8 @@ theorem IsIntegrable.leviRestrict (hM : IsIntegrable R v M) :
 
 lemma nodeWt_leviRestrict (j : J) (n : ℤ) :
     nodeWt (R.comap e) v (LeviRestrict R v e M) j n = nodeWt R v M (e j) n := by
-  simp only [nodeWt, weightSpace_leviRestrict]
-  rfl
+  unfold nodeWt
+  exact iSup_congr fun Λ ↦ iSup_congr fun _ ↦ weightSpace_leviRestrict Λ
 
 /-- Rank-one structures with the same operators and grading are equal. -/
 lemma IntegrableSl2.eq_of {q : k} {N : Type*} [AddCommGroup N] [Module k N]
