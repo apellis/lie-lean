@@ -45,6 +45,11 @@ lemma mem (h : HasSymbol k s u) : u ∈ filtration R L k := h.1
 
 lemma of_mem (h : u ∈ filtration R L k) : HasSymbol k (toGr R L k ⟨u, h⟩) u := ⟨h, rfl⟩
 
+lemma unique (hs : HasSymbol k s u) (ht : HasSymbol k t u) : s = t := by
+  obtain ⟨h, rfl⟩ := hs
+  obtain ⟨h', rfl⟩ := ht
+  rfl
+
 lemma mul (hu : HasSymbol m s u) (hw : HasSymbol n t w) : HasSymbol (m + n) (s * t) (u * w) := by
   obtain ⟨hu, rfl⟩ := hu
   obtain ⟨hw, rfl⟩ := hw

@@ -98,6 +98,7 @@ import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Gram
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Hyperplane
 import LieLean.Algebra.Lie.KacMoody.ShapovalovElement.Basic
 import LieLean.Algebra.Lie.KacMoody.ShapovalovElement.Families
+import LieLean.Algebra.Lie.KacMoody.ShapovalovElement.Uniqueness
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Leading
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Multiplicity
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Polynomial
