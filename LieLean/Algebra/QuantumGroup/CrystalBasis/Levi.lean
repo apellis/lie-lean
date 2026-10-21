@@ -112,6 +112,7 @@ theorem IsCrystalLattice.leviRestrict (hL : IsCrystalLattice hv hM L) :
     exact hL.kashiwaraF_mem (e j) m hm
 
 /-- `ẽⱼ` on `L / cL` for the restriction is `ẽ_{e j}`. -/
+set_option trace.Meta.synthInstance true in
 lemma IsCrystalLattice.eQ_leviRestrict (hL : IsCrystalLattice hv hM L) (c : A) (j : J) :
     (hL.leviRestrict (e := e)).eQ c j = hL.eQ c (e j) :=
   IntegrableSl2.eTildeQ_congr (nodeSl2_leviRestrict hv hM j) _ _ _ _ c
