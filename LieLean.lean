@@ -97,6 +97,7 @@ import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Generic
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Gram
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Hyperplane
 import LieLean.Algebra.Lie.KacMoody.ShapovalovElement.Basic
+import LieLean.Algebra.Lie.KacMoody.ShapovalovElement.Existence
 import LieLean.Algebra.Lie.KacMoody.ShapovalovElement.Families
 import LieLean.Algebra.Lie.KacMoody.ShapovalovElement.Roots
 import LieLean.Algebra.Lie.KacMoody.ShapovalovElement.Uniqueness
