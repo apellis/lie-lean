@@ -48,7 +48,7 @@ lemma of_mem (h : u ∈ filtration R L k) : HasSymbol k (toGr R L k ⟨u, h⟩) 
 lemma mul (hu : HasSymbol m s u) (hw : HasSymbol n t w) : HasSymbol (m + n) (s * t) (u * w) := by
   obtain ⟨hu, rfl⟩ := hu
   obtain ⟨hw, rfl⟩ := hw
-  exact ⟨mul_mem_filtration hu hw, (toGr_mul _ _).symm⟩
+  exact ⟨mul_mem_filtration hu hw, (toGr_mul ⟨u, hu⟩ ⟨w, hw⟩).symm⟩
 
 lemma one : HasSymbol 0 1 (1 : UniversalEnvelopingAlgebra R L) :=
   ⟨one_mem_filtration 0, toGr_zero_one⟩
@@ -112,9 +112,9 @@ lemma toGr_ι_ne_zero [Nontrivial R] [Module.Free R L] {x : L} (hx : x ≠ 0) :
   rintro ⟨r, hr⟩
   have h := congrArg (lift R (0 : L →ₗ⁅R⁆ R)) hr
   rw [AlgHom.commutes, lift_ι_apply, Algebra.algebraMap_self, RingHom.id_apply,
-    LieHom.zero_apply] at h
+    zero_apply] at h
   rw [h, map_zero] at hr
-  exact hx (ι_injective R L (by rw [← hr, LieHom.map_zero]))
+  exact hx (ι_injective R L (by rw [LieHom.map_zero]; exact hr.symm))
 
 instance instNoZeroDivisorsAssociatedGraded [NoZeroDivisors R] [Module.Free R L] :
     NoZeroDivisors (AssociatedGraded R L) :=
