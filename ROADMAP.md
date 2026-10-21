@@ -472,6 +472,15 @@ involution, `R`-polynomials; existence and uniqueness of the Kazhdan–Lusztig b
 
 ### M12. Deeper category 𝒪  `[~]`  ([Kac] §9, [HumO], [KK])
 
+*Maintainer decisions (2026-10-21, issue #7).* Remaining [HumO] items: Thm. 4.12 (Shapovalov
+elements) first. Then `Extⁿ_𝒪` for Thm. 6.9–6.15 and Prop. 7.2 (b), by whichever construction is
+easier (projective resolutions in `𝒪` on a tie). `ker_bggDiff_eq_range` is accepted as Thm. 6.2.
+Bott's Thm. 6.6 in the `𝔫`-cohomology form by duality if that is cheap, otherwise the
+`𝔫₋`-homology form stands. Prop. 7.8 as a homomorphism on the completed Grothendieck group
+(`multiplicities`). Props. 7.3 and 7.4 are not formalized. Ch. 1 results quoted from standard texts,
+and Ch. 10 items through projective functors (§10.8) or Duflo's theorem, only where a target needs
+them. Thm. 6.5 (a) gets no erratum: its proof stays marked reconstructed.
+
 Done: `UniversalEnvelopingAlgebra.instIsDomain` (`UniversalEnveloping/Domain.lean`, via graded
 PBW); `KacMoody/VermaHom.lean`: `primitiveVectors`, `VermaModule.homEquiv`
 (`Hom(M(μ), V) ≃ primitive vectors of weight μ`), `injective_of_ne_zero`,
