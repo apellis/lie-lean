@@ -356,6 +356,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Extraction
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Intersection
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.ScalarResidue
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integral.Strings
+import LieLean.Algebra.QuantumGroup.PBW.Crystal.CanonicalCongruence
 import LieLean.Algebra.QuantumGroup.PBW.Crystal.Grouped
 import LieLean.Algebra.QuantumGroup.PBW.Crystal.IntegralPBW
 import LieLean.Algebra.QuantumGroup.PBW.Crystal.LongestCoverage
