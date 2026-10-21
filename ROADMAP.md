@@ -2979,11 +2979,13 @@ assertion is the congruence of `θ_h^c` to `±b`, for a unique `b ∈ B`, modulo
   the canonical basis, giving `θ_h^c ≡ ±b mod v⁻¹ℒ` for a unique `b ∈ B` (see "Remaining 41.1.6
   gap" above).
 - [Lus] Thm. 14.3.2 (d).
-- General basis/form construction without `hY` via [Lus] 25.2.2 (listed under "Status and open
-  threads"). The fixed-column and integral comparisons, transported integral bar-fixed
-  elements, and their rational and integral bases are proved for `IsXRegular`, without target
-  `hY`; agreement with the old construction and form transport remain. The original
-  dominant-tensor uniqueness still requires `hY`.
+- The original dominant-tensor uniqueness characterization of the canonical basis of `U̇` still
+  requires `hY`. The general basis and form construction via [Lus] 25.2.2 is proved for
+  `IsXRegular` without target `hY` (listed under "Status and open threads"): fixed-column and
+  integral comparisons, transported integral bar-fixed elements and their rational and integral
+  bases, form transport, Thm. 26.3.1 (a), (b), nondegeneracy, and agreement with the old
+  construction under its `hY` (`Modified.columnCanonicalBasis_eq_modifiedCanonicalBasis`).
+  `IsXRegular` remains a route hypothesis for the printed 26.3.1.
 
 *Approach followed.* The global-basis part of Kashiwara's grand loop was proved for all Cartan
 data at once, by induction on the weight ([Kas91] §7.5), not rank by rank (rank-two bar-fixed
