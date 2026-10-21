@@ -79,7 +79,7 @@ lemma finite_summandsAbove_of_hasFiniteWeightsAbove {J : Type*} {Λ : J → Dom 
     exact Set.finite_coe_iff.1 hf.finite
   refine ((hab (Λ j).1).biUnion fun ν _ ↦ hfib ((Λ j).1 + R.rootSum ν)).subset
     fun j' ⟨ν, hν⟩ ↦ Set.mem_biUnion (x := ν) ?_ hν
-  rw [Set.mem_setOf_eq, ← hν]
+  rw [Set.mem_ofPred_eq, ← hν]
   exact (Submodule.ne_bot_iff _).2 ⟨_, hmem j', hne j'⟩
 
 variable [Finite I] [IsDomain A] [IsDiscreteValuationRing A]
