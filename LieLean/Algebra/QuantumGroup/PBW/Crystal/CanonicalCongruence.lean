@@ -57,8 +57,8 @@ local notation "B" => fWi (D := D) transcendental_ratFunc_X
 /-- Two crystal words that agree modulo `v⁻¹ℒ(∞)` have the same weight. -/
 lemma wordWeight_eq_of_sub_mem {u t : List I} (h : B u - B t ∈ P) :
     wordWeight u = wordWeight t :=
-  wordWeight_eq_of_mem_Uw (fWi_mem_Uw u) (word_not_mem_uniformizer t)
-    (by simpa using neg_mem h)
+  wordWeight_eq_of_mem_Uw (fWi_mem_Uw t) (word_not_mem_uniformizer t)
+    (by rw [← neg_sub]; exact neg_mem h)
 
 /-- `G(b)` is congruent to `f̃_u 1` modulo `v⁻¹ℒ(∞)` for every word `u` in the class `b`. -/
 lemma negGlobal_mk_sub_mem (u : List I) :
@@ -101,13 +101,14 @@ variable {Y : Type*} [AddCommGroup Y] (R : D.RootDatum Y)
 
 /-- Every PBW element is congruent to `±b`, `b ∈ B`, modulo `v⁻¹ℒ(∞)`. -/
 theorem exists_canonical_congruence {w : List I} (hw : cs.IsReduced w) (c : Fin w.length → ℕ) :
-    ∃ x ∈ canonicalBasis D, ∃ e : ℤ, (e = 1 ∨ e = -1) ∧ pbwNegative R hw c - (e : K) • x ∈ P := by
+    ∃ x ∈ canonicalBasis D, ∃ e : ℤ, (e = 1 ∨ e = -1) ∧
+      pbwNegative R hw c - (e : K) • x ∈ P := by
   obtain ⟨u, e, he, hX, -⟩ := original_PBW_unique_signed R hw c
   refine ⟨negGlobal D (wordWeight u) (Quotient.mk _ ⟨u, rfl⟩),
     (mem_canonicalBasis_iff D).2 ⟨_, _, rfl⟩, e, he, ?_⟩
   have hG := negGlobal_mk_sub_mem (D := D) u
-  have : (e : K) • (negGlobal D (wordWeight u) (Quotient.mk _ ⟨u, rfl⟩) - B u) ∈ P :=
-    Submodule.smul_of_tower_mem _ _ hG
+  have : (e : K) • (negGlobal D (wordWeight u) (Quotient.mk _ ⟨u, rfl⟩) - B u) ∈ P := by
+    simpa only [Int.cast_smul_eq_zsmul] using zsmul_mem hG e
   convert sub_mem hX this using 1
   rw [smul_sub]
   abel
@@ -122,14 +123,16 @@ theorem existsUnique_canonical_congruence {w : List I} (hw : cs.IsReduced w)
   obtain ⟨x, hx, e, he, hXx⟩ := exists_canonical_congruence R hw c
   obtain ⟨u, hxu⟩ := exists_word_of_mem_canonicalBasis hx
   have hXu : pbwNegative R hw c - (e : K) • B u ∈ P := by
-    have : (e : K) • (x - B u) ∈ P := Submodule.smul_of_tower_mem _ _ hxu
+    have : (e : K) • (x - B u) ∈ P := by
+      simpa only [Int.cast_smul_eq_zsmul] using zsmul_mem hxu e
     convert add_mem hXx this using 1
     rw [smul_sub]
     abel
   refine ⟨x, ⟨hx, e, ⟨he, hXx⟩, ?_⟩, ?_⟩
   · rintro f ⟨hf, hXf⟩
     have hXfu : pbwNegative R hw c - (f : K) • B u ∈ P := by
-      have : (f : K) • (x - B u) ∈ P := Submodule.smul_of_tower_mem _ _ hxu
+      have : (f : K) • (x - B u) ∈ P := by
+        simpa only [Int.cast_smul_eq_zsmul] using zsmul_mem hxu f
       convert add_mem hXf this using 1
       rw [smul_sub]
       abel
@@ -137,7 +140,8 @@ theorem existsUnique_canonical_congruence {w : List I} (hw : cs.IsReduced w)
   · rintro y ⟨hy, f, ⟨hf, hXy⟩, -⟩
     obtain ⟨t, hyt⟩ := exists_word_of_mem_canonicalBasis hy
     have hXt : pbwNegative R hw c - (f : K) • B t ∈ P := by
-      have : (f : K) • (y - B t) ∈ P := Submodule.smul_of_tower_mem _ _ hyt
+      have : (f : K) • (y - B t) ∈ P := by
+        simpa only [Int.cast_smul_eq_zsmul] using zsmul_mem hyt f
       convert add_mem hXy this using 1
       rw [smul_sub]
       abel
