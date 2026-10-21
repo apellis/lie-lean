@@ -415,6 +415,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.StrictHom
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Tensor
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.TensorDecomposition
 import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.Uniqueness
+import LieLean.Algebra.QuantumGroup.CrystalBasis.GrandLoop.WeightsAbove
 import LieLean.Algebra.QuantumGroup.CrystalBasis.HighestWeightLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integrable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.KashiwaraOperators
@@ -623,6 +624,7 @@ import LieLean.Algebra.QuantumGroup.TriangularDecomposition
 import LieLean.Algebra.QuantumGroup.TriangularRep
 import LieLean.Algebra.QuantumGroup.Verma
 import LieLean.Algebra.QuantumGroup.Weight
+import LieLean.Algebra.QuantumGroup.WeightsAbove
 import LieLean.Combinatorics.Enumerative.SignReversingInvolution
 import LieLean.GroupTheory.Coxeter.Bruhat
 import LieLean.GroupTheory.Coxeter.Deletion
