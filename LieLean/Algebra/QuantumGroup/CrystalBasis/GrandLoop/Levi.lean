@@ -50,7 +50,6 @@ variable {k I J Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] [Decidable
   {M : Type*} [AddCommGroup M] [Module k M] [Module (QuantumGroup R v) M]
   [IsScalarTower k (QuantumGroup R v) M]
 
-omit [DecidableEq I] [DecidableEq J] in
 /-- The restriction of a module with finitely many weights above each weight has finitely many
 weights above each weight: its weights are those of `M`, and `Q_J₊ ⊆ Q₊`. -/
 theorem HasFiniteWeightsAbove.leviRestrict (h : HasFiniteWeightsAbove R v M) :
@@ -89,7 +88,7 @@ variable {k I J Y : Type*} [Field k] [AddCommGroup Y] [DecidableEq I] [Decidable
   (hfund : ∀ j : I, ∃ Λ : Dom R, ∀ i, Λ.1 (R.coroot i) = if i = j then 1 else 0)
   (e : J ↪ I)
 
-omit [DecidableEq I] [DecidableEq J] [NeZero v] [CharZero k] [Finite I] in
+omit [NeZero v] [CharZero k] [Finite I] in
 include hfund in
 /-- The fundamental weights of `R` restrict to fundamental weights of `R.comap e`. -/
 lemma exists_fundamental_comap (j : J) :
@@ -98,8 +97,50 @@ lemma exists_fundamental_comap (j : J) :
   refine ⟨⟨Λ.1, fun i ↦ Λ.2 (e i)⟩, fun i ↦ ?_⟩
   simp only [LusztigCartanDatum.RootDatum.comap_coroot, hΛ, e.injective.eq_iff]
 
-include hinj hϖ hϖv hk hfund
+section Generic
 
+variable {M : Type*} [AddCommGroup M] [Module k M] [Module (QuantumGroup R v) M]
+  [IsScalarTower k (QuantumGroup R v) M] [Module A M] [IsScalarTower A k M]
+  {hM : IsIntegrable R v M} {L : Submodule A M}
+  {hL : IsCrystalLattice (pow_ne_one_of_transcendental' hvt) hM L}
+  {B : Set (L ⧸ (Ideal.span {ϖ} • ⊤ : Submodule A L))}
+
+include hinj hϖ hϖv hk hfund in
+/-- **Restriction to a Levi subalgebra** ([Kas] Prop. 4.3, (4.6)) for a module `M` in `𝒪_int` with a
+crystal base `(L, B)`: `M ≅ ⊕_b L_q^J(wt b)` as `U(R.comap e)`-modules, the sum running over the
+`b ∈ B` with `ẽ_{e j} b = 0` for every `j ∈ J`. -/
+theorem nonempty_leviRestrict_equiv_dfinsupp_of_isCategoryOInt (hO : IsCategoryOInt R v M)
+    (hB : IsCrystalBase hL ϖ B) :
+    Nonempty ((Π₀ b : {b : B // ∀ j, hB.e (e j) b = none},
+        IrreducibleModule (R.comap e) v (hB.wt b)) ≃ₗ[QuantumGroup (R.comap e) v]
+      LeviRestrict R v e M) := by
+  have : Finite J := Finite.of_injective e e.injective
+  have hc := not_isUnit_ϖ hϖ
+  have hfd : ∀ Λ, FiniteDimensional k (weightSpace (R.comap e) v (LeviRestrict R v e M) Λ) :=
+    fun Λ ↦ by
+      rw [weightSpace_leviRestrict]
+      exact hO.finiteDimensional_weightSpace Λ
+  have hab := HasFiniteWeightsAbove.leviRestrict (e := e) (hO.hasFiniteWeightsAbove hR)
+  have hB' := hB.leviRestrict (e := e)
+  obtain ⟨s, Λ, Φ, hhw, hwt, ⟨Ψ⟩⟩ := exists_crystalEquiv_sigma_of_hasFiniteWeightsAbove
+    (hvt := hvt) (hR := hR.comap e) hinj hϖ hϖv hk (exists_fundamental_comap hfund e) hfd hab hB'
+  have hC : ∀ b, (hB'.crystal hc).IsHighestWeight b ↔ ∀ j, hB.e (e j) b = none := fun b ↦
+    forall_congr' fun j ↦ hB.leviRestrict_e_eq_none_iff j b
+  let f : s → {b : B // ∀ j, hB.e (e j) b = none} :=
+    fun j ↦ ⟨Φ ⟨j, topHW hvt (hR.comap e) hinj hϖ (Λ j)⟩, (hC _).1 ((hhw _).2 ⟨j, rfl⟩)⟩
+  have hf : Function.Bijective f := by
+    refine ⟨fun j j' h ↦ ?_, fun b ↦ ?_⟩
+    · exact (Sigma.mk.inj_iff.1 (Φ.toEquiv.injective (congrArg Subtype.val h))).1
+    · obtain ⟨j, hj⟩ := (hhw b.1).1 ((hC b.1).2 b.2)
+      exact ⟨j, Subtype.ext hj.symm⟩
+  have hwt' : ∀ j, hB.wt (f j).1 = (Λ j).1 := fun j ↦
+    (hB.wt_leviRestrict hc _).symm.trans (hwt j)
+  exact ⟨(DFinsupp.domLCongrOfEq (fun Λ' : Y →+ ℤ ↦ IrreducibleModule (R.comap e) v Λ')
+    (fun j ↦ (Λ j).1) (fun b ↦ hB.wt b.1) (Equiv.ofBijective f hf) hwt').trans Ψ⟩
+
+end Generic
+
+include hinj hϖ hϖv hk hfund in
 /-- **[Kas] Prop. 4.3 (restriction to a Levi subalgebra).** For an injection `e : J ↪ I` and a
 dominant `λ`, `L_q(λ) ≅ ⊕_b L_q^J(wt b)` as modules over `U(R.comap e)` (acting through
 `leviHom`, whose image is the subalgebra `U_q(𝔤_J)`), the sum running over the elements `b` of the
@@ -111,34 +152,10 @@ theorem nonempty_leviRestrict_equiv_dfinsupp (μ : Dom R) :
     Nonempty ((Π₀ b : {b // ∀ j, (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).e (e j) b = none},
         IrreducibleModule (R.comap e) v ((crystalHW hvt hR hinj hϖ hϖv hk hfund μ).wt b)) ≃ₗ[
           QuantumGroup (R.comap e) v]
-      LeviRestrict R v e (IrreducibleModule R v μ.1)) := by
-  have : Finite J := Finite.of_injective e e.injective
-  have hv' := pow_ne_one_of_transcendental' hvt
-  have hO := IrreducibleModule.isCategoryOInt hR hv' μ.2
-  have hc := not_isUnit_ϖ hϖ
-  have hB := isCrystalBaseHW hvt hR hinj hϖ hϖv hk hfund μ
-  have hfd : ∀ Λ, FiniteDimensional k
-      (weightSpace (R.comap e) v (LeviRestrict R v e (IrreducibleModule R v μ.1)) Λ) := fun Λ ↦ by
-    rw [weightSpace_leviRestrict]
-    exact hO.finiteDimensional_weightSpace Λ
-  obtain ⟨s, Λ, Φ, hhw, hwt, ⟨Ψ⟩⟩ := exists_crystalEquiv_sigma_of_hasFiniteWeightsAbove
-    (hvt := hvt) (hR := hR.comap e) hinj hϖ hϖv hk (exists_fundamental_comap hfund e) hfd
-    (hO.hasFiniteWeightsAbove hR).leviRestrict (hB.leviRestrict (e := e))
-  have hC : ∀ b, ((hB.leviRestrict (e := e)).crystal hc).IsHighestWeight b ↔
-      ∀ j, (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).e (e j) b = none := fun b ↦
-    forall_congr' fun j ↦ hB.leviRestrict_e_eq_none_iff j b
-  let f : s → {b // ∀ j, (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).e (e j) b = none} :=
-    fun j ↦ ⟨Φ ⟨j, topHW hvt (hR.comap e) hinj hϖ (Λ j)⟩, (hC _).1 ((hhw _).2 ⟨j, rfl⟩)⟩
-  have hf : Function.Bijective f := by
-    refine ⟨fun j j' h ↦ ?_, fun b ↦ ?_⟩
-    · exact (Sigma.mk.inj_iff.1 (Φ.toEquiv.injective (congrArg Subtype.val h))).1
-    · obtain ⟨j, hj⟩ := (hhw b.1).1 ((hC b.1).2 b.2)
-      exact ⟨j, Subtype.ext hj.symm⟩
-  have hwt' : ∀ j, (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).wt (f j).1 = (Λ j).1 := fun j ↦
-    (hB.wt_leviRestrict hc _).symm.trans (hwt j)
-  exact ⟨(DFinsupp.domLCongrOfEq (fun Λ' : Y →+ ℤ ↦ IrreducibleModule (R.comap e) v Λ')
-    (fun j ↦ (Λ j).1) (fun b ↦ (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).wt b.1)
-    (Equiv.ofBijective f hf) hwt').trans Ψ⟩
+      LeviRestrict R v e (IrreducibleModule R v μ.1)) :=
+  nonempty_leviRestrict_equiv_dfinsupp_of_isCategoryOInt hinj hϖ hϖv hk hfund e
+    (IrreducibleModule.isCategoryOInt hR (pow_ne_one_of_transcendental' hvt) μ.2)
+    (isCrystalBaseHW hvt hR hinj hϖ hϖv hk hfund μ)
 
 end LieLean.QuantumGroup.GrandLoop
 
