@@ -37,6 +37,8 @@ so the condition says that every `J`-component of `B` is a copy of some `B_J(ν)
 
 ## Main results
 
+* `Crystal.IsNormal.isNormalRankTwo`: [Kas] Prop. 7.1, (i) ⇒ (ii). The converse is stated in
+  [Kas] without proof and is not formalized.
 * `Crystal.IsNormal.reflectionPerm_mul_pow`: Kashiwara's reflections satisfy the Coxeter relations
   `(SᵢSⱼ)^{mᵢⱼ} = 1` of the Weyl group on every normal crystal ([Kas94] Thm. 7.2.2); they are
   transported from the braid relations on the path crystals of the rank-two Levi data
@@ -51,7 +53,7 @@ so the condition says that every `J`-component of `B` is a copy of some `B_J(ν)
 ## References
 
 * [Kas] M. Kashiwara, *On crystal bases*, CMS Conf. Proc. 16 (1995), §7.6 (normal crystals;
-  Prop. 7.1: it suffices to consider `J` with at most two elements), §11, Thm. 11.1 (the action of
+  Prop. 7.1: it suffices to consider `J` with at most two elements, stated without proof), §11, Thm. 11.1 (the action of
   the Weyl group).
 * [Kas94] M. Kashiwara, *Crystal bases of modified quantized enveloping algebra*, Duke Math. J.
   **73** (1994), 383–413, §1.5 (normal crystals), §7.1 (the reflections `Sᵢ`), Thm. 7.2.2 (the
@@ -337,6 +339,19 @@ structure IsNormal (C : Crystal (P.cartanDatum hA) B) : Prop where
           ⟨ν, hν.mem_integralWeights⟩).component → B),
       Function.Injective Φ ∧ IsLeviHom (leviPathCrystal hA J hν) C (↑) Φ ∧ b ∈ Set.range Φ
 
+/-- The condition of [Kas] Prop. 7.1 (ii): the condition defining `Crystal.IsNormal`, imposed only
+on the subsets `J ⊆ ι` with at most two elements. -/
+structure IsNormalRankTwo (C : Crystal (P.cartanDatum hA) B) : Prop where
+  isSeminormal : C.IsSeminormal
+  exists_leviHom : ∀ J : Finset ι, J.card ≤ 2 →
+    (A.submatrix ((↑) : J → ι) (↑)).IsFiniteCartan → ∀ b : B,
+    ∃ (ν : Dual ℝ (StdSpace (A.submatrix ((↑) : J → ι) (↑)) ℝ))
+      (hν : (Realization.std (A.submatrix ((↑) : J → ι) (↑)) ℝ).IsDominantIntegral ν)
+      (Φ : (straightLine ((Realization.std (A.submatrix ((↑) : J → ι) (↑)) ℝ).pathSpace
+          (LSGeneralClass.isGeneralizedCartan_submatrix hA Subtype.val_injective))
+          ⟨ν, hν.mem_integralWeights⟩).component → B),
+      Function.Injective Φ ∧ IsLeviHom (leviPathCrystal hA J hν) C (↑) Φ ∧ b ∈ Set.range Φ
+
 namespace IsNormal
 
 variable {C : Crystal (P.cartanDatum hA) B}
@@ -475,6 +490,13 @@ theorem tensor (h₁ : C₁.IsNormal) (h₂ : C₂.IsNormal) : (C₁.tensor C₂
       change Prod.map Φ₁ Φ₂ (E.toEquiv.symm ⟨η, z⟩) = _
       rw [h]
       rfl
+
+/-- **[Kas] Prop. 7.1, (i) ⇒ (ii)**: a normal crystal satisfies the normality condition for every
+`J` with at most two elements. The converse, (ii) ⇒ (i), is stated in [Kas] without proof and is
+not formalized. -/
+theorem isNormalRankTwo (hC : C.IsNormal) : C.IsNormalRankTwo where
+  isSeminormal := hC.isSeminormal
+  exists_leviHom J _ hJ b := hC.exists_leviHom J hJ b
 
 end IsNormal
 

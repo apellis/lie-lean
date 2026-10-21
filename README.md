@@ -206,8 +206,10 @@ Further proved results include:
   in the printed grand loop from an exercise derivation whose reconstruction remains partial. Also
   Kashiwara, *On crystal bases*, Prop. 4.2: `L_q(μ) ⊗ L_q(ν) ≅ ⊕_b L_q(ν + wt b)` over the
   `b ∈ B(μ)` with `εᵢ(b) ≤ ⟨i, ν⟩` (`GrandLoop.nonempty_tensor_equiv_dfinsupp`, and `_ratFunc`
-  over `ℚ(v)` with no hypothesis left; tensor factors in Lusztig's order). Not formalized: Kashiwara, *On crystal bases*, Prop. 4.3 (restriction to
-  `U_q(𝔤_J)`) and Prop. 7.1, and crystal bases of integrable modules outside `𝒪_int`.
+  over `ℚ(v)` with no hypothesis left; tensor factors in Lusztig's order). Kashiwara, *On crystal bases*, Prop. 7.1: only (i) ⇒ (ii)
+  (`Crystal.IsNormal.isNormalRankTwo`); the converse, that normality for all `J` with at most two
+  elements implies normality, is stated there without proof and is not formalized. Not formalized:
+  Prop. 4.3 (restriction to `U_q(𝔤_J)`), and crystal bases of integrable modules outside `𝒪_int`.
 - **Global and canonical bases** (`QuantumGroup/CrystalBasis/Global/`; over `ℚ(v)`, every Cartan
   datum with finite index set):
   - Kashiwara's global bases (Kashiwara, Duke Math. J. 63 (1991), §7): the statement (G.1) at
