@@ -74,6 +74,13 @@ lemma IsCrystalBase.wt_leviRestrict (hB : IsCrystalBase hL c B) (hc : ¬IsUnit c
   obtain ⟨x, hx, hxb⟩ := hB.exists_mk_eq b
   exact (hB.leviRestrict (e := e)).wt_eq hc b x (by rw [weightSpace_leviRestrict]; exact hx) hxb
 
+/-- The highest weight elements of the restricted crystal are the `b` with `ẽ_{e j} b = 0` for
+all `j ∈ J`. -/
+lemma IsCrystalBase.isHighestWeight_crystal_leviRestrict_iff (hB : IsCrystalBase hL c B)
+    (hc : ¬IsUnit c) (b : B) :
+    ((hB.leviRestrict (e := e)).crystal hc).IsHighestWeight b ↔ ∀ j, hB.e (e j) b = none :=
+  forall_congr' fun j ↦ hB.leviRestrict_e_eq_none_iff j b
+
 end LieLean.QuantumGroup
 
 namespace LieLean.QuantumGroup.GrandLoop
@@ -106,6 +113,38 @@ variable {M : Type*} [AddCommGroup M] [Module k M] [Module (QuantumGroup R v) M]
   {B : Set (L ⧸ (Ideal.span {ϖ} • ⊤ : Submodule A L))}
 
 include hinj hϖ hϖv hk hfund hR in
+/-- The summands of the restriction of a module `M` in `𝒪_int` with a crystal base `(L, B)`
+correspond to the `b ∈ B` with `ẽ_{e j} b = 0` for all `j ∈ J`, with the same weights. -/
+theorem exists_equiv_leviRestrict_of_isCategoryOInt (hO : IsCategoryOInt R v M)
+    (hB : IsCrystalBase hL ϖ B) :
+    ∃ (s : Set (Submodule (QuantumGroup (R.comap e) v) (LeviRestrict R v e M)))
+      (Λ : s → Dom (R.comap e)) (f : s ≃ {b : B // ∀ j, hB.e (e j) b = none}),
+      (∀ j, hB.wt (f j).1 = (Λ j).1) ∧
+      Nonempty ((Π₀ j, IrreducibleModule (R.comap e) v (Λ j).1) ≃ₗ[QuantumGroup (R.comap e) v]
+        LeviRestrict R v e M) := by
+  have : Finite J := Finite.of_injective e e.injective
+  have hc := not_isUnit_ϖ hϖ
+  have hfd : ∀ Λ, FiniteDimensional k (weightSpace (R.comap e) v (LeviRestrict R v e M) Λ) :=
+    fun Λ ↦ by
+      rw [weightSpace_leviRestrict]
+      exact hO.finiteDimensional_weightSpace Λ
+  have hab : HasFiniteWeightsAbove (R.comap e) v (LeviRestrict R v e M) :=
+    HasFiniteWeightsAbove.leviRestrict (hO.hasFiniteWeightsAbove hR)
+  obtain ⟨s, Λ, Φ, hhw, hwt, hΨ⟩ := exists_crystalEquiv_sigma_of_hasFiniteWeightsAbove
+    (M := LeviRestrict R v e M) (hvt := hvt) (hR := hR.comap e) hinj hϖ hϖv hk
+    (exists_fundamental_comap hfund e) hfd hab (hB.leviRestrict (e := e))
+  have hC := hB.isHighestWeight_crystal_leviRestrict_iff (e := e) hc
+  let f : s → {b : B // ∀ j, hB.e (e j) b = none} :=
+    fun j ↦ ⟨Φ ⟨j, topHW hvt (hR.comap e) hinj hϖ (Λ j)⟩, (hC _).1 ((hhw _).2 ⟨j, rfl⟩)⟩
+  have hf : Function.Bijective f := by
+    refine ⟨fun j j' h ↦ ?_, fun b ↦ ?_⟩
+    · exact (Sigma.mk.inj_iff.1 (Φ.toEquiv.injective (congrArg Subtype.val h))).1
+    · obtain ⟨j, hj⟩ := (hhw b.1).1 ((hC b.1).2 b.2)
+      exact ⟨j, Subtype.ext hj.symm⟩
+  exact ⟨s, Λ, Equiv.ofBijective f hf,
+    fun j ↦ (hB.wt_leviRestrict hc _).symm.trans (hwt j), hΨ⟩
+
+include hinj hϖ hϖv hk hfund hR in
 /-- **Restriction to a Levi subalgebra** ([Kas] Prop. 4.3, (4.6)) for a module `M` in `𝒪_int` with a
 crystal base `(L, B)`: `M ≅ ⊕_b L_q^J(wt b)` as `U(R.comap e)`-modules, the sum running over the
 `b ∈ B` with `ẽ_{e j} b = 0` for every `j ∈ J`. -/
@@ -114,29 +153,10 @@ theorem nonempty_leviRestrict_equiv_dfinsupp_of_isCategoryOInt (hO : IsCategoryO
     Nonempty ((Π₀ b : {b : B // ∀ j, hB.e (e j) b = none},
         IrreducibleModule (R.comap e) v (hB.wt b)) ≃ₗ[QuantumGroup (R.comap e) v]
       LeviRestrict R v e M) := by
-  have : Finite J := Finite.of_injective e e.injective
-  have hc := not_isUnit_ϖ hϖ
-  have hfd : ∀ Λ, FiniteDimensional k (weightSpace (R.comap e) v (LeviRestrict R v e M) Λ) :=
-    fun Λ ↦ by
-      rw [weightSpace_leviRestrict]
-      exact hO.finiteDimensional_weightSpace Λ
-  have hab := HasFiniteWeightsAbove.leviRestrict (e := e) (hO.hasFiniteWeightsAbove hR)
-  have hB' := hB.leviRestrict (e := e)
-  obtain ⟨s, Λ, Φ, hhw, hwt, ⟨Ψ⟩⟩ := exists_crystalEquiv_sigma_of_hasFiniteWeightsAbove
-    (hvt := hvt) (hR := hR.comap e) hinj hϖ hϖv hk (exists_fundamental_comap hfund e) hfd hab hB'
-  have hC : ∀ b, (hB'.crystal hc).IsHighestWeight b ↔ ∀ j, hB.e (e j) b = none := fun b ↦
-    forall_congr' fun j ↦ hB.leviRestrict_e_eq_none_iff j b
-  let f : s → {b : B // ∀ j, hB.e (e j) b = none} :=
-    fun j ↦ ⟨Φ ⟨j, topHW hvt (hR.comap e) hinj hϖ (Λ j)⟩, (hC _).1 ((hhw _).2 ⟨j, rfl⟩)⟩
-  have hf : Function.Bijective f := by
-    refine ⟨fun j j' h ↦ ?_, fun b ↦ ?_⟩
-    · exact (Sigma.mk.inj_iff.1 (Φ.toEquiv.injective (congrArg Subtype.val h))).1
-    · obtain ⟨j, hj⟩ := (hhw b.1).1 ((hC b.1).2 b.2)
-      exact ⟨j, Subtype.ext hj.symm⟩
-  have hwt' : ∀ j, hB.wt (f j).1 = (Λ j).1 := fun j ↦
-    (hB.wt_leviRestrict hc _).symm.trans (hwt j)
+  obtain ⟨s, Λ, f, hwt, ⟨Ψ⟩⟩ :=
+    exists_equiv_leviRestrict_of_isCategoryOInt (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund e hO hB
   exact ⟨(DFinsupp.domLCongrOfEq (fun Λ' : Y →+ ℤ ↦ IrreducibleModule (R.comap e) v Λ')
-    (fun j ↦ (Λ j).1) (fun b ↦ hB.wt b.1) (Equiv.ofBijective f hf) hwt').trans Ψ⟩
+    (fun j ↦ (Λ j).1) (fun b ↦ hB.wt b.1) f hwt).trans Ψ⟩
 
 end Generic
 
