@@ -86,7 +86,7 @@ lemma commute_commutator_mulRight (a : A) : Commute (commutator R a) (mulRight R
 
 /-- The binomial expansion `aⁿ u = ∑ⱼ C(n, j) (ad a)ʲ(u) aⁿ⁻ʲ`. -/
 theorem pow_mul_eq_sum_commutator (a u : A) (n : ℕ) :
-    a ^ n * u = ∑ j ∈ range (n + 1), n.choose j • ((commutator R a ^ j) u * a ^ (n - j)) := by
+    a ^ n * u = ∑ j ∈ Finset.range (n + 1), n.choose j • ((commutator R a ^ j) u * a ^ (n - j)) := by
   have hL : mulLeft R a = commutator R a + mulRight R a := by
     rw [commutator, sub_add_cancel]
   have h := congrArg (fun T : Module.End R A ↦ T u)
@@ -102,18 +102,18 @@ theorem pow_mul_eq_sum_commutator (a u : A) (n : ℕ) :
 -/
 theorem pow_mul_eq_sum_mul_pow {a u : A} {J n : ℕ} (hJ : J ≤ n)
     (hu : (commutator R a ^ (J + 1)) u = 0) :
-    a ^ n * u = (∑ j ∈ range (J + 1), n.choose j • ((commutator R a ^ j) u * a ^ (J - j))) *
+    a ^ n * u = (∑ j ∈ Finset.range (J + 1), n.choose j • ((commutator R a ^ j) u * a ^ (J - j))) *
       a ^ (n - J) := by
   rw [pow_mul_eq_sum_commutator (R := R), sum_mul]
   symm
-  calc ∑ j ∈ range (J + 1), n.choose j • ((commutator R a ^ j) u * a ^ (J - j)) * a ^ (n - J)
-      = ∑ j ∈ range (J + 1), n.choose j • ((commutator R a ^ j) u * a ^ (n - j)) := by
+  calc ∑ j ∈ Finset.range (J + 1), n.choose j • ((commutator R a ^ j) u * a ^ (J - j)) * a ^ (n - J)
+      = ∑ j ∈ Finset.range (J + 1), n.choose j • ((commutator R a ^ j) u * a ^ (n - j)) := by
         refine sum_congr rfl fun j hj ↦ ?_
-        rw [mem_range] at hj
+        rw [Finset.mem_range] at hj
         rw [smul_mul_assoc, mul_assoc, ← pow_add, show J - j + (n - J) = n - j by omega]
-    _ = ∑ j ∈ range (n + 1), n.choose j • ((commutator R a ^ j) u * a ^ (n - j)) := by
-        refine sum_subset (range_subset_range.mpr (by omega)) fun j _ hj ↦ ?_
-        rw [mem_range, not_lt] at hj
+    _ = ∑ j ∈ Finset.range (n + 1), n.choose j • ((commutator R a ^ j) u * a ^ (n - j)) := by
+        refine sum_subset (Finset.range_subset_range.mpr (by omega)) fun j _ hj ↦ ?_
+        rw [Finset.mem_range, not_lt] at hj
         rw [commutator_pow_eq_zero_of_le hj hu, zero_mul, smul_zero]
 
 end LinearMap

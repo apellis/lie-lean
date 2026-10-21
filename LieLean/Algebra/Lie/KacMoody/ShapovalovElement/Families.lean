@@ -81,11 +81,10 @@ theorem comp_mem_polyFam {F : Dual K H → 𝒰⁻} (hF : F ∈ polyFam P) {T : 
   | mem F hF =>
     obtain ⟨p, u, rfl⟩ := hF
     refine Submodule.subset_span ⟨MvPolynomial.aeval g p, u, funext fun Λ ↦ ?_⟩
+    have hgΛ : (fun j ↦ evalPoly K H (g j) Λ) = fun j ↦ T Λ (Module.Free.chooseBasis K H j) :=
+      funext fun j ↦ congrFun (hg j) Λ
     simp only
-    rw [evalPoly_aeval, evalPoly_apply]
-    congr 2
-    funext j
-    exact congrFun (hg j) Λ
+    rw [evalPoly_aeval, hgΛ, evalPoly_apply]
   | zero => exact zero_mem_polyFam
   | add F G _ _ hF hG => exact add_mem_polyFam hF hG
   | smul a F _ hF => exact const_smul_mem_polyFam a hF
@@ -112,9 +111,19 @@ theorem dual_mem_polyFun (φ : 𝒰⁻ →ₗ[K] K) {F : Dual K H → 𝒰⁻} (
     obtain ⟨p, u, rfl⟩ := hF
     refine ⟨p * MvPolynomial.C (φ u), funext fun Λ ↦ ?_⟩
     simp
-  | zero => simpa using zero_mem (polyFun K H)
-  | add F G _ _ hF hG => simpa using add_mem hF hG
-  | smul a F _ hF => simpa using Subalgebra.smul_mem _ hF a
+  | zero =>
+    have h : (fun Λ ↦ φ ((0 : Dual K H → 𝒰⁻) Λ)) = 0 := funext fun Λ ↦ by simp
+    rw [h]
+    exact zero_mem _
+  | add F G _ _ hF hG =>
+    have h : (fun Λ ↦ φ ((F + G) Λ)) = (fun Λ ↦ φ (F Λ)) + fun Λ ↦ φ (G Λ) :=
+      funext fun Λ ↦ by simp
+    rw [h]
+    exact add_mem hF hG
+  | smul a F _ hF =>
+    have h : (fun Λ ↦ φ ((a • F) Λ)) = a • fun Λ ↦ φ (F Λ) := funext fun Λ ↦ by simp
+    rw [h]
+    exact Subalgebra.smul_mem _ hF a
 
 /-! ### Density on hyperplanes -/
 
@@ -165,6 +174,8 @@ lemma descPochhammer_mem_polyFun {c : Dual K H → K} (hc : c ∈ polyFun K H) (
   refine ⟨Polynomial.aeval p (descPochhammer K j), funext fun Λ ↦ ?_⟩
   have h := Polynomial.aeval_algHom_apply (Pi.evalAlgHom K (fun _ : Dual K H ↦ K) Λ)
     (evalPoly K H p) (descPochhammer K j)
+  change evalPoly K H (Polynomial.aeval p (descPochhammer K j)) Λ =
+    Polynomial.eval (evalPoly K H p Λ) (descPochhammer K j)
   rw [← Polynomial.aeval_algHom_apply (evalPoly K H), ← Polynomial.coe_aeval_eq_eval]
   exact h.symm
 
