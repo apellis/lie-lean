@@ -56,12 +56,12 @@ local notation "bosv" => bos (D := D) (pow_ne_one_of_transcendental' hvt)
 
 /-! ### `σ` and the `𝒜`-action -/
 
-omit [Finite I] in
+omit [Finite I] [DecidableEq I] in
 lemma starU_laurent_smul (c : LaurentPolynomial ℤ) (x : Um D 𝕧) :
     starU D 𝕧 (c • x) = c • starU D 𝕧 x := by
   rw [laurent_smul_eq, laurent_smul_eq, map_smul]
 
-omit [Finite I] in
+omit [Finite I] [DecidableEq I] in
 lemma starU_mem_span_image {S : Set (Um D 𝕧)} {x : Um D 𝕧}
     (hx : x ∈ Submodule.span (LaurentPolynomial ℤ) S) :
     starU D 𝕧 x ∈ Submodule.span (LaurentPolynomial ℤ) (starU D 𝕧 '' S) := by
@@ -86,7 +86,7 @@ lemma mem_signedBasisGeRight_iff {i : I} {n : ℕ} {x : Um D 𝕧} :
 /-- `°𝐁_{i;n} = σ(𝐁_{i;n})`. -/
 lemma mem_signedBasisAtRight_iff {i : I} {n : ℕ} {x : Um D 𝕧} :
     x ∈ signedBasisAtRight D i n ↔ starU D 𝕧 x ∈ signedBasisAt D i n := by
-  simp only [signedBasisAtRight, signedBasisAt, Set.mem_diff, mem_signedBasisGeRight_iff]
+  simp only [signedBasisAtRight, signedBasisAt, Set.mem_sdiff, mem_signedBasisGeRight_iff]
 
 /-! ### Right multiplication by `θᵢ^{(n)}` -/
 
