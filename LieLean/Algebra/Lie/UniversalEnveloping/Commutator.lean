@@ -86,7 +86,8 @@ lemma commute_commutator_mulRight (a : A) : Commute (commutator R a) (mulRight R
 
 /-- The binomial expansion `aⁿ u = ∑ⱼ C(n, j) (ad a)ʲ(u) aⁿ⁻ʲ`. -/
 theorem pow_mul_eq_sum_commutator (a u : A) (n : ℕ) :
-    a ^ n * u = ∑ j ∈ Finset.range (n + 1), n.choose j • ((commutator R a ^ j) u * a ^ (n - j)) := by
+    a ^ n * u =
+      ∑ j ∈ Finset.range (n + 1), n.choose j • ((commutator R a ^ j) u * a ^ (n - j)) := by
   have hL : mulLeft R a = commutator R a + mulRight R a := by
     rw [commutator, sub_add_cancel]
   have h := congrArg (fun T : Module.End R A ↦ T u)

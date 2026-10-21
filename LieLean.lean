@@ -96,6 +96,7 @@ import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Formula
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Generic
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Gram
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Hyperplane
+import LieLean.Algebra.Lie.KacMoody.ShapovalovElement.Basic
 import LieLean.Algebra.Lie.KacMoody.ShapovalovElement.Families
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Leading
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Multiplicity
@@ -222,6 +223,7 @@ import LieLean.Algebra.Lie.Subalgebra
 import LieLean.Algebra.Lie.UniversalEnveloping.Domain
 import LieLean.Algebra.Lie.UniversalEnveloping.Commutator
 import LieLean.Algebra.Lie.UniversalEnveloping.Filtration
+import LieLean.Algebra.Lie.UniversalEnveloping.Symbol
 import LieLean.Algebra.Lie.UniversalEnveloping.Free
 import LieLean.Algebra.Lie.UniversalEnveloping.Graded
 import LieLean.Algebra.Lie.UniversalEnveloping.Kernel
