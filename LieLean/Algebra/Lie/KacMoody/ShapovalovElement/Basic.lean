@@ -136,15 +136,17 @@ variable {hA : A.IsGeneralizedCartan} {v : P.weylGroup hA} {i : ι} {r : ℕ} {a
 /-- The symbol of `θ(λ)` in degree `r ∑ aⱼ` is `∏ⱼ [yⱼ]^{r aⱼ}`. -/
 lemma hasSymbol (h : IsShapovalovElement P hA v i r a θ) (hpos : 0 < r * ∑ j, a j)
     (Λ : Dual K H) : HasSymbol (r * ∑ j, a j) (∏ j, fSym P j ^ (r * a j)) (θ Λ) := by
-  obtain ⟨d, hd⟩ : ∃ d, r * ∑ j, a j = d + 1 := ⟨_, (Nat.succ_pred_eq_of_pos hpos).symm⟩
-  have h1 := (hasSymbol_shapovalovLead (P := P) r a).congr_deg hd
-  have h2 := h.sub_mem_filtration Λ
-  rw [hd, Nat.add_sub_cancel] at h2
+  obtain ⟨d, hd⟩ := Nat.exists_eq_add_one_of_ne_zero hpos.ne'
+  have h1 : HasSymbol (d + 1) (∏ j, fSym P j ^ (r * a j)) (shapovalovLead P r a) :=
+    (hasSymbol_shapovalovLead r a).congr_deg hd
+  have h2 : θ Λ - shapovalovLead P r a ∈ filtration K (nNeg P) d := by
+    have h3 := h.sub_mem_filtration Λ
+    rwa [hd, Nat.add_sub_cancel] at h3
   exact (h1.of_sub_mem h2).congr_deg hd.symm
 
 lemma ne_zero (h : IsShapovalovElement P hA v i r a θ) (hpos : 0 < r * ∑ j, a j)
     (Λ : Dual K H) : θ Λ ≠ 0 :=
-  (h.hasSymbol hpos Λ).ne_zero (prod_fSym_ne_zero r a)
+  HasSymbol.ne_zero (h.hasSymbol hpos Λ) (prod_fSym_ne_zero (P := P) r a)
 
 /-- A Shapovalov element only depends on the coroot pairing `⟨-, γ^∨⟩`. -/
 lemma of_corootPairing_eq {v' : P.weylGroup hA} {i' : ι}

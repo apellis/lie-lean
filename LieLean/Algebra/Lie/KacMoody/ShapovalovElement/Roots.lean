@@ -69,7 +69,7 @@ theorem exists_simple_descent {hA : A.IsGeneralizedCartan} (hfin : A.IsFiniteCar
   have hkl : ∀ l, l ≠ j → k l = 0 := by
     intro l hl
     have h4 := congrFun hinj l
-    simp [Pi.single_apply, hl] at h4
+    simp [hl] at h4
     have h5 : (0 : ℤ) ≤ k' l := hk' l
     have h6 : (0 : ℤ) ≤ k l := hk l
     omega
