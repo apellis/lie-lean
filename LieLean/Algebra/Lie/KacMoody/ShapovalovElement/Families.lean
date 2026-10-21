@@ -17,7 +17,8 @@ Complements to `Matrix.Realization.KacMoodyAlgebra.VermaModule.polyFam` (polynom
   polynomial family;
 * `dual_mem_polyFun`: a linear functional applied to a polynomial family is a polynomial function;
 * `mem_of_forall_nat`: if `F(λ)` lies in a subspace `W` for all `λ` on the hyperplane
-  `λ(a) = c` with `λ(b) ∈ -ℕ_{≥ N}`, and some `δ ∈ 𝔥*` has `δ(a) = 0`, `δ(b) = 1`, then
+  `φ(λ) = c` with `ψ(λ) ∈ -ℕ_{≥ N}` (`φ`, `ψ` linear), and some `δ ∈ 𝔥*` has `φ(δ) = 0`,
+  `ψ(δ) = 1`, then
   `F(λ) ∈ W` on the whole hyperplane (the Zariski density argument of [HumO] §4.13);
 * `descPochhammer_mem_polyFun`, `choose_eq_descPochhammer`: binomial coefficients `C(n, j)` as
   polynomials in `n`.
@@ -127,43 +128,42 @@ theorem dual_mem_polyFun (φ : 𝒰⁻ →ₗ[K] K) {F : Dual K H → 𝒰⁻} (
 
 /-! ### Density on hyperplanes -/
 
-/-- A polynomial function vanishing at the points of the hyperplane `λ(a) = c` with
-`λ(b) ∈ -ℕ_{≥ N}` vanishes on the hyperplane, provided some `δ` has `δ(a) = 0`, `δ(b) = 1`. -/
-theorem eq_zero_of_forall_nat {F : Dual K H → K} (hF : F ∈ polyFun K H) {a b : H} {c : K}
-    {δ : Dual K H} (hδa : δ a = 0) (hδb : δ b = 1) (N : ℕ)
-    (h : ∀ Λ : Dual K H, Λ a = c → ∀ m : ℕ, N ≤ m → Λ b = -(m : K) → F Λ = 0)
-    {Λ : Dual K H} (hΛ : Λ a = c) : F Λ = 0 := by
+/-- A polynomial function vanishing at the points of the hyperplane `φ(λ) = c` with
+`ψ(λ) ∈ -ℕ_{≥ N}` vanishes on the hyperplane, provided some `δ` has `φ(δ) = 0`, `ψ(δ) = 1`. -/
+theorem eq_zero_of_forall_nat {F : Dual K H → K} (hF : F ∈ polyFun K H)
+    {φ ψ : Dual K H →ₗ[K] K} {c : K} {δ : Dual K H} (hδa : φ δ = 0) (hδb : ψ δ = 1) (N : ℕ)
+    (h : ∀ Λ : Dual K H, φ Λ = c → ∀ m : ℕ, N ≤ m → ψ Λ = -(m : K) → F Λ = 0)
+    {Λ : Dual K H} (hΛ : φ Λ = c) : F Λ = 0 := by
   obtain ⟨p, rfl⟩ := hF
   have hG : linePoly K H Λ δ p = 0 := by
     refine Polynomial.eq_zero_of_infinite_isRoot _ ?_
-    refine Set.infinite_of_injective_forall_mem (f := fun m : ℕ ↦ -((N + m : ℕ) : K) - Λ b)
+    refine Set.infinite_of_injective_forall_mem (f := fun m : ℕ ↦ -((N + m : ℕ) : K) - ψ Λ)
       (fun m m' hmm ↦ ?_) fun m ↦ ?_
     · have h1 := neg_injective (sub_left_injective hmm)
       exact Nat.add_left_cancel (Nat.cast_injective h1)
     · change (linePoly K H Λ δ p).eval _ = 0
       rw [eval_linePoly]
       refine h _ ?_ (N + m) (Nat.le_add_right N m) ?_
-      · simp only [LinearMap.add_apply, LinearMap.smul_apply, hδa, smul_eq_mul, mul_zero,
-          add_zero, hΛ]
-      · simp only [LinearMap.add_apply, LinearMap.smul_apply, hδb, smul_eq_mul, mul_one]
+      · rw [map_add, map_smul, hδa, smul_zero, add_zero, hΛ]
+      · rw [map_add, map_smul, hδb, smul_eq_mul, mul_one]
         ring
   have h0 := eval_linePoly Λ δ p 0
   rw [hG, Polynomial.eval_zero, zero_smul, add_zero] at h0
   exact h0.symm
 
-/-- A polynomial family with values in a subspace `W` at the points of the hyperplane `λ(a) = c`
-with `λ(b) ∈ -ℕ_{≥ N}` has values in `W` on the hyperplane, provided some `δ` has `δ(a) = 0`,
-`δ(b) = 1`. -/
+/-- A polynomial family with values in a subspace `W` at the points of the hyperplane `φ(λ) = c`
+with `ψ(λ) ∈ -ℕ_{≥ N}` has values in `W` on the hyperplane, provided some `δ` has `φ(δ) = 0`,
+`ψ(δ) = 1`. -/
 theorem mem_of_forall_nat {F : Dual K H → 𝒰⁻} (hF : F ∈ polyFam P) (W : Submodule K 𝒰⁻)
-    {a b : H} {c : K} {δ : Dual K H} (hδa : δ a = 0) (hδb : δ b = 1) (N : ℕ)
-    (h : ∀ Λ : Dual K H, Λ a = c → ∀ m : ℕ, N ≤ m → Λ b = -(m : K) → F Λ ∈ W)
-    {Λ : Dual K H} (hΛ : Λ a = c) : F Λ ∈ W := by
+    {φ ψ : Dual K H →ₗ[K] K} {c : K} {δ : Dual K H} (hδa : φ δ = 0) (hδb : ψ δ = 1) (N : ℕ)
+    (h : ∀ Λ : Dual K H, φ Λ = c → ∀ m : ℕ, N ≤ m → ψ Λ = -(m : K) → F Λ ∈ W)
+    {Λ : Dual K H} (hΛ : φ Λ = c) : F Λ ∈ W := by
   by_contra hW
-  obtain ⟨φ, hφ, hφW⟩ := Submodule.exists_dual_map_eq_bot_of_notMem hW inferInstance
-  refine hφ (eq_zero_of_forall_nat (dual_mem_polyFun φ hF) hδa hδb N
+  obtain ⟨χ, hχ, hχW⟩ := Submodule.exists_dual_map_eq_bot_of_notMem hW inferInstance
+  refine hχ (eq_zero_of_forall_nat (dual_mem_polyFun χ hF) hδa hδb N
     (fun Λ' hΛ' m hm hb ↦ ?_) hΛ)
-  have := Submodule.mem_map_of_mem (f := φ) (h Λ' hΛ' m hm hb)
-  rwa [hφW, Submodule.mem_bot] at this
+  have := Submodule.mem_map_of_mem (f := χ) (h Λ' hΛ' m hm hb)
+  rwa [hχW, Submodule.mem_bot] at this
 
 /-! ### Binomial coefficients -/
 
