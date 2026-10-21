@@ -418,6 +418,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.HighestWeightLattice
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Integrable
 import LieLean.Algebra.QuantumGroup.CrystalBasis.KashiwaraOperators
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Lattice
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Levi
 import LieLean.Algebra.QuantumGroup.CrystalBasis.LocalStrings
 import LieLean.Algebra.QuantumGroup.CrystalBasis.LocalTensorRule
 import LieLean.Algebra.QuantumGroup.CrystalBasis.NegativePart
@@ -455,6 +456,7 @@ import LieLean.Algebra.QuantumGroup.Integrable
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Classical
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Rank
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Verma
+import LieLean.Algebra.QuantumGroup.Levi
 import LieLean.Algebra.QuantumGroup.LusztigF.Bar
 import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
 import LieLean.Algebra.QuantumGroup.LusztigF.BraidIntersection
