@@ -91,6 +91,9 @@ theorem kashiwaraF_leviRestrict (j : J) (m : LeviRestrict R v e M) :
 variable {A : Type*} [CommRing A] [Algebra A k] [Module A M] [IsScalarTower A k M]
   {L : Submodule A M} {hv hM}
 
+instance instIsScalarTowerLeviRestrict : IsScalarTower A k (LeviRestrict R v e M) :=
+  inferInstanceAs (IsScalarTower A k M)
+
 omit [Algebra A k] [IsScalarTower A k M] in
 /-- A crystal lattice of `M` is a crystal lattice of its restriction ([Kas] §4.6). -/
 theorem IsCrystalLattice.leviRestrict (hL : IsCrystalLattice hv hM L) :
