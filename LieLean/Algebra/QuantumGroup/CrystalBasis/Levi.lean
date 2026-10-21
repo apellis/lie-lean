@@ -69,7 +69,7 @@ theorem weightSetProj_leviRestrict (S : Set (Y →+ ℤ)) (m : LeviRestrict R v 
       classical
       simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
       rw [weightSetProj_of_mem hv _ S hx', weightSetProj_of_mem hv hM S hx]
-      split_ifs <;> simp
+      split_ifs <;> rfl
   exact LinearMap.congr_fun h m
 
 /-- `ẽⱼ` on the restriction is `ẽ_{e j}` on `M`. -/
@@ -91,6 +91,7 @@ theorem kashiwaraF_leviRestrict (j : J) (m : LeviRestrict R v e M) :
 variable {A : Type*} [CommRing A] [Algebra A k] [Module A M] [IsScalarTower A k M]
   {L : Submodule A M} {hv hM}
 
+omit [Algebra A k] [IsScalarTower A k M] in
 /-- A crystal lattice of `M` is a crystal lattice of its restriction ([Kas] §4.6). -/
 theorem IsCrystalLattice.leviRestrict (hL : IsCrystalLattice hv hM L) :
     IsCrystalLattice (M := LeviRestrict R v e M) hv hM.leviRestrict

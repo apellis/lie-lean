@@ -128,8 +128,6 @@ omit [DecidableEq I] [DecidableEq J] [Module (QuantumGroup R v) M]
 
 instance : AddCommGroup (LeviRestrict R v e M) := inferInstanceAs (AddCommGroup M)
 
-instance : Module k (LeviRestrict R v e M) := inferInstanceAs (Module k M)
-
 instance {A : Type*} [Semiring A] [Module A M] : Module A (LeviRestrict R v e M) :=
   inferInstanceAs (Module A M)
 
