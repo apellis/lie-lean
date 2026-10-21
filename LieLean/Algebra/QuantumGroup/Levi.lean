@@ -116,24 +116,16 @@ def leviHom : QuantumGroup (R.comap e) v →ₐ[k] QuantumGroup R v := lift (lev
 variable (M : Type*) [AddCommGroup M] [Module k M] [Module (QuantumGroup R v) M]
   [IsScalarTower k (QuantumGroup R v) M]
 
-/-- A `U(R)`-module `M`, regarded as a `U(R.comap e)`-module along `leviHom`. -/
+/-- A `U(R)`-module `M`, regarded as a `U(R.comap e)`-module along `leviHom`. It is reducible to
+`M`, so it carries the additive group and scalar structures of `M`. -/
 @[nolint unusedArguments]
-def LeviRestrict {D : LusztigCartanDatum I} (_R : D.RootDatum Y) (_v : k) (_e : J ↪ I)
+abbrev LeviRestrict {D : LusztigCartanDatum I} (_R : D.RootDatum Y) (_v : k) (_e : J ↪ I)
     (M : Type*) : Type _ := M
 
 namespace LeviRestrict
 
 omit [DecidableEq I] [DecidableEq J] [Module (QuantumGroup R v) M]
   [IsScalarTower k (QuantumGroup R v) M]
-
-instance : AddCommGroup (LeviRestrict R v e M) := inferInstanceAs (AddCommGroup M)
-
-instance {A : Type*} [Semiring A] [Module A M] : Module A (LeviRestrict R v e M) :=
-  inferInstanceAs (Module A M)
-
-instance {A : Type*} [CommSemiring A] [Algebra A k] [Module A M] [IsScalarTower A k M] :
-    IsScalarTower A k (LeviRestrict R v e M) :=
-  inferInstanceAs (IsScalarTower A k M)
 
 /-- The identity `M ≃ LeviRestrict R v e M` as a `k`-linear equivalence. -/
 def of : M ≃ₗ[k] LeviRestrict R v e M := LinearEquiv.refl k M
