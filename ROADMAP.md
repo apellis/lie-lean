@@ -2958,7 +2958,7 @@ record how each item is approached and what it does and does not make possible.
 ### D1. Canonical basis of `f` and the remainder of [Lus] 41.1.6
 
 *Status.* Scheduled 2026-10-14 (issue #180). The canonical bases of `f`, `L_q(λ)` and `U̇` are
-proved, and so is 41.1.6 (`existsUnique_canonical_congruence`); 14.3.2 (d) remains. Declarations are listed under
+proved, and so are 41.1.6 (`existsUnique_canonical_congruence`) and 14.3.2 (d). Declarations are listed under
 "Global basis of `f`" in "Status and open threads".
 
 *Target.* Lusztig's canonical basis `B` of `f`: the elements `b ∈ 𝒜f` with `b̄ = b` and
@@ -2972,7 +2972,7 @@ assertion is the congruence of `θ_h^c` to `±b`, for a unique `b ∈ B`, modulo
   fundamental weights).
 - Lusztig's signed basis and canonical basis of `f`, identified with the global basis
   (`mem_signedBasis_iff`, `canonicalBasisAt_eq_range`): [Lus] 14.2.3, 14.2.5 (a), 14.3.1,
-  Thm. 14.3.2 (a)–(c), 14.3.3, Thm. 14.4.3 (a)–(e).
+  Thm. 14.3.2 (a)–(d), 14.3.3, Thm. 14.4.3 (a)–(e).
 - The canonical basis of `L_q(λ)`: [Lus] Thm. 14.4.11 (`canonicalBasisHWBasis`) and Prop. 19.3.3
   (`isNegLaurent_formL_evq_sub`), for `X`-regular root data.
 - The canonical basis of `U̇` and its almost orthonormality: [Lus] Thm. 24.3.3, Thm. 25.2.1
@@ -2986,7 +2986,6 @@ assertion is the congruence of `θ_h^c` to `±b`, for a unique `b ∈ B`, modulo
   `PBWSignedCrystal.original_PBW_longest_unique_signed_exponent`).
 
 *Remaining.*
-- [Lus] Thm. 14.3.2 (d).
 - The original dominant-tensor uniqueness characterization of the canonical basis of `U̇` still
   requires `hY`. The general basis and form construction via [Lus] 25.2.2 is proved for
   `IsXRegular` without target `hY` (listed under "Status and open threads"): fixed-column and
@@ -3253,7 +3252,9 @@ completed steps and continuation threads are:
   `(L(λ), B(λ))` instead of Lusztig's 19.1.4 (our own route), with fundamental weights, and is
   transferred from `freeCoroot R` (`formL_hwTransfer`).
   [Lus] 41.1.6, congruence part: `PBWSignedCrystal.existsUnique_canonical_congruence`.
-  Remaining: 14.3.2 (d).
+  `Global/SignedBijectionRight.lean` (Lusztig's deduction from (c) via `σ`): [Lus] Thm. 14.3.2 (d),
+  the bijections `°π_{i,n} : °𝐁_{i;0} → °𝐁_{i;n}` for right multiplication by `θᵢ^{(n)}`
+  (`rightDf`, `rightDf_mk`, `existsUnique_rightDf_sub_mem_span`, `rightStringMap_bijective`).
 - **Quasi-R-matrix** (M15, towards [Lus] Ch. 24–26; `QuantumGroup/QuasiR/`): over `ℚ(v)`, the
   components `Θ_ν = c_ν Σ_b b⁻ ⊗ (b*)⁺ ∈ U⁻_ν ⊗ U⁺_ν` (`quasiR`, `c_ν = ∏ᵢ (-vᵢ)^{νᵢ}`), with
   [Lus] 4.1.2 (b) for every basis of `f_ν` (`quasiR_eq_sum`), `Θ_0 = 1 ⊗ 1` (`quasiR_zero`) and

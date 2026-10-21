@@ -219,7 +219,7 @@ Further proved results include:
   - Lusztig's canonical basis of `f` is Kashiwara's global basis: the signed basis of [Lus] 14.2.3
     is `{±G(b)}` (`mem_signedBasis_iff`), and the canonical basis of [Lus] 14.4.2 is
     `B_ν = {G(b) | b ∈ B(∞)_ν}` (`canonicalBasisAt_eq_range`). Also [Lus] 14.2.5 (a), 14.3.1,
-    Thm. 14.3.2 (a)–(c), 14.3.3 and Thm. 14.4.3 (a)–(e) (bases of `f` over `ℚ(v)` and of `𝒜f`
+    Thm. 14.3.2 (a)–(d), 14.3.3 and Thm. 14.4.3 (a)–(e) (bases of `f` over `ℚ(v)` and of `𝒜f`
     over `𝒜 = ℤ[v, v⁻¹]`, stability under `σ`).
   - Canonical basis of `L_q(λ)`: [Lus] Thm. 14.4.11 (`canonicalBasisHWBasis`,
     `evq_eq_zero_of_notMem_canonicalBasisHW`) and Prop. 19.3.3 (`isNegLaurent_formL_evq_sub`:
@@ -264,7 +264,7 @@ Further proved results include:
   - [Lus] 41.1.6: PBW elements lie in `ℒ` and are congruent modulo `v⁻¹ℒ` to `±b` for a unique
     `b` in the canonical basis and a unique sign, for every reduced word
     (`PBWSignedCrystal.existsUnique_canonical_congruence`).
-  - **Not formalized:** [Lus] 14.3.2 (d); 41.1.9 (compatibility with the quantum Frobenius map, deferred item D2 of the
+  - **Not formalized:** [Lus] 41.1.9 (compatibility with the quantum Frobenius map, deferred item D2 of the
     roadmap).
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`
   satisfy all braid relations, with no condition on the Dynkin diagram
