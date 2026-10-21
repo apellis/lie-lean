@@ -62,6 +62,7 @@ def shapovalovLead (r : ℕ) (a : ι → ℕ) : 𝒰⁻ :=
 
 variable {P}
 
+omit [CharZero K] in
 lemma hasSymbol_fEnv (j : ι) : HasSymbol 1 (fSym P j) (fEnv P j) := HasSymbol.of_mem _
 
 lemma fSym_ne_zero (j : ι) : fSym P j ≠ 0 :=
@@ -108,7 +109,7 @@ lemma equivEnvNNeg_fEnv_pow_mul (Λ : Dual K H) (j : ι) (n : ℕ) (u : 𝒰⁻)
 lemma equivEnvNNeg_fEnv_pow (Λ : Dual K H) (j : ι) (n : ℕ) :
     equivEnvNNeg P Λ (fEnv P j ^ n) =
       (toEnd K P.KacMoodyAlgebra (VermaModule P Λ) (f P j) ^ n) (hwv P Λ) := by
-  have h := equivEnvNNeg_fEnv_pow_mul Λ j n 1
+  have h := equivEnvNNeg_fEnv_pow_mul (P := P) Λ j n 1
   rwa [mul_one, equivEnvNNeg_one] at h
 
 /-! ### Shapovalov elements -/

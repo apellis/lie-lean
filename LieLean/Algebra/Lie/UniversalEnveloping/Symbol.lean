@@ -125,6 +125,10 @@ instance instNoZeroDivisorsAssociatedGraded [NoZeroDivisors R] [Module.Free R L]
     NoZeroDivisors (AssociatedGraded R L) :=
   (symmetricAlgebraEquivAssociatedGraded R L).symm.toMulEquiv.noZeroDivisors
 
+instance instNontrivialAssociatedGraded [Nontrivial R] [Module.Free R L] :
+    Nontrivial (AssociatedGraded R L) :=
+  (symmetricAlgebraEquivAssociatedGraded R L).injective.nontrivial
+
 /-- If `y` has a nonzero symbol in degree one and `u yᵠ ∈ Fₘ₊ᵩ`, then `u ∈ Fₘ`. -/
 theorem mem_filtration_of_mul_pow_mem [NoZeroDivisors R] [Module.Free R L]
     {y : UniversalEnvelopingAlgebra R L} {t : AssociatedGraded R L} (hy : HasSymbol 1 t y)

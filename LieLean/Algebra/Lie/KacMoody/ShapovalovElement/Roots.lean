@@ -41,13 +41,10 @@ lemma simple_mul_apply_root (hA : A.IsGeneralizedCartan) (j : ι) (v : P.weylGro
 /-- **Descent to a lower root** ([HumO] §4.13): for `A` of finite type and a positive root
 `γ = v αᵢ = ∑ kₗ αₗ` of height `> 1`, there is `j` with `kⱼ > 0`, `⟨γ, αⱼ^∨⟩ > 0` and
 `sⱼ γ = γ - ⟨γ, αⱼ^∨⟩ αⱼ` positive. -/
-theorem exists_simple_descent (hfin : A.IsFiniteCartan) {v : P.weylGroup hfin.isGeneralizedCartan}
-    {i : ι} {k : ι → ℤ} (hk : 0 ≤ k)
+theorem exists_simple_descent {hA : A.IsGeneralizedCartan} (hfin : A.IsFiniteCartan)
+    {v : P.weylGroup hA} {i : ι} {k : ι → ℤ} (hk : 0 ≤ k)
     (hvk : (v : Dual K H ≃ₗ[K] Dual K H) (P.root i) = P.rootOf k) (hht : 1 < ∑ l, k l) :
-    ∃ j, 0 < k j ∧ 0 < (A *ᵥ k) j ∧
-      P.IsPosRoot hfin.isGeneralizedCartan
-        ((P.coxeterSystem hfin.isGeneralizedCartan).simple j * v) i := by
-  set hA := hfin.isGeneralizedCartan
+    ∃ j, 0 < k j ∧ 0 < (A *ᵥ k) j ∧ P.IsPosRoot hA ((P.coxeterSystem hA).simple j * v) i := by
   obtain ⟨d, hd, hpd⟩ := hfin.exists_posDef
   have hk0 : k ≠ 0 := by
     rintro rfl
@@ -94,45 +91,44 @@ theorem exists_simple_descent (hfin : A.IsFiniteCartan) {v : P.weylGroup hfin.is
 /-- **Non-proportional coroots** ([HumO] §4.13): for `A` of finite type, a positive root
 `γ = v αᵢ` and `j`, if `⟨x, αⱼ^∨⟩ = t ⟨x, γ^∨⟩` for all `x`, then `sⱼ γ` is negative. (Then
 `γ` is a multiple of `αⱼ`, so `sⱼ γ = -γ`.) -/
-theorem not_isPosRoot_of_forall_coroot_eq [FiniteDimensional K H] (hfin : A.IsFiniteCartan)
-    {v : P.weylGroup hfin.isGeneralizedCartan} {i j : ι}
-    (hv : P.IsPosRoot hfin.isGeneralizedCartan v i) (t : K)
-    (ht : ∀ x : Dual K H, x (P.coroot j) = t * P.corootPairing hfin.isGeneralizedCartan x v i) :
-    ¬ P.IsPosRoot hfin.isGeneralizedCartan
-      ((P.coxeterSystem hfin.isGeneralizedCartan).simple j * v) i := by
-  set hA := hfin.isGeneralizedCartan
+theorem not_isPosRoot_of_forall_coroot_eq [FiniteDimensional K H] {hA : A.IsGeneralizedCartan}
+    (hfin : A.IsFiniteCartan) {v : P.weylGroup hA} {i j : ι} (hv : P.IsPosRoot hA v i) (t : K)
+    (ht : ∀ x : Dual K H, x (P.coroot j) = t * P.corootPairing hA x v i) :
+    ¬ P.IsPosRoot hA ((P.coxeterSystem hA).simple j * v) i := by
   intro hsv
   obtain ⟨S⟩ := isSymmetrizable_iff_nonempty_symmetrization.mp hfin.isSymmetrizable
-  set γ := (v : Dual K H ≃ₗ[K] Dual K H) (P.root i)
-  have hform : ∀ x, P.dualBilinForm S x γ = P.corootPairing hA x v i / S.ε i := by
+  have hform : ∀ x, P.dualBilinForm S x ((v : Dual K H ≃ₗ[K] Dual K H) (P.root i)) =
+      P.corootPairing hA x v i / S.ε i := by
     intro x
     rw [← P.dualBilinForm_weylGroup hA S (v⁻¹).2, inv_apply_apply, dualBilinForm_root_right]
     rfl
   have hεi : (S.ε i : K) ≠ 0 := by exact_mod_cast S.ε_ne_zero i
   have hεj : (S.ε j : K) ≠ 0 := by exact_mod_cast S.ε_ne_zero j
-  have hzero : ∀ x, P.dualBilinForm S x ((S.ε j : K) • P.root j - (t * S.ε i) • γ) = 0 := by
+  have hzero : ∀ x, P.dualBilinForm S x ((S.ε j : K) • P.root j -
+      (t * S.ε i) • (v : Dual K H ≃ₗ[K] Dual K H) (P.root i)) = 0 := by
     intro x
     rw [map_sub, map_smul, map_smul, dualBilinForm_root_right, hform, ht, smul_eq_mul,
       smul_eq_mul]
     field_simp
     ring
-  have hrel : (S.ε j : K) • P.root j = (t * S.ε i) • γ := by
+  have hrel : (S.ε j : K) • P.root j = (t * S.ε i) • (v : Dual K H ≃ₗ[K] Dual K H) (P.root i) := by
     rw [← sub_eq_zero]
-    have h0 : (P.toDual S).symm ((S.ε j : K) • P.root j - (t * S.ε i) • γ) = 0 :=
+    have h0 : (P.toDual S).symm ((S.ε j : K) • P.root j -
+        (t * S.ε i) • (v : Dual K H ≃ₗ[K] Dual K H) (P.root i)) = 0 :=
       (Module.forall_dual_apply_eq_zero_iff K _).mp fun x ↦
         (P.dualBilinForm_apply_eq S x _).symm.trans (hzero x)
-    simpa using h0
+    exact (LinearEquiv.map_eq_zero_iff _).mp h0
   have ht0 : t * S.ε i ≠ 0 := by
     intro h0
     rw [h0, zero_smul, smul_eq_zero] at hrel
     exact P.linearIndependent_root.ne_zero j (hrel.resolve_left hεj)
-  have hγ : γ = ((t * S.ε i)⁻¹ * S.ε j) • P.root j := by
+  have hγ : (v : Dual K H ≃ₗ[K] Dual K H) (P.root i) = ((t * S.ε i)⁻¹ * S.ε j) • P.root j := by
     rw [mul_smul, hrel, smul_smul, inv_mul_cancel₀ ht0, one_smul]
   have hs : (((P.coxeterSystem hA).simple j * v : P.weylGroup hA) : Dual K H ≃ₗ[K] Dual K H)
-      (P.root i) = -γ := by
+      (P.root i) = -(v : Dual K H ≃ₗ[K] Dual K H) (P.root i) := by
     rw [simple_mul_apply_root, hγ, map_smul, reflection_apply, P.root_coroot_self hA]
     module
   obtain ⟨k, hk, hk'⟩ := hsv
-  exact not_isPosRoot_and hv ⟨k, hk, by rw [mul_simple_apply_root, ← hk', hs]⟩
+  exact not_isPosRoot_and hv ⟨k, hk, by rw [mul_simple_apply_root, ← hs, hk']⟩
 
 end Matrix.Realization
