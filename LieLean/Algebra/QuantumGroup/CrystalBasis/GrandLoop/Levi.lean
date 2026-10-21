@@ -151,7 +151,7 @@ crystal base `(L, B)`: `M ≅ ⊕_b L_q^J(wt b)` as `U(R.comap e)`-modules, the 
 theorem nonempty_leviRestrict_equiv_dfinsupp_of_isCategoryOInt (hO : IsCategoryOInt R v M)
     (hB : IsCrystalBase hL ϖ B) :
     Nonempty ((Π₀ b : {b : B // ∀ j, hB.e (e j) b = none},
-        IrreducibleModule (R.comap e) v (hB.wt b)) ≃ₗ[QuantumGroup (R.comap e) v]
+        IrreducibleModule (R.comap e) v (hB.wt b.1)) ≃ₗ[QuantumGroup (R.comap e) v]
       LeviRestrict R v e M) := by
   obtain ⟨s, Λ, f, hwt, ⟨Ψ⟩⟩ :=
     exists_equiv_leviRestrict_of_isCategoryOInt (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund e hO hB
@@ -170,7 +170,7 @@ transcendental over `ℚ` and the crystal bases are taken over a discrete valuat
 `k = A[ϖ⁻¹]` and `ϖ ↦ v⁻¹` (the hypotheses of the grand loop). -/
 theorem nonempty_leviRestrict_equiv_dfinsupp (μ : Dom R) :
     Nonempty ((Π₀ b : {b // ∀ j, (crystalHW hvt hR hinj hϖ hϖv hk hfund μ).e (e j) b = none},
-        IrreducibleModule (R.comap e) v ((crystalHW hvt hR hinj hϖ hϖv hk hfund μ).wt b)) ≃ₗ[
+        IrreducibleModule (R.comap e) v ((crystalHW hvt hR hinj hϖ hϖv hk hfund μ).wt b.1)) ≃ₗ[
           QuantumGroup (R.comap e) v]
       LeviRestrict R v e (IrreducibleModule R v μ.1)) :=
   nonempty_leviRestrict_equiv_dfinsupp_of_isCategoryOInt (hvt := hvt) (hR := hR) hinj hϖ hϖv hk
@@ -198,7 +198,7 @@ theorem nonempty_leviRestrict_equiv_dfinsupp_ratFunc (e : J ↪ I) (μ : Dom D.e
         IrreducibleModule (D.extendedRootDatum.comap e) vInf
           ((crystalHW transcendental_vInf D.isXRegular_extendedRootDatum
             injective_algebraMap_localRing localX_mem_maximalIdeal algebraMap_localX
-            exists_pow_localX_mul D.exists_fundamental_extendedRootDatum μ).wt b)) ≃ₗ[
+            exists_pow_localX_mul D.exists_fundamental_extendedRootDatum μ).wt b.1)) ≃ₗ[
           QuantumGroup (D.extendedRootDatum.comap e) vInf]
       LeviRestrict D.extendedRootDatum vInf e (IrreducibleModule D.extendedRootDatum vInf μ.1)) :=
   nonempty_leviRestrict_equiv_dfinsupp injective_algebraMap_localRing localX_mem_maximalIdeal
