@@ -91,6 +91,14 @@ example : LusztigF.toQuotient DA2 (RatFunc.X : RatFunc ℚ) (fDivPow DA2 0 2 * f
   toQuotient_fDivPow_mul_fDivPow (by decide)
     (by rw [DA2, LusztigCartanDatum.cartanMatrix_ofSymmetrization]; decide) (by norm_num)
 
+open scoped TensorProduct in
+/-- [Lus] 31.1.1: `_S f = S ⊗_𝒜 𝒜f` has the basis `1 ⊗ b`, `b ∈ B`; here `S = ℚ(v)`. -/
+example : letI := LusztigF.integralLaurentEval.toAlgebra
+    Module.Basis (canonicalBasis DA2) (RatFunc ℚ)
+      (RatFunc ℚ ⊗[LaurentPolynomial ℤ] LusztigF.quotientIntegralForm DA2) :=
+  letI := LusztigF.integralLaurentEval.toAlgebra
+  baseChangeCanonicalBasis DA2 (RatFunc ℚ)
+
 /-! ### Lusztig 25.2.1 (d) and 26.3.1 on the extended root datum of `sl₂` -/
 
 /-- The extended root datum of `sl₂`. -/
