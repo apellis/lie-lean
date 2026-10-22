@@ -65,6 +65,7 @@ import LieLean.Algebra.Lie.KacMoody.CategoryOExtVerma
 import LieLean.Algebra.Lie.KacMoody.CategoryOEulerChar
 import LieLean.Algebra.Lie.KacMoody.CategoryOProjDimension
 import LieLean.Algebra.Lie.KacMoody.CategoryOProjective
+import LieLean.Algebra.Lie.KacMoody.CategoryOTranslation
 import LieLean.Algebra.Lie.KacMoody.CategoryOStdFilteredCriterion
 import LieLean.Algebra.Lie.KacMoody.CategoryOSubmodule
 import LieLean.Algebra.Lie.KacMoody.Character
