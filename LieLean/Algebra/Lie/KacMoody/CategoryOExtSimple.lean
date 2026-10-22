@@ -124,16 +124,18 @@ def simple (lam : Dual K H) : CategoryO.{u} P :=
 
 /-- The subquotient `N' / N` of an object of `𝒪`, as an object of `𝒪`. -/
 def ofSubquotient (X : CategoryO.{u} P) (N N' : LieSubmodule K 𝔤 X.obj) : CategoryO.{u} P :=
-  mk (N.Subquotient N') ((X.property.1.lieSubmodule N').quotient _) (by
-    classical
-    obtain ⟨S, hS⟩ : ∃ S : Finset (ofLie P N'),
-        LieSubmodule.lieSpan K 𝔤 (S : Set (ofLie P N')) = ⊤ := (ofSub X N').property.2
-    refine ⟨S.image ((LieSubmodule.Quotient.mk' _).comp
-      (ofLieEquiv (P := P) N').symm.toLieModuleHom), ?_⟩
-    rw [Finset.coe_image]
-    exact lieSpan_image_eq_top_of_surjective _
-      ((LieSubmodule.Quotient.surjective_mk' _).comp (ofLieEquiv (P := P) N').symm.surjective)
-      hS)
+  ⟨ofLie P (N.Subquotient N'), isObj_of_surjective
+    (ofLieModuleHom ((ofLieEquiv (P := P) (N.Subquotient N')).toLieModuleHom.comp
+      ((LieSubmodule.Quotient.mk' _).comp (ofLieEquiv (P := P) N').symm.toLieModuleHom)) :
+        (ofSub X N').obj ⟶ ofLie P (N.Subquotient N'))
+    (fun z ↦ by
+      obtain ⟨y, hy⟩ := LieSubmodule.Quotient.surjective_mk' (N.comap N'.incl)
+        ((ofLieEquiv (P := P) (N.Subquotient N')).symm z)
+      refine ⟨ofLieEquiv (P := P) N' y, ?_⟩
+      change ofLieEquiv (P := P) (N.Subquotient N') (LieSubmodule.Quotient.mk' (N.comap N'.incl)
+        ((ofLieEquiv (P := P) N').symm (ofLieEquiv (P := P) N' y))) = z
+      rw [LieModuleEquiv.symm_apply_apply, hy, LieModuleEquiv.apply_symm_apply])
+    (ofSub X N').property⟩
 
 /-- The quotient map `N' → N' / N`. -/
 def toSubquotient (X : CategoryO.{u} P) (N N' : LieSubmodule K 𝔤 X.obj) :
@@ -229,9 +231,11 @@ theorem ext_simple_eq_zero_aux (μ : Dual K H) (d : ℕ) : ∀ (lam : Dual K H) 
       (VermaModule.isCategoryO P lam).multiplicity κ ≠ 0 ∧ κ ≠ lam := by
     refine ⟨by rw [hmult]; omega, ?_⟩
     rintro rfl
+    have h1 : (IrreducibleModule.isCategoryO P κ).multiplicity κ = 1 := by
+      rw [IrreducibleModule.multiplicity_eq]
+      simp
     have h := hmult κ
-    rw [VermaModule.multiplicity_self, IrreducibleModule.multiplicity_eq,
-      ite_cond_eq_true _ _ (eq_self κ)] at h
+    rw [VermaModule.multiplicity_self, h1] at h
     omega
   refine Abelian.Ext.eq_zero_of_shortExact_right_succ (shortExact_kerComplex (verma P lam) Z φ hφ)
     (ext_verma_eq_zero hμ (Nat.succ_pos n)) ?_
