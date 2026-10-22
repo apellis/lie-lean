@@ -163,9 +163,14 @@ import LieLean.Algebra.Lie.KacMoody.Super.Grading
 import LieLean.Algebra.Lie.KacMoody.Super.InvariantForm
 import LieLean.Algebra.Lie.KacMoody.Super.InvariantFormLie
 import LieLean.Algebra.Lie.KacMoody.Super.MaxIdeal
+import LieLean.Algebra.Lie.KacMoody.Super.RootPairing
 import LieLean.Algebra.Lie.KacMoody.Super.RootSpace
+import LieLean.Algebra.Lie.KacMoody.Super.Serre
 import LieLean.Algebra.Lie.KacMoody.Super.TensorRep
+import LieLean.Algebra.Lie.KacMoody.Super.Adjoint
 import LieLean.Algebra.Lie.KacMoody.Super.Auxiliary
+import LieLean.Algebra.Lie.KacMoody.Super.Casimir
+import LieLean.Algebra.Lie.KacMoody.Super.Integrable
 import LieLean.Algebra.Lie.KacMoody.Super.Triangular
 import LieLean.Algebra.Lie.KacMoody.Super.Verma
 import LieLean.Algebra.Lie.KacMoody.TensorProduct
