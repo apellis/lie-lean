@@ -32,7 +32,7 @@ span of the quantum Serre products of `(I, ∘)` at `ε`
 * `frobRootSum_coroot`: `⟨Σⱼ μⱼ lⱼ j', i⟩ = lᵢ ⟨μ, αᵢ^∨⟩_∘`.
 * `algebraMap_frobCoeff`: the coefficients `frobCoeff` in `k`.
 * `frobPairBase_comm`: the form `frobPairBase` is symmetric.
-* `mem_serreSpan_of_frobSplitHom_mem_frobRad`,
+* `mem_serreSpan_of_frobPairBase_eq_zero`, `mem_serreSpan_of_frobSplitHom_mem_frobRad`,
   `quasiClassicalHom_eq_zero_of_frobSplitHom_mem_frobRad`: the kernel of `Fr'` modulo the
   radical in weights `ν ≤ n`.
 
@@ -195,12 +195,14 @@ lemma algebraMap_frobCoeff (i : I) (μ : I →₀ ℕ) :
     zpow_add₀ hq0, zpow_natCast]
 
 include hl0 hl hprim hA hΛ in
-/-- **The kernel of `Fr'` modulo the radical in small weights**: if `y ∈ f_k` has weight `ν`
-with `νᵢ ≤ nᵢ` for all `i` and `Fr'(y)` lies in the radical of the form of `Λ_λ`, then `y` lies
-in the span of the quantum Serre products of `(I, ∘)` at the parameters `ε^{dᵢ*} = ±1`. -/
-theorem mem_serreSpan_of_frobSplitHom_mem_frobRad {ν : I →₀ ℕ} (hν : ∀ i, ν i ≤ frobTop Λ l i)
+/-- **The kernel of `Fr'` modulo the form in small weights**: if `y ∈ f_k` has weight `ν`
+with `νᵢ ≤ nᵢ` for all `i` and `Fr'(y)` is orthogonal to the elements `Fr'(θ_w)` for the form of
+`Λ_λ`, then `y` lies in the span of the quantum Serre products of `(I, ∘)` at the parameters
+`ε^{dᵢ*} = ±1`. -/
+theorem mem_serreSpan_of_frobPairBase_eq_zero {ν : I →₀ ℕ} (hν : ∀ i, ν i ≤ frobTop Λ l i)
     {y : LusztigF k I} (hy : y ∈ LusztigF.weightSpace k ν)
-    (hrad : frobSplitHom D k l y ∈ frobRad hR Λ k) :
+    (hpair : ∀ w : List I, frobPairBase hR Λ k (frobSplitHom D k l y)
+      (frobSplitHom D k l (FreeAlgebra.wordBasis k I w)) = 0) :
     y ∈ serreSpan (D.frobenius hl0) (fun i ↦ ε ^ (D.frobenius hl0).d i) ν := by
   set D' := D.frobenius hl0
   have hε : ε ≠ 0 := by
@@ -221,13 +223,22 @@ theorem mem_serreSpan_of_frobSplitHom_mem_frobRad {ν : I →₀ ℕ} (hν : ∀
       weightSign_pow_serreExp D' (hq i), classicalCoeff]
   · funext w
     obtain ⟨κ, hκ, h⟩ := exists_frobPairBase_eq_vermaForm hR Λ hl0 hl hprim hA hΛ (k := k) w.1 ν
-    have h0 : frobPairBase hR Λ k (frobSplitHom D k l y)
-        (frobSplitHom D k l (FreeAlgebra.wordBasis k I w.1)) = 0 := by
-      rw [frobRad, LinearMap.mem_ker] at hrad
-      rw [hrad, LinearMap.zero_apply]
+    have h0 := hpair w.1
     rw [frobPairBase_comm, h y hy] at h0
     rw [shapovalovMap_apply, Pi.zero_apply]
     exact (mul_eq_zero.1 h0).resolve_left hκ.ne_zero
+
+include hl0 hl hprim hA hΛ in
+/-- **The kernel of `Fr'` modulo the radical in small weights**: if `y ∈ f_k` has weight `ν`
+with `νᵢ ≤ nᵢ` for all `i` and `Fr'(y)` lies in the radical of the form of `Λ_λ`, then `y` lies
+in the span of the quantum Serre products of `(I, ∘)` at the parameters `ε^{dᵢ*} = ±1`. -/
+theorem mem_serreSpan_of_frobSplitHom_mem_frobRad {ν : I →₀ ℕ} (hν : ∀ i, ν i ≤ frobTop Λ l i)
+    {y : LusztigF k I} (hy : y ∈ LusztigF.weightSpace k ν)
+    (hrad : frobSplitHom D k l y ∈ frobRad hR Λ k) :
+    y ∈ serreSpan (D.frobenius hl0) (fun i ↦ ε ^ (D.frobenius hl0).d i) ν :=
+  mem_serreSpan_of_frobPairBase_eq_zero hR Λ hl0 hl hprim hA hΛ hν hy fun w ↦ by
+    rw [frobRad, LinearMap.mem_ker] at hrad
+    rw [hrad, LinearMap.zero_apply]
 
 include hl0 hl hprim hA hΛ in
 /-- **`Fr'` is injective modulo the radical in small weights** (towards [Lus] 35.4.2): if

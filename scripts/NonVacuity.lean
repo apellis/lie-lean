@@ -167,6 +167,21 @@ example : Submodule.span ℂ (Submonoid.closure (Set.range fun j ↦ baseGen DA2
   have hl : DA2.frobOrder 2 i = 2 := by fin_cases i <;> decide
   omega
 
+/-- [Lus] 35.1.2 (a) for `A₂`, `l = 2`. -/
+theorem hAA2 : ∀ i j, i ≠ j → 2 ≤ DA2.frobOrder 2 j → ∀ a : ℕ, DA2.cartanMatrix i j = -a →
+    a < DA2.frobOrder 2 i := by
+  intro i j hij _ a ha
+  have hc : DA2.cartanMatrix i j = -1 := by
+    fin_cases i <;> fin_cases j <;> first | exact absurd rfl hij | decide
+  have hl : DA2.frobOrder 2 i = 2 := by fin_cases i <;> decide
+  omega
+
+/-- [Lus] Thm. 35.1.7 for `A₂`, `l = 2`: `Fr(θᵢ^{(n)}) = θᵢ^{(n/2)}` for even `n`, else `0`. -/
+example (n : ℕ) : frob (by norm_num) hlI hprimI hAA2 (baseGen DA2 ℂ 0 n) =
+    if DA2.frobOrder 2 0 ∣ n then
+      baseGen (DA2.frobenius (l := 2) (by norm_num)) ℂ 0 (n / DA2.frobOrder 2 0) else 0 :=
+  frob_baseGen _ _ _ _ 0 n
+
 end Frobenius35
 
 open scoped TensorProduct in
