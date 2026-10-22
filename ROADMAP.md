@@ -497,12 +497,15 @@ of `Extⁿ` and of the projective dimension of `M(μ)` (`CategoryO.instFiniteExt
 translation functors on `𝒪` (`CategoryO.translationFunctor`, exact and `K`-linear), the adjunction
 (`CategoryO.translationAdj`) and `Extⁿ_𝒪(T X, Y) ≅ Extⁿ_𝒪(X, T' Y)`
 (`CategoryO.extTranslationEquiv`, `KacMoody/CategoryOTranslation.lean`).
-Equality cases of Prop. 6.9 (`KacMoody/CategoryOProjDimensionEq.lean`, `Λ` dominant integral):
-`CategoryO.projectiveDimension_verma_weylDot` (`pd M(w·Λ) = ℓ(w)` for every `w`, via wall-crossing
-sequences) and `CategoryO.projectiveDimension_simple` (`pd L(Λ) = 2ℓ(w₀)`, via dimension shifting
-along the BGG resolution), so the block of `Λ` has global dimension `2ℓ(w₀)`.
-Roadmap items (maintainer decision 2026-10-22, issue #7): [HumO] Prop. 6.15, and
-`pd L(w·Λ) = 2ℓ(w₀) - ℓ(w)` for `w ≠ 1` (via twisting functors).
+Equality cases of Prop. 6.9 (`Λ` dominant integral): `CategoryO.projectiveDimension_verma_weylDot`
+(`pd M(w·Λ) = ℓ(w)` for every `w`, `KacMoody/CategoryOProjDimensionEq.lean`) and
+`CategoryO.projectiveDimension_simple_weylDot` (`pd L(w·Λ) = 2ℓ(w₀) - ℓ(w)` for every `w`,
+`KacMoody/CategoryOProjDimensionSimple.lean`; `projectiveDimension_simple` is `w = 1`), so the
+block of `Λ` has global dimension `2ℓ(w₀)`. Both lower bounds come from wall-crossing: the
+sequences `0 → M(w sᵢ·Λ) → Θ M(w·Λ) → M(w·Λ) → 0` for Verma modules, and for simple modules the
+cokernel of the adjunction morphism `L(w·Λ) → Θ L(w·Λ)`, with descending induction on `ℓ(w)` from
+`L(w₀·Λ) = M(w₀·Λ)` (reconstructed; Humphreys leaves it as an exercise, and no twisting functors
+are needed). Roadmap item (maintainer decision 2026-10-22, issue #7): [HumO] Prop. 6.15.
 Bott's Thm. 6.6 stands in the `𝔫₋`-homology form (Garland–Lepowsky, M13); the `𝔫`-cohomology form
 would need new Lie algebra cohomology infrastructure and is not formalized. Its dimension statement
 `dim H_k(𝔫₋, L(Λ)) = #{w ∈ W | ℓ(w) = k}` holds for every symmetrizable GCM
@@ -1094,14 +1097,21 @@ comparison of Thm. 7.9 instead of Prop. 7.3.
 direction of Thm. 4.8); for antidominant `λ` and a weight `μ` with `λ - μ` integral and `μ + ρ`
 orthogonal to every root integral for `λ`: `nonempty_equiv_projectiveCover_of_singular`
 (`P(λ) ≅ T_μ^λ M(μ)`), Thm. 7.16 (a) `nonempty_equiv_restrictedDual_projectiveCover_of_singular`
-(`P(λ) ≅ P(λ)^∨`) and (b) `multiplicity_verma_weylDot_of_singular`, `count_projectiveCover_of_singular`
-(`[M(w·λ) : L(λ)] = 1`, `(P(λ) : M(w·λ)) = 1` for `w ∈ W_[λ]`); Thm. 4.10 for integral `λ`
-(`μ = -ρ`): `exists_nonempty_equiv_projectiveCover_of_integral`,
-`nonempty_equiv_restrictedDual_projectiveCover_of_integral`, `multiplicity_verma_weylDot_of_integral`.
-Reconstructed via Prop. 7.13 and adjunction. Such a `μ` need not exist for non-integral `λ` (the
-coroots of the integral roots can span a non-saturated sublattice, e.g. type `A₁ × A₁` inside
-`B₂`); Thm. 7.16 for all antidominant `λ` (Irving's wall-crossing argument) remains open.
-*Maybe (future)*: Thm. 7.16 for all antidominant `λ`. Outline: (1) the Coxeter system of the integral Weyl
+(`P(λ) ≅ P(λ)^∨`); Thm. 4.10 for integral `λ` (`μ = -ρ`):
+`exists_nonempty_equiv_projectiveCover_of_integral`,
+`nonempty_equiv_restrictedDual_projectiveCover_of_integral`. Reconstructed via Prop. 7.13 and
+adjunction. Such a `μ` need not exist for non-integral `λ` (the coroots of the integral roots can
+span a non-saturated sublattice, e.g. type `A₁ × A₁` inside `B₂`).
+**Thm. 7.16 (b) for all antidominant `λ`** (`KacMoody/VermaAntidominantMultiplicity.lean`):
+`multiplicity_verma_weylDot_of_isAntidominant` (`[M(w·λ) : L(λ)] = 1` for `w ∈ W_[λ]`),
+`count_projectiveCover_of_isAntidominant` (`(P(λ) : M(w·λ)) = 1` in every standard filtration),
+`multiplicity_verma_le_one_of_isAntidominant` (`[M(ξ) : L(λ)] ≤ 1` for every `ξ`) and the
+integral case `multiplicity_verma_weylDot_of_integral` (Thm. 4.10). Reconstructed: every map
+`P(λ) → M(ξ)` kills the kernel of `P(λ) ↠ L(λ)` because `M(ξ)` is torsion-free over the Ore
+domain `U(𝔫⁻)` (`KacMoody/VermaTorsionFree.lean`, `VermaModule.eq_zero_or_ker_le`) and
+`L(λ) = M(λ)`, so `dim Hom(P(λ), M(ξ)) ≤ dim Hom(M(λ), M(ξ)) ≤ 1`; the socle of `M(w·λ)` gives
+`≥ 1`. Thm. 7.16 (a) for all antidominant `λ` (Irving's wall-crossing argument) remains open.
+*Maybe (future)*: Thm. 7.16 (a) for all antidominant `λ` ((b) is proved above). Outline: (1) the Coxeter system of the integral Weyl
 group `W_[λ]` with its simple integral reflections (Humphreys Thm. 3.4, already formalized as a reflection group,
 needs the simple system and length function); (2) wall-crossing `Θ_s` for simple integral reflections at
 non-integral `λ` (generalize `TranslationWallCrossing` from `W` to `W_[λ]`); (3) injectivity of `P(λ)^∨` in `𝒪`
@@ -3099,14 +3109,23 @@ and the canonical bases of `L_q(λ)` and `U̇` follow Lusztig's Ch. 14, 19 and 2
 *Status.* Scheduled 2026-10-22. Done: [Lus] Prop. 7.1.5 (b), the higher-order quantum Serre
 relations `f_{i,j;n,m;e} = 0` in `f` over `ℚ(v)` for `e = ±1`, `m > an`
 (`LusztigF/HigherSerre.lean`: `higherSerre_mem_radical`, `toQuotient_higherSerre`; proved with
-the skew derivations `rₕ` in `'f`, not with commutators in `U`). [Lus] Lemma 34.1.2 (a), (b),
+the skew derivations `rₕ` in `'f`, not with commutators in `U`), and [Lus] Cor. 7.1.7
+(`toQuotient_fDivPow_mul_fDivPow`, Lusztig's proof). [Lus] Lemma 34.1.2 (a), (b),
 (c), (e): Gaussian binomials `[a; t]`, `a ∈ ℤ`, at a unit `v` of an integral domain with
 `v^{2l} = 1`, `v^{2t} ≠ 1` for `0 < t < l` (`RootOfUnity/GaussBinomial.lean`:
 `gaussBinom_eq_zero_of_not_dvd`, `gaussBinom_mul_mul`, `gaussBinom_add_mul_add_mul`,
 `pow_sq_add_eq_of_root`; via generating series and the `q`-Vandermonde identity
 `qBinomInt_add`, our argument). [Lus] 34.1.3 (a), 34.1.4 (a) (`RootOfUnity/GaussBinomialSums.lean`:
 `prod_qBinomialU_mul_root`, `sum_qBinomialU_root`; the latter via the telescoping partial sums
-`sum_neg_one_pow_qBinomial`, our argument), and [Lus] 35.1.5 (a) (`gaussBinom_mul_mul_eq_pow`).
+`sum_neg_one_pow_qBinomial`, our argument), and [Lus] 35.1.5 (a) (`gaussBinom_mul_mul_eq_pow`). [Lus] 31.1.1: `_S f = S ⊗_𝒜 𝒜f` for a
+commutative `𝒜`-algebra `S`, with the `S`-basis `1 ⊗ b`, `b ∈ B` (`ChangeOfRings/Basic.lean`:
+`integralCanonicalBasis`, `baseChangeCanonicalBasis`), generated by the `θᵢ^{(n)}`
+(`adjoin_baseChangeGenerator`). [Lus] Prop. 33.2.2 (c): in the quasi-classical case
+(`F` of characteristic zero, `(ε^{dᵢ})² = 1`), `_F f` is presented by the quantum Serre relations
+at `ε` (`ChangeOfRings/QuasiClassical.lean`: `quasiClassicalEquiv`,
+`quasiClassicalHom_eq_zero_iff`); no-odd-cycles assumption not needed. Proof (our argument): the
+canonical basis grades `_F f`, and a dimension count against quantum Gabber–Kac, with the
+sign twist `finrank_serreSpan_of_sq_eq_one` (`GabberKac/SerreSpanSign.lean`).
 [Lus] 2.2.4: the Cartan datum `(I, ∘)`, `i ∘ j = lᵢ lⱼ (i · j)` with `lᵢ` least such that
 `l ∣ lᵢ dᵢ` (`Frobenius/CartanDatum.lean`: `LusztigCartanDatum.frobOrder`, `frobOrder_dvd_iff`,
 `frobenius`, `frobenius_d`, `frobOrder_mul_cartanMatrix_frobenius`).

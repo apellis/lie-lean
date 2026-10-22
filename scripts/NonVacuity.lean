@@ -82,6 +82,35 @@ example : higherSerre DA2 0 1 1 2 1 ∈ LusztigF.radical DA2 (RatFunc.X : RatFun
   higherSerre_mem_radical (by decide) 1 2 (Or.inl rfl)
     (by rw [DA2, LusztigCartanDatum.cartanMatrix_ofSymmetrization]; decide)
 
+/-- [Lus] Cor. 7.1.7 for `A₂`, `m = 2`, `n = 1`: `θ₀^{(2)} θ₁` in terms of `θ₀^{(r)} θ₁ θ₀^{(2-r)}`,
+`r ≤ 1`, in `f`. -/
+example : LusztigF.toQuotient DA2 (RatFunc.X : RatFunc ℚ) (fDivPow DA2 0 2 * fDivPow DA2 1 1) =
+    ∑ r ∈ Finset.range (1 * 1 + 1), higherSerreCoeff DA2 0 1 1 2 (2 - r) •
+      LusztigF.toQuotient DA2 RatFunc.X
+        (fDivPow DA2 0 r * fDivPow DA2 1 1 * fDivPow DA2 0 (2 - r)) :=
+  toQuotient_fDivPow_mul_fDivPow (by decide)
+    (by rw [DA2, LusztigCartanDatum.cartanMatrix_ofSymmetrization]; decide) (by norm_num)
+
+open scoped TensorProduct in
+/-- [Lus] 31.1.1: `_S f = S ⊗_𝒜 𝒜f` has the basis `1 ⊗ b`, `b ∈ B`; here `S = ℚ(v)`. -/
+example : letI := LusztigF.integralLaurentEval.toAlgebra
+    Module.Basis (canonicalBasis DA2) (RatFunc ℚ)
+      (RatFunc ℚ ⊗[LaurentPolynomial ℤ] LusztigF.quotientIntegralForm DA2) :=
+  letI := LusztigF.integralLaurentEval.toAlgebra
+  baseChangeCanonicalBasis DA2 (RatFunc ℚ)
+
+open scoped TensorProduct in
+/-- [Lus] Prop. 33.2.2 (c): `_ℚ f` at `v ↦ -1` is presented by the quantum Serre relations at
+`ε = -1`. -/
+example : letI := (LaurentPolynomial.eval₂ (Int.castRingHom ℚ) (-1)).toAlgebra
+    (LusztigF.serreIdeal DA2 (algebraMap (LaurentPolynomial ℤ) ℚ
+      (LaurentPolynomial.T 1))).ringCon.Quotient ≃ₐ[ℚ]
+      ℚ ⊗[LaurentPolynomial ℤ] LusztigF.quotientIntegralForm DA2 :=
+  letI := (LaurentPolynomial.eval₂ (Int.castRingHom ℚ) (-1)).toAlgebra
+  quasiClassicalEquiv DA2 ℚ fun i ↦ by
+    rw [RingHom.algebraMap_toAlgebra, LaurentPolynomial.eval₂_T, ← pow_mul, mul_comm, pow_mul]
+    simp
+
 /-! ### Lusztig 25.2.1 (d) and 26.3.1 on the extended root datum of `sl₂` -/
 
 /-- The extended root datum of `sl₂`. -/
