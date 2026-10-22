@@ -497,12 +497,15 @@ of `Extⁿ` and of the projective dimension of `M(μ)` (`CategoryO.instFiniteExt
 translation functors on `𝒪` (`CategoryO.translationFunctor`, exact and `K`-linear), the adjunction
 (`CategoryO.translationAdj`) and `Extⁿ_𝒪(T X, Y) ≅ Extⁿ_𝒪(X, T' Y)`
 (`CategoryO.extTranslationEquiv`, `KacMoody/CategoryOTranslation.lean`).
-Equality cases of Prop. 6.9 (`KacMoody/CategoryOProjDimensionEq.lean`, `Λ` dominant integral):
-`CategoryO.projectiveDimension_verma_weylDot` (`pd M(w·Λ) = ℓ(w)` for every `w`, via wall-crossing
-sequences) and `CategoryO.projectiveDimension_simple` (`pd L(Λ) = 2ℓ(w₀)`, via dimension shifting
-along the BGG resolution), so the block of `Λ` has global dimension `2ℓ(w₀)`.
-Roadmap items (maintainer decision 2026-10-22, issue #7): [HumO] Prop. 6.15, and
-`pd L(w·Λ) = 2ℓ(w₀) - ℓ(w)` for `w ≠ 1` (via twisting functors).
+Equality cases of Prop. 6.9 (`Λ` dominant integral): `CategoryO.projectiveDimension_verma_weylDot`
+(`pd M(w·Λ) = ℓ(w)` for every `w`, `KacMoody/CategoryOProjDimensionEq.lean`) and
+`CategoryO.projectiveDimension_simple_weylDot` (`pd L(w·Λ) = 2ℓ(w₀) - ℓ(w)` for every `w`,
+`KacMoody/CategoryOProjDimensionSimple.lean`; `projectiveDimension_simple` is `w = 1`), so the
+block of `Λ` has global dimension `2ℓ(w₀)`. Both lower bounds come from wall-crossing: the
+sequences `0 → M(w sᵢ·Λ) → Θ M(w·Λ) → M(w·Λ) → 0` for Verma modules, and for simple modules the
+cokernel of the adjunction morphism `L(w·Λ) → Θ L(w·Λ)`, with descending induction on `ℓ(w)` from
+`L(w₀·Λ) = M(w₀·Λ)` (reconstructed; Humphreys leaves it as an exercise, and no twisting functors
+are needed). Roadmap item (maintainer decision 2026-10-22, issue #7): [HumO] Prop. 6.15.
 Bott's Thm. 6.6 stands in the `𝔫₋`-homology form (Garland–Lepowsky, M13); the `𝔫`-cohomology form
 would need new Lie algebra cohomology infrastructure and is not formalized. Its dimension statement
 `dim H_k(𝔫₋, L(Λ)) = #{w ∈ W | ℓ(w) = k}` holds for every symmetrizable GCM
