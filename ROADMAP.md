@@ -3208,8 +3208,14 @@ unit times the Shapovalov-type pairing `vermaForm` with Gaussian-binomial coeffi
 for `y` of weight `ν ≤ (⟨i, λ⟩/lᵢ)ᵢ` with `Fr'(y) ∈ frobRad`, `y` maps to zero in `_F f*`
 (`Frobenius/SplittingKernel.lean`: `mem_serreSpan_of_frobSplitHom_mem_frobRad`,
 `quasiClassicalHom_eq_zero_of_frobSplitHom_mem_frobRad`, via
-`LusztigF.mem_serreSpan_of_shapovalovMap_eq_zero_of_sq_eq_one`). Next: `Fr`
-([Lus] 35.1.7, 35.3.3–35.5) and 31.1.3, 35.1.9.
+`LusztigF.mem_serreSpan_of_shapovalovMap_eq_zero_of_sq_eq_one`). [Lus] Thm. 35.1.7 over the field
+`F` of 35.2.1, under 35.1.2 (a) (`Frobenius/Homomorphism.lean`): `Fr : _F f → _F f*` with
+`Fr(θᵢ^{(n)}) = θᵢ^{(n/lᵢ)}` if `lᵢ ∣ n` and `0` otherwise (`frob`, `frob_baseGen`, uniqueness
+`eq_frob`, `frob_comp_frobSplit`), as `Fr'⁻¹` composed with the projection along the left ideal `K`
+spanned by the `θᵢ w`, `lᵢ ≥ 2` (`frobKer`). `_F f = Fr'(_F f*) ⊕ K` and injectivity of `Fr'`
+(`isCompl_frobKer`, `frobSplit_injective`) come from 35.3.2 (d) and the kernel statement above on
+the extended root datum with `λ` large, in place of the tensor decomposition 35.4.2 (b); the
+multiplicativity argument is that of 35.5.1 (our argument). Next: 35.1.9 and 31.1.3.
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).

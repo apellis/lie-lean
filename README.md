@@ -309,7 +309,10 @@ Further proved results include:
     of the contravariant form of `Λ_λ` on `_F f`: `θᵢ w` lies in its radical for every product `w`
     of the `θⱼ^{(lⱼ)}` when `lᵢ ≥ 2` (`baseGen_one_mul_mem_frobRad`), and these products span
     `_F f` modulo the radical (`span_frobWords_sup_frobRad`), under Lusztig's assumption
-    35.1.2 (a) and `lᵢ ∣ ⟨i, λ⟩`.
+    35.1.2 (a) and `lᵢ ∣ ⟨i, λ⟩`. [Lus] Thm. 35.1.7 over that field, under 35.1.2 (a): the
+    `F`-algebra map `Fr : _F f → _F f*`, `θᵢ^{(n)} ↦ θᵢ^{(n/lᵢ)}` if `lᵢ ∣ n` and `0` otherwise
+    (`frob`, `frob_baseGen`, uniqueness `eq_frob`), with `Fr ∘ Fr' = 1` (`frob_comp_frobSplit`);
+    `Fr'` is injective (`frobSplit_injective`).
   - **Not yet formalized:** [Lus] 41.1.9 (compatibility with the quantum Frobenius map, roadmap
     item D2, in progress).
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`

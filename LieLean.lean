@@ -502,6 +502,7 @@ import LieLean.Algebra.QuantumGroup.Frobenius.Generators
 import LieLean.Algebra.QuantumGroup.Frobenius.HighestWeight
 import LieLean.Algebra.QuantumGroup.Frobenius.PairingRecursion
 import LieLean.Algebra.QuantumGroup.Frobenius.SplittingKernel
+import LieLean.Algebra.QuantumGroup.Frobenius.Homomorphism
 import LieLean.Algebra.QuantumGroup.Frobenius.RadicalWords
 import LieLean.Algebra.QuantumGroup.Frobenius.SerreIdentity
 import LieLean.Algebra.QuantumGroup.Frobenius.Splitting
