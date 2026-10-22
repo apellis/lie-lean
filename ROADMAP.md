@@ -3115,6 +3115,9 @@ at `ε` (`ChangeOfRings/QuasiClassical.lean`: `quasiClassicalEquiv`,
 `quasiClassicalHom_eq_zero_iff`); no-odd-cycles assumption not needed. Proof (our argument): the
 canonical basis grades `_F f`, and a dimension count against quantum Gabber–Kac, with the
 sign twist `finrank_serreSpan_of_sq_eq_one` (`GabberKac/SerreSpanSign.lean`).
+[Lus] 2.2.4: the Cartan datum `(I, ∘)`, `i ∘ j = lᵢ lⱼ (i · j)` with `lᵢ` least such that
+`l ∣ lᵢ dᵢ` (`Frobenius/CartanDatum.lean`: `LusztigCartanDatum.frobOrder`, `frobOrder_dvd_iff`,
+`frobenius`, `frobenius_d`, `frobOrder_mul_cartanMatrix_frobenius`).
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).
