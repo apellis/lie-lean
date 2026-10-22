@@ -214,7 +214,6 @@ theorem hasDelormeFormula_ofSub_bot (X : CategoryO.{u} P) : HasDelormeFormula hA
   ⟨∅, fun μ _ ↦ eulerChar_ofSub_bot hA X μ, fun ν ↦ by
     rw [multiplicity_ofSub_bot, delormeSum, Finset.sum_empty, Nat.cast_zero]⟩
 
-omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem multiplicity_dualVerma (lam ν : Dual K H) :
     (dualVerma P lam).property.1.multiplicity ν =
       (VermaModule.isCategoryO P lam).multiplicity ν := by
@@ -246,10 +245,11 @@ theorem hasDelormeFormula_dualVerma (lam : Dual K H) :
     HasDelormeFormula hA (dualVerma P lam) := by
   classical
   refine ⟨{lam}, fun μ hμ ↦ ?_, fun ν ↦ ?_⟩
-  · rw [eulerChar_dualVerma, finrank_ext_zero_verma_dualVerma,
-      if_neg (Ne.symm (Finset.notMem_singleton.mp hμ)), Nat.cast_zero]
+  · rw [eulerChar_dualVerma, finrank_ext_zero_verma_dualVerma]
+    simp [Ne.symm (Finset.notMem_singleton.mp hμ)]
   · rw [delormeSum, Finset.sum_singleton, eulerChar_dualVerma, finrank_ext_zero_verma_dualVerma,
-      if_pos rfl, Nat.cast_one, one_mul, multiplicity_dualVerma]
+      multiplicity_dualVerma]
+    simp
 
 /-! ### Induction on composition factors -/
 
@@ -311,7 +311,6 @@ theorem ncard_dotOrbitBelow_lt {μ κ : Dual K H} (hκ : κ ∈ dotOrbitBelow P 
   exact Set.ncard_lt_ncard ((Set.ssubset_iff_of_subset hsub).mpr
     ⟨κ, ⟨⟨x, hx⟩, hκμ, hne⟩, fun h ↦ h.2.2 rfl⟩) (finite_dotOrbitBelow hA μ)
 
-omit [IsAlgClosed K] in
 theorem mem_dotOrbitBelow_of_multiplicity {lam ν : Dual K H}
     (h : (VermaModule.isCategoryO P lam).multiplicity ν ≠ 0) (hne : ν ≠ lam) :
     ν ∈ dotOrbitBelow P hA lam := by
@@ -364,7 +363,7 @@ theorem hasDelormeFormula_simple_aux : ∀ (n : ℕ) (lam : Dual K H),
       rw [VermaModule.multiplicity_self] at h
       simp at h
       omega
-    rw [if_neg hne] at h
+    simp only [hne, ↓reduceIte] at h
     have hmem := mem_dotOrbitBelow_of_multiplicity hA
       (by omega : (VermaModule.isCategoryO P lam).multiplicity ν ≠ 0) hne
     exact ih ν (by have := ncard_dotOrbitBelow_lt hA hmem; omega) Z' e'
