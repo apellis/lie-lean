@@ -102,6 +102,7 @@ theorem finite_dotOrbitAbove (μ : Dual K H) : (dotOrbitAbove P hA μ).Finite :=
   rintro κ ⟨⟨w, rfl⟩, -⟩
   exact ⟨w, rfl⟩
 
+omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 /-- Going up the dot orbit shrinks the set of weights above. -/
 theorem ncard_dotOrbitAbove_lt {μ κ : Dual K H} (hκ : κ ∈ dotOrbitAbove P hA μ) :
     (dotOrbitAbove P hA κ).ncard < (dotOrbitAbove P hA μ).ncard := by
