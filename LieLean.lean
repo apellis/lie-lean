@@ -353,6 +353,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.ModifiedCanonical
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.ModifiedCanonicalBasis
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.ModifiedCanonicalForm
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.ModifiedCanonicalSigned
+import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.ModifiedCanonicalTransfer
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeBar
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeFiltrationGlobal
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Global.NegativeFiltrationSpan
@@ -652,6 +653,7 @@ import LieLean.Algebra.QuantumGroup.TriangularRep
 import LieLean.Algebra.QuantumGroup.Verma
 import LieLean.Algebra.QuantumGroup.Weight
 import LieLean.Algebra.QuantumGroup.WeightsAbove
+import LieLean.Algebra.QuantumGroup.YRegular
 import LieLean.Combinatorics.Enumerative.SignReversingInvolution
 import LieLean.GroupTheory.Coxeter.Bruhat
 import LieLean.GroupTheory.Coxeter.Deletion
