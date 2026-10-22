@@ -3092,7 +3092,9 @@ the skew derivations `rₕ` in `'f`, not with commutators in `U`). [Lus] Lemma 3
 `v^{2l} = 1`, `v^{2t} ≠ 1` for `0 < t < l` (`RootOfUnity/GaussBinomial.lean`:
 `gaussBinom_eq_zero_of_not_dvd`, `gaussBinom_mul_mul`, `gaussBinom_add_mul_add_mul`,
 `pow_sq_add_eq_of_root`; via generating series and the `q`-Vandermonde identity
-`qBinomInt_add`, our argument).
+`qBinomInt_add`, our argument). [Lus] 34.1.3 (a), 34.1.4 (a) (`RootOfUnity/GaussBinomialSums.lean`:
+`prod_qBinomialU_mul_root`, `sum_qBinomialU_root`; the latter via the telescoping partial sums
+`sum_neg_one_pow_qBinomial`, our argument).
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).
