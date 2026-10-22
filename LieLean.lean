@@ -55,6 +55,7 @@ import LieLean.Algebra.Lie.KacMoody.CasimirIrreducible
 import LieLean.Algebra.Lie.KacMoody.CategoryO
 import LieLean.Algebra.Lie.KacMoody.CategoryOAbelian
 import LieLean.Algebra.Lie.KacMoody.CategoryOExt
+import LieLean.Algebra.Lie.KacMoody.CategoryOExtVerma
 import LieLean.Algebra.Lie.KacMoody.CategoryOProjective
 import LieLean.Algebra.Lie.KacMoody.CategoryOSubmodule
 import LieLean.Algebra.Lie.KacMoody.Character
