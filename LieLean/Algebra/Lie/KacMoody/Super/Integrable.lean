@@ -31,7 +31,8 @@ For odd `eᵢ`, the reflection `rᵢ` is the reflection of the even root `2αᵢ
 ## Main definitions
 
 * `Matrix.Realization.SuperEnveloping.sl2H`, `sl2E`, `sl2F`: the triple.
-* `Matrix.Realization.SuperEnveloping.IsIntegrable`: `eᵢ`, `fᵢ` act locally nilpotently.
+* `Matrix.Realization.SuperEnveloping.IsIntegrable`: `eᵢ`, `fᵢ` act locally nilpotently;
+  `IsIntegrableAt` is the same condition at a single node `i`.
 
 ## Main results
 
@@ -263,14 +264,19 @@ lemma sl2H_smul {μ : Dual K H} {v : V} (hv : v ∈ modWeightSpace P p V μ) (i 
 /-! ### Integrable modules -/
 
 variable (P p V) in
+/-- A `U(G̃(A, τ))`-module is *integrable at `i`* if `eᵢ` and `fᵢ` act locally nilpotently. -/
+def IsIntegrableAt (i : ι) : Prop :=
+  ∀ v : V, (∃ n, e P p i ^ n • v = 0) ∧ ∃ n, f P p i ^ n • v = 0
+
+variable (P p V) in
 /-- A `U(G̃(A, τ))`-module is *integrable* if all `eᵢ` and `fᵢ` act locally nilpotently. -/
 def IsIntegrable : Prop :=
-  ∀ i (v : V), (∃ n, e P p i ^ n • v = 0) ∧ ∃ n, f P p i ^ n • v = 0
+  ∀ i, IsIntegrableAt P p V i
 
 omit [CharZero K] in
-lemma IsIntegrable.exists_sl2E (hV : IsIntegrable P p V) (i : ι) (v : V) :
+lemma IsIntegrableAt.exists_sl2E {i : ι} (hV : IsIntegrableAt P p V i) (v : V) :
     ∃ n, (toEnd K 𝒰 V (sl2E P p i) ^ n) v = 0 := by
-  obtain ⟨n, hn⟩ := (hV i v).1
+  obtain ⟨n, hn⟩ := (hV v).1
   refine ⟨n, ?_⟩
   rw [toEnd_pow_apply]
   unfold sl2E
@@ -280,9 +286,9 @@ lemma IsIntegrable.exists_sl2E (hV : IsIntegrable P p V) (i : ι) (v : V) :
   · exact hn
 
 omit [CharZero K] in
-lemma IsIntegrable.exists_sl2F (hV : IsIntegrable P p V) (i : ι) (v : V) :
+lemma IsIntegrableAt.exists_sl2F {i : ι} (hV : IsIntegrableAt P p V i) (v : V) :
     ∃ n, (toEnd K 𝒰 V (sl2F P p i) ^ n) v = 0 := by
-  obtain ⟨n, hn⟩ := (hV i v).2
+  obtain ⟨n, hn⟩ := (hV v).2
   refine ⟨n, ?_⟩
   rw [toEnd_pow_apply]
   unfold sl2F
@@ -291,17 +297,33 @@ lemma IsIntegrable.exists_sl2F (hV : IsIntegrable P p V) (i : ι) (v : V) :
       smul_zero, smul_zero]
   · exact hn
 
+omit [CharZero K] in
+lemma IsIntegrable.exists_sl2E (hV : IsIntegrable P p V) (i : ι) (v : V) :
+    ∃ n, (toEnd K 𝒰 V (sl2E P p i) ^ n) v = 0 :=
+  (hV i).exists_sl2E v
+
+omit [CharZero K] in
+lemma IsIntegrable.exists_sl2F (hV : IsIntegrable P p V) (i : ι) (v : V) :
+    ∃ n, (toEnd K 𝒰 V (sl2F P p i) ^ n) v = 0 :=
+  (hV i).exists_sl2F v
+
 variable (hA : A.IsGeneralizedCartan)
 include hA
+
+/-- The weights of a module integrable at `i` are integral on the `𝔰𝔩₂`-coroot `αᵢ^∨ / dᵢ`. -/
+theorem exists_int_of_modWeightSpace_ne_bot_of_isIntegrableAt {i : ι}
+    (hV : IsIntegrableAt P p V i) {μ : Dual K H} (hμ : modWeightSpace P p V μ ≠ ⊥) :
+    ∃ z : ℤ, μ (sl2Coroot P p i) = z := by
+  obtain ⟨v, hv, hv0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hμ
+  obtain ⟨k, hk⟩ := hV.exists_sl2E v
+  exact (isSl2Triple P p (hA := hA) i).exists_int_of_lie_h_eq_smul hV.exists_sl2F hk
+    (sl2H_smul hv i) hv0
 
 /-- The weights of an integrable module are integral on the `𝔰𝔩₂`-coroots: if `V_λ ≠ 0` then
 `⟨λ, αᵢ^∨ / dᵢ⟩ ∈ ℤ` ([Kac78] Lemma 1.2). -/
 theorem exists_int_of_modWeightSpace_ne_bot' (hV : IsIntegrable P p V) {μ : Dual K H}
-    (hμ : modWeightSpace P p V μ ≠ ⊥) (i : ι) : ∃ z : ℤ, μ (sl2Coroot P p i) = z := by
-  obtain ⟨v, hv, hv0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hμ
-  obtain ⟨k, hk⟩ := hV.exists_sl2E i v
-  exact (isSl2Triple P p (hA := hA) i).exists_int_of_lie_h_eq_smul (hV.exists_sl2F i) hk
-    (sl2H_smul hv i) hv0
+    (hμ : modWeightSpace P p V μ ≠ ⊥) (i : ι) : ∃ z : ℤ, μ (sl2Coroot P p i) = z :=
+  exists_int_of_modWeightSpace_ne_bot_of_isIntegrableAt hA (hV i) hμ
 
 omit hA [DecidableEq ι] in
 lemma apply_coroot_eq (μ : Dual K H) (i : ι) :
@@ -327,12 +349,13 @@ theorem exists_int_mul_two_of_modWeightSpace_ne_bot (hV : IsIntegrable P p V) {�
 
 /-- For an integrable module, `dim V_λ ≤ dim V_{rᵢ λ}`: the map `Fᵢⁿ` (if `n = ⟨λ, αᵢ^∨ / dᵢ⟩ ≥ 0`)
 or `Eᵢ⁻ⁿ` (if `n ≤ 0`) embeds `V_λ` into `V_{rᵢ λ}`. -/
-theorem rank_modWeightSpace_le_reflection (hV : IsIntegrable P p V) (i : ι) (μ : Dual K H) :
+theorem rank_modWeightSpace_le_reflection_of_isIntegrableAt {i : ι}
+    (hV : IsIntegrableAt P p V i) (μ : Dual K H) :
     Module.rank K (modWeightSpace P p V μ) ≤
       Module.rank K (modWeightSpace P p V (P.reflection hA i μ)) := by
   by_cases hμ : modWeightSpace P p V μ = ⊥
   · rw [hμ, rank_bot]; exact zero_le
-  obtain ⟨z, hz⟩ := exists_int_of_modWeightSpace_ne_bot' hA hV hμ i
+  obtain ⟨z, hz⟩ := exists_int_of_modWeightSpace_ne_bot_of_isIntegrableAt hA hV hμ
   have t := isSl2Triple P p (hA := hA) i
   obtain ⟨n, rfl | rfl⟩ := Int.eq_nat_or_neg z
   · -- `⟨λ, αᵢ^∨ / dᵢ⟩ = n ≥ 0`: `Fᵢⁿ : V_λ → V_{λ - dᵢ n αᵢ}` is injective
@@ -344,7 +367,7 @@ theorem rank_modWeightSpace_le_reflection (hV : IsIntegrable P p V) (i : ι) (μ
         rw [hr, toEnd_pow_apply]; exact sl2F_pow_smul_mem hv i n
     refine LinearMap.rank_le_of_injective φ (LinearMap.ker_eq_bot.mp ?_)
     refine LinearMap.ker_eq_bot'.mpr fun v hv ↦ Subtype.ext ?_
-    obtain ⟨k, hk⟩ := hV.exists_sl2E i v
+    obtain ⟨k, hk⟩ := hV.exists_sl2E v
     refine t.eq_zero_of_pow_toEnd_f_eq_zero hk ?_ (congr_arg Subtype.val hv)
     rw [sl2H_smul v.2 i, hz, Int.cast_natCast]
   · -- `⟨λ, αᵢ^∨ / dᵢ⟩ = -n ≤ 0`: `Eᵢⁿ : V_λ → V_{λ + dᵢ n αᵢ}` is injective
@@ -357,17 +380,30 @@ theorem rank_modWeightSpace_le_reflection (hV : IsIntegrable P p V) (i : ι) (μ
         rw [hr, toEnd_pow_apply]; exact sl2E_pow_smul_mem hv i n
     refine LinearMap.rank_le_of_injective φ (LinearMap.ker_eq_bot.mp ?_)
     refine LinearMap.ker_eq_bot'.mpr fun v hv ↦ Subtype.ext ?_
-    obtain ⟨k, hk⟩ := hV.exists_sl2F i v
+    obtain ⟨k, hk⟩ := hV.exists_sl2F v
     refine t.symm.eq_zero_of_pow_toEnd_f_eq_zero hk ?_ (congr_arg Subtype.val hv)
     rw [neg_lie, sl2H_smul v.2 i, hz, Int.cast_neg, Int.cast_natCast, neg_smul, neg_neg]
+
+/-- For an integrable module, `dim V_λ ≤ dim V_{rᵢ λ}`. -/
+theorem rank_modWeightSpace_le_reflection (hV : IsIntegrable P p V) (i : ι) (μ : Dual K H) :
+    Module.rank K (modWeightSpace P p V μ) ≤
+      Module.rank K (modWeightSpace P p V (P.reflection hA i μ)) :=
+  rank_modWeightSpace_le_reflection_of_isIntegrableAt hA (hV i) μ
+
+/-- For a module integrable at `i`, `dim V_{rᵢ λ} = dim V_λ`. -/
+theorem rank_modWeightSpace_reflection_of_isIntegrableAt {i : ι}
+    (hV : IsIntegrableAt P p V i) (μ : Dual K H) :
+    Module.rank K (modWeightSpace P p V (P.reflection hA i μ)) =
+      Module.rank K (modWeightSpace P p V μ) := by
+  refine le_antisymm ?_ (rank_modWeightSpace_le_reflection_of_isIntegrableAt hA hV μ)
+  have := rank_modWeightSpace_le_reflection_of_isIntegrableAt hA hV (P.reflection hA i μ)
+  rwa [reflection_reflection] at this
 
 /-- For an integrable module, `dim V_{rᵢ λ} = dim V_λ`. -/
 theorem rank_modWeightSpace_reflection (hV : IsIntegrable P p V) (i : ι) (μ : Dual K H) :
     Module.rank K (modWeightSpace P p V (P.reflection hA i μ)) =
-      Module.rank K (modWeightSpace P p V μ) := by
-  refine le_antisymm ?_ (rank_modWeightSpace_le_reflection hA hV i μ)
-  have := rank_modWeightSpace_le_reflection hA hV i (P.reflection hA i μ)
-  rwa [reflection_reflection] at this
+      Module.rank K (modWeightSpace P p V μ) :=
+  rank_modWeightSpace_reflection_of_isIntegrableAt hA (hV i) μ
 
 /-- For an integrable module `V`, the weight multiplicities are `W`-invariant:
 `dim V_{w λ} = dim V_λ` for all `w ∈ W` ([Kac78] Prop. 1.4 (b), cf. [Kac] Prop. 3.7 (a)). -/
