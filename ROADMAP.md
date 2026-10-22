@@ -3191,7 +3191,10 @@ stated through the contravariant form of `Λ_λ` on `_F f` (`Frobenius/HighestWe
 `𝒜`-valued form `frobPair`, its left radical `frobRad` over `F`, a left ideal containing `θᵢ`
 when `lᵢ ≥ 2` and `lᵢ ∣ ⟨i, λ⟩`; `Frobenius/RadicalWords.lean`: `baseGen_one_mul_mem_frobRad`,
 `θᵢ w ∈ frobRad` for every product `w` of the `θⱼ^{(lⱼ)}`, and `span_frobWords_sup_frobRad`,
-`_F f = span(words) + frobRad`), under Lusztig's assumption 35.1.2 (a). Next: `Fr`
+`_F f = span(words) + frobRad`), under Lusztig's assumption 35.1.2 (a). Towards 35.4.2
+(`Frobenius/PairingRecursion.lean`, our argument): on Frobenius words the form `frobPairBase` is a
+unit times the Shapovalov-type pairing `vermaForm` with Gaussian-binomial coefficients
+(`exists_frobPairBase_eq_vermaForm`, via `dE_smul_frobVec_sub_mem` and [Lus] 3.1.9). Next: `Fr`
 ([Lus] 35.1.7, 35.3.3–35.5) and 31.1.3, 35.1.9.
 
 *Missing prerequisites.*
