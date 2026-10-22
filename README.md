@@ -280,6 +280,9 @@ Further proved results include:
   - [Lus] Lemma 34.1.2 (a), (b), (c), (e): Gaussian binomials at a root of `1` in an integral
     domain (`gaussBinom_eq_zero_of_not_dvd`, `gaussBinom_mul_mul`, `gaussBinom_add_mul_add_mul`,
     `pow_sq_add_eq_of_root`).
+  - [Lus] 34.1.3 (a), 34.1.4 (a): a product and a sum of Gaussian binomials at a root of `1`
+    (`prod_qBinomialU_mul_root`, `sum_qBinomialU_root`), and [Lus] 35.1.5 (a)
+    (`gaussBinom_mul_mul_eq_pow`).
   - **Not yet formalized:** [Lus] 41.1.9 (compatibility with the quantum Frobenius map, roadmap
     item D2, in progress).
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`
