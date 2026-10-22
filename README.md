@@ -277,6 +277,9 @@ Further proved results include:
     (`PBWSignedCrystal.existsUnique_canonical_congruence`).
   - [Lus] Prop. 7.1.5 (b): the higher-order quantum Serre relations hold in `f` over `ℚ(v)`
     (`higherSerre_mem_radical`, `toQuotient_higherSerre`).
+  - [Lus] Lemma 34.1.2 (a), (b), (c), (e): Gaussian binomials at a root of `1` in an integral
+    domain (`gaussBinom_eq_zero_of_not_dvd`, `gaussBinom_mul_mul`, `gaussBinom_add_mul_add_mul`,
+    `pow_sq_add_eq_of_root`).
   - **Not yet formalized:** [Lus] 41.1.9 (compatibility with the quantum Frobenius map, roadmap
     item D2, in progress).
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`

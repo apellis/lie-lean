@@ -116,4 +116,25 @@ example (Λ : GrandLoop.Dom R1) :=
     (one_mem_canonicalBasis sl2Datum) (sub_self _) (one_mem_canonicalBasisHW Λ)
     (one_mem_canonicalBasisHW Λ)
 
+/-! ### Lusztig 34.1.2 at `v = 2 ∈ 𝔽₅`, a primitive fourth root of `1` (`l = 2`) -/
+
+local instance : Fact (Nat.Prime 5) := ⟨by decide⟩
+
+/-- `v = 2 ∈ 𝔽₅`. -/
+abbrev v5 : (ZMod 5)ˣ := ZMod.unitOfCoprime 2 (by norm_num)
+
+theorem hv5 : ((v5 : ZMod 5)) ^ (2 * 2) = 1 := by decide
+
+theorem hv5prim : ∀ t, 0 < t → t < 2 → (v5 : ZMod 5) ^ (2 * t) ≠ 1 := fun t h0 ht ↦ by
+  obtain rfl : t = 1 := by omega
+  decide
+
+/-- [Lus] 34.1.2 (a): `[2; 1] = 0` at `v = 2 ∈ 𝔽₅`. -/
+example : gaussBinom v5 2 1 = 0 :=
+  gaussBinom_eq_zero_of_not_dvd hv5 hv5prim (by norm_num) (by norm_num) (by norm_num)
+
+/-- [Lus] 34.1.2 (e): `v^{l² + l} = (-1)^{l+1}` at `v = 2 ∈ 𝔽₅`. -/
+example : (v5 : ZMod 5) ^ (2 ^ 2 + 2) = (-1) ^ (2 + 1) :=
+  pow_sq_add_eq_of_root hv5 hv5prim (by norm_num)
+
 end NonVacuity
