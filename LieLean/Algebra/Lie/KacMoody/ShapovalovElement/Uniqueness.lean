@@ -91,10 +91,10 @@ lemma exists_sub_comp_eq_smul {D : Dual K H → 𝒰⁻} (hD : D ∈ polyFam P) 
 namespace IsShapovalovElement
 
 variable {hA : A.IsGeneralizedCartan} {v : P.weylGroup hA} {i : ι} {r : ℕ} {a : ι → ℕ}
-  {θ θ' : Dual K H → 𝒰⁻}
 
 /-- `θ(λ) v_λ` is a maximal vector of weight `λ - rγ` when `⟨λ + ρ, γ^∨⟩ = r`. -/
-lemma equivEnvNNeg_mem_primitiveVectors (h : IsShapovalovElement P hA v i r a θ) {Λ : Dual K H}
+lemma equivEnvNNeg_mem_primitiveVectors {θ : Dual K H → 𝒰⁻}
+    (h : IsShapovalovElement P hA v i r a θ) {Λ : Dual K H}
     (hΛ : P.corootPairing hA (Λ + P.rho) v i = r) :
     equivEnvNNeg P Λ (θ Λ) ∈
       primitiveVectors P (VermaModule P Λ) (Λ - r • P.rootOf fun j ↦ (a j : ℤ)) := by
@@ -106,6 +106,7 @@ lemma equivEnvNNeg_mem_primitiveVectors (h : IsShapovalovElement P hA v i r a θ
 /-- **Uniqueness on the hyperplane** ([HumO] §4.13): two Shapovalov elements for `(γ, r)` agree at
 every `λ` with `⟨λ + ρ, γ^∨⟩ = r`. -/
 theorem eq_of_corootPairing_eq [IsAlgClosed K] [FiniteDimensional K H] (hfin : A.IsFiniteCartan)
+    {θ θ' : Dual K H → 𝒰⁻}
     (h : IsShapovalovElement P hA v i r a θ) (h' : IsShapovalovElement P hA v i r a θ')
     (hpos : 0 < r * ∑ j, a j) {Λ : Dual K H} (hΛ : P.corootPairing hA (Λ + P.rho) v i = r) :
     θ Λ = θ' Λ := by
@@ -143,6 +144,7 @@ theorem eq_of_corootPairing_eq [IsAlgClosed K] [FiniteDimensional K H] (hfin : A
 Shapovalov elements for `(γ, r)` differ by `⟨λ + ρ, γ^∨⟩ - r` times a polynomial family, i.e. they
 agree modulo `U(𝔟⁻)(h_γ + ρ(h_γ) - r)`. -/
 theorem exists_sub_eq_smul [IsAlgClosed K] [FiniteDimensional K H] (hfin : A.IsFiniteCartan)
+    {θ θ' : Dual K H → 𝒰⁻}
     (h : IsShapovalovElement P hA v i r a θ) (h' : IsShapovalovElement P hA v i r a θ')
     (hpos : 0 < r * ∑ j, a j) :
     ∃ G ∈ polyFam P, ∀ Λ, θ Λ - θ' Λ = (P.corootPairing hA (Λ + P.rho) v i - r) • G Λ := by
