@@ -153,6 +153,20 @@ example : baseGen DA2 ℂ 0 (DA2.frobOrder 2 0) * baseGen DA2 ℂ 1 1 =
       (baseGen DA2 ℂ 0 r * baseGen DA2 ℂ 1 1 * baseGen DA2 ℂ 0 (DA2.frobOrder 2 0 - r)) :=
   baseGen_frobOrder_mul_baseGen DA2 (by norm_num) hlI hprimI (by decide) (by decide) (by decide)
 
+open scoped TensorProduct in
+/-- [Lus] 35.3.2 (c) for `A₂`, `l = 2`, `λ = 0`: `_ℂ f` is spanned by the products of the
+`θⱼ^{(2)}` modulo the radical of the form of `Λ_0`. -/
+example : Submodule.span ℂ (Submonoid.closure (Set.range fun j ↦ baseGen DA2 ℂ j
+        (DA2.frobOrder 2 j)) : Set (ℂ ⊗[LaurentPolynomial ℤ] LusztigF.quotientIntegralForm DA2)) ⊔
+      frobRad DA2.isXRegular_extendedRootDatum
+        (⟨0, fun _ ↦ le_rfl⟩ : GrandLoop.Dom DA2.extendedRootDatum) ℂ = ⊤ := by
+  refine span_frobWords_sup_frobRad _ _ (by norm_num) hlI hprimI ?_ (by simp)
+  intro i j hij _ a ha
+  have hc : DA2.cartanMatrix i j = -1 := by
+    fin_cases i <;> fin_cases j <;> first | exact absurd rfl hij | decide
+  have hl : DA2.frobOrder 2 i = 2 := by fin_cases i <;> decide
+  omega
+
 end Frobenius35
 
 open scoped TensorProduct in
