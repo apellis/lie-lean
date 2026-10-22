@@ -3087,7 +3087,12 @@ and the canonical bases of `L_q(λ)` and `U̇` follow Lusztig's Ch. 14, 19 and 2
 *Status.* Scheduled 2026-10-22. Done: [Lus] Prop. 7.1.5 (b), the higher-order quantum Serre
 relations `f_{i,j;n,m;e} = 0` in `f` over `ℚ(v)` for `e = ±1`, `m > an`
 (`LusztigF/HigherSerre.lean`: `higherSerre_mem_radical`, `toQuotient_higherSerre`; proved with
-the skew derivations `rₕ` in `'f`, not with commutators in `U`).
+the skew derivations `rₕ` in `'f`, not with commutators in `U`). [Lus] Lemma 34.1.2 (a), (b),
+(c), (e): Gaussian binomials `[a; t]`, `a ∈ ℤ`, at a unit `v` of an integral domain with
+`v^{2l} = 1`, `v^{2t} ≠ 1` for `0 < t < l` (`RootOfUnity/GaussBinomial.lean`:
+`gaussBinom_eq_zero_of_not_dvd`, `gaussBinom_mul_mul`, `gaussBinom_add_mul_add_mul`,
+`pow_sq_add_eq_of_root`; via generating series and the `q`-Vandermonde identity
+`qBinomInt_add`, our argument).
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).

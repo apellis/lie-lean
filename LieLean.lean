@@ -643,6 +643,7 @@ import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.GeneratorPairing
 import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.Isometry
 import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.PBWRecursion
 import LieLean.Algebra.QuantumGroup.RootDatumHom
+import LieLean.Algebra.QuantumGroup.RootOfUnity.GaussBinomial
 import LieLean.Algebra.QuantumGroup.Sl2
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Equivalence
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Uniqueness
