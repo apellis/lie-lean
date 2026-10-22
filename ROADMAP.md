@@ -3194,7 +3194,12 @@ when `lᵢ ≥ 2` and `lᵢ ∣ ⟨i, λ⟩`; `Frobenius/RadicalWords.lean`: `ba
 `_F f = span(words) + frobRad`), under Lusztig's assumption 35.1.2 (a). Towards 35.4.2
 (`Frobenius/PairingRecursion.lean`, our argument): on Frobenius words the form `frobPairBase` is a
 unit times the Shapovalov-type pairing `vermaForm` with Gaussian-binomial coefficients
-(`exists_frobPairBase_eq_vermaForm`, via `dE_smul_frobVec_sub_mem` and [Lus] 3.1.9). Next: `Fr`
+(`exists_frobPairBase_eq_vermaForm`, via `dE_smul_frobVec_sub_mem` and [Lus] 3.1.9); by
+[Lus] 34.1.2 (b) these coefficients are classical ones for `(I, ∘)` twisted by a sign character, so
+for `y` of weight `ν ≤ (⟨i, λ⟩/lᵢ)ᵢ` with `Fr'(y) ∈ frobRad`, `y` maps to zero in `_F f*`
+(`Frobenius/SplittingKernel.lean`: `mem_serreSpan_of_frobSplitHom_mem_frobRad`,
+`quasiClassicalHom_eq_zero_of_frobSplitHom_mem_frobRad`, via
+`LusztigF.mem_serreSpan_of_shapovalovMap_eq_zero_of_sq_eq_one`). Next: `Fr`
 ([Lus] 35.1.7, 35.3.3–35.5) and 31.1.3, 35.1.9.
 
 *Missing prerequisites.*
