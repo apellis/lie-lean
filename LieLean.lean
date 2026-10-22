@@ -65,6 +65,7 @@ import LieLean.Algebra.Lie.KacMoody.CategoryOExtVerma
 import LieLean.Algebra.Lie.KacMoody.CategoryOEulerChar
 import LieLean.Algebra.Lie.KacMoody.CategoryOProjDimension
 import LieLean.Algebra.Lie.KacMoody.CategoryOProjDimensionEq
+import LieLean.Algebra.Lie.KacMoody.CategoryOProjDimensionSimple
 import LieLean.Algebra.Lie.KacMoody.CategoryOProjective
 import LieLean.Algebra.Lie.KacMoody.CategoryOStdFilteredCriterion
 import LieLean.Algebra.Lie.KacMoody.CategoryOSubmodule
@@ -159,6 +160,10 @@ import LieLean.Algebra.Lie.KacMoody.StandardFiltrationSummand
 import LieLean.Algebra.Lie.KacMoody.StrongLinkage
 import LieLean.Algebra.Lie.KacMoody.Super.Enveloping
 import LieLean.Algebra.Lie.KacMoody.Super.Grading
+import LieLean.Algebra.Lie.KacMoody.Super.InvariantForm
+import LieLean.Algebra.Lie.KacMoody.Super.InvariantFormLie
+import LieLean.Algebra.Lie.KacMoody.Super.MaxIdeal
+import LieLean.Algebra.Lie.KacMoody.Super.RootSpace
 import LieLean.Algebra.Lie.KacMoody.Super.TensorRep
 import LieLean.Algebra.Lie.KacMoody.Super.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.Super.Triangular
@@ -238,6 +243,8 @@ import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.KacMoody.VermaSimple
 import LieLean.Algebra.Lie.KacMoody.VermaSocle
+import LieLean.Algebra.Lie.KacMoody.VermaTorsionFree
+import LieLean.Algebra.Lie.KacMoody.VermaAntidominantMultiplicity
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
 import LieLean.Algebra.Lie.KacMoody.WeightBasis
 import LieLean.Algebra.Lie.KacMoody.WeylLength

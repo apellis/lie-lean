@@ -497,12 +497,15 @@ of `Extⁿ` and of the projective dimension of `M(μ)` (`CategoryO.instFiniteExt
 translation functors on `𝒪` (`CategoryO.translationFunctor`, exact and `K`-linear), the adjunction
 (`CategoryO.translationAdj`) and `Extⁿ_𝒪(T X, Y) ≅ Extⁿ_𝒪(X, T' Y)`
 (`CategoryO.extTranslationEquiv`, `KacMoody/CategoryOTranslation.lean`).
-Equality cases of Prop. 6.9 (`KacMoody/CategoryOProjDimensionEq.lean`, `Λ` dominant integral):
-`CategoryO.projectiveDimension_verma_weylDot` (`pd M(w·Λ) = ℓ(w)` for every `w`, via wall-crossing
-sequences) and `CategoryO.projectiveDimension_simple` (`pd L(Λ) = 2ℓ(w₀)`, via dimension shifting
-along the BGG resolution), so the block of `Λ` has global dimension `2ℓ(w₀)`.
-Roadmap items (maintainer decision 2026-10-22, issue #7): [HumO] Prop. 6.15, and
-`pd L(w·Λ) = 2ℓ(w₀) - ℓ(w)` for `w ≠ 1` (via twisting functors).
+Equality cases of Prop. 6.9 (`Λ` dominant integral): `CategoryO.projectiveDimension_verma_weylDot`
+(`pd M(w·Λ) = ℓ(w)` for every `w`, `KacMoody/CategoryOProjDimensionEq.lean`) and
+`CategoryO.projectiveDimension_simple_weylDot` (`pd L(w·Λ) = 2ℓ(w₀) - ℓ(w)` for every `w`,
+`KacMoody/CategoryOProjDimensionSimple.lean`; `projectiveDimension_simple` is `w = 1`), so the
+block of `Λ` has global dimension `2ℓ(w₀)`. Both lower bounds come from wall-crossing: the
+sequences `0 → M(w sᵢ·Λ) → Θ M(w·Λ) → M(w·Λ) → 0` for Verma modules, and for simple modules the
+cokernel of the adjunction morphism `L(w·Λ) → Θ L(w·Λ)`, with descending induction on `ℓ(w)` from
+`L(w₀·Λ) = M(w₀·Λ)` (reconstructed; Humphreys leaves it as an exercise, and no twisting functors
+are needed). Roadmap item (maintainer decision 2026-10-22, issue #7): [HumO] Prop. 6.15.
 Bott's Thm. 6.6 stands in the `𝔫₋`-homology form (Garland–Lepowsky, M13); the `𝔫`-cohomology form
 would need new Lie algebra cohomology infrastructure and is not formalized. Its dimension statement
 `dim H_k(𝔫₋, L(Λ)) = #{w ∈ W | ℓ(w) = k}` holds for every symmetrizable GCM
@@ -1094,14 +1097,21 @@ comparison of Thm. 7.9 instead of Prop. 7.3.
 direction of Thm. 4.8); for antidominant `λ` and a weight `μ` with `λ - μ` integral and `μ + ρ`
 orthogonal to every root integral for `λ`: `nonempty_equiv_projectiveCover_of_singular`
 (`P(λ) ≅ T_μ^λ M(μ)`), Thm. 7.16 (a) `nonempty_equiv_restrictedDual_projectiveCover_of_singular`
-(`P(λ) ≅ P(λ)^∨`) and (b) `multiplicity_verma_weylDot_of_singular`, `count_projectiveCover_of_singular`
-(`[M(w·λ) : L(λ)] = 1`, `(P(λ) : M(w·λ)) = 1` for `w ∈ W_[λ]`); Thm. 4.10 for integral `λ`
-(`μ = -ρ`): `exists_nonempty_equiv_projectiveCover_of_integral`,
-`nonempty_equiv_restrictedDual_projectiveCover_of_integral`, `multiplicity_verma_weylDot_of_integral`.
-Reconstructed via Prop. 7.13 and adjunction. Such a `μ` need not exist for non-integral `λ` (the
-coroots of the integral roots can span a non-saturated sublattice, e.g. type `A₁ × A₁` inside
-`B₂`); Thm. 7.16 for all antidominant `λ` (Irving's wall-crossing argument) remains open.
-*Maybe (future)*: Thm. 7.16 for all antidominant `λ`. Outline: (1) the Coxeter system of the integral Weyl
+(`P(λ) ≅ P(λ)^∨`); Thm. 4.10 for integral `λ` (`μ = -ρ`):
+`exists_nonempty_equiv_projectiveCover_of_integral`,
+`nonempty_equiv_restrictedDual_projectiveCover_of_integral`. Reconstructed via Prop. 7.13 and
+adjunction. Such a `μ` need not exist for non-integral `λ` (the coroots of the integral roots can
+span a non-saturated sublattice, e.g. type `A₁ × A₁` inside `B₂`).
+**Thm. 7.16 (b) for all antidominant `λ`** (`KacMoody/VermaAntidominantMultiplicity.lean`):
+`multiplicity_verma_weylDot_of_isAntidominant` (`[M(w·λ) : L(λ)] = 1` for `w ∈ W_[λ]`),
+`count_projectiveCover_of_isAntidominant` (`(P(λ) : M(w·λ)) = 1` in every standard filtration),
+`multiplicity_verma_le_one_of_isAntidominant` (`[M(ξ) : L(λ)] ≤ 1` for every `ξ`) and the
+integral case `multiplicity_verma_weylDot_of_integral` (Thm. 4.10). Reconstructed: every map
+`P(λ) → M(ξ)` kills the kernel of `P(λ) ↠ L(λ)` because `M(ξ)` is torsion-free over the Ore
+domain `U(𝔫⁻)` (`KacMoody/VermaTorsionFree.lean`, `VermaModule.eq_zero_or_ker_le`) and
+`L(λ) = M(λ)`, so `dim Hom(P(λ), M(ξ)) ≤ dim Hom(M(λ), M(ξ)) ≤ 1`; the socle of `M(w·λ)` gives
+`≥ 1`. Thm. 7.16 (a) for all antidominant `λ` (Irving's wall-crossing argument) remains open.
+*Maybe (future)*: Thm. 7.16 (a) for all antidominant `λ` ((b) is proved above). Outline: (1) the Coxeter system of the integral Weyl
 group `W_[λ]` with its simple integral reflections (Humphreys Thm. 3.4, already formalized as a reflection group,
 needs the simple system and length function); (2) wall-crossing `Θ_s` for simple integral reflections at
 non-integral `λ` (generalize `TranslationWallCrossing` from `W` to `W_[λ]`); (3) injectivity of `P(λ)^∨` in `𝒪`
@@ -3022,9 +3032,28 @@ Chevalley involution `omega` (`ω² = σ`) and `ñ₋ = nMinus = ω(ñ₊)`, the
 commutator (`superBracket_mem_gTilde`), `ñ₊ ⊆ ⨁_{α ∈ Q₊ \ 0} U_α` and `ñ₋ ⊆ ⨁ U_{-α}`
 (`nPlus_le_iSup_weightSpace`, `nMinus_le_iSup_weightSpace`), `G̃ ∩ U_0 = 𝔥`
 (`gTilde_inf_weightSpace_zero`) and `[ñ₊ ∩ U_α, ñ₋ ∩ U_{-α}] ⊆ 𝔥` (`superBracket_mem_range_h`).
+The maximal ideal `R` meeting `𝔥` trivially (`Super/MaxIdeal.lean`, `maxIdeal`; ideals of `G̃` as
+subspaces `I ⊆ G̃` with `[G̃, I] ⊆ I`, `IsIdeal`): `isIdeal_maxIdeal`, `maxIdeal_inf_range_h`,
+`le_maxIdeal`, and `σ(R) ⊆ R` (`parity_mem_maxIdeal`).
+The bilinear form on `G̃` (`Super/InvariantForm.lean`, towards Kac78 Prop. 1.5): weight
+rescalings `wScale`, the projection `hComp : G̃ → 𝔥`, the form
+`(x | y) = (π₀x | π₀y) + (π₀[D x, y] | ρ^∨)` (`invForm`, `D = degInv` dividing by `⟨μ, ρ^∨⟩` on
+`U_μ`), vanishing off opposite weights (`invForm_eq_zero`), supersymmetry
+`(y | x) = (-1)^{|x||y|}(x | y)` (`invForm_swap`), `(eᵢ | fⱼ) = δᵢⱼ εᵢ` (`invForm_e_f`), and the
+statement `[x, y] = (x | y) ν⁻¹(μ)` on `G̃_μ × G̃_{-μ}` (`LieEqForm`, closed under `μ ↦ -μ`).
+Root spaces (`Super/RootSpace.lean`): `G̃_α`, `α ∈ Q₊ \ {0}`, is spanned by the iterated super
+commutators of weight `α` (`gTilde_inf_weightSpace_rootOf`); `G̃_{αᵢ} = K eᵢ`,
+`G̃_{2αᵢ} = K [eᵢ, eᵢ]` and `G̃_{mαᵢ} = 0` for `m ≥ 3` (`mem_weightSpace_root`,
+`mem_weightSpace_two_root`, `eq_zero_of_mem_weightSpace_nsmul_root`).
+`C_μ` for every `μ` (`Super/InvariantFormLie.lean`, `lieEqForm`: `[x, y] = (x | y) ν⁻¹(μ)` on
+`G̃_μ × G̃_{-μ}`), by induction on the height as in [Kac] Thm. 2.2, with the super Jacobi identity;
+invariance `(x | [y, z]) = ([x, y] | z)` for triples whose middle element has weight `±αₖ`
+(`invTriple_of_root`; the repeated odd generator case uses `G̃_{±2αₖ} = K [eₖ, eₖ]`).
+Kac78 Prop. 1.5: the form is invariant on `G̃` (`invForm_superBracket`) and its radical is `R`
+(`invForm_eq_zero_of_mem_maxIdeal`, `mem_maxIdeal_iff`).
 Remaining: the super Gabber–Kac theorem (the maximal ideal
 `R` is generated by the Serre elements, needed for the quantum comparison); rank-one integrability and `W`-invariance
-(Kac78 Lemma 1.2, Prop. 2.3); invariant form (Prop. 1.5) and Casimir (Prop. 2.7); Thm. 1, Thm. 2.
+(Kac78 Lemma 1.2, Prop. 2.3); Casimir (Prop. 2.7); Thm. 1, Thm. 2.
 
 ## Deferred and scheduled items
 

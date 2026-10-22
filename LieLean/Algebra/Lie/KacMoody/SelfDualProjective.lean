@@ -15,10 +15,11 @@ Humphreys, GSM 94, Theorem 7.16 and Theorem 4.10: for `λ` antidominant, `P(λ) 
 standard filtration of `P(λ)` contains each `M(w·λ)`, `w ∈ W_[λ]`, exactly once; equivalently
 `[M(w·λ) : L(λ)] = 1`.
 
-Here this is proved whenever there is a weight `μ` with `λ - μ` integral such that `μ + ρ` is
-orthogonal to every root `β` with `⟨λ + ρ, β^∨⟩ ∈ ℤ`. Then `P(λ) ≅ T_μ^λ M(μ)`, with `M(μ)` simple
-and projective. Such a `μ` exists for integral `λ` (`μ = -ρ`, Theorem 4.10), and more generally
-when the coroots of the integral roots of `λ` span a saturated sublattice of the coroot lattice.
+Here self-duality is proved whenever there is a weight `μ` with `λ - μ` integral such that
+`μ + ρ` is orthogonal to every root `β` with `⟨λ + ρ, β^∨⟩ ∈ ℤ`. Then `P(λ) ≅ T_μ^λ M(μ)`, with
+`M(μ)` simple and projective. Such a `μ` exists for integral `λ` (`μ = -ρ`, Theorem 4.10), and
+more generally when the coroots of the integral roots of `λ` span a saturated sublattice of the
+coroot lattice.
 For arbitrary antidominant `λ`, Humphreys follows Irving's argument with wall-crossing functors;
 that general case is not formalized here.
 
@@ -30,18 +31,17 @@ that general case is not formalized here.
   `P(λ) ≅ T_μ^λ M(μ)`.
 * `Matrix.Realization.KacMoodyAlgebra.nonempty_equiv_restrictedDual_projectiveCover_of_singular`:
   `P(λ) ≅ P(λ)^∨` (Theorem 7.16 (a)).
-* `Matrix.Realization.KacMoodyAlgebra.multiplicity_verma_weylDot_of_singular`,
-  `Matrix.Realization.KacMoodyAlgebra.count_projectiveCover_of_singular`: Theorem 7.16 (b).
 * `Matrix.Realization.KacMoodyAlgebra.exists_nonempty_equiv_projectiveCover_of_integral`,
-  `Matrix.Realization.KacMoodyAlgebra.nonempty_equiv_restrictedDual_projectiveCover_of_integral`,
-  `Matrix.Realization.KacMoodyAlgebra.multiplicity_verma_weylDot_of_integral`: Theorem 4.10.
+  `Matrix.Realization.KacMoodyAlgebra.nonempty_equiv_restrictedDual_projectiveCover_of_integral`:
+  Theorem 4.10. The multiplicity statements (Theorem 7.16 (b), Theorem 4.10) hold for every
+  antidominant `λ`; they are proved in `VermaAntidominantMultiplicity.lean`.
 
 ## Proof
 
 `P(λ) ≅ T_μ^λ M(μ)` follows from Proposition 7.13 (`w = 1`), where the weight `x·λ` produced there
 is `λ`: `dim Hom(T_μ^λ M(μ), M(y·λ)) = dim Hom(M(μ), T_λ^μ M(y·λ)) = dim End M(μ) = 1` for
 `y ∈ W_[λ]` (adjunction, Theorem 7.6 and `y·μ = μ`), so `[M(λ) : L(x·λ)] = 1`, forcing
-`x·λ = λ` by antidominance; the same computation with Theorem 3.9 (c) gives (b). Self-duality
+`x·λ = λ` by antidominance. Self-duality
 follows from `(T M)^∨ ≅ T(M^∨)` (Proposition 7.1) and `M(μ) ≅ L(μ) ≅ L(μ)^∨`. Reconstructed.
 
 ## References
@@ -331,43 +331,6 @@ theorem nonempty_equiv_projectiveCover_of_singular
   exact ⟨e⟩
 
 include hA in
-/-- **Humphreys, GSM 94, Theorem 7.16 (b)**, multiplicity form, under the hypotheses of
-`nonempty_equiv_projectiveCover_of_singular`: `[M(y·λ) : L(λ)] = 1` for every `y ∈ W_[λ]`. -/
-theorem multiplicity_verma_weylDot_of_singular
-    (hlam : P.IsAntidominant hA.isGeneralizedCartan lam)
-    (hsing : ∀ v i, P.IsPosRoot hA.isGeneralizedCartan v i → ∀ n : ℤ,
-      P.corootPairing hA.isGeneralizedCartan (lam + P.rho) v i = n →
-        P.corootPairing hA.isGeneralizedCartan (μ + P.rho) v i = 0)
-    (hν : P.IsDominantIntegral ν) (hz : z ∈ P.weylGroup hA.isGeneralizedCartan)
-    (hzν : z (lam - μ) = ν) {y : P.weylGroup hA.isGeneralizedCartan}
-    (hy : y ∈ P.integralWeylGroup hA.isGeneralizedCartan lam) :
-    (VermaModule.isCategoryO P (P.weylDot hA.isGeneralizedCartan y lam)).multiplicity lam = 1 := by
-  obtain ⟨e⟩ := nonempty_equiv_projectiveCover_of_singular P hA hlam hsing hν hz hzν
-  obtain ⟨-, hdim⟩ := finrank_hom_translation_verma_of_singular P hA hlam hsing hν hz hzν hy
-  have h1 := ProjectiveCover.finrank_hom_eq_multiplicity (P := P) (hA := hA) (Λ := lam)
-    (VermaModule.isCategoryO P (P.weylDot hA.isGeneralizedCartan y lam))
-  rw [(lieModuleHomCongr P e (LieModuleEquiv.refl)).finrank_eq, hdim] at h1
-  exact h1.symm
-
-include hA in
-/-- **Humphreys, GSM 94, Theorem 7.16 (b)**, under the hypotheses of
-`nonempty_equiv_projectiveCover_of_singular`: every standard filtration of `P(λ)` contains each
-`M(y·λ)`, `y ∈ W_[λ]`, exactly once. -/
-theorem count_projectiveCover_of_singular [DecidableEq (Dual K H)]
-    (hlam : P.IsAntidominant hA.isGeneralizedCartan lam)
-    (hsing : ∀ v i, P.IsPosRoot hA.isGeneralizedCartan v i → ∀ n : ℤ,
-      P.corootPairing hA.isGeneralizedCartan (lam + P.rho) v i = n →
-        P.corootPairing hA.isGeneralizedCartan (μ + P.rho) v i = 0)
-    (hν : P.IsDominantIntegral ν) (hz : z ∈ P.weylGroup hA.isGeneralizedCartan)
-    (hzν : z (lam - μ) = ν) {t : Multiset (Dual K H)}
-    (ht : IsStdFiltered P (⊤ : LieSubmodule K 𝔤 (ProjectiveCover P hA lam)) t)
-    {y : P.weylGroup hA.isGeneralizedCartan}
-    (hy : y ∈ P.integralWeylGroup hA.isGeneralizedCartan lam) :
-    t.count (P.weylDot hA.isGeneralizedCartan y lam) = 1 := by
-  rw [ProjectiveCover.count_eq_multiplicity P lam hA ht]
-  exact multiplicity_verma_weylDot_of_singular P hA hlam hsing hν hz hzν hy
-
-include hA in
 /-- **Humphreys, GSM 94, Theorem 7.16 (a)**, under the hypotheses of
 `nonempty_equiv_projectiveCover_of_singular`: `P(λ)` is self-dual, `P(λ) ≅ P(λ)^∨`. -/
 theorem nonempty_equiv_restrictedDual_projectiveCover_of_singular
@@ -444,22 +407,6 @@ theorem nonempty_equiv_restrictedDual_projectiveCover_of_integral
   obtain ⟨z, hz, hν⟩ := exists_isDominantIntegral_of_integral P hA hlam hint
   exact nonempty_equiv_restrictedDual_projectiveCover_of_singular P hA (μ := -P.rho) hlam
     (fun v i _ _ _ ↦ by simp [Matrix.Realization.corootPairing]) hν hz (by rw [sub_neg_eq_add])
-
-include hA in
-/-- **Humphreys, GSM 94, Theorem 4.10**, multiplicities: for `λ` antidominant with `λ + ρ`
-integral, `[M(w·λ) : L(λ)] = 1` for every `w ∈ W`, so every standard filtration of `P(λ)` contains
-each `M(w·λ)` exactly once. -/
-theorem multiplicity_verma_weylDot_of_integral
-    (hlam : P.IsAntidominant hA.isGeneralizedCartan lam)
-    (hint : ∀ j, ∃ n : ℤ, (lam + P.rho) (P.coroot j) = n) (w : P.weylGroup hA.isGeneralizedCartan) :
-    (VermaModule.isCategoryO P (P.weylDot hA.isGeneralizedCartan w lam)).multiplicity lam = 1 := by
-  obtain ⟨z, hz, hν⟩ := exists_isDominantIntegral_of_integral P hA hlam hint
-  refine multiplicity_verma_weylDot_of_singular P hA (μ := -P.rho) hlam
-    (fun v i _ _ _ ↦ by simp [Matrix.Realization.corootPairing]) hν hz (by rw [sub_neg_eq_add]) ?_
-  rw [P.integralWeylGroup_eq_of_integral hA.isGeneralizedCartan (μ' := lam + P.rho)
-    fun j ↦ ⟨-1, by simp⟩, mem_integralWeylGroup, mem_rootLattice]
-  obtain ⟨k, hk⟩ := P.exists_apply_eq_add_rootOf hA.isGeneralizedCartan w.2 hint
-  exact ⟨k, by rw [hk, add_sub_cancel_left]⟩
 
 end Integral
 
