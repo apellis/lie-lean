@@ -213,10 +213,10 @@ theorem exists_mul_fEnv_pow_eq [IsAlgClosed K] [FiniteDimensional K H]
     exact h0
   set W := primitiveVectors P (VermaModule P μ) ν
   have : FiniteDimensional K W := by
-    haveI := finiteDimensional_weightSpace P μ ν
+    have := finiteDimensional_weightSpace P μ ν
     exact Submodule.finiteDimensional_of_le inf_le_left
   have h1 : finrank K W ≤ 1 := by
-    rw [← finrank_hom (V := VermaModule P μ)]
+    rw [← finrank_hom (P := P) (V := VermaModule P μ)]
     exact finrank_hom_le_one_of_finite_type P hfin S μ ν
   have hmemψ : ι' (φ₁ (hwv P ν)) ∈ W :=
     map_mem_primitiveVectors ι' (map_hwv_mem_primitiveVectors P φ₁)

@@ -113,10 +113,10 @@ theorem eq_of_corootPairing_eq [IsAlgClosed K] [FiniteDimensional K H] (hfin : A
   obtain ⟨S⟩ := isSymmetrizable_iff_nonempty_symmetrization.mp hfin.isSymmetrizable
   set W := primitiveVectors P (VermaModule P Λ) (Λ - r • P.rootOf fun j ↦ (a j : ℤ))
   have : FiniteDimensional K W := by
-    haveI := finiteDimensional_weightSpace P Λ (Λ - r • P.rootOf fun j ↦ (a j : ℤ))
+    have := finiteDimensional_weightSpace P Λ (Λ - r • P.rootOf fun j ↦ (a j : ℤ))
     exact Submodule.finiteDimensional_of_le inf_le_left
   have h1 : finrank K W ≤ 1 := by
-    rw [← finrank_hom (V := VermaModule P Λ)]
+    rw [← finrank_hom (P := P) (V := VermaModule P Λ)]
     exact finrank_hom_le_one_of_finite_type P hfin S Λ _
   obtain ⟨w₀, hw₀⟩ := finrank_le_one_iff.mp h1
   obtain ⟨c, hc⟩ := hw₀ ⟨_, h.equivEnvNNeg_mem_primitiveVectors hΛ⟩
@@ -151,7 +151,7 @@ theorem exists_sub_eq_smul [IsAlgClosed K] [FiniteDimensional K H] (hfin : A.IsF
   let φ : Dual K (Dual K H) := (Dual.eval K H (P.coroot i)).comp
     ((v⁻¹ : P.weylGroup hA) : Dual K H ≃ₗ[K] Dual K H).toLinearMap
   obtain ⟨b, hb⟩ : ∃ b : H, ∀ Λ : Dual K H, Λ b = P.corootPairing hA Λ v i :=
-    ⟨(Module.evalEquiv K H).symm φ, fun Λ ↦ Module.apply_evalEquiv_symm_apply Λ φ⟩
+    ⟨(Module.evalEquiv K H).symm φ, fun Λ ↦ Module.apply_evalEquiv_symm_apply K H Λ φ⟩
   obtain ⟨c, hc⟩ : ∃ c : K, c = P.corootPairing hA P.rho v i - r := ⟨_, rfl⟩
   have hbc : ∀ Λ : Dual K H, Λ b + c = P.corootPairing hA (Λ + P.rho) v i - r := by
     intro Λ
