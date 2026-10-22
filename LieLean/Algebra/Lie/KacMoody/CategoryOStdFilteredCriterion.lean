@@ -119,7 +119,7 @@ theorem isStdFiltered_of_ext_one (X : CategoryO.{u} P) (N : LieSubmodule K 𝔤 
   have hY : ¬ Subsingleton Y.obj := by
     intro hsub
     refine h0 (eq_bot_iff.mpr fun x hx ↦ ?_)
-    have h1 : ofLieEquiv (P := P) N ⟨x, hx⟩ = 0 := Subsingleton.elim _ _
+    have h1 : ofLieEquiv (P := P) N ⟨x, hx⟩ = 0 := @Subsingleton.elim _ hsub _ _
     rw [LieSubmodule.mem_bot]
     exact congrArg Subtype.val ((ofLieEquiv (P := P) N).injective
       (h1.trans (map_zero (ofLieEquiv (P := P) N)).symm))
@@ -188,10 +188,10 @@ theorem tfae_isStdFiltered (X : CategoryO.{u} P) :
   tfae_have 1 → 2 := fun ⟨s, hs⟩ lam n hn x ↦ ext_dualVerma_eq_zero_of_isStdFiltered X hs lam hn x
   tfae_have 2 → 3 := fun h lam x ↦ h lam 1 Nat.one_pos x
   tfae_have 3 → 1 := fun h ↦ isStdFiltered_of_ext_one X ⊤ fun lam ↦
-    ext_eq_zero_of_equiv_left (Y := X) (LieModuleEquiv.ofBijective
+    ext_eq_zero_of_equiv_left (Y := X) ((LieModuleEquiv.ofBijective
       (⊤ : LieSubmodule K 𝔤 X.obj).incl
       ⟨Subtype.val_injective, fun y ↦ ⟨⟨y, LieSubmodule.mem_top y⟩, rfl⟩⟩).symm.trans
-      (ofLieEquiv (P := P) (⊤ : LieSubmodule K 𝔤 X.obj)) (h lam)
+      (ofLieEquiv (P := P) (⊤ : LieSubmodule K 𝔤 X.obj))) (h lam)
   tfae_finish
 
 end CategoryO
