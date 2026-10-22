@@ -96,7 +96,7 @@ theorem weightSpace_eq_bot_of_equiv {M M' : Type*} [AddCommGroup M] [Module K M]
     weightSpace P M' ρ = ⊥ := by
   rw [eq_bot_iff]
   intro v hv
-  have hv' := map_mem_weightSpaceOfMap P e.symm.toLieModuleHom hv
+  have hv' : e.symm v ∈ weightSpace P M ρ := map_mem_weightSpaceOfMap P e.symm.toLieModuleHom hv
   rw [h, Submodule.mem_bot] at hv'
   rw [Submodule.mem_bot, ← e.apply_symm_apply v]
   change e (e.symm v) = 0
@@ -126,7 +126,8 @@ def simple (lam : Dual K H) : CategoryO.{u} P :=
 def ofSubquotient (X : CategoryO.{u} P) (N N' : LieSubmodule K 𝔤 X.obj) : CategoryO.{u} P :=
   mk (N.Subquotient N') ((X.property.1.lieSubmodule N').quotient _) (by
     classical
-    obtain ⟨S, hS⟩ := (ofSub X N').property.2
+    obtain ⟨S, hS⟩ : ∃ S : Finset (ofLie P N'),
+        LieSubmodule.lieSpan K 𝔤 (S : Set (ofLie P N')) = ⊤ := (ofSub X N').property.2
     refine ⟨S.image ((LieSubmodule.Quotient.mk' _).comp
       (ofLieEquiv (P := P) N').symm.toLieModuleHom), ?_⟩
     rw [Finset.coe_image]
@@ -139,14 +140,12 @@ def toSubquotient (X : CategoryO.{u} P) (N N' : LieSubmodule K 𝔤 X.obj) :
     N' →ₗ⁅K,𝔤⁆ (ofSubquotient X N N').obj :=
   (ofLieEquiv (P := P) (N.Subquotient N')).toLieModuleHom.comp (LieSubmodule.Quotient.mk' _)
 
-omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem toSubquotient_eq_zero_iff (X : CategoryO.{u} P) (N N' : LieSubmodule K 𝔤 X.obj)
     (y : N') : toSubquotient X N N' y = 0 ↔ (y : X.obj) ∈ N := by
   change (LieSubmodule.Quotient.mk' (N.comap N'.incl) y : N.Subquotient N') = 0 ↔ _
   rw [LieSubmodule.Quotient.mk_eq_zero]
   rfl
 
-omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem surjective_toSubquotient (X : CategoryO.{u} P) (N N' : LieSubmodule K 𝔤 X.obj) :
     Function.Surjective (toSubquotient X N N') :=
   (ofLieEquiv (P := P) (N.Subquotient N')).surjective.comp
@@ -159,11 +158,14 @@ def toSimple (lam : Dual K H) (Z : CategoryO.{u} P)
   e.symm.toLieModuleHom.comp ((LieSubmodule.Quotient.mk' _).comp
     (ofLieEquiv (P := P) (VermaModule P lam)).symm.toLieModuleHom)
 
-omit [IsAlgClosed K] in
+omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem surjective_toSimple (lam : Dual K H) (Z : CategoryO.{u} P)
-    (e : Z.obj ≃ₗ⁅K,𝔤⁆ IrreducibleModule P lam) : Function.Surjective (toSimple P lam Z e) :=
-  e.symm.surjective.comp ((LieSubmodule.Quotient.surjective_mk' _).comp
-    (ofLieEquiv (P := P) (VermaModule P lam)).symm.surjective)
+    (e : Z.obj ≃ₗ⁅K,𝔤⁆ IrreducibleModule P lam) : Function.Surjective (toSimple P lam Z e) := by
+  intro z
+  obtain ⟨m, hm⟩ := LieSubmodule.Quotient.surjective_mk' (VermaModule.maxSubmodule P lam) (e z)
+  refine ⟨ofLieEquiv (P := P) (VermaModule P lam) m, ?_⟩
+  change e.symm (LieSubmodule.Quotient.mk' (VermaModule.maxSubmodule P lam) m) = z
+  rw [hm, LieModuleEquiv.symm_apply_apply]
 
 /-! ### `Ext` along local composition series -/
 
@@ -228,7 +230,8 @@ theorem ext_simple_eq_zero_aux (μ : Dual K H) (d : ℕ) : ∀ (lam : Dual K H) 
     refine ⟨by rw [hmult]; omega, ?_⟩
     rintro rfl
     have h := hmult κ
-    rw [VermaModule.multiplicity_self, IrreducibleModule.multiplicity_eq, if_pos rfl] at h
+    rw [VermaModule.multiplicity_self, IrreducibleModule.multiplicity_eq,
+      ite_cond_eq_true _ _ (eq_self κ)] at h
     omega
   refine Abelian.Ext.eq_zero_of_shortExact_right_succ (shortExact_kerComplex (verma P lam) Z φ hφ)
     (ext_verma_eq_zero hμ (Nat.succ_pos n)) ?_
