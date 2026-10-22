@@ -159,6 +159,7 @@ import LieLean.Algebra.Lie.KacMoody.StandardFiltrationSummand
 import LieLean.Algebra.Lie.KacMoody.StrongLinkage
 import LieLean.Algebra.Lie.KacMoody.Super.Enveloping
 import LieLean.Algebra.Lie.KacMoody.Super.Grading
+import LieLean.Algebra.Lie.KacMoody.Super.MaxIdeal
 import LieLean.Algebra.Lie.KacMoody.Super.TensorRep
 import LieLean.Algebra.Lie.KacMoody.Super.Auxiliary
 import LieLean.Algebra.Lie.KacMoody.Super.Triangular
