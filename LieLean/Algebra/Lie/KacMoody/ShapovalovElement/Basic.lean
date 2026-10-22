@@ -147,7 +147,8 @@ lemma ne_zero {θ : Dual K H → 𝒰⁻} (h : IsShapovalovElement P hA v i r a 
   HasSymbol.ne_zero (h.hasSymbol hpos Λ) (prod_fSym_ne_zero (P := P) r a)
 
 /-- A Shapovalov element only depends on the coroot pairing `⟨-, γ^∨⟩`. -/
-lemma of_corootPairing_eq {θ : Dual K H → 𝒰⁻} {v' : P.weylGroup hA} {i' : ι}
+lemma of_corootPairing_eq {θ : Dual K H → 𝒰⁻} {v' : P.weylGroup hA}
+    {i' : ι}
     (h : IsShapovalovElement P hA v i r a θ)
     (hc : ∀ x, P.corootPairing hA x v' i' = P.corootPairing hA x v i) :
     IsShapovalovElement P hA v' i' r a θ where
