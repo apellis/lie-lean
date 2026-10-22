@@ -499,6 +499,17 @@ translation functors on `𝒪` (`CategoryO.translationFunctor`, exact and `K`-li
 (`CategoryO.extTranslationEquiv`, `KacMoody/CategoryOTranslation.lean`).
 Roadmap items (maintainer decision 2026-10-22, issue #7): [HumO] Prop. 6.15, and the equality
 cases of Prop. 6.9 (`pd M(w·Λ) = ℓ(w)`, `pd L(w·Λ) = 2ℓ(w₀) - ℓ(w)`, global dimension `2ℓ(w₀)`).
+Bott's Thm. 6.6 stands in the `𝔫₋`-homology form (Garland–Lepowsky, M13); the `𝔫`-cohomology form
+would need new Lie algebra cohomology infrastructure and is not formalized. Its dimension statement
+`dim H_k(𝔫₋, L(Λ)) = #{w ∈ W | ℓ(w) = k}` holds for every symmetrizable GCM
+(`IrreducibleModule.finrank_homology`, `KacMoody/Kostant/Dimension.lean`).
+Prop. 7.8 done (`KacMoody/TranslationGrothendieck.lean`; finite type, algebraically closed
+characteristic-zero field, arbitrary antidominant `λ, μ` with the same positive roots orthogonal to
+`λ + ρ` and `μ + ρ`): `translationClassMap` (`e^{x·λ} ↦ e^{x·μ}` on the completed Grothendieck
+group), `multiplicities_translation_of_sameFacet` (`[T_λ^μ V] = translationClassMap λ μ [V]`),
+`translationClassMap_exp`, `translationClassMap_verma`, the inverse
+`translationClassMap_translationClassMap`, and `translation_irreducible_of_sameFacet_of_isAntidominant`
+(`T_λ^μ L(w·λ) ≅ L(w·μ)` for all `w ∈ W`).
 
 Thm. 4.12 (Shapovalov elements) done: `KacMoody/ShapovalovElement/` defines
 `IsShapovalovElement` (polynomial families `λ ↦ θ(λ) ∈ U(𝔫⁻)_{-rγ}` with the maximal-vector
