@@ -134,7 +134,8 @@ variable {hA : A.IsGeneralizedCartan} {v : P.weylGroup hA} {i : ι} {r : ℕ} {a
 
 /-- The symbol of `θ(λ)` in degree `r ∑ aⱼ` is `∏ⱼ [yⱼ]^{r aⱼ}`. -/
 lemma hasSymbol {θ : Dual K H → 𝒰⁻} (h : IsShapovalovElement P hA v i r a θ)
-    (hpos : 0 < r * ∑ j, a j) (Λ : Dual K H) : HasSymbol (r * ∑ j, a j) (∏ j, fSym P j ^ (r * a j)) (θ Λ) := by
+    (hpos : 0 < r * ∑ j, a j) (Λ : Dual K H) :
+    HasSymbol (r * ∑ j, a j) (∏ j, fSym P j ^ (r * a j)) (θ Λ) := by
   obtain ⟨d, hd⟩ := Nat.exists_eq_add_one_of_ne_zero hpos.ne'
   have h1 : HasSymbol (d + 1) (∏ j, fSym P j ^ (r * a j)) (shapovalovLead P r a) :=
     (hasSymbol_shapovalovLead r a).congr_deg hd
