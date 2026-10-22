@@ -506,6 +506,7 @@ import LieLean.Algebra.QuantumGroup.LusztigF.Bar
 import LieLean.Algebra.QuantumGroup.LusztigF.BarQuotient
 import LieLean.Algebra.QuantumGroup.LusztigF.BraidIntersection
 import LieLean.Algebra.QuantumGroup.LusztigF.QuotientComul
+import LieLean.Algebra.QuantumGroup.LusztigF.QuotientGrading
 import LieLean.Algebra.QuantumGroup.PositiveComul
 import LieLean.Algebra.QuantumGroup.LusztigF.Basic
 import LieLean.Algebra.QuantumGroup.LusztigF.Comul
