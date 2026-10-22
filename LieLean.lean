@@ -482,6 +482,8 @@ import LieLean.Algebra.QuantumGroup.Faithful
 import LieLean.Algebra.QuantumGroup.Frobenius.CartanDatum
 import LieLean.Algebra.QuantumGroup.Frobenius.DividedPowerCommutation
 import LieLean.Algebra.QuantumGroup.Frobenius.Generators
+import LieLean.Algebra.QuantumGroup.Frobenius.HighestWeight
+import LieLean.Algebra.QuantumGroup.Frobenius.RadicalWords
 import LieLean.Algebra.QuantumGroup.Frobenius.SerreIdentity
 import LieLean.Algebra.QuantumGroup.Frobenius.Splitting
 import LieLean.Algebra.QuantumGroup.Frobenius.SplittingGeneral
