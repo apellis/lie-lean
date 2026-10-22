@@ -2989,6 +2989,22 @@ highest-weight modules `L_q(λ)` and equality of characters with `L(λ)` for `λ
 integral; Lusztig's canonical basis / Kashiwara's global basis (proved for `f`, `L_q(λ)` and
 `U̇`; see "Global basis of `f`" under "Status and open threads").
 
+### M16. Contragredient Lie superalgebras  `[~]`  ([Kac78])
+
+**[Kac78]** V. G. Kac, *Infinite-dimensional algebras, Dedekind's η-function, classical Möbius
+function and the very strange formula*, Adv. Math. **30** (1978), 85–136. Tracking issue #312.
+
+Target: Kac78 Thm. 1 (character formula for integrable highest-weight modules of `G(A, τ)`,
+`A` symmetrizable, `aᵢⱼ` even for `i ∈ τ`) and Thm. 2 (a) denominator identity, (c)
+`L(Λ) = M(Λ)/Σ U fᵢ^{Λ(hᵢ)+1} v_Λ`. The Weyl group and `ρ` are those of `A`, so with M8 this
+gives `ch L_{G(A,τ)}(Λ) = ch L_{𝔤(A)}(Λ)`. Mathlib has no Lie superalgebras: the encoding works in
+the enveloping algebra of `G̃(A, τ)`.
+
+Done: `Matrix.Realization.SuperEnveloping` (`KacMoody/Super/Enveloping.lean`; generators,
+super-commutator relations, `lift`, `hom_ext`), `Matrix.IsSuperAdmissible`.
+Remaining: triangular decomposition and Verma modules; rank-one integrability and `W`-invariance
+(Kac78 Lemma 1.2, Prop. 2.3); invariant form (Prop. 1.5) and Casimir (Prop. 2.7); Thm. 1, Thm. 2.
+
 ## Deferred and scheduled items
 
 D2 is deferred (maintainer decision 2026-10-14): do not start it until the maintainer schedules
