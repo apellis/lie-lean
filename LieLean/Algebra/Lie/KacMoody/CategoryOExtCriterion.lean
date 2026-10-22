@@ -81,6 +81,7 @@ variable {ι H K : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K] [
   [AddCommGroup Q] [Module K Q] [LieRingModule P.KacMoodyAlgebra Q]
   [LieModule K P.KacMoodyAlgebra Q]
 
+omit [LieModule K P.KacMoodyAlgebra Y] in
 /-- A morphism `Y → Q` into a noetherian module in `𝒪` vanishes if every morphism from `Y` to a
 composition factor `L(ν)` of `Q` does: a nonzero morphism maps onto a simple quotient of its
 image. -/
@@ -124,6 +125,7 @@ local notation "𝔤" => KacMoodyAlgebra P
 
 /-! ### Morphisms and `Ext` along isomorphisms -/
 
+omit [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 /-- A morphism in `𝒪` vanishes if every morphism of the underlying `𝔤`-modules does. -/
 theorem hom_eq_zero_of_lie {Y Z : CategoryO.{u} P} (h : ∀ φ : Y.obj →ₗ⁅K,𝔤⁆ Z.obj, φ = 0)
     (f : Y ⟶ Z) : f = 0 := by
@@ -202,7 +204,6 @@ theorem toQuotient_eq_zero_iff (X : CategoryO.{u} P) (N : LieSubmodule K 𝔤 X.
     toQuotient X N x = 0 ↔ x ∈ N := by
   change (LieSubmodule.Quotient.mk' N x : X.obj ⧸ N) = 0 ↔ _
   rw [LieSubmodule.Quotient.mk_eq_zero]
-  rfl
 
 omit [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem surjective_toQuotient (X : CategoryO.{u} P) (N : LieSubmodule K 𝔤 X.obj) :
@@ -216,7 +217,6 @@ def simpleToDualVerma (μ : Dual K H) : IrreducibleModule P μ →ₗ⁅K,𝔤�
   (ofLieEquiv (P := P) (restrictedDual P (VermaModule P μ))).toLieModuleHom.comp
     (IrreducibleModule.toRestrictedDual P μ)
 
-omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem injective_simpleToDualVerma (μ : Dual K H) :
     Function.Injective (simpleToDualVerma (P := P) μ) :=
   (ofLieEquiv (P := P) (restrictedDual P (VermaModule P μ))).injective.comp
@@ -243,7 +243,7 @@ theorem ext_one_simple_eq_zero (Y : CategoryO.{u} P) (μ : Dual K H)
       obtain ⟨m, hm⟩ := (hker y).mp y.2
       exact ⟨m, Subtype.ext hm⟩⟩
   have hS := shortExact_kerComplex D Q φ hφ
-  refine ext_eq_zero_of_equiv_right
+  refine ext_eq_zero_of_equiv_right (Z := ofSub D φ.ker)
     ((ofLieEquiv (P := P) φ.ker).symm.trans (eK.symm.trans e.symm)) ?_ x
   refine Abelian.Ext.eq_zero_of_shortExact_right_of_hom hS hdual fun f ↦ ?_
   -- `Hom(Y, Q) = 0`: the composition factors `L(ν)` of `Q` have `ν < μ`
