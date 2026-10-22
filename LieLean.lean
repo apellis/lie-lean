@@ -54,6 +54,7 @@ import LieLean.Algebra.Lie.KacMoody.CasimirForm
 import LieLean.Algebra.Lie.KacMoody.CasimirIrreducible
 import LieLean.Algebra.Lie.KacMoody.CategoryO
 import LieLean.Algebra.Lie.KacMoody.CategoryOAbelian
+import LieLean.Algebra.Lie.KacMoody.CategoryODelorme
 import LieLean.Algebra.Lie.KacMoody.CategoryOExt
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtCriterion
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtDualVerma
