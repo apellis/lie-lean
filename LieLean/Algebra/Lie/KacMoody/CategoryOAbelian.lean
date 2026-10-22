@@ -203,13 +203,12 @@ def directSumEquivPi {J : Type} [Fintype J] (M : J → ModuleCat.{w} 𝓤) :
   map_smul' c m := funext fun j ↦ DFinsupp.smul_apply c m j
   map_lie' {x m} := funext fun j ↦ DirectSum.lie_module_bracket_apply x m j
 
-variable {J : Type} [Finite J] (M : J → ModuleCat.{w} 𝓤)
-
-lemma isCategoryO_piObj (hM : ∀ j, IsCategoryO P (M j)) : IsCategoryO P (piObj M) := by
+lemma isCategoryO_piObj {J : Type} [Finite J] (M : J → ModuleCat.{w} 𝓤)
+    (hM : ∀ j, IsCategoryO P (M j)) : IsCategoryO P (piObj M) := by
   have := Fintype.ofFinite J
   exact (IsCategoryO.directSum _ hM).of_equiv (directSumEquivPi M)
 
-lemma exists_finset_lieSpan_piObj_eq_top
+lemma exists_finset_lieSpan_piObj_eq_top {J : Type} [Finite J] (M : J → ModuleCat.{w} 𝓤)
     (hM : ∀ j, ∃ S : Finset (M j), LieSubmodule.lieSpan K 𝔤 (S : Set (M j)) = ⊤) :
     ∃ S : Finset (piObj M), LieSubmodule.lieSpan K 𝔤 (S : Set (piObj M)) = ⊤ := by
   classical
@@ -221,10 +220,11 @@ lemma exists_finset_lieSpan_piObj_eq_top
     (directSumEquivPi (P := P) M).surjective hT
 
 /-- A finite product of modules in `𝒪` lies in `𝒪`. -/
-theorem isObj_pi (hM : ∀ j, IsObj P (M j)) : IsObj P (piObj M) :=
+theorem isObj_pi {J : Type} [Finite J] (M : J → ModuleCat.{w} 𝓤)
+    (hM : ∀ j, IsObj P (M j)) : IsObj P (piObj M) :=
   ⟨isCategoryO_piObj M fun j ↦ (hM j).1, exists_finset_lieSpan_piObj_eq_top M fun j ↦ (hM j).2⟩
 
-lemma isClosedUnderLimitsOfShape_discrete :
+lemma isClosedUnderLimitsOfShape_discrete (J : Type) [Finite J] :
     (IsObj.{w} P).IsClosedUnderLimitsOfShape (Discrete J) := by
   refine ObjectProperty.IsClosedUnderLimitsOfShape.mk' ?_
   rintro _ ⟨F, hF⟩
@@ -235,7 +235,7 @@ lemma isClosedUnderLimitsOfShape_discrete :
 end Products
 
 instance : (IsObj.{w} P).IsClosedUnderFiniteProducts where
-  isClosedUnderLimitsOfShape _ _ := isClosedUnderLimitsOfShape_discrete
+  isClosedUnderLimitsOfShape J _ := isClosedUnderLimitsOfShape_discrete J
 
 variable [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan]
 
