@@ -50,7 +50,7 @@ variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K] [
   (hA : A.IsGeneralizedCartan) (hS : A.IsSymmetrizable) {Λ : Dual K H}
   (hΛ : P.IsDominantIntegral Λ)
 
-omit [CharZero K] [FiniteDimensional K H] in
+omit [FiniteDimensional K H] in
 /-- The Weyl group has finitely many elements of each length. -/
 theorem finite_setOf_length_eq (k : ℕ) :
     {w : P.weylGroup hA | (P.coxeterSystem hA).length w = k}.Finite := by
@@ -59,7 +59,7 @@ theorem finite_setOf_length_eq (k : ℕ) :
   obtain ⟨ω, hω, rfl⟩ := (P.coxeterSystem hA).exists_isReduced w
   exact ⟨ω, hω.eq.symm.trans hw, rfl⟩
 
-omit [FiniteDimensional K H] in
+omit [DecidableEq ι] [FiniteDimensional K H] in
 include hΛ in
 /-- The weights `w(Λ + ρ) - ρ`, `w ∈ W`, are pairwise distinct. -/
 theorem injective_apply_add_rho_sub_rho :
@@ -70,6 +70,7 @@ theorem injective_apply_add_rho_sub_rho :
     exact ⟨n, by rw [LinearMap.add_apply, hn, rho_coroot]⟩
   exact fun w w' h ↦ P.apply_injective_of_regular hA hreg (sub_left_injective h)
 
+omit [FiniteDimensional K H] in
 /-- If the nonzero weight spaces of `H_k(𝔫₋, L(Λ))` are indexed injectively by `T` and are all
 one-dimensional, then `dim H_k(𝔫₋, L(Λ)) = |T|`. -/
 theorem finrank_homology_eq_card {T : Type*} (k : ℕ) (μ : T → Dual K H)
