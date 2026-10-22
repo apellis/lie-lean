@@ -52,6 +52,7 @@ def homToLie (X Y : CategoryO.{u} P) : (X ⟶ Y) →ₗ[K] (X.obj →ₗ⁅K,�
   map_add' _ _ := LieModuleHom.ext fun _ ↦ rfl
   map_smul' _ _ := LieModuleHom.ext fun _ ↦ rfl
 
+omit [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem injective_homToLie (X Y : CategoryO.{u} P) : Function.Injective (homToLie X Y) :=
   fun f g h ↦ by
     ext y
@@ -93,6 +94,7 @@ def dotOrbitAbove (μ : Dual K H) : Set (Dual K H) :=
   {κ | (∃ w : P.weylGroup hA.isGeneralizedCartan, κ = P.weylDot hA.isGeneralizedCartan w μ) ∧
     μ ∈ cone P κ ∧ μ ≠ κ}
 
+omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem finite_dotOrbitAbove (μ : Dual K H) : (dotOrbitAbove P hA μ).Finite := by
   have := P.finite_weylGroup hA
   refine (Set.finite_range fun w : P.weylGroup hA.isGeneralizedCartan ↦
