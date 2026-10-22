@@ -163,6 +163,7 @@ import LieLean.Algebra.Lie.KacMoody.Super.Enveloping
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Cancellation
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.FreeGrading
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.GVerma
+import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.IntegrableAt
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Lowest
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Syzygy
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Weights
