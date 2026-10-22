@@ -156,7 +156,7 @@ omit [Fintype ι] [DecidableEq ι] [CharZero K] in
 lemma exists_apply_eq_zero_apply_eq_one {V : Type*} [AddCommGroup V] [Module K V]
     {φ ψ : V →ₗ[K] K} {x₀ : V} (hx₀ : φ x₀ = 1) (h : ¬ ∀ x, ψ x = ψ x₀ * φ x) :
     ∃ δ, φ δ = 0 ∧ ψ δ = 1 := by
-  push_neg at h
+  push Not at h
   obtain ⟨x, hx⟩ := h
   have hy : φ (x - φ x • x₀) = 0 := by
     rw [map_sub, map_smul, hx₀, smul_eq_mul, mul_one, sub_self]
@@ -201,8 +201,8 @@ theorem exists_mul_fEnv_pow_eq [IsAlgClosed K] [FiniteDimensional K H]
     rw [h0, _root_.zero_apply, eq_comm, LinearEquiv.map_eq_zero_iff] at h1
     exact fEnv_pow_ne_zero j Q h1
   have hιinj := injective_of_ne_zero P hι0
-  obtain ⟨φ₁, hφ₁⟩ := exists_injective_reflectionOf hfin (P := P) (Λ := Λ) (v := v) hv hΛ
   set ν := Λ - r • (v : Dual K H ≃ₗ[K] Dual K H) (P.root i)
+  obtain ⟨φ₁, hφ₁⟩ := exists_injective_reflectionOf hfin (P := P) (Λ := Λ) (v := v) hv hΛ
   have hψ0 : ι' (φ₁ (hwv P ν)) ≠ 0 := by
     intro h0
     apply hwv_ne_zero P ν
@@ -247,7 +247,7 @@ theorem IsShapovalovElement.of_hyperplane [FiniteDimensional K H] {hA : A.IsGene
   obtain ⟨b, hb'⟩ : ∃ b : H, ∀ Λ : Dual K H, Λ b = P.corootPairing hA Λ v i :=
     ⟨(Module.evalEquiv K H).symm ((Dual.eval K H (P.coroot i)).comp
       ((v⁻¹ : P.weylGroup hA) : Dual K H ≃ₗ[K] Dual K H).toLinearMap),
-      fun Λ ↦ Module.apply_evalEquiv_symm_apply _ _⟩
+      fun Λ ↦ Module.apply_evalEquiv_symm_apply K H Λ _⟩
   obtain ⟨γ, hγ⟩ : ∃ γ, γ = (v : Dual K H ≃ₗ[K] Dual K H) (P.root i) := ⟨_, rfl⟩
   have h2 : P.corootPairing hA γ v i = 2 := hγ ▸ corootPairing_apply_root hA v i
   let c : Dual K H → K := fun Λ ↦ -(P.corootPairing hA (Λ + P.rho) v i - r) / 2
@@ -283,7 +283,7 @@ theorem exists_isShapovalovElement_step [IsAlgClosed K] [FiniteDimensional K H]
     (hsv : P.IsPosRoot hA ((P.coxeterSystem hA).simple j * v) i) {r : ℕ} (hr : 0 < r)
     {θβ : Dual K H → 𝒰⁻}
     (hθβ : IsShapovalovElement P hA ((P.coxeterSystem hA).simple j * v) i r
-      (fun l ↦ ((k - (A *ᵥ k) j • Pi.single j 1) l).toNat) θβ) :
+      (fun l ↦ ((k - (A *ᵥ k) j • Pi.single j 1 : ι → ℤ) l).toNat) θβ) :
     ∃ θ, IsShapovalovElement P hA v i r (fun l ↦ (k l).toNat) θ := by
   classical
   /- The roots `γ = ∑ kₗ αₗ` and `β = ∑ k'ₗ αₗ`. -/
@@ -328,13 +328,13 @@ theorem exists_isShapovalovElement_step [IsAlgClosed K] [FiniteDimensional K H]
   obtain ⟨l₀, hl₀⟩ : ∃ l, k' l ≠ 0 := by
     by_contra! h
     exact hβ0 (funext h)
-  have hΣβ : 0 < ∑ l, aβ l := by
+  have hsumβ : 0 < ∑ l, aβ l := by
     refine lt_of_lt_of_le ?_
       (Finset.single_le_sum (fun l _ ↦ Nat.zero_le (aβ l)) (Finset.mem_univ l₀))
     have h0 : (0 : ℤ) ≤ k' l₀ := hk' l₀
     simp only [haβdef]
     omega
-  have hposβ : 0 < r * ∑ l, aβ l := Nat.mul_pos hr hΣβ
+  have hposβ : 0 < r * ∑ l, aβ l := Nat.mul_pos hr hsumβ
   have hposγ : 0 < r * ∑ l, aγ l := Nat.mul_pos hr (by rw [hsum]; omega)
   have hv : P.IsPosRoot hA v i := ⟨k, hk, hvk⟩
   have hγj : (v : Dual K H ≃ₗ[K] Dual K H) (P.root i) (P.coroot j) = (p : K) := by
@@ -348,7 +348,7 @@ theorem exists_isShapovalovElement_step [IsAlgClosed K] [FiniteDimensional K H]
   obtain ⟨b, hb⟩ : ∃ b : H, ∀ Λ : Dual K H, Λ b = P.corootPairing hA Λ v i :=
     ⟨(Module.evalEquiv K H).symm ((Dual.eval K H (P.coroot i)).comp
       ((v⁻¹ : P.weylGroup hA) : Dual K H ≃ₗ[K] Dual K H).toLinearMap),
-      fun Λ ↦ Module.apply_evalEquiv_symm_apply _ _⟩
+      fun Λ ↦ Module.apply_evalEquiv_symm_apply K H Λ _⟩
   /- The construction of [HumO] §4.13, as a polynomial family. -/
   obtain ⟨J₀, hJ₀⟩ := exists_commutator_pow_eq_zero_of_mem_polyFam hθβ.mem_polyFam
     (exists_commutator_fEnv_pow_eq_zero hA j)
@@ -531,15 +531,16 @@ theorem exists_isShapovalovElement_aux [IsAlgClosed K] [FiniteDimensional K H]
   by_cases h1 : 1 < n
   · obtain ⟨j, -, hp, hsv⟩ := exists_simple_descent hfin hk hvk (by rw [hn]; exact_mod_cast h1)
     have hβ : (((P.coxeterSystem hA).simple j * v : P.weylGroup hA) :
-        Dual K H ≃ₗ[K] Dual K H) (P.root i) = P.rootOf (k - (A *ᵥ k) j • Pi.single j 1) := by
+        Dual K H ≃ₗ[K] Dual K H) (P.root i) =
+          P.rootOf (k - (A *ᵥ k) j • Pi.single j 1 : ι → ℤ) := by
       rw [simple_mul_apply_root, hvk, reflection_rootOf]
     have hk' : 0 ≤ k - (A *ᵥ k) j • Pi.single j 1 := by
       obtain ⟨k'', hk'', h''⟩ := hsv
       rw [hβ] at h''
       rw [P.rootOf_injective h'']
       exact hk''
-    have hsum' : ∑ l, (k - (A *ᵥ k) j • Pi.single j 1) l = (n : ℤ) - (A *ᵥ k) j := by
-      rw [Finset.sum_congr rfl fun l _ ↦ (show (k - (A *ᵥ k) j • Pi.single j 1) l =
+    have hsum' : ∑ l, (k - (A *ᵥ k) j • Pi.single j 1 : ι → ℤ) l = (n : ℤ) - (A *ᵥ k) j := by
+      rw [Finset.sum_congr rfl fun l _ ↦ (show (k - (A *ᵥ k) j • Pi.single j 1 : ι → ℤ) l =
         k l - (A *ᵥ k) j * Pi.single j (1 : ℤ) l by simp), Finset.sum_sub_distrib,
         ← Finset.mul_sum, Finset.sum_eq_single j (fun l _ hl ↦ by simp [hl]) (by simp), hn]
       simp
@@ -576,7 +577,7 @@ theorem exists_isShapovalovElement_aux [IsAlgClosed K] [FiniteDimensional K H]
         simp [hk1]
       · simp [hk1, hl]
     rw [ha]
-    refine (isShapovalovElement_simple hA j hr).of_corootPairing_eq fun x ↦ ?_
+    refine ⟨_, (isShapovalovElement_simple hA j hr).of_corootPairing_eq fun x ↦ ?_⟩
     exact corootPairing_eq_of_apply_root_eq hfin (v := 1) (v' := v) (i := j) (i' := i)
       (by rw [hvk, hk1, rootOf_single]; rfl) x
 
