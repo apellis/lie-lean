@@ -412,13 +412,17 @@ theorem translationFunctor_shortExact {S : ShortComplex (CategoryO.{u} P)} (hS :
     ((exact_iff_ker_eq_range P _ _).mp hex) hg χ₁ χ₂
   exact shortExact_of_lie hf' hg' fun y hy ↦ ((exact_iff_ker_eq_range P _ _).mpr hex' y).mp hy
 
+theorem translationFunctor_preservesFinite :
+    PreservesFiniteLimits (translationFunctor L χ₁ χ₂) ∧
+      PreservesFiniteColimits (translationFunctor L χ₁ χ₂) :=
+  ((Functor.exact_tfae (translationFunctor L χ₁ χ₂)).out 1 4 rfl rfl).mp
+    fun _ hS ↦ translationFunctor_shortExact L χ₁ χ₂ hS
+
 instance : PreservesFiniteLimits (translationFunctor L χ₁ χ₂) :=
-  (((Functor.exact_tfae (translationFunctor L χ₁ χ₂)).out 1 4).mp
-    fun _ hS ↦ translationFunctor_shortExact L χ₁ χ₂ hS).1
+  (translationFunctor_preservesFinite L χ₁ χ₂).1
 
 instance : PreservesFiniteColimits (translationFunctor L χ₁ χ₂) :=
-  (((Functor.exact_tfae (translationFunctor L χ₁ χ₂)).out 1 4).mp
-    fun _ hS ↦ translationFunctor_shortExact L χ₁ χ₂ hS).2
+  (translationFunctor_preservesFinite L χ₁ χ₂).2
 
 /-- `homEquivLie` with the explicit inverse `φ ↦ homMk (ofLieModuleHom φ)`. -/
 def homEquivLie' (X Y : CategoryO.{u} P) : (X ⟶ Y) ≃ₗ[K] (X.obj →ₗ⁅K,𝔤⁆ Y.obj) :=
