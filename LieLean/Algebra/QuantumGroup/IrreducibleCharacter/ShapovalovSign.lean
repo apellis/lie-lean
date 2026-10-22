@@ -21,6 +21,12 @@ Under this relation `E_i^{c}(T y) = sᵢ ∏ₖ σ(k, i)^{μₖ} · T(E_i^{c'} y
 `T` (`LusztigF.shapovalovMap_signTwist_eq_zero_iff`); for `σ` with values `±1` the ranks agree
 (`LusztigF.shapovalovRank_eq_of_signTwist`).
 
+Consequently, at parameters `qᵢ = ±1` with `qᵢ^{-aᵢⱼ} = qⱼ^{-aⱼᵢ}`, an element of `'f_ν`
+(`νᵢ ≤ nᵢ`) in the kernel of a pairing whose coefficients are the classical ones `nᵢ - ⟨μ, αᵢ^∨⟩`
+twisted by the sign character `μ ↦ ∏ₖ qᵢ^{-aᵢₖ μₖ}` lies in the span of the Serre products with
+parameters `q` (`LusztigF.mem_serreSpan_of_shapovalovMap_eq_zero_of_sq_eq_one`), by the classical
+kernel (`LusztigF.mem_serreSpan_of_shapovalovMap_eq_zero`, from the Gabber–Kac theorem).
+
 This is used for the pairing of [Lus] 35.4.2 at a quasi-classical parameter (`q_i = ±1`): its
 coefficients differ from the classical ones `⟨Λ - μ, αᵢ^∨⟩` by such a sign character, which
 `LusztigF.signTwist_serreProduct` matches with the Serre relations at the parameters `qᵢ`.
@@ -228,5 +234,93 @@ theorem shapovalovRank_eq_of_signTwist {c c' : I → (I →₀ ℕ) → K} {s : 
   exact shapovalovMap_signTwist_eq_zero_iff hs hσ0 hσd hc y.2
 
 end Twist
+
+/-! ### The classical and quasi-classical kernels -/
+
+section Kernel
+
+variable [Fintype I] [DecidableEq I] [CharZero K] (D : LusztigCartanDatum I)
+
+/-- A weight of the standard realization over `K` with `⟨Λ, αᵢ^∨⟩ = nᵢ`. -/
+def stdWeightOver (n : I → ℕ) : Module.Dual K (Matrix.Realization.StdSpace D.cartanMatrix K) :=
+  (∑ i, (n i : K) • LinearMap.proj i) ∘ₗ LinearMap.fst K (I → K) _
+
+omit [CharZero K] in
+lemma stdWeightOver_coroot (n : I → ℕ) (i : I) :
+    stdWeightOver D n ((Matrix.Realization.std D.cartanMatrix K).coroot i) = n i := by
+  simp [stdWeightOver, Matrix.Realization.std, Pi.single_apply]
+
+/-- **The classical kernel.** If `y ∈ 'f_ν` with `νᵢ ≤ nᵢ` for all `i` pairs to zero with all
+words for the classical Shapovalov pairing of highest weight `n`, then `y` lies in the span of
+the classical Serre products of weight `ν`. -/
+theorem mem_serreSpan_of_shapovalovMap_eq_zero (n : I → ℕ) {ν : I →₀ ℕ} (hν : ∀ i, ν i ≤ n i)
+    {y : LusztigF K I} (hy : y ∈ weightSpace K ν)
+    (h0 : shapovalovMap (classicalCoeff K D n) ν y = 0) :
+    y ∈ serreSpan D (fun _ ↦ (1 : K)) ν :=
+  mem_serreSpan_of_vermaForm_eq_zero D (Matrix.Realization.std D.cartanMatrix K)
+    (stdWeightOver_coroot D n) hν hy fun w hw ↦ congr_fun h0 ⟨w, hw⟩
+
+/-- **The quasi-classical kernel.** Let `qᵢ² = 1` with `qᵢ^{-aᵢⱼ} = qⱼ^{-aⱼᵢ}` for `i ≠ j`, and
+let the coefficients `c` differ from the classical ones of highest weight `n` by the sign character
+`μ ↦ ∏ₖ qᵢ^{-aᵢₖ μₖ}` and nonzero scalars `sᵢ`. If `y ∈ 'f_ν` with `νᵢ ≤ nᵢ` pairs to zero with all
+words for the pairing `S_c`, then `y` lies in the span of the Serre products of weight `ν` with
+parameters `q`. -/
+theorem mem_serreSpan_of_shapovalovMap_eq_zero_of_sq_eq_one {q : I → K} (hq : ∀ i, q i ^ 2 = 1)
+    (hsym : ∀ i j, i ≠ j → q i ^ (serreExp D i j - 1) = q j ^ (serreExp D j i - 1))
+    (n : I → ℕ) {c : I → (I →₀ ℕ) → K} {s : I → K} (hs : ∀ i, s i ≠ 0)
+    (hc : ∀ i μ, c i μ =
+      s i * weightSign (fun k ↦ q i ^ (serreExp D i k - 1)) μ * classicalCoeff K D n i μ)
+    {ν : I →₀ ℕ} (hν : ∀ i, ν i ≤ n i) {y : LusztigF K I} (hy : y ∈ weightSpace K ν)
+    (h0 : shapovalovMap c ν y = 0) :
+    y ∈ serreSpan D q ν := by
+  let _ : LinearOrder I := IsWellOrder.linearOrder WellOrderingRel
+  set σ : I → I → K := fun i j ↦ if i < j then q i ^ (serreExp D i j - 1) else 1
+  have hσ : ∀ i j, σ i j ^ 2 = 1 := fun i j ↦ by
+    simp only [σ]; split_ifs
+    · rw [← pow_mul, mul_comm, pow_mul, hq, one_pow]
+    · exact one_pow 2
+  have hσ0 : ∀ i j, σ i j ≠ 0 := fun i j h ↦ by simpa [h] using hσ i j
+  have hσd : ∀ i, σ i i = 1 := fun i ↦ by simp [σ]
+  have hσq : ∀ i j, i ≠ j → σ i j * σ j i = q i ^ (serreExp D i j - 1) := fun i j hij ↦ by
+    rcases lt_or_gt_of_ne hij with h | h
+    · simp [σ, h, h.not_gt]
+    · simp [σ, h, h.not_gt, hsym i j hij]
+  have hτ : ∀ i k, q i ^ (serreExp D i k - 1) = σ k i * σ i k := fun i k ↦ by
+    by_cases hik : i = k
+    · subst hik; simp [hσd, serreExp, D.cartanMatrix_self]
+    · rw [mul_comm, hσq i k hik]
+  -- the twist relates `c` to the classical coefficients
+  have hc' : ∀ i μ, c i μ * weightSign (σ i) μ =
+      s i * weightSign (fun k ↦ σ k i) μ * classicalCoeff K D n i μ := fun i μ ↦ by
+    have hB : weightSign (σ i) μ * weightSign (σ i) μ = 1 := by
+      rw [← weightSign_mul]
+      simp only [← sq, hσ]
+      simp [weightSign]
+    rw [hc, show (fun k ↦ q i ^ (serreExp D i k - 1)) = fun k ↦ σ k i * σ i k from
+      funext (hτ i), weightSign_mul]
+    linear_combination (s i * weightSign (fun k ↦ σ k i) μ * classicalCoeff K D n i μ) * hB
+  have hTy : signTwist σ y ∈ weightSpace K ν := signTwist_mem σ hy
+  have h2 := mem_serreSpan_of_shapovalovMap_eq_zero D n hν hTy
+    ((shapovalovMap_signTwist_eq_zero_iff hs hσ0 hσd hc' hTy).1 (by
+      rwa [signTwist_signTwist hσ]))
+  -- the twist maps the classical Serre span into the one with parameters `q`
+  have hmap : ∀ z ∈ serreSpan D (fun _ ↦ (1 : K)) ν, signTwist σ z ∈ serreSpan D q ν := by
+    intro z hz
+    induction hz using Submodule.span_induction with
+    | mem z hz =>
+      obtain ⟨g, hg, rfl⟩ := hz
+      obtain ⟨t, ht0, ht⟩ := signTwist_serreProduct D hq hσ hσd hσq hg.1
+      have : signTwist σ (serreProduct D (fun _ ↦ (1 : K)) g) = t⁻¹ • serreProduct D q g := by
+        rw [← signTwist_signTwist hσ (serreProduct D q g), ht, map_smul, smul_smul,
+          inv_mul_cancel₀ ht0, one_smul]
+      rw [this]
+      exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨g, hg, rfl⟩)
+    | zero => simp
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | smul a b _ hb => rw [map_smul]; exact Submodule.smul_mem _ _ hb
+  have := hmap _ h2
+  rwa [signTwist_signTwist hσ] at this
+
+end Kernel
 
 end LusztigF
