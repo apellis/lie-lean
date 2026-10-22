@@ -156,7 +156,7 @@ theorem isObj_of_surjective {X Y : ModuleCat.{w} 𝓤} (f : X ⟶ Y)
     obtain ⟨a, rfl⟩ := LieSubmodule.Quotient.surjective_mk' φ.ker a
     obtain ⟨b, rfl⟩ := LieSubmodule.Quotient.surjective_mk' φ.ker b
     rw [LieSubmodule.Quotient.lift_mk, LieSubmodule.Quotient.lift_mk] at hab
-    rw [← sub_eq_zero, ← map_sub, LieSubmodule.Quotient.mk_eq_zero', LieModuleHom.mem_ker,
+    rw [← sub_eq_zero, ← map_sub, LieSubmodule.Quotient.mk_eq_zero, LieModuleHom.mem_ker,
       map_sub, hab, sub_self]
   obtain ⟨S, hS⟩ := hX.2
   refine ⟨(hX.1.quotient φ.ker).of_equiv (LieModuleEquiv.ofBijective q hq), ?_⟩
@@ -169,15 +169,66 @@ theorem isObj_of_surjective {X Y : ModuleCat.{w} 𝓤} (f : X ⟶ Y)
 instance : (IsObj.{w} P).IsClosedUnderIsomorphisms where
   of_iso e hX := isObj_of_surjective e.hom (toLieModuleEquiv (P := P) e).surjective hX
 
+variable (P) in
+/-- The zero `U(𝔤)`-module. -/
+def zeroObj : ModuleCat.{w} 𝓤 := ModuleCat.of 𝓤 PUnit.{w + 1}
+
+instance : Subsingleton (zeroObj.{w} P) := inferInstanceAs (Subsingleton PUnit)
+
 instance : (IsObj.{w} P).ContainsZero where
-  exists_zero := ⟨ModuleCat.of 𝓤 PUnit.{w + 1}, ModuleCat.isZero_of_subsingleton _,
+  exists_zero := ⟨zeroObj P, ModuleCat.isZero_of_subsingleton _,
     IsCategoryO.of_subsingleton P _, ⟨∅, by
-      have := (LieSubmodule.subsingleton_iff K 𝔤 (ModuleCat.of 𝓤 PUnit.{w + 1})).mpr
-        inferInstance
+      have := (LieSubmodule.subsingleton_iff K 𝔤 (zeroObj.{w} P)).mpr inferInstance
       exact Subsingleton.elim _ _⟩⟩
 
 instance : (IsObj.{w} P).IsClosedUnderQuotients where
   prop_of_epi f hf hX := isObj_of_surjective f ((ModuleCat.epi_iff_surjective f).mp hf) hX
+
+/-! ### Finite products -/
+
+section Products
+
+/-- The product `∏ⱼ Mⱼ` of `U(𝔤)`-modules. -/
+def piObj {J : Type} (M : J → ModuleCat.{w} 𝓤) : ModuleCat.{w} 𝓤 := ModuleCat.of 𝓤 (∀ j, M j)
+
+/-- A finite direct sum of `U(𝔤)`-modules is identified, as a `𝔤`-module, with the product
+`U(𝔤)`-module. -/
+def directSumEquivPi {J : Type} [Fintype J] (M : J → ModuleCat.{w} 𝓤) :
+    DirectSum J (fun j ↦ M j) ≃ₗ⁅K,𝔤⁆ piObj M where
+  toFun m j := m j
+  invFun m := (DirectSum.linearEquivFunOnFintype K J (fun j ↦ M j)).symm m
+  left_inv m := (DirectSum.linearEquivFunOnFintype K J (fun j ↦ M j)).symm_apply_apply m
+  right_inv m := (DirectSum.linearEquivFunOnFintype K J (fun j ↦ M j)).apply_symm_apply m
+  map_add' a b := funext fun j ↦ DirectSum.add_apply a b j
+  map_smul' c m := funext fun j ↦ DFinsupp.smul_apply c m j
+  map_lie' {x m} := funext fun j ↦ DirectSum.lie_module_bracket_apply x m j
+
+variable {J : Type} [Finite J] (M : J → ModuleCat.{w} 𝓤)
+
+/-- A finite product of modules in `𝒪` lies in `𝒪`. -/
+theorem isObj_pi (hM : ∀ j, IsObj P (M j)) : IsObj P (piObj M) := by
+  classical
+  have := Fintype.ofFinite J
+  let e := directSumEquivPi (P := P) M
+  have hO : IsCategoryO P (DirectSum J fun j ↦ M j) := IsCategoryO.directSum _ fun j ↦ (hM j).1
+  refine ⟨hO.of_equiv e, ?_⟩
+  obtain ⟨T, hT⟩ := exists_finset_lieSpan_directSum_eq_top (L := 𝔤) fun j ↦ (hM j).2
+  refine ⟨T.image e, ?_⟩
+  rw [Finset.coe_image]
+  exact lieSpan_image_eq_top_of_surjective e.toLieModuleHom e.surjective hT
+
+lemma isClosedUnderLimitsOfShape_discrete :
+    (IsObj.{w} P).IsClosedUnderLimitsOfShape (Discrete J) := by
+  refine ObjectProperty.IsClosedUnderLimitsOfShape.mk' ?_
+  rintro _ ⟨F, hF⟩
+  let e : limit F ≅ piObj (fun j ↦ F.obj ⟨j⟩) :=
+    HasLimit.isoOfNatIso (Discrete.natIsoFunctor (F := F)) ≪≫ ModuleCat.piIsoPi _
+  exact (IsObj.{w} P).prop_of_iso e.symm (isObj_pi _ fun j ↦ hF ⟨j⟩)
+
+end Products
+
+instance : (IsObj.{w} P).IsClosedUnderFiniteProducts where
+  isClosedUnderLimitsOfShape _ _ := isClosedUnderLimitsOfShape_discrete
 
 variable [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan]
 
@@ -201,50 +252,6 @@ theorem isObj_of_injective {X Y : ModuleCat.{w} 𝓤} (f : X ⟶ Y)
 
 instance : (IsObj.{w} P).IsClosedUnderSubobjects where
   prop_of_mono f hf hY := isObj_of_injective f ((ModuleCat.mono_iff_injective f).mp hf) hY
-
-/-! ### Finite products -/
-
-section Products
-
-variable {J : Type} [Fintype J] (M : J → ModuleCat.{w} 𝓤)
-
-/-- A finite direct sum of `U(𝔤)`-modules is identified, as a `𝔤`-module, with the product
-`U(𝔤)`-module. -/
-def directSumEquivPi :
-    DirectSum J (fun j ↦ M j) ≃ₗ⁅K,𝔤⁆ ModuleCat.of 𝓤 (∀ j, M j) :=
-  { DirectSum.linearEquivFunOnFintype K J (fun j ↦ M j) with
-    map_lie' := fun {x m} ↦ funext fun j ↦ by
-      change (⁅x, m⁆ : DirectSum J fun j ↦ M j) j = UniversalEnvelopingAlgebra.ι K x • m j
-      rw [DirectSum.lie_module_bracket_apply]
-      rfl }
-
-omit [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
-/-- A finite product of modules in `𝒪` lies in `𝒪`. -/
-theorem isObj_pi (hM : ∀ j, IsObj P (M j)) : IsObj P (ModuleCat.of 𝓤 (∀ j, M j)) := by
-  classical
-  refine ⟨(IsCategoryO.directSum _ fun j ↦ (hM j).1).of_equiv (directSumEquivPi M), ?_⟩
-  obtain ⟨T, hT⟩ := exists_finset_lieSpan_directSum_eq_top (L := 𝔤) fun j ↦ (hM j).2
-  refine ⟨T.image (directSumEquivPi (P := P) M), ?_⟩
-  rw [Finset.coe_image]
-  exact lieSpan_image_eq_top_of_surjective (directSumEquivPi (P := P) M).toLieModuleHom
-    (directSumEquivPi (P := P) M).surjective hT
-
-omit [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
-lemma isClosedUnderLimitsOfShape_discrete :
-    (IsObj.{w} P).IsClosedUnderLimitsOfShape (Discrete J) := by
-  refine ObjectProperty.IsClosedUnderLimitsOfShape.mk' ?_
-  rintro _ ⟨F, hF⟩
-  let e : limit F ≅ ModuleCat.of 𝓤 (∀ j, F.obj ⟨j⟩) :=
-    HasLimit.isoOfNatIso (Discrete.natIsoFunctor (F := F)) ≪≫ ModuleCat.piIsoPi _
-  exact (IsObj.{w} P).prop_of_iso e.symm (isObj_pi _ fun j ↦ hF ⟨j⟩)
-
-end Products
-
-omit [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
-instance : (IsObj.{w} P).IsClosedUnderFiniteProducts where
-  isClosedUnderLimitsOfShape J _ := by
-    have := Fintype.ofFinite J
-    exact isClosedUnderLimitsOfShape_discrete
 
 /-- **The category `𝒪` is abelian** (finite type, algebraically closed field of characteristic
 zero; [HumO] §1.1 and Thm 1.11). -/
