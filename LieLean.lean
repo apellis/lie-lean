@@ -54,6 +54,7 @@ import LieLean.Algebra.Lie.KacMoody.CasimirForm
 import LieLean.Algebra.Lie.KacMoody.CasimirIrreducible
 import LieLean.Algebra.Lie.KacMoody.CategoryO
 import LieLean.Algebra.Lie.KacMoody.CategoryOSubmodule
+import LieLean.Algebra.Lie.KacMoody.CategoryOAbelian
 import LieLean.Algebra.Lie.KacMoody.Character
 import LieLean.Algebra.Lie.KacMoody.CharacterAntiInvariant
 import LieLean.Algebra.Lie.KacMoody.CharacterDenominator
