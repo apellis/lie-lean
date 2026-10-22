@@ -481,6 +481,25 @@ Bott's Thm. 6.6 in the `𝔫`-cohomology form by duality if that is cheap, other
 and Ch. 10 items through projective functors (§10.8) or Duflo's theorem, only where a target needs
 them. Thm. 6.5 (a) gets no erratum: its proof stays marked reconstructed.
 
+`Extⁿ_𝒪` ([HumO] Ch. 6, Prop. 7.2 (b)) done, for `𝔤` of finite type over an algebraically closed
+field of characteristic zero. `𝒪` is the abelian full subcategory `CategoryO P` of `U(𝔤)`-modules
+(`KacMoody/CategoryOAbelian.lean`) with enough projectives (`CategoryO.instEnoughProjectives`), and
+`Extⁿ_𝒪` is Mathlib's `Abelian.Ext`. Prop. 6.9 as upper bounds
+(`CategoryO.hasProjectiveDimensionLT_verma_weylDot`,
+`CategoryO.hasProjectiveDimensionLT_simple_weylDot`, `CategoryO.hasProjectiveDimensionLT_of_multiplicity`);
+Thm. 6.11 (a) for arbitrary weights (`CategoryO.ext_verma_eq_zero`, `CategoryO.ext_simple_eq_zero`)
+and (b) (`CategoryO.ext_verma_weylDot_verma_eq_zero`,
+`CategoryO.ext_verma_weylDot_simple_eq_zero`); Thm. 6.12
+(`CategoryO.ext_verma_dualVerma_eq_zero`); Thm. 6.13 (`CategoryO.tfae_isStdFiltered`); finiteness
+of `Extⁿ` and of the projective dimension of `M(μ)` (`CategoryO.instFiniteExt`,
+`CategoryO.hasProjectiveDimensionLT_verma`); Prop. 6.14, Delorme's formula
+(`CategoryO.character_eq_sum_eulerChar`, `CategoryO.multiplicity_eq_sum_eulerChar`); Prop. 7.2:
+translation functors on `𝒪` (`CategoryO.translationFunctor`, exact and `K`-linear), the adjunction
+(`CategoryO.translationAdj`) and `Extⁿ_𝒪(T X, Y) ≅ Extⁿ_𝒪(X, T' Y)`
+(`CategoryO.extTranslationEquiv`, `KacMoody/CategoryOTranslation.lean`).
+Roadmap items (maintainer decision 2026-10-22, issue #7): [HumO] Prop. 6.15, and the equality
+cases of Prop. 6.9 (`pd M(w·Λ) = ℓ(w)`, `pd L(w·Λ) = 2ℓ(w₀) - ℓ(w)`, global dimension `2ℓ(w₀)`).
+
 Thm. 4.12 (Shapovalov elements) done: `KacMoody/ShapovalovElement/` defines
 `IsShapovalovElement` (polynomial families `λ ↦ θ(λ) ∈ U(𝔫⁻)_{-rγ}` with the maximal-vector
 property on the hyperplane `⟨λ + ρ, γ^∨⟩ = r` and leading term `∏ yⱼ^{r aⱼ}` modulo lower PBW
