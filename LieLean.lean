@@ -341,6 +341,7 @@ import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.CategoryOInt
 import LieLean.Algebra.QuantumGroup.CategoryOIntTensor
 import LieLean.Algebra.QuantumGroup.ChangeOfRings.Basic
+import LieLean.Algebra.QuantumGroup.ChangeOfRings.QuasiClassical
 import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.CompleteReducibility
 import LieLean.Algebra.QuantumGroup.ContravariantForm
@@ -486,6 +487,7 @@ import LieLean.Algebra.QuantumGroup.GabberKac.Classical
 import LieLean.Algebra.QuantumGroup.GabberKac.MapCoeffs
 import LieLean.Algebra.QuantumGroup.GabberKac.Quantum
 import LieLean.Algebra.QuantumGroup.GabberKac.SerreSpan
+import LieLean.Algebra.QuantumGroup.GabberKac.SerreSpanSign
 import LieLean.Algebra.QuantumGroup.GabberKac.Specialization
 import LieLean.Algebra.QuantumGroup.GabberKac.VermaOperator
 import LieLean.Algebra.QuantumGroup.HighestWeightMaps
