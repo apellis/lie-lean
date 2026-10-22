@@ -141,6 +141,10 @@ example (n : ℕ) : frobSplit DA2 (by norm_num) hlI hprimI
 
 example : DA2.frobOrder 2 0 = 2 := by decide
 
+/-- [Lus] Lemma 35.2.2 for `A₂`, `l = 2`. -/
+example : Algebra.adjoin ℂ (frobeniusGenerators DA2 ℂ 2) = ⊤ :=
+  adjoin_frobeniusGenerators DA2 (by norm_num) hlI hprimI
+
 end Frobenius35
 
 open scoped TensorProduct in

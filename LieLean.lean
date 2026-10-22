@@ -487,6 +487,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.Transfer
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Valuation
 import LieLean.Algebra.QuantumGroup.Faithful
 import LieLean.Algebra.QuantumGroup.Frobenius.CartanDatum
+import LieLean.Algebra.QuantumGroup.Frobenius.Generators
 import LieLean.Algebra.QuantumGroup.Frobenius.SerreIdentity
 import LieLean.Algebra.QuantumGroup.Frobenius.Splitting
 import LieLean.Algebra.QuantumGroup.Frobenius.SplittingGeneral
