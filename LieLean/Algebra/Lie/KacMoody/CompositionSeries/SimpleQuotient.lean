@@ -187,7 +187,7 @@ theorem exists_subquotient_equiv_of_ne_bot [WellFoundedGT (LieSubmodule K 𝔤 V
     rw [htop, Submodule.mem_bot] at hmem
     exact hq0 hmem
   have hμ' : ¬ M.toSubmodule ⊓ weightSpace P V μ ≤ M'.toSubmodule := fun h ↦
-    hμ ((hV.weightSpace_subquotient_eq_bot_iff M' M μ).mpr h)
+    hμ ((weightSpace_subquotient_eq_bot_iff hV M' M μ).mpr h)
   obtain ⟨M₁, M₂, ν, h₁, h₁₂, h₂, hlt, hfac⟩ :=
     hV.exists_isLocalFactor_some hM'M.le (mem_cone_self μ) hμ'
   have hne : M₁ ≠ M₂ := by
@@ -203,7 +203,8 @@ theorem exists_subquotient_equiv_of_ne_bot [WellFoundedGT (LieSubmodule K 𝔤 V
   -- `L(ν)` occurs in a local composition series through `M₁ ⊆ M₂`
   obtain ⟨l₁, hl₁⟩ := hV.exists_isLocalCompositionSeries_of_le μ (bot_le : ⊥ ≤ M₁)
   obtain ⟨l₂, hl₂⟩ := hV.exists_isLocalCompositionSeries_of_le μ (le_top : M₂ ≤ ⊤)
-  have hl := hl₁.append (IsLocalCompositionSeries.cons_iff.mpr ⟨h₁₂, ⟨hμν, hψ⟩, hl₂⟩)
+  have hfac' : IsLocalFactor P μ M₁ M₂ (some ν) := ⟨hμν, hψ⟩
+  have hl := hl₁.append (IsLocalCompositionSeries.cons_iff.mpr ⟨h₁₂, hfac', hl₂⟩)
   refine (hV.multiplicity_ne_zero_iff hμν hl).mpr ?_
   simp [factorWeights, List.filterMap_append]
 
