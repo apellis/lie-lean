@@ -210,7 +210,7 @@ theorem ext_simple_weylDot_eq_zero : ∀ (d : ℕ) (w : P.weylGroup hA.isGeneral
     omega
   obtain ⟨y, hwy, rfl⟩ := IsStronglyLinked.exists_bruhatLE_weylDot P hA hΛ
     (VermaModule.isStronglyLinked_of_multiplicity_ne_zero P hA hνV)
-  have hlt := hwy.eq_or_length_lt.resolve_left fun h ↦ hνne (by rw [h])
+  have hlt := hwy.eq_or_length_lt.resolve_left fun h ↦ hνne (by subst h; rfl)
   have hym := (P.coxeterSystem hA').length_le_length_longestElement y
   exact ih _ (by omega) y rfl Z' e' n (by omega) Y x'
 
