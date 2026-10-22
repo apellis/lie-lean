@@ -110,7 +110,7 @@ theorem Matrix.Realization.KacMoodyAlgebra.exists_finset_lieSpan_tensor_eq_top
     exact fun v hv ↦ hvN v hv
   rw [eq_top_iff]
   rintro z -
-  induction z using TensorProduct.induction_on with
+  induction z using TensorProduct.inductionOn with
   | zero => exact N.zero_mem
   | tmul x l =>
     have hx : x ∈ S' := hS' ▸ LieSubmodule.mem_top x
@@ -143,14 +143,13 @@ local notation "𝔤" => KacMoodyAlgebra P
 local notation "𝓤" => UniversalEnvelopingAlgebra K P.KacMoodyAlgebra
 local notation "𝓩" => Subalgebra.center K 𝓤
 
-variable (χ₁ χ₂ : 𝓩 →ₐ[K] K)
-
-theorem centralTranslationMap_add (f g : M →ₗ⁅K,𝔤⁆ N) :
+theorem centralTranslationMap_add (χ₁ χ₂ : 𝓩 →ₐ[K] K) (f g : M →ₗ⁅K,𝔤⁆ N) :
     centralTranslationMap P L χ₁ χ₂ (f + g) =
       centralTranslationMap P L χ₁ χ₂ f + centralTranslationMap P L χ₁ χ₂ g := by
-  ext ⟨t, -⟩
+  ext ⟨t, ht⟩
   change TensorProduct.map _ _ t = TensorProduct.map _ _ t + TensorProduct.map _ _ t
-  induction t using TensorProduct.induction_on with
+  clear ht
+  induction t using TensorProduct.inductionOn with
   | zero => simp
   | tmul v z =>
     rw [TensorProduct.map_tmul, TensorProduct.map_tmul, TensorProduct.map_tmul, ← add_tmul]
@@ -159,11 +158,12 @@ theorem centralTranslationMap_add (f g : M →ₗ⁅K,𝔤⁆ N) :
     simp only [map_add, hs, ht]
     abel
 
-theorem centralTranslationMap_smul (c : K) (f : M →ₗ⁅K,𝔤⁆ N) :
+theorem centralTranslationMap_smul (χ₁ χ₂ : 𝓩 →ₐ[K] K) (c : K) (f : M →ₗ⁅K,𝔤⁆ N) :
     centralTranslationMap P L χ₁ χ₂ (c • f) = c • centralTranslationMap P L χ₁ χ₂ f := by
-  ext ⟨t, -⟩
+  ext ⟨t, ht⟩
   change TensorProduct.map _ _ t = c • TensorProduct.map _ _ t
-  induction t using TensorProduct.induction_on with
+  clear ht
+  induction t using TensorProduct.inductionOn with
   | zero => simp
   | tmul v z =>
     rw [TensorProduct.map_tmul, TensorProduct.map_tmul, smul_tmul']
@@ -175,22 +175,6 @@ theorem centralTranslationMap_smul (c : K) (f : M →ₗ⁅K,𝔤⁆ N) :
 section Tensor
 
 variable [FiniteDimensional K L]
-
-theorem tensorDualEquivHom_tmul (n : N) (φ : Module.Dual K L) (l : L) :
-    tensorDualEquivHom P N L (n ⊗ₜ φ) l = φ l • n := by
-  simp [tensorDualEquivHom]
-
-theorem tensorDualEquivHom_map (k : N →ₗ⁅K,𝔤⁆ N') (t : N ⊗[K] Module.Dual K L) :
-    tensorDualEquivHom P N' L
-        (TensorProduct.LieModule.map k (LieModuleHom.id : Module.Dual K L →ₗ⁅K,𝔤⁆ _) t) =
-      (k : N →ₗ[K] N') ∘ₗ tensorDualEquivHom P N L t := by
-  induction t using TensorProduct.induction_on with
-  | zero => simp
-  | tmul n φ =>
-    ext l
-    rw [TensorProduct.LieModule.map_tmul, LinearMap.comp_apply, tensorDualEquivHom_tmul,
-      tensorDualEquivHom_tmul, LieModuleHom.id_apply, LieModuleHom.coe_toLinearMap, map_smul]
-  | add s t hs ht => simp only [map_add, hs, ht, LinearMap.comp_add]
 
 theorem tensorDualEquivHom_tensorHomAdjunction_apply (g : M ⊗[K] L →ₗ⁅K,𝔤⁆ N) (m : M) :
     tensorDualEquivHom P N L (tensorHomAdjunction P g m) =
@@ -261,7 +245,6 @@ def homCentralBlockEquiv (hM : IsCentralLocallyFinite P M) (χ : 𝓩 →ₐ[K] 
         have h3 : h v = 0 := (LieSubmodule.mem_bot _).mp ((disjoint_centralBlock P hθ).le_bot
           ((LieSubmodule.mem_inf _ _ _).mpr ⟨h1, mem_centralBlock_centralBlock P χ _⟩))
         rw [h3]
-        rfl
     | zero => simp
     | add v w _ _ hv hw => simp only [map_add, LieSubmodule.coe_add, hv, hw]
 
@@ -289,7 +272,8 @@ variable [CharZero K] [IsAlgClosed K]
 
 /-- The translation of a finitely generated module in `𝒪` by a finite-dimensional module in `𝒪`
 is finitely generated. -/
-theorem exists_finset_lieSpan_centralTranslation_eq_top_of_fg [FiniteDimensional K L]
+theorem exists_finset_lieSpan_centralTranslation_eq_top_of_fg (χ₁ χ₂ : 𝓩 →ₐ[K] K)
+    [FiniteDimensional K L]
     (hM : IsCategoryO P M) (hL : IsCategoryO P L) {S : Finset M}
     (hS : LieSubmodule.lieSpan K 𝔤 (S : Set M) = ⊤) :
     ∃ T : Finset (centralTranslation P L χ₁ χ₂ M),
@@ -311,7 +295,7 @@ variable [FiniteDimensional K L]
 /-- **Adjointness of translation functors** ([HumO] Prop 7.2 (a)), for all modules: for `M` in
 `𝒪` and a finite-dimensional `L` in `𝒪`,
 `Hom(pr_{χ₂}(pr_{χ₁} M ⊗ L), N) ≅ Hom(M, pr_{χ₁}(pr_{χ₂} N ⊗ L^*))`, `K`-linearly. -/
-def homTranslationEquiv (hM : IsCategoryO P M) (hL : IsCategoryO P L) :
+def homTranslationEquiv (χ₁ χ₂ : 𝓩 →ₐ[K] K) (hM : IsCategoryO P M) (hL : IsCategoryO P L) :
     (centralTranslation P L χ₁ χ₂ M →ₗ⁅K,𝔤⁆ N) ≃ₗ[K]
       (M →ₗ⁅K,𝔤⁆ centralTranslation P (Module.Dual K L) χ₂ χ₁ N) :=
   (homCentralBlockEquiv P (((hM.centralBlock P χ₁).tensorProduct hL).isCentralLocallyFinite P)
@@ -319,8 +303,9 @@ def homTranslationEquiv (hM : IsCategoryO P M) (hL : IsCategoryO P L) :
     (tensorHomAdjunction P).trans (homCentralBlockEquiv P (hM.isCentralLocallyFinite P) χ₁)
 
 /-- Naturality of `homTranslationEquiv` in `M`. -/
-theorem homTranslationEquiv_comp_left (hM' : IsCategoryO P M') (hM : IsCategoryO P M)
-    (hL : IsCategoryO P L) (f : M' →ₗ⁅K,𝔤⁆ M) (g : centralTranslation P L χ₁ χ₂ M →ₗ⁅K,𝔤⁆ N) :
+theorem homTranslationEquiv_comp_left (χ₁ χ₂ : 𝓩 →ₐ[K] K) (hM' : IsCategoryO P M')
+    (hM : IsCategoryO P M) (hL : IsCategoryO P L) (f : M' →ₗ⁅K,𝔤⁆ M)
+    (g : centralTranslation P L χ₁ χ₂ M →ₗ⁅K,𝔤⁆ N) :
     homTranslationEquiv P χ₁ χ₂ hM' hL (g.comp (centralTranslationMap P L χ₁ χ₂ f)) =
       (homTranslationEquiv P χ₁ χ₂ hM hL g).comp f := by
   simp only [homTranslationEquiv, LinearEquiv.trans_apply, centralTranslationMap]
@@ -330,7 +315,8 @@ theorem homTranslationEquiv_comp_left (hM' : IsCategoryO P M') (hM : IsCategoryO
     homCentralBlockEquiv_comp_left P (hM'.isCentralLocallyFinite P) (hM.isCentralLocallyFinite P)]
 
 /-- Naturality of `homTranslationEquiv` in `N`. -/
-theorem homTranslationEquiv_comp_right (hM : IsCategoryO P M) (hL : IsCategoryO P L)
+theorem homTranslationEquiv_comp_right (χ₁ χ₂ : 𝓩 →ₐ[K] K) (hM : IsCategoryO P M)
+    (hL : IsCategoryO P L)
     (g : centralTranslation P L χ₁ χ₂ M →ₗ⁅K,𝔤⁆ N) (k : N →ₗ⁅K,𝔤⁆ N') :
     homTranslationEquiv P χ₁ χ₂ hM hL (k.comp g) =
       (centralTranslationMap P (Module.Dual K L) χ₂ χ₁ k).comp
@@ -360,18 +346,19 @@ theorem lie_of_shortExact {S : ShortComplex (CategoryO.{u} P)} (hS : S.ShortExac
     Function.Injective S.f.hom.hom ∧ Function.Exact S.f.hom.hom S.g.hom.hom ∧
       Function.Surjective S.g.hom.hom := by
   have : PreservesFiniteLimits (IsObj.{u} P).ι :=
-    ((Functor.preservesFiniteLimits_tfae (IsObj.{u} P).ι).out 2 3).mp
-      fun _ _ f ↦ (IsObj.{u} P).preservesKernels_ι f
+    ((Functor.preservesFiniteLimits_tfae (IsObj.{u} P).ι).out 3 4).mp
+      (IsObj.{u} P).preservesKernels_ι
   have : PreservesFiniteColimits (IsObj.{u} P).ι :=
-    ((Functor.preservesFiniteColimits_tfae (IsObj.{u} P).ι).out 2 3).mp
-      fun _ _ f ↦ (IsObj.{u} P).preservesCokernels_ι f
+    ((Functor.preservesFiniteColimits_tfae (IsObj.{u} P).ι).out 3 4).mp
+      (IsObj.{u} P).preservesCokernels_ι
   have h := hS.map (IsObj.{u} P).ι
   exact ⟨h.moduleCat_injective_f,
     (ShortComplex.ShortExact.moduleCat_exact_iff_function_exact _).mp h.exact,
     h.moduleCat_surjective_g⟩
 
-variable (L : Type u) [AddCommGroup L] [Module K L] [LieRingModule 𝔤 L] [LieModule K 𝔤 L]
-  [FiniteDimensional K L] (χ₁ χ₂ : 𝓩 →ₐ[K] K)
+variable (L : Type u) [AddCommGroup L] [Module K L] [LieRingModule P.KacMoodyAlgebra L]
+  [LieModule K P.KacMoodyAlgebra L] [FiniteDimensional K L]
+  (χ₁ χ₂ : Subalgebra.center K (UniversalEnvelopingAlgebra K P.KacMoodyAlgebra) →ₐ[K] K)
 
 omit [IsAlgClosed K] in
 theorem isCategoryO_of_finiteDimensional' : IsCategoryO P L :=
@@ -426,10 +413,10 @@ theorem translationFunctor_shortExact {S : ShortComplex (CategoryO.{u} P)} (hS :
   exact shortExact_of_lie hf' hg' fun y hy ↦ ((exact_iff_ker_eq_range P _ _).mpr hex' y).mp hy
 
 instance : PreservesFiniteLimits (translationFunctor L χ₁ χ₂) :=
-  (((Functor.exact_tfae _).out 0 3).mp fun _ hS ↦ translationFunctor_shortExact L χ₁ χ₂ hS).1
+  (((Functor.exact_tfae _).out 1 4).mp fun _ hS ↦ translationFunctor_shortExact L χ₁ χ₂ hS).1
 
 instance : PreservesFiniteColimits (translationFunctor L χ₁ χ₂) :=
-  (((Functor.exact_tfae _).out 0 3).mp fun _ hS ↦ translationFunctor_shortExact L χ₁ χ₂ hS).2
+  (((Functor.exact_tfae _).out 1 4).mp fun _ hS ↦ translationFunctor_shortExact L χ₁ χ₂ hS).2
 
 /-- `Hom(T X, Y) ≅ Hom(X, T' Y)` in `𝒪`, from `homTranslationEquiv`. -/
 def translationHomEquiv (X Y : CategoryO.{u} P) :
