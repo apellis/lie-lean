@@ -130,6 +130,14 @@ theorem projective_of_isProjectiveO (Q : CategoryO.{w} P) (hQ : IsProjectiveO.{w
     ext m
     exact LieModuleHom.congr_fun hψ m
 
+/-- A module in `𝒪` that is projective in the sense of `IsProjectiveO` is projective in `𝒪`. -/
+theorem projective_mk (M : Type w) [AddCommGroup M] [Module K M] [LieRingModule 𝔤 M]
+    [LieModule K 𝔤 M] (hM : IsCategoryO P M)
+    (hS : ∃ S : Finset M, LieSubmodule.lieSpan K 𝔤 (S : Set M) = ⊤)
+    (hproj : IsProjectiveO.{w} P M) : Projective (mk M hM hS) :=
+  projective_of_isProjectiveO _ (hproj.of_retract (ofLieEquiv (P := P) M).symm.toLieModuleHom
+    (ofLieEquiv (P := P) M).toLieModuleHom (by ext; rfl))
+
 /-- A surjection onto an object of `𝒪` from a projective module in `𝒪` is a projective
 presentation. -/
 theorem nonempty_projectivePresentation (M : Type w) [AddCommGroup M] [Module K M]
@@ -138,8 +146,7 @@ theorem nonempty_projectivePresentation (M : Type w) [AddCommGroup M] [Module K 
     (hproj : IsProjectiveO.{w} P M) (π : M →ₗ⁅K,𝔤⁆ X.obj) (hπ : Function.Surjective π) :
     Nonempty (ProjectivePresentation X) := by
   let e := ofLieEquiv (P := P) M
-  have hQ : Projective (mk M hM hS) := projective_of_isProjectiveO _
-    (hproj.of_retract e.symm.toLieModuleHom e.toLieModuleHom (by ext; rfl))
+  have := projective_mk M hM hS hproj
   let f : mk M hM hS ⟶ X := (IsObj.{w} P).homMk (ofLieModuleHom (π.comp e.symm.toLieModuleHom))
   have hf : Epi f := (IsObj.{w} P).ι.epi_of_epi_map
     ((ModuleCat.epi_iff_surjective _).mpr fun x ↦ by
