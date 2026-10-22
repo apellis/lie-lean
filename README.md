@@ -275,8 +275,10 @@ Further proved results include:
   - [Lus] 41.1.6: PBW elements lie in `ℒ` and are congruent modulo `v⁻¹ℒ` to `±b` for a unique
     `b` in the canonical basis and a unique sign, for every reduced word
     (`PBWSignedCrystal.existsUnique_canonical_congruence`).
-  - **Not formalized:** [Lus] 41.1.9 (compatibility with the quantum Frobenius map, deferred item D2 of the
-    roadmap).
+  - [Lus] Prop. 7.1.5 (b): the higher-order quantum Serre relations hold in `f` over `ℚ(v)`
+    (`higherSerre_mem_radical`, `toQuotient_higherSerre`).
+  - **Not yet formalized:** [Lus] 41.1.9 (compatibility with the quantum Frobenius map, roadmap
+    item D2, in progress).
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`
   satisfy all braid relations, with no condition on the Dynkin diagram
   (`isBraidLiftable_braidEquivOfNotRoot`, `braidArtinHomOfNotRoot`; [Lus] 39.4.3), via the

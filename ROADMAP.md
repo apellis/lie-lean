@@ -3016,8 +3016,7 @@ Remaining: gradings and triangular decomposition; the super Gabber–Kac theorem
 
 ## Deferred and scheduled items
 
-D2 is deferred (maintainer decision 2026-10-14): do not start it until the maintainer schedules
-it. D1 was scheduled by the maintainer on 2026-10-14 (issue #180) and is largely done. The notes
+D2 was scheduled by the maintainer on 2026-10-22 and is in progress. D1 was scheduled by the maintainer on 2026-10-14 (issue #180) and is largely done. The notes
 record how each item is approached and what it does and does not make possible.
 
 ### D1. Canonical basis of `f` and the remainder of [Lus] 41.1.6
@@ -3085,15 +3084,20 @@ and the canonical bases of `L_q(λ)` and `U̇` follow Lusztig's Ch. 14, 19 and 2
 *Target.* At a root of unity, the action of the `Tᵢ` on `_S U̇` (already formalized,
 `Modified.braidArtinHomR`) is compatible with Lusztig's quantum Frobenius homomorphism.
 
+*Status.* Scheduled 2026-10-22. Done: [Lus] Prop. 7.1.5 (b), the higher-order quantum Serre
+relations `f_{i,j;n,m;e} = 0` in `f` over `ℚ(v)` for `e = ±1`, `m > an`
+(`LusztigF/HigherSerre.lean`: `higherSerre_mem_radical`, `toQuotient_higherSerre`; proved with
+the skew derivations `rₕ` in `'f`, not with commutators in `U`).
+
 *Missing prerequisites.*
-- Higher-order quantum Serre relations.
+- The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).
 - The quantum Frobenius homomorphism itself, between `U̇` at an `ℓ`-th root of unity and the
   modified algebra of the modified root datum, together with its splitting.
 - Divided-power formulas for the `Tᵢ` at roots of unity (the existing divided-power formulas are
   generic and specialize).
 
 *Approach.*
-1. Prove the higher-order Serre relations in `𝒜f`.
+1. Prove the higher-order Serre relations in `f` (done) and their consequence 7.1.7 in `𝒜f`.
 2. Construct the Frobenius homomorphism on `𝒜f`, then on `𝒜U̇`, then on `_S U̇`.
 3. Check 41.1.9 on generators using the existing divided-power formulas.
 
