@@ -314,7 +314,8 @@ theorem exists_isShapovalovElement_step [IsAlgClosed K] [FiniteDimensional K H]
     have h3 := hk'l l
     simp only [haγdef, haβdef]
     split_ifs with hl
-    · simp only [hl, ↓reduceIte] at h3
+    · subst hl
+      simp only [↓reduceIte] at h3
       omega
     · simp only [hl, ↓reduceIte] at h3
       omega
