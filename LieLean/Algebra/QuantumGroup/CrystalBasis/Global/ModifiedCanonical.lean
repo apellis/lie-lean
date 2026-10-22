@@ -58,7 +58,9 @@ justified by the generalized column comparison, following the method of 25.2.2. 
 the column, integrality and bar invariance are proved; `ModifiedCanonicalBasis` proves that
 these elements form rational and integral bases without target `hY`. `ModifiedCanonicalForm`
 proves normalized form transport; `ModifiedCanonicalSigned` proves agreement with the old
-construction under `hY`. The dominant-tensor characterization and its uniqueness retain `hY`.
+construction under `hY`. The dominant-tensor characterization and its uniqueness retain `hY`;
+`ModifiedCanonicalTransfer` proves (a), (b) for `columnCanonical` without `hY`, and derives `hY`
+from `Y`-regularity.
 
 ## Implementation notes
 

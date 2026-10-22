@@ -245,9 +245,16 @@ Further proved results include:
     `Modified.eq_zero_of_forall_form_eq_zero_of_transcendental`).
   - **Hypotheses of 25.2.1 and 26.3.1.** The original construction and dominant-tensor
     uniqueness in 25.2.1 assume `R.IsXRegular` and
-    `hY : ∀ N, ∃ λ dominant, ∀ i, N ≤ ⟨i, λ⟩`; that uniqueness retains `hY`.
-    Lusztig proves 25.2.1 for `Y`-regular root data, which satisfy `hY`, and 26.3.1 for every
-    root datum, by reduction to the simply connected case ([Lus] 25.2.2).
+    `hY : ∀ N, ∃ λ dominant, ∀ i, N ≤ ⟨i, λ⟩`; that uniqueness retains `hY`, and it fails
+    without it (affine `A₁` with dependent coroots). Lusztig states 25.2.1 for `Y`-regular root
+    data: for `Y` free of finite rank these satisfy `hY` (`exists_dom_of_isYRegular`), so 25.2.1
+    (a) holds as printed (`existsUnique_modifiedCanonical_of_isYRegular`). For every `X`-regular
+    root datum, with no `hY`, the transported element `Modified.columnCanonical` satisfies the
+    defining properties 25.2.1 (a), (b) (`modTensorAct_columnCanonical`,
+    `modTensorAct_columnCanonical_eq_zero`), by transport of `Λ_λ`, `Ψ` and `(b ◇ b'')_{λ,λ''}`
+    along the morphism of root data (`hwMap_smul`, `pairMap_tensorPsi`,
+    `pairMap_tensorCanonical`). 26.3.1 is proved for every root datum by reduction to the simply
+    connected case ([Lus] 25.2.2).
     The transported construction, 26.3.1(a–b), and nondegeneracy below need only `R.IsXRegular`:
     this remains a route hypothesis not present in the general printed statement.
   - **Column transport ([Lus] 23.2.5, 25.2.2).** `Modified.columnEquiv` and its integral

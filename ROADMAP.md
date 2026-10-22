@@ -3026,8 +3026,13 @@ assertion is the congruence of `θ_h^c` to `±b`, for a unique `b ∈ B`, modulo
   `PBWSignedCrystal.original_PBW_longest_unique_signed_exponent`).
 
 *Remaining.*
-- The original dominant-tensor uniqueness characterization of the canonical basis of `U̇` still
-  requires `hY`. The general basis and form construction via [Lus] 25.2.2 is proved for
+- Done (`CrystalBasis/Global/ModifiedCanonicalTransfer.lean`, `QuantumGroup/YRegular.lean`): the
+  transported elements `columnCanonical` satisfy 25.2.1 (a), (b) for every `X`-regular root
+  datum with no `hY` (`modTensorAct_columnCanonical`, `modTensorAct_columnCanonical_eq_zero`), and
+  `Y`-regularity implies `hY` for `Y` free of finite rank, so the dominant-tensor uniqueness holds
+  as printed (`existsUnique_modifiedCanonical_of_isYRegular`). Without `hY` that uniqueness fails
+  (affine `A₁` with dependent coroots), so it keeps `hY`; this is a boundary of the
+  characterization, not a missing proof. The general basis and form construction via [Lus] 25.2.2 is proved for
   `IsXRegular` without target `hY` (listed under "Status and open threads"): fixed-column and
   integral comparisons, transported integral bar-fixed elements and their rational and integral
   bases, form transport, Thm. 26.3.1 (a), (b), nondegeneracy, and agreement with the old
@@ -3468,7 +3473,10 @@ completed steps and continuation threads are:
   and `columnCanonical_eq_modifiedCanonical`, by the signed characterization and triangular
   leading coefficients. The old APIs are retained as compatibility statements.
   Remaining route hypothesis for the general printed 26.3.1: `IsXRegular`.
-  The original dominant-tensor uniqueness characterization retains `hY`.
+  The original dominant-tensor uniqueness characterization retains `hY` (necessarily; it holds for
+  `Y`-regular data, `existsUnique_modifiedCanonical_of_isYRegular`); properties 25.2.1 (a), (b)
+  hold for `columnCanonical` without `hY` (`modTensorAct_columnCanonical`,
+  `ModifiedCanonicalTransfer.lean`).
 - **Crystal bases of `L_q(λ)`** (M15): Kashiwara's grand loop ([HK] §5.3) is complete
   (`GrandLoop.allProp`), giving existence ([HK] Thm. 5.1.1, `GrandLoop.isCrystalBase`) and uniqueness
   ([HK] Lemma 5.2.3, `GrandLoop.eq_base_of_isCrystalBase`) of the crystal base `(L(λ), B(λ))` of

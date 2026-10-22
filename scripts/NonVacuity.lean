@@ -96,4 +96,18 @@ example : Nonempty (((Unit → ℤ) × (Unit → ℤ) →+ ℤ) × canonicalBasi
     canonicalBasis sl2Datum) :=
   ⟨(0, ⟨_, one_mem_canonicalBasis sl2Datum⟩, ⟨_, one_mem_canonicalBasis sl2Datum⟩)⟩
 
+/-- The extended root datum of `sl₂` is `Y`-regular. -/
+theorem hYreg1 : R1.IsYRegular :=
+  linearIndependent_unique_iff.2 (by simp [Prod.ext_iff, funext_iff])
+
+/-- [Lus] Thm. 25.2.1 (a) with uniqueness, from `Y`-regularity. -/
+example := existsUnique_modifiedCanonical_of_isYRegular hR1 hYreg1 0
+  (one_mem_canonicalBasis sl2Datum) (one_mem_canonicalBasis sl2Datum)
+
+/-- [Lus] Thm. 25.2.1 (a) for the transported element, without `hY`. -/
+example (Λ : GrandLoop.Dom R1) :=
+  modTensorAct_columnCanonical hR1 Λ Λ 0 (one_mem_canonicalBasis sl2Datum)
+    (one_mem_canonicalBasis sl2Datum) (sub_self _) (one_mem_canonicalBasisHW Λ)
+    (one_mem_canonicalBasisHW Λ)
+
 end NonVacuity
