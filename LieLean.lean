@@ -500,6 +500,7 @@ import LieLean.Algebra.QuantumGroup.Hopf
 import LieLean.Algebra.QuantumGroup.Integrable
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Classical
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Rank
+import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.ShapovalovSign
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Verma
 import LieLean.Algebra.QuantumGroup.Levi
 import LieLean.Algebra.QuantumGroup.LusztigF.Bar
