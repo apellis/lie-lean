@@ -3107,6 +3107,9 @@ the skew derivations `rₕ` in `'f`, not with commutators in `U`). [Lus] Lemma 3
 `qBinomInt_add`, our argument). [Lus] 34.1.3 (a), 34.1.4 (a) (`RootOfUnity/GaussBinomialSums.lean`:
 `prod_qBinomialU_mul_root`, `sum_qBinomialU_root`; the latter via the telescoping partial sums
 `sum_neg_one_pow_qBinomial`, our argument), and [Lus] 35.1.5 (a) (`gaussBinom_mul_mul_eq_pow`).
+[Lus] 2.2.4: the Cartan datum `(I, ∘)`, `i ∘ j = lᵢ lⱼ (i · j)` with `lᵢ` least such that
+`l ∣ lᵢ dᵢ` (`Frobenius/CartanDatum.lean`: `LusztigCartanDatum.frobOrder`, `frobOrder_dvd_iff`,
+`frobenius`, `frobenius_d`, `frobOrder_mul_cartanMatrix_frobenius`).
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).
