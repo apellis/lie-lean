@@ -126,7 +126,7 @@ theorem facetShift_weylDot {lam μ : Dual K H}
       P.weylDot hA.isGeneralizedCartan w μ := by
   have h : ∃ x, P.weylDot hA.isGeneralizedCartan x lam = P.weylDot hA.isGeneralizedCartan w lam :=
     ⟨w, rfl⟩
-  rw [facetShift, dite_cond_eq_true (eq_true h)]
+  rw [facetShift, dite_eq_left_of_eq_true (eq_true h)]
   exact weylDot_eq_of_weylDot_eq P hA hfacet h.choose_spec
 
 /-- **The map of Proposition 7.8 on the completed Grothendieck group**:
@@ -166,7 +166,8 @@ theorem coeffAt_translationClassMap_weylDot {lam μ : Dual K H}
   · intro η hη hne
     obtain ⟨x, rfl⟩ := (mem_dotOrbit P hA).mp hη
     rw [facetShift_weylDot P hA hfacet, CharacterRing.coeff_exp,
-      ite_cond_eq_false _ _ (eq_false fun h ↦ hne (weylDot_eq_of_weylDot_eq P hA hfacet' h.symm)),
+      ite_eq_right_of_eq_false _ _
+        (eq_false fun h ↦ hne (weylDot_eq_of_weylDot_eq P hA hfacet' h.symm)),
       mul_zero]
 
 /-- `translationClassMap λ μ` vanishes off the orbit `W·μ`. -/
@@ -178,8 +179,8 @@ theorem coeffAt_translationClassMap_eq_zero (lam μ : Dual K H) (c : P.Character
   rw [coeffAt_translationClassMap]
   refine Finset.sum_eq_zero fun η hη ↦ ?_
   obtain ⟨x, rfl⟩ := (mem_dotOrbit P hA).mp hη
-  rw [facetShift, dite_cond_eq_true (eq_true ⟨x, rfl⟩), CharacterRing.coeff_exp,
-    ite_cond_eq_false _ _ (eq_false (hξ _).symm), mul_zero]
+  rw [facetShift, dite_eq_left_of_eq_true (eq_true ⟨x, rfl⟩), CharacterRing.coeff_exp,
+    ite_eq_right_of_eq_false _ _ (eq_false (hξ _).symm), mul_zero]
 
 /-- **Isomorphism of Grothendieck groups** (Humphreys, GSM 94, Proposition 7.8): on classes
 supported on `W·λ`, `translationClassMap μ λ` is inverse to `translationClassMap λ μ`. -/
@@ -242,8 +243,6 @@ theorem translation_irreducible_of_sameFacet_of_isAntidominant {lam μ ν : Dual
 
 section Modules
 
-variable {V : Type*} [AddCommGroup V] [Module K V] [LieRingModule 𝔤 V] [LieModule K 𝔤 V]
-
 include hA in
 /-- **Multiplicities under translation within a facet** (Humphreys, GSM 94, §7.8): for `V ∈ 𝒪`
 in the block of `λ`, `[T_λ^μ V : L(w·μ)] = [V : L(w·λ)]` for every `w ∈ W`. -/
@@ -258,6 +257,8 @@ theorem multiplicity_translation_of_sameFacet {lam μ ν : Dual K H}
         P.corootPairing hA.isGeneralizedCartan (lam + P.rho) v i = 0)
     (hν : P.IsDominantIntegral ν) {z : Dual K H ≃ₗ[K] Dual K H}
     (hz : z ∈ P.weylGroup hA.isGeneralizedCartan) (hzν : z (μ - lam) = ν)
+    {V : Type*} [AddCommGroup V] [Module K V] [LieRingModule P.KacMoodyAlgebra V]
+    [LieModule K P.KacMoodyAlgebra V]
     (hV : IsCategoryO P V) (hVlam : centralBlock P V (centralCharacter P lam) = ⊤)
     (w : P.weylGroup hA.isGeneralizedCartan) :
     (hV.centralTranslation P (IrreducibleModule.isCategoryO P ν) (centralCharacter P lam)
@@ -277,13 +278,13 @@ theorem multiplicity_translation_of_sameFacet {lam μ ν : Dual K H}
   · obtain ⟨e⟩ := translation_irreducible_of_sameFacet_of_isAntidominant P hA hlam hμ hfacet
       hfacet' hν hz hzν w
     rw [← IsCategoryO.multiplicity_congr (IrreducibleModule.isCategoryO P _) _ e,
-      IrreducibleModule.multiplicity_eq, ite_cond_eq_true _ _ (eq_true rfl), mul_one]
+      IrreducibleModule.multiplicity_eq, ite_eq_left_of_eq_true _ _ (eq_true rfl), mul_one]
   · intro η hη hne
     obtain ⟨x, rfl⟩ := (mem_dotOrbit P hA).mp hη
     obtain ⟨e⟩ := translation_irreducible_of_sameFacet_of_isAntidominant P hA hlam hμ hfacet
       hfacet' hν hz hzν x
     rw [← IsCategoryO.multiplicity_congr (IrreducibleModule.isCategoryO P _) _ e,
-      IrreducibleModule.multiplicity_eq, ite_cond_eq_false _ _
+      IrreducibleModule.multiplicity_eq, ite_eq_right_of_eq_false _ _
         (eq_false fun h ↦ hne (weylDot_eq_of_weylDot_eq P hA hfacet' h.symm)), mul_zero]
 
 include hA in
@@ -301,6 +302,8 @@ theorem multiplicities_translation_of_sameFacet {lam μ ν : Dual K H}
         P.corootPairing hA.isGeneralizedCartan (lam + P.rho) v i = 0)
     (hν : P.IsDominantIntegral ν) {z : Dual K H ≃ₗ[K] Dual K H}
     (hz : z ∈ P.weylGroup hA.isGeneralizedCartan) (hzν : z (μ - lam) = ν)
+    {V : Type*} [AddCommGroup V] [Module K V] [LieRingModule P.KacMoodyAlgebra V]
+    [LieModule K P.KacMoodyAlgebra V]
     (hV : IsCategoryO P V) (hVlam : centralBlock P V (centralCharacter P lam) = ⊤) :
     (hV.centralTranslation P (IrreducibleModule.isCategoryO P ν) (centralCharacter P lam)
       (centralCharacter P μ)).multiplicities =
@@ -340,13 +343,13 @@ theorem translationClassMap_exp {lam μ : Dual K H}
     rw [coeffAt_translationClassMap_weylDot P hA hfacet hfacet', CharacterRing.coeff_exp,
       CharacterRing.coeff_exp]
     by_cases h : P.weylDot hA.isGeneralizedCartan x lam = P.weylDot hA.isGeneralizedCartan w lam
-    · rw [ite_cond_eq_true _ _ (eq_true h),
-        ite_cond_eq_true _ _ (eq_true (weylDot_eq_of_weylDot_eq P hA hfacet h))]
-    · rw [ite_cond_eq_false _ _ (eq_false h), ite_cond_eq_false _ _
+    · rw [ite_eq_left_of_eq_true _ _ (eq_true h),
+        ite_eq_left_of_eq_true _ _ (eq_true (weylDot_eq_of_weylDot_eq P hA hfacet h))]
+    · rw [ite_eq_right_of_eq_false _ _ (eq_false h), ite_eq_right_of_eq_false _ _
         (eq_false fun h' ↦ h (weylDot_eq_of_weylDot_eq P hA hfacet' h'))]
   · push Not at hξ
     rw [coeffAt_translationClassMap_eq_zero P hA lam μ _ hξ, CharacterRing.coeff_exp,
-      ite_cond_eq_false _ _ (eq_false (hξ w).symm)]
+      ite_eq_right_of_eq_false _ _ (eq_false (hξ w).symm)]
 
 include hA in
 /-- Proposition 7.8 on Verma classes: `translationClassMap λ μ [M(w·λ)] = [M(w·μ)]`. -/
@@ -362,10 +365,11 @@ theorem translationClassMap_verma {lam μ ν : Dual K H}
     (hν : P.IsDominantIntegral ν) {z : Dual K H ≃ₗ[K] Dual K H}
     (hz : z ∈ P.weylGroup hA.isGeneralizedCartan) (hzν : z (μ - lam) = ν)
     (w : P.weylGroup hA.isGeneralizedCartan) :
-    translationClassMap P hA lam μ (IsCategoryO.multiplicities
+    translationClassMap P hA lam μ (IsCategoryO.multiplicities (P := P)
         (V := VermaModule P (P.weylDot hA.isGeneralizedCartan w lam))
         (VermaModule.isCategoryO P _)) =
-      IsCategoryO.multiplicities (V := VermaModule P (P.weylDot hA.isGeneralizedCartan w μ))
+      IsCategoryO.multiplicities (P := P)
+        (V := VermaModule P (P.weylDot hA.isGeneralizedCartan w μ))
         (VermaModule.isCategoryO P _) := by
   have hχ : centralCharacter P (P.weylDot hA.isGeneralizedCartan w lam) =
       centralCharacter P lam := centralCharacter_weyl P hA.isGeneralizedCartan w.property lam
