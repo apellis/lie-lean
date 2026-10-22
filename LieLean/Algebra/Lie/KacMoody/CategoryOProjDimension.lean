@@ -45,7 +45,7 @@ factors of `N(w·Λ)` are `L(y·Λ)` with `w < y`, so `ℓ(y) > ℓ(w)`
   GSM 94, AMS 2008, §6.9.
 -/
 
-open CategoryTheory Limits LieModule
+open CategoryTheory Limits LieModule Module
 
 noncomputable section
 
