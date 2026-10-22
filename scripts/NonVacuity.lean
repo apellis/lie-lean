@@ -146,4 +146,12 @@ example : gaussBinom v5 2 1 = 0 :=
 example : (v5 : ZMod 5) ^ (2 ^ 2 + 2) = (-1) ^ (2 + 1) :=
   pow_sq_add_eq_of_root hv5 hv5prim (by norm_num)
 
+/-- [Lus] 34.1.3 (a): `[2; 2] [4; 2] = 2! v^4` at `v = 2 ∈ 𝔽₅`. -/
+example : ∏ j ∈ Finset.range 2, qBinomialU v5 (2 * (j + 1)) 2 =
+    (Nat.factorial 2 : ZMod 5) * (v5 : ZMod 5) ^ (2 ^ 2 * Nat.choose 2 2) :=
+  prod_qBinomialU_mul_root hv5 hv5prim (by norm_num) 2
+
+/-- [Lus] 34.1.4 (a) at `v = 2 ∈ 𝔽₅`, `r = 0`, `a = 1`. -/
+example := sum_qBinomialU_root (r := 0) (a := 1) hv5 hv5prim (by norm_num) (by norm_num)
+
 end NonVacuity

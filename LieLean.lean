@@ -160,6 +160,8 @@ import LieLean.Algebra.Lie.KacMoody.StrongLinkage
 import LieLean.Algebra.Lie.KacMoody.Super.Enveloping
 import LieLean.Algebra.Lie.KacMoody.Super.Grading
 import LieLean.Algebra.Lie.KacMoody.Super.TensorRep
+import LieLean.Algebra.Lie.KacMoody.Super.Auxiliary
+import LieLean.Algebra.Lie.KacMoody.Super.Triangular
 import LieLean.Algebra.Lie.KacMoody.Super.Verma
 import LieLean.Algebra.Lie.KacMoody.TensorProduct
 import LieLean.Algebra.Lie.KacMoody.TensorVerma
@@ -645,6 +647,7 @@ import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.Isometry
 import LieLean.Algebra.QuantumGroup.RestrictedBraidIsometry.PBWRecursion
 import LieLean.Algebra.QuantumGroup.RootDatumHom
 import LieLean.Algebra.QuantumGroup.RootOfUnity.GaussBinomial
+import LieLean.Algebra.QuantumGroup.RootOfUnity.GaussBinomialSums
 import LieLean.Algebra.QuantumGroup.Sl2
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Equivalence
 import LieLean.Algebra.QuantumGroup.Sl2.Classification.Uniqueness
