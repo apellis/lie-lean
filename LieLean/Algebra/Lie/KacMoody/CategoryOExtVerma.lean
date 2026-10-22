@@ -210,6 +210,15 @@ theorem stdStepMapO_apply (X : CategoryO.{u} P) {N₀ N₁ : LieSubmodule K 𝔤
     stdStepMapO X hle e y = ofLieEquiv (P := P) (VermaModule P μ) (stdStepMap hle e y) :=
   rfl
 
+theorem stdStepMapO_eq_zero (X : CategoryO.{u} P) {N₀ N₁ : LieSubmodule K 𝔤 X.obj}
+    {μ : Dual K H} (hle : N₀ ≤ N₁)
+    (e : VermaModule P μ ≃ₗ⁅K,𝔤⁆ N₁.map (LieSubmodule.Quotient.mk' N₀)) {y : N₁}
+    (hy : (y : X.obj) ∈ N₀) : stdStepMapO X hle e y = 0 := by
+  have h : stdStepMap hle e y = stdStepMap hle e 0 := by
+    rw [map_zero]
+    exact (stdStepMap_eq_zero_iff hle e y).mpr hy
+  rw [← map_zero (stdStepMapO X hle e), stdStepMapO_apply, stdStepMapO_apply, h]
+
 /-- `Extⁿ(N₁, Y) = 0` for a step `N₁ / N₀ ≅ M(μ)` of a standard filtration with
 `Extⁿ(N₀, Y) = 0 = Extⁿ(M(μ), Y)`. -/
 theorem ext_eq_zero_of_step (X Y : CategoryO.{u} P) {n : ℕ} {N₀ N₁ : LieSubmodule K 𝔤 X.obj}
@@ -220,8 +229,7 @@ theorem ext_eq_zero_of_step (X Y : CategoryO.{u} P) {n : ℕ} {N₀ N₁ : LieSu
     ∀ x : Abelian.Ext.{u} (ofSub X N₁) Y n, x = 0 :=
   Abelian.Ext.eq_zero_of_shortExact_left
     (shortExact_subComplex X hle (verma P μ) (stdStepMapO X hle e)
-      (fun x hx ↦ by
-        rw [stdStepMapO_apply, (stdStepMap_eq_zero_iff hle e _).mpr hx, map_zero])
+      (fun _ hx ↦ stdStepMapO_eq_zero X hle e hx)
       ((ofLieEquiv (P := P) _).surjective.comp (surjective_stdStepMap hle e))
       (fun y hy ↦ (stdStepMap_eq_zero_iff hle e y).mp
         ((ofLieEquiv (P := P) _).injective (hy.trans (map_zero _).symm)))) h₀ hμ
@@ -239,6 +247,7 @@ theorem ext_eq_zero_of_isStdFiltered (X Y : CategoryO.{u} P) {n : ℕ}
     exact ext_eq_zero_of_step X Y hle e (ih fun ν hν ↦ hY ν (Multiset.mem_cons_of_mem hν))
       (hY μ (Multiset.mem_cons_self _ _))
 
+omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 /-- A nonzero endomorphism of `M(ν)` is surjective. -/
 theorem surjective_of_ne_zero_of_eq {κ ν : Dual K H}
     {g : VermaModule P κ →ₗ⁅K,𝔤⁆ VermaModule P ν} (hg : g ≠ 0) (hκ : κ = ν) :
@@ -322,8 +331,7 @@ theorem ext_inf_ker_eq_zero_aux [DecidableEq (Dual K H)] (X Y : CategoryO.{u} P)
         refine Abelian.Ext.eq_zero_of_shortExact_left
           (shortExact_subComplex X hle' (verma P κ) g' (fun x hx ↦ ?_) (fun m ↦ ?_)
             (fun y hy ↦ ?_)) hext (hY κ hκmem hκν)
-        · change stdStepMapO X hle e ⟨x, hle hx.1⟩ = 0
-          rw [stdStepMapO_apply, hstep0 x hx.1, map_zero]
+        · exact stdStepMapO_eq_zero X hle e hx.1
         · obtain ⟨y, hy⟩ := surjective_stdStepMap hle e
             ((ofLieEquiv (P := P) (VermaModule P κ)).symm m)
           obtain ⟨x, hx, hφx⟩ := hsurj (φ y)
@@ -335,7 +343,8 @@ theorem ext_inf_ker_eq_zero_aux [DecidableEq (Dual K H)] (X Y : CategoryO.{u} P)
             rw [← map_sub]
             rfl
           change stdStepMapO X hle e ⟨(y : X.obj) - x, hmem.1⟩ = m
-          rw [stdStepMapO_apply, hsub, hstep0 x hx, sub_zero, hy, LieModuleEquiv.apply_symm_apply]
+          rw [stdStepMapO_apply, hsub, hstep0 x hx, sub_zero, hy]
+          exact (ofLieEquiv (P := P) (VermaModule P κ)).apply_symm_apply m
         · have h1 : stdStepMap hle e ⟨y, (y.2 : (y : X.obj) ∈ N₁ ⊓ φ.ker).1⟩ = 0 :=
             (ofLieEquiv (P := P) _).injective (hy.trans (map_zero _).symm)
           exact ⟨(stdStepMap_eq_zero_iff hle e _).mp h1, y.2.2⟩
