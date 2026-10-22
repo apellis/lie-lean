@@ -51,9 +51,9 @@ def weightSign (f : I → K) (μ : I →₀ ℕ) : K := μ.prod fun k m ↦ f k 
 
 @[simp] lemma weightSign_zero (f : I → K) : weightSign f 0 = 1 := by simp [weightSign]
 
-lemma weightSign_add [DecidableEq I] (f : I → K) (μ μ' : I →₀ ℕ) :
-    weightSign f (μ + μ') = weightSign f μ * weightSign f μ' :=
-  Finsupp.prod_add_index' (fun _ ↦ pow_zero _) fun _ _ _ ↦ pow_add _ _ _
+lemma weightSign_add (f : I → K) (μ μ' : I →₀ ℕ) :
+    weightSign f (μ + μ') = weightSign f μ * weightSign f μ' := by
+  classical exact Finsupp.prod_add_index' (fun _ ↦ pow_zero _) fun _ _ _ ↦ pow_add _ _ _
 
 @[simp] lemma weightSign_single (f : I → K) (i : I) (m : ℕ) :
     weightSign f (Finsupp.single i m) = f i ^ m :=
@@ -62,20 +62,22 @@ lemma weightSign_add [DecidableEq I] (f : I → K) (μ μ' : I →₀ ℕ) :
 lemma weightSign_ne_zero {f : I → K} (hf : ∀ k, f k ≠ 0) (μ : I →₀ ℕ) : weightSign f μ ≠ 0 :=
   Finset.prod_ne_zero_iff.2 fun k _ ↦ pow_ne_zero _ (hf k)
 
-lemma weightSign_mul [DecidableEq I] (f g : I → K) (μ : I →₀ ℕ) :
+lemma weightSign_mul (f g : I → K) (μ : I →₀ ℕ) :
     weightSign (fun k ↦ f k * g k) μ = weightSign f μ * weightSign g μ := by
   simp only [weightSign, Finsupp.prod, mul_pow, Finset.prod_mul_distrib]
 
-lemma prod_map_eq_weightSign [DecidableEq I] (f : I → K) (w : List I) :
+lemma prod_map_eq_weightSign (f : I → K) (w : List I) :
     (w.map f).prod = weightSign f (wordWeight w) := by
+  classical
   induction w with
   | nil => simp
   | cons i w ih => rw [List.map_cons, List.prod_cons, ih, wordWeight_cons, weightSign_add,
       weightSign_single, pow_one]
 
 /-- Removing one letter `i` from a weight with `μᵢ ≠ 0`. -/
-lemma weightSign_tsub_single [DecidableEq I] (f : I → K) {μ : I →₀ ℕ} {i : I} (h : μ i ≠ 0) :
+lemma weightSign_tsub_single (f : I → K) {μ : I →₀ ℕ} {i : I} (h : μ i ≠ 0) :
     weightSign f μ = f i * weightSign f (μ - Finsupp.single i 1) := by
+  classical
   conv_lhs => rw [← single_add_tsub_single h, add_comm]
   rw [weightSign_add, weightSign_single, pow_one, mul_comm]
 
@@ -95,6 +97,7 @@ lemma signTwist_mem {μ : I →₀ ℕ} {y : LusztigF K I} (hy : y ∈ wordSpan 
   | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
   | smul a y _ hy => rw [map_smul]; exact Submodule.smul_mem _ _ hy
 
+omit [DecidableEq I] in
 /-- `T(θⱼ y) = ∏ₖ σ(j, k)^{μₖ} θⱼ T(y)` for `y` of weight `μ`. -/
 lemma signTwist_ι_mul (j : I) {μ : I →₀ ℕ} {y : LusztigF K I} (hy : y ∈ wordSpan K μ) :
     signTwist σ (ι K j * y) = weightSign (σ j) μ • (ι K j * signTwist σ y) := by
@@ -155,8 +158,9 @@ theorem vermaOp_signTwist {i : I} {c c' : (I →₀ ℕ) → K} {s : K} (hσi : 
       · simp
 
 /-- **The Verma-type word operators under the twist.** Under the hypotheses of
-`LusztigF.vermaOp_signTwist` at every `i`, with `sᵢ ≠ 0` and `σ` nowhere zero, for each word `u`
-and weight `μ` there is `κ ≠ 0` with `E_u^{c}(T y) = κ · T(E_u^{c'} y)` for all `y` of weight `μ`. -/
+`LusztigF.vermaOp_signTwist` at every `i`, with `sᵢ ≠ 0` and `σ` nowhere zero, for each word
+`u` and weight `μ` there is `κ ≠ 0` with `E_u^{c}(T y) = κ · T(E_u^{c'} y)` for all `y` of
+weight `μ`. -/
 theorem vermaWordOp_signTwist {c c' : I → (I →₀ ℕ) → K} {s : I → K} (hs : ∀ i, s i ≠ 0)
     (hσ0 : ∀ i j, σ i j ≠ 0) (hσd : ∀ i, σ i i = 1)
     (hc : ∀ i μ, c i μ * weightSign (σ i) μ = s i * weightSign (fun k ↦ σ k i) μ * c' i μ)
@@ -250,22 +254,27 @@ lemma stdWeightOver_coroot (n : I → ℕ) (i : I) :
     stdWeightOver D n ((Matrix.Realization.std D.cartanMatrix K).coroot i) = n i := by
   simp [stdWeightOver, Matrix.Realization.std, Pi.single_apply]
 
+omit [Fintype I] in
 /-- **The classical kernel.** If `y ∈ 'f_ν` with `νᵢ ≤ nᵢ` for all `i` pairs to zero with all
 words for the classical Shapovalov pairing of highest weight `n`, then `y` lies in the span of
 the classical Serre products of weight `ν`. -/
-theorem mem_serreSpan_of_shapovalovMap_eq_zero (n : I → ℕ) {ν : I →₀ ℕ} (hν : ∀ i, ν i ≤ n i)
+theorem mem_serreSpan_of_shapovalovMap_eq_zero [Finite I] (n : I → ℕ) {ν : I →₀ ℕ}
+    (hν : ∀ i, ν i ≤ n i)
     {y : LusztigF K I} (hy : y ∈ weightSpace K ν)
     (h0 : shapovalovMap (classicalCoeff K D n) ν y = 0) :
-    y ∈ serreSpan D (fun _ ↦ (1 : K)) ν :=
-  mem_serreSpan_of_vermaForm_eq_zero D (Matrix.Realization.std D.cartanMatrix K)
-    (stdWeightOver_coroot D n) hν hy fun w hw ↦ congr_fun h0 ⟨w, hw⟩
+    y ∈ serreSpan D (fun _ ↦ (1 : K)) ν := by
+  have := Fintype.ofFinite I
+  exact mem_serreSpan_of_vermaForm_eq_zero D (Matrix.Realization.std D.cartanMatrix K)
+      (stdWeightOver_coroot D n) hν hy fun w hw ↦ congr_fun h0 ⟨w, hw⟩
 
+omit [Fintype I] in
 /-- **The quasi-classical kernel.** Let `qᵢ² = 1` with `qᵢ^{-aᵢⱼ} = qⱼ^{-aⱼᵢ}` for `i ≠ j`, and
 let the coefficients `c` differ from the classical ones of highest weight `n` by the sign character
 `μ ↦ ∏ₖ qᵢ^{-aᵢₖ μₖ}` and nonzero scalars `sᵢ`. If `y ∈ 'f_ν` with `νᵢ ≤ nᵢ` pairs to zero with all
 words for the pairing `S_c`, then `y` lies in the span of the Serre products of weight `ν` with
 parameters `q`. -/
-theorem mem_serreSpan_of_shapovalovMap_eq_zero_of_sq_eq_one {q : I → K} (hq : ∀ i, q i ^ 2 = 1)
+theorem mem_serreSpan_of_shapovalovMap_eq_zero_of_sq_eq_one [Finite I] {q : I → K}
+    (hq : ∀ i, q i ^ 2 = 1)
     (hsym : ∀ i j, i ≠ j → q i ^ (serreExp D i j - 1) = q j ^ (serreExp D j i - 1))
     (n : I → ℕ) {c : I → (I →₀ ℕ) → K} {s : I → K} (hs : ∀ i, s i ≠ 0)
     (hc : ∀ i μ, c i μ =
@@ -273,6 +282,7 @@ theorem mem_serreSpan_of_shapovalovMap_eq_zero_of_sq_eq_one {q : I → K} (hq : 
     {ν : I →₀ ℕ} (hν : ∀ i, ν i ≤ n i) {y : LusztigF K I} (hy : y ∈ weightSpace K ν)
     (h0 : shapovalovMap c ν y = 0) :
     y ∈ serreSpan D q ν := by
+  have := Fintype.ofFinite I
   let _ : LinearOrder I := IsWellOrder.linearOrder WellOrderingRel
   set σ : I → I → K := fun i j ↦ if i < j then q i ^ (serreExp D i j - 1) else 1
   have hσ : ∀ i j, σ i j ^ 2 = 1 := fun i j ↦ by
