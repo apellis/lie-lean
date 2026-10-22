@@ -50,15 +50,15 @@ variable (X : CategoryO.{u} P) {S : ShortComplex (CategoryO.{u} P)} (hS : S.Shor
 def postcompLinear {Y Y' : CategoryO.{u} P} (f : Y ⟶ Y') (n : ℕ) :
     Abelian.Ext.{u} X Y n →ₗ[K] Abelian.Ext.{u} X Y' n where
   toFun x := x.comp (Abelian.Ext.mk₀ f) (add_zero n)
-  map_add' x y := Abelian.Ext.add_comp _ _ _ _
-  map_smul' r x := Abelian.Ext.smul_comp _ _ _ r
+  map_add' _ _ := Abelian.Ext.add_comp _ _ _ _
+  map_smul' r _ := Abelian.Ext.smul_comp _ _ _ r
 
 /-- The connecting map `Extⁿ(X, S.X₃) → Extⁿ⁺¹(X, S.X₁)`, as a linear map. -/
 def connectingLinear (n : ℕ) :
     Abelian.Ext.{u} X S.X₃ n →ₗ[K] Abelian.Ext.{u} X S.X₁ (n + 1) where
   toFun x := x.comp hS.extClass rfl
-  map_add' x y := Abelian.Ext.add_comp _ _ _ _
-  map_smul' r x := Abelian.Ext.smul_comp _ _ _ r
+  map_add' _ _ := Abelian.Ext.add_comp _ _ _ _
+  map_smul' r _ := Abelian.Ext.smul_comp _ _ _ r
 
 include hS in
 theorem exact_postcompLinear (n : ℕ) :
@@ -89,10 +89,10 @@ theorem injective_postcompLinear_zero : Function.Injective (postcompLinear X S.f
   rw [Abelian.Ext.mk₀_comp_mk₀, Abelian.Ext.mk₀_eq_zero_iff] at hx
   rw [(cancel_mono S.f).mp (hx.trans zero_comp.symm), Abelian.Ext.mk₀_zero]
 
+include hS in
 /-- **Alternating sums along the long exact sequence.** For `0 → A → B → C → 0` short exact and
 `Ext^{N+1}(X, A) = 0`, `∑_{n ≤ N} (-1)ⁿ dim Extⁿ(X, B)` is the sum of the corresponding sums for
 `A` and `C`. -/
-include hS in
 theorem sum_finrank_ext_eq_add (N : ℕ)
     (hN : ∀ x : Abelian.Ext.{u} X S.X₁ (N + 1), x = 0) :
     ∑ n ∈ Finset.range (N + 1), (-1 : ℤ) ^ n * finrank K (Abelian.Ext.{u} X S.X₂ n) =
@@ -124,7 +124,8 @@ theorem sum_finrank_ext_eq_add (N : ℕ)
   have hrd : rd N = 0 := by
     have : LinearMap.range (connectingLinear X hS N) = ⊥ :=
       eq_bot_iff.mpr fun x _ ↦ (Submodule.mem_bot K).mpr (hN x)
-    simp only [rd, this, finrank_bot, Nat.cast_zero]
+    simp only [rd]
+    rw [this, finrank_bot, Nat.cast_zero]
   -- the alternating sum of `dim B - dim A - dim C` telescopes to `± rd M`
   have key (M : ℕ) : ∑ n ∈ Finset.range (M + 1), (-1 : ℤ) ^ n *
       ((finrank K (Abelian.Ext.{u} X S.X₂ n) : ℤ) - finrank K (Abelian.Ext.{u} X S.X₁ n) -
