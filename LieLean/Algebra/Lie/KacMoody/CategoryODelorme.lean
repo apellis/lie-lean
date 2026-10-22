@@ -214,6 +214,7 @@ theorem hasDelormeFormula_ofSub_bot (X : CategoryO.{u} P) : HasDelormeFormula hA
   ⟨∅, fun μ _ ↦ eulerChar_ofSub_bot hA X μ, fun ν ↦ by
     rw [multiplicity_ofSub_bot, delormeSum, Finset.sum_empty, Nat.cast_zero]⟩
 
+omit [IsAlgClosed K] in
 theorem multiplicity_dualVerma (lam ν : Dual K H) :
     (dualVerma P lam).property.1.multiplicity ν =
       (VermaModule.isCategoryO P lam).multiplicity ν := by
@@ -311,6 +312,7 @@ theorem ncard_dotOrbitBelow_lt {μ κ : Dual K H} (hκ : κ ∈ dotOrbitBelow P 
   exact Set.ncard_lt_ncard ((Set.ssubset_iff_of_subset hsub).mpr
     ⟨κ, ⟨⟨x, hx⟩, hκμ, hne⟩, fun h ↦ h.2.2 rfl⟩) (finite_dotOrbitBelow hA μ)
 
+omit [Fact A.IsFiniteCartan] in
 theorem mem_dotOrbitBelow_of_multiplicity {lam ν : Dual K H}
     (h : (VermaModule.isCategoryO P lam).multiplicity ν ≠ 0) (hne : ν ≠ lam) :
     ν ∈ dotOrbitBelow P hA lam := by
