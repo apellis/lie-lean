@@ -337,6 +337,7 @@ import LieLean.Algebra.QuantumGroup.BraidAction.FiniteTypeArtin
 import LieLean.Algebra.QuantumGroup.CartanDatum
 import LieLean.Algebra.QuantumGroup.CategoryOInt
 import LieLean.Algebra.QuantumGroup.CategoryOIntTensor
+import LieLean.Algebra.QuantumGroup.ChangeOfRings.Basic
 import LieLean.Algebra.QuantumGroup.Character
 import LieLean.Algebra.QuantumGroup.CompleteReducibility
 import LieLean.Algebra.QuantumGroup.ContravariantForm
