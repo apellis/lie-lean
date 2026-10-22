@@ -3089,6 +3089,12 @@ the relations of `G̃(A, τ)` and the Serre relations. Reconstructed super analo
 (`GVerma.fAlg_smul_hwv_eq_zero_iff`); `x` gives a syzygy in `⊕ᵢ M̄(-αᵢ) → M̄(0)` that the Casimir
 operator forces into the span of lower syzygies (`mem_lowerSyz_of_e_smul_mem`), whence `x ∈ S`
 (`mem_serreIdeal_of_minimal`).
+Cancellation (`Super/GabberKac/Cancellation.lean`, any GCM and parity): rank-one integrality
+(`exists_nat_of_f_smul_eq_zero`); `f⁻¹(R)` is spanned by lifted iterated super commutators
+(`mem_span_sLie_of_mem_fPre`), so `J = T(V) f⁻¹(R)` is a two-sided ideal stable under reversal
+(`mul_mem_gIdeal`, `rev_mem_gIdeal`); left and right cancellation of generators modulo `J`
+(`mem_gIdeal_of_ι_mul_mem'`, `mem_gIdeal_of_mul_ι_mem'`, via `M̄(ρ/2)`), hence injectivity of
+`M̄(-αᵢ) → M̄(0)` (`syzComponent_injective`). Reconstructed, without PBW for `G(A, τ)`.
 Remaining: Thm. 1, Thm. 2.
 
 ## Deferred and scheduled items
