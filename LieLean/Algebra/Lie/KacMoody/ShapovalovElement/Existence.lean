@@ -314,13 +314,13 @@ theorem exists_isShapovalovElement_step [IsAlgClosed K] [FiniteDimensional K H]
     have h3 := hk'l l
     simp only [haγdef, haβdef]
     split_ifs with hl
-    · rw [if_pos hl] at h3
+    · simp only [hl, ↓reduceIte] at h3
       omega
-    · rw [if_neg hl] at h3
+    · simp only [hl, ↓reduceIte] at h3
       omega
   have hcastγ : (fun l ↦ ((aγ l : ℕ) : ℤ)) = k := funext fun l ↦ Int.toNat_of_nonneg (hk l)
   have hsum : ∑ l, aγ l = ∑ l, aβ l + p := by
-    simp only [haγ, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    simp only [haγ, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, ↓reduceIte]
   have hβ0 : k' ≠ 0 := by
     intro h0
     rw [h0, map_zero, LinearEquiv.map_eq_zero_iff] at hβ
@@ -462,7 +462,7 @@ theorem exists_isShapovalovElement_step [IsAlgClosed K] [FiniteDimensional K H]
       rw [mul_assoc, ← pow_add, show J - r * p + (nN - J) = Q by omega, hXeq, hEΛ]
       exact LinearMap.pow_mul_eq_sum_mul_pow (by omega) (hJ μ)
     have hθΛ : θ₀ Λ = X := by
-      show π (L (E Λ)) = X
+      change π (L (E Λ)) = X
       rw [← hXE, hLy]
       exact Submodule.projection_apply_of_mem_left hWc hXW
     refine ⟨fun x hx ↦ ?_, ?_⟩
@@ -497,8 +497,7 @@ theorem exists_isShapovalovElement_step [IsAlgClosed K] [FiniteDimensional K H]
   have hcoef : ∀ Λ, P.corootPairing hA (Λ + P.rho) v i = r ↔
       Dual.eval K H b Λ = r - P.corootPairing hA P.rho v i := by
     intro Λ
-    rw [Dual.eval_apply, hb, corootPairing_add]
-    constructor <;> intro h <;> linarith
+    rw [Dual.eval_apply, hb, corootPairing_add, eq_sub_iff_add_eq]
   obtain ⟨δ, hδa, hδb⟩ : ∃ δ, Dual.eval K H b δ = 0 ∧ Dual.eval K H (P.coroot j) δ = 1 := by
     refine exists_apply_eq_zero_apply_eq_one
       (x₀ := (1 / 2 : K) • (v : Dual K H ≃ₗ[K] Dual K H) (P.root i)) ?_ fun h ↦ ?_
@@ -540,9 +539,8 @@ theorem exists_isShapovalovElement_aux [IsAlgClosed K] [FiniteDimensional K H]
       rw [P.rootOf_injective h'']
       exact hk''
     have hsum' : ∑ l, (k - (A *ᵥ k) j • Pi.single j 1 : ι → ℤ) l = (n : ℤ) - (A *ᵥ k) j := by
-      rw [Finset.sum_congr rfl fun l _ ↦ (show (k - (A *ᵥ k) j • Pi.single j 1 : ι → ℤ) l =
-        k l - (A *ᵥ k) j * Pi.single j (1 : ℤ) l by simp), Finset.sum_sub_distrib,
-        ← Finset.mul_sum, Finset.sum_eq_single j (fun l _ hl ↦ by simp [hl]) (by simp), hn]
+      simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
+      rw [Finset.sum_sub_distrib, hn, ← Finset.mul_sum]
       simp
     have hnn : (0 : ℤ) ≤ (n : ℤ) - (A *ᵥ k) j := by
       rw [← hsum']
