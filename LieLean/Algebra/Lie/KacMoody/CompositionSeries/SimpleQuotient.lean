@@ -57,7 +57,6 @@ lemma subsingleton_subquotient_self (N : LieSubmodule K 𝔤 V) : Subsingleton (
 
 namespace IsLocalCompositionSeries
 
-omit [CharZero K] in
 /-- A local composition series from `N` to `M` has at most `f M - f N` irreducible factors, for a
 strictly monotone `f`: the steps with an irreducible factor are strict inclusions. -/
 theorem length_factorWeights_add_le {ν : Dual K H} {f : LieSubmodule K 𝔤 V → ℕ}
@@ -168,7 +167,7 @@ theorem exists_subquotient_equiv_of_ne_bot [WellFoundedGT (LieSubmodule K 𝔤 V
     ∃ M' : LieSubmodule K 𝔤 V, M' < M ∧ ∃ ν : Dual K H, hV.multiplicity ν ≠ 0 ∧
       Nonempty (M'.Subquotient M ≃ₗ⁅K,𝔤⁆ IrreducibleModule P ν) := by
   -- a maximal submodule `M'` of `M`
-  obtain ⟨M', hM'M, hmax⟩ := (wellFounded_gt (α := LieSubmodule K 𝔤 V)).has_min
+  obtain ⟨M', hM'M : M' < M, hmax⟩ := (wellFounded_gt (α := LieSubmodule K 𝔤 V)).has_min
     {N | N < M} ⟨⊥, bot_lt_iff_ne_bot.mpr hM⟩
   have hmax' (N : LieSubmodule K 𝔤 V) (h₁ : M' ≤ N) (h₂ : N < M) : N = M' :=
     (eq_or_lt_of_le h₁).elim Eq.symm fun h ↦ absurd h (hmax N h₂)
