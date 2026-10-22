@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
 import LieLean.Algebra.Lie.KacMoody.CategoryOProjDimensionEq
+import LieLean.Algebra.Lie.KacMoody.ExactFunctorO
+import LieLean.Algebra.Lie.KacMoody.TranslationProjectiveLongest
 import LieLean.Algebra.Lie.KacMoody.SelfDualProjective
 import LieLean.Algebra.Lie.KacMoody.SelfDualProjectiveCriterion
 import LieLean.LinearAlgebra.Matrix.Cartan.IntegralSimpleRoots
@@ -68,12 +70,10 @@ structure IsPreserving (F : CategoryO.{u} P ⥤ CategoryO.{u} P) : Prop where
   projective : ∀ X : CategoryO.{u} P, IsProjectiveO.{u} P X.obj →
     IsProjectiveO.{u} P (F.obj X).obj
   selfDual : ∀ X : CategoryO.{u} P, IsSelfDual P X → IsSelfDual P (F.obj X)
-  fg : ∀ X : CategoryO.{u} P, (∃ S : Finset X.obj, LieSubmodule.lieSpan K 𝔤 (S : Set X.obj) = ⊤) →
-    ∃ S : Finset (F.obj X).obj, LieSubmodule.lieSpan K 𝔤 (S : Set (F.obj X).obj) = ⊤
 
 omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem isPreserving_id : IsPreserving P (𝟭 (CategoryO.{u} P)) :=
-  ⟨inferInstance, fun _ h ↦ h, fun _ h ↦ h, fun _ h ↦ h⟩
+  ⟨inferInstance, fun _ h ↦ h, fun _ h ↦ h⟩
 
 omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem IsPreserving.comp {F G : CategoryO.{u} P ⥤ CategoryO.{u} P} (hF : IsPreserving P F)
@@ -81,7 +81,7 @@ theorem IsPreserving.comp {F G : CategoryO.{u} P ⥤ CategoryO.{u} P} (hF : IsPr
   have := hF.mono
   have := hG.mono
   ⟨inferInstance, fun X h ↦ hG.projective _ (hF.projective X h),
-    fun X h ↦ hG.selfDual _ (hF.selfDual X h), fun X h ↦ hG.fg _ (hF.fg X h)⟩
+    fun X h ↦ hG.selfDual _ (hF.selfDual X h)⟩
 
 /-- **Translation functors by simple finite-dimensional modules preserve projectivity and
 self-duality** (Humphreys, GSM 94, §3.8 and §7.1). -/
@@ -104,15 +104,6 @@ theorem isPreserving_translationFunctor {ν : Dual K H} (hν : P.IsDominantInteg
       (centralTranslationEquiv P (IrreducibleModule P ν) χ₁ χ₂ e).trans <|
       (restrictedDualCentralTranslationEquiv P Fact.out hν X.property.1 χ₁ χ₂).symm.trans
       (restrictedDualEquiv P (ofLieEquiv (P := P) _).symm)⟩
-  fg X := by
-    classical
-    rintro ⟨S, hS⟩
-    obtain ⟨T, hT⟩ := exists_finset_lieSpan_centralTranslation_eq_top_of_fg P χ₁ χ₂
-      X.property.1 (IrreducibleModule.isCategoryO P ν) hS
-    refine ⟨T.image (ofLieEquiv (P := P) _), ?_⟩
-    rw [Finset.coe_image]
-    exact lieSpan_image_eq_top_of_surjective (ofLieEquiv (P := P) _).toLieModuleHom
-      (ofLieEquiv (P := P) _).surjective hT
 
 variable (hA : A.IsFiniteCartan)
 
@@ -295,6 +286,112 @@ theorem exists_adjunction_mono_weylDot {lam : Dual K H}
   have := adjs.isRightAdjoint
   refine ⟨Fs ⋙ F', G' ⋙ Gs, adjs.comp adj', hFs.comp hF', φs ≫ Gs.map φ', ?_⟩
   exact mono_comp _ _
+
+include hA in
+/-- **Humphreys, GSM 94, Theorem 7.16 (a)**, for `λ` as in `exists_adjunction_mono_weylDot`:
+`P(λ) ≅ P(λ)^∨`. With `λ° = w_λ·λ` dominant, `M(λ) ↪ M(λ°)` and `M(λ°) ↪ G M(λ)` give a
+morphism `F M(λ°) → M(λ) = L(λ)` that is nonzero on `F M(λ)`. `F M(λ°)` is projective and
+`F M(λ)` is self-dual, so `P(λ)` is a self-dual summand of `F M(λ°)`
+(`ProjectiveCover.nonempty_equiv_restrictedDual_of_selfDual`). -/
+theorem nonempty_equiv_restrictedDual_projectiveCover_of_walls {lam : Dual K H}
+    (hreg : ∀ v i, P.IsPosRoot hA.isGeneralizedCartan v i → ∀ n : ℤ,
+      P.corootPairing hA.isGeneralizedCartan (lam + P.rho) v i = n → n < 0)
+    (hwalls : ∀ (u : P.weylGroup hA.isGeneralizedCartan) (j : ι),
+      P.IsPosRoot hA.isGeneralizedCartan u j →
+      P.IsIntegralRoot hA.isGeneralizedCartan (lam + P.rho) u j →
+      (∀ v i, P.IsPosRoot hA.isGeneralizedCartan v i →
+        P.IsIntegralRoot hA.isGeneralizedCartan (lam + P.rho) v i →
+        (v : Dual K H ≃ₗ[K] Dual K H) (P.root i) ≠ (u : Dual K H ≃ₗ[K] Dual K H) (P.root j) →
+          P.IsPosRoot hA.isGeneralizedCartan (P.reflectionOf hA.isGeneralizedCartan u j * v) i) →
+      ∃ c : Dual K H, (∀ t, ∃ z : ℤ, c (P.coroot t) = z) ∧
+        P.corootPairing hA.isGeneralizedCartan (lam + P.rho + c) u j = 0 ∧
+        ∀ v i, P.IsPosRoot hA.isGeneralizedCartan v i → ∀ m : ℤ,
+          P.corootPairing hA.isGeneralizedCartan (lam + P.rho + c) v i = m →
+          m < 0 ∨ (v : Dual K H ≃ₗ[K] Dual K H) (P.root i) =
+            (u : Dual K H ≃ₗ[K] Dual K H) (P.root j))
+    : Nonempty (ProjectiveCover P hA lam ≃ₗ⁅K,𝔤⁆ restrictedDual P (ProjectiveCover P hA lam)) := by
+  have hA' := hA.isGeneralizedCartan
+  have hlam : P.IsAntidominant hA' lam := fun v i hv n hn ↦ (hreg v i hv n hn).le
+  have hreg' : ∀ v i, P.IsPosRoot hA' v i → P.corootPairing hA' (lam + P.rho) v i ≠ 0 :=
+    fun v i hv h0 ↦ by
+      have := hreg v i hv 0 (by rw [h0, Int.cast_zero])
+      omega
+  obtain ⟨wl, hwl⟩ := exists_isLongestIntegral hA hlam hreg'
+  have hdom : P.IsDominant hA' (P.weylDot hA' wl lam) :=
+    isDominant_weylDot_of_isLongestIntegral hA hlam (fun j ↦ ⟨0, by simp⟩) hwl
+  have hwlρ : wl ∈ P.integralWeylGroup hA' (lam + P.rho) := by
+    rw [P.integralWeylGroup_eq_of_integral _ (μ' := lam) fun j ↦ ⟨1, by simp⟩]
+    exact hwl.1
+  have hint : ∀ j, ∃ z : ℤ, (P.weylDot hA' wl lam - lam) (P.coroot j) = z := by
+    have e : P.weylDot hA' wl lam - lam =
+        (wl : Dual K H ≃ₗ[K] Dual K H) (lam + P.rho) - (lam + P.rho) := by
+      rw [weylDot]
+      abel
+    rw [e]
+    exact P.exists_int_of_mem_rootLattice hwlρ
+  have hinv : wl⁻¹ ∈ P.integralWeylGroup hA' (P.weylDot hA' wl lam) := by
+    rw [P.integralWeylGroup_eq_of_integral _ hint]
+    exact inv_mem hwl.1
+  have e : P.weylDot hA' wl⁻¹ (P.weylDot hA' wl lam) = lam := by
+    rw [← weylDot_mul, inv_mul_cancel, weylDot_one]
+  have key := VermaModule.exists_injective_weylDot_of_isDominant P hA hdom hinv
+  rw [e] at key
+  obtain ⟨ι₀, hι₀⟩ := key
+  have hex := exists_adjunction_mono_weylDot (P := P) hA hreg hwalls (y := wl) hwlρ
+  obtain ⟨F, G, adj, hFp, φ, hφ⟩ := hex
+  have heM := VermaModule.nonempty_equiv_irreducible_of_isAntidominant P hA (μ := lam) hlam
+  let eM := heM.some
+  let ιl : (verma P lam).obj →ₗ⁅K,𝔤⁆ (verma P (P.weylDot hA' wl lam)).obj :=
+    (ofLieEquiv (P := P) (VermaModule P (P.weylDot hA' wl lam))).toLieModuleHom.comp
+      (ι₀.comp (ofLieEquiv (P := P) (VermaModule P lam)).symm.toLieModuleHom)
+  have hιl : Function.Injective ιl := fun a b hab ↦
+    (ofLieEquiv (P := P) (VermaModule P lam)).symm.injective <| hι₀ <|
+      (ofLieEquiv (P := P) (VermaModule P (P.weylDot hA' wl lam))).injective hab
+  let ιo : verma P lam ⟶ verma P (P.weylDot hA' wl lam) := (IsObj.{u} P).homMk (ofLieModuleHom ιl)
+  have hιo : Mono ιo :=
+    mono_homMk_of_injective (X := verma P lam) (Y := verma P (P.weylDot hA' wl lam)) ιl hιl
+  let g : F.obj (verma P (P.weylDot hA' wl lam)) ⟶ verma P lam := (adj.homEquiv _ _).symm φ
+  have hg : F.map ιo ≫ g ≠ 0 := by
+    intro h0
+    rw [← adj.homEquiv_naturality_left_symm] at h0
+    have h1 : ιo ≫ φ = 0 := by
+      have := congrArg (adj.homEquiv _ _) h0
+      rw [Equiv.apply_symm_apply] at this
+      rw [this, Adjunction.homEquiv_unit]
+      have := adj.isRightAdjoint
+      simp
+    have hinj := injective_of_mono (ιo ≫ φ)
+    rw [h1] at hinj
+    have h2 := @hinj ((ofLieEquiv (P := P) (VermaModule P lam)) (VermaModule.hwv P lam)) 0
+      (by simp)
+    exact VermaModule.hwv_ne_zero P lam
+      ((ofLieEquiv (P := P) (VermaModule P lam)).injective (h2.trans (map_zero _).symm))
+  have := hFp.mono
+  have hXproj : IsProjectiveO.{u} P (F.obj (verma P (P.weylDot hA' wl lam))).obj :=
+    hFp.projective _ ((VermaModule.isProjectiveO P hA hdom).of_equiv (ofLieEquiv (P := P) _))
+  have hS := (F.obj (verma P (P.weylDot hA' wl lam))).property.2.choose_spec
+  have hsd : IsSelfDual P (verma P lam) :=
+    ⟨(ofLieEquiv (P := P) (VermaModule P lam)).symm.trans <| eM.trans <|
+      (IrreducibleModule.equivRestrictedDual P lam).trans <| (restrictedDualEquiv P eM).trans
+        (restrictedDualEquiv P (ofLieEquiv (P := P) (VermaModule P lam)).symm)⟩
+  have heZ := hFp.selfDual _ hsd
+  let eZ := heZ.some
+  let j := toLieModuleHom (F.map ιo).hom
+  have hj : Function.Injective j := injective_of_mono (F.map ιo)
+  let f : (F.obj (verma P (P.weylDot hA' wl lam))).obj →ₗ⁅K,𝔤⁆ IrreducibleModule P lam :=
+    eM.toLieModuleHom.comp
+      ((ofLieEquiv (P := P) (VermaModule P lam)).symm.toLieModuleHom.comp (toLieModuleHom g.hom))
+  have hf : f.comp j ≠ 0 := by
+    intro h0
+    apply hg
+    ext x
+    have := LieModuleHom.congr_fun h0 x
+    have h3 : (ofLieEquiv (P := P) (VermaModule P lam)).symm
+        (g.hom.hom ((F.map ιo).hom.hom x)) = 0 :=
+      eM.injective (this.trans (map_zero _).symm)
+    exact (ofLieEquiv (P := P) (VermaModule P lam)).symm.injective (h3.trans (map_zero _).symm)
+  exact ProjectiveCover.nonempty_equiv_restrictedDual_of_selfDual P hA hXproj
+    (F.obj (verma P (P.weylDot hA' wl lam))).property.1 hS (F.obj _).property.1 eZ j hj f hf
 
 end CategoryO
 
