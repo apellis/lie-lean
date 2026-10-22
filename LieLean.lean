@@ -60,6 +60,7 @@ import LieLean.Algebra.Lie.KacMoody.CategoryOExtDualVerma
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtSimple
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtVerma
 import LieLean.Algebra.Lie.KacMoody.CategoryOProjective
+import LieLean.Algebra.Lie.KacMoody.CategoryOStdFilteredCriterion
 import LieLean.Algebra.Lie.KacMoody.CategoryOSubmodule
 import LieLean.Algebra.Lie.KacMoody.Character
 import LieLean.Algebra.Lie.KacMoody.CharacterAntiInvariant
