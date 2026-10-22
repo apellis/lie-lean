@@ -97,7 +97,8 @@ local notation "𝔤" => KacMoodyAlgebra P
 
 omit [CharZero K] in
 /-- The map `N₁ → N₁ / N₀ ≅ M(μ)` of a step of a standard filtration. -/
-def stdStepMap (hle : N₀ ≤ N₁) (e : VermaModule P μ ≃ₗ⁅K,𝔤⁆ N₁.map (LieSubmodule.Quotient.mk' N₀)) :
+def stdStepMap (_hle : N₀ ≤ N₁)
+    (e : VermaModule P μ ≃ₗ⁅K,𝔤⁆ N₁.map (LieSubmodule.Quotient.mk' N₀)) :
     N₁ →ₗ⁅K,𝔤⁆ VermaModule P μ :=
   e.symm.toLieModuleHom.comp (((LieSubmodule.Quotient.mk' N₀).comp N₁.incl).codRestrict
     (N₁.map (LieSubmodule.Quotient.mk' N₀)) fun y ↦ LieSubmodule.mem_map_of_mem y.2)
@@ -204,6 +205,11 @@ def stdStepMapO (X : CategoryO.{u} P) {N₀ N₁ : LieSubmodule K 𝔤 X.obj} {�
     N₁ →ₗ⁅K,𝔤⁆ (verma P μ).obj :=
   (ofLieEquiv (P := P) (VermaModule P μ)).toLieModuleHom.comp (stdStepMap hle e)
 
+theorem stdStepMapO_apply (X : CategoryO.{u} P) {N₀ N₁ : LieSubmodule K 𝔤 X.obj} {μ : Dual K H}
+    (hle : N₀ ≤ N₁) (e : VermaModule P μ ≃ₗ⁅K,𝔤⁆ N₁.map (LieSubmodule.Quotient.mk' N₀)) (y : N₁) :
+    stdStepMapO X hle e y = ofLieEquiv (P := P) (VermaModule P μ) (stdStepMap hle e y) :=
+  rfl
+
 /-- `Extⁿ(N₁, Y) = 0` for a step `N₁ / N₀ ≅ M(μ)` of a standard filtration with
 `Extⁿ(N₀, Y) = 0 = Extⁿ(M(μ), Y)`. -/
 theorem ext_eq_zero_of_step (X Y : CategoryO.{u} P) {n : ℕ} {N₀ N₁ : LieSubmodule K 𝔤 X.obj}
@@ -215,8 +221,7 @@ theorem ext_eq_zero_of_step (X Y : CategoryO.{u} P) {n : ℕ} {N₀ N₁ : LieSu
   Abelian.Ext.eq_zero_of_shortExact_left
     (shortExact_subComplex X hle (verma P μ) (stdStepMapO X hle e)
       (fun x hx ↦ by
-        change ofLieEquiv (P := P) (VermaModule P μ) _ = 0
-        rw [(stdStepMap_eq_zero_iff hle e _).mpr hx, map_zero])
+        rw [stdStepMapO_apply, (stdStepMap_eq_zero_iff hle e _).mpr hx, map_zero])
       ((ofLieEquiv (P := P) _).surjective.comp (surjective_stdStepMap hle e))
       (fun y hy ↦ (stdStepMap_eq_zero_iff hle e y).mp
         ((ofLieEquiv (P := P) _).injective (hy.trans (map_zero _).symm)))) h₀ hμ
@@ -240,13 +245,14 @@ theorem surjective_of_ne_zero_of_eq {κ ν : Dual K H}
     Function.Surjective g := by
   subst hκ
   obtain ⟨σ, hσ⟩ := exists_section_of_comp_ne_zero P (q := g) (g := LieModuleHom.id)
-    (by rwa [LieModuleHom.comp_id])
+    (fun h ↦ hg (by ext m; exact LieModuleHom.congr_fun h m))
   exact fun m ↦ ⟨σ m, hσ m⟩
 
 /-- Induction along a standard filtration of `X` for the kernel of `φ : X → M(ν)`: as long as `φ`
 vanishes, `Extⁿ(N, Y) = 0` when no factor is `M(ν)`; from the (unique) factor `M(ν)` on, `φ` maps
 `N` onto `M(ν)` and `Extⁿ(N ∩ ker φ, Y) = 0`. -/
-theorem ext_inf_ker_eq_zero_aux (X Y : CategoryO.{u} P) {n : ℕ} {ν : Dual K H}
+theorem ext_inf_ker_eq_zero_aux [DecidableEq (Dual K H)] (X Y : CategoryO.{u} P) {n : ℕ}
+    {ν : Dual K H}
     (φ : X.obj →ₗ⁅K,𝔤⁆ VermaModule P ν) {N : LieSubmodule K 𝔤 X.obj}
     {s : Multiset (Dual K H)} (hN : IsStdFiltered P N s) (hcount : s.count ν ≤ 1)
     (hhom : ∀ κ ∈ s, ∀ g : VermaModule P κ →ₗ⁅K,𝔤⁆ VermaModule P ν, g ≠ 0 → κ = ν)
@@ -254,7 +260,6 @@ theorem ext_inf_ker_eq_zero_aux (X Y : CategoryO.{u} P) {n : ℕ} {ν : Dual K H
     ((∀ x ∈ N, φ x = 0) ∧ (ν ∉ s → ∀ x : Abelian.Ext.{u} (ofSub X N) Y n, x = 0)) ∨
       ((∀ v, ∃ x ∈ N, φ x = v) ∧ ν ∈ s ∧
         ∀ x : Abelian.Ext.{u} (ofSub X (N ⊓ φ.ker)) Y n, x = 0) := by
-  classical
   induction hN with
   | bot =>
     exact Or.inl ⟨fun x hx ↦ by rw [(LieSubmodule.mem_bot x).mp hx, map_zero],
@@ -317,8 +322,8 @@ theorem ext_inf_ker_eq_zero_aux (X Y : CategoryO.{u} P) {n : ℕ} {ν : Dual K H
         refine Abelian.Ext.eq_zero_of_shortExact_left
           (shortExact_subComplex X hle' (verma P κ) g' (fun x hx ↦ ?_) (fun m ↦ ?_)
             (fun y hy ↦ ?_)) hext (hY κ hκmem hκν)
-        · change ofLieEquiv (P := P) (VermaModule P κ) (stdStepMap hle e ⟨x, hle hx.1⟩) = 0
-          rw [hstep0 x hx.1, map_zero]
+        · change stdStepMapO X hle e ⟨x, hle hx.1⟩ = 0
+          rw [stdStepMapO_apply, hstep0 x hx.1, map_zero]
         · obtain ⟨y, hy⟩ := surjective_stdStepMap hle e
             ((ofLieEquiv (P := P) (VermaModule P κ)).symm m)
           obtain ⟨x, hx, hφx⟩ := hsurj (φ y)
@@ -329,9 +334,8 @@ theorem ext_inf_ker_eq_zero_aux (X Y : CategoryO.{u} P) {n : ℕ} {ν : Dual K H
               stdStepMap hle e y - stdStepMap hle e ⟨x, hle hx⟩ := by
             rw [← map_sub]
             rfl
-          change ofLieEquiv (P := P) (VermaModule P κ)
-            (stdStepMap hle e ⟨(y : X.obj) - x, hmem.1⟩) = m
-          rw [hsub, hstep0 x hx, sub_zero, hy, LieModuleEquiv.apply_symm_apply]
+          change stdStepMapO X hle e ⟨(y : X.obj) - x, hmem.1⟩ = m
+          rw [stdStepMapO_apply, hsub, hstep0 x hx, sub_zero, hy, LieModuleEquiv.apply_symm_apply]
         · have h1 : stdStepMap hle e ⟨y, (y.2 : (y : X.obj) ∈ N₁ ⊓ φ.ker).1⟩ = 0 :=
             (ofLieEquiv (P := P) _).injective (hy.trans (map_zero _).symm)
           exact ⟨(stdStepMap_eq_zero_iff hle e _).mp h1, y.2.2⟩
@@ -385,9 +389,10 @@ theorem ext_verma_eq_zero_aux (lam : Dual K H) (n : ℕ) : ∀ μ : Dual K H,
       intro y _
       exact (LieSubmodule.mem_map y).mpr ⟨eQ.symm y, trivial, eQ.apply_symm_apply y⟩
     have ht' : IsStdFiltered P (⊤ : LieSubmodule K 𝔤 Q.obj) t := by
-      rw [← htop]
-      exact ht.map_of_injOn P eQ.toLieModuleHom (B := ⊤)
+      have h := ht.map_of_injOn P eQ.toLieModuleHom (B := ⊤)
         (fun y _ hy ↦ eQ.injective (hy.trans (map_zero eQ.toLieModuleHom).symm)) le_rfl
+      rw [htop] at h
+      exact h
     -- the factors `M(κ)` of `P(μ)` satisfy the hypothesis of the theorem
     have hY : ∀ κ ∈ t, κ ≠ μ → ∀ z : Abelian.Ext.{u} (verma P κ) (verma P lam) (n + 1),
         z = 0 := fun κ hκ _ ↦ ih κ fun ⟨hκl, hκne⟩ ↦ by
