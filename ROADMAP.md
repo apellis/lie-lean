@@ -3094,7 +3094,7 @@ the skew derivations `rₕ` in `'f`, not with commutators in `U`). [Lus] Lemma 3
 `pow_sq_add_eq_of_root`; via generating series and the `q`-Vandermonde identity
 `qBinomInt_add`, our argument). [Lus] 34.1.3 (a), 34.1.4 (a) (`RootOfUnity/GaussBinomialSums.lean`:
 `prod_qBinomialU_mul_root`, `sum_qBinomialU_root`; the latter via the telescoping partial sums
-`sum_neg_one_pow_qBinomial`, our argument).
+`sum_neg_one_pow_qBinomial`, our argument), and [Lus] 35.1.5 (a) (`gaussBinom_mul_mul_eq_pow`).
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).

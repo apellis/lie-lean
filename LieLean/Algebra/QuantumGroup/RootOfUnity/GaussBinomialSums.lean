@@ -23,6 +23,8 @@ used in the construction of the quantum Frobenius map ([Lus] 35.1).
   `∏_{j=1}^{p} [lj; l] = p! v^{l² p(p-1)/2}`.
 * [Lus] 34.1.4 (a), same hypotheses, `0 ≤ r ≤ a < l` (`sum_qBinomialU_root`):
   `Σ_{q=0}^{l-a-1} (-1)^{l-r+1+q} v^{-(l-r)(a-l+1+q)+q} [l-r; q] = v^{l(a-r)} [a; r]`.
+* [Lus] 35.1.5 (a), same hypotheses (`gaussBinom_mul_mul_eq_pow`):
+  `[l a₁; l t₁]_v = [a₁; t₁]_{v^{l²}}`.
 
 ## Proof
 
@@ -34,7 +36,7 @@ evaluates the complementary part with 34.1.2 (c)). This turns the left hand side
 
 ## References
 
-* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, 1.3.4, 34.1.2–34.1.4.
+* [Lus] G. Lusztig, *Introduction to quantum groups*, Birkhäuser 1993, 1.3.4, 34.1.2–34.1.4, 35.1.5.
 -/
 
 open Finset
@@ -203,6 +205,21 @@ theorem sum_qBinomialU_root (hl : (v : R) ^ (2 * l) = 1)
   apply IsFractionRing.injective R (FractionRing R)
   simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_units_zpow, map_qBinomialU]
   exact sum_qBinomial_root h0 h1 h2 hra hal
+
+/-- [Lus] 35.1.5 (a): if `v^{2l} = 1` and `v^{2t} ≠ 1` for `0 < t < l`, then
+`[l a₁; l t₁]_v = [a₁; t₁]_{v^{l²}}` for `a₁ ∈ ℤ`, `t₁ ∈ ℕ` (Lusztig states it for `v = vᵢ`,
+`l = lᵢ`, with `vᵢ* = vᵢ^{lᵢ²}`). Part (b) of [Lus] 35.1.5 is `gaussBinom_eq_zero_of_not_dvd`. -/
+theorem gaussBinom_mul_mul_eq_pow (hl : (v : R) ^ (2 * l) = 1)
+    (hprim : ∀ t, 0 < t → t < l → (v : R) ^ (2 * t) ≠ 1) (hl0 : 0 < l) (a₁ : ℤ) (t₁ : ℕ) :
+    gaussBinom v (l * a₁) (l * t₁) = gaussBinom (v ^ (l ^ 2)) a₁ t₁ := by
+  have h1 : (((v ^ (l ^ 2) : Rˣ) : R)) ^ (2 * 1) = 1 := by
+    rw [Units.val_pow_eq_pow_val, ← pow_mul, show l ^ 2 * (2 * 1) = 2 * l * l by ring, pow_mul,
+      hl, one_pow]
+  have h := gaussBinom_mul_mul (v := v ^ (l ^ 2)) h1 (fun t h0 ht ↦ by omega) one_pos a₁ t₁
+  rw [Nat.cast_one, one_mul, one_mul] at h
+  rw [h, gaussBinom_mul_mul hl hprim hl0, ← zpow_natCast, ← zpow_mul]
+  push_cast
+  ring_nf
 
 end Domain
 
