@@ -143,6 +143,22 @@ example : DA2.frobOrder 2 0 = 2 := by decide
 
 end Frobenius35
 
+open scoped TensorProduct in
+/-- [Lus] 35.1.11 for `A₂`, `l = 2`, `l' = 4`, over `𝒜' = 𝒜/(v² + 1)` itself. -/
+example (n : ℕ) : frobSplitGeneral DA2 (l := 2) (l' := 4) (by norm_num) (Or.inl rfl)
+      (CyclotomicQuotient 4)
+      ((1 : CyclotomicQuotient 4) ⊗ₜ integralGenerator (DA2.frobenius (l := 2) (by norm_num)) 0 n) =
+    (1 : CyclotomicQuotient 4) ⊗ₜ integralGenerator DA2 0 (DA2.frobOrder 2 0 * n) :=
+  frobSplitGeneral_integralGenerator DA2 _ _ _ 0 n
+
+open scoped TensorProduct in
+/-- [Lus] 35.1.11 for `A₂`, odd `l = l' = 3`. -/
+example (n : ℕ) : frobSplitGeneral DA2 (l := 3) (l' := 3) (by norm_num) (Or.inr ⟨by decide, rfl⟩)
+      (CyclotomicQuotient 3)
+      ((1 : CyclotomicQuotient 3) ⊗ₜ integralGenerator (DA2.frobenius (l := 3) (by norm_num)) 1 n) =
+    (1 : CyclotomicQuotient 3) ⊗ₜ integralGenerator DA2 1 (DA2.frobOrder 3 1 * n) :=
+  frobSplitGeneral_integralGenerator DA2 _ _ _ 1 n
+
 /-! ### Lusztig 25.2.1 (d) and 26.3.1 on the extended root datum of `sl₂` -/
 
 /-- The extended root datum of `sl₂`. -/

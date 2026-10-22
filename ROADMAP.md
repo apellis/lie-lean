@@ -3123,8 +3123,12 @@ sign twist `finrank_serreSpan_of_sq_eq_one` (`GabberKac/SerreSpanSign.lean`).
 (`Frobenius/Splitting.lean`: `frobSplit`, `frobSplit_integralGenerator`, `eq_frobSplit`), via the
 Serre relations [Lus] 35.2.3 (b) between the `θᵢ^{(lᵢ)}` (`sum_baseGen_frobenius_serre`, from
 the identity `sum_frobenius_serre` in `Frobenius/SerreIdentity.lean`, Lusztig's argument) and
-Prop. 33.2.2 (c) for `f*`. Lusztig's assumptions 35.1.2 (a), (b) are not needed. Next: 35.1.11
-(general `𝒜'`-algebras), then `Fr` ([Lus] 35.1.7, 35.3–35.5) and 31.1.3, 35.1.9.
+Prop. 33.2.2 (c) for `f*`. Lusztig's assumptions 35.1.2 (a), (b) are not needed. [Lus] 35.1.11:
+`Fr'` over every `𝒜'`-algebra `R`, `𝒜' = 𝒜/(f_{l'})` as in 35.1.3
+(`Frobenius/SplittingGeneral.lean`: `CyclotomicQuotient`, `frobSplitGeneral`,
+`frobSplitGeneral_integralGenerator`, `eq_frobSplitGeneral`), by restriction from the fraction
+field of `𝒜'` (a domain: `cyclotomicQuotientEval_injective`, `v ↦ e^{2πi/l'}`) and change of
+rings. Next: `Fr` ([Lus] 35.1.7, 35.3–35.5) and 31.1.3, 35.1.9.
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).
