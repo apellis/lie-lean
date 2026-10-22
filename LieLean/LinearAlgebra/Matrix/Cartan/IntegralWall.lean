@@ -19,7 +19,7 @@ integral Weyl group `W_[λ]` (Humphreys, GSM 94, §7.15, §7.16).
 
 ## Main results
 
-* `Matrix.Realization.exists_int_corootPairing_of_integral`: integral weights pair integrally
+* `Matrix.Realization.exists_int_corootPairing_of_forall_int`: integral weights pair integrally
   with every real coroot.
 * `Matrix.Realization.one_le_of_corootPairing_rho_eq`: `⟨ρ, β^∨⟩ ≥ 1` for every positive root.
 * `Matrix.Realization.exists_wall_shift`: the wall weight. With `n = -⟨x, γ^∨⟩ = 2q + ε`,
@@ -44,7 +44,7 @@ variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K] [
 
 omit [DecidableEq ι] [CharZero K] in
 /-- Integral weights pair integrally with every real coroot. -/
-lemma exists_int_corootPairing_of_integral {hA : A.IsGeneralizedCartan} {c : Dual K H}
+lemma exists_int_corootPairing_of_forall_int {hA : A.IsGeneralizedCartan} {c : Dual K H}
     (hc : ∀ t, ∃ z : ℤ, c (P.coroot t) = z) (v : P.weylGroup hA) (i : ι) :
     ∃ m : ℤ, P.corootPairing hA c v i = m := by
   obtain ⟨k, hk⟩ := P.exists_apply_eq_add_rootOf hA (v⁻¹).2 hc
@@ -77,7 +77,7 @@ variable [FiniteDimensional K H]
 include hF in
 /-- A positive definite symmetrization computes coroot pairings: if `β = v αᵢ = Σₜ bₜ αₜ`, then
 `⟨y, β^∨⟩ dᵢ = Σₜ bₜ ⟨y, αₜ^∨⟩ dₜ`. -/
-lemma exists_corootPairing_mul_eq_sum : ∃ d : ι → ℤ, (∀ t, 0 < d t) ∧
+lemma exists_symmetrizer_corootPairing_mul : ∃ d : ι → ℤ, (∀ t, 0 < d t) ∧
     ∀ {hA : A.IsGeneralizedCartan} (y : Dual K H) (v : P.weylGroup hA) (i : ι) (b : ι → ℤ),
       (v : Dual K H ≃ₗ[K] Dual K H) (P.root i) = P.rootOf b →
         P.corootPairing hA y v i * d i = ∑ t, (b t : K) * y (P.coroot t) * d t := by
@@ -108,7 +108,7 @@ include hF in
 /-- `⟨ρ, β^∨⟩ ≥ 1` for every positive real root `β`. -/
 lemma one_le_of_corootPairing_rho_eq {hA : A.IsGeneralizedCartan} {v : P.weylGroup hA} {i : ι}
     (hv : P.IsPosRoot hA v i) {m : ℤ} (hm : P.corootPairing hA P.rho v i = m) : 1 ≤ m := by
-  obtain ⟨d, hdpos, hd⟩ := exists_corootPairing_mul_eq_sum (P := P) hF
+  obtain ⟨d, hdpos, hd⟩ := exists_symmetrizer_corootPairing_mul (P := P) hF
   obtain ⟨b, hb0, hb⟩ := hv
   have h := hd P.rho v i b hb
   simp only [rho_coroot, mul_one, hm] at h
@@ -152,8 +152,8 @@ theorem exists_wall_shift {hA : A.IsGeneralizedCartan} (u : P.weylGroup hA) (j :
   have hγ : ∀ t, ∃ z : ℤ, γ (P.coroot t) = z := apply_integral u (root_integral j)
   have hr : ∀ t, ∃ z : ℤ, r (P.coroot t) = z :=
     apply_integral u fun t ↦ ⟨1, by rw [rho_coroot, Int.cast_one]⟩
-  choose fγ hfγ using exists_int_corootPairing_of_integral (hA := hA) hγ
-  choose fr hfr using exists_int_corootPairing_of_integral (hA := hA) hr
+  choose fγ hfγ using exists_int_corootPairing_of_forall_int (hA := hA) hγ
+  choose fr hfr using exists_int_corootPairing_of_forall_int (hA := hA) hr
   obtain ⟨M, hM⟩ := (Set.finite_range fun p : P.weylGroup hA × ι ↦
     2 * fr p.1 p.2 - fγ p.1 p.2).bddAbove
   refine ⟨M.toNat + 1, by omega, fun x hdeep hu hux hsimple ↦ ?_⟩
