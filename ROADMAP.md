@@ -481,6 +481,16 @@ Bott's Thm. 6.6 in the `𝔫`-cohomology form by duality if that is cheap, other
 and Ch. 10 items through projective functors (§10.8) or Duflo's theorem, only where a target needs
 them. Thm. 6.5 (a) gets no erratum: its proof stays marked reconstructed.
 
+Thm. 4.12 (Shapovalov elements) done: `KacMoody/ShapovalovElement/` defines
+`IsShapovalovElement` (polynomial families `λ ↦ θ(λ) ∈ U(𝔫⁻)_{-rγ}` with the maximal-vector
+property on the hyperplane `⟨λ + ρ, γ^∨⟩ = r` and leading term `∏ yⱼ^{r aⱼ}` modulo lower PBW
+degree) and proves `VermaModule.shapovalov`: existence for every positive root and `r > 0`, and
+uniqueness modulo `U(𝔟⁻)(h_γ + ρ(h_γ) - r)` (`IsShapovalovElement.exists_sub_eq_smul`), for `𝔤` of
+finite type over an algebraically closed field of characteristic zero. The proof follows [HumO]
+§4.13: induction on height through `γ = s_j β`, the commutator expansion of `y_j^n θ_β`
+(`UniversalEnveloping/Commutator.lean`), the PBW symbol calculus (`UniversalEnveloping/Symbol.lean`)
+and Zariski density on the hyperplane.
+
 Done: `UniversalEnvelopingAlgebra.instIsDomain` (`UniversalEnveloping/Domain.lean`, via graded
 PBW); `KacMoody/VermaHom.lean`: `primitiveVectors`, `VermaModule.homEquiv`
 (`Hom(M(μ), V) ≃ primitive vectors of weight μ`), `injective_of_ne_zero`,
