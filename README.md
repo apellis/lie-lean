@@ -316,6 +316,8 @@ Further proved results include:
     `F`-algebra map `Fr : _F f → _F f*`, `θᵢ^{(n)} ↦ θᵢ^{(n/lᵢ)}` if `lᵢ ∣ n` and `0` otherwise
     (`frob`, `frob_baseGen`, uniqueness `eq_frob`), with `Fr ∘ Fr' = 1` (`frob_comp_frobSplit`);
     `Fr'` is injective (`frobSplit_injective`).
+    The same for every `𝒜'`-algebra `R`, `𝒜' = 𝒜/(φ_{2l})` (`frobGeneral`,
+    `frobGeneral_integralGenerator`, `eq_frobGeneral`).
   - **Not yet formalized:** [Lus] 41.1.9 (compatibility with the quantum Frobenius map, roadmap
     item D2, in progress).
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`

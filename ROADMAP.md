@@ -3226,7 +3226,11 @@ for `y` of weight `ν ≤ (⟨i, λ⟩/lᵢ)ᵢ` with `Fr'(y) ∈ frobRad`, `y` 
 spanned by the `θᵢ w`, `lᵢ ≥ 2` (`frobKer`). `_F f = Fr'(_F f*) ⊕ K` and injectivity of `Fr'`
 (`isCompl_frobKer`, `frobSplit_injective`) come from 35.3.2 (d) and the kernel statement above on
 the extended root datum with `λ` large, in place of the tensor decomposition 35.4.2 (b); the
-multiplicativity argument is that of 35.5.1 (our argument). Next: 35.1.9 and 31.1.3.
+multiplicativity argument is that of 35.5.1 (our argument). [Lus] Thm. 35.1.7 over every
+`𝒜'`-algebra `R` (`Frobenius/HomomorphismGeneral.lean`: `frobGeneral`,
+`frobGeneral_integralGenerator`, uniqueness `eq_frobGeneral`), by base change from the cyclotomic
+ring `𝒜' = 𝒜/(φ_{2l})`: `Fr` over `𝒜'` is the restriction of `Fr` over its fraction field, which
+preserves the integral forms. Next: 35.1.9 and 31.1.3.
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).
