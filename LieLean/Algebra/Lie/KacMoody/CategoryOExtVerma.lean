@@ -29,8 +29,12 @@ weights `μ, λ` and is formalized in that generality.
 
 * `Matrix.Realization.KacMoodyAlgebra.CategoryO.ext_eq_zero_of_isStdFiltered`: `Extⁿ(N, Y) = 0`
   for `N` with a standard filtration whose factors `M(μ)` all have `Extⁿ(M(μ), Y) = 0`.
+* `Matrix.Realization.KacMoodyAlgebra.CategoryO.ext_succ_verma_eq_zero`: dimension shifting along
+  `P(μ) → M(μ)`.
 * `Matrix.Realization.KacMoodyAlgebra.CategoryO.ext_verma_eq_zero`:
   **[HumO] Theorem 6.11 (a)** for Verma modules.
+* `Matrix.Realization.KacMoodyAlgebra.CategoryO.ext_verma_eq_zero_of_weightSpace`:
+  `Extⁿ(M(μ), Y) = 0` for all `n` if `Y` has no weight `≥ μ`.
 
 ## Proof
 
@@ -362,6 +366,74 @@ theorem ext_inf_ker_eq_zero_aux [DecidableEq (Dual K H)] (X Y : CategoryO.{u} P)
 
 /-! ### [HumO] Theorem 6.11 (a) for Verma modules -/
 
+/-- Dimension shifting along `P(μ) → M(μ)`: `Extⁿ⁺¹(M(μ), Y) = 0` if `Extⁿ(M(κ), Y) = 0` for
+every factor `M(κ) ≠ M(μ)` of a standard filtration of `P(μ)`, i.e. for every `κ ≠ μ` with
+`[M(κ) : L(μ)] ≠ 0` (BGG reciprocity). -/
+theorem ext_succ_verma_eq_zero (Y : CategoryO.{u} P) (μ : Dual K H) (n : ℕ)
+    (hY : ∀ κ, (VermaModule.isCategoryO P κ).multiplicity μ ≠ 0 → κ ≠ μ →
+      ∀ z : Abelian.Ext.{u} (verma P κ) Y n, z = 0)
+    (x : Abelian.Ext.{u} (verma P μ) Y (n + 1)) : x = 0 := by
+  have hA : A.IsFiniteCartan := Fact.out
+  classical
+  obtain ⟨t, ht, hcount, -⟩ := ProjectiveCover.exists_isStdFiltered P μ hA
+  -- every factor `M(κ)` of `P(μ)` has `[M(κ) : L(μ)] ≠ 0`
+  have hmult : ∀ κ ∈ t, (VermaModule.isCategoryO P κ).multiplicity μ ≠ 0 := fun κ hκ ↦ by
+    rw [← ProjectiveCover.count_eq_multiplicity P μ hA ht κ]
+    exact (Multiset.count_pos.mpr hκ).ne'
+  -- `P(μ)` as a projective object of `𝒪`
+  obtain ⟨p, -, -, hp⟩ := (ProjectiveCover.isProjectiveCover P μ hA).exists_generator
+  let Q := mk (ProjectiveCover P hA μ) (ProjectiveCover.isCategoryO P hA μ)
+    ⟨{p}, by rw [Finset.coe_singleton]; exact hp⟩
+  have hQ : Projective Q := projective_mk _ _ _ (ProjectiveCover.isProjectiveO P hA μ)
+  let eQ := ofLieEquiv (P := P) (ProjectiveCover P hA μ)
+  -- a surjection `P(μ) → M(μ)`
+  obtain ⟨φ₀, hφ₀⟩ := ProjectiveCover.isProjectiveO P hA μ (VermaModule.isCategoryO P μ)
+    (IrreducibleModule.isCategoryO P μ) (LieSubmodule.Quotient.mk' (VermaModule.maxSubmodule P μ))
+    (LieSubmodule.Quotient.surjective_mk' _) (ProjectiveCover.π P hA μ)
+  have hφ₀s : Function.Surjective φ₀ := by
+    rw [← LieModuleHom.range_eq_top]
+    by_contra hne
+    have hle := (VermaModule.le_maxSubmodule_iff P μ φ₀.range).mpr hne
+    apply ProjectiveCover.π_ne_zero P hA μ
+    rw [← hφ₀]
+    ext y
+    rw [LieModuleHom.comp_apply, _root_.zero_apply, LieSubmodule.Quotient.mk_eq_zero]
+    exact hle ((LieModuleHom.mem_range _ _).mpr ⟨y, rfl⟩)
+  let φ : Q.obj →ₗ⁅K,𝔤⁆ VermaModule P μ := φ₀.comp eQ.symm.toLieModuleHom
+  have hφ : Function.Surjective φ := hφ₀s.comp eQ.symm.surjective
+  -- the standard filtration of `P(μ)`, inside `Q`
+  have htop : (⊤ : LieSubmodule K 𝔤 (ProjectiveCover P hA μ)).map eQ.toLieModuleHom = ⊤ := by
+    rw [eq_top_iff]
+    intro y _
+    exact (LieSubmodule.mem_map y).mpr ⟨eQ.symm y, trivial, eQ.apply_symm_apply y⟩
+  have ht' : IsStdFiltered P (⊤ : LieSubmodule K 𝔤 Q.obj) t := by
+    have h := ht.map_of_injOn P eQ.toLieModuleHom (B := ⊤)
+      (fun y _ hy ↦ eQ.injective (hy.trans (map_zero eQ.toLieModuleHom).symm)) le_rfl
+    rw [htop] at h
+    exact h
+  rcases ext_inf_ker_eq_zero_aux Q Y φ ht' hcount.le
+      (fun κ hκ g hg ↦ eq_of_mem_cone_of_mem_cone (VermaModule.mem_cone_of_multiplicity_ne_zero
+        (VermaModule.multiplicity_ne_zero_of_hom_ne_zero P (φ := g) hg))
+        (VermaModule.mem_cone_of_multiplicity_ne_zero (hmult κ hκ)))
+      (fun κ hκ hne ↦ hY κ (hmult κ hκ) hne) with
+    ⟨h0, -⟩ | ⟨-, -, hext⟩
+  · obtain ⟨y, hy⟩ := hφ (VermaModule.hwv P μ)
+    exact absurd (hy.symm.trans (h0 y (LieSubmodule.mem_top y))) (VermaModule.hwv_ne_zero P μ)
+  · rw [top_inf_eq] at hext
+    let eV := ofLieEquiv (P := P) (VermaModule P μ)
+    let ψ : Q.obj →ₗ⁅K,𝔤⁆ (verma P μ).obj := eV.toLieModuleHom.comp φ
+    have hkerψ : ψ.ker = φ.ker := by
+      ext y
+      simp only [LieModuleHom.mem_ker]
+      exact ⟨fun h ↦ eV.injective (h.trans (map_zero eV.toLieModuleHom).symm),
+        fun h ↦ (congrArg eV h).trans (map_zero eV.toLieModuleHom)⟩
+    have : Projective (kerComplex Q (verma P μ) ψ).X₂ := hQ
+    have hker : ∀ z : Abelian.Ext.{u} (ofSub Q ψ.ker) Y n, z = 0 := by
+      rw [hkerψ]
+      exact hext
+    exact Abelian.Ext.eq_zero_of_shortExact_of_projective
+      (shortExact_kerComplex Q (verma P μ) ψ (eV.surjective.comp hφ)) hker x
+
 theorem ext_verma_eq_zero_aux (lam : Dual K H) (n : ℕ) : ∀ μ : Dual K H,
     ¬ (P.IsStronglyLinked (Fact.out : A.IsFiniteCartan).isGeneralizedCartan μ lam ∧ μ ≠ lam) →
       ∀ x : Abelian.Ext.{u} (verma P μ) (verma P lam) (n + 1), x = 0 := by
@@ -376,75 +448,15 @@ theorem ext_verma_eq_zero_aux (lam : Dual K H) (n : ℕ) : ∀ μ : Dual K H,
     exact hμ (VermaModule.isStronglyLinked_of_extOne_ne_zero P hA hy)
   | succ n ih =>
     intro μ hμ x
-    classical
-    obtain ⟨t, ht, hcount, -⟩ := ProjectiveCover.exists_isStdFiltered P μ hA
-    -- every factor `M(κ)` of `P(μ)` has `[M(κ) : L(μ)] ≠ 0`
-    have hmult : ∀ κ ∈ t, (VermaModule.isCategoryO P κ).multiplicity μ ≠ 0 := fun κ hκ ↦ by
-      rw [← ProjectiveCover.count_eq_multiplicity P μ hA ht κ]
-      exact (Multiset.count_pos.mpr hκ).ne'
-    -- `P(μ)` as a projective object of `𝒪`
-    obtain ⟨p, -, -, hp⟩ := (ProjectiveCover.isProjectiveCover P μ hA).exists_generator
-    let Q := mk (ProjectiveCover P hA μ) (ProjectiveCover.isCategoryO P hA μ)
-      ⟨{p}, by rw [Finset.coe_singleton]; exact hp⟩
-    have hQ : Projective Q := projective_mk _ _ _ (ProjectiveCover.isProjectiveO P hA μ)
-    let eQ := ofLieEquiv (P := P) (ProjectiveCover P hA μ)
-    -- a surjection `P(μ) → M(μ)`
-    obtain ⟨φ₀, hφ₀⟩ := ProjectiveCover.isProjectiveO P hA μ (VermaModule.isCategoryO P μ)
-      (IrreducibleModule.isCategoryO P μ) (LieSubmodule.Quotient.mk' (VermaModule.maxSubmodule P μ))
-      (LieSubmodule.Quotient.surjective_mk' _) (ProjectiveCover.π P hA μ)
-    have hφ₀s : Function.Surjective φ₀ := by
-      rw [← LieModuleHom.range_eq_top]
-      by_contra hne
-      have hle := (VermaModule.le_maxSubmodule_iff P μ φ₀.range).mpr hne
-      apply ProjectiveCover.π_ne_zero P hA μ
-      rw [← hφ₀]
-      ext y
-      rw [LieModuleHom.comp_apply, _root_.zero_apply, LieSubmodule.Quotient.mk_eq_zero]
-      exact hle ((LieModuleHom.mem_range _ _).mpr ⟨y, rfl⟩)
-    let φ : Q.obj →ₗ⁅K,𝔤⁆ VermaModule P μ := φ₀.comp eQ.symm.toLieModuleHom
-    have hφ : Function.Surjective φ := hφ₀s.comp eQ.symm.surjective
-    -- the standard filtration of `P(μ)`, inside `Q`
-    have htop : (⊤ : LieSubmodule K 𝔤 (ProjectiveCover P hA μ)).map eQ.toLieModuleHom = ⊤ := by
-      rw [eq_top_iff]
-      intro y _
-      exact (LieSubmodule.mem_map y).mpr ⟨eQ.symm y, trivial, eQ.apply_symm_apply y⟩
-    have ht' : IsStdFiltered P (⊤ : LieSubmodule K 𝔤 Q.obj) t := by
-      have h := ht.map_of_injOn P eQ.toLieModuleHom (B := ⊤)
-        (fun y _ hy ↦ eQ.injective (hy.trans (map_zero eQ.toLieModuleHom).symm)) le_rfl
-      rw [htop] at h
-      exact h
-    -- the factors `M(κ)` of `P(μ)` satisfy the hypothesis of the theorem
-    have hY : ∀ κ ∈ t, κ ≠ μ → ∀ z : Abelian.Ext.{u} (verma P κ) (verma P lam) (n + 1),
-        z = 0 := fun κ hκ _ ↦ ih κ fun ⟨hκl, hκne⟩ ↦ by
-      have hμκ := VermaModule.isStronglyLinked_of_multiplicity_ne_zero P hA (hmult κ hκ)
-      have hμe : μ = lam := by
-        by_contra h
-        exact hμ ⟨Relation.ReflTransGen.trans hκl hμκ, h⟩
-      have h1 : κ ∈ cone P μ := VermaModule.mem_cone_of_multiplicity_ne_zero
-        (VermaModule.multiplicity_ne_zero_of_isStronglyLinked P hA (by rw [hμe]; exact hκl))
-      exact hκne ((eq_of_mem_cone_of_mem_cone h1
-        (VermaModule.mem_cone_of_multiplicity_ne_zero (hmult κ hκ))).trans hμe)
-    rcases ext_inf_ker_eq_zero_aux Q (verma P lam) φ ht' hcount.le
-        (fun κ hκ g hg ↦ eq_of_mem_cone_of_mem_cone (VermaModule.mem_cone_of_multiplicity_ne_zero
-          (VermaModule.multiplicity_ne_zero_of_hom_ne_zero P (φ := g) hg))
-          (VermaModule.mem_cone_of_multiplicity_ne_zero (hmult κ hκ))) hY with
-      ⟨h0, -⟩ | ⟨-, -, hext⟩
-    · obtain ⟨y, hy⟩ := hφ (VermaModule.hwv P μ)
-      exact absurd (hy.symm.trans (h0 y (LieSubmodule.mem_top y))) (VermaModule.hwv_ne_zero P μ)
-    · rw [top_inf_eq] at hext
-      let eV := ofLieEquiv (P := P) (VermaModule P μ)
-      let ψ : Q.obj →ₗ⁅K,𝔤⁆ (verma P μ).obj := eV.toLieModuleHom.comp φ
-      have hkerψ : ψ.ker = φ.ker := by
-        ext y
-        simp only [LieModuleHom.mem_ker]
-        exact ⟨fun h ↦ eV.injective (h.trans (map_zero eV.toLieModuleHom).symm),
-          fun h ↦ (congrArg eV h).trans (map_zero eV.toLieModuleHom)⟩
-      have : Projective (kerComplex Q (verma P μ) ψ).X₂ := hQ
-      have hker : ∀ z : Abelian.Ext.{u} (ofSub Q ψ.ker) (verma P lam) (n + 1), z = 0 := by
-        rw [hkerψ]
-        exact hext
-      exact Abelian.Ext.eq_zero_of_shortExact_of_projective
-        (shortExact_kerComplex Q (verma P μ) ψ (eV.surjective.comp hφ)) hker x
+    refine ext_succ_verma_eq_zero _ μ (n + 1) (fun κ hκ _ ↦ ih κ fun ⟨hκl, hκne⟩ ↦ ?_) x
+    have hμκ := VermaModule.isStronglyLinked_of_multiplicity_ne_zero P hA hκ
+    have hμe : μ = lam := by
+      by_contra h
+      exact hμ ⟨Relation.ReflTransGen.trans hκl hμκ, h⟩
+    have h1 : κ ∈ cone P μ := VermaModule.mem_cone_of_multiplicity_ne_zero
+      (VermaModule.multiplicity_ne_zero_of_isStronglyLinked P hA (by rw [hμe]; exact hκl))
+    exact hκne ((eq_of_mem_cone_of_mem_cone h1
+      (VermaModule.mem_cone_of_multiplicity_ne_zero hκ)).trans hμe)
 
 /-- **[HumO] Theorem 6.11 (a)**, first vanishing statement. Unless `μ ↑ λ` with `μ ≠ λ`,
 `Extⁿ_𝒪(M(μ), M(λ)) = 0` for all `n > 0`. Finite type, algebraically closed field of
@@ -456,6 +468,31 @@ theorem ext_verma_eq_zero {μ lam : Dual K H}
     x = 0 := by
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
   exact ext_verma_eq_zero_aux lam m μ hμ x
+
+/-- `Extⁿ_𝒪(M(μ), Y) = 0` for all `n` if `Y` has no weight `ρ ≥ μ`: for `n = 0` a morphism
+`M(μ) → Y` sends `v_μ` to `Y_μ = 0`, and the induction step is `ext_succ_verma_eq_zero`, since
+every factor `M(κ)` of `P(μ)` has `κ ≥ μ`. -/
+theorem ext_verma_eq_zero_of_weightSpace (Y : CategoryO.{u} P) (n : ℕ) : ∀ μ : Dual K H,
+    (∀ ρ, μ ∈ cone P ρ → weightSpace P Y.obj ρ = ⊥) →
+      ∀ x : Abelian.Ext.{u} (verma P μ) Y n, x = 0 := by
+  induction n with
+  | zero =>
+    intro μ hμ x
+    let eV := ofLieEquiv (P := P) (VermaModule P μ)
+    let ψ : VermaModule P μ →ₗ⁅K,𝔤⁆ Y.obj :=
+      (toLieModuleHom (Abelian.Ext.homEquiv₀ x).hom).comp eV.toLieModuleHom
+    have hmem : ψ (VermaModule.hwv P μ) ∈ weightSpace P Y.obj μ :=
+      map_mem_weightSpaceOfMap P ψ (VermaModule.hwv_mem_weightSpace P μ)
+    rw [hμ μ (mem_cone_self μ)] at hmem
+    have hψ : ψ = 0 := (VermaModule.eq_zero_iff P ψ).mpr hmem
+    have h0 : Abelian.Ext.homEquiv₀ x = 0 := by
+      ext m
+      exact LieModuleHom.congr_fun hψ (eV.symm m)
+    rw [← Abelian.Ext.mk₀_homEquiv₀_apply x, h0, Abelian.Ext.mk₀_zero]
+  | succ n ih =>
+    intro μ hμ x
+    exact ext_succ_verma_eq_zero Y μ n (fun κ hκ _ ↦ ih κ fun ρ hρ ↦
+      hμ ρ (mem_cone_trans (VermaModule.mem_cone_of_multiplicity_ne_zero hκ) hρ)) x
 
 end CategoryO
 
