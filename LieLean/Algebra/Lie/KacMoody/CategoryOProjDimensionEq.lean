@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Alex Ellis. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Alex Ellis
+-/
 import LieLean.Algebra.Lie.KacMoody.CategoryOProjDimension
 import LieLean.Algebra.Lie.KacMoody.CategoryOTranslation
 import LieLean.Algebra.Lie.KacMoody.TranslationWallCrossing
@@ -5,6 +10,38 @@ import LieLean.Algebra.Lie.KacMoody.TranslationWallHead
 import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosureNonintegral
 import LieLean.Algebra.Lie.KacMoody.DualIrreducible
 import LieLean.LinearAlgebra.Matrix.Cartan.IntegralWeylGroupAntidominant
+import LieLean.Algebra.Lie.KacMoody.BGG.Exactness
+import LieLean.Algebra.Lie.KacMoody.ProjectiveStdFiltration
+import LieLean.Algebra.Lie.KacMoody.EnoughProjectives
+
+/-!
+# Projective dimensions in `𝒪`: the equality cases of Prop. 6.9
+
+For `𝔤` of finite type over an algebraically closed field of characteristic zero and `Λ`
+dominant integral, `CategoryOProjDimension.lean` gives the upper bounds `pd M(w·Λ) ≤ ℓ(w)` and
+`pd L(w·Λ) ≤ 2ℓ(w₀) - ℓ(w)`. This file proves that the first bound is an equality for every `w`,
+and that the second is an equality for `w = 1`, so the block of `Λ` has global dimension `2ℓ(w₀)`.
+
+## Main results
+
+* `CategoryO.projectiveDimension_verma_weylDot`: [HumO] Prop. 6.9 (a), `pd M(w·Λ) = ℓ(w)`.
+  The lower bound is a nonzero class in `Ext^{ℓ(w)}(M(w·Λ), L(Λ))`, built by induction on `ℓ(w)`:
+  for `ℓ(w sᵢ) < ℓ(w)` the wall-crossing sequence `0 → M(w sᵢ·Λ) → Θ M(w·Λ) → M(w·Λ) → 0` has
+  injective connecting map on `Ext(−, L(Λ))`, since `Θ = T' T` and `T` kills `L(Λ)` (by
+  adjunction, `Ext(Θ M, L(Λ)) ≅ Ext(T M, T L(Λ)) = 0`).
+* `CategoryO.projectiveDimension_simple`: [HumO] Prop. 6.9 (b) for `w = 1`, `pd L(Λ) = 2ℓ(w₀)`.
+  The lower bound comes from the BGG resolution `0 → C_m → ⋯ → C_0 → L(Λ) → 0`
+  (`ker_bggDiff_eq_range`, `m = ℓ(w₀)`): dimension shifting along its images `R_j`, using
+  `Ext^n(C_k, L(Λ)) = 0` for `n > k` and `Ext^k(C_k, L(Λ)) ≠ 0` (`M(w·Λ)` is a summand of `C_k`),
+  gives `Ext^{2m}(L(Λ), L(Λ)) ≠ 0`.
+
+The lower bound `pd L(w·Λ) ≥ 2ℓ(w₀) - ℓ(w)` for `w ≠ 1` is not proved here.
+
+## References
+
+* [HumO] J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
+  GSM 94, §6.9.
+-/
 
 noncomputable section
 
@@ -571,6 +608,284 @@ theorem projectiveDimension_verma_weylDot (w : P.weylGroup hA.isGeneralizedCarta
     intro h
     obtain ⟨x, hx⟩ := exists_ext_verma_weylDot_simple_ne_zero hA hΛ _ w rfl
     exact hx (x.eq_zero_of_hasProjectiveDimensionLT _ le_rfl)
+
+/-! ### The BGG resolution in `𝒪` and `pd L(Λ) = 2ℓ(w₀)` -/
+
+section BGG
+
+open DirectSum
+
+omit [IsAlgClosed K] [FiniteDimensional K H] in
+/-- In finite type the Weyl group is finite (`finite_weylGroup`), so `w₀` exists. -/
+instance finite_weylGroup_of_fact (h : A.IsGeneralizedCartan) : Finite (P.weylGroup h) :=
+  P.finite_weylGroup Fact.out
+
+variable (P Λ) in
+/-- The term `C_k = ⊕_{ℓ(w) = k} M(w·Λ)` of the BGG resolution, as an object of `𝒪`. -/
+def bggObj (k : ℕ) : CategoryO.{u} P :=
+  mk (BGGTerm P hA.isGeneralizedCartan Λ k)
+    (IsCategoryO.directSum _ fun _ ↦ VermaModule.isCategoryO P _)
+    (exists_finset_lieSpan_directSum_eq_top fun _ ↦ ⟨{VermaModule.hwv P _}, by
+      rw [Finset.coe_singleton]
+      exact VermaModule.lieSpan_map_hwv_eq_top LieModuleHom.id Function.surjective_id⟩)
+
+/-- The BGG differential `C_{k+1} → C_k` on the objects of `𝒪`. -/
+def bggObjDiff (k : ℕ) : (bggObj P hA Λ (k + 1)).obj →ₗ⁅K,𝔤⁆ (bggObj P hA Λ k).obj :=
+  (ofLieEquiv (P := P) (BGGTerm P hA.isGeneralizedCartan Λ k)).toLieModuleHom.comp
+    ((bggDiff P hA.isGeneralizedCartan hΛ k).comp
+      (ofLieEquiv (P := P) (BGGTerm P hA.isGeneralizedCartan Λ (k + 1))).symm.toLieModuleHom)
+
+/-- The BGG augmentation `C_0 → L(Λ)` on the objects of `𝒪`. -/
+def bggObjAug : (bggObj P hA Λ 0).obj →ₗ⁅K,𝔤⁆ (simple P Λ).obj :=
+  (ofLieEquiv (P := P) (IrreducibleModule P Λ)).toLieModuleHom.comp
+    ((bggAugmentation P hA.isGeneralizedCartan hΛ).comp
+      (ofLieEquiv (P := P) (BGGTerm P hA.isGeneralizedCartan Λ 0)).symm.toLieModuleHom)
+
+omit [IsAlgClosed K] [Fact A.IsFiniteCartan] in
+theorem ker_bggObjDiff (k : ℕ) : (bggObjDiff hA hΛ k).ker = (bggObjDiff hA hΛ (k + 1)).range := by
+  have h := ker_bggDiff_eq_range P hA.isGeneralizedCartan hΛ hA.isSymmetrizable k
+  ext x
+  rw [LieModuleHom.mem_ker, LieModuleHom.mem_range]
+  constructor
+  · intro hx
+    have hx' : (ofLieEquiv (P := P) _).symm x ∈ (bggDiff P hA.isGeneralizedCartan hΛ k).ker := by
+      rw [LieModuleHom.mem_ker]
+      exact (ofLieEquiv (P := P) _).injective (by rw [map_zero]; exact hx)
+    rw [h, LieModuleHom.mem_range] at hx'
+    obtain ⟨y, hy⟩ := hx'
+    exact ⟨ofLieEquiv (P := P) _ y, hy⟩
+  · rintro ⟨y, rfl⟩
+    exact LieModuleHom.congr_fun (bggDiff_comp_bggDiff P hA.isGeneralizedCartan hΛ k)
+      ((ofLieEquiv (P := P) _).symm y)
+
+omit [IsAlgClosed K] [Fact A.IsFiniteCartan] in
+theorem ker_bggObjAug : (bggObjAug hA hΛ).ker = (bggObjDiff hA hΛ 0).range := by
+  have h := ker_bggAugmentation P hA.isGeneralizedCartan hΛ hA.isSymmetrizable
+  ext x
+  rw [LieModuleHom.mem_ker, LieModuleHom.mem_range]
+  constructor
+  · intro hx
+    have hx' : (ofLieEquiv (P := P) _).symm x ∈ (bggAugmentation P hA.isGeneralizedCartan hΛ).ker := by
+      rw [LieModuleHom.mem_ker]
+      exact (ofLieEquiv (P := P) _).injective (by rw [map_zero]; exact hx)
+    rw [h, LieModuleHom.mem_range] at hx'
+    obtain ⟨y, hy⟩ := hx'
+    exact ⟨ofLieEquiv (P := P) _ y, hy⟩
+  · rintro ⟨y, rfl⟩
+    have h0 : (ofLieEquiv (P := P) _).symm ((bggObjDiff hA hΛ 0) y) ∈
+        (bggAugmentation P hA.isGeneralizedCartan hΛ).ker := by
+      rw [h]
+      exact ⟨(ofLieEquiv (P := P) _).symm y, rfl⟩
+    rw [LieModuleHom.mem_ker] at h0
+    exact (congrArg (ofLieEquiv (P := P) (IrreducibleModule P Λ)) h0).trans (map_zero _)
+
+omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
+theorem surjective_bggObjAug : Function.Surjective (bggObjAug hA hΛ) := fun z ↦ by
+  obtain ⟨y, hy⟩ := bggAugmentation_surjective P hA.isGeneralizedCartan hΛ
+    ((ofLieEquiv (P := P) _).symm z)
+  exact ⟨ofLieEquiv (P := P) _ y, hy⟩
+
+/-- The image `R_k ⊆ C_k` of the differential `C_{k+1} → C_k`, as an object of `𝒪`. -/
+def bggImage (k : ℕ) : CategoryO.{u} P := ofSub (bggObj P hA Λ k) (bggObjDiff hA hΛ k).range
+
+/-- `C_{k+1} → R_k`. -/
+def bggObjDiffImage (k : ℕ) : (bggObj P hA Λ (k + 1)).obj →ₗ⁅K,𝔤⁆ (bggImage hA hΛ k).obj :=
+  (ofLieEquiv (P := P) (bggObjDiff hA hΛ k).range).toLieModuleHom.comp
+    (LieModuleHom.codRestrict (bggObjDiff hA hΛ k).range (bggObjDiff hA hΛ k)
+      fun m ↦ (LieModuleHom.mem_range _ _).mpr ⟨m, rfl⟩)
+
+theorem surjective_bggObjDiffImage (k : ℕ) : Function.Surjective (bggObjDiffImage hA hΛ k) :=
+  fun z ↦ by
+    obtain ⟨y, hy⟩ := (LieModuleHom.mem_range _ _).mp ((ofLieEquiv (P := P) _).symm z).2
+    exact ⟨y, (ofLieEquiv (P := P) _).symm.injective (Subtype.ext hy)⟩
+
+theorem ker_bggObjDiffImage (k : ℕ) :
+    (bggObjDiffImage hA hΛ k).ker = (bggObjDiff hA hΛ (k + 1)).range := by
+  rw [← ker_bggObjDiff]
+  ext x
+  rw [LieModuleHom.mem_ker, LieModuleHom.mem_ker]
+  constructor
+  · intro h
+    exact congrArg Subtype.val ((ofLieEquiv (P := P) (bggObjDiff hA hΛ k).range).injective
+      (h.trans (map_zero _).symm))
+  · intro h
+    have h' : LieModuleHom.codRestrict (bggObjDiff hA hΛ k).range (bggObjDiff hA hΛ k)
+        (fun m ↦ (LieModuleHom.mem_range _ _).mpr ⟨m, rfl⟩) x = 0 := Subtype.ext h
+    exact (congrArg (ofLieEquiv (P := P) (bggObjDiff hA hΛ k).range) h').trans (map_zero _)
+
+include hΛ in
+/-- `Extⁿ(C_k, Y) = 0` for `n > k`: `C_k` has a standard filtration by `M(w·Λ)`, `ℓ(w) = k`. -/
+theorem ext_bggObj_eq_zero (k n : ℕ) (hn : k < n) (Y : CategoryO.{u} P)
+    (x : Abelian.Ext.{u} (bggObj P hA Λ k) Y n) : x = 0 := by
+  classical
+  have := Fintype.ofFinite {w : P.weylGroup hA.isGeneralizedCartan // (P.coxeterSystem hA.isGeneralizedCartan).length w = k}
+  have hv : ∀ w : {w : P.weylGroup hA.isGeneralizedCartan // (P.coxeterSystem hA.isGeneralizedCartan).length w = k},
+      IsStdFiltered P (⊤ : LieSubmodule K 𝔤 (VermaModule P (P.weylDot hA.isGeneralizedCartan w.1 Λ)))
+        {P.weylDot hA.isGeneralizedCartan w.1 Λ} := fun w ↦ by
+    have := isStdFiltered_range_of_injective P (LieModuleHom.id (R := K) (L := 𝔤)
+      (M := VermaModule P (P.weylDot hA.isGeneralizedCartan w.1 Λ))) Function.injective_id
+    rwa [(LieModuleHom.range_eq_top _).mpr Function.surjective_id] at this
+  have hfilt := IsStdFiltered.directSum P hv
+  let g : BGGTerm P hA.isGeneralizedCartan Λ k →ₗ⁅K,𝔤⁆ (bggObj P hA Λ k).obj :=
+    (ofLieEquiv (P := P) (BGGTerm P hA.isGeneralizedCartan Λ k)).toLieModuleHom
+  have hg : ∀ y ∈ (⊤ : LieSubmodule K 𝔤 (BGGTerm P hA.isGeneralizedCartan Λ k)), g y = 0 → y = 0 :=
+    fun y _ hy ↦ (ofLieEquiv (P := P) (BGGTerm P hA.isGeneralizedCartan Λ k)).injective (hy.trans (map_zero _).symm)
+  have hfilt' := IsStdFiltered.map_of_injOn P g hg hfilt le_rfl
+  have htop : (⊤ : LieSubmodule K 𝔤 (BGGTerm P hA.isGeneralizedCartan Λ k)).map g = ⊤ :=
+    eq_top_iff.mpr fun y _ ↦ (LieSubmodule.mem_map _).mpr
+      ⟨(ofLieEquiv (P := P) _).symm y, trivial, rfl⟩
+  rw [htop] at hfilt'
+  refine ext_eq_zero_of_ofSub_top _ Y (fun x ↦ ?_) x
+  refine ext_eq_zero_of_isStdFiltered (bggObj P hA Λ k) Y hfilt' (fun μ hμ ↦ ?_) x
+  obtain ⟨w, -, hw⟩ := Multiset.mem_sum.mp hμ
+  rw [Multiset.mem_singleton] at hw
+  subst hw
+  exact ext_verma_weylDot_eq_zero hA hΛ k w.1 w.2 n hn Y
+
+include hΛ in
+/-- `Ext^{ℓ(w)}(C_{ℓ(w)}, L(Λ)) ≠ 0`: `M(w·Λ)` is a summand of `C_{ℓ(w)}`. -/
+theorem exists_ext_bggObj_ne_zero (w : P.weylGroup hA.isGeneralizedCartan) :
+    ∃ x : Abelian.Ext.{u} (bggObj P hA Λ ((P.coxeterSystem hA.isGeneralizedCartan).length w))
+      (simple P Λ) ((P.coxeterSystem hA.isGeneralizedCartan).length w), x ≠ 0 := by
+  classical
+  have hA' := hA.isGeneralizedCartan
+  set k := (P.coxeterSystem hA').length w
+  obtain ⟨x, hx⟩ := exists_ext_verma_weylDot_simple_ne_zero hA hΛ k w rfl
+  let j : {w : P.weylGroup hA' // (P.coxeterSystem hA').length w = k} := ⟨w, rfl⟩
+  let q : verma P (P.weylDot hA' w Λ) ⟶ bggObj P hA Λ k :=
+    (IsObj.{u} P).homMk (ofLieModuleHom ((ofLieEquiv (P := P) _).toLieModuleHom.comp
+      ((lieModuleOf K _ 𝔤 (fun w : {w : P.weylGroup hA' // (P.coxeterSystem hA').length w = k} ↦
+          VermaModule P (P.weylDot hA' w.1 Λ)) j).comp
+        (ofLieEquiv (P := P) _).symm.toLieModuleHom)))
+  let p : bggObj P hA Λ k ⟶ verma P (P.weylDot hA' w Λ) :=
+    (IsObj.{u} P).homMk (ofLieModuleHom ((ofLieEquiv (P := P) _).toLieModuleHom.comp
+      ((lieModuleComponent K _ 𝔤
+          (fun w : {w : P.weylGroup hA' // (P.coxeterSystem hA').length w = k} ↦
+            VermaModule P (P.weylDot hA' w.1 Λ)) j).comp
+        (ofLieEquiv (P := P) _).symm.toLieModuleHom)))
+  have hqp : q ≫ p = 𝟙 _ := by
+    ext y
+    exact DirectSum.of_eq_same (β := fun w : {w : P.weylGroup hA' //
+      (P.coxeterSystem hA').length w = k} ↦ VermaModule P (P.weylDot hA' w.1 Λ)) j _
+  refine ⟨(Abelian.Ext.mk₀ p).comp x (zero_add _), fun h0 ↦ hx ?_⟩
+  have := congrArg (fun z ↦ (Abelian.Ext.mk₀ q).comp z (zero_add _)) h0
+  simpa [hqp] using this
+
+include hΛ in
+theorem exists_ext_bggObj_ne_zero' (k : ℕ) (w : P.weylGroup hA.isGeneralizedCartan)
+    (hw : (P.coxeterSystem hA.isGeneralizedCartan).length w = k) :
+    ∃ x : Abelian.Ext.{u} (bggObj P hA Λ k) (simple P Λ) k, x ≠ 0 := by
+  subst hw
+  exact exists_ext_bggObj_ne_zero hA hΛ w
+
+theorem kerComplex_bggObjDiffImage_X₁ (k : ℕ) :
+    (kerComplex _ _ (bggObjDiffImage hA hΛ k)).X₁ = bggImage hA hΛ (k + 1) := by
+  change ofSub _ _ = ofSub _ _
+  rw [ker_bggObjDiffImage]
+
+include hΛ in
+/-- `Ext^{j+2s+1}(R_j, L(Λ)) ≠ 0` for `j + s + 1 = m = ℓ(w₀)`, by dimension shifting from the top of
+the BGG resolution. -/
+theorem exists_ext_bggImage_ne_zero (s : ℕ) :
+    ∀ j, j + s + 1 = (P.coxeterSystem hA.isGeneralizedCartan).length
+        (P.coxeterSystem hA.isGeneralizedCartan).longestElement →
+      ∃ x : Abelian.Ext.{u} (bggImage hA hΛ j) (simple P Λ) (j + 2 * s + 1), x ≠ 0 := by
+  have hA' := hA.isGeneralizedCartan
+  induction s with
+  | zero =>
+    intro j hj
+    have hS := shortExact_kerComplex _ _ _ (surjective_bggObjDiffImage hA hΛ j)
+    -- `C_{j+2} = 0`, so `R_{j+1} = 0`
+    have hsub : Subsingleton (BGGTerm P hA' Λ (j + 1 + 1)) := by
+      have : IsEmpty {w : P.weylGroup hA' // (P.coxeterSystem hA').length w = j + 1 + 1} :=
+        ⟨fun w ↦ by
+          have := (P.coxeterSystem hA').length_le_length_longestElement w.1
+          omega⟩
+      infer_instance
+    have hbot : (bggObjDiffImage hA hΛ j).ker = ⊥ := by
+      rw [ker_bggObjDiffImage, eq_bot_iff]
+      rintro _ ⟨y, rfl⟩
+      have : (ofLieEquiv (P := P) (BGGTerm P hA' Λ (j + 1 + 1))).symm y = 0 :=
+        Subsingleton.elim _ _
+      change ofLieEquiv _ (bggDiff P _ hΛ (j + 1) ((ofLieEquiv _).symm y)) = 0
+      rw [this, map_zero, map_zero]
+    have hZ : Limits.IsZero (kerComplex _ _ (bggObjDiffImage hA hΛ j)).X₁ := by
+      change Limits.IsZero (ofSub _ _)
+      rw [hbot]
+      exact isZero_ofSub_bot _
+    obtain ⟨x, hx⟩ := exists_ext_bggObj_ne_zero' hA hΛ (j + 1)
+      (P.coxeterSystem hA').longestElement (by omega)
+    obtain ⟨x₃, hx₃⟩ := Abelian.Ext.contravariant_sequence_exact₂ hS (simple P Λ) x
+      (Abelian.Ext.eq_zero_of_isZero_left hZ _)
+    refine ⟨x₃, fun h0 ↦ hx ?_⟩
+    rw [← hx₃]
+    subst h0
+    exact Abelian.Ext.comp_zero _ _ _ _ _
+  | succ s ih =>
+    intro j hj
+    have hS := shortExact_kerComplex _ _ _ (surjective_bggObjDiffImage hA hΛ j)
+    have h₁ : ∃ x : Abelian.Ext.{u} (kerComplex _ _ (bggObjDiffImage hA hΛ j)).X₁ (simple P Λ)
+        (j + 1 + 2 * s + 1), x ≠ 0 := by
+      rw [kerComplex_bggObjDiffImage_X₁]
+      exact ih (j + 1) (by omega)
+    obtain ⟨x₁, hx₁⟩ := h₁
+    have h₂ : ∀ x : Abelian.Ext.{u} (kerComplex _ _ (bggObjDiffImage hA hΛ j)).X₂ (simple P Λ)
+        (j + 1 + 2 * s + 1), x = 0 :=
+      ext_bggObj_eq_zero hA hΛ (j + 1) _ (by omega) _
+    rw [show j + 2 * (s + 1) + 1 = j + 1 + 2 * s + 1 + 1 by ring]
+    exact ⟨_, Abelian.Ext.extClass_comp_ne_zero hS h₂ hx₁⟩
+
+include hΛ in
+/-- `Ext^{2m}(L(Λ), L(Λ)) ≠ 0` for `m = ℓ(w₀)` and `Λ` dominant integral. -/
+theorem exists_ext_simple_self_ne_zero :
+    ∃ x : Abelian.Ext.{u} (simple P Λ) (simple P Λ)
+      (2 * (P.coxeterSystem hA.isGeneralizedCartan).length
+        (P.coxeterSystem hA.isGeneralizedCartan).longestElement), x ≠ 0 := by
+  have hA' := hA.isGeneralizedCartan
+  set m := (P.coxeterSystem hA').length (P.coxeterSystem hA').longestElement with hm
+  rcases Nat.eq_zero_or_pos m with h0 | hpos
+  · rw [h0, mul_zero]
+    have : Nontrivial (simple.{u} P Λ).obj :=
+      have := IrreducibleModule.isIrreducible P Λ
+      (ofLieEquiv (P := P) (IrreducibleModule P Λ)).toEquiv.symm.nontrivial
+    refine ⟨Abelian.Ext.mk₀ (𝟙 _), fun h ↦ ?_⟩
+    rw [Abelian.Ext.mk₀_eq_zero_iff] at h
+    obtain ⟨a, ha⟩ := exists_ne (0 : (simple.{u} P Λ).obj)
+    exact ha (congrArg (fun φ ↦ φ.hom.hom a) h)
+  · have hS := shortExact_kerComplex _ _ _ (surjective_bggObjAug hA hΛ)
+    have h₁ : ∃ x : Abelian.Ext.{u} (kerComplex _ _ (bggObjAug hA hΛ)).X₁ (simple P Λ)
+        (0 + 2 * (m - 1) + 1), x ≠ 0 := by
+      have hX : (kerComplex _ _ (bggObjAug hA hΛ)).X₁ = bggImage hA hΛ 0 := by
+        change ofSub _ _ = ofSub _ _
+        rw [ker_bggObjAug]
+      rw [hX]
+      exact exists_ext_bggImage_ne_zero hA hΛ (m - 1) 0 (by omega)
+    obtain ⟨x₁, hx₁⟩ := h₁
+    have h₂ : ∀ x : Abelian.Ext.{u} (kerComplex _ _ (bggObjAug hA hΛ)).X₂ (simple P Λ)
+        (0 + 2 * (m - 1) + 1), x = 0 :=
+      ext_bggObj_eq_zero hA hΛ 0 _ (by omega) _
+    rw [show 2 * m = 0 + 2 * (m - 1) + 1 + 1 by omega]
+    exact ⟨_, Abelian.Ext.extClass_comp_ne_zero hS h₂ hx₁⟩
+
+include hΛ in
+/-- **[HumO] Proposition 6.9 (b) for `w = 1`, and the global dimension.** For `Λ` dominant
+integral, `pd L(Λ) = 2m` with `m = ℓ(w₀)`. Together with `hasProjectiveDimensionLT_of_multiplicity`,
+the block of `Λ` has global dimension exactly `2m`. -/
+theorem projectiveDimension_simple :
+    projectiveDimension (simple.{u} P Λ) =
+      ((2 * (P.coxeterSystem hA.isGeneralizedCartan).length
+        (P.coxeterSystem hA.isGeneralizedCartan).longestElement : ℕ) : WithBot ℕ∞) := by
+  refine le_antisymm ?_ ?_
+  · refine (projectiveDimension_le_iff _ _).mpr ?_
+    have h := hasProjectiveDimensionLT_simple_weylDot hA hΛ 1
+    rw [weylDot_one, (P.coxeterSystem _).length_one, Nat.sub_zero] at h
+    exact h
+  · rw [projectiveDimension_ge_iff]
+    intro h
+    obtain ⟨x, hx⟩ := exists_ext_simple_self_ne_zero hA hΛ
+    exact hx (x.eq_zero_of_hasProjectiveDimensionLT _ le_rfl)
+
+end BGG
 
 end CategoryO
 
