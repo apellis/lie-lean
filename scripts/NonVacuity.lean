@@ -248,4 +248,33 @@ example : ∏ j ∈ Finset.range 2, qBinomialU v5 (2 * (j + 1)) 2 =
 /-- [Lus] 34.1.4 (a) at `v = 2 ∈ 𝔽₅`, `r = 0`, `a = 1`. -/
 example := sum_qBinomialU_root (r := 0) (a := 1) hv5 hv5prim (by norm_num) (by norm_num)
 
+/-! ### Super Gabber–Kac for `osp(1|4)` -/
+
+/-- The Cartan matrix of `B₂` with an odd short simple root (the Lie superalgebra `osp(1|4)`). -/
+abbrev AOsp : Matrix (Fin 2) (Fin 2) ℤ := !![2, -2; -1, 2]
+
+/-- The parity: `e₀` odd. -/
+abbrev pOsp : Fin 2 → ZMod 2 := ![1, 0]
+
+theorem hAOsp : AOsp.IsGeneralizedCartan where
+  diag := by decide
+  offDiag_nonpos i j := by fin_cases i <;> fin_cases j <;> decide
+  zero_comm i j := by fin_cases i <;> fin_cases j <;> decide
+
+theorem hpOsp : AOsp.IsSuperAdmissible pOsp := by
+  intro i j hi
+  fin_cases i
+  · fin_cases j <;> decide
+  · exact absurd hi (by decide)
+
+/-- The symmetrization `ε = (2, 1)`. -/
+def SOsp : AOsp.Symmetrization where
+  ε := ![2, 1]
+  ε_pos i := by fin_cases i <;> norm_num
+  ε_mul_comm i j := by fin_cases i <;> fin_cases j <;> norm_num
+
+example : SuperEnveloping.maxIdeal (std AOsp ℚ) pOsp =
+    SuperEnveloping.serreIdeal (std AOsp ℚ) pOsp :=
+  SuperEnveloping.maxIdeal_eq_serreIdeal _ _ SOsp hAOsp hpOsp
+
 end NonVacuity
