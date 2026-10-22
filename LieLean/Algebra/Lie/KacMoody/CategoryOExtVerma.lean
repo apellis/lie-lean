@@ -205,11 +205,13 @@ def stdStepMapO (X : CategoryO.{u} P) {N₀ N₁ : LieSubmodule K 𝔤 X.obj} {�
     N₁ →ₗ⁅K,𝔤⁆ (verma P μ).obj :=
   (ofLieEquiv (P := P) (VermaModule P μ)).toLieModuleHom.comp (stdStepMap hle e)
 
+omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem stdStepMapO_apply (X : CategoryO.{u} P) {N₀ N₁ : LieSubmodule K 𝔤 X.obj} {μ : Dual K H}
     (hle : N₀ ≤ N₁) (e : VermaModule P μ ≃ₗ⁅K,𝔤⁆ N₁.map (LieSubmodule.Quotient.mk' N₀)) (y : N₁) :
     stdStepMapO X hle e y = ofLieEquiv (P := P) (VermaModule P μ) (stdStepMap hle e y) :=
   rfl
 
+omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem stdStepMapO_eq_zero (X : CategoryO.{u} P) {N₀ N₁ : LieSubmodule K 𝔤 X.obj}
     {μ : Dual K H} (hle : N₀ ≤ N₁)
     (e : VermaModule P μ ≃ₗ⁅K,𝔤⁆ N₁.map (LieSubmodule.Quotient.mk' N₀)) {y : N₁}
@@ -218,6 +220,17 @@ theorem stdStepMapO_eq_zero (X : CategoryO.{u} P) {N₀ N₁ : LieSubmodule K �
     rw [map_zero]
     exact (stdStepMap_eq_zero_iff hle e y).mpr hy
   rw [← map_zero (stdStepMapO X hle e), stdStepMapO_apply, stdStepMapO_apply, h]
+
+omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
+theorem stdStepMapO_eq_zero_iff (X : CategoryO.{u} P) {N₀ N₁ : LieSubmodule K 𝔤 X.obj}
+    {μ : Dual K H} (hle : N₀ ≤ N₁)
+    (e : VermaModule P μ ≃ₗ⁅K,𝔤⁆ N₁.map (LieSubmodule.Quotient.mk' N₀)) (y : N₁) :
+    stdStepMapO X hle e y = 0 ↔ (y : X.obj) ∈ N₀ := by
+  refine ⟨fun h ↦ ?_, stdStepMapO_eq_zero X hle e⟩
+  rw [← map_zero (stdStepMapO X hle e), stdStepMapO_apply, stdStepMapO_apply] at h
+  have h' := (ofLieEquiv (P := P) (VermaModule P μ)).injective h
+  rw [map_zero] at h'
+  exact (stdStepMap_eq_zero_iff hle e y).mp h'
 
 /-- `Extⁿ(N₁, Y) = 0` for a step `N₁ / N₀ ≅ M(μ)` of a standard filtration with
 `Extⁿ(N₀, Y) = 0 = Extⁿ(M(μ), Y)`. -/
@@ -230,9 +243,8 @@ theorem ext_eq_zero_of_step (X Y : CategoryO.{u} P) {n : ℕ} {N₀ N₁ : LieSu
   Abelian.Ext.eq_zero_of_shortExact_left
     (shortExact_subComplex X hle (verma P μ) (stdStepMapO X hle e)
       (fun _ hx ↦ stdStepMapO_eq_zero X hle e hx)
-      ((ofLieEquiv (P := P) _).surjective.comp (surjective_stdStepMap hle e))
-      (fun y hy ↦ (stdStepMap_eq_zero_iff hle e y).mp
-        ((ofLieEquiv (P := P) _).injective (hy.trans (map_zero _).symm)))) h₀ hμ
+      ((ofLieEquiv (P := P) (VermaModule P μ)).surjective.comp (surjective_stdStepMap hle e))
+      (fun y hy ↦ (stdStepMapO_eq_zero_iff X hle e y).mp hy)) h₀ hμ
 
 /-- `Extⁿ(N, Y) = 0` for a Lie submodule `N` with a standard filtration whose factors `M(μ)` all
 have `Extⁿ(M(μ), Y) = 0`. -/
@@ -345,9 +357,8 @@ theorem ext_inf_ker_eq_zero_aux [DecidableEq (Dual K H)] (X Y : CategoryO.{u} P)
           change stdStepMapO X hle e ⟨(y : X.obj) - x, hmem.1⟩ = m
           rw [stdStepMapO_apply, hsub, hstep0 x hx, sub_zero, hy]
           exact (ofLieEquiv (P := P) (VermaModule P κ)).apply_symm_apply m
-        · have h1 : stdStepMap hle e ⟨y, (y.2 : (y : X.obj) ∈ N₁ ⊓ φ.ker).1⟩ = 0 :=
-            (ofLieEquiv (P := P) _).injective (hy.trans (map_zero _).symm)
-          exact ⟨(stdStepMap_eq_zero_iff hle e _).mp h1, y.2.2⟩
+        · exact ⟨(stdStepMapO_eq_zero_iff X hle e (LieSubmodule.inclusion inf_le_left y)).mp hy,
+            y.2.2⟩
 
 /-! ### [HumO] Theorem 6.11 (a) for Verma modules -/
 
