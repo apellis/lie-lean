@@ -113,6 +113,8 @@ example : letI := (LaurentPolynomial.eval₂ (Int.castRingHom ℚ) (-1)).toAlgeb
 
 /-! ### Lusztig 35.1.8 at `l = 2`, `v ↦ i ∈ ℂ` -/
 
+section Frobenius35
+
 /-- `𝒜 → ℂ`, `v ↦ i`: `ε = i` has `ε⁴ = 1` and `ε² ≠ 1` ([Lus] 35.2.1 with `l = 2`). -/
 local instance : Algebra (LaurentPolynomial ℤ) ℂ :=
   (LaurentPolynomial.eval₂ (Int.castRingHom ℂ) (Units.mk0 Complex.I Complex.I_ne_zero)).toAlgebra
@@ -138,6 +140,8 @@ example (n : ℕ) : frobSplit DA2 (by norm_num) hlI hprimI
   frobSplit_integralGenerator DA2 (by norm_num) hlI hprimI 0 n
 
 example : DA2.frobOrder 2 0 = 2 := by decide
+
+end Frobenius35
 
 /-! ### Lusztig 25.2.1 (d) and 26.3.1 on the extended root datum of `sl₂` -/
 
