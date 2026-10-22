@@ -111,7 +111,6 @@ theorem Matrix.Realization.KacMoodyAlgebra.exists_finset_lieSpan_tensor_eq_top
   rw [eq_top_iff]
   rintro z -
   induction z using TensorProduct.inductionOn with
-  | zero => exact N.zero_mem
   | tmul x l =>
     have hx : x ∈ S' := hS' ▸ LieSubmodule.mem_top x
     exact hx l
@@ -150,7 +149,6 @@ theorem centralTranslationMap_add (χ₁ χ₂ : 𝓩 →ₐ[K] K) (f g : M →�
   change TensorProduct.map _ _ t = TensorProduct.map _ _ t + TensorProduct.map _ _ t
   clear ht
   induction t using TensorProduct.inductionOn with
-  | zero => simp
   | tmul v z =>
     rw [TensorProduct.map_tmul, TensorProduct.map_tmul, TensorProduct.map_tmul, ← add_tmul]
     rfl
@@ -164,7 +162,6 @@ theorem centralTranslationMap_smul (χ₁ χ₂ : 𝓩 →ₐ[K] K) (c : K) (f :
   change TensorProduct.map _ _ t = c • TensorProduct.map _ _ t
   clear ht
   induction t using TensorProduct.inductionOn with
-  | zero => simp
   | tmul v z =>
     rw [TensorProduct.map_tmul, TensorProduct.map_tmul, smul_tmul']
     rfl
@@ -279,16 +276,16 @@ theorem exists_finset_lieSpan_centralTranslation_eq_top_of_fg (χ₁ χ₂ : �
     ∃ T : Finset (centralTranslation P L χ₁ χ₂ M),
       LieSubmodule.lieSpan K 𝔤 (T : Set (centralTranslation P L χ₁ χ₂ M)) = ⊤ := by
   classical
-  have hS₁ : LieSubmodule.lieSpan K 𝔤
-      ((S.image (blockRetr P hM χ₁) : Finset (centralBlock P M χ₁)) :
-        Set (centralBlock P M χ₁)) = ⊤ := by
-    rw [Finset.coe_image]
-    exact lieSpan_image_eq_top_of_surjective _ (fun y ↦ ⟨y, blockRetr_incl P hM χ₁ y⟩) hS
+  have hr₁ : Function.Surjective (blockRetr P hM χ₁) := fun y ↦ ⟨(y : M), blockRetr_incl P hM χ₁ y⟩
+  have hS₁ := lieSpan_image_eq_top_of_surjective (blockRetr P hM χ₁) hr₁ hS
+  rw [← Finset.coe_image] at hS₁
   obtain ⟨T, hT⟩ := exists_finset_lieSpan_tensor_eq_top (L := 𝔤) (W := L) hS₁
   have hXO : IsCategoryO P (centralBlock P M χ₁ ⊗[K] L) := (hM.centralBlock P χ₁).tensorProduct hL
-  refine ⟨T.image (blockRetr P hXO χ₂), ?_⟩
-  rw [Finset.coe_image]
-  exact lieSpan_image_eq_top_of_surjective _ (fun y ↦ ⟨y, blockRetr_incl P hXO χ₂ y⟩) hT
+  have hr₂ : Function.Surjective (blockRetr P hXO χ₂) :=
+    fun y ↦ ⟨(y : centralBlock P M χ₁ ⊗[K] L), blockRetr_incl P hXO χ₂ y⟩
+  have hT₂ := lieSpan_image_eq_top_of_surjective (blockRetr P hXO χ₂) hr₂ hT
+  rw [← Finset.coe_image] at hT₂
+  exact ⟨_, hT₂⟩
 
 variable [FiniteDimensional K L]
 
@@ -351,7 +348,7 @@ theorem lie_of_shortExact {S : ShortComplex (CategoryO.{u} P)} (hS : S.ShortExac
   have : PreservesFiniteColimits (IsObj.{u} P).ι :=
     ((Functor.preservesFiniteColimits_tfae (IsObj.{u} P).ι).out 3 4).mp
       (IsObj.{u} P).preservesCokernels_ι
-  have h := hS.map (IsObj.{u} P).ι
+  have h := hS.map_of_exact (IsObj.{u} P).ι
   exact ⟨h.moduleCat_injective_f,
     (ShortComplex.ShortExact.moduleCat_exact_iff_function_exact _).mp h.exact,
     h.moduleCat_surjective_g⟩
@@ -401,7 +398,10 @@ instance : (translationFunctor L χ₁ χ₂).Additive where
 instance : (translationFunctor L χ₁ χ₂).Linear K where
   map_smul {X Y} f c := by
     ext x
-    exact LieModuleHom.congr_fun (centralTranslationMap_smul P χ₁ χ₂ c (toLieModuleHom f.hom)) x
+    have h := LieModuleHom.congr_fun (centralTranslationMap_smul P χ₁ χ₂ c (toLieModuleHom f.hom))
+      ((ofLieEquiv (P := P) (centralTranslation P L χ₁ χ₂ X.obj)).symm x)
+    exact (congrArg (ofLieEquiv (P := P) (centralTranslation P L χ₁ χ₂ Y.obj)) h).trans
+      ((ofLieEquiv (P := P) (centralTranslation P L χ₁ χ₂ Y.obj)).map_smul c _)
 
 /-- **Translation functors are exact** ([HumO] §7.1). -/
 theorem translationFunctor_shortExact {S : ShortComplex (CategoryO.{u} P)} (hS : S.ShortExact) :
@@ -413,22 +413,31 @@ theorem translationFunctor_shortExact {S : ShortComplex (CategoryO.{u} P)} (hS :
   exact shortExact_of_lie hf' hg' fun y hy ↦ ((exact_iff_ker_eq_range P _ _).mpr hex' y).mp hy
 
 instance : PreservesFiniteLimits (translationFunctor L χ₁ χ₂) :=
-  (((Functor.exact_tfae _).out 1 4).mp fun _ hS ↦ translationFunctor_shortExact L χ₁ χ₂ hS).1
+  (((Functor.exact_tfae (translationFunctor L χ₁ χ₂)).out 1 4).mp
+    fun _ hS ↦ translationFunctor_shortExact L χ₁ χ₂ hS).1
 
 instance : PreservesFiniteColimits (translationFunctor L χ₁ χ₂) :=
-  (((Functor.exact_tfae _).out 1 4).mp fun _ hS ↦ translationFunctor_shortExact L χ₁ χ₂ hS).2
+  (((Functor.exact_tfae (translationFunctor L χ₁ χ₂)).out 1 4).mp
+    fun _ hS ↦ translationFunctor_shortExact L χ₁ χ₂ hS).2
+
+/-- `homEquivLie` with the explicit inverse `φ ↦ homMk (ofLieModuleHom φ)`. -/
+def homEquivLie' (X Y : CategoryO.{u} P) : (X ⟶ Y) ≃ₗ[K] (X.obj →ₗ⁅K,𝔤⁆ Y.obj) :=
+  { homEquivLie X Y with
+    invFun := fun φ ↦ (IsObj.{u} P).homMk (ofLieModuleHom φ)
+    left_inv := fun f ↦ by ext; rfl
+    right_inv := fun φ ↦ by ext; rfl }
 
 /-- `Hom(T X, Y) ≅ Hom(X, T' Y)` in `𝒪`, from `homTranslationEquiv`. -/
 def translationHomEquiv (X Y : CategoryO.{u} P) :
     ((translationFunctor L χ₁ χ₂).obj X ⟶ Y) ≃ₗ[K]
       (X ⟶ (translationFunctor (Module.Dual K L) χ₂ χ₁).obj Y) :=
-  (homEquivLie _ _).trans <|
+  (homEquivLie' ((translationFunctor L χ₁ χ₂).obj X) Y).trans <|
     (lieModuleHomCongr P (ofLieEquiv (P := P) (centralTranslation P L χ₁ χ₂ X.obj)).symm
       LieModuleEquiv.refl).trans <|
     (homTranslationEquiv P χ₁ χ₂ X.property.1 (isCategoryO_of_finiteDimensional' L)).trans <|
     (lieModuleHomCongr P LieModuleEquiv.refl
       (ofLieEquiv (P := P) (centralTranslation P (Module.Dual K L) χ₂ χ₁ Y.obj))).trans
-    (homEquivLie _ _).symm
+    (homEquivLie' X ((translationFunctor (Module.Dual K L) χ₂ χ₁).obj Y)).symm
 
 theorem translationHomEquiv_comp_left {X' X Y : CategoryO.{u} P} (f : X' ⟶ X)
     (h : (translationFunctor L χ₁ χ₂).obj X ⟶ Y) :
@@ -459,8 +468,11 @@ def translationAdj :
     { homEquiv := fun X Y ↦ (translationHomEquiv L χ₁ χ₂ X Y).toEquiv
       homEquiv_naturality_left_symm := fun {X' X Y} f g ↦ by
         apply (translationHomEquiv L χ₁ χ₂ X' Y).injective
-        simp only [LinearEquiv.coe_toEquiv_symm, LinearEquiv.apply_symm_apply,
-          translationHomEquiv_comp_left]
+        change translationHomEquiv L χ₁ χ₂ X' Y ((translationHomEquiv L χ₁ χ₂ X' Y).symm (f ≫ g)) =
+          translationHomEquiv L χ₁ χ₂ X' Y ((translationFunctor L χ₁ χ₂).map f ≫
+            (translationHomEquiv L χ₁ χ₂ X Y).symm g)
+        rw [translationHomEquiv_comp_left, LinearEquiv.apply_symm_apply,
+          LinearEquiv.apply_symm_apply]
       homEquiv_naturality_right := fun f g ↦ translationHomEquiv_comp_right L χ₁ χ₂ f g }
 
 /-- **[HumO] Proposition 7.2 (b).** For a finite-dimensional module `L` and central characters
