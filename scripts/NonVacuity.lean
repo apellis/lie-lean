@@ -76,6 +76,12 @@ def DA2 : LusztigCartanDatum (Fin 2) :=
 example : LusztigF.radical DA2 (RatFunc.X : RatFunc ℚ) = LusztigF.serreIdeal DA2 RatFunc.X :=
   LusztigF.radical_eq_serreIdeal_ratFunc DA2
 
+/-- [Lus] Prop. 7.1.5 (b): the higher-order quantum Serre relation `f_{0,1;1,2;1} = 0` in `f`
+for `A₂`. -/
+example : higherSerre DA2 0 1 1 2 1 ∈ LusztigF.radical DA2 (RatFunc.X : RatFunc ℚ) :=
+  higherSerre_mem_radical (by decide) 1 2 (Or.inl rfl)
+    (by rw [DA2, LusztigCartanDatum.cartanMatrix_ofSymmetrization]; decide)
+
 /-! ### Lusztig 25.2.1 (d) and 26.3.1 on the extended root datum of `sl₂` -/
 
 /-- The extended root datum of `sl₂`. -/
