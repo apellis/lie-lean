@@ -489,6 +489,7 @@ import LieLean.Algebra.QuantumGroup.Faithful
 import LieLean.Algebra.QuantumGroup.Frobenius.CartanDatum
 import LieLean.Algebra.QuantumGroup.Frobenius.SerreIdentity
 import LieLean.Algebra.QuantumGroup.Frobenius.Splitting
+import LieLean.Algebra.QuantumGroup.Frobenius.SplittingGeneral
 import LieLean.Algebra.QuantumGroup.GabberKac
 import LieLean.Algebra.QuantumGroup.GabberKac.Classical
 import LieLean.Algebra.QuantumGroup.GabberKac.MapCoeffs

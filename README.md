@@ -298,8 +298,11 @@ Further proved results include:
     θᵢ^{(lᵢn)}`, where `f*` is the algebra of the Cartan datum `(I, ∘)` of [Lus] 2.2.4
     (`frobSplit`, `frobSplit_integralGenerator`, uniqueness `eq_frobSplit`), with the Serre
     relations of [Lus] 35.2.3 (b) between the `θᵢ^{(lᵢ)}` (`sum_baseGen_frobenius_serre`).
-    Lusztig's assumptions 35.1.2 (a), (b) are not used. General `𝒜'`-algebras (35.1.11) are not
-    yet covered.
+    Lusztig's assumptions 35.1.2 (a), (b) are not used. Over every `𝒜'`-algebra `R`, `𝒜'` the
+    quotient of `𝒜` by the `l'`-th cyclotomic polynomial (`l' = 2l`, or `l' = l` for odd `l`;
+    [Lus] 35.1.3, `CyclotomicQuotient`), by [Lus] 35.1.11: `frobSplitGeneral`,
+    `frobSplitGeneral_integralGenerator`, uniqueness `eq_frobSplitGeneral`; `𝒜'` is a domain
+    (embedded in `ℂ` by `v ↦ e^{2πi/l'}`).
   - **Not yet formalized:** [Lus] 41.1.9 (compatibility with the quantum Frobenius map, roadmap
     item D2, in progress).
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`
