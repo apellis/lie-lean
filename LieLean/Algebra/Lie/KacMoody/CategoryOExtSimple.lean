@@ -129,7 +129,7 @@ def subquotientMap (X : CategoryO.{u} P) (N N' : LieSubmodule K 𝔤 X.obj) :
     ((LieSubmodule.Quotient.mk' (N.comap N'.incl)).comp
       (ofLieEquiv (P := P) N').symm.toLieModuleHom)
 
-omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
+omit [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 theorem surjective_subquotientMap (X : CategoryO.{u} P) (N N' : LieSubmodule K 𝔤 X.obj) :
     Function.Surjective (subquotientMap X N N') := by
   intro z
