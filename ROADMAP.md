@@ -3190,6 +3190,11 @@ sign twist `finrank_serreSpan_of_sq_eq_one` (`GabberKac/SerreSpanSign.lean`).
 [Lus] 2.2.4: the Cartan datum `(I, ∘)`, `i ∘ j = lᵢ lⱼ (i · j)` with `lᵢ` least such that
 `l ∣ lᵢ dᵢ` (`Frobenius/CartanDatum.lean`: `LusztigCartanDatum.frobOrder`, `frobOrder_dvd_iff`,
 `frobenius`, `frobenius_d`, `frobOrder_mul_cartanMatrix_frobenius`).
+[Lus] 2.2.5: the root datum `(Y*, X*)` of type `(I, ∘)` (`Frobenius/RootDatum.lean`:
+`frobWeights` = `X* = {ζ ∈ X | lᵢ ∣ ⟨i, ζ⟩}`, `frobRootDatum` on `Y* = Hom(X*, ℤ)` with `i* : ζ ↦
+⟨i, ζ⟩/lᵢ` and `j* = lⱼ j'`, `frobDualHom : Y → Y*`), for every `Y` (Lusztig: free of finite rank);
+`X`-regularity passes to `(Y*, X*)` (`IsXRegular.frobRootDatum`), and `Y`-regularity for `Y` free
+(`IsYRegular.frobRootDatum`).
 [Lus] Thm. 35.1.8 over the field `F` of [Lus] 35.2.1: `Fr' : _F f* → _F f`, `θᵢ^{(n)} ↦ θᵢ^{(lᵢn)}`
 (`Frobenius/Splitting.lean`: `frobSplit`, `frobSplit_integralGenerator`, `eq_frobSplit`), via the
 Serre relations [Lus] 35.2.3 (b) between the `θᵢ^{(lᵢ)}` (`sum_baseGen_frobenius_serre`, from

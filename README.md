@@ -293,6 +293,9 @@ Further proved results include:
   - [Lus] 34.1.3 (a), 34.1.4 (a): a product and a sum of Gaussian binomials at a root of `1`
     (`prod_qBinomialU_mul_root`, `sum_qBinomialU_root`), and [Lus] 35.1.5 (a)
     (`gaussBinom_mul_mul_eq_pow`).
+  - [Lus] 2.2.5: the root datum `(Y*, X*)` of type `(I, ∘)` (`frobRootDatum`, on
+    `Y* = Hom(X*, ℤ)`, `X* = frobWeights`), for every `Y`; it is `X`-regular when the original one
+    is (`IsXRegular.frobRootDatum`), and `Y`-regular when the original one is and `Y` is free.
   - [Lus] Thm. 35.1.8 over the field `F` of [Lus] 35.2.1 (characteristic zero, `ε^{2l} = 1`,
     `ε^{2t} ≠ 1` for `0 < t < l`): the `F`-algebra map `Fr' : _F f* → _F f`, `θᵢ^{(n)} ↦
     θᵢ^{(lᵢn)}`, where `f*` is the algebra of the Cartan datum `(I, ∘)` of [Lus] 2.2.4

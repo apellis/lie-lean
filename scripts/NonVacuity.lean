@@ -111,6 +111,11 @@ example : letI := (LaurentPolynomial.eval₂ (Int.castRingHom ℚ) (-1)).toAlgeb
     rw [RingHom.algebraMap_toAlgebra, LaurentPolynomial.eval₂_T, ← pow_mul, mul_comm, pow_mul]
     simp
 
+/-! ### Lusztig 2.2.5: the root datum `(Y*, X*)` at `l = 2` is `X`-regular -/
+
+example : (DA2.extendedRootDatum.frobRootDatum (l := 2) (by norm_num)).IsXRegular :=
+  LusztigCartanDatum.RootDatum.IsXRegular.frobRootDatum DA2.isXRegular_extendedRootDatum _
+
 /-! ### Lusztig 35.1.8 at `l = 2`, `v ↦ i ∈ ℂ` -/
 
 section Frobenius35
