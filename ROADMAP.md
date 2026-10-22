@@ -1097,14 +1097,21 @@ comparison of Thm. 7.9 instead of Prop. 7.3.
 direction of Thm. 4.8); for antidominant `λ` and a weight `μ` with `λ - μ` integral and `μ + ρ`
 orthogonal to every root integral for `λ`: `nonempty_equiv_projectiveCover_of_singular`
 (`P(λ) ≅ T_μ^λ M(μ)`), Thm. 7.16 (a) `nonempty_equiv_restrictedDual_projectiveCover_of_singular`
-(`P(λ) ≅ P(λ)^∨`) and (b) `multiplicity_verma_weylDot_of_singular`, `count_projectiveCover_of_singular`
-(`[M(w·λ) : L(λ)] = 1`, `(P(λ) : M(w·λ)) = 1` for `w ∈ W_[λ]`); Thm. 4.10 for integral `λ`
-(`μ = -ρ`): `exists_nonempty_equiv_projectiveCover_of_integral`,
-`nonempty_equiv_restrictedDual_projectiveCover_of_integral`, `multiplicity_verma_weylDot_of_integral`.
-Reconstructed via Prop. 7.13 and adjunction. Such a `μ` need not exist for non-integral `λ` (the
-coroots of the integral roots can span a non-saturated sublattice, e.g. type `A₁ × A₁` inside
-`B₂`); Thm. 7.16 for all antidominant `λ` (Irving's wall-crossing argument) remains open.
-*Maybe (future)*: Thm. 7.16 for all antidominant `λ`. Outline: (1) the Coxeter system of the integral Weyl
+(`P(λ) ≅ P(λ)^∨`); Thm. 4.10 for integral `λ` (`μ = -ρ`):
+`exists_nonempty_equiv_projectiveCover_of_integral`,
+`nonempty_equiv_restrictedDual_projectiveCover_of_integral`. Reconstructed via Prop. 7.13 and
+adjunction. Such a `μ` need not exist for non-integral `λ` (the coroots of the integral roots can
+span a non-saturated sublattice, e.g. type `A₁ × A₁` inside `B₂`).
+**Thm. 7.16 (b) for all antidominant `λ`** (`KacMoody/VermaAntidominantMultiplicity.lean`):
+`multiplicity_verma_weylDot_of_isAntidominant` (`[M(w·λ) : L(λ)] = 1` for `w ∈ W_[λ]`),
+`count_projectiveCover_of_isAntidominant` (`(P(λ) : M(w·λ)) = 1` in every standard filtration),
+`multiplicity_verma_le_one_of_isAntidominant` (`[M(ξ) : L(λ)] ≤ 1` for every `ξ`) and the
+integral case `multiplicity_verma_weylDot_of_integral` (Thm. 4.10). Reconstructed: every map
+`P(λ) → M(ξ)` kills the kernel of `P(λ) ↠ L(λ)` because `M(ξ)` is torsion-free over the Ore
+domain `U(𝔫⁻)` (`KacMoody/VermaTorsionFree.lean`, `VermaModule.eq_zero_or_ker_le`) and
+`L(λ) = M(λ)`, so `dim Hom(P(λ), M(ξ)) ≤ dim Hom(M(λ), M(ξ)) ≤ 1`; the socle of `M(w·λ)` gives
+`≥ 1`. Thm. 7.16 (a) for all antidominant `λ` (Irving's wall-crossing argument) remains open.
+*Maybe (future)*: Thm. 7.16 (a) for all antidominant `λ` ((b) is proved above). Outline: (1) the Coxeter system of the integral Weyl
 group `W_[λ]` with its simple integral reflections (Humphreys Thm. 3.4, already formalized as a reflection group,
 needs the simple system and length function); (2) wall-crossing `Θ_s` for simple integral reflections at
 non-integral `λ` (generalize `TranslationWallCrossing` from `W` to `W_[λ]`); (3) injectivity of `P(λ)^∨` in `𝒪`
