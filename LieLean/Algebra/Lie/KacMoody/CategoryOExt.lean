@@ -27,7 +27,7 @@ inductions of [HumO] §6.11–6.12.
 * `Matrix.Realization.KacMoodyAlgebra.CategoryO.shortExact_of_lie`: short exactness in `𝒪` can be
   checked on the underlying `𝔤`-modules.
 * `Matrix.Realization.KacMoodyAlgebra.CategoryO.ext_one_eq_zero_of_extOne`: relative `Ext¹ = 0`
-  implies `Ext¹_𝒪 = 0`.
+  implies `Ext¹_𝒪 = 0`; `ext_one_eq_zero_of_extOne_of_equiv` allows models of the two objects.
 
 ## References
 
@@ -77,14 +77,17 @@ theorem shortExact_of_lie {S : ShortComplex (CategoryO.{u} P)}
       mono_f := (ModuleCat.mono_iff_injective _).mpr hf
       epi_g := (ModuleCat.epi_iff_surjective _).mpr hg }
 
-/-- `Ext¹_𝒪(X, Y) = 0` when the relative `Ext¹` vanishes, given a surjection `M → X` from a
-projective module in `𝒪`: the kernel sequence `0 → N → M → X → 0` has a weight splitting, and
-the vanishing of relative `Ext¹` extends every morphism `N → Y` to `M`. -/
+/-- `Ext¹_𝒪(X, Y) = 0` when the relative `Ext¹` of models `MX ≅ X`, `MY ≅ Y` vanishes, given a
+surjection `M → X` from a projective module in `𝒪`: the kernel sequence `0 → N → M → X → 0` has a
+weight splitting, and the vanishing of relative `Ext¹` extends every morphism `N → Y` to `M`. -/
 theorem ext_one_eq_zero_of_extOne_aux (M : Type u) [AddCommGroup M] [Module K M]
     [LieRingModule 𝔤 M] [LieModule K 𝔤 M] (hM : IsCategoryO P M)
     (hS : ∃ S : Finset M, LieSubmodule.lieSpan K 𝔤 (S : Set M) = ⊤)
     (hproj : IsProjectiveO.{u} P M) (X Y : CategoryO.{u} P) (π : M →ₗ⁅K,𝔤⁆ X.obj)
-    (hπ : Function.Surjective π) (hXY : ∀ e : ExtOne (h P) X.obj Y.obj, e = 0)
+    (hπ : Function.Surjective π) (MX MY : Type u) [AddCommGroup MX] [Module K MX]
+    [LieRingModule 𝔤 MX] [LieModule K 𝔤 MX] [AddCommGroup MY] [Module K MY]
+    [LieRingModule 𝔤 MY] [LieModule K 𝔤 MY] (hMX : IsCategoryO P MX)
+    (eX : MX ≃ₗ⁅K,𝔤⁆ X.obj) (eY : MY ≃ₗ⁅K,𝔤⁆ Y.obj) (hXY : ∀ e : ExtOne (h P) MX MY, e = 0)
     (z : Abelian.Ext.{u} X Y 1) : z = 0 := by
   let Q := mk M hM hS
   have hQ : Projective Q := projective_mk M hM hS hproj
@@ -110,23 +113,39 @@ theorem ext_one_eq_zero_of_extOne_aux (M : Type u) [AddCommGroup M] [Module K M]
     ⟨eN ⟨y, LieModuleHom.mem_ker.mpr hy⟩, rfl⟩
   have : Projective S.X₂ := hQ
   refine Abelian.Ext.eq_zero_of_forall_exists_comp hS (fun a ↦ ?_) z
+  let pX : Q.obj →ₗ⁅K,𝔤⁆ MX := eX.symm.toLieModuleHom.comp πQ
+  have hpX : Function.Surjective pX := eX.symm.surjective.comp hπQ
+  have hexactX : ∀ b, pX b = 0 ↔ ∃ a : πQ.ker, πQ.ker.incl a = b := fun b ↦
+    Iff.trans ⟨fun hb ↦ eX.symm.injective (hb.trans (map_zero eX.symm.toLieModuleHom).symm),
+      fun hb ↦ (congrArg eX.symm hb).trans (map_zero eX.symm.toLieModuleHom)⟩ (hexact b)
   obtain ⟨SD⟩ := ExtOne.exists_splitData (h P) Q.property.1.iSup_weightSpaceOfMap_eq_top
-    X.property.1.iSup_weightSpaceOfMap_eq_top Subtype.val_injective hπQ hexact
+    hMX.iSup_weightSpaceOfMap_eq_top Subtype.val_injective hpX hexactX
   obtain ⟨g, hg⟩ := (SD.connecting_eq_zero_iff
-    ((toLieModuleHom a.hom).comp eN.toLieModuleHom)).mp (hXY _)
-  refine ⟨(IsObj.{u} P).homMk (ofLieModuleHom g), ?_⟩
+    (eY.symm.toLieModuleHom.comp ((toLieModuleHom a.hom).comp eN.toLieModuleHom))).mp (hXY _)
+  refine ⟨(IsObj.{u} P).homMk (ofLieModuleHom (eY.toLieModuleHom.comp g)), ?_⟩
   ext x
-  exact LieModuleHom.congr_fun hg (eN.symm x)
+  exact (congrArg eY (LieModuleHom.congr_fun hg (eN.symm x))).trans (eY.apply_symm_apply _)
+
+/-- **Relative `Ext¹` and `Ext¹_𝒪`.** If the relative `Ext¹` (`LieModule.ExtOne`, the `Ext¹_𝒪`
+of [HumO] Thm 3.3 (d) and Thm 6.5) of `𝔤`-modules `MX ≅ X` and `MY ≅ Y` vanishes, then so does
+`Ext¹(X, Y)` in the derived category of the abelian category `𝒪`. -/
+theorem ext_one_eq_zero_of_extOne_of_equiv (X Y : CategoryO.{u} P) (MX MY : Type u)
+    [AddCommGroup MX] [Module K MX] [LieRingModule 𝔤 MX] [LieModule K 𝔤 MX] [AddCommGroup MY]
+    [Module K MY] [LieRingModule 𝔤 MY] [LieModule K 𝔤 MY] (hMX : IsCategoryO P MX)
+    (eX : MX ≃ₗ⁅K,𝔤⁆ X.obj) (eY : MY ≃ₗ⁅K,𝔤⁆ Y.obj) (hXY : ∀ e : ExtOne (h P) MX MY, e = 0)
+    (z : Abelian.Ext.{u} X Y 1) : z = 0 := by
+  obtain ⟨S, hS⟩ := X.property.2
+  obtain ⟨κ, _, _, τ, hD, hproj, hgen, π, hπ⟩ :=
+    exists_isProjectiveO_surjective P (Fact.out : A.IsFiniteCartan) X.property.1 hS
+  exact ext_one_eq_zero_of_extOne_aux _ hD hgen hproj X Y π hπ MX MY hMX eX eY hXY z
 
 /-- **Relative `Ext¹` and `Ext¹_𝒪`.** If the relative `Ext¹` (`LieModule.ExtOne`, the `Ext¹_𝒪`
 of [HumO] Thm 3.3 (d) and Thm 6.5) vanishes, then so does `Ext¹` in the derived category of the
 abelian category `𝒪`. -/
 theorem ext_one_eq_zero_of_extOne (X Y : CategoryO.{u} P)
-    (hXY : ∀ e : ExtOne (h P) X.obj Y.obj, e = 0) (z : Abelian.Ext.{u} X Y 1) : z = 0 := by
-  obtain ⟨S, hS⟩ := X.property.2
-  obtain ⟨κ, _, _, τ, hD, hproj, hgen, π, hπ⟩ :=
-    exists_isProjectiveO_surjective P (Fact.out : A.IsFiniteCartan) X.property.1 hS
-  exact ext_one_eq_zero_of_extOne_aux _ hD hgen hproj X Y π hπ hXY z
+    (hXY : ∀ e : ExtOne (h P) X.obj Y.obj, e = 0) (z : Abelian.Ext.{u} X Y 1) : z = 0 :=
+  ext_one_eq_zero_of_extOne_of_equiv X Y X.obj Y.obj X.property.1 (LieModuleEquiv.refl)
+    (LieModuleEquiv.refl) hXY z
 
 end CategoryO
 
