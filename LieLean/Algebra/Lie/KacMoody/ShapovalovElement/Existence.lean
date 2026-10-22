@@ -13,7 +13,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.Commutator
 # Existence of Shapovalov elements
 
 **Shapovalov's theorem** ([HumO] Thm. 4.12): for `𝔤` of finite type over an algebraically closed
-field of characteristic zero, every positive root `γ = ∑ⱼ aⱼ αⱼ` and every `r > 0` admit a
+field of characteristic zero, every positive root `γ = ∑ⱼ aⱼ αⱼ` and every `r > 0` have a
 Shapovalov element (`VermaModule.exists_isShapovalovElement`), unique modulo
 `U(𝔟⁻)(h_γ + ρ(h_γ) - r)` (`VermaModule.IsShapovalovElement.exists_sub_eq_smul`).
 
