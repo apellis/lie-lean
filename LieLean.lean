@@ -124,6 +124,7 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.Chains
 import LieLean.Algebra.Lie.KacMoody.Kostant.Cocycle
 import LieLean.Algebra.Lie.KacMoody.Kostant.Degree0
 import LieLean.Algebra.Lie.KacMoody.Kostant.Degree1
+import LieLean.Algebra.Lie.KacMoody.Kostant.Dimension
 import LieLean.Algebra.Lie.KacMoody.Kostant.Euler
 import LieLean.Algebra.Lie.KacMoody.Kostant.ExactSequence
 import LieLean.Algebra.Lie.KacMoody.Kostant.GarlandLepowsky
