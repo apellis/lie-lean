@@ -122,19 +122,27 @@ def simple (lam : Dual K H) : CategoryO.{u} P :=
       rw [Finset.coe_singleton]
       exact VermaModule.lieSpan_map_hwv_eq_top _ (LieSubmodule.Quotient.surjective_mk' _)⟩
 
+/-- The quotient map `N' → N' / N`, between the `U(𝔤)`-modules defined by `N'` and `N' / N`. -/
+def subquotientMap (X : CategoryO.{u} P) (N N' : LieSubmodule K 𝔤 X.obj) :
+    ofLie P N' →ₗ⁅K,𝔤⁆ ofLie P (N.Subquotient N') :=
+  (ofLieEquiv (P := P) (N.Subquotient N')).toLieModuleHom.comp
+    ((LieSubmodule.Quotient.mk' (N.comap N'.incl)).comp
+      (ofLieEquiv (P := P) N').symm.toLieModuleHom)
+
+omit [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
+theorem surjective_subquotientMap (X : CategoryO.{u} P) (N N' : LieSubmodule K 𝔤 X.obj) :
+    Function.Surjective (subquotientMap X N N') := by
+  intro z
+  obtain ⟨y, hy⟩ := LieSubmodule.Quotient.surjective_mk' (N.comap N'.incl)
+    ((ofLieEquiv (P := P) (N.Subquotient N')).symm z)
+  exact ⟨ofLieEquiv (P := P) N' y,
+    (congrArg (ofLieEquiv (P := P) (N.Subquotient N')) hy).trans
+      ((ofLieEquiv (P := P) (N.Subquotient N')).apply_symm_apply z)⟩
+
 /-- The subquotient `N' / N` of an object of `𝒪`, as an object of `𝒪`. -/
 def ofSubquotient (X : CategoryO.{u} P) (N N' : LieSubmodule K 𝔤 X.obj) : CategoryO.{u} P :=
-  ⟨ofLie P (N.Subquotient N'), isObj_of_surjective
-    (ofLieModuleHom ((ofLieEquiv (P := P) (N.Subquotient N')).toLieModuleHom.comp
-      ((LieSubmodule.Quotient.mk' _).comp (ofLieEquiv (P := P) N').symm.toLieModuleHom)) :
-        (ofSub X N').obj ⟶ ofLie P (N.Subquotient N'))
-    (fun z ↦ by
-      obtain ⟨y, hy⟩ := LieSubmodule.Quotient.surjective_mk' (N.comap N'.incl)
-        ((ofLieEquiv (P := P) (N.Subquotient N')).symm z)
-      refine ⟨ofLieEquiv (P := P) N' y, ?_⟩
-      change ofLieEquiv (P := P) (N.Subquotient N') (LieSubmodule.Quotient.mk' (N.comap N'.incl)
-        ((ofLieEquiv (P := P) N').symm (ofLieEquiv (P := P) N' y))) = z
-      rw [LieModuleEquiv.symm_apply_apply, hy, LieModuleEquiv.apply_symm_apply])
+  ⟨ofLie P (N.Subquotient N'), isObj_of_surjective (X := (ofSub X N').obj)
+    (ofLieModuleHom (subquotientMap X N N')) (surjective_subquotientMap X N N')
     (ofSub X N').property⟩
 
 /-- The quotient map `N' → N' / N`. -/
