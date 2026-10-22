@@ -156,6 +156,8 @@ import LieLean.Algebra.Lie.KacMoody.Shapovalov
 import LieLean.Algebra.Lie.KacMoody.StandardFiltration
 import LieLean.Algebra.Lie.KacMoody.StandardFiltrationSummand
 import LieLean.Algebra.Lie.KacMoody.StrongLinkage
+import LieLean.Algebra.Lie.KacMoody.Super.Enveloping
+import LieLean.Algebra.Lie.KacMoody.Super.TensorRep
 import LieLean.Algebra.Lie.KacMoody.TensorProduct
 import LieLean.Algebra.Lie.KacMoody.TensorVerma
 import LieLean.Algebra.Lie.KacMoody.TensorVermaStability
