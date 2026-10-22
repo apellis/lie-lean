@@ -3001,7 +3001,9 @@ gives `ch L_{G(A,τ)}(Λ) = ch L_{𝔤(A)}(Λ)`. Mathlib has no Lie superalgebra
 the enveloping algebra of `G̃(A, τ)`.
 
 Done: `Matrix.Realization.SuperEnveloping` (`KacMoody/Super/Enveloping.lean`; generators,
-super-commutator relations, `lift`, `hom_ext`), `Matrix.IsSuperAdmissible`.
+super-commutator relations, `lift`, `hom_ext`), `Matrix.IsSuperAdmissible`; the tensor-algebra
+representation `SuperEnveloping.tensorRep` (`Super/TensorRep.lean`), with `fAlg_injective` (the `fᵢ`
+generate a free subalgebra) and `h_injective`.
 Remaining: triangular decomposition and Verma modules; rank-one integrability and `W`-invariance
 (Kac78 Lemma 1.2, Prop. 2.3); invariant form (Prop. 1.5) and Casimir (Prop. 2.7); Thm. 1, Thm. 2.
 
