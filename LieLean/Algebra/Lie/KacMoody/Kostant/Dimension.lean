@@ -77,26 +77,30 @@ symmetrizable and `Λ` dominant integral, `dim H_k(𝔫₋, L(Λ)) = #{w ∈ W |
 theorem finrank_homology (k : ℕ) :
     finrank K (homology K (nNeg P) (IrreducibleModule P Λ) k) =
       Nat.card {w : P.weylGroup hA // (P.coxeterSystem hA).length w = k} := by
-  set T := {w : P.weylGroup hA // (P.coxeterSystem hA).length w = k}
-  haveI : Finite T := (finite_setOf_length_eq hA k).to_subtype
-  letI : Fintype T := Fintype.ofFinite T
-  let μ : T → Dual K H := fun w ↦ (w.1 : Dual K H ≃ₗ[K] Dual K H) (Λ + P.rho) - P.rho
-  have hμ : Function.Injective μ :=
+  have : Finite {w : P.weylGroup hA // (P.coxeterSystem hA).length w = k} :=
+    (finite_setOf_length_eq hA k).to_subtype
+  let _ : Fintype {w : P.weylGroup hA // (P.coxeterSystem hA).length w = k} := Fintype.ofFinite _
+  have hμ : Function.Injective fun w : {w : P.weylGroup hA // (P.coxeterSystem hA).length w = k} ↦
+      (w.1 : Dual K H ≃ₗ[K] Dual K H) (Λ + P.rho) - P.rho :=
     (injective_apply_add_rho_sub_rho hA hΛ).comp Subtype.val_injective
-  have hne (w : T) :
-      (nNegDerivAction P (IrreducibleModule P Λ)).homologyWeightSpace k (μ w) ≠ ⊥ :=
+  have hne (w : {w : P.weylGroup hA // (P.coxeterSystem hA).length w = k}) :
+      (nNegDerivAction P (IrreducibleModule P Λ)).homologyWeightSpace k
+        ((w.1 : Dual K H ≃ₗ[K] Dual K H) (Λ + P.rho) - P.rho) ≠ ⊥ :=
     (homologyWeightSpace_ne_bot_iff hA hS hΛ k _).mpr ⟨w.1, w.2, rfl⟩
   choose v hv hv0 using fun w ↦ Submodule.exists_mem_ne_zero_of_ne_bot (hne w)
   have hli := (iSupIndep.comp
     ((nNegDerivAction P (IrreducibleModule P Λ)).iSupIndep_homologyWeightSpace k)
     hμ).linearIndependent _ hv hv0
-  have hle (w : T) :
-      (nNegDerivAction P (IrreducibleModule P Λ)).homologyWeightSpace k (μ w) ≤ K ∙ v w :=
-      fun x hx ↦ by
-    have h1 := finrank_homologyWeightSpace_eq_one hA hS hΛ w.1
-    rw [w.2] at h1
-    obtain ⟨c, hc⟩ := (finrank_eq_one_iff_of_nonzero' (⟨v w, hv w⟩ : ↥(_ : Submodule K _))
-      (fun h ↦ hv0 w (congrArg Subtype.val h))).mp h1 ⟨x, hx⟩
+  have hle (w : P.weylGroup hA) (hw : (P.coxeterSystem hA).length w = k) :
+      (nNegDerivAction P (IrreducibleModule P Λ)).homologyWeightSpace k
+        ((w : Dual K H ≃ₗ[K] Dual K H) (Λ + P.rho) - P.rho) ≤ K ∙ v ⟨w, hw⟩ := by
+    intro x hx
+    have h1 := finrank_homologyWeightSpace_eq_one hA hS hΛ w
+    rw [hw] at h1
+    obtain ⟨c, hc⟩ := (finrank_eq_one_iff_of_nonzero' (⟨v ⟨w, hw⟩, hv ⟨w, hw⟩⟩ :
+      ↥((nNegDerivAction P (IrreducibleModule P Λ)).homologyWeightSpace k
+        ((w : Dual K H ≃ₗ[K] Dual K H) (Λ + P.rho) - P.rho)))
+      (fun h ↦ hv0 ⟨w, hw⟩ (congrArg Subtype.val h))).mp h1 ⟨x, hx⟩
     exact Submodule.mem_span_singleton.mpr ⟨c, congrArg Subtype.val hc⟩
   have hsup : homology K (nNeg P) (IrreducibleModule P Λ) k = Submodule.span K (Set.range v) := by
     rw [← iSup_nNegHomologyWeightSpace P _ (isCategoryO P Λ).iSup_weightSpaceOfMap_eq_top k,
@@ -105,7 +109,7 @@ theorem finrank_homology (k : ℕ) :
     · by_cases h : (nNegDerivAction P (IrreducibleModule P Λ)).homologyWeightSpace k ν = ⊥
       · exact h.le.trans bot_le
       · obtain ⟨w, hw, rfl⟩ := (homologyWeightSpace_ne_bot_iff hA hS hΛ k ν).mp h
-        exact (hle ⟨w, hw⟩).trans (le_iSup (fun w ↦ K ∙ v w) ⟨w, hw⟩)
+        exact (hle w hw).trans (le_iSup (fun w ↦ K ∙ v w) ⟨w, hw⟩)
     · exact ((Submodule.span_singleton_le_iff_mem _ _).mpr (hv w)).trans (le_iSup_of_le _ le_rfl)
   rw [hsup, finrank_span_eq_card hli, Nat.card_eq_fintype_card]
 
