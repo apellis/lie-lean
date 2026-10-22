@@ -110,9 +110,6 @@ def mk (M : Type w) [AddCommGroup M] [Module K M] [LieRingModule 𝔤 M] [LieMod
 
 /-! ### Projectives -/
 
-variable [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan]
-
-omit [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 /-- An epimorphism in `𝒪` is surjective. -/
 theorem surjective_of_epi {X Y : CategoryO.{w} P} (f : X ⟶ Y) [Epi f] :
     Function.Surjective f.hom.hom := by
