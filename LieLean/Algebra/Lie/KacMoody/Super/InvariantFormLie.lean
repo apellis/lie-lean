@@ -9,9 +9,9 @@ import LieLean.Algebra.Lie.KacMoody.Super.RootSpace
 # The supersymmetric form on `G̃(A, τ)`: invariance
 
 We prove that the form `(·|·)` of `Super/InvariantForm.lean` on `G̃ = G̃(A, τ)` satisfies
-`[x, y] = (x | y) ν⁻¹(μ)` for `x ∈ G̃_μ`, `y ∈ G̃_{-μ}` (`C_μ`) and is invariant,
-`([x, y] | z) = (x | [y, z])` for triples whose middle element has weight `±αₖ` ([Kac78]
-Prop. 1.5, the step used for invariance).
+`[x, y] = (x | y) ν⁻¹(μ)` for `x ∈ G̃_μ`, `y ∈ G̃_{-μ}` (`C_μ`), is invariant,
+`([x, y] | z) = (x | [y, z])` for all `x, y, z ∈ G̃`, and has radical the maximal ideal `R`
+([Kac78] Prop. 1.5).
 
 The proof follows the even case (`LieLean/Algebra/Lie/KacMoody/InvariantFormAux.lean`), with super
 signs. For homogeneous `x, y, z` of weights `α, β, γ` with `α + β + γ = 0`, the super Jacobi
@@ -22,7 +22,10 @@ linearly independent. When `y` has weight `±αₖ` and `α, β` are dependent, 
 has weight `0`, or two of `x, y, z` are proportional (they lie in `G̃_{±αₖ} = K e_k` or `K f_k`),
 and the super Jacobi identity for a repeated odd element gives the claim; here
 `G̃_{±2αₖ} = K [eₖ, eₖ]` (resp. `K [fₖ, fₖ]`) is used, which vanishes for `k` even. `C_μ` is then
-proved by induction on the height of `μ`.
+proved by induction on the height of `μ`. Full invariance follows since the elements `y` with
+`([x, y] | z) = (x | [y, z])` for all `x, z` contain the generators and are closed under the
+super bracket. The radical is an ideal meeting `𝔥` trivially, so it lies in `R`; conversely
+`([R, G̃] | 𝔥) = 0` and nondegeneracy on `𝔥` give `(R | G̃) = 0`.
 
 ## Main results
 
@@ -30,6 +33,9 @@ proved by induction on the height of `μ`.
 * `Matrix.Realization.SuperEnveloping.invTriple_of_root`: invariance for a triple whose middle
   element has weight `±αₖ`.
 * `Matrix.Realization.SuperEnveloping.lieEqForm`: `C_μ` for every `μ`.
+* `Matrix.Realization.SuperEnveloping.invForm_superBracket`: invariance on `G̃`.
+* `Matrix.Realization.SuperEnveloping.invForm_eq_zero_of_mem_maxIdeal`,
+  `Matrix.Realization.SuperEnveloping.mem_maxIdeal_iff`: the radical of the form on `G̃` is `R`.
 
 ## References
 
@@ -743,6 +749,248 @@ theorem lieEqForm (μ : Dual K H) : LieEqForm P p S μ := by
     · obtain ⟨n, -, hμn⟩ := AuxLieAlgebra.exists_nat_of_mem_posWeights P hμ
       exact hpos n μ hμ hμn
   · exact lieEqForm_of_notMem S hμw
+
+/-! ### Invariance -/
+
+variable (P p S) in
+/-- `y` satisfies invariance in the middle: `([x, y] | z) = (x | [y, z])` for `x, z ∈ G̃`. -/
+def MidInv (y : P.SuperEnveloping p) : Prop :=
+  ∀ x ∈ gTilde P p, ∀ z ∈ gTilde P p,
+    invForm P p S (superBracket P p x y) z = invForm P p S x (superBracket P p y z)
+
+omit [FiniteDimensional K H] in
+variable (P p) in
+/-- A property of pairs of elements of `G̃`, additive in each variable, holds as soon as it holds
+for homogeneous weight vectors. -/
+lemma forall_gTilde_of_homog {q : P.SuperEnveloping p → P.SuperEnveloping p → Prop}
+    (add_left : ∀ x₁ x₂ z, q x₁ z → q x₂ z → q (x₁ + x₂) z)
+    (add_right : ∀ x z₁ z₂, q x z₁ → q x z₂ → q x (z₁ + z₂))
+    (hom : ∀ (α γ : Dual K H) (a c : ZMod 2), ∀ x ∈ gTilde P p, x ∈ weightSpace P p α →
+      IsHomog P p a x → ∀ z ∈ gTilde P p, z ∈ weightSpace P p γ → IsHomog P p c z → q x z)
+    {x z : P.SuperEnveloping p} (hx : x ∈ gTilde P p) (hz : z ∈ gTilde P p) : q x z := by
+  refine induction_on_gTilde P p (q := fun x ↦ q x z) hx (fun α x hx hxα ↦ ?_)
+    (fun x₁ x₂ h₁ h₂ ↦ add_left _ _ _ h₁ h₂)
+  refine induction_homog P p (q := fun x ↦ q x z) hx hxα (fun a x hx hxα hxa ↦ ?_)
+    (fun x₁ x₂ h₁ h₂ ↦ add_left _ _ _ h₁ h₂)
+  refine induction_on_gTilde P p (q := fun z ↦ q x z) hz (fun γ z hz hzγ ↦ ?_)
+    (fun z₁ z₂ h₁ h₂ ↦ add_right _ _ _ h₁ h₂)
+  exact induction_homog P p (q := fun z ↦ q x z) hz hzγ
+    (fun c z hz hzγ hzc ↦ hom α γ a c x hx hxα hxa z hz hzγ hzc)
+    (fun z₁ z₂ h₁ h₂ ↦ add_right _ _ _ h₁ h₂)
+
+/-- Invariance in the middle may be checked on homogeneous weight vectors of opposite weights. -/
+lemma midInv_of_weight {β : Dual K H} {y : P.SuperEnveloping p} (hyβ : y ∈ weightSpace P p β)
+    (hinv : ∀ (α : Dual K H) (a c : ZMod 2), ∀ x ∈ gTilde P p, x ∈ weightSpace P p α →
+      IsHomog P p a x → ∀ z ∈ gTilde P p, z ∈ weightSpace P p (-(α + β)) → IsHomog P p c z →
+      invForm P p S (superBracket P p x y) z = invForm P p S x (superBracket P p y z)) :
+    MidInv P p S y := by
+  intro x hx z hz
+  refine forall_gTilde_of_homog P p (q := fun x z ↦ invForm P p S (superBracket P p x y) z =
+    invForm P p S x (superBracket P p y z)) ?_ ?_ ?_ hx hz
+  · intro x₁ x₂ z h₁ h₂
+    simp only [superBracket_add_left, map_add, LinearMap.add_apply, h₁, h₂]
+  · intro x z₁ z₂ h₁ h₂
+    simp only [superBracket_add_right, map_add, h₁, h₂]
+  intro α γ a c x hx hxα hxa z hz hzγ hzc
+  by_cases hs : α + β + γ = 0
+  · obtain rfl : γ = -(α + β) := eq_neg_of_add_eq_zero_right hs
+    exact hinv α a c x hx hxα hxa z hz hzγ hzc
+  · rw [invForm_eq_zero P p S (superBracket_mem_weightSpace hxα hyβ) hzγ hs,
+      invForm_eq_zero P p S hxα (superBracket_mem_weightSpace hyβ hzγ) (by rwa [← add_assoc])]
+
+lemma midInv_e (k : ι) : MidInv P p S (e P p k) :=
+  midInv_of_weight (e_mem_weightSpace P p k) fun α _ _ _ hx hxα hxa _ hz hzγ hzc ↦
+    ((invTriple_of_root (lieEqForm P p S α) (lieEqForm P p S _) (lieEqForm P p S _) hx hxα hxa
+      (nPlus_le_gTilde P p (e_mem_nPlus P p k)) (e_mem_weightSpace P p k) (isHomog_e P p k)
+      hz hzγ hzc (Or.inl rfl)).1).symm
+
+lemma midInv_f (k : ι) : MidInv P p S (f P p k) :=
+  midInv_of_weight (f_mem_weightSpace P p k) fun α _ _ _ hx hxα hxa _ hz hzγ hzc ↦
+    ((invTriple_of_root (lieEqForm P p S α) (lieEqForm P p S _) (lieEqForm P p S _) hx hxα hxa
+      (nMinus_le_gTilde P p (f_mem_nMinus P p k)) (f_mem_weightSpace P p k) (isHomog_f P p k)
+      hz hzγ hzc (Or.inr rfl)).1).symm
+
+lemma midInv_h (t : H) : MidInv P p S (h P p t) := by
+  refine midInv_of_weight (h_mem_weightSpace P p t) fun α a _ x _ hxα hxa z _ hzγ _ ↦ ?_
+  rw [add_zero] at hzγ
+  rw [superBracket_swap (isHomog_h P p t) hxa, superBracket_h_of_mem_weightSpace P p t hxα,
+    superBracket_h_of_mem_weightSpace P p t hzγ, zero_mul, zSign_zero, one_smul]
+  simp
+
+/-- The super Leibniz rule for invariance in the middle. -/
+lemma MidInv.bracket {a b : ZMod 2} {y₁ y₂ : P.SuperEnveloping p} (hy₁ : y₁ ∈ gTilde P p)
+    (hy₂ : y₂ ∈ gTilde P p) (ha : IsHomog P p a y₁) (hb : IsHomog P p b y₂)
+    (h₁ : MidInv P p S y₁) (h₂ : MidInv P p S y₂) : MidInv P p S (superBracket P p y₁ y₂) := by
+  intro x hx z hz
+  refine forall_gTilde_of_homog P p (q := fun x z ↦
+    invForm P p S (superBracket P p x (superBracket P p y₁ y₂)) z =
+      invForm P p S x (superBracket P p (superBracket P p y₁ y₂) z)) ?_ ?_ ?_ hx hz
+  · intro x₁ x₂ z e₁ e₂
+    simp only [superBracket_add_left, map_add, LinearMap.add_apply, e₁, e₂]
+  · intro x z₁ z₂ e₁ e₂
+    simp only [superBracket_add_right, map_add, e₁, e₂]
+  intro α γ c d x hx _ hxc z hz _ hzd
+  have J₁ := superBracket_jacobi hxc ha hb
+  have J₂ := superBracket_jacobi ha hb hzd
+  have hsw := superBracket_swap (hxc.superBracket hb) ha
+  rw [J₁, eq_sub_of_add_eq J₂.symm, hsw]
+  simp only [map_add, map_sub, map_neg, map_smul, LinearMap.add_apply, LinearMap.neg_apply,
+    LinearMap.smul_apply, smul_eq_mul]
+  rw [h₂ _ (superBracket_mem_gTilde P p hx hy₁) _ hz,
+    h₁ x hx _ (superBracket_mem_gTilde P p hy₂ hz),
+    h₁ _ (superBracket_mem_gTilde P p hx hy₂) _ hz,
+    h₂ x hx _ (superBracket_mem_gTilde P p hy₁ hz)]
+  have hs : zSign K (c * a) * zSign K ((c + b) * a) = zSign K (a * b) := by
+    rcases zmod_two_cases a with rfl | rfl <;> rcases zmod_two_cases b with rfl | rfl <;>
+      rcases zmod_two_cases c with rfl | rfl <;> simp [show (1 : ZMod 2) + 1 = 0 from rfl]
+  linear_combination (-(invForm P p S x (superBracket P p y₂ (superBracket P p y₁ z)))) * hs
+
+variable (P p S) in
+/-- The elements satisfying invariance in the middle, as a subspace. -/
+def midInvSubmodule : Submodule K (P.SuperEnveloping p) where
+  carrier := {y | MidInv P p S y}
+  add_mem' {y₁ y₂} h₁ h₂ x hx z hz := by
+    rw [superBracket_add_right, superBracket_add_left, map_add, LinearMap.add_apply, map_add,
+      h₁ x hx z hz, h₂ x hx z hz]
+  zero_mem' x _ z _ := by simp [superBracket_zero_left]
+  smul_mem' c y hy x hx z hz := by
+    rw [superBracket_smul_right, superBracket_smul_left, map_smul, LinearMap.smul_apply, map_smul,
+      hy x hx z hz]
+
+variable (P p S) in
+/-- The form on `G̃(A, τ)` is invariant: `([x, y] | z) = (x | [y, z])` ([Kac78] Prop. 1.5). -/
+theorem invForm_superBracket {x y z : P.SuperEnveloping p} (hx : x ∈ gTilde P p)
+    (hy : y ∈ gTilde P p) (hz : z ∈ gTilde P p) :
+    invForm P p S (superBracket P p x y) z = invForm P p S x (superBracket P p y z) := by
+  suffices gTilde P p ≤ midInvSubmodule P p S from this hy x hx z hz
+  have hplus : ∀ i w, MidInv P p S (eLie P p i w) := by
+    intro i w
+    induction w with
+    | nil => exact midInv_e i
+    | cons j w ih =>
+      exact MidInv.bracket (nPlus_le_gTilde P p (e_mem_nPlus P p j))
+        (nPlus_le_gTilde P p (eLie_mem_nPlus P p i w)) (isHomog_e P p j) (isHomog_eLie P p i w)
+        (midInv_e j) ih
+  have hminus : ∀ i w, MidInv P p S (omega P p (eLie P p i w)) := by
+    intro i w
+    induction w with
+    | nil => rw [eLie_nil, omega_e]; exact midInv_f i
+    | cons j w ih =>
+      rw [omega_eLie_cons]
+      exact MidInv.bracket (nMinus_le_gTilde P p (f_mem_nMinus P p j))
+        (nMinus_le_gTilde P p (omega_mem_nMinus P p (eLie_mem_nPlus P p i w))) (isHomog_f P p j)
+        (isHomog_eLie P p i w).omega (midInv_f j) ih
+  refine sup_le (sup_le ?_ ?_) ?_
+  · exact Submodule.map_le_iff_le_comap.2 ((nPlus_le_iff P p).2 fun i w ↦ hminus i w)
+  · rintro _ ⟨t, rfl⟩
+    exact midInv_h t
+  · exact (nPlus_le_iff P p).2 hplus
+
+/-! ### The radical of the form -/
+
+omit [FiniteDimensional K H] in
+variable (P p) in
+/-- Induction over the homogeneous elements of a subspace stable under the parity involution. -/
+lemma induction_parity {N : Submodule K (P.SuperEnveloping p)}
+    (hN : ∀ x ∈ N, parity P p x ∈ N) {q : P.SuperEnveloping p → Prop}
+    (hom : ∀ a, ∀ x ∈ N, IsHomog P p a x → q x) (add : ∀ x y, q x → q y → q (x + y))
+    {x : P.SuperEnveloping p} (hx : x ∈ N) : q x := by
+  have hdec : x = (2 : K)⁻¹ • (x + parity P p x) + (2 : K)⁻¹ • (x - parity P p x) := by
+    rw [← smul_add, add_add_sub_cancel, ← two_smul K x, smul_smul, inv_mul_cancel₀ two_ne_zero,
+      one_smul]
+  rw [hdec]
+  have hσ := hN x hx
+  refine add _ _ (hom 0 _ ?_ ?_) (hom 1 _ ?_ ?_)
+  · exact Submodule.smul_mem _ _ (add_mem hx hσ)
+  · rw [IsHomog, map_smul, map_add, parity_parity, zSign_zero, one_smul, add_comm]
+  · exact Submodule.smul_mem _ _ (sub_mem hx hσ)
+  · rw [IsHomog, map_smul, map_sub, parity_parity, zSign_one, neg_one_smul, ← smul_neg, neg_sub]
+
+omit [FiniteDimensional K H] in
+variable (P p) in
+/-- `[R, G̃] ⊆ R`. -/
+lemma superBracket_mem_maxIdeal_left {r y : P.SuperEnveloping p} (hr : r ∈ maxIdeal P p)
+    (hy : y ∈ gTilde P p) : superBracket P p r y ∈ maxIdeal P p := by
+  refine induction_parity P p (N := maxIdeal P p) (fun _ ↦ parity_mem_maxIdeal P p)
+    (q := fun r ↦ superBracket P p r y ∈ maxIdeal P p) (fun a r hr hra ↦ ?_)
+    (fun r₁ r₂ h₁ h₂ ↦ by rw [superBracket_add_left]; exact add_mem h₁ h₂) hr
+  refine induction_parity P p (N := gTilde P p) (fun _ ↦ parity_mem_gTilde P p)
+    (q := fun y ↦ superBracket P p r y ∈ maxIdeal P p) (fun b y hy hyb ↦ ?_)
+    (fun y₁ y₂ h₁ h₂ ↦ by rw [superBracket_add_right]; exact add_mem h₁ h₂) hy
+  rw [superBracket_swap hyb hra]
+  exact neg_mem (Submodule.smul_mem _ _
+    ((isIdeal_maxIdeal P p).superBracket_mem y hy r hr))
+
+lemma h_toDual_symm_ne_zero {μ : Dual K H} (hμ : μ ≠ 0) : h P p ((P.toDual S).symm μ) ≠ 0 :=
+  fun h0 ↦ hμ ((P.toDual S).symm.map_eq_zero_iff.1
+    ((injective_iff_map_eq_zero _).1 (h_injective P p) _ h0))
+
+variable (P p S) in
+/-- The maximal ideal `R` lies in the radical of the form: `(R | G̃) = 0` and `(G̃ | R) = 0`. -/
+theorem invForm_eq_zero_of_mem_maxIdeal {r y : P.SuperEnveloping p} (hr : r ∈ maxIdeal P p)
+    (hy : y ∈ gTilde P p) : invForm P p S r y = 0 ∧ invForm P p S y r = 0 := by
+  have hR := isIdeal_maxIdeal P p
+  have hle := le_iSup_inf_weightSpace P p (maxIdeal P p) fun a x hx ↦
+    hR.superBracket_mem _ (h_mem_gTilde P p a) x hx
+  refine Submodule.iSup_induction _
+    (motive := fun r ↦ invForm P p S r y = 0 ∧ invForm P p S y r = 0) (hle hr) ?_ (by simp)
+    fun r₁ r₂ h₁ h₂ ↦ ⟨by rw [map_add, LinearMap.add_apply, h₁.1, h₂.1, add_zero],
+      by rw [map_add, h₁.2, h₂.2, add_zero]⟩
+  rintro μ r ⟨hrR, hrμ⟩
+  have hrG := hR.le_gTilde hrR
+  by_cases hμ : μ = 0
+  · subst hμ
+    have : r ∈ maxIdeal P p ⊓ LinearMap.range (h P p) := ⟨hrR, by
+      rw [← gTilde_inf_weightSpace_zero P p]; exact ⟨hrG, hrμ⟩⟩
+    rw [maxIdeal_inf_range_h, Submodule.mem_bot] at this
+    simp [this]
+  refine induction_on_gTilde P p
+    (q := fun y ↦ invForm P p S r y = 0 ∧ invForm P p S y r = 0) hy (fun ν y hy hyν ↦ ?_)
+    fun y₁ y₂ h₁ h₂ ↦ ⟨by rw [map_add, h₁.1, h₂.1, add_zero],
+      by rw [map_add, LinearMap.add_apply, h₁.2, h₂.2, add_zero]⟩
+  by_cases hμν : μ + ν = 0
+  · obtain rfl : ν = -μ := eq_neg_of_add_eq_zero_right hμν
+    have hC := lieEqForm P p S μ r hrG hrμ y hy hyν
+    have hC' := lieEqForm P p S (-μ) y hy hyν r hrG (by rwa [neg_neg])
+    have hm : superBracket P p r y ∈ maxIdeal P p ⊓ LinearMap.range (h P p) :=
+      ⟨superBracket_mem_maxIdeal_left P p hrR hy, by
+        rw [hC, ← map_smul]; exact LinearMap.mem_range_self _ _⟩
+    have hm' : superBracket P p y r ∈ maxIdeal P p ⊓ LinearMap.range (h P p) :=
+      ⟨hR.superBracket_mem y hy r hrR, by
+        rw [hC', ← map_smul]; exact LinearMap.mem_range_self _ _⟩
+    rw [maxIdeal_inf_range_h, Submodule.mem_bot, hC, smul_eq_zero] at hm
+    rw [maxIdeal_inf_range_h, Submodule.mem_bot, hC', smul_eq_zero] at hm'
+    exact ⟨hm.resolve_right (h_toDual_symm_ne_zero hμ),
+      hm'.resolve_right (h_toDual_symm_ne_zero (neg_ne_zero.2 hμ))⟩
+  · exact ⟨invForm_eq_zero P p S hrμ hyν hμν,
+      invForm_eq_zero P p S hyν hrμ (by rwa [add_comm])⟩
+
+variable (P p S) in
+/-- The radical of the form on `G̃(A, τ)` is the maximal ideal `R` ([Kac78] Prop. 1.5;
+cf. [Kac] Thm. 2.2 for `𝔤̃(A)`). -/
+theorem mem_maxIdeal_iff {r : P.SuperEnveloping p} (hr : r ∈ gTilde P p) :
+    r ∈ maxIdeal P p ↔ ∀ y ∈ gTilde P p, invForm P p S y r = 0 := by
+  refine ⟨fun hr y hy ↦ (invForm_eq_zero_of_mem_maxIdeal P p S hr hy).2, fun h0 ↦ ?_⟩
+  let I : Submodule K (P.SuperEnveloping p) :=
+    { carrier := {r | r ∈ gTilde P p ∧ ∀ y ∈ gTilde P p, invForm P p S y r = 0}
+      add_mem' := fun ⟨h₁, h₁'⟩ ⟨h₂, h₂'⟩ ↦ ⟨add_mem h₁ h₂, fun y hy ↦ by
+        rw [map_add, h₁' y hy, h₂' y hy, add_zero]⟩
+      zero_mem' := ⟨zero_mem _, fun y _ ↦ map_zero _⟩
+      smul_mem' := fun c r ⟨h, h'⟩ ↦ ⟨Submodule.smul_mem _ c h, fun y hy ↦ by
+        rw [map_smul, h' y hy, smul_zero]⟩ }
+  have hI : IsIdeal P p I :=
+    ⟨fun _ hr ↦ hr.1, fun x hx r ⟨hrG, hr0⟩ ↦ ⟨superBracket_mem_gTilde P p hx hrG, fun y hy ↦ by
+      rw [← invForm_superBracket P p S hy hx hrG]
+      exact hr0 _ (superBracket_mem_gTilde P p hy hx)⟩⟩
+  have hI0 : I ⊓ LinearMap.range (h P p) = ⊥ := by
+    refine eq_bot_iff.2 ?_
+    rintro _ ⟨⟨-, hx⟩, ⟨t, rfl⟩⟩
+    rw [Submodule.mem_bot, ← map_zero (h P p)]
+    congr 1
+    refine (P.nondegenerate_bilinForm S).2 t fun b ↦ ?_
+    have := hx (h P p b) (h_mem_gTilde P p b)
+    rwa [invForm_h_h] at this
+  exact le_maxIdeal P p hI hI0 ⟨hr, h0⟩
 
 end Invariance
 
