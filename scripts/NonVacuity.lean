@@ -145,6 +145,14 @@ example : DA2.frobOrder 2 0 = 2 := by decide
 example : Algebra.adjoin ℂ (frobeniusGenerators DA2 ℂ 2) = ⊤ :=
   adjoin_frobeniusGenerators DA2 (by norm_num) hlI hprimI
 
+/-- [Lus] Prop. 35.3.1 for `A₂`, `l = 2` (`a = 1 < 2 = lᵢ`). -/
+example : baseGen DA2 ℂ 0 (DA2.frobOrder 2 0) * baseGen DA2 ℂ 1 1 =
+    ∑ r ∈ Finset.range (1 + 1), ((algebraMap (LaurentPolynomial ℤ) ℂ (LaurentPolynomial.T 1) ^
+      DA2.d 0) ^ ((DA2.frobOrder 2 0 : ℤ) * ((1 : ℤ) - r)) *
+        qBinomial (algebraMap (LaurentPolynomial ℤ) ℂ (LaurentPolynomial.T 1) ^ DA2.d 0) 1 r) •
+      (baseGen DA2 ℂ 0 r * baseGen DA2 ℂ 1 1 * baseGen DA2 ℂ 0 (DA2.frobOrder 2 0 - r)) :=
+  baseGen_frobOrder_mul_baseGen DA2 (by norm_num) hlI hprimI (by decide) (by decide) (by decide)
+
 end Frobenius35
 
 open scoped TensorProduct in
