@@ -111,6 +111,100 @@ example : letI := (LaurentPolynomial.eval₂ (Int.castRingHom ℚ) (-1)).toAlgeb
     rw [RingHom.algebraMap_toAlgebra, LaurentPolynomial.eval₂_T, ← pow_mul, mul_comm, pow_mul]
     simp
 
+/-! ### Lusztig 2.2.5: the root datum `(Y*, X*)` at `l = 2` is `X`-regular -/
+
+example : (DA2.extendedRootDatum.frobRootDatum (l := 2) (by norm_num)).IsXRegular :=
+  LusztigCartanDatum.RootDatum.IsXRegular.frobRootDatum DA2.isXRegular_extendedRootDatum _
+
+/-! ### Lusztig 35.1.8 at `l = 2`, `v ↦ i ∈ ℂ` -/
+
+section Frobenius35
+
+/-- `𝒜 → ℂ`, `v ↦ i`: `ε = i` has `ε⁴ = 1` and `ε² ≠ 1` ([Lus] 35.2.1 with `l = 2`). -/
+local instance : Algebra (LaurentPolynomial ℤ) ℂ :=
+  (LaurentPolynomial.eval₂ (Int.castRingHom ℂ) (Units.mk0 Complex.I Complex.I_ne_zero)).toAlgebra
+
+theorem hIT : algebraMap (LaurentPolynomial ℤ) ℂ (LaurentPolynomial.T 1) = Complex.I := by
+  rw [RingHom.algebraMap_toAlgebra, LaurentPolynomial.eval₂_T, zpow_one]; rfl
+
+theorem hlI : algebraMap (LaurentPolynomial ℤ) ℂ (LaurentPolynomial.T 1) ^ (2 * 2) = 1 := by
+  rw [hIT]; exact Complex.I_pow_four
+
+theorem hprimI : ∀ t, 0 < t → t < 2 →
+    algebraMap (LaurentPolynomial ℤ) ℂ (LaurentPolynomial.T 1) ^ (2 * t) ≠ 1 := by
+  intro t ht0 ht
+  obtain rfl : t = 1 := by omega
+  rw [hIT, Complex.I_sq]; norm_num
+
+open scoped TensorProduct in
+/-- [Lus] Thm. 35.1.8 for `A₂`, `l = 2` (so `lᵢ = 2` and `(I, ∘)` has `i ∘ j = 4 (i · j)`):
+`Fr'(θᵢ^{(n)}) = θᵢ^{(2n)}`. -/
+example (n : ℕ) : frobSplit DA2 (by norm_num) hlI hprimI
+      ((1 : ℂ) ⊗ₜ integralGenerator (DA2.frobenius (l := 2) (by norm_num)) 0 n) =
+    (1 : ℂ) ⊗ₜ integralGenerator DA2 0 (DA2.frobOrder 2 0 * n) :=
+  frobSplit_integralGenerator DA2 (by norm_num) hlI hprimI 0 n
+
+example : DA2.frobOrder 2 0 = 2 := by decide
+
+/-- [Lus] Lemma 35.2.2 for `A₂`, `l = 2`. -/
+example : Algebra.adjoin ℂ (frobeniusGenerators DA2 ℂ 2) = ⊤ :=
+  adjoin_frobeniusGenerators DA2 (by norm_num) hlI hprimI
+
+/-- [Lus] Prop. 35.3.1 for `A₂`, `l = 2` (`a = 1 < 2 = lᵢ`). -/
+example : baseGen DA2 ℂ 0 (DA2.frobOrder 2 0) * baseGen DA2 ℂ 1 1 =
+    ∑ r ∈ Finset.range (1 + 1), ((algebraMap (LaurentPolynomial ℤ) ℂ (LaurentPolynomial.T 1) ^
+      DA2.d 0) ^ ((DA2.frobOrder 2 0 : ℤ) * ((1 : ℤ) - r)) *
+        qBinomial (algebraMap (LaurentPolynomial ℤ) ℂ (LaurentPolynomial.T 1) ^ DA2.d 0) 1 r) •
+      (baseGen DA2 ℂ 0 r * baseGen DA2 ℂ 1 1 * baseGen DA2 ℂ 0 (DA2.frobOrder 2 0 - r)) :=
+  baseGen_frobOrder_mul_baseGen DA2 (by norm_num) hlI hprimI (by decide) (by decide) (by decide)
+
+open scoped TensorProduct in
+/-- [Lus] 35.3.2 (c) for `A₂`, `l = 2`, `λ = 0`: `_ℂ f` is spanned by the products of the
+`θⱼ^{(2)}` modulo the radical of the form of `Λ_0`. -/
+example : Submodule.span ℂ (Submonoid.closure (Set.range fun j ↦ baseGen DA2 ℂ j
+        (DA2.frobOrder 2 j)) : Set (ℂ ⊗[LaurentPolynomial ℤ] LusztigF.quotientIntegralForm DA2)) ⊔
+      frobRad DA2.isXRegular_extendedRootDatum
+        (⟨0, fun _ ↦ le_rfl⟩ : GrandLoop.Dom DA2.extendedRootDatum) ℂ = ⊤ := by
+  refine span_frobWords_sup_frobRad _ _ (by norm_num) hlI hprimI ?_ (by simp)
+  intro i j hij _ a ha
+  have hc : DA2.cartanMatrix i j = -1 := by
+    fin_cases i <;> fin_cases j <;> first | exact absurd rfl hij | decide
+  have hl : DA2.frobOrder 2 i = 2 := by fin_cases i <;> decide
+  omega
+
+/-- [Lus] 35.1.2 (a) for `A₂`, `l = 2`. -/
+theorem hAA2 : ∀ i j, i ≠ j → 2 ≤ DA2.frobOrder 2 j → ∀ a : ℕ, DA2.cartanMatrix i j = -a →
+    a < DA2.frobOrder 2 i := by
+  intro i j hij _ a ha
+  have hc : DA2.cartanMatrix i j = -1 := by
+    fin_cases i <;> fin_cases j <;> first | exact absurd rfl hij | decide
+  have hl : DA2.frobOrder 2 i = 2 := by fin_cases i <;> decide
+  omega
+
+/-- [Lus] Thm. 35.1.7 for `A₂`, `l = 2`: `Fr(θᵢ^{(n)}) = θᵢ^{(n/2)}` for even `n`, else `0`. -/
+example (n : ℕ) : frob (by norm_num) hlI hprimI hAA2 (baseGen DA2 ℂ 0 n) =
+    if DA2.frobOrder 2 0 ∣ n then
+      baseGen (DA2.frobenius (l := 2) (by norm_num)) ℂ 0 (n / DA2.frobOrder 2 0) else 0 :=
+  frob_baseGen _ _ _ _ 0 n
+
+end Frobenius35
+
+open scoped TensorProduct in
+/-- [Lus] 35.1.11 for `A₂`, `l = 2`, `l' = 4`, over `𝒜' = 𝒜/(v² + 1)` itself. -/
+example (n : ℕ) : frobSplitGeneral DA2 (l := 2) (l' := 4) (by norm_num) (Or.inl rfl)
+      (CyclotomicQuotient 4)
+      ((1 : CyclotomicQuotient 4) ⊗ₜ integralGenerator (DA2.frobenius (l := 2) (by norm_num)) 0 n) =
+    (1 : CyclotomicQuotient 4) ⊗ₜ integralGenerator DA2 0 (DA2.frobOrder 2 0 * n) :=
+  frobSplitGeneral_integralGenerator DA2 _ _ _ 0 n
+
+open scoped TensorProduct in
+/-- [Lus] 35.1.11 for `A₂`, odd `l = l' = 3`. -/
+example (n : ℕ) : frobSplitGeneral DA2 (l := 3) (l' := 3) (by norm_num) (Or.inr ⟨by decide, rfl⟩)
+      (CyclotomicQuotient 3)
+      ((1 : CyclotomicQuotient 3) ⊗ₜ integralGenerator (DA2.frobenius (l := 3) (by norm_num)) 1 n) =
+    (1 : CyclotomicQuotient 3) ⊗ₜ integralGenerator DA2 1 (DA2.frobOrder 3 1 * n) :=
+  frobSplitGeneral_integralGenerator DA2 _ _ _ 1 n
+
 /-! ### Lusztig 25.2.1 (d) and 26.3.1 on the extended root datum of `sl₂` -/
 
 /-- The extended root datum of `sl₂`. -/
@@ -173,5 +267,34 @@ example : ∏ j ∈ Finset.range 2, qBinomialU v5 (2 * (j + 1)) 2 =
 
 /-- [Lus] 34.1.4 (a) at `v = 2 ∈ 𝔽₅`, `r = 0`, `a = 1`. -/
 example := sum_qBinomialU_root (r := 0) (a := 1) hv5 hv5prim (by norm_num) (by norm_num)
+
+/-! ### Super Gabber–Kac for `osp(1|4)` -/
+
+/-- The Cartan matrix of `B₂` with an odd short simple root (the Lie superalgebra `osp(1|4)`). -/
+abbrev AOsp : Matrix (Fin 2) (Fin 2) ℤ := !![2, -2; -1, 2]
+
+/-- The parity: `e₀` odd. -/
+abbrev pOsp : Fin 2 → ZMod 2 := ![1, 0]
+
+theorem hAOsp : AOsp.IsGeneralizedCartan where
+  diag := by decide
+  offDiag_nonpos i j := by fin_cases i <;> fin_cases j <;> decide
+  zero_comm i j := by fin_cases i <;> fin_cases j <;> decide
+
+theorem hpOsp : AOsp.IsSuperAdmissible pOsp := by
+  intro i j hi
+  fin_cases i
+  · fin_cases j <;> decide
+  · exact absurd hi (by decide)
+
+/-- The symmetrization `ε = (2, 1)`. -/
+def SOsp : AOsp.Symmetrization where
+  ε := ![2, 1]
+  ε_pos i := by fin_cases i <;> norm_num
+  ε_mul_comm i j := by fin_cases i <;> fin_cases j <;> norm_num
+
+example : SuperEnveloping.maxIdeal (std AOsp ℚ) pOsp =
+    SuperEnveloping.serreIdeal (std AOsp ℚ) pOsp :=
+  SuperEnveloping.maxIdeal_eq_serreIdeal _ _ SOsp hAOsp hpOsp
 
 end NonVacuity
