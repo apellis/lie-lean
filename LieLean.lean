@@ -732,6 +732,7 @@ import LieLean.LinearAlgebra.Matrix.Cartan.TitsCone.InteriorConverse
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.IntegralWeylGroup
 import LieLean.LinearAlgebra.Matrix.Cartan.IntegralWeylGroupAntidominant
+import LieLean.LinearAlgebra.Matrix.Cartan.IntegralSimpleRoots
 import LieLean.LinearAlgebra.Matrix.Cartan.IntegralWeylGroupFacet
 import LieLean.LinearAlgebra.Matrix.Cartan.IntegralWeylGroupReflections
 import LieLean.LinearAlgebra.Matrix.Cartan.WeylGroupCoxeter
