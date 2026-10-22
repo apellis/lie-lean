@@ -49,7 +49,7 @@ above it the intersections with `N` have the same factors as the filtration of `
   GSM 94, AMS 2008, §6.10–6.11.
 -/
 
-open CategoryTheory Limits LieModule
+open CategoryTheory Limits LieModule Module
 
 noncomputable section
 
@@ -109,8 +109,8 @@ theorem surjective_stdStepMap (hle : N₀ ≤ N₁)
   obtain ⟨y, hy, hyz⟩ := (LieSubmodule.mem_map _).mp (e m).2
   refine ⟨⟨y, hy⟩, ?_⟩
   change e.symm ⟨_, _⟩ = m
-  rw [← e.symm_apply_apply m]
-  exact congrArg e.symm (Subtype.ext hyz)
+  rw [LieModuleEquiv.symm_apply_eq]
+  exact Subtype.ext hyz
 
 omit [CharZero K] in
 theorem stdStepMap_eq_zero_iff (hle : N₀ ≤ N₁)
@@ -137,10 +137,10 @@ local notation "𝔤" => KacMoodyAlgebra P
 def ofSub (X : CategoryO.{u} P) (N : LieSubmodule K 𝔤 X.obj) : CategoryO.{u} P :=
   ⟨ofLie P N, isObj_of_injective
     (ofLieModuleHom (N.incl.comp (ofLieEquiv (P := P) N).symm.toLieModuleHom))
-    (fun a b hab ↦ (ofLieEquiv (P := P) N).symm.injective (Subtype.ext hab)) X.property⟩
+    (fun _ _ hab ↦ (ofLieEquiv (P := P) N).symm.injective (Subtype.ext hab)) X.property⟩
 
 theorem isZero_ofSub_bot (X : CategoryO.{u} P) : IsZero (ofSub X ⊥) := by
-  have : Subsingleton (ofLie P (⊥ : LieSubmodule K 𝔤 X.obj)) :=
+  have : Subsingleton ((IsObj.{u} P).ι.obj (ofSub X ⊥)) :=
     inferInstanceAs (Subsingleton (⊥ : LieSubmodule K 𝔤 X.obj))
   exact IsZero.of_full_of_faithful_of_isZero (IsObj.{u} P).ι _
     (ModuleCat.isZero_of_subsingleton _)
@@ -193,7 +193,7 @@ def kerComplex (X Z : CategoryO.{u} P) (φ : X.obj →ₗ⁅K,𝔤⁆ Z.obj) :
 theorem shortExact_kerComplex (X Z : CategoryO.{u} P) (φ : X.obj →ₗ⁅K,𝔤⁆ Z.obj)
     (hφ : Function.Surjective φ) : (kerComplex X Z φ).ShortExact :=
   shortExact_of_lie
-    (fun a b hab ↦ (ofLieEquiv (P := P) φ.ker).symm.injective (Subtype.ext hab)) hφ
+    (fun _ _ hab ↦ (ofLieEquiv (P := P) φ.ker).symm.injective (Subtype.ext hab)) hφ
     (fun y hy ↦ ⟨ofLieEquiv (P := P) φ.ker ⟨y, LieModuleHom.mem_ker.mpr hy⟩, rfl⟩)
 
 /-! ### `Ext` along standard filtrations -/
@@ -215,7 +215,7 @@ theorem ext_eq_zero_of_step (X Y : CategoryO.{u} P) {n : ℕ} {N₀ N₁ : LieSu
   Abelian.Ext.eq_zero_of_shortExact_left
     (shortExact_subComplex X hle (verma P μ) (stdStepMapO X hle e)
       (fun x hx ↦ by
-        change ofLieEquiv (P := P) _ _ = 0
+        change ofLieEquiv (P := P) (VermaModule P μ) _ = 0
         rw [(stdStepMap_eq_zero_iff hle e _).mpr hx, map_zero])
       ((ofLieEquiv (P := P) _).surjective.comp (surjective_stdStepMap hle e))
       (fun y hy ↦ (stdStepMap_eq_zero_iff hle e y).mp
@@ -317,7 +317,7 @@ theorem ext_inf_ker_eq_zero_aux (X Y : CategoryO.{u} P) {n : ℕ} {ν : Dual K H
         refine Abelian.Ext.eq_zero_of_shortExact_left
           (shortExact_subComplex X hle' (verma P κ) g' (fun x hx ↦ ?_) (fun m ↦ ?_)
             (fun y hy ↦ ?_)) hext (hY κ hκmem hκν)
-        · change ofLieEquiv (P := P) _ (stdStepMap hle e ⟨x, hle hx.1⟩) = 0
+        · change ofLieEquiv (P := P) (VermaModule P κ) (stdStepMap hle e ⟨x, hle hx.1⟩) = 0
           rw [hstep0 x hx.1, map_zero]
         · obtain ⟨y, hy⟩ := surjective_stdStepMap hle e
             ((ofLieEquiv (P := P) (VermaModule P κ)).symm m)
@@ -329,7 +329,8 @@ theorem ext_inf_ker_eq_zero_aux (X Y : CategoryO.{u} P) {n : ℕ} {ν : Dual K H
               stdStepMap hle e y - stdStepMap hle e ⟨x, hle hx⟩ := by
             rw [← map_sub]
             rfl
-          change ofLieEquiv (P := P) _ (stdStepMap hle e ⟨(y : X.obj) - x, hmem.1⟩) = m
+          change ofLieEquiv (P := P) (VermaModule P κ)
+            (stdStepMap hle e ⟨(y : X.obj) - x, hmem.1⟩) = m
           rw [hsub, hstep0 x hx, sub_zero, hy, LieModuleEquiv.apply_symm_apply]
         · have h1 : stdStepMap hle e ⟨y, (y.2 : (y : X.obj) ∈ N₁ ⊓ φ.ker).1⟩ = 0 :=
             (ofLieEquiv (P := P) _).injective (hy.trans (map_zero _).symm)
@@ -365,7 +366,7 @@ theorem ext_verma_eq_zero_aux (lam : Dual K H) (n : ℕ) : ∀ μ : Dual K H,
     let eQ := ofLieEquiv (P := P) (ProjectiveCover P hA μ)
     -- a surjection `P(μ) → M(μ)`
     obtain ⟨φ₀, hφ₀⟩ := ProjectiveCover.isProjectiveO P hA μ (VermaModule.isCategoryO P μ)
-      (IrreducibleModule.isCategoryO P μ) (LieSubmodule.Quotient.mk' (maxSubmodule P μ))
+      (IrreducibleModule.isCategoryO P μ) (LieSubmodule.Quotient.mk' (VermaModule.maxSubmodule P μ))
       (LieSubmodule.Quotient.surjective_mk' _) (ProjectiveCover.π P hA μ)
     have hφ₀s : Function.Surjective φ₀ := by
       rw [← LieModuleHom.range_eq_top]
