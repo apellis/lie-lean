@@ -324,7 +324,8 @@ lemma corootPairing_wall_mul_simple (i : ι) : P.corootPairing hF.isGeneralizedC
   rw [sub_add_cancel, corootPairing_apply, show y⁻¹ * (y *
     (P.coxeterSystem hF.isGeneralizedCartan).simple i) =
       1 * (P.coxeterSystem hF.isGeneralizedCartan).simple i by group,
-    corootPairing_mul_simple, corootPairing_one, wallWeight_coroot, ite_eq_left_iff.mpr (fun h => absurd rfl h), neg_zero]
+    corootPairing_mul_simple, corootPairing_one, wallWeight_coroot,
+    ite_eq_left_iff.mpr (fun h => absurd rfl h), neg_zero]
 
 omit hy hΛ [FiniteDimensional K H] in
 lemma corootPairing_weylDot_mul_simple (i : ι) : P.corootPairing hF.isGeneralizedCartan
@@ -446,7 +447,8 @@ gives a nonzero class in `Extⁿ⁺¹(M(u·Λ), L(Λ))`. The connecting map of t
 `y αᵢ`) is injective, since `Extⁿ(Θ M(u·Λ), L(Λ)) ≅ Extⁿ(T M(u·Λ), T' L(Λ))` and `L(Λ)` is
 killed by translation onto the wall. -/
 theorem exists_ext_verma_simple_ne_zero_succ (i : ι) {u : P.weylGroup hA.isGeneralizedCartan}
-    (hu : P.IsPosRoot hA.isGeneralizedCartan (u * (P.coxeterSystem hA.isGeneralizedCartan).simple i) i)
+    (hu : P.IsPosRoot hA.isGeneralizedCartan
+      (u * (P.coxeterSystem hA.isGeneralizedCartan).simple i) i)
     {n : ℕ} (h : ∃ x : Abelian.Ext.{u} (verma P (P.weylDot hA.isGeneralizedCartan
       (u * (P.coxeterSystem hA.isGeneralizedCartan).simple i) Λ)) (simple P Λ) n, x ≠ 0) :
     ∃ x : Abelian.Ext.{u} (verma P (P.weylDot hA.isGeneralizedCartan u Λ)) (simple P Λ) (n + 1),
@@ -536,10 +538,13 @@ theorem exists_ext_verma_simple_ne_zero_succ (i : ι) {u : P.weylGroup hA.isGene
     have hΛ' : P.weylDot hA' y⁻¹ lam = Λ := by
       rw [← weylDot_mul, inv_mul_cancel, weylDot_one]
     rw [hΛ'] at hsub
-    let T' := (translationFunctor (Module.Dual K (IrreducibleModule P ν)) chiL chiM).obj (simple P Λ)
+    let T' := (translationFunctor (Module.Dual K (IrreducibleModule P ν)) chiL chiM).obj
+      (simple P Λ)
     have : Subsingleton T'.obj := (((ofLieEquiv (P := P) _).symm.trans
-      ((centralTranslationEquiv P _ chiL chiM (ofLieEquiv (P := P) (IrreducibleModule P Λ)).symm).trans
-        (centralTranslationCoeffEquiv P (IrreducibleModule P Λ) chiL chiM eD))).toEquiv).subsingleton
+      ((centralTranslationEquiv P _ chiL chiM
+        (ofLieEquiv (P := P) (IrreducibleModule P Λ)).symm).trans
+        (centralTranslationCoeffEquiv P (IrreducibleModule P Λ) chiL chiM eD))).toEquiv
+      ).subsingleton
     intro x
     have hz := Abelian.Ext.eq_zero_of_isZero_right (isZero_of_subsingleton T')
       (extTranslationEquiv (IrreducibleModule P ν) chiM chiL Xo (simple P Λ) n x)
@@ -665,7 +670,8 @@ theorem ker_bggObjAug : (bggObjAug hA hΛ).ker = (bggObjDiff hA hΛ 0).range := 
   rw [LieModuleHom.mem_ker, LieModuleHom.mem_range]
   constructor
   · intro hx
-    have hx' : (ofLieEquiv (P := P) _).symm x ∈ (bggAugmentation P hA.isGeneralizedCartan hΛ).ker := by
+    have hx' : (ofLieEquiv (P := P) _).symm x ∈
+        (bggAugmentation P hA.isGeneralizedCartan hΛ).ker := by
       rw [LieModuleHom.mem_ker]
       exact (ofLieEquiv (P := P) _).injective (by rw [map_zero]; exact hx)
     rw [h, LieModuleHom.mem_range] at hx'
@@ -718,9 +724,12 @@ include hΛ in
 theorem ext_bggObj_eq_zero (k n : ℕ) (hn : k < n) (Y : CategoryO.{u} P)
     (x : Abelian.Ext.{u} (bggObj P hA Λ k) Y n) : x = 0 := by
   classical
-  have := Fintype.ofFinite {w : P.weylGroup hA.isGeneralizedCartan // (P.coxeterSystem hA.isGeneralizedCartan).length w = k}
-  have hv : ∀ w : {w : P.weylGroup hA.isGeneralizedCartan // (P.coxeterSystem hA.isGeneralizedCartan).length w = k},
-      IsStdFiltered P (⊤ : LieSubmodule K 𝔤 (VermaModule P (P.weylDot hA.isGeneralizedCartan w.1 Λ)))
+  have := Fintype.ofFinite {w : P.weylGroup hA.isGeneralizedCartan //
+    (P.coxeterSystem hA.isGeneralizedCartan).length w = k}
+  have hv : ∀ w : {w : P.weylGroup hA.isGeneralizedCartan //
+        (P.coxeterSystem hA.isGeneralizedCartan).length w = k},
+      IsStdFiltered P (⊤ : LieSubmodule K 𝔤
+        (VermaModule P (P.weylDot hA.isGeneralizedCartan w.1 Λ)))
         {P.weylDot hA.isGeneralizedCartan w.1 Λ} := fun w ↦ by
     have := isStdFiltered_range_of_injective P (LieModuleHom.id (R := K) (L := 𝔤)
       (M := VermaModule P (P.weylDot hA.isGeneralizedCartan w.1 Λ))) Function.injective_id
@@ -729,7 +738,8 @@ theorem ext_bggObj_eq_zero (k n : ℕ) (hn : k < n) (Y : CategoryO.{u} P)
   let g : BGGTerm P hA.isGeneralizedCartan Λ k →ₗ⁅K,𝔤⁆ (bggObj P hA Λ k).obj :=
     (ofLieEquiv (P := P) (BGGTerm P hA.isGeneralizedCartan Λ k)).toLieModuleHom
   have hg : ∀ y ∈ (⊤ : LieSubmodule K 𝔤 (BGGTerm P hA.isGeneralizedCartan Λ k)), g y = 0 → y = 0 :=
-    fun y _ hy ↦ (ofLieEquiv (P := P) (BGGTerm P hA.isGeneralizedCartan Λ k)).injective (hy.trans (map_zero _).symm)
+    fun y _ hy ↦ (ofLieEquiv (P := P) (BGGTerm P hA.isGeneralizedCartan Λ k)).injective
+      (hy.trans (map_zero _).symm)
   have hfilt' := IsStdFiltered.map_of_injOn P g hg hfilt le_rfl
   have htop : (⊤ : LieSubmodule K 𝔤 (BGGTerm P hA.isGeneralizedCartan Λ k)).map g = ⊤ :=
     eq_top_iff.mpr fun y _ ↦ (LieSubmodule.mem_map _).mpr
