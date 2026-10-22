@@ -3236,7 +3236,11 @@ multiplicativity argument is that of 35.5.1 (our argument). [Lus] Thm. 35.1.7 ov
 `𝒜'`-algebra `R` (`Frobenius/HomomorphismGeneral.lean`: `frobGeneral`,
 `frobGeneral_integralGenerator`, uniqueness `eq_frobGeneral`), by base change from the cyclotomic
 ring `𝒜' = 𝒜/(φ_{2l})`: `Fr` over `𝒜'` is the restriction of `Fr` over its fraction field, which
-preserves the integral forms. Next: 35.1.9 and 31.1.3.
+preserves the integral forms. Towards 35.1.9, the form of the presentation 31.1.3 used there
+(`Modified/TriangularMap.lean`): `𝒜U̇ ≅ ⊕_λ 𝒜f ⊗_𝒜 𝒜f`, `(λ, x ⊗ x') ↦ x⁻ 1_λ x'⁺`
+(`triSumEquiv`, from the triangular basis of 23.2.2 (b)), the bilinear maps `triA` (over `𝒜`) and
+`triS` (over an `𝒜`-algebra `S`), and the spanning monomials `θ_w⁻ 1_λ θ_{w'}⁺ = F_w 1_λ E_{w'}`
+(`mem_span_triA_thetaW`, `triA_thetaW`). Next: 35.1.9.
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).
