@@ -256,8 +256,8 @@ lemma not_isPosRoot_simple (i : ι) : ¬P.IsPosRoot hF.isGeneralizedCartan
     ((P.coxeterSystem hF.isGeneralizedCartan).simple i) i := fun h ↦
   P.not_isPosRoot_and (isPosRoot_one hF.isGeneralizedCartan i) (by rwa [one_mul])
 
-omit hΛ in
-/-- The positive root `β = y αᵢ`... rather `y rᵢ αᵢ = -y αᵢ`, which is positive. -/
+omit hΛ [FiniteDimensional K H] in
+/-- `y sᵢ αᵢ = -y αᵢ` is a positive root. -/
 lemma isPosRoot_mul_simple (i : ι) : P.IsPosRoot hF.isGeneralizedCartan
     (y * (P.coxeterSystem hF.isGeneralizedCartan).simple i) i :=
   isPosRoot_mul_of_not hy (not_isPosRoot_simple hF i)
@@ -385,7 +385,7 @@ namespace Matrix.Realization.KacMoodyAlgebra
 
 namespace CategoryO
 
-open CategoryTheory
+open CategoryTheory VermaModule
 
 variable {ι H : Type u} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K]
   [IsAlgClosed K] [AddCommGroup H] [Module K H] [FiniteDimensional K H] {A : Matrix ι ι ℤ}
@@ -393,13 +393,16 @@ variable {ι H : Type u} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [Cha
 
 local notation "𝔤" => KacMoodyAlgebra P
 
+omit [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 /-- An object of `𝒪` whose underlying module is trivial is zero. -/
-theorem isZero_of_subsingleton (X : CategoryO.{u} P) [Subsingleton X.obj] : Limits.IsZero X :=
-  Limits.IsZero.of_full_of_faithful_of_isZero (IsObj.{u} P).ι _
+theorem isZero_of_subsingleton (X : CategoryO.{u} P) [Subsingleton X.obj] : Limits.IsZero X := by
+  have : Subsingleton ((IsObj.{u} P).ι.obj X) := inferInstanceAs (Subsingleton X.obj)
+  exact Limits.IsZero.of_full_of_faithful_of_isZero (IsObj.{u} P).ι _
     (ModuleCat.isZero_of_subsingleton _)
 
 variable (hA : A.IsFiniteCartan) {Λ : Dual K H} (hΛ : P.IsDominantIntegral Λ)
 
+include hΛ in
 /-- The step of [HumO] §6.9: for `ℓ(u sᵢ) < ℓ(u)`, a nonzero class in `Extⁿ(M(u sᵢ·Λ), L(Λ))`
 gives a nonzero class in `Extⁿ⁺¹(M(u·Λ), L(Λ))`. The connecting map of the wall-crossing sequence
 `0 → M(u sᵢ·Λ) → Θ M(u·Λ) → M(u·Λ) → 0` (for a regular antidominant `λ = y·Λ` and the wall of
@@ -426,9 +429,7 @@ theorem exists_ext_verma_simple_ne_zero_succ (i : ι) {u : P.weylGroup hA.isGene
       P.corootPairing hA' (μ + P.rho) v j = 0 := fun v j hv h0 ↦ by
     obtain ⟨m, hm⟩ := exists_corootPairing_weylDot_eq_neg hA hy hΛ hv
     rw [hm] at h0
-    have : ((-(m + 1 : ℤ) : ℤ) : K) = ((0 : ℤ) : K) := by rw [← h0]; push_cast; ring
-    have := Int.cast_injective this
-    omega
+    exact (Nat.cast_add_one_ne_zero m (neg_eq_zero.mp h0)).elim
   have hν := isDominantIntegral_sub_wallWeight hΛ i
   have hν' := isDominantIntegral_wall_sub_weylDot hA hy hΛ i
   have hzν : ((y⁻¹ : P.weylGroup hA') : Dual K H ≃ₗ[K] Dual K H) (lam - μ) = ν :=
@@ -441,27 +442,24 @@ theorem exists_ext_verma_simple_ne_zero_succ (i : ι) {u : P.weylGroup hA.isGene
   have hlamα : P.corootPairing hA' (lam + P.rho) v₀ i ≠ 0 := by
     rw [corootPairing_weylDot_mul_simple (hF := hA) (y := y) (Λ := Λ) i, hm]
     intro h0
-    have : (((m : ℤ) + 1 : ℤ) : K) = ((0 : ℤ) : K) := by
-      rw [← neg_eq_zero.mp h0]; push_cast; ring
-    have := Int.cast_injective this
-    omega
+    exact Nat.cast_add_one_ne_zero m (neg_eq_zero.mp h0)
   have hw : P.IsPosRoot hA' (w * v₀) i := by
     rwa [show w * v₀ = u * s by simp only [w, v₀]; group]
-  set χλ := centralCharacter P lam
-  set χμ := centralCharacter P μ
-  haveI := IrreducibleModule.finiteDimensional (P := P) hA hν
-  haveI := IrreducibleModule.finiteDimensional (P := P) hA hν'
-  let Xo := (translationFunctor (IrreducibleModule P ν') χλ χμ).obj
+  set chiL := centralCharacter P lam
+  set chiM := centralCharacter P μ
+  have := IrreducibleModule.finiteDimensional (P := P) hA hν
+  have := IrreducibleModule.finiteDimensional (P := P) hA hν'
+  let Xo := (translationFunctor (IrreducibleModule P ν') chiL chiM).obj
     (verma P (P.weylDot hA' w lam))
-  let eX : Xo.obj ≃ₗ⁅K,𝔤⁆ centralTranslation P (IrreducibleModule P ν') χλ χμ
+  let eX : Xo.obj ≃ₗ⁅K,𝔤⁆ centralTranslation P (IrreducibleModule P ν') chiL chiM
       (VermaModule P (P.weylDot hA' w lam)) :=
-    (ofLieEquiv (P := P) (centralTranslation P (IrreducibleModule P ν') χλ χμ
+    (ofLieEquiv (P := P) (centralTranslation P (IrreducibleModule P ν') chiL chiM
       (verma P (P.weylDot hA' w lam)).obj)).symm.trans
-      (centralTranslationEquiv P (IrreducibleModule P ν') χλ χμ
+      (centralTranslationEquiv P (IrreducibleModule P ν') chiL chiM
         (ofLieEquiv (P := P) (VermaModule P (P.weylDot hA' w lam))).symm)
   obtain ⟨f, g, hf, hg, hfg⟩ := wallCrossing_verma_shortExact P hA hlam hμ hfacet hν
     (y⁻¹).2 hzν hν' (1 : P.weylGroup hA').2 rfl hv₀ hμα hwall hlamα hw eX
-  let Θo := (translationFunctor (IrreducibleModule P ν) χμ χλ).obj Xo
+  let Θo := (translationFunctor (IrreducibleModule P ν) chiM chiL).obj Xo
   let F : verma P (P.weylDot hA' (w * P.reflectionOf hA' v₀ i) lam) ⟶ Θo :=
     (IsObj.{u} P).homMk (ofLieModuleHom ((ofLieEquiv (P := P) _).toLieModuleHom.comp
       (f.comp (ofLieEquiv (P := P) (VermaModule P _)).symm.toLieModuleHom)))
@@ -481,11 +479,11 @@ theorem exists_ext_verma_simple_ne_zero_succ (i : ι) {u : P.weylGroup hA.isGene
       rw [corootPairing_one, LinearMap.add_apply, rho_coroot] at hk
       exact ⟨-(k + 2 : ℤ), by push_cast; linear_combination hk⟩
     have hsimp : (⟨P.reflection hA' i, P.reflection_mem_weylGroup hA' i⟩ :
-        P.weylGroup hA') = s := Subtype.ext (coxeterSystem_simple hA' i).symm
+        P.weylGroup hA') = s := Subtype.ext (coxeterSystem_simple P hA' i).symm
     have hC : ¬P.UpperClosureCondition hA'
         (((y⁻¹ : P.weylGroup hA') : Dual K H ≃ₗ[K] Dual K H) (lam + P.rho))
         (((y⁻¹ : P.weylGroup hA') : Dual K H ≃ₗ[K] Dual K H) (μ + P.rho)) := by
-      have key := not_upperClosureCondition_of_wall P hA (a := lam + P.rho) (b := μ + P.rho)
+      have key := not_upperClosureCondition_of_wall (P := P) hA (a := lam + P.rho) (b := μ + P.rho)
         (v := v₀) (w := s * y⁻¹) (i := i) hμα (n := -((m : ℤ) + 1)) (by omega) (by
           rw [corootPairing_weylDot_mul_simple (hF := hA) (y := y) (Λ := Λ) i, hm]; push_cast; ring)
         (by
@@ -501,17 +499,17 @@ theorem exists_ext_verma_simple_ne_zero_succ (i : ι) {u : P.weylGroup hA.isGene
     have hΛ' : P.weylDot hA' y⁻¹ lam = Λ := by
       rw [← weylDot_mul, inv_mul_cancel, weylDot_one]
     rw [hΛ'] at hsub
-    let T' := (translationFunctor (Module.Dual K (IrreducibleModule P ν)) χλ χμ).obj (simple P Λ)
+    let T' := (translationFunctor (Module.Dual K (IrreducibleModule P ν)) chiL chiM).obj (simple P Λ)
     have : Subsingleton T'.obj := (((ofLieEquiv (P := P) _).symm.trans
-      ((centralTranslationEquiv P _ χλ χμ (ofLieEquiv (P := P) (IrreducibleModule P Λ)).symm).trans
-        (centralTranslationCoeffEquiv P (IrreducibleModule P Λ) χλ χμ eD))).toEquiv).subsingleton
+      ((centralTranslationEquiv P _ chiL chiM (ofLieEquiv (P := P) (IrreducibleModule P Λ)).symm).trans
+        (centralTranslationCoeffEquiv P (IrreducibleModule P Λ) chiL chiM eD))).toEquiv).subsingleton
     intro x
     have hz := Abelian.Ext.eq_zero_of_isZero_right (isZero_of_subsingleton T')
-      (extTranslationEquiv (IrreducibleModule P ν) χμ χλ Xo (simple P Λ) n x)
+      (extTranslationEquiv (IrreducibleModule P ν) chiM chiL Xo (simple P Λ) n x)
     exact (LinearEquiv.map_eq_zero_iff _).mp hz
   have h1 : P.weylDot hA' (w * P.reflectionOf hA' v₀ i) lam = P.weylDot hA' (u * s) Λ := by
     have hsimp : (⟨P.reflection hA' i, P.reflection_mem_weylGroup hA' i⟩ :
-        P.weylGroup hA') = s := Subtype.ext (coxeterSystem_simple hA' i).symm
+        P.weylGroup hA') = s := Subtype.ext (coxeterSystem_simple P hA' i).symm
     rw [← weylDot_mul]
     congr 1
     simp [reflectionOf, hsimp, w, v₀, s, mul_assoc]
@@ -519,9 +517,11 @@ theorem exists_ext_verma_simple_ne_zero_succ (i : ι) {u : P.weylGroup hA.isGene
     rw [← weylDot_mul]
     simp [w]
   obtain ⟨x, hx⟩ := h
-  have hx' : ∃ x : Abelian.Ext.{u} S.X₁ (simple P Λ) n, x ≠ 0 := h1 ▸ ⟨x, hx⟩
+  have hx' : ∃ x : Abelian.Ext.{u} (verma P (P.weylDot hA' (w * P.reflectionOf hA' v₀ i) lam))
+      (simple P Λ) n, x ≠ 0 := by rw [h1]; exact ⟨x, hx⟩
   obtain ⟨x₁, hx₁⟩ := hx'
-  exact h3 ▸ ⟨_, Abelian.Ext.extClass_comp_ne_zero hS h₂ hx₁⟩
+  rw [← h3]
+  exact ⟨_, Abelian.Ext.extClass_comp_ne_zero hS h₂ (x₁ := x₁) hx₁⟩
 
 include hΛ in
 /-- **[HumO] Proposition 6.9 (a), lower bound**: `Ext^{ℓ(w)}(M(w·Λ), L(Λ)) ≠ 0` for `Λ` dominant
@@ -566,9 +566,7 @@ theorem projectiveDimension_verma_weylDot (w : P.weylGroup hA.isGeneralizedCarta
     projectiveDimension (verma.{u} P (P.weylDot hA.isGeneralizedCartan w Λ)) =
       ((P.coxeterSystem hA.isGeneralizedCartan).length w : ℕ) := by
   refine le_antisymm ?_ ?_
-  · have h := hasProjectiveDimensionLT_verma_weylDot hA hΛ w
-    rw [← projectiveDimension_lt_iff] at h
-    exact Order.le_of_lt_succ (by simpa using h)
+  · exact (projectiveDimension_le_iff _ _).mpr (hasProjectiveDimensionLT_verma_weylDot hA hΛ w)
   · rw [projectiveDimension_ge_iff]
     intro h
     obtain ⟨x, hx⟩ := exists_ext_verma_weylDot_simple_ne_zero hA hΛ _ w rfl
