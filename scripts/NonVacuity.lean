@@ -111,6 +111,38 @@ example : letI := (LaurentPolynomial.eval₂ (Int.castRingHom ℚ) (-1)).toAlgeb
     rw [RingHom.algebraMap_toAlgebra, LaurentPolynomial.eval₂_T, ← pow_mul, mul_comm, pow_mul]
     simp
 
+/-! ### Lusztig 35.1.8 at `l = 2`, `v ↦ i ∈ ℂ` -/
+
+section Frobenius35
+
+/-- `𝒜 → ℂ`, `v ↦ i`: `ε = i` has `ε⁴ = 1` and `ε² ≠ 1` ([Lus] 35.2.1 with `l = 2`). -/
+local instance : Algebra (LaurentPolynomial ℤ) ℂ :=
+  (LaurentPolynomial.eval₂ (Int.castRingHom ℂ) (Units.mk0 Complex.I Complex.I_ne_zero)).toAlgebra
+
+theorem hIT : algebraMap (LaurentPolynomial ℤ) ℂ (LaurentPolynomial.T 1) = Complex.I := by
+  rw [RingHom.algebraMap_toAlgebra, LaurentPolynomial.eval₂_T, zpow_one]; rfl
+
+theorem hlI : algebraMap (LaurentPolynomial ℤ) ℂ (LaurentPolynomial.T 1) ^ (2 * 2) = 1 := by
+  rw [hIT]; exact Complex.I_pow_four
+
+theorem hprimI : ∀ t, 0 < t → t < 2 →
+    algebraMap (LaurentPolynomial ℤ) ℂ (LaurentPolynomial.T 1) ^ (2 * t) ≠ 1 := by
+  intro t ht0 ht
+  obtain rfl : t = 1 := by omega
+  rw [hIT, Complex.I_sq]; norm_num
+
+open scoped TensorProduct in
+/-- [Lus] Thm. 35.1.8 for `A₂`, `l = 2` (so `lᵢ = 2` and `(I, ∘)` has `i ∘ j = 4 (i · j)`):
+`Fr'(θᵢ^{(n)}) = θᵢ^{(2n)}`. -/
+example (n : ℕ) : frobSplit DA2 (by norm_num) hlI hprimI
+      ((1 : ℂ) ⊗ₜ integralGenerator (DA2.frobenius (l := 2) (by norm_num)) 0 n) =
+    (1 : ℂ) ⊗ₜ integralGenerator DA2 0 (DA2.frobOrder 2 0 * n) :=
+  frobSplit_integralGenerator DA2 (by norm_num) hlI hprimI 0 n
+
+example : DA2.frobOrder 2 0 = 2 := by decide
+
+end Frobenius35
+
 /-! ### Lusztig 25.2.1 (d) and 26.3.1 on the extended root datum of `sl₂` -/
 
 /-- The extended root datum of `sl₂`. -/

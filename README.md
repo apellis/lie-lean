@@ -293,6 +293,13 @@ Further proved results include:
   - [Lus] 34.1.3 (a), 34.1.4 (a): a product and a sum of Gaussian binomials at a root of `1`
     (`prod_qBinomialU_mul_root`, `sum_qBinomialU_root`), and [Lus] 35.1.5 (a)
     (`gaussBinom_mul_mul_eq_pow`).
+  - [Lus] Thm. 35.1.8 over the field `F` of [Lus] 35.2.1 (characteristic zero, `ε^{2l} = 1`,
+    `ε^{2t} ≠ 1` for `0 < t < l`): the `F`-algebra map `Fr' : _F f* → _F f`, `θᵢ^{(n)} ↦
+    θᵢ^{(lᵢn)}`, where `f*` is the algebra of the Cartan datum `(I, ∘)` of [Lus] 2.2.4
+    (`frobSplit`, `frobSplit_integralGenerator`, uniqueness `eq_frobSplit`), with the Serre
+    relations of [Lus] 35.2.3 (b) between the `θᵢ^{(lᵢ)}` (`sum_baseGen_frobenius_serre`).
+    Lusztig's assumptions 35.1.2 (a), (b) are not used. General `𝒜'`-algebras (35.1.11) are not
+    yet covered.
   - **Not yet formalized:** [Lus] 41.1.9 (compatibility with the quantum Frobenius map, roadmap
     item D2, in progress).
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`

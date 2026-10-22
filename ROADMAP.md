@@ -3148,6 +3148,12 @@ sign twist `finrank_serreSpan_of_sq_eq_one` (`GabberKac/SerreSpanSign.lean`).
 [Lus] 2.2.4: the Cartan datum `(I, ∘)`, `i ∘ j = lᵢ lⱼ (i · j)` with `lᵢ` least such that
 `l ∣ lᵢ dᵢ` (`Frobenius/CartanDatum.lean`: `LusztigCartanDatum.frobOrder`, `frobOrder_dvd_iff`,
 `frobenius`, `frobenius_d`, `frobOrder_mul_cartanMatrix_frobenius`).
+[Lus] Thm. 35.1.8 over the field `F` of [Lus] 35.2.1: `Fr' : _F f* → _F f`, `θᵢ^{(n)} ↦ θᵢ^{(lᵢn)}`
+(`Frobenius/Splitting.lean`: `frobSplit`, `frobSplit_integralGenerator`, `eq_frobSplit`), via the
+Serre relations [Lus] 35.2.3 (b) between the `θᵢ^{(lᵢ)}` (`sum_baseGen_frobenius_serre`, from
+the identity `sum_frobenius_serre` in `Frobenius/SerreIdentity.lean`, Lusztig's argument) and
+Prop. 33.2.2 (c) for `f*`. Lusztig's assumptions 35.1.2 (a), (b) are not needed. Next: 35.1.11
+(general `𝒜'`-algebras), then `Fr` ([Lus] 35.1.7, 35.3–35.5) and 31.1.3, 35.1.9.
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).
