@@ -205,17 +205,24 @@ def directSumEquivPi {J : Type} [Fintype J] (M : J → ModuleCat.{w} 𝓤) :
 
 variable {J : Type} [Finite J] (M : J → ModuleCat.{w} 𝓤)
 
-/-- A finite product of modules in `𝒪` lies in `𝒪`. -/
-theorem isObj_pi (hM : ∀ j, IsObj P (M j)) : IsObj P (piObj M) := by
+lemma isCategoryO_piObj (hM : ∀ j, IsCategoryO P (M j)) : IsCategoryO P (piObj M) := by
+  have := Fintype.ofFinite J
+  exact (IsCategoryO.directSum _ hM).of_equiv (directSumEquivPi M)
+
+lemma exists_finset_lieSpan_piObj_eq_top
+    (hM : ∀ j, ∃ S : Finset (M j), LieSubmodule.lieSpan K 𝔤 (S : Set (M j)) = ⊤) :
+    ∃ S : Finset (piObj M), LieSubmodule.lieSpan K 𝔤 (S : Set (piObj M)) = ⊤ := by
   classical
   have := Fintype.ofFinite J
-  let e := directSumEquivPi (P := P) M
-  have hO : IsCategoryO P (DirectSum J fun j ↦ M j) := IsCategoryO.directSum _ fun j ↦ (hM j).1
-  refine ⟨hO.of_equiv e, ?_⟩
-  obtain ⟨T, hT⟩ := exists_finset_lieSpan_directSum_eq_top (L := 𝔤) fun j ↦ (hM j).2
-  refine ⟨T.image e, ?_⟩
+  obtain ⟨T, hT⟩ := exists_finset_lieSpan_directSum_eq_top (L := 𝔤) hM
+  refine ⟨T.image (directSumEquivPi (P := P) M), ?_⟩
   rw [Finset.coe_image]
-  exact lieSpan_image_eq_top_of_surjective e.toLieModuleHom e.surjective hT
+  exact lieSpan_image_eq_top_of_surjective (directSumEquivPi (P := P) M).toLieModuleHom
+    (directSumEquivPi (P := P) M).surjective hT
+
+/-- A finite product of modules in `𝒪` lies in `𝒪`. -/
+theorem isObj_pi (hM : ∀ j, IsObj P (M j)) : IsObj P (piObj M) :=
+  ⟨isCategoryO_piObj M fun j ↦ (hM j).1, exists_finset_lieSpan_piObj_eq_top M fun j ↦ (hM j).2⟩
 
 lemma isClosedUnderLimitsOfShape_discrete :
     (IsObj.{w} P).IsClosedUnderLimitsOfShape (Discrete J) := by
