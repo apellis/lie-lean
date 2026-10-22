@@ -217,6 +217,7 @@ def simpleToDualVerma (μ : Dual K H) : IrreducibleModule P μ →ₗ⁅K,𝔤�
   (ofLieEquiv (P := P) (restrictedDual P (VermaModule P μ))).toLieModuleHom.comp
     (IrreducibleModule.toRestrictedDual P μ)
 
+omit [IsAlgClosed K] in
 theorem injective_simpleToDualVerma (μ : Dual K H) :
     Function.Injective (simpleToDualVerma (P := P) μ) :=
   (ofLieEquiv (P := P) (restrictedDual P (VermaModule P μ))).injective.comp
