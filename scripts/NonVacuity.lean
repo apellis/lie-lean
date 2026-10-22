@@ -90,6 +90,18 @@ example : letI := LusztigF.integralLaurentEval.toAlgebra
   letI := LusztigF.integralLaurentEval.toAlgebra
   baseChangeCanonicalBasis DA2 (RatFunc ℚ)
 
+open scoped TensorProduct in
+/-- [Lus] Prop. 33.2.2 (c): `_ℚ f` at `v ↦ -1` is presented by the quantum Serre relations at
+`ε = -1`. -/
+example : letI := (LaurentPolynomial.eval₂ (Int.castRingHom ℚ) (-1)).toAlgebra
+    (LusztigF.serreIdeal DA2 (algebraMap (LaurentPolynomial ℤ) ℚ
+      (LaurentPolynomial.T 1))).ringCon.Quotient ≃ₐ[ℚ]
+      ℚ ⊗[LaurentPolynomial ℤ] LusztigF.quotientIntegralForm DA2 :=
+  letI := (LaurentPolynomial.eval₂ (Int.castRingHom ℚ) (-1)).toAlgebra
+  quasiClassicalEquiv DA2 ℚ fun i ↦ by
+    rw [RingHom.algebraMap_toAlgebra, LaurentPolynomial.eval₂_T, ← pow_mul, mul_comm, pow_mul]
+    simp
+
 /-! ### Lusztig 25.2.1 (d) and 26.3.1 on the extended root datum of `sl₂` -/
 
 /-- The extended root datum of `sl₂`. -/
