@@ -277,6 +277,9 @@ Further proved results include:
     (`PBWSignedCrystal.existsUnique_canonical_congruence`).
   - [Lus] Prop. 7.1.5 (b): the higher-order quantum Serre relations hold in `f` over `ℚ(v)`
     (`higherSerre_mem_radical`, `toQuotient_higherSerre`).
+  - [Lus] Cor. 7.1.7: for `m > an`, `θᵢ^{(m)} θⱼ^{(n)}` is a combination of the
+    `θᵢ^{(r)} θⱼ^{(n)} θᵢ^{(s)}`, `r + s = m`, `s ≥ m - an`, in `f`
+    (`toQuotient_fDivPow_mul_fDivPow`, coefficients `higherSerreCoeff`).
   - [Lus] Lemma 34.1.2 (a), (b), (c), (e): Gaussian binomials at a root of `1` in an integral
     domain (`gaussBinom_eq_zero_of_not_dvd`, `gaussBinom_mul_mul`, `gaussBinom_add_mul_add_mul`,
     `pow_sq_add_eq_of_root`).
