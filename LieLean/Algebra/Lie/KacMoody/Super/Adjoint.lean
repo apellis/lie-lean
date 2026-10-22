@@ -660,6 +660,30 @@ lemma f_pow_sl2Deg_mul (i : ι) (n : ℕ) :
   · rw [← neg_smul, smul_pow, smul_smul, ← mul_pow, pow_mul]; norm_num
   · simp
 
+/-- If `N` contains the positive Serre elements, then `Eᵢ` acts locally nilpotently on
+`G̃(A, τ)` modulo `N`. -/
+theorem exists_sl2E_pow_smul_mem (N : Submodule 𝒰 (Ad P p))
+    (hSE : ∀ i j, i ≠ j → toAd P p (serreE P p i j) ∈ N) (i : ι) {z : 𝒰}
+    (hz : z ∈ gTilde P p) : ∃ n, sl2E P p i ^ n • toAd P p z ∈ N :=
+  exists_pow_smul_mem (adRep_sl2E_apply P p i)
+    (fun j ↦ exists_isGood_sl2E i (isGood_adE_e hSE i j))
+    (fun j ↦ exists_isGood_sl2E i (if hij : i = j then ⟨4, isGood_adE_of_eq_zero i
+      (by subst hij; exact adE_f_self P p i le_rfl)⟩ else
+      ⟨1, isGood_adE_of_eq_zero i (adE_f_of_ne P p hij le_rfl)⟩))
+    (fun c ↦ exists_isGood_sl2E i ⟨3, isGood_adE_of_eq_zero i (adE_h P p i c le_rfl)⟩) hz
+
+/-- If `N` contains the negative Serre elements, then `Fᵢ` acts locally nilpotently on
+`G̃(A, τ)` modulo `N`. -/
+theorem exists_sl2F_pow_smul_mem (N : Submodule 𝒰 (Ad P p))
+    (hSF : ∀ i j, i ≠ j → toAd P p (serreF P p i j) ∈ N) (i : ι) {z : 𝒰}
+    (hz : z ∈ gTilde P p) : ∃ n, sl2F P p i ^ n • toAd P p z ∈ N :=
+  exists_pow_smul_mem (adRep_sl2F_apply P p i)
+    (fun j ↦ exists_isGood_sl2F i (if hij : i = j then ⟨4, isGood_adF_of_eq_zero i
+      (by subst hij; exact adF_e_self P p i le_rfl)⟩ else
+      ⟨1, isGood_adF_of_eq_zero i (adF_e_of_ne P p hij le_rfl)⟩))
+    (fun j ↦ exists_isGood_sl2F i (isGood_adF_f hSF i j))
+    (fun c ↦ exists_isGood_sl2F i ⟨3, isGood_adF_of_eq_zero i (adF_h P p i c le_rfl)⟩) hz
+
 /-- [Kac78] §1.4 (cf. [Kac] Lemma 3.5): if `N ⊆ G̃(A, τ)` is a submodule of the adjoint module
 containing the Serre elements, then `G̃(A, τ) / N` is an integrable module. -/
 theorem isIntegrable_quotient (N : Submodule 𝒰 (Ad P p))
@@ -668,23 +692,13 @@ theorem isIntegrable_quotient (N : Submodule 𝒰 (Ad P p))
     IsIntegrable P p (↥(gTildeAd P p) ⧸ N.comap (gTildeAd P p).subtype) := by
   have hE : ∀ i z, z ∈ gTilde P p → ∃ n, e P p i ^ n • toAd P p z ∈ N := by
     intro i z hz
-    obtain ⟨n, hn⟩ := exists_pow_smul_mem (adRep_sl2E_apply P p i)
-      (fun j ↦ exists_isGood_sl2E i (isGood_adE_e hSE i j))
-      (fun j ↦ exists_isGood_sl2E i (if hij : i = j then ⟨4, isGood_adE_of_eq_zero i
-        (by subst hij; exact adE_f_self P p i le_rfl)⟩ else
-        ⟨1, isGood_adE_of_eq_zero i (adE_f_of_ne P p hij le_rfl)⟩))
-      (fun c ↦ exists_isGood_sl2E i ⟨3, isGood_adE_of_eq_zero i (adE_h P p i c le_rfl)⟩) hz
+    obtain ⟨n, hn⟩ := exists_sl2E_pow_smul_mem N hSE i hz
     refine ⟨sl2Deg p i * n, ?_⟩
     rw [e_pow_sl2Deg_mul, smul_assoc]
     exact N.smul_of_tower_mem _ hn
   have hF : ∀ i z, z ∈ gTilde P p → ∃ n, f P p i ^ n • toAd P p z ∈ N := by
     intro i z hz
-    obtain ⟨n, hn⟩ := exists_pow_smul_mem (adRep_sl2F_apply P p i)
-      (fun j ↦ exists_isGood_sl2F i (if hij : i = j then ⟨4, isGood_adF_of_eq_zero i
-        (by subst hij; exact adF_e_self P p i le_rfl)⟩ else
-        ⟨1, isGood_adF_of_eq_zero i (adF_e_of_ne P p hij le_rfl)⟩))
-      (fun j ↦ exists_isGood_sl2F i (isGood_adF_f hSF i j))
-      (fun c ↦ exists_isGood_sl2F i ⟨3, isGood_adF_of_eq_zero i (adF_h P p i c le_rfl)⟩) hz
+    obtain ⟨n, hn⟩ := exists_sl2F_pow_smul_mem N hSF i hz
     refine ⟨sl2Deg p i * n, ?_⟩
     rw [f_pow_sl2Deg_mul, smul_assoc]
     exact N.smul_of_tower_mem _ hn
