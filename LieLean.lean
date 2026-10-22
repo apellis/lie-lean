@@ -501,6 +501,7 @@ import LieLean.Algebra.QuantumGroup.Frobenius.DividedPowerCommutation
 import LieLean.Algebra.QuantumGroup.Frobenius.Generators
 import LieLean.Algebra.QuantumGroup.Frobenius.HighestWeight
 import LieLean.Algebra.QuantumGroup.Frobenius.PairingRecursion
+import LieLean.Algebra.QuantumGroup.Frobenius.SplittingKernel
 import LieLean.Algebra.QuantumGroup.Frobenius.RadicalWords
 import LieLean.Algebra.QuantumGroup.Frobenius.SerreIdentity
 import LieLean.Algebra.QuantumGroup.Frobenius.Splitting
@@ -519,6 +520,7 @@ import LieLean.Algebra.QuantumGroup.Hopf
 import LieLean.Algebra.QuantumGroup.Integrable
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Classical
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Rank
+import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.ShapovalovSign
 import LieLean.Algebra.QuantumGroup.IrreducibleCharacter.Verma
 import LieLean.Algebra.QuantumGroup.Levi
 import LieLean.Algebra.QuantumGroup.LusztigF.Bar
