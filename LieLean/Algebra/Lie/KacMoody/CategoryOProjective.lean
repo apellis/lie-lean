@@ -112,6 +112,7 @@ def mk (M : Type w) [AddCommGroup M] [Module K M] [LieRingModule 𝔤 M] [LieMod
 
 variable [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan]
 
+omit [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 /-- An epimorphism in `𝒪` is surjective. -/
 theorem surjective_of_epi {X Y : CategoryO.{w} P} (f : X ⟶ Y) [Epi f] :
     Function.Surjective f.hom.hom := by
@@ -160,13 +161,14 @@ variable {ι H : Type u} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [Cha
 quotient of a projective object. -/
 instance CategoryO.instEnoughProjectives : EnoughProjectives (CategoryO.{u} P) where
   presentation X := by
+    obtain ⟨S, hS⟩ := X.property.2
     obtain ⟨κ, _, _, τ, hD, hproj, hgen, π, hπ⟩ :=
-      exists_isProjectiveO_surjective P (Fact.out : A.IsFiniteCartan) X.property.1 X.property.2
+      exists_isProjectiveO_surjective P (Fact.out : A.IsFiniteCartan) X.property.1 hS
     exact nonempty_projectivePresentation _ X hD hgen hproj π hπ
 
 /-- `Extⁿ` in `𝒪` ([HumO] §6.1), via the derived category of `𝒪`. -/
 instance CategoryO.instHasExt : HasExt.{u} (CategoryO.{u} P) :=
-  hasExt_of_enoughProjectives.{u}
+  hasExt_of_enoughProjectives.{u} _
 
 end Ext
 
