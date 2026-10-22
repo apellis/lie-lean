@@ -237,11 +237,12 @@ lemma exists_forall_not_isPosRoot_mul :
   rw [zero_add, sub_add_cancel, corootPairing_apply, ← zero_add P.rho, hn] at h
   exact absurd (h (by push_cast; ring)) (by omega)
 
-omit [FiniteDimensional K H] in
+omit [DecidableEq ι] [FiniteDimensional K H] in
 /-- If `y` sends positive roots to negative roots, it sends negative roots to positive roots. -/
 lemma isPosRoot_mul_of_not {hA : A.IsGeneralizedCartan} {y : P.weylGroup hA}
     (hy : ∀ v i, P.IsPosRoot hA v i → ¬P.IsPosRoot hA (y * v) i) {v : P.weylGroup hA} {i : ι}
     (hv : ¬P.IsPosRoot hA v i) : P.IsPosRoot hA (y * v) i := by
+  classical
   have hvs := (P.isPosRoot_or v i).resolve_left hv
   refine (P.isPosRoot_or (y * v) i).resolve_right fun h ↦ hy _ _ hvs ?_
   rwa [← mul_assoc]
@@ -284,9 +285,10 @@ lemma not_isPosRoot_inv_mul {v : P.weylGroup hF.isGeneralizedCartan} {j : ι}
     ¬P.IsPosRoot hF.isGeneralizedCartan (y⁻¹ * v) j := fun h ↦
   hy _ _ h (by rwa [← mul_assoc, mul_inv_cancel, one_mul])
 
-omit hF hy hΛ [CharZero K] [FiniteDimensional K H] in
-lemma isPosRoot_one (hA : A.IsGeneralizedCartan) (i : ι) : P.IsPosRoot hA 1 i :=
-  ⟨Pi.single i 1, Pi.single_nonneg.mpr zero_le_one, by simp⟩
+omit hF hy hΛ [DecidableEq ι] [CharZero K] [FiniteDimensional K H] in
+lemma isPosRoot_one (hA : A.IsGeneralizedCartan) (i : ι) : P.IsPosRoot hA 1 i := by
+  classical
+  exact ⟨Pi.single i 1, Pi.single_nonneg.mpr zero_le_one, by simp⟩
 
 omit hy hΛ [FiniteDimensional K H] in
 lemma not_isPosRoot_simple (i : ι) : ¬P.IsPosRoot hF.isGeneralizedCartan
@@ -364,10 +366,11 @@ lemma apply_root_eq_or_of_corootPairing_wall (i : ι) {v : P.weylGroup hF.isGene
     rw [mul_simple_apply_root, neg_eq_iff_eq_neg] at h
     rw [hv, Subgroup.coe_mul, LinearEquiv.mul_apply, h, map_neg]
 
-omit hF hy [CharZero K] [FiniteDimensional K H] in
+omit hF hy [DecidableEq ι] [CharZero K] [FiniteDimensional K H] in
 /-- `ν = Λ + ρ - b` is dominant integral. -/
 lemma isDominantIntegral_sub_wallWeight (i : ι) :
     P.IsDominantIntegral (Λ + P.rho - P.wallWeight i) := by
+  classical
   intro j
   obtain ⟨n, hn⟩ := hΛ j
   refine ⟨n + if j = i then 1 else 0, ?_⟩
