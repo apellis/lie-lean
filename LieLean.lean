@@ -160,6 +160,7 @@ import LieLean.Algebra.Lie.KacMoody.StandardFiltration
 import LieLean.Algebra.Lie.KacMoody.StandardFiltrationSummand
 import LieLean.Algebra.Lie.KacMoody.StrongLinkage
 import LieLean.Algebra.Lie.KacMoody.Super.Enveloping
+import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Cancellation
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.FreeGrading
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.GVerma
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Lowest
