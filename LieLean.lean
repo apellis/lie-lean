@@ -169,6 +169,7 @@ import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.IntegrableAt
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Lowest
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Syzygy
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.VermaWeights
+import LieLean.Algebra.Lie.KacMoody.Super.HighestWeight
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.WeightQuotient
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Weights
 import LieLean.Algebra.Lie.KacMoody.Super.Grading

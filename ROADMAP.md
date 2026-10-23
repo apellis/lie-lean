@@ -3112,7 +3112,16 @@ admissible `τ`. Proof reconstructed after [Kac] §10.4, without a PBW theorem f
 `(1 - e^{-αᵢ}) ch M̄(0)` is `rᵢ`-invariant (integrability of `M̄(0) / U fᵢ v̄₀`), and a maximal
 weight `β` of `ch M̄(0) · R - 1` would satisfy both `⟨β, αᵢ^∨⟩ ≥ 0` and `(β + 2ρ | β) = 0`
 (Casimir expansion of the one-dimensional `M̄(0) / Σᵢ U fᵢ v̄₀`).
-Remaining: Thm. 1, Thm. 2.
+Integrable highest-weight modules (`Super/HighestWeight.lean`, **Kac78 Thm. 2 (c)**): for
+symmetrizable `A`, admissible `τ` and `Λ` dominant integral for `G(A, τ)` (`⟨Λ, αᵢ^∨⟩ = nᵢ ∈ ℕ`,
+`nᵢ` even for odd `eᵢ`), `L̃(Λ) = M̄(Λ) / Σᵢ U fᵢ^{nᵢ+1} v̄_Λ` is integrable
+(`GVerma.isIntegrable_fPowQuotient`), nonzero (`GVerma.fPowSubmodule_ne_top`) and irreducible
+(`GVerma.isSimpleModule_fPowQuotient`, `GVerma.isCoatom_fPowSubmodule`), via the rank-one formula
+`eᵢ fᵢ^{k+1} v = dₖ₊₁ fᵢᵏ v` (`e_smul_f_pow_smul`, `lowerCoeff`), dominance of highest weights in
+modules integrable at a node (`exists_nat_of_e_smul_eq_zero_of_isIntegrableAt`) and the Casimir
+operator with [Kac] Lemma 10.3 (`KacMoodyAlgebra.dualBilinForm_add_two_rho_ne`). Kac78 derives
+Thm. 2 (c) from the character formula; the direct argument is reconstructed.
+Remaining: Thm. 1, Thm. 2 (a).
 
 ## Deferred and scheduled items
 
