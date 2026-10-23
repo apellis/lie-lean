@@ -91,7 +91,8 @@ omit [LieRingModule L X] [LieModule K L X] in
 lemma map_map_subtype (e : ExteriorAlgebra K V) :
     ExteriorAlgebra.map p (ExteriorAlgebra.map V.subtype e) = e := by
   rw [← AlgHom.comp_apply, map_comp_map,
-    show p ∘ₗ V.subtype = LinearMap.id from LinearMap.ext hp, ExteriorAlgebra.map_id, AlgHom.id_apply]
+    show p ∘ₗ V.subtype = LinearMap.id from LinearMap.ext hp, ExteriorAlgebra.map_id,
+    AlgHom.id_apply]
 
 include hp in
 omit [LieRingModule L X] [LieModule K L X] in
@@ -213,7 +214,8 @@ theorem relDiff_add_delta_mem (s : Finset J) (q n : ℕ) {z : EP}
   induction hz using Submodule.span_induction with
   | mem z hz =>
     obtain ⟨l, r, hq, hl, hr, rfl⟩ := hz
-    simpa only [hq] using relDiff_add_delta_basisWord (hp := hp) (b := b) (Ψ := Ψ) (hlead := hlead) (s := s) (l := l) hl n hr
+    simpa only [hq] using relDiff_add_delta_basisWord (hp := hp) (b := b) (Ψ := Ψ)
+      (hlead := hlead) (s := s) (l := l) hl n hr
   | zero => simp
   | add x y _ _ hx hy => simpa only [map_add, add_add_add_comm] using add_mem hx hy
   | smul r z _ hz =>
@@ -457,7 +459,8 @@ def monoWt (m : J →₀ ℕ) : Dual K H := m.sum fun j k ↦ k • wt j
 lemma monoWt_single_add (i : J) (m : J →₀ ℕ) :
     monoWt wt (Finsupp.single i 1 + m) = wt i + monoWt wt m := by
   rw [monoWt, Finsupp.sum_add_index' (h := fun j (k : ℕ) ↦ k • wt j) (fun _ ↦ zero_smul ℕ _)
-    (fun _ _ _ ↦ add_smul _ _ _), Finsupp.sum_single_index (h := fun j (k : ℕ) ↦ k • wt j) (zero_smul ℕ _), one_smul,
+    (fun _ _ _ ↦ add_smul _ _ _),
+    Finsupp.sum_single_index (h := fun j (k : ℕ) ↦ k • wt j) (zero_smul ℕ _), one_smul,
     monoWt]
 
 /-- The span of the basis words of weight `μ`. -/
@@ -598,6 +601,208 @@ lemma delta_mem_coordWt (hw : IsWeightCoord b wt ρ Ψ c) (s : Finset J) (l : Li
   convert tmul_mem_coordWt hw (contract_basisWord_mem b wt i l) _ r using 2
   rw [monoWt_single_add]
   abel
+
+include hp in
+omit [LieModule K L X] in
+lemma prZero_of_mem {z : EP} (hz : z ∈ coordWt Ψ ρ 0) : prZero p Ψ hT z = z := by
+  rw [prZero, LinearMap.comp_apply, LinearMap.comp_apply, Module.End.weightProj_of_mem hT hz,
+    toCoord_ofCoord (hp := hp)]
+
+omit [LieModule K L X] in
+lemma prZero_of_mem_ne {ν : Dual K H} (hν : ν ≠ 0) {z : EP} (hz : z ∈ coordWt Ψ ρ ν) :
+    prZero p Ψ hT z = 0 := by
+  rw [prZero, LinearMap.comp_apply, LinearMap.comp_apply,
+    Module.End.weightProj_of_mem_ne hT hν hz, map_zero]
+
+include hp in
+omit [LieModule K L X] in
+/-- The weight-`0` projection commutes with the Koszul differential. -/
+lemma prZero_delta (hw : IsWeightCoord b wt ρ Ψ c) (s : Finset J) (z : EP) :
+    prZero p Ψ hT (Koszul.delta b s z) = Koszul.delta b s (prZero p Ψ hT z) := by
+  induction z with
+  | add z z' h h' => simp only [map_add, h, h']
+  | tmul e q =>
+    have he : e ∈ Submodule.span K (Set.range (basisWord b)) :=
+      (span_basisWord b).symm ▸ Submodule.mem_top
+    induction he using Submodule.span_induction with
+    | mem e he =>
+      obtain ⟨l, rfl⟩ := he
+      induction q using MvPolynomial.induction_on' with
+      | monomial m r =>
+        have hg := tmul_mem_coordWt hw (basisWord_mem_wordSpan b wt l) m r
+        have hd := delta_mem_coordWt hw s l m r
+        by_cases hν : wordWt wt l + c + monoWt wt m = 0
+        · rw [hν] at hg hd
+          rw [prZero_of_mem hp hT hd, prZero_of_mem hp hT hg]
+        · rw [prZero_of_mem_ne hT hν hd, prZero_of_mem_ne hT hν hg, map_zero]
+      | add q q' h h' => simp only [tmul_add, map_add, h, h']
+    | zero => simp only [zero_tmul, map_zero]
+    | add e e' _ _ h h' => simp only [add_tmul, map_add, h, h']
+    | smul r e _ h => simp only [← smul_tmul', map_smul, h]
+
+omit [LieRingModule L X] [LieModule K L X] in
+lemma supportedTensors_le_rectangle (s : Finset J) (q n : ℕ) :
+    supportedTensors b s q n ≤ rectangle q n := by
+  refine Submodule.span_le.mpr ?_
+  rintro _ ⟨l, r, hl, -, hr, rfl⟩
+  exact tmul_mem_rectangle (hl ▸ Koszul.basisWord_mem_exteriorPower b l) hr
+
+include hp in
+omit [LieModule K L X] in
+lemma prZero_mem_supportedTensors (hw : IsWeightCoord b wt ρ Ψ c) {s : Finset J} {q n : ℕ}
+    {z : EP} (hz : z ∈ supportedTensors b s q n) :
+    prZero p Ψ hT z ∈ supportedTensors b s q n := by
+  classical
+  induction hz using Submodule.span_induction with
+  | mem z hz =>
+    obtain ⟨l, r, hl, hs, hr, rfl⟩ := hz
+    rw [MvPolynomial.as_sum r, tmul_sum, map_sum]
+    refine Submodule.sum_mem _ fun m hm ↦ ?_
+    have hmem : basisWord b l ⊗ₜ MvPolynomial.monomial m (r.coeff m) ∈
+        supportedTensors b s q n :=
+      Submodule.subset_span ⟨l, _, hl, hs,
+        (MvPolynomial.monomial_mem_restrictSupport K).mpr (Or.inl (hr hm)), rfl⟩
+    have hg := tmul_mem_coordWt hw (basisWord_mem_wordSpan b wt l) m (r.coeff m)
+    by_cases hν : wordWt wt l + c + monoWt wt m = 0
+    · rw [hν] at hg
+      rwa [prZero_of_mem hp hT hg]
+    · rw [prZero_of_mem_ne hT hν hg]
+      exact zero_mem _
+  | zero => simp only [map_zero, zero_mem]
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ r hx
+
+include hp in
+omit [LieModule K L X] in
+lemma prZero_mem_rectangle (hw : IsWeightCoord b wt ρ Ψ c) {q n : ℕ} {z : EP}
+    (hz : z ∈ rectangle q n) : prZero p Ψ hT z ∈ rectangle q n := by
+  obtain ⟨s, hs⟩ := Koszul.exists_support_rectangle b q n hz
+  exact supportedTensors_le_rectangle s q n (prZero_mem_supportedTensors hp hT hw hs)
+
+omit [LieRingModule L X] [LieModule K L X] in
+lemma delta_univ_eq [Fintype J] {s : Finset J} {q n : ℕ} {z : EP}
+    (hz : z ∈ supportedTensors b s q n) : Koszul.delta b Finset.univ z = Koszul.delta b s z := by
+  classical
+  induction hz using Submodule.span_induction with
+  | mem z hz =>
+    obtain ⟨l, r, -, hs, -, rfl⟩ := hz
+    simp only [Koszul.delta, LinearMap.sum_apply]
+    symm
+    refine Finset.sum_subset (Finset.subset_univ s) fun i _ hi ↦ ?_
+    rw [Koszul.deltaTerm_tmul, contract_basisWord_eq_zero b fun h ↦ hi (hs i h), zero_tmul]
+  | zero => simp only [map_zero]
+  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+  | smul r x _ hx => rw [map_smul, map_smul, hx]
+
+/-! ### Exactness -/
+
+omit [LieRingModule L X] [LieModule K L X] in
+lemma map_mem_exteriorPower {M N : Type*} [AddCommGroup M] [Module K M] [AddCommGroup N]
+    [Module K N] (f : M →ₗ[K] N) {q : ℕ} {ω : ExteriorAlgebra K M} (hω : ω ∈ ⋀[K]^q M) :
+    ExteriorAlgebra.map f ω ∈ ⋀[K]^q N := by
+  have h : (⋀[K]^q M).map (ExteriorAlgebra.map f).toLinearMap ≤ ⋀[K]^q N := by
+    rw [exteriorPower, Submodule.map_pow]
+    refine pow_le_pow_left' ?_ q
+    rintro _ ⟨_, ⟨y, rfl⟩, rfl⟩
+    exact ⟨f y, by simp⟩
+  exact h ⟨ω, hω, rfl⟩
+
+omit [LieRingModule L X] [LieModule K L X] in
+lemma toCoord_mem_rectangle {q : ℕ} {t : EX} (ht : t ∈ chainsIn K L X q) :
+    ∃ n, toCoord p Ψ t ∈ rectangle q n := by
+  obtain ⟨t, rfl⟩ := ht
+  induction t with
+  | tmul ω x =>
+    refine ⟨(Ψ x).totalDegree, ?_⟩
+    rw [incl_tmul, toCoord_tmul]
+    exact tmul_mem_rectangle (map_mem_exteriorPower p ω.2)
+      ((MvPolynomial.mem_restrictTotalDegree _ _ _).mpr le_rfl)
+  | add t t' h h' =>
+    obtain ⟨n, hn⟩ := h
+    obtain ⟨n', hn'⟩ := h'
+    refine ⟨max n n', ?_⟩
+    rw [map_add, map_add]
+    exact add_mem (Koszul.rectangle_mono q (le_max_left _ _) hn)
+      (Koszul.rectangle_mono q (le_max_right _ _) hn')
+
+omit [LieRingModule L X] [LieModule K L X] in
+lemma ofCoord_mem_chainsIn {q n : ℕ} {z : EP} (hz : z ∈ rectangle q n) :
+    ofCoord Ψ z ∈ chainsIn K L X q := by
+  induction hz using Submodule.span_induction with
+  | mem z hz =>
+    obtain ⟨e, he, r, -, rfl⟩ := hz
+    rw [ofCoord_tmul]
+    exact tmul_mem_chainsIn (map_mem_exteriorPower _ he) _
+  | zero => simp only [map_zero, zero_mem]
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ r hx
+
+variable [Fintype J]
+
+variable (p Ψ b) in
+/-- The relative differential on weight `0`, extended by minus the Koszul differential on the
+other weights. -/
+def relKoszulOp : Module.End K EP :=
+  relDiff p Ψ ∘ₗ prZero p Ψ hT - Koszul.delta b Finset.univ ∘ₗ (LinearMap.id - prZero p Ψ hT)
+
+lemma relKoszulOp_apply (z : EP) : relKoszulOp p Ψ b hT z =
+    relDiff p Ψ (prZero p Ψ hT z) - Koszul.delta b Finset.univ (z - prZero p Ψ hT z) := rfl
+
+include hp in
+lemma prZero_relKoszulOp (hr : IsRelData η ρ p) (hw : IsWeightCoord b wt ρ Ψ c) (z : EP) :
+    prZero p Ψ hT (relKoszulOp p Ψ b hT z) = relDiff p Ψ (prZero p Ψ hT z) := by
+  rw [relKoszulOp_apply, map_sub, prZero_relDiff_prZero Ψ hp hT hr, prZero_delta hp hT hw,
+    map_sub, prZero_prZero Ψ hp hT hr, sub_self, map_zero, sub_zero]
+
+include hp in
+lemma relKoszulOp_relKoszulOp (hr : IsRelData η ρ p) (hw : IsWeightCoord b wt ρ Ψ c) (z : EP) :
+    relKoszulOp p Ψ b hT (relKoszulOp p Ψ b hT z) = 0 := by
+  have h := prZero_relKoszulOp hp hT hr hw z
+  rw [relKoszulOp_apply (z := relKoszulOp p Ψ b hT z), h, relDiff_relDiff_prZero Ψ hT hr,
+    relKoszulOp_apply (z := z), sub_sub_cancel_left, map_neg,
+    ← Module.End.mul_apply, Koszul.delta_sq, LinearMap.zero_apply, neg_zero, sub_zero]
+
+include hp in
+lemma isLeadingKoszul_relKoszulOp (hlead : IsLeading Ψ b) (hw : IsWeightCoord b wt ρ Ψ c) :
+    Koszul.IsLeadingKoszul b (relKoszulOp p Ψ b hT) := by
+  intro s q n z hz
+  have h1 := prZero_mem_supportedTensors hp hT hw hz
+  rw [relKoszulOp_apply, map_sub, delta_univ_eq hz, delta_univ_eq h1]
+  convert relDiff_add_delta_mem hp hlead s q n h1 using 1
+  abel
+
+include hp hT in
+/-- **Exactness of relative chains.** Under the weight and leading-term hypotheses, every chain
+`t` of weight `0` and positive degree whose differential lies in `⨆ₐ η(a) ∧ C` is a boundary
+modulo `⨆ₐ η(a) ∧ C`. This is the hypothesis of
+`LieModule.ChevalleyEilenberg.DerivAction.exists_δ_eq_of_relExact`. -/
+theorem relExact [CharZero K] (hlead : IsLeading Ψ b) (hr : IsRelData η ρ p)
+    (hw : IsWeightCoord b wt ρ Ψ c) {k : ℕ} (t : EX) (ht : t ∈ ρ.chainPiece (k + 1) 0)
+    (hdt : diff K L X t ∈ wedgeRange K L X η) :
+    ∃ s ∈ ρ.chainPiece (k + 2) 0, t - diff K L X s ∈ wedgeRange K L X η := by
+  obtain ⟨n, hz⟩ := toCoord_mem_rectangle (p := p) (Ψ := Ψ) ht.1
+  have hPt : Pr hT t = t := Module.End.weightProj_of_mem hT ht.2
+  have hprz : prZero p Ψ hT (toCoord p Ψ t) = toCoord p Ψ t := by
+    rw [prZero_toCoord Ψ hp hT hr, hPt]
+  have hrel : relDiff p Ψ (toCoord p Ψ t) = 0 := by
+    have := relDiff_toCoord_Pr Ψ hT hr t
+    rw [hPt] at this
+    rw [this]
+    exact toCoord_eq_zero_of_mem Ψ hr hdt
+  have hDz : relKoszulOp p Ψ b hT (toCoord p Ψ t) = 0 := by
+    rw [relKoszulOp_apply, hprz, hrel, sub_self, map_zero, sub_zero]
+  obtain ⟨y, hy, hDy⟩ := Koszul.exists_primitive_of_isLeadingKoszul b
+    (isLeadingKoszul_relKoszulOp hp hT hlead hw) (relKoszulOp_relKoszulOp hp hT hr hw) (k + 1) n
+    (Nat.succ_pos k) hz hDz
+  have hy0 : relDiff p Ψ (prZero p Ψ hT y) = toCoord p Ψ t := by
+    have := congrArg (prZero p Ψ hT) hDy
+    rwa [prZero_relKoszulOp hp hT hr hw, hprz] at this
+  refine ⟨ofCoord Ψ (prZero p Ψ hT y),
+    ⟨ofCoord_mem_chainsIn (Ψ := Ψ) (prZero_mem_rectangle hp hT hw hy), ?_⟩, ?_⟩
+  · rw [ofCoord_prZero Ψ hp hT hr]
+    exact Module.End.weightProj_mem hT 0 _
+  · refine mem_of_toCoord_eq_zero Ψ hr ?_
+    rw [map_sub, ← hy0, relDiff, LinearMap.comp_apply, LinearMap.comp_apply, sub_self]
 
 end Relative
 
