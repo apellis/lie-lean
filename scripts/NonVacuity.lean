@@ -341,7 +341,7 @@ example (ν : Fin 2 →₀ ℕ) :
     KacMoodyAlgebra.kostantPartition (std AOsp ℚ) ((std AOsp ℚ).rootOf (SuperEnveloping.natVec ν)) +
       Module.finrank ℚ ↥(FreeAlgebra.wordSpan ℚ ν ⊓
         (SuperEnveloping.superSerreIdeal ℚ AOsp pOsp).restrictScalars ℚ) =
-        Fintype.card (LieLean.QuantumGroup.LusztigF.Words ν) :=
+        Fintype.card (LusztigF.Words ν) :=
   SuperEnveloping.kostantPartition_add_finrank_superSerreIdeal SOsp hAOsp hpOsp ν
 
 end NonVacuity
