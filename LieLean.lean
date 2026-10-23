@@ -261,6 +261,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationComposite
 import LieLean.Algebra.Lie.KacMoody.TranslationSimple
 import LieLean.Algebra.Lie.KacMoody.DominantVermaTensor
 import LieLean.Algebra.Lie.KacMoody.DominantVermaTensorHom
+import LieLean.Algebra.Lie.KacMoody.ProjectiveFunctorBlock
 import LieLean.Algebra.Lie.KacMoody.ProjectiveFunctorLift
 import LieLean.Algebra.Lie.KacMoody.ProjectiveFunctorVerma
 import LieLean.Algebra.Lie.KacMoody.ExactFunctorO
@@ -310,6 +311,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.LeftRegular
 import LieLean.Algebra.Lie.UniversalEnveloping.LeadingAction
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
+import LieLean.Algebra.Lie.UniversalEnveloping.TensorNatTrans
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorNatural
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorNaturalEval
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorNaturalLift
