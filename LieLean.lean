@@ -1,6 +1,7 @@
 import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.Homology.ChainComplex
 import LieLean.Algebra.Lie.Homology.Cochain
+import LieLean.Algebra.Lie.Homology.CochainDuality
 import LieLean.Algebra.Lie.Homology.CochainWeights
 import LieLean.Algebra.Lie.Homology.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Homology.Comparison
@@ -12,6 +13,7 @@ import LieLean.Algebra.Lie.Homology.LeadingDifferential
 import LieLean.Algebra.Lie.Homology.LongExactSequence
 import LieLean.Algebra.Lie.Homology.RegularAcyclic
 import LieLean.Algebra.Lie.Homology.RegularFiltration
+import LieLean.Algebra.Lie.Homology.TrivialTensor
 import LieLean.Algebra.Lie.Homology.Vanishing
 import LieLean.Algebra.Lie.Homology.Weights
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
@@ -99,6 +101,7 @@ import LieLean.Algebra.Lie.KacMoody.Geck
 import LieLean.Algebra.Lie.KacMoody.Grothendieck
 import LieLean.Algebra.Lie.KacMoody.HighestWeight
 import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
+import LieLean.Algebra.Lie.KacMoody.InjectiveCohomology
 import LieLean.Algebra.Lie.KacMoody.Integrable
 import LieLean.Algebra.Lie.KacMoody.IntegrableRoots
 import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
@@ -143,6 +146,7 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.RootSums
 import LieLean.Algebra.Lie.KacMoody.Kostant.Theorem
 import LieLean.Algebra.Lie.KacMoody.Kostant.WeightShift
 import LieLean.Algebra.Lie.KacMoody.Kostant.Weights
+import LieLean.Algebra.Lie.KacMoody.NPosCohomology
 import LieLean.Algebra.Lie.KacMoody.Projective
 import LieLean.Algebra.Lie.KacMoody.ProjectiveCover
 import LieLean.Algebra.Lie.KacMoody.ProjectiveCoverHom
@@ -245,6 +249,7 @@ import LieLean.Algebra.Lie.KacMoody.DominantVermaTensor
 import LieLean.Algebra.Lie.KacMoody.ExactFunctorO
 import LieLean.Algebra.Lie.KacMoody.DualIrreducible
 import LieLean.Algebra.Lie.KacMoody.DualVerma
+import LieLean.Algebra.Lie.KacMoody.DualVermaCohomology
 import LieLean.Algebra.Lie.KacMoody.DualVermaSocle
 import LieLean.Algebra.Lie.KacMoody.DualityExt
 import LieLean.Algebra.Lie.KacMoody.DualityFunctor
