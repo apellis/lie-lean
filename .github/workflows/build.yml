@@ -17,6 +17,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Cache key
+        id: key
+        run: |
+          echo "toolchain=build-${{ runner.os }}-${{ hashFiles('lean-toolchain') }}" >> "$GITHUB_OUTPUT"
+          echo "prefix=build-${{ runner.os }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}" >> "$GITHUB_OUTPUT"
+
       # A change touching only Markdown files cannot affect the Lean build.
       - name: Detect documentation-only change
         id: scope
@@ -33,13 +40,46 @@ jobs:
           else
             echo "docs_only=false" >> "$GITHUB_OUTPUT"
           fi
-      - uses: leanprover/lean-action@v1
+      - name: Install elan
         if: steps.scope.outputs.docs_only != 'true'
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      # Fetches the pinned dependencies and Mathlib's prebuilt oleans.
+      - name: Fetch dependencies and Mathlib cache
+        if: steps.scope.outputs.docs_only != 'true'
+        run: lake exe cache get
+
+      # Build outputs of this package, saved by the last master build; Lake rebuilds only
+      # modules whose inputs changed. After a pin bump (new manifest) fall back to the newest
+      # entry for the toolchain.
+      - name: Restore build cache
+        if: steps.scope.outputs.docs_only != 'true'
+        uses: actions/cache/restore@v4
         with:
-          use-mathlib-cache: true
+          path: .lake/build
+          key: ${{ steps.key.outputs.prefix }}-${{ github.sha }}
+          restore-keys: |
+            ${{ steps.key.outputs.prefix }}-
+            ${{ steps.key.outputs.toolchain }}-
+
+      - name: Build
+        if: steps.scope.outputs.docs_only != 'true'
+        run: lake build --wfail
+
       - name: Axiom audit
         if: steps.scope.outputs.docs_only != 'true'
         run: lake env lean -DwarningAsError=true scripts/AxiomAudit.lean
       - name: Non-vacuity checks
         if: steps.scope.outputs.docs_only != 'true'
         run: lake env lean -DwarningAsError=true scripts/NonVacuity.lean
+
+      # Only master builds write the cache, so pull requests cannot evict it.
+      - name: Save build cache
+        if: github.event_name != 'pull_request' && steps.scope.outputs.docs_only != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .lake/build
+          key: ${{ steps.key.outputs.prefix }}-${{ github.sha }}
