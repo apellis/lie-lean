@@ -3383,7 +3383,12 @@ completed steps and continuation threads are:
     `UniversalEnveloping/TensorNatural.lean`); evaluation at a module `M` with annihilator `I`
     is injective, and bijective when the two Hom spaces have equal finite dimension
     (`tensorNatLinear_injective`, `tensorNatLinear_bijective`,
-    `UniversalEnveloping/TensorNaturalEval.lean`).
+    `UniversalEnveloping/TensorNaturalEval.lean`). For `λ` dominant, `I` the annihilator of
+    `M(λ)` and Kostant's multiplicity formula for `(U/I)^{ad}` as a hypothesis
+    (`KostantMultiplicity`, extended to all finite-dimensional modules by
+    `finrank_hom_of_kostant`), evaluation at `M(λ)` is a bijection
+    `Hom(V, (U/I)^{ad} ⊗ W) ≅ Hom(M(λ) ⊗ V, M(λ) ⊗ W)` (`bijective_tensorNatLinear_verma`,
+    `KacMoody/ProjectiveFunctorVerma.lean`; the core of the proof of Thm. 10.7).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem

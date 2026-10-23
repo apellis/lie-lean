@@ -261,6 +261,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationComposite
 import LieLean.Algebra.Lie.KacMoody.TranslationSimple
 import LieLean.Algebra.Lie.KacMoody.DominantVermaTensor
 import LieLean.Algebra.Lie.KacMoody.DominantVermaTensorHom
+import LieLean.Algebra.Lie.KacMoody.ProjectiveFunctorVerma
 import LieLean.Algebra.Lie.KacMoody.ExactFunctorO
 import LieLean.Algebra.Lie.KacMoody.DualIrreducible
 import LieLean.Algebra.Lie.KacMoody.DualVerma
