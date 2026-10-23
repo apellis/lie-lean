@@ -295,6 +295,7 @@ import LieLean.Algebra.Lie.KacMoody.VermaSocle
 import LieLean.Algebra.Lie.KacMoody.VermaTorsionFree
 import LieLean.Algebra.Lie.KacMoody.VermaAntidominantMultiplicity
 import LieLean.Algebra.Lie.KacMoody.VermaWeights
+import LieLean.Algebra.Lie.KacMoody.WallCrossingIndependence
 import LieLean.Algebra.Lie.KacMoody.WeightBasis
 import LieLean.Algebra.Lie.KacMoody.WeylLength
 import LieLean.Algebra.Lie.LocallyNilpotent
