@@ -65,14 +65,6 @@ variable {ι H : Type u} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [Cha
 
 local notation "𝔤" => KacMoodyAlgebra P
 
-/-- A monomorphism of `𝒪` is injective on the underlying modules. -/
-theorem injective_of_mono {X Y : CategoryO.{u} P} (f : X ⟶ Y) [Mono f] :
-    Function.Injective f.hom.hom := by
-  have : PreservesFiniteLimits (IsObj.{u} P).ι :=
-    ((Functor.preservesFiniteLimits_tfae (IsObj.{u} P).ι).out 3 4).mp
-      (IsObj.{u} P).preservesKernels_ι
-  exact (ModuleCat.mono_iff_injective ((IsObj.{u} P).ι.map f)).mp inferInstance
-
 omit [CharZero K] [IsAlgClosed K] [FiniteDimensional K H] [Fact A.IsFiniteCartan] in
 /-- A morphism of `𝒪` that is injective on the underlying modules is a monomorphism. -/
 theorem mono_of_injective {X Y : CategoryO.{u} P} (f : X ⟶ Y) (hf : Function.Injective f.hom.hom) :

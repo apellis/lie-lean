@@ -62,6 +62,7 @@ import LieLean.Algebra.Lie.KacMoody.CategoryO
 import LieLean.Algebra.Lie.KacMoody.CategoryOAbelian
 import LieLean.Algebra.Lie.KacMoody.CategoryODelorme
 import LieLean.Algebra.Lie.KacMoody.CategoryOExt
+import LieLean.Algebra.Lie.KacMoody.CategoryOExtCohomology
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtCriterion
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtDualVerma
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtFinite

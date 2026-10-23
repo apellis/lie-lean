@@ -264,6 +264,12 @@ instance : (IsObj.{w} P).IsClosedUnderSubobjects where
 zero; [HumO] §1.1 and Thm 1.11). -/
 instance instAbelian : Abelian (CategoryO.{w} P) := inferInstance
 
+/-- A monomorphism of `𝒪` is injective on the underlying modules. -/
+theorem injective_of_mono {X Y : CategoryO.{w} P} (f : X ⟶ Y) [Mono f] :
+    Function.Injective f.hom.hom := by
+  have := (IsObj.{w} P).preservesMonomorphisms_ι_of_isNormalEpiCategory
+  exact (ModuleCat.mono_iff_injective ((IsObj.{w} P).ι.map f)).mp inferInstance
+
 end CategoryO
 
 end Matrix.Realization.KacMoodyAlgebra
