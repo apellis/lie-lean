@@ -383,6 +383,62 @@ lemma diff_Pr_mem (hr : IsRelData η ρ p) {w : EX} (hw : w ∈ wedgeRange K L X
   | zero => simpa only [map_zero] using (wedgeRange K L X η).zero_mem
   | add w w' _ _ h h' => rw [map_add, map_add]; exact add_mem h h'
 
+/-! ### The weight-`0` projection in coordinates -/
+
+variable (p) in
+/-- The projection onto weight `0`, in coordinates. -/
+def prZero : Module.End K EP := toCoord p Ψ ∘ₗ Pr hT ∘ₗ ofCoord Ψ
+
+include hp in
+omit [LieModule K L X] in
+lemma ofCoord_prZero (hr : IsRelData η ρ p) (z : EP) :
+    ofCoord Ψ (prZero p Ψ hT z) = Pr hT (ofCoord Ψ z) := by
+  rw [prZero, LinearMap.comp_apply, LinearMap.comp_apply, ← Pr_ofCoord_toCoord Ψ hT hr,
+    toCoord_ofCoord (hp := hp)]
+
+include hp in
+omit [LieModule K L X] in
+lemma prZero_toCoord (hr : IsRelData η ρ p) (c : EX) :
+    prZero p Ψ hT (toCoord p Ψ c) = toCoord p Ψ (Pr hT c) := by
+  rw [prZero, LinearMap.comp_apply, LinearMap.comp_apply, Pr_ofCoord_toCoord Ψ hT hr,
+    toCoord_ofCoord (hp := hp)]
+
+include hp in
+omit [LieModule K L X] in
+lemma prZero_prZero (hr : IsRelData η ρ p) (z : EP) :
+    prZero p Ψ hT (prZero p Ψ hT z) = prZero p Ψ hT z := by
+  change toCoord p Ψ (Pr hT (ofCoord Ψ (prZero p Ψ hT z))) = _
+  rw [ofCoord_prZero Ψ hp hT hr, Pr_Pr]
+  rfl
+
+/-- On weight `0`, the relative differential in coordinates is the differential. -/
+lemma relDiff_toCoord_Pr (hr : IsRelData η ρ p) (c : EX) :
+    relDiff p Ψ (toCoord p Ψ (Pr hT c)) = toCoord p Ψ (diff K L X (Pr hT c)) := by
+  set w := Pr hT c - ofCoord Ψ (toCoord p Ψ (Pr hT c))
+  have hw : w ∈ wedgeRange K L X η := sub_ofCoord_toCoord_mem (Ψ := Ψ) hr _
+  have hPw : Pr hT w = w := by
+    simp only [w, map_sub, Pr_ofCoord_toCoord Ψ hT hr, Pr_Pr]
+  have h0 : toCoord p Ψ (diff K L X w) = 0 := by
+    rw [← hPw]
+    exact toCoord_eq_zero_of_mem Ψ hr (diff_Pr_mem hT hr hw)
+  have e : ofCoord Ψ (toCoord p Ψ (Pr hT c)) = Pr hT c - w := by simp only [w, sub_sub_cancel]
+  rw [relDiff, LinearMap.comp_apply, LinearMap.comp_apply, e, map_sub, map_sub, h0, sub_zero]
+
+lemma relDiff_prZero (hr : IsRelData η ρ p) (z : EP) :
+    relDiff p Ψ (prZero p Ψ hT z) = toCoord p Ψ (diff K L X (Pr hT (ofCoord Ψ z))) :=
+  relDiff_toCoord_Pr Ψ hT hr _
+
+lemma relDiff_relDiff_prZero (hr : IsRelData η ρ p) (z : EP) :
+    relDiff p Ψ (relDiff p Ψ (prZero p Ψ hT z)) = 0 := by
+  have e : diff K L X (Pr hT (ofCoord Ψ z)) = Pr hT (diff K L X (Pr hT (ofCoord Ψ z))) := by
+    rw [Pr_diff hT, Pr_Pr]
+  rw [relDiff_prZero Ψ hT hr, e, relDiff_toCoord_Pr Ψ hT hr, ← e, diff_diff, map_zero]
+
+include hp in
+lemma prZero_relDiff_prZero (hr : IsRelData η ρ p) (z : EP) :
+    prZero p Ψ hT (relDiff p Ψ (prZero p Ψ hT z)) = relDiff p Ψ (prZero p Ψ hT z) := by
+  rw [relDiff_prZero Ψ hT hr, prZero_toCoord Ψ hp hT hr, Pr_diff hT, Pr_Pr]
+
 end Relative
 
 end LieModule.ChevalleyEilenberg.RelativeKoszul
