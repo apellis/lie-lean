@@ -102,7 +102,7 @@ variable (hL : ⨆ γ, Module.End.weightSpaceOf ρ.D γ = ⊤)
 
 include hL hX in
 /-- The boundaries of weight `ν` are the differentials of the chains of weight `ν`. -/
-lemma boundaries_inf_chainWeightSpace (k : ℕ) (ν : Dual K H) :
+lemma boundaries_inf_chainWeightSpace_of_iSup (k : ℕ) (ν : Dual K H) :
     boundaries K L X k ⊓ ρ.chainWeightSpace ν = (ρ.chainPiece (k + 1) ν).map (diff K L X) := by
   refine le_antisymm (fun b ⟨hb, hbw⟩ ↦ ?_)
     fun _ ⟨c, hc, hb⟩ ↦ hb ▸ ⟨⟨c, hc.1, rfl⟩, ρ.diff_mem_chainWeightSpace hc.2⟩
@@ -150,7 +150,7 @@ theorem finrank_homologyWeightSpace_add_add (k : ℕ) (ν : Dual K H)
   have h₁ := ρ.finrank_homologyWeightSpace_add k ν
   have h₂ : finrank K ↥(boundaries K L X k ⊓ ρ.chainWeightSpace ν) =
       finrank K (LinearMap.range (ρ.diffPiece k ν)) := by
-    rw [ρ.boundaries_inf_chainWeightSpace hL hX, map_diff_chainPiece,
+    rw [ρ.boundaries_inf_chainWeightSpace_of_iSup hL hX, map_diff_chainPiece,
       Submodule.finrank_map_subtype_eq]
   have h₃ : finrank K ↥(cycles K L X k ⊓ ρ.chainWeightSpace ν) =
       finrank K (LinearMap.ker ((diff K L X).domRestrict (ρ.chainPiece k ν))) := by

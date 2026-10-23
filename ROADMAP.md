@@ -511,8 +511,15 @@ in `𝒪`, `KacMoody/CategoryOExtCohomology.lean`), by dimension shifting along 
 injectives `Q^∨` of `𝒪`, whose positive-degree `𝔫`-cohomology vanishes
 (`KacMoody/InjectiveCohomology.lean`, via `KacMoody/DualVermaCohomology.lean` and the duality
 of `Homology/CochainDuality.lean`); the isomorphism comes from equal finite dimensions. Part (a) open.
-Bott's Thm. 6.6 stands in the `𝔫₋`-homology form (Garland–Lepowsky, M13); the `𝔫`-cohomology form
-would need new Lie algebra cohomology infrastructure and is not formalized. Its dimension statement
+Bott's Thm. 6.6 in the `𝔫`-cohomology form (`KacMoody/Kostant/Cohomology.lean`, every
+symmetrizable GCM, `λ` dominant integral): `IrreducibleModule.finrank_nPosCohomology_eq_one`
+(`dim H^{ℓ(w)}(𝔫, L(λ))_{w·λ} = 1`) and `IrreducibleModule.finrank_nPosCohomology_eq_zero` (the
+other weight spaces vanish), deduced from the `𝔫₋`-homology form (Garland–Lepowsky, M13) by the
+weight-space duality `finrank_nPosCohomology_restrictedDual` (`dim Hᵏ(𝔫, V^∨)_μ =
+dim H_k(𝔫₋, V)_μ` for `V` in `𝒪`; `Homology/CochainDualityFinrank.lean`,
+`Homology/Transport.lean`) and `L(λ) ≅ L(λ)^∨`; reconstructed. With Prop. 6.15 (b), in finite
+type: `CategoryO.finrank_ext_verma_simple_eq_one` (`dim Extᵏ_𝒪(M(w·λ), L(λ)) = 1` for
+`ℓ(w) = k`) and `CategoryO.finrank_ext_verma_simple_eq_zero`. The homological dimension statement
 `dim H_k(𝔫₋, L(Λ)) = #{w ∈ W | ℓ(w) = k}` holds for every symmetrizable GCM
 (`IrreducibleModule.finrank_homology`, `KacMoody/Kostant/Dimension.lean`).
 Prop. 7.8 done (`KacMoody/TranslationGrothendieck.lean`; finite type, algebraically closed
