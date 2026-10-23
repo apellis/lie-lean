@@ -331,6 +331,84 @@ theorem mem_span_triA_thetaW (z : aForm R) :
 
 /-! ### Base change -/
 
+/-! ### Products of generators with the elements `F_w 1_λ E_{w'}` -/
+
+
+variable (R) in
+/-- `F_w 1_λ E_{w'} = θ_w⁻ 1_λ θ_{w'}⁺`, as an element of `𝒜U̇`. -/
+def triT (l : Y →+ ℤ) (w w' : List (I × ℕ)) : aForm R :=
+  triA R l (thetaW D w) (thetaW D w')
+
+lemma coe_triT (l : Y →+ ℤ) (w w' : List (I × ℕ)) :
+    (triT R l w w' : Modified R 𝕧) =
+      elt (l - wtW R w) (l - wtW R w') (fPow R w * ePow R w')
+        (by
+          rw [show l - wtW R w - (l - wtW R w') = wtW R w' - wtW R w by abel]
+          exact fPow_mul_ePow_mem w w') :=
+  triA_thetaW l w w'
+
+/-- `1_λ = F_∅ 1_λ E_∅`. -/
+lemma one_eq_triT (l : Y →+ ℤ) : (one l : Modified R 𝕧) = triT R l [] [] := by
+  rw [coe_triT, one]
+  exact elt_index (by simp) (by simp) (by simp) _ _
+
+/-- `Fⱼ^{(m)} 1_μ = F_{(j,m)} 1_μ E_∅`. -/
+lemma divF_eq_triT (j : I) (m : ℕ) (μ : Y →+ ℤ) : divF R j m μ = triT R μ [(j, m)] [] := by
+  rw [coe_triT, divF]
+  exact elt_index (by simp [wtW_cons, sub_eq_add_neg]) (by simp)
+    (by simp [fPow_cons]) _ _
+
+/-- `Eᵢ^{(n)} 1_μ = F_∅ 1_{μ + nα_i} E_{(i,n)}`. -/
+lemma divE_eq_triT (i : I) (n : ℕ) (μ : Y →+ ℤ) :
+    divE R i n μ = triT R (μ + n • R.root i) [] [(i, n)] := by
+  rw [coe_triT, divE]
+  exact elt_index (by simp) (by simp [wtW_cons]) (by simp [ePow_cons]) _ _
+
+omit [Finite I] in
+lemma elt_mul_elt' {l₁ l₂ l₂' l₃ : Y →+ ℤ} (h : l₂ = l₂') {a b : QuantumGroup R 𝕧}
+    (ha : a ∈ adWeightSpace R 𝕧 (l₁ - l₂)) (hb : b ∈ adWeightSpace R 𝕧 (l₂' - l₃)) :
+    elt l₁ l₂ a ha * elt l₂' l₃ b hb =
+      elt l₁ l₃ (a * b) (by subst h; simpa using mul_mem_adWeightSpace ha hb) := by
+  subst h; exact elt_mul_elt _ _ _ _ _
+
+open Classical in
+lemma one_mul_triT (μ l : Y →+ ℤ) (w w' : List (I × ℕ)) :
+    (one μ : Modified R 𝕧) * triT R l w w' =
+      if μ = l - wtW R w then (triT R l w w' : Modified R 𝕧) else 0 := by
+  rw [coe_triT]
+  split_ifs with h
+  · subst h; exact one_mul_elt _ _ _
+  · rw [one]; exact elt_mul_elt_of_ne h _ _
+
+open Classical in
+lemma divF_mul_triT (j : I) (m : ℕ) (μ l : Y →+ ℤ) (w w' : List (I × ℕ)) :
+    divF R j m μ * triT R l w w' =
+      if μ = l - wtW R w then (triT R l ((j, m) :: w) w' : Modified R 𝕧) else 0 := by
+  rw [coe_triT]
+  split_ifs with h
+  · subst h
+    rw [divF, elt_mul_elt, coe_triT]
+    exact elt_index (by rw [wtW_cons]; simp only [smul_neg]; abel) rfl
+      (by rw [fPow_cons, mul_assoc]) _ _
+  · rw [divF]; exact elt_mul_elt_of_ne h _ _
+
+open Classical in
+lemma divE_mul_triT_nil (i : I) (n : ℕ) (μ l : Y →+ ℤ) (w' : List (I × ℕ)) :
+    divE R i n μ * triT R l [] w' =
+      if μ = l then (triT R (l + n • R.root i) [] ((i, n) :: w') : Modified R 𝕧) else 0 := by
+  rw [coe_triT]
+  split_ifs with h
+  · subst h
+    rw [divE, elt_mul_elt' (by simp), coe_triT]
+    exact elt_index (by simp) (by rw [wtW_cons]; abel)
+      (by rw [ePow_cons, fPow_nil, one_mul, one_mul]) _ _
+  · rw [divE]; exact elt_mul_elt_of_ne (by simpa using h) _ _
+
+/-- `Fⱼ^{(m)} 1_{λ - |w|} · F_w 1_λ E_{w'} = F_{(j,m) w} 1_λ E_{w'}`. -/
+lemma triT_cons (j : I) (m : ℕ) (l : Y →+ ℤ) (w w' : List (I × ℕ)) :
+    (triT R l ((j, m) :: w) w' : Modified R 𝕧) = divF R j m (l - wtW R w) * triT R l w w' := by
+  simp only [divF_mul_triT, ↓reduceIte]
+
 section BaseChange
 
 variable (S : Type*) [CommRing S] [Algebra 𝒜 S]

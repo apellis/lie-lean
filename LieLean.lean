@@ -511,6 +511,8 @@ import LieLean.Algebra.QuantumGroup.Frobenius.PairingRecursion
 import LieLean.Algebra.QuantumGroup.Frobenius.SplittingKernel
 import LieLean.Algebra.QuantumGroup.Frobenius.Homomorphism
 import LieLean.Algebra.QuantumGroup.Frobenius.HomomorphismGeneral
+import LieLean.Algebra.QuantumGroup.Frobenius.Modified
+import LieLean.Algebra.QuantumGroup.Frobenius.ModifiedMul
 import LieLean.Algebra.QuantumGroup.Frobenius.RadicalWords
 import LieLean.Algebra.QuantumGroup.Frobenius.RootDatum
 import LieLean.Algebra.QuantumGroup.Frobenius.SerreIdentity

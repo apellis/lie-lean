@@ -317,7 +317,9 @@ Further proved results include:
     (`frob`, `frob_baseGen`, uniqueness `eq_frob`), with `Fr ∘ Fr' = 1` (`frob_comp_frobSplit`);
     `Fr'` is injective (`frobSplit_injective`).
     The same for every `𝒜'`-algebra `R`, `𝒜' = 𝒜/(φ_{2l})` (`frobGeneral`,
-    `frobGeneral_integralGenerator`, `eq_frobGeneral`).
+    `frobGeneral_integralGenerator`, `eq_frobGeneral`). [Lus] 35.1.9 over every `𝒜'`-algebra `S`:
+    the `S`-algebra map `Fr : _S U̇ → _S U̇*` with Lusztig's values on `Eᵢ^{(n)} 1_λ`,
+    `Fᵢ^{(n)} 1_λ`, `1_λ` (`Modified.frobR`, `frobR_eA`, `frobR_fA`, `frobR_oneA`, `eq_frobR`).
   - **Not yet formalized:** [Lus] 41.1.9 (compatibility with the quantum Frobenius map, roadmap
     item D2, in progress).
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`

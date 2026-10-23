@@ -3251,7 +3251,15 @@ preserves the integral forms. Towards 35.1.9, the form of the presentation 31.1.
 (`Modified/TriangularMap.lean`): `𝒜U̇ ≅ ⊕_λ 𝒜f ⊗_𝒜 𝒜f`, `(λ, x ⊗ x') ↦ x⁻ 1_λ x'⁺`
 (`triSumEquiv`, from the triangular basis of 23.2.2 (b)), the bilinear maps `triA` (over `𝒜`) and
 `triS` (over an `𝒜`-algebra `S`), and the spanning monomials `θ_w⁻ 1_λ θ_{w'}⁺ = F_w 1_λ E_{w'}`
-(`mem_span_triA_thetaW`, `triA_thetaW`). Next: 35.1.9.
+(`mem_span_triA_thetaW`, `triA_thetaW`). [Lus] 35.1.9 under 35.1.2 (a), over every `𝒜'`-algebra
+`S` (`Frobenius/Modified.lean`, `Frobenius/ModifiedMul.lean`): the homomorphism of non-unital
+`S`-algebras `Fr : _S U̇ → _S U̇*` (`Modified.frobR`), `Eᵢ^{(n)} 1_λ ↦ Eᵢ^{(n/lᵢ)} 1_{λ*}`,
+`Fᵢ^{(n)} 1_λ ↦ Fᵢ^{(n/lᵢ)} 1_{λ*}`, `1_λ ↦ 1_{λ*}` if `lᵢ ∣ n` and `λ ∈ X*`, and `0` otherwise
+(`frobR_eA`, `frobR_fA`, `frobR_oneA`), unique (`eq_frobR`). The idempotents of `U̇*` are indexed
+by `Hom(Y*, ℤ)` and `λ* = frobWt λ`; for `Y` free of finite rank this is Lusztig's `X*`.
+Multiplicativity (`frobA_mul`, our argument) is checked on generators against the spanning
+monomials, through the commutation formula 23.1.3 and the Gaussian binomials of 34.1.2, 35.1.5.
+Next: 41.1.9.
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).
