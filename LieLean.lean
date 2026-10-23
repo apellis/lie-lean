@@ -1,6 +1,7 @@
 import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.Homology.ChainComplex
 import LieLean.Algebra.Lie.Homology.Cochain
+import LieLean.Algebra.Lie.Homology.CochainDuality
 import LieLean.Algebra.Lie.Homology.CochainWeights
 import LieLean.Algebra.Lie.Homology.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Homology.Comparison
@@ -510,6 +511,7 @@ import LieLean.Algebra.QuantumGroup.CrystalBasis.TensorStrings
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Transfer
 import LieLean.Algebra.QuantumGroup.CrystalBasis.Valuation
 import LieLean.Algebra.QuantumGroup.Faithful
+import LieLean.Algebra.QuantumGroup.Frobenius.Braid
 import LieLean.Algebra.QuantumGroup.Frobenius.CartanDatum
 import LieLean.Algebra.QuantumGroup.Frobenius.DividedPowerCommutation
 import LieLean.Algebra.QuantumGroup.Frobenius.Generators
