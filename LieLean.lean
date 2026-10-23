@@ -250,6 +250,7 @@ import LieLean.Algebra.Lie.KacMoody.TranslationWallHead
 import LieLean.Algebra.Lie.KacMoody.TranslationWallMultiplicity
 import LieLean.Algebra.Lie.KacMoody.TranslationFunctor
 import LieLean.Algebra.Lie.KacMoody.RestrictedDual
+import LieLean.Algebra.Lie.KacMoody.RelativeVermaTensor
 import LieLean.Algebra.Lie.KacMoody.TranslationDuality
 import LieLean.Algebra.Lie.KacMoody.TranslationEquivalence
 import LieLean.Algebra.Lie.KacMoody.TranslationAdjunction
