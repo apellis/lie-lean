@@ -3116,7 +3116,7 @@ Remaining: Thm. 1, Thm. 2.
 
 ## Deferred and scheduled items
 
-D2 was scheduled by the maintainer on 2026-10-22 and is in progress. D1 was scheduled by the maintainer on 2026-10-14 (issue #180) and is largely done. The notes
+D2 was scheduled by the maintainer on 2026-10-22 and is done. D1 was scheduled by the maintainer on 2026-10-14 (issue #180) and is largely done. The notes
 record how each item is approached and what it does and does not make possible.
 
 ### D1. Canonical basis of `f` and the remainder of [Lus] 41.1.6
@@ -3179,12 +3179,12 @@ and the canonical bases of `L_q(λ)` and `U̇` follow Lusztig's Ch. 14, 19 and 2
 - Nondegeneracy of the Khovanov–Lauda calculus: that route (Kang–Kashiwara, Brundan, Webster)
   does not use canonical bases.
 
-### D2. [Lus] 41.1.9: compatibility of the braid group action with the quantum Frobenius map
+### D2. [Lus] 41.1.9: compatibility of the braid group action with the quantum Frobenius map  `[x]`
 
 *Target.* At a root of unity, the action of the `Tᵢ` on `_S U̇` (already formalized,
 `Modified.braidArtinHomR`) is compatible with Lusztig's quantum Frobenius homomorphism.
 
-*Status.* Scheduled 2026-10-22. Done: [Lus] Prop. 7.1.5 (b), the higher-order quantum Serre
+*Status.* Scheduled 2026-10-22; done. Done: [Lus] Prop. 7.1.5 (b), the higher-order quantum Serre
 relations `f_{i,j;n,m;e} = 0` in `f` over `ℚ(v)` for `e = ±1`, `m > an`
 (`LusztigF/HigherSerre.lean`: `higherSerre_mem_radical`, `toQuotient_higherSerre`; proved with
 the skew derivations `rₕ` in `'f`, not with commutators in `U`), and [Lus] Cor. 7.1.7
@@ -3259,7 +3259,12 @@ preserves the integral forms. Towards 35.1.9, the form of the presentation 31.1.
 by `Hom(Y*, ℤ)` and `λ* = frobWt λ`; for `Y` free of finite rank this is Lusztig's `X*`.
 Multiplicativity (`frobA_mul`, our argument) is checked on generators against the spanning
 monomials, through the commutation formula 23.1.3 and the Gaussian binomials of 34.1.2, 35.1.5.
-Next: 41.1.9.
+[Lus] 41.1.9, under 35.1.2 (a), over every `𝒜'`-algebra `S` (`Frobenius/Braid.lean`):
+`Fr ∘ T''_{i,1} = T''_{i,1} ∘ Fr` on `𝒜U̇` and on `_S U̇` (`Modified.frobA_braidA`,
+`Modified.frobR_braidR`), and the same for the inverses `T'_{i,-1}` (`frobR_braidR_symm`), with
+`T''_{i,1}` on the right the symmetry of `_S U̇*` for `(I, ∘)`. Proof as in [Lus]: both sides are
+multiplicative, so it suffices to check the generators, using the formulas of 37.1.3 for
+`T''_{i,1}(Eⱼ^{(n)} 1_λ)`, `T''_{i,1}(Fⱼ^{(n)} 1_λ)` (`braidA_eA_ne`, `braidA_eA_self`, ...).
 
 *Missing prerequisites.*
 - The integral consequences of the higher-order Serre relations ([Lus] 7.1.7).

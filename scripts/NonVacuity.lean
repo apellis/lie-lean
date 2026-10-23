@@ -217,6 +217,17 @@ example (n : ℕ) (μ : (Fin 2 → ℤ) × (Fin 2 → ℤ) →+ ℤ) :
           (DA2.extendedRootDatum.frobWt 2 μ) else 0 :=
   Modified.frobR_eA _ _ _ _ _ 0 n μ
 
+open scoped TensorProduct in
+/-- [Lus] 41.1.9 for `A₂`, `l = 2`, `l' = 4`, over `𝒜' = 𝒜/(v² + 1)`:
+`Fr ∘ T''_{0,1} = T''_{0,1} ∘ Fr` on `_S U̇`. -/
+example (z : CyclotomicQuotient 4 ⊗[LaurentPolynomial ℤ] Modified.aForm DA2.extendedRootDatum) :
+    Modified.frobR DA2.extendedRootDatum (l := 2) (l' := 4) (by norm_num) (Or.inl rfl) hAA2
+        (CyclotomicQuotient 4) (Modified.braidR (CyclotomicQuotient 4) 0 z) =
+      Modified.braidR (CyclotomicQuotient 4) 0
+        (Modified.frobR DA2.extendedRootDatum (l := 2) (l' := 4) (by norm_num) (Or.inl rfl) hAA2
+          (CyclotomicQuotient 4) z) :=
+  Modified.frobR_braidR _ _ _ _ _ 0 z
+
 /-! ### Lusztig 25.2.1 (d) and 26.3.1 on the extended root datum of `sl₂` -/
 
 /-- The extended root datum of `sl₂`. -/
