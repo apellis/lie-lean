@@ -29,16 +29,16 @@ The recursion `(δf)(y ∧ c) = y f(c) - f(θ(y) c) - δ(ι_y f)(c)` (with `ι_y
 ## Main definitions
 
 * `LieModule.ChevalleyEilenberg.envAction`: `u ↦ u^⊤`, the anti-homomorphism `U(L) → End(N)`.
-* `LieModule.ChevalleyEilenberg.coDiff`: the differential `δ` on `Hom_R(⋀L, N)`.
+* `LieModule.ChevalleyEilenberg.cochainDiff`: the differential `δ` on `Hom_R(⋀L, N)`.
 * `LieModule.ChevalleyEilenberg.δ`: its graded pieces `C^k(L, N) → C^{k+1}(L, N)`.
 * `LieModule.ChevalleyEilenberg.cochainComplex`: `C^•(L, N)` as a cochain complex of
   `R`-modules, functorial in `N` (`cochainComplexMap`).
 
 ## Main results
 
-* `LieModule.ChevalleyEilenberg.coDiff_coDiff`, `δ_comp_δ`: `δ ∘ δ = 0`.
-* `LieModule.ChevalleyEilenberg.contract_coDiff`: the recursion formula for `δ`.
-* `LieModule.ChevalleyEilenberg.cochainPair_coDiff`: `δ` is the transpose of the chain
+* `LieModule.ChevalleyEilenberg.cochainDiff_cochainDiff`, `δ_comp_δ`: `δ ∘ δ = 0`.
+* `LieModule.ChevalleyEilenberg.contract_cochainDiff`: the recursion formula for `δ`.
+* `LieModule.ChevalleyEilenberg.cochainPair_cochainDiff`: `δ` is the transpose of the chain
   differential for an invariant pairing.
 * `LieModule.ChevalleyEilenberg.δ_zero_apply`: `(δf)(x) = x f(1)` in degree `0`.
 
@@ -148,20 +148,20 @@ lemma cochainExt_mulRight (f : ExteriorAlgebra R L →ₗ[R] N) (u : UniversalEn
 
 variable (R L N) in
 /-- The **Chevalley–Eilenberg codifferential** `δf = f̃ ∘ d ∘ (· ⊗ 1)` on `Hom_R(⋀L, N)`. -/
-def coDiff : Module.End R (ExteriorAlgebra R L →ₗ[R] N) where
+def cochainDiff : Module.End R (ExteriorAlgebra R L →ₗ[R] N) where
   toFun f := cochainExt R L N f ∘ₗ diff R L (LeftRegular R L) ∘ₗ
     (TensorProduct.mk R _ _).flip ((LeftRegular.equiv R L).symm 1)
   map_add' f g := by rw [map_add, LinearMap.add_comp]
   map_smul' t f := by rw [map_smul, LinearMap.smul_comp, RingHom.id_apply]
 
-lemma coDiff_apply (f : ExteriorAlgebra R L →ₗ[R] N) (c : ExteriorAlgebra R L) :
-    coDiff R L N f c =
+lemma cochainDiff_apply (f : ExteriorAlgebra R L →ₗ[R] N) (c : ExteriorAlgebra R L) :
+    cochainDiff R L N f c =
       cochainExt R L N f (diff R L (LeftRegular R L) (c ⊗ₜ (LeftRegular.equiv R L).symm 1)) :=
   rfl
 
 /-- `(δf)~ = f̃ ∘ d`. -/
-theorem cochainExt_coDiff (f : ExteriorAlgebra R L →ₗ[R] N) :
-    cochainExt R L N (coDiff R L N f) = cochainExt R L N f ∘ₗ diff R L (LeftRegular R L) := by
+theorem cochainExt_cochainDiff (f : ExteriorAlgebra R L →ₗ[R] N) :
+    cochainExt R L N (cochainDiff R L N f) = cochainExt R L N f ∘ₗ diff R L (LeftRegular R L) := by
   ext c u
   simp only [TensorProduct.AlgebraTensorModule.curry_apply, TensorProduct.curry_apply,
     LinearMap.restrictScalars_self, LinearMap.comp_apply]
@@ -171,36 +171,36 @@ theorem cochainExt_coDiff (f : ExteriorAlgebra R L →ₗ[R] N) :
     congr 1
     apply (LeftRegular.equiv R L).injective
     simp
-  rw [cochainExt_tmul, coDiff_apply]
+  rw [cochainExt_tmul, cochainDiff_apply]
   conv_rhs => rw [hu, ← lTensor_diff, cochainExt_mulRight]
 
 /-- `δ ∘ δ = 0`. -/
-@[simp] theorem coDiff_coDiff (f : ExteriorAlgebra R L →ₗ[R] N) :
-    coDiff R L N (coDiff R L N f) = 0 := by
+@[simp] theorem cochainDiff_cochainDiff (f : ExteriorAlgebra R L →ₗ[R] N) :
+    cochainDiff R L N (cochainDiff R L N f) = 0 := by
   ext c
-  rw [coDiff_apply, cochainExt_coDiff, LinearMap.comp_apply, diff_diff, map_zero,
+  rw [cochainDiff_apply, cochainExt_cochainDiff, LinearMap.comp_apply, diff_diff, map_zero,
     LinearMap.zero_apply]
 
-theorem coDiff_comp_coDiff : coDiff R L N ∘ₗ coDiff R L N = 0 :=
-  LinearMap.ext fun f ↦ by rw [LinearMap.comp_apply, coDiff_coDiff, LinearMap.zero_apply]
+theorem cochainDiff_comp_cochainDiff : cochainDiff R L N ∘ₗ cochainDiff R L N = 0 :=
+  LinearMap.ext fun f ↦ by rw [LinearMap.comp_apply, cochainDiff_cochainDiff, LinearMap.zero_apply]
 
-lemma coDiff_one (f : ExteriorAlgebra R L →ₗ[R] N) :
-    coDiff R L N f (1 : ExteriorAlgebra R L) = 0 := by
-  rw [coDiff_apply]
+lemma cochainDiff_one (f : ExteriorAlgebra R L →ₗ[R] N) :
+    cochainDiff R L N f (1 : ExteriorAlgebra R L) = 0 := by
+  rw [cochainDiff_apply]
   exact (congrArg (cochainExt R L N f) (diff_one_tmul _)).trans (map_zero _)
 
 /-- `(δf)(x) = x f(1)`. -/
-lemma coDiff_ι (f : ExteriorAlgebra R L →ₗ[R] N) (x : L) :
-    coDiff R L N f (ι R x) = ⁅x, f 1⁆ := by
-  rw [coDiff_apply, diff_ι_tmul, map_neg, cochainExt_tmul]
+lemma cochainDiff_ι (f : ExteriorAlgebra R L →ₗ[R] N) (x : L) :
+    cochainDiff R L N f (ι R x) = ⁅x, f 1⁆ := by
+  rw [cochainDiff_apply, diff_ι_tmul, map_neg, cochainExt_tmul]
   have : LeftRegular.equiv R L ⁅x, (LeftRegular.equiv R L).symm 1⁆ =
       UniversalEnvelopingAlgebra.ι R x := by simp
   rw [this, envAction_ι, neg_neg]
 
 /-- `δ` commutes with postcomposition by morphisms of Lie modules. -/
-lemma coDiff_comp {N' : Type*} [AddCommGroup N'] [Module R N'] [LieRingModule L N']
+lemma cochainDiff_comp {N' : Type*} [AddCommGroup N'] [Module R N'] [LieRingModule L N']
     [LieModule R L N'] (φ : N →ₗ⁅R,L⁆ N') (f : ExteriorAlgebra R L →ₗ[R] N) :
-    coDiff R L N' ((φ : N →ₗ[R] N') ∘ₗ f) = (φ : N →ₗ[R] N') ∘ₗ coDiff R L N f := by
+    cochainDiff R L N' ((φ : N →ₗ[R] N') ∘ₗ f) = (φ : N →ₗ[R] N') ∘ₗ cochainDiff R L N f := by
   have : cochainExt R L N' ((φ : N →ₗ[R] N') ∘ₗ f) =
       (φ : N →ₗ[R] N') ∘ₗ cochainExt R L N f := by
     ext c u
@@ -208,7 +208,7 @@ lemma coDiff_comp {N' : Type*} [AddCommGroup N'] [Module R N'] [LieRingModule L 
       LinearMap.restrictScalars_self, LinearMap.comp_apply, cochainExt_tmul]
     exact LinearMap.congr_fun (envAction_comp φ _) (f c)
   ext c
-  rw [coDiff_apply, this, LinearMap.comp_apply, LinearMap.comp_apply, coDiff_apply]
+  rw [cochainDiff_apply, this, LinearMap.comp_apply, LinearMap.comp_apply, cochainDiff_apply]
 
 /-! ### Grading -/
 
@@ -226,11 +226,12 @@ lemma cochainExt_eq_of_mem_chainsIn {j : ℕ} {f g : ExteriorAlgebra R L →ₗ[
   | add s s' hs hs' => simp only [map_add, hs, hs']
 
 /-- `δf` on `⋀ʲ⁺¹L` only depends on the restriction of `f` to `⋀ʲL`. -/
-lemma coDiff_eq_of_eq {j : ℕ} {f g : ExteriorAlgebra R L →ₗ[R] N}
+lemma cochainDiff_eq_of_eq {j : ℕ} {f g : ExteriorAlgebra R L →ₗ[R] N}
     (h : f ∘ₗ (⋀[R]^j L).subtype = g ∘ₗ (⋀[R]^j L).subtype) :
-    coDiff R L N f ∘ₗ (⋀[R]^(j + 1) L).subtype = coDiff R L N g ∘ₗ (⋀[R]^(j + 1) L).subtype := by
+    cochainDiff R L N f ∘ₗ (⋀[R]^(j + 1) L).subtype =
+      cochainDiff R L N g ∘ₗ (⋀[R]^(j + 1) L).subtype := by
   ext ω
-  simp only [LinearMap.comp_apply, Submodule.subtype_apply, coDiff_apply]
+  simp only [LinearMap.comp_apply, Submodule.subtype_apply, cochainDiff_apply]
   exact cochainExt_eq_of_mem_chainsIn h (diff_mem_chainsIn (tmul_mem_chainsIn ω.2 _))
 
 variable (R L N) in
@@ -240,19 +241,19 @@ abbrev Cochains (k : ℕ) := ⋀[R]^k L →ₗ[R] N
 variable (R L N) in
 /-- The codifferential `δ : C^k(L, N) → C^{k+1}(L, N)`. -/
 def δ (k : ℕ) : Cochains R L N k →ₗ[R] Cochains R L N (k + 1) :=
-  LinearMap.lcomp R N (⋀[R]^(k + 1) L).subtype ∘ₗ coDiff R L N ∘ₗ
+  LinearMap.lcomp R N (⋀[R]^(k + 1) L).subtype ∘ₗ cochainDiff R L N ∘ₗ
     LinearMap.lcomp R N (degProj R L k)
 
 lemma δ_apply (k : ℕ) (f : Cochains R L N k) (ω : ⋀[R]^(k + 1) L) :
-    δ R L N k f ω = coDiff R L N (f ∘ₗ degProj R L k) ω := rfl
+    δ R L N k f ω = cochainDiff R L N (f ∘ₗ degProj R L k) ω := rfl
 
 /-- `δ ∘ δ = 0`. -/
 theorem δ_comp_δ (k : ℕ) : δ R L N (k + 1) ∘ₗ δ R L N k = 0 := by
   ext f ω
   simp only [LinearMap.comp_apply, LinearMap.zero_apply]
-  change (coDiff R L N ((δ R L N k f) ∘ₗ degProj R L (k + 1)) ∘ₗ
+  change (cochainDiff R L N ((δ R L N k f) ∘ₗ degProj R L (k + 1)) ∘ₗ
     (⋀[R]^(k + 2) L).subtype) ω = 0
-  rw [coDiff_eq_of_eq (g := coDiff R L N (f ∘ₗ degProj R L k)) (j := k + 1)]
+  rw [cochainDiff_eq_of_eq (g := cochainDiff R L N (f ∘ₗ degProj R L k)) (j := k + 1)]
   · simp
   · ext ω'
     simp [δ_apply, degProj_subtype]
@@ -262,8 +263,8 @@ lemma δ_zero_apply (f : Cochains R L N 0) (x : L) :
     δ R L N 0 f ⟨ι R x, by simp⟩ =
       ⁅x, f ⟨1, by simp⟩⁆ := by
   rw [δ_apply]
-  change coDiff R L N (f ∘ₗ degProj R L 0) (ι R x) = _
-  rw [coDiff_ι, LinearMap.comp_apply]
+  change cochainDiff R L N (f ∘ₗ degProj R L 0) (ι R x) = _
+  rw [cochainDiff_ι, LinearMap.comp_apply]
   congr 2
   exact degProj_subtype 0 ⟨1, _⟩
 
@@ -273,7 +274,7 @@ lemma δ_comp (k : ℕ) (φ : N →ₗ⁅R,L⁆ N') (f : Cochains R L N k) :
     δ R L N' k ((φ : N →ₗ[R] N') ∘ₗ f) = (φ : N →ₗ[R] N') ∘ₗ δ R L N k f := by
   ext ω
   simp only [δ_apply, LinearMap.comp_apply]
-  rw [LinearMap.comp_assoc, coDiff_comp, LinearMap.comp_apply]
+  rw [LinearMap.comp_assoc, cochainDiff_comp, LinearMap.comp_apply]
 
 variable (R L N) in
 /-- The **Chevalley–Eilenberg cochain complex** `C^•(L, N)`, `C^k(L, N) = Hom_R(⋀ᵏL, N)`. -/
@@ -360,8 +361,8 @@ lemma contract_lieDeriv (y z : L) (f : ExteriorAlgebra R L →ₗ[R] N) :
   rfl
 
 /-- The recursion `ι_y (δf) = -θ_y f - δ(ι_y f)`. -/
-lemma contract_coDiff (y : L) (f : ExteriorAlgebra R L →ₗ[R] N) :
-    contract y (coDiff R L N f) = -lieDeriv y f - coDiff R L N (contract y f) := by
+lemma contract_cochainDiff (y : L) (f : ExteriorAlgebra R L →ₗ[R] N) :
+    contract y (cochainDiff R L N f) = -lieDeriv y f - cochainDiff R L N (contract y f) := by
   ext c
   change cochainExt R L N f (diff R L (LeftRegular R L)
       (wedge R L (LeftRegular R L) y (c ⊗ₜ (LeftRegular.equiv R L).symm 1))) = _
@@ -405,13 +406,13 @@ lemma cochainPair_lieDeriv (hB : ∀ (x : L) (n : N) (m : X), B ⁅x, n⁆ m = -
 /-- **Transpose formula**: for an `L`-invariant pairing `B : N × X → R`
 (`B(x n, m) = -B(n, x m)`), the codifferential `δ` is the transpose of the chain
 differential `d` on `⋀L ⊗ X`: `(δf)^ = f̂ ∘ d`. -/
-theorem cochainPair_coDiff (hB : ∀ (x : L) (n : N) (m : X), B ⁅x, n⁆ m = -B n ⁅x, m⁆)
+theorem cochainPair_cochainDiff (hB : ∀ (x : L) (n : N) (m : X), B ⁅x, n⁆ m = -B n ⁅x, m⁆)
     (f : ExteriorAlgebra R L →ₗ[R] N) (t : ExteriorAlgebra R L ⊗[R] X) :
-    cochainPair B (coDiff R L N f) t = cochainPair B f (diff R L X t) := by
+    cochainPair B (cochainDiff R L N f) t = cochainPair B f (diff R L X t) := by
   induction t using induction generalizing f with
-  | one m => simp [coDiff_one]
+  | one m => simp [cochainDiff_one]
   | wedge y t ht =>
-    rw [cochainPair_wedge, contract_coDiff, map_sub, map_neg, LinearMap.sub_apply,
+    rw [cochainPair_wedge, contract_cochainDiff, map_sub, map_neg, LinearMap.sub_apply,
       LinearMap.neg_apply, ht, cochainPair_lieDeriv hB, diff_wedge, map_sub, map_neg,
       cochainPair_wedge]
   | add t t' ht ht' => simp only [map_add, ht, ht']

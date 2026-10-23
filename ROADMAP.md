@@ -1348,8 +1348,8 @@ Lie algebra cohomology (`Homology/Cochain.lean`, towards [HumO] Thm. 6.15): the 
 complex `C^k(L, N) = Hom_R(⋀ᵏL, N)` with `δ ∘ δ = 0` (`ChevalleyEilenberg.δ_comp_δ`,
 `cochainComplex`, functorial in `N`), obtained as the transpose of the Koszul differential on
 `⋀L ⊗ U(L)` through the anti-homomorphism `envAction : U(L) → End(N)`; the recursion
-`contract_coDiff` and the transpose formula `cochainPair_coDiff` (`δ` is adjoint to the chain
-differential of `⋀L ⊗ X` for an invariant pairing `N × X → R`), over any commutative ring.
+`contract_cochainDiff` and the transpose formula `cochainPair_cochainDiff` (`δ` is adjoint to the
+chain differential of `⋀L ⊗ X` for an invariant pairing `N × X → R`), over any commutative ring.
 The left-regular module moved to `UniversalEnveloping/LeftRegular.lean`.
 (The old low-degree complex
 `Algebra/Lie/ChevalleyEilenberg.lean` and the unused `H₂` route to Gabber–Kac
