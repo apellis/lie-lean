@@ -69,14 +69,14 @@ theorem isZero_weightComplex_homology_succ {μ : Dual K H} {k : ℕ}
   have h1 : ρ.δWeight (k + 1) μ f = 0 := by
     have h := hf
     simp only [HomologicalComplex.sc', HomologicalComplex.shortComplexFunctor'_obj_g,
-      ρ.weightComplex_d, ModuleCat.hom_ofHom] at h
+      ρ.weightComplex_d] at h
     exact h
   have hf' : δ K L N (k + 1) (f : Cochains K L N (k + 1)) = 0 := congrArg Subtype.val h1
   obtain ⟨g, hg, hgf⟩ := h f f.2 hf'
   refine ⟨⟨g, hg⟩, ?_⟩
   have h2 : ρ.δWeight k μ ⟨g, hg⟩ = f := Subtype.ext hgf
   simp only [HomologicalComplex.sc', HomologicalComplex.shortComplexFunctor'_obj_f,
-    ρ.weightComplex_d, ModuleCat.hom_ofHom]
+    ρ.weightComplex_d]
   exact h2
 
 end LieModule.ChevalleyEilenberg.DerivAction
@@ -200,7 +200,7 @@ lemma weightSpaceOfMap_le_weightSpaceOf_omegaTwist (ν : Dual K H) :
       Module.End.weightSpaceOf (nPosDerivAction P (OmegaTwist P V)).φ (-ν) := by
   rintro _ ⟨v, hv, rfl⟩ a
   rw [nPosDerivAction_φ_apply]
-  show OmegaTwist.of P V ⁅chevalleyInvolution P (h P a), v⁆ = _
+  change OmegaTwist.of P V ⁅chevalleyInvolution P (h P a), v⁆ = _
   rw [chevalleyInvolution_h, neg_lie, hv a]
   simp
 
