@@ -3448,8 +3448,14 @@ completed steps and continuation threads are:
     `BlockProjectiveFunctor.exists_decomposition`): every projective functor on the block is a
     sum of pairwise orthogonal indecomposable summands, by induction on the dimension of the
     corner `e End(M(λ) ⊗ V) e` (only the vanishing statement at `M(λ)` is used, not [BG]
-    Cor. 3.8). Remaining: the isomorphism criterion at `M(λ)` ([BG] Cor. 3.8), the
-    classification of indecomposables by `P(μ)` (Thm. 3.3 (ii)) and Thm. 3.4.
+    Cor. 3.8). Cor. 3.8 and Thm. 3.3 (ii)
+    (`KacMoody/BlockProjectiveFunctorClassification.lean`): an isomorphism
+    `F(M(λ)) ≅ G(M(λ))` is the value of one natural transformation restricting to bijections
+    `F(M) → G(M)` on the block (`BlockProjectiveFunctor.exists_bijOn_of_equiv_verma`), `P(μ)`
+    has only the idempotents `0`, `1` (`ProjectiveCover.eq_zero_or_eq_one_of_isIdempotentElem`)
+    and `F` is indecomposable iff `F(M(λ)) ≅ P(μ)` for some `μ`
+    (`BlockProjectiveFunctor.isIndecomposable_iff_exists_equiv_projectiveCover`; the backward
+    direction without the Kostant hypothesis). Remaining: Thm. 3.4.
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
