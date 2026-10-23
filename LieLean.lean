@@ -161,11 +161,15 @@ import LieLean.Algebra.Lie.KacMoody.StandardFiltrationSummand
 import LieLean.Algebra.Lie.KacMoody.StrongLinkage
 import LieLean.Algebra.Lie.KacMoody.Super.Enveloping
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Cancellation
+import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.CasimirExpansion
+import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Character
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.FreeGrading
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.GVerma
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.IntegrableAt
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Lowest
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Syzygy
+import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.VermaWeights
+import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.WeightQuotient
 import LieLean.Algebra.Lie.KacMoody.Super.GabberKac.Weights
 import LieLean.Algebra.Lie.KacMoody.Super.Grading
 import LieLean.Algebra.Lie.KacMoody.Super.InvariantForm
