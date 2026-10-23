@@ -143,6 +143,7 @@ import LieLean.Algebra.Lie.KacMoody.Kostant.RootSums
 import LieLean.Algebra.Lie.KacMoody.Kostant.Theorem
 import LieLean.Algebra.Lie.KacMoody.Kostant.WeightShift
 import LieLean.Algebra.Lie.KacMoody.Kostant.Weights
+import LieLean.Algebra.Lie.KacMoody.NPosCohomology
 import LieLean.Algebra.Lie.KacMoody.Projective
 import LieLean.Algebra.Lie.KacMoody.ProjectiveCover
 import LieLean.Algebra.Lie.KacMoody.ProjectiveCoverHom
