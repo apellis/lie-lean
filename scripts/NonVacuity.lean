@@ -317,4 +317,10 @@ example (Λ β : Module.Dual ℚ (StdSpace AOsp ℚ)) :
       KacMoodyAlgebra.kostantPartition (std AOsp ℚ) β :=
   SuperEnveloping.GVerma.finrank_modWeightSpace_sub_eq_kostantPartition SOsp hAOsp hpOsp Λ β
 
+/-- Kac 1978 Thm. 2 (c) for `osp(1|4)`: `M̄(0) / ∑ᵢ U fᵢ v̄₀` is irreducible. -/
+example : IsSimpleModule (SuperEnveloping (std AOsp ℚ) pOsp)
+    (SuperEnveloping.GVerma.FPowQuotient (std AOsp ℚ) pOsp 0 0) :=
+  SuperEnveloping.GVerma.isSimpleModule_fPowQuotient SOsp hAOsp hpOsp (fun _ ↦ by simp)
+    fun _ _ ↦ ⟨0, rfl⟩
+
 end NonVacuity
