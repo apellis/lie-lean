@@ -1,6 +1,7 @@
 import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.Homology.ChainComplex
 import LieLean.Algebra.Lie.Homology.Cochain
+import LieLean.Algebra.Lie.Homology.CochainWeights
 import LieLean.Algebra.Lie.Homology.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Homology.Comparison
 import LieLean.Algebra.Lie.Homology.Complex
