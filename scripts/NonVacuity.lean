@@ -297,4 +297,12 @@ example : SuperEnveloping.maxIdeal (std AOsp ℚ) pOsp =
     SuperEnveloping.serreIdeal (std AOsp ℚ) pOsp :=
   SuperEnveloping.maxIdeal_eq_serreIdeal _ _ SOsp hAOsp hpOsp
 
+/-- The weight multiplicities of Verma modules of `osp(1|4)` are given by Kostant's partition
+function of `so(5)`. -/
+example (Λ β : Module.Dual ℚ (StdSpace AOsp ℚ)) :
+    Module.finrank ℚ (SuperEnveloping.modWeightSpace (std AOsp ℚ) pOsp
+      (SuperEnveloping.GVerma (std AOsp ℚ) pOsp Λ) (Λ - β)) =
+      KacMoodyAlgebra.kostantPartition (std AOsp ℚ) β :=
+  SuperEnveloping.GVerma.finrank_modWeightSpace_sub_eq_kostantPartition SOsp hAOsp hpOsp Λ β
+
 end NonVacuity
