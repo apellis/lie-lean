@@ -3457,8 +3457,14 @@ completed steps and continuation threads are:
     (`BlockProjectiveFunctor.isIndecomposable_iff_exists_equiv_projectiveCover`; the backward
     direction without the Kostant hypothesis). Thm. 3.4 (i): projective functors with equal
     characters `[F(M)] = [G(M)]` on the block are isomorphic on the block
-    (`BlockProjectiveFunctor.exists_bijOn_of_character_eq`, via Cor. 3.10). Remaining:
-    Thm. 3.4 (ii)–(iv).
+    (`BlockProjectiveFunctor.exists_bijOn_of_character_eq`, via Cor. 3.10). Thm. 3.4 (ii)
+    (`KacMoody/BlockProjectiveFunctorComposition.lean`): characters are additive over a summand
+    and its complement (`BlockProjectiveFunctor.character_eq_add`); a projective functor `F` on
+    the block of `λ` with values in the block of `μ` (`MapsTo`) composes with a projective
+    functor `G` on the block of `μ` to the projective functor `GF = e''(− ⊗ (V ⊗ W))`
+    (`BlockProjectiveFunctor.comp`, natural via `TensorNatTrans.lTensor`), with
+    `(GF)(M) ≅ G(F(M))` and `ch (GF)(M) = ch G(F(M))` (`nonempty_comp_equiv`,
+    `character_comp`). Remaining: Thm. 3.4 (iii), (iv).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
