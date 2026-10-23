@@ -3003,7 +3003,7 @@ highest-weight modules `L_q(λ)` and equality of characters with `L(λ)` for `λ
 integral; Lusztig's canonical basis / Kashiwara's global basis (proved for `f`, `L_q(λ)` and
 `U̇`; see "Global basis of `f`" under "Status and open threads").
 
-### M16. Contragredient Lie superalgebras  `[~]`  ([Kac78])
+### M16. Contragredient Lie superalgebras  `[x]`  ([Kac78])
 
 **[Kac78]** V. G. Kac, *Infinite-dimensional algebras, Dedekind's η-function, classical Möbius
 function and the very strange formula*, Adv. Math. **30** (1978), 85–136. Tracking issue #312.
@@ -3121,7 +3121,18 @@ symmetrizable `A`, admissible `τ` and `Λ` dominant integral for `G(A, τ)` (`�
 modules integrable at a node (`exists_nat_of_e_smul_eq_zero_of_isIntegrableAt`) and the Casimir
 operator with [Kac] Lemma 10.3 (`KacMoodyAlgebra.dualBilinForm_add_two_rho_ne`). Kac78 derives
 Thm. 2 (c) from the character formula; the direct argument is reconstructed.
-Remaining: Thm. 1, Thm. 2 (a).
+Character formula (`Super/CharacterFormula.lean`, **Kac78 Thm. 1**): the character
+`IsCasimirModule.character` of a module with a Casimir scalar, the analogue of [Kac] Prop. 9.8
+(`IsCasimirModule.coeffAt_character_mul_denominator_ne_zero`: the coefficient of `e^ν` in `R ch V`
+vanishes unless `(ν + 2ρ | ν) = c` and `ν` lies in the cones, from the Verma expansion and
+`ch M̄(0) R = 1`), and for `Λ` dominant integral with `⟨Λ, αᵢ^∨⟩` even for odd `τᵢ`
+`e^ρ R ch L̃(Λ) = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(Λ + ρ)}`
+(`GVerma.exp_rho_mul_denominator_mul_character`), hence `ch L_{G(A,τ)}(Λ) = ch L_{𝔤(A)}(Λ)`
+(`GVerma.character_eq_character`). **Kac78 Thm. 2 (a)** in the form
+`e^ρ = ch M̄(0) ∑_{w ∈ W} (-1)^{ℓ(w)} e^{wρ}` (`exp_rho_eq_vermaChar_mul_weylAltSum`; the
+denominator of `G(A, τ)` is `ch M̄(0)⁻¹ = R`). Kac78's product form of `ch M̄(0)⁻¹` over even and
+odd positive roots needs the root multiplicities of `G(A, τ)`, which are not formalized.
+Kac78 Thms. 1, 2 are done at this scope.
 
 ## Deferred and scheduled items
 
