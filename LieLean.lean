@@ -311,6 +311,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorNatural
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorNaturalEval
+import LieLean.Algebra.Lie.UniversalEnveloping.TensorNaturalNilpotent
 import LieLean.Algebra.Lie.Weights.OfMap
 import LieLean.Algebra.QuantumGroup.BarInvolution
 import LieLean.Algebra.QuantumGroup.BaseChange
