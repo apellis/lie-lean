@@ -217,20 +217,25 @@ theorem finrank_modWeightSpace (μ : Dual K H) :
   rw [vermaDim, ← LinearEquiv.finrank_map_eq (shiftEquiv P p Λ 0), ← zero_sub,
     ← map_shiftEquiv_modWeightSpace, sub_sub_cancel]
 
-lemma vermaDim_zero : vermaDim P p 0 = 1 := by
-  have h := modWeightSpace_sub_eq P p 0 0
+variable (P p Λ) in
+/-- The highest weight space: `M̄(Λ)_Λ = K v̄_Λ`. -/
+lemma modWeightSpace_self :
+    modWeightSpace P p (GVerma P p Λ) Λ = Submodule.span K {hwv P p Λ} := by
+  have h := modWeightSpace_sub_eq P p Λ 0
   rw [sub_zero] at h
-  rw [vermaDim, neg_zero, h]
-  have : wordVector P p 0 '' {w | P.rootOf (wordVec w) = 0} = {hwv P p 0} := by
-    ext v
-    simp only [Set.mem_image, Set.mem_ofPred_eq, Set.mem_singleton_iff]
-    constructor
-    · rintro ⟨w, hw, rfl⟩
-      rw [← map_zero P.rootOf] at hw
-      rw [wordVec_eq_zero_iff.1 (P.rootOf_injective hw), wordVector_nil]
-    · rintro rfl
-      exact ⟨[], by simp, wordVector_nil⟩
-  rw [this, finrank_span_singleton (hwv_ne_zero P p 0)]
+  rw [h]
+  congr 1
+  ext v
+  simp only [Set.mem_image, Set.mem_ofPred_eq, Set.mem_singleton_iff]
+  constructor
+  · rintro ⟨w, hw, rfl⟩
+    rw [← map_zero P.rootOf] at hw
+    rw [wordVec_eq_zero_iff.1 (P.rootOf_injective hw), wordVector_nil]
+  · rintro rfl
+    exact ⟨[], by simp, wordVector_nil⟩
+
+lemma vermaDim_zero : vermaDim P p 0 = 1 := by
+  rw [vermaDim, neg_zero, modWeightSpace_self, finrank_span_singleton (hwv_ne_zero P p 0)]
 
 /-- `vermaDim β = 0` unless `β ∈ Q₊`. -/
 lemma exists_eq_rootOf_of_vermaDim_ne_zero {β : Dual K H} (hβ : vermaDim P p β ≠ 0) :
