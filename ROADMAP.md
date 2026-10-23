@@ -3389,6 +3389,11 @@ completed steps and continuation threads are:
     `finrank_hom_of_kostant`), evaluation at `M(λ)` is a bijection
     `Hom(V, (U/I)^{ad} ⊗ W) ≅ Hom(M(λ) ⊗ V, M(λ) ⊗ W)` (`bijective_tensorNatLinear_verma`,
     `KacMoody/ProjectiveFunctorVerma.lean`; the core of the proof of Thm. 10.7).
+    Changing the ideal (`adQuotientMap`, `tensorNatMap_adQuotientMap`; with `I = ⊥` these
+    give natural maps on all modules) and nilpotence: a natural endomorphism of `− ⊗ V`
+    vanishing on modules killed by `I` satisfies `θ_M ^ n = 0` when `M` has a filtration of
+    length `n` with subquotients killed by `I` (`pow_eq_zero_of_hasKilledFiltration`,
+    `UniversalEnveloping/TensorNaturalNilpotent.lean`).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
