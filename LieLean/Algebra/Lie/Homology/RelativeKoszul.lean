@@ -169,6 +169,8 @@ lemma lieAction_error (y : L) (l : List J) (n : ℕ) {q : P}
 def IsLeading : Prop := ∀ (j : J) (n : ℕ) (q : P), q ∈ MvPolynomial.restrictTotalDegree J K n →
   Ψ ⁅(b j : L), Ψ.symm q⁆ - MvPolynomial.X j * q ∈ MvPolynomial.restrictTotalDegree J K n
 
+section Leading
+
 variable {Ψ b} (hlead : IsLeading Ψ b)
 include hp hlead
 
@@ -216,5 +218,171 @@ theorem relDiff_add_delta_mem (s : Finset J) (q n : ℕ) {z : EP}
   | add x y _ _ hx hy => simpa only [map_add, add_add_add_comm] using add_mem hx hy
   | smul r z _ hz =>
     simpa only [map_smul, smul_add] using Submodule.smul_mem (rectangle (q - 1) n) r hz
+
+end Leading
+
+/-! ### Relative chains -/
+
+section Relative
+
+variable {H : Type*} [AddCommGroup H] [Module K H] (η : H →ₗ[K] L) (ρ : DerivAction K H L X)
+
+/-- The data of the relative setting: `ρ` is the action of `η(H)`, which is abelian, and
+`p : L → V` is a projection along `η(H)` commuting with `ad η(H)`. -/
+structure IsRelData (p : L →ₗ[K] V) : Prop where
+  D_eq : ∀ a, ρ.D a = LieAlgebra.ad K L (η a)
+  φ_eq : ∀ a (x : X), ρ.φ a x = ⁅η a, x⁆
+  lie_eta : ∀ a a', ⁅η a, η a'⁆ = 0
+  map_eta : ∀ a, p (η a) = 0
+  sub_mem : ∀ y, ∃ a, y - (p y : L) = η a
+  map_ad : ∀ a y, (p ⁅η a, y⁆ : L) = ⁅η a, (p y : L)⁆
+
+variable {η ρ}
+
+omit [LieRingModule L X] [LieModule K L X] in
+lemma wedgeV_zero (z : EP) : wedgeV 0 z = 0 := by
+  induction z with
+  | tmul e q => simp
+  | add z z' h h' => rw [map_add, h, h', add_zero]
+
+omit [LieModule K L X] in
+lemma toCoord_eq_zero_of_mem (hr : IsRelData η ρ p) {w : EX}
+    (hw : w ∈ wedgeRange K L X η) : toCoord p Ψ w = 0 := by
+  induction hw using Submodule.iSup_induction' with
+  | mem a w hw =>
+    obtain ⟨c, rfl⟩ := hw
+    rw [toCoord_wedge, hr.map_eta, wedgeV_zero]
+  | zero => exact map_zero _
+  | add w w' _ _ h h' => rw [map_add, h, h', add_zero]
+
+omit [LieRingModule L X] [LieModule K L X] in
+lemma wedge_mem_wedgeRange_of_mem (y : L) {w : EX} (hw : w ∈ wedgeRange K L X η) :
+    wedge K L X y w ∈ wedgeRange K L X η := by
+  induction hw using Submodule.iSup_induction' with
+  | mem a w hw =>
+    obtain ⟨c, rfl⟩ := hw
+    have e : wedge K L X y (wedge K L X (η a) c) = wedge K L X (η a) (-wedge K L X y c) := by
+      induction c with
+      | tmul ω x =>
+        rw [map_neg, wedge_tmul, wedge_tmul, wedge_tmul, wedge_tmul, ← neg_tmul, ← mul_assoc,
+          ← mul_assoc, eq_neg_of_add_eq_zero_left (ExteriorAlgebra.ι_add_mul_swap y (η a)),
+          neg_mul]
+      | add c c' h h' => simp only [map_add, map_neg, h, h', neg_add]
+    rw [e]
+    exact wedge_mem_wedgeRange η a _
+  | zero => simpa only [map_zero] using (wedgeRange K L X η).zero_mem
+  | add w w' _ _ h h' => rw [map_add]; exact add_mem h h'
+
+omit [LieRingModule L X] [LieModule K L X] in
+lemma ofCoord_toCoord_tmul (ω : ExteriorAlgebra K L) (x : X) :
+    ofCoord Ψ (toCoord p Ψ (ω ⊗ₜ x)) = ExteriorAlgebra.map (V.subtype ∘ₗ p) ω ⊗ₜ x := by
+  rw [toCoord_tmul, ofCoord_tmul, ← AlgHom.comp_apply, map_comp_map, LinearEquiv.symm_apply_apply]
+
+omit [LieModule K L X] in
+/-- `c` and `(⋀p ⊗ Ψ)⁻¹(⋀p ⊗ Ψ) c` agree modulo `⨆ₐ η(a) ∧ C`. -/
+lemma sub_ofCoord_toCoord_mem (hr : IsRelData η ρ p) (c : EX) :
+    c - ofCoord Ψ (toCoord p Ψ c) ∈ wedgeRange K L X η := by
+  induction c with
+  | tmul ω x =>
+    rw [ofCoord_toCoord_tmul, ← sub_tmul]
+    induction ω using exterior_induction with
+    | algebraMap r => simp [AlgHom.commutes]
+    | add ω ω' h h' =>
+      rw [map_add, add_sub_add_comm, add_tmul]
+      exact add_mem h h'
+    | ι_mul y ω h =>
+      obtain ⟨a, ha⟩ := hr.sub_mem y
+      have e : (ι K y * ω - ExteriorAlgebra.map (V.subtype ∘ₗ p) (ι K y * ω)) ⊗ₜ[K] x =
+          wedge K L X (η a) (ω ⊗ₜ x) + wedge K L X (p y : L)
+            ((ω - ExteriorAlgebra.map (V.subtype ∘ₗ p) ω) ⊗ₜ x) := by
+        rw [wedge_tmul, wedge_tmul, ← add_tmul, map_mul, ExteriorAlgebra.map_apply_ι, ← ha,
+          map_sub, sub_mul, mul_sub]
+        simp only [LinearMap.comp_apply, Submodule.subtype_apply]
+        congr 1
+        abel
+      rw [e]
+      exact add_mem (wedge_mem_wedgeRange η a _) (wedge_mem_wedgeRange_of_mem _ h)
+  | add c c' h h' =>
+    rw [map_add, map_add, add_sub_add_comm]
+    exact add_mem h h'
+
+omit [LieModule K L X] in
+/-- The kernel of `⋀p ⊗ Ψ` is `⨆ₐ η(a) ∧ C`. -/
+lemma mem_of_toCoord_eq_zero (hr : IsRelData η ρ p) {c : EX} (hc : toCoord p Ψ c = 0) :
+    c ∈ wedgeRange K L X η := by
+  simpa [hc] using sub_ofCoord_toCoord_mem (Ψ := Ψ) hr c
+
+omit [LieRingModule L X] [LieModule K L X] in
+/-- Naturality of the derivation extension. -/
+lemma map_extDeriv {f D : L →ₗ[K] L} (h : ∀ y, f (D y) = D (f y)) (ω : ExteriorAlgebra K L) :
+    ExteriorAlgebra.map f (extDeriv D ω) = extDeriv D (ExteriorAlgebra.map f ω) := by
+  induction ω using exterior_induction with
+  | algebraMap r => simp [AlgHom.commutes]
+  | add ω ω' h h' => simp only [map_add, h, h']
+  | ι_mul y ω ih =>
+    rw [extDeriv_ι_mul, map_add, map_mul, map_mul, ExteriorAlgebra.map_apply_ι,
+      ExteriorAlgebra.map_apply_ι, ih, map_mul, ExteriorAlgebra.map_apply_ι, extDeriv_ι_mul, h]
+
+omit [LieModule K L X] in
+lemma ofCoord_toCoord_θ (hr : IsRelData η ρ p) (a : H) (c : EX) :
+    ofCoord Ψ (toCoord p Ψ (ρ.θ a c)) = ρ.θ a (ofCoord Ψ (toCoord p Ψ c)) := by
+  induction c with
+  | tmul ω x =>
+    rw [ρ.θ_tmul, map_add, map_add, ofCoord_toCoord_tmul, ofCoord_toCoord_tmul,
+      ofCoord_toCoord_tmul, ρ.θ_tmul, map_extDeriv]
+    intro y
+    simp [hr.D_eq, hr.map_ad]
+  | add c c' h h' => simp only [map_add, h, h']
+
+variable (hT : ⨆ μ, Module.End.weightSpaceOf ρ.θ μ = ⊤)
+
+/-- The projection onto the chains of weight `0`. -/
+abbrev Pr : Module.End K EX := Module.End.weightProj hT 0
+
+omit [LieModule K L X] in
+lemma Pr_ofCoord_toCoord (hr : IsRelData η ρ p) (c : EX) :
+    Pr hT (ofCoord Ψ (toCoord p Ψ c)) = ofCoord Ψ (toCoord p Ψ (Pr hT c)) :=
+  Module.End.weightProj_comm_of_mapsTo hT 0 (ofCoord Ψ ∘ₗ toCoord p Ψ)
+    (fun ν c hc a ↦ by
+      simp only [LinearMap.comp_apply]
+      rw [← ofCoord_toCoord_θ (Ψ := Ψ) hr a c, hc a, map_smul, map_smul]) c
+
+lemma Pr_diff (c : EX) : Pr hT (diff K L X c) = diff K L X (Pr hT c) :=
+  Module.End.weightProj_comm_of_mapsTo hT 0 (diff K L X)
+    (fun ν c hc a ↦ by rw [← ρ.diff_θ, hc a, map_smul]) c
+
+omit [LieModule K L X] in
+lemma Pr_wedge (hr : IsRelData η ρ p) (a : H) (c : EX) :
+    Pr hT (wedge K L X (η a) c) = wedge K L X (η a) (Pr hT c) :=
+  Module.End.weightProj_comm_of_mapsTo hT 0 _ (fun ν c hc b ↦ by
+    rw [ρ.θ_wedge, hr.D_eq, LieAlgebra.ad_apply, hr.lie_eta, map_zero, LinearMap.zero_apply,
+      zero_add, hc b, map_smul]) c
+
+omit [LieModule K L X] in
+lemma Pr_Pr (c : EX) : Pr hT (Pr hT c) = Pr hT c :=
+  Module.End.weightProj_of_mem hT (Module.End.weightProj_mem hT 0 c)
+
+omit [LieModule K L X] in
+lemma θ_Pr (a : H) (c : EX) : ρ.θ a (Pr hT c) = 0 := by
+  have h := Module.End.weightProj_mem hT 0 c a
+  simpa using h
+
+lemma lieAction_eq_θ (hr : IsRelData η ρ p) (a : H) : lieAction K L X (η a) = ρ.θ a := by
+  have : ρ.φ a = toEnd K L X (η a) := LinearMap.ext (hr.φ_eq a)
+  rw [ρ.θ_apply, hr.D_eq, this]
+  rfl
+
+/-- The differential maps the weight-`0` part of `⨆ₐ η(a) ∧ C` into `⨆ₐ η(a) ∧ C`. -/
+lemma diff_Pr_mem (hr : IsRelData η ρ p) {w : EX} (hw : w ∈ wedgeRange K L X η) :
+    diff K L X (Pr hT w) ∈ wedgeRange K L X η := by
+  induction hw using Submodule.iSup_induction' with
+  | mem a w hw =>
+    obtain ⟨c, rfl⟩ := hw
+    rw [Pr_wedge hT hr, diff_wedge, lieAction_eq_θ hr, θ_Pr, neg_zero, zero_sub]
+    exact neg_mem (wedge_mem_wedgeRange η a _)
+  | zero => simpa only [map_zero] using (wedgeRange K L X η).zero_mem
+  | add w w' _ _ h h' => rw [map_add, map_add]; exact add_mem h h'
+
+end Relative
 
 end LieModule.ChevalleyEilenberg.RelativeKoszul
