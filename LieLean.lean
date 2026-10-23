@@ -247,6 +247,7 @@ import LieLean.Algebra.Lie.KacMoody.DominantVermaTensor
 import LieLean.Algebra.Lie.KacMoody.ExactFunctorO
 import LieLean.Algebra.Lie.KacMoody.DualIrreducible
 import LieLean.Algebra.Lie.KacMoody.DualVerma
+import LieLean.Algebra.Lie.KacMoody.DualVermaCohomology
 import LieLean.Algebra.Lie.KacMoody.DualVermaSocle
 import LieLean.Algebra.Lie.KacMoody.DualityExt
 import LieLean.Algebra.Lie.KacMoody.DualityFunctor
