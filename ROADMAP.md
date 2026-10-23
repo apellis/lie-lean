@@ -3487,7 +3487,14 @@ completed steps and continuation threads are:
     exactness in the middle (`map_injective`, `map_surjective`, `ker_map_eq_range`), so
     multiplicities of `F(B)` are additive on short exact sequences of the block
     (`multiplicity_eq_add_of_exact`) and along standard filtrations
-    (`multiplicity_eq_sum_of_isStdFiltered`). Remaining: Thm. 3.4 (iii).
+    (`multiplicity_eq_sum_of_isStdFiltered`). Thm. 3.4 (iii), adjoint functors
+    (`KacMoody/BlockProjectiveFunctorAdjoint.lean`,
+    `BlockProjectiveFunctor.vermaMult_eq_vermaMult_of_adjoint`): if `G` from the block of `μ` to
+    the block of `λ` is right adjoint to `F` on the blocks, then
+    `(F(M(χ)) : M(ν)) = (G(M(ν)) : M(χ))` for `χ` linked to `λ` and `ν` linked to `μ`; both sides
+    are computed by Thm. 3.7 and BGG reciprocity on projective covers, and the adjunction moves
+    `F` across (`IsFGProjectiveO.finrank_hom_restrictedDual`, `eq_of_forall_sum_multiplicity_eq`).
+    Thm. 3.3 and Thm. 3.4 in block form are complete.
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
