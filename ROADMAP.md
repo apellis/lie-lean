@@ -902,8 +902,8 @@ translation functors `T`, `T'` by `L`, `L^*`, stated for `X ≅ T M`): `translat
 naturality of the adjunction in the first variable, `translationAdjunction_comp_left`),
 `not_injective_translationUnit` (`M ≠ 0`, `T M = 0`), the shuffling cokernel `shuffling` with
 `shuffling_exact` (`M → Θ M → Sh M → 0`) and functoriality `shufflingMap`, `shufflingMap_id`,
-`shufflingMap_comp`. Remaining: the independence of `Θ_s` from `μ` (Humphreys derives it from the
-classification of projective functors, §10.8).
+`shufflingMap_comp`. The independence of `Θ_s` from `μ` (§10.8) is proved with Duflo's and
+Kostant's theorems as hypotheses (`exists_bijOn_translationIdem_of_stabilizer`, status section).
 **Theorem 7.8 as a natural isomorphism** (`KacMoody/TranslationEquivalence.lean`, arbitrary
 weights): `bijective_translationUnit_of_sameFacet` — for `λ♮`, `μ♮` in the same facet, the
 adjunction morphism `η_V : V → T' T V` (natural by `translationUnit_naturality`) is bijective for
@@ -3424,7 +3424,15 @@ completed steps and continuation threads are:
     finitely generated module of the block, through one natural transformation
     (`exists_bijOn_translationIdem`, from `bijOn_range_of_block` and
     `exists_tensorNatTrans_of_equiv_verma`, `KacMoody/ProjectiveFunctorIso.lean`; Kostant
-    hypothesis).
+    hypothesis). **Independence of `T_μ^λ T_λ^μ` from `μ`**
+    (`KacMoody/WallCrossingIndependence.lean`): for antidominant `λ` and antidominant `μ`, `μ'` in the closure of the facet of `λ` with the
+    same dot stabilizer (e.g. two weights on the wall of `s` only, so `Θ_s` either way), the
+    composites agree at the dominant Verma module `M(w·λ)` of the block
+    (`nonempty_equiv_translation_translation_verma`: both are projective with the same
+    character, Thm. 7.6, Thm. 7.12, Cor. 3.10), hence one natural transformation identifies
+    them on every finitely generated module of the block
+    (`exists_bijOn_translationIdem_of_stabilizer`), with Duflo's theorem (the annihilator `I`
+    of `M(w·λ)`) and Kostant's multiplicities for `U/I` as hypotheses.
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
