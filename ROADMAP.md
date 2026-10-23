@@ -3413,6 +3413,9 @@ completed steps and continuation threads are:
     on all modules (`exists_tensorNatTrans_app_verma`, with the Kostant hypothesis), and (b)
     natural morphisms between such summands that are inverse at `M(λ)` are isomorphisms on the
     block (`exists_inverse_of_block`).
+    On a finitely generated module with locally finite central action, each block projection
+    is the action of one central element (`exists_rep_eq_centralBlockProjection`,
+    `KacMoody/CentralIdempotent.lean`), so translation functors are such summands there.
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
