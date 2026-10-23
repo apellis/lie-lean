@@ -3464,7 +3464,13 @@ completed steps and continuation threads are:
     functor `G` on the block of `μ` to the projective functor `GF = e''(− ⊗ (V ⊗ W))`
     (`BlockProjectiveFunctor.comp`, natural via `TensorNatTrans.lTensor`), with
     `(GF)(M) ≅ G(F(M))` and `ch (GF)(M) = ch G(F(M))` (`nonempty_comp_equiv`,
-    `character_comp`). Remaining: Thm. 3.4 (iii), (iv).
+    `character_comp`). Thm. 3.4 (iv), statement and the functors `pr_χ(− ⊗ V)`
+    (`KacMoody/BlockProjectiveFunctorWeyl.lean`): `CommutesWithWeyl` (the multiplicity of
+    `M(w·ν)` in `F(M(w·λ))` is that of `M(ν)` in `F(M(λ))`, `w ∈ W_[λ]`, multiplicities as
+    `dim Hom(F(M), M(ν)^∨)`, `count_eq_vermaMult`), `vermaMult_tensorBlock`
+    (`(pr_χ(M(Λ) ⊗ V) : M(ξ)) = dim V_{ξ-Λ}` if `χ_ξ = χ`, else `0`) and
+    `commutesWithWeyl_tensorBlock`. Remaining: Thm. 3.4 (iii), and (iv) for all projective
+    functors (BG §3.9 (d), (e)).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
