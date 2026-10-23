@@ -505,7 +505,12 @@ block of `Λ` has global dimension `2ℓ(w₀)`. Both lower bounds come from wal
 sequences `0 → M(w sᵢ·Λ) → Θ M(w·Λ) → M(w·Λ) → 0` for Verma modules, and for simple modules the
 cokernel of the adjunction morphism `L(w·Λ) → Θ L(w·Λ)`, with descending induction on `ℓ(w)` from
 `L(w₀·Λ) = M(w₀·Λ)` (reconstructed; Humphreys leaves it as an exercise, and no twisting functors
-are needed). Roadmap item (maintainer decision 2026-10-22, issue #7): [HumO] Prop. 6.15.
+are needed). [HumO] Prop. 6.15 (maintainer decision 2026-10-22, issue #7): part (b) done,
+`CategoryO.nonempty_ext_verma_linearEquiv_nPosCohomology` (`Extⁿ_𝒪(M(μ), N) ≅ Hⁿ(𝔫, N)_μ` for `N`
+in `𝒪`, `KacMoody/CategoryOExtCohomology.lean`), by dimension shifting along embeddings into the
+injectives `Q^∨` of `𝒪`, whose positive-degree `𝔫`-cohomology vanishes
+(`KacMoody/InjectiveCohomology.lean`, via `KacMoody/DualVermaCohomology.lean` and the duality
+of `Homology/CochainDuality.lean`); the isomorphism comes from equal finite dimensions. Part (a) open.
 Bott's Thm. 6.6 stands in the `𝔫₋`-homology form (Garland–Lepowsky, M13); the `𝔫`-cohomology form
 would need new Lie algebra cohomology infrastructure and is not formalized. Its dimension statement
 `dim H_k(𝔫₋, L(Λ)) = #{w ∈ W | ℓ(w) = k}` holds for every symmetrizable GCM
