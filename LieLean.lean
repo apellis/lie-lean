@@ -15,6 +15,7 @@ import LieLean.Algebra.Lie.Homology.LongExactSequence
 import LieLean.Algebra.Lie.Homology.RegularAcyclic
 import LieLean.Algebra.Lie.Homology.RegularFiltration
 import LieLean.Algebra.Lie.Homology.RelativeCochain
+import LieLean.Algebra.Lie.Homology.RelativeDuality
 import LieLean.Algebra.Lie.Homology.Transport
 import LieLean.Algebra.Lie.Homology.TrivialTensor
 import LieLean.Algebra.Lie.Homology.Vanishing
