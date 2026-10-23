@@ -17,6 +17,7 @@ import LieLean.Algebra.Lie.Homology.RegularFiltration
 import LieLean.Algebra.Lie.Homology.RelativeCochain
 import LieLean.Algebra.Lie.Homology.RelativeDuality
 import LieLean.Algebra.Lie.Homology.RelativeKoszul
+import LieLean.Algebra.Lie.Homology.RelativeTensor
 import LieLean.Algebra.Lie.Homology.Transport
 import LieLean.Algebra.Lie.Homology.TrivialTensor
 import LieLean.Algebra.Lie.Homology.Vanishing
@@ -274,6 +275,7 @@ import LieLean.Algebra.Lie.KacMoody.UpperClosure
 import LieLean.Algebra.Lie.KacMoody.UpperClosureNonintegral
 import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosure
 import LieLean.Algebra.Lie.KacMoody.TranslationUpperClosureNonintegral
+import LieLean.Algebra.Lie.KacMoody.VermaCoordinates
 import LieLean.Algebra.Lie.KacMoody.VermaEmbedding
 import LieLean.Algebra.Lie.KacMoody.VermaIrreducible
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
