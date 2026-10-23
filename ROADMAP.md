@@ -3476,8 +3476,13 @@ completed steps and continuation threads are:
     lattice, then `F` commutes with `W_[λ]`; BG's induction, on the number of weights above `ψ`
     in its linkage class (`linkedAbove`), with Verma multiplicities additive over decompositions
     (`vermaMult_eq_sum`) and given by BGG reciprocity on covers
-    (`vermaMult_verma_eq_multiplicity`). Remaining: Thm. 3.4 (iii), and (iv) for all projective
-    functors (BG §3.9 (e)).
+    (`vermaMult_verma_eq_multiplicity`). Thm. 3.4 (iv) for every projective functor on the
+    block of a dominant `λ`, BG §3.9 (e) (`KacMoody/BlockProjectiveFunctorWeylGeneral.lean`,
+    `BlockProjectiveFunctor.commutesWithWeyl`, with the Kostant hypothesis at every dominant
+    weight): compose `F` with `pr_{χ_λ}(− ⊗ L(Nρ)^*)` from the block of `λ + Nρ`, which sends
+    `M(w·(λ + Nρ))` to `M(w·λ)` (`nonempty_tensorBlock_verma_equiv`,
+    `KacMoody/BlockProjectiveFunctorShift.lean`); for `N` large every summand of the composite
+    satisfies the hypothesis of §3.9 (d). Remaining: Thm. 3.4 (iii).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem

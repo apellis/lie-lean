@@ -66,6 +66,7 @@ import LieLean.Algebra.Lie.KacMoody.BlockProjectiveFunctorComposition
 import LieLean.Algebra.Lie.KacMoody.BlockProjectiveFunctorDecomposition
 import LieLean.Algebra.Lie.KacMoody.BlockProjectiveFunctorShift
 import LieLean.Algebra.Lie.KacMoody.BlockProjectiveFunctorWeyl
+import LieLean.Algebra.Lie.KacMoody.BlockProjectiveFunctorWeylGeneral
 import LieLean.Algebra.Lie.KacMoody.BlockProjectiveFunctorWeylInduction
 import LieLean.Algebra.Lie.KacMoody.Blocks
 import LieLean.Algebra.Lie.KacMoody.Blocks.Exact
