@@ -2,6 +2,7 @@ import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.Homology.ChainComplex
 import LieLean.Algebra.Lie.Homology.Cochain
 import LieLean.Algebra.Lie.Homology.CochainDuality
+import LieLean.Algebra.Lie.Homology.CochainDualityFinrank
 import LieLean.Algebra.Lie.Homology.CochainWeights
 import LieLean.Algebra.Lie.Homology.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Homology.Comparison
@@ -13,6 +14,7 @@ import LieLean.Algebra.Lie.Homology.LeadingDifferential
 import LieLean.Algebra.Lie.Homology.LongExactSequence
 import LieLean.Algebra.Lie.Homology.RegularAcyclic
 import LieLean.Algebra.Lie.Homology.RegularFiltration
+import LieLean.Algebra.Lie.Homology.Transport
 import LieLean.Algebra.Lie.Homology.TrivialTensor
 import LieLean.Algebra.Lie.Homology.Vanishing
 import LieLean.Algebra.Lie.Homology.Weights
@@ -132,6 +134,7 @@ import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Polynomial
 import LieLean.Algebra.Lie.KacMoody.KacKazhdan.Words
 import LieLean.Algebra.Lie.KacMoody.Kostant.Chains
 import LieLean.Algebra.Lie.KacMoody.Kostant.Cocycle
+import LieLean.Algebra.Lie.KacMoody.Kostant.Cohomology
 import LieLean.Algebra.Lie.KacMoody.Kostant.Degree0
 import LieLean.Algebra.Lie.KacMoody.Kostant.Degree1
 import LieLean.Algebra.Lie.KacMoody.Kostant.Dimension

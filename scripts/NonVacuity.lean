@@ -67,6 +67,11 @@ example : ∃ s : Set (LieSubmodule ℚ P2.KacMoodyAlgebra (IrreducibleModule P2
     ((IrreducibleModule.isIntegrable_iff P2 hA2).2
       (IrreducibleModule.isDominantIntegral_rho (P := P2)))
 
+/-! ### Bott's theorem (cohomological form) at `Λ = ρ`, `w = 1` -/
+
+example := IrreducibleModule.finrank_nPosCohomology_eq_one hA2 hS2
+  (IrreducibleModule.isDominantIntegral_rho (P := P2)) 1
+
 /-! ### Quantum Gabber–Kac for `A₂` -/
 
 /-- The Lusztig Cartan datum of type `A₂`, symmetrized by `ε = 1`. -/

@@ -196,6 +196,39 @@ lemma comp_mk_mem_range {B : N →ₗ[K] X →ₗ[K] K}
 
 variable [LieModule K L X] [LieModule K L N]
 
+omit [LieModule K L X] [LieModule K L N] in
+/-- A functional `ψ` of weight `-μ` on `⋀L ⊗ X` is, on the chains of degree `k`, the pairing
+with a `k`-cochain of weight `μ` with values in `N`. -/
+lemma exists_cochain_of_weight {B : N →ₗ[K] X →ₗ[K] K} (hD : ∀ a, ρN.D a = ρ.D a)
+    (hBφ : ∀ (a : H) (n : N) (m : X), B (ρN.φ a n) m = -B n (ρ.φ a m))
+    (hinj : Function.Injective B)
+    (hrep : ∀ (γ : Dual K H) (ψ : X →ₗ[K] K), (∀ a m, ψ (ρ.φ a m) = γ a * ψ m) →
+      ψ ∈ LinearMap.range B)
+    (hL : ⨆ γ, Module.End.weightSpaceOf ρ.D γ = ⊤) {k : ℕ} {μ : Dual K H}
+    (ψ : ExteriorAlgebra K L ⊗[K] X →ₗ[K] K) (hψθ : ∀ a t, ψ (ρ.θ a t) = -μ a * ψ t) :
+    ∃ g ∈ ρN.cochainWeightSpace k μ,
+      ∀ t ∈ chainsIn K L X k, cochainPair B (g ∘ₗ degProj K L k) t = ψ t := by
+  have hΦ : ∀ ω : ⋀[K]^k L, ψ ∘ₗ TensorProduct.mk K _ X (ω : ExteriorAlgebra K L) ∈
+      LinearMap.range B := fun ω ↦ comp_mk_mem_range ρ hrep hL _ ψ (-μ) hψθ
+  obtain ⟨g, hg⟩ : ∃ g : Cochains K L N k,
+      ∀ ω m, B (g ω) m = ψ ((ω : ExteriorAlgebra K L) ⊗ₜ m) :=
+    ⟨(LinearEquiv.ofInjective B hinj).symm.toLinearMap ∘ₗ
+        (((LinearMap.llcomp K X _ K ψ) ∘ₗ TensorProduct.mk K _ X ∘ₗ
+          (⋀[K]^k L).subtype).codRestrict (LinearMap.range B) hΦ),
+      fun ω m ↦ LinearMap.congr_fun (LinearEquiv.ofInjective_symm_apply (f := B) (h := hinj)
+        (⟨_, hΦ ω⟩ : LinearMap.range B)) m⟩
+  refine ⟨g, fun a ↦ ?_, ?_⟩
+  · refine LinearMap.ext fun ω ↦ hinj (LinearMap.ext fun m ↦ ?_)
+    have h := hψθ a ((ω : ExteriorAlgebra K L) ⊗ₜ m)
+    rw [θ_tmul, map_add] at h
+    rw [coActDeg_apply, LinearMap.smul_apply, map_sub, LinearMap.sub_apply, hBφ, hD, map_smul,
+      LinearMap.smul_apply, hg, hg, hg, smul_eq_mul, coe_extDerivDeg]
+    linear_combination -h
+  · rintro t ⟨s, rfl⟩
+    induction s with
+    | tmul ω m => rw [incl_tmul, cochainPair_tmul, LinearMap.comp_apply, degProj_subtype, hg]
+    | add s s' h h' => rw [map_add, map_add, map_add, h, h']
+
 /-- **Vanishing of weight cohomology by duality.** Let `B : N × X → K` be an invariant pairing
 (for `L` and for `H`) identifying `N` with the weight functionals on `X`, with `L` and `X` sums
 of weight spaces. If `H_{k+1}(L, X) = 0`, then every `(k+1)`-cocycle of weight `μ` with values in
@@ -276,33 +309,13 @@ theorem exists_δ_eq_of_subsingleton_homology {B : N →ₗ[K] X →ₗ[K] K}
       | zero => simp only [map_zero]
       | add t t' _ _ h h' => rw [map_add, map_add, map_add, h, h']
   -- the primitive
-  have hΦ : ∀ ω : ⋀[K]^k L, ψ ∘ₗ TensorProduct.mk K _ X (ω : ExteriorAlgebra K L) ∈
-      LinearMap.range B := fun ω ↦ comp_mk_mem_range ρ hrep hL _ ψ (-μ) hψθ
-  obtain ⟨g, hg⟩ : ∃ g : Cochains K L N k,
-      ∀ ω m, B (g ω) m = ψ ((ω : ExteriorAlgebra K L) ⊗ₜ m) :=
-    ⟨(LinearEquiv.ofInjective B hinj).symm.toLinearMap ∘ₗ
-        (((LinearMap.llcomp K X _ K ψ) ∘ₗ TensorProduct.mk K _ X ∘ₗ
-          (⋀[K]^k L).subtype).codRestrict (LinearMap.range B) hΦ),
-      fun ω m ↦ LinearMap.congr_fun (LinearEquiv.ofInjective_symm_apply (f := B) (h := hinj)
-        (⟨_, hΦ ω⟩ : LinearMap.range B)) m⟩
-  have hpair : ∀ t ∈ chainsIn K L X k, cochainPair B (g ∘ₗ degProj K L k) t = ψ t := by
-    rintro t ⟨s, rfl⟩
-    induction s with
-    | tmul ω m => rw [incl_tmul, cochainPair_tmul, LinearMap.comp_apply, degProj_subtype, hg]
-    | add s s' h h' => rw [map_add, map_add, map_add, h, h']
-  refine ⟨g, fun a ↦ ?_, ?_⟩
-  · refine LinearMap.ext fun ω ↦ hinj (LinearMap.ext fun m ↦ ?_)
-    have h := hψθ a ((ω : ExteriorAlgebra K L) ⊗ₜ m)
-    rw [θ_tmul, map_add] at h
-    rw [coActDeg_apply, LinearMap.smul_apply, map_sub, LinearMap.sub_apply, hBφ, hD, map_smul,
-      LinearMap.smul_apply, hg, hg, hg, smul_eq_mul, coe_extDerivDeg]
-    linear_combination -h
-  · refine LinearMap.ext fun ω ↦ hinj (LinearMap.ext fun m ↦ ?_)
-    have hω : (ω : ExteriorAlgebra K L) ⊗ₜ m ∈ chainsIn K L X (k + 1) := tmul_mem_chainsIn ω.2 m
-    rw [δ_apply]
-    change cochainPair B (cochainDiff K L N (g ∘ₗ degProj K L k)) ((ω : ExteriorAlgebra K L) ⊗ₜ m)
-      = _
-    rw [cochainPair_cochainDiff hB, hpair _ (diff_mem_chainsIn hω), hψd _ hω, hF,
-      cochainPair_tmul, LinearMap.comp_apply, degProj_subtype]
+  obtain ⟨g, hgw, hpair⟩ := exists_cochain_of_weight ρ ρN hD hBφ hinj hrep hL (k := k) ψ hψθ
+  refine ⟨g, hgw, LinearMap.ext fun ω ↦ hinj (LinearMap.ext fun m ↦ ?_)⟩
+  have hω : (ω : ExteriorAlgebra K L) ⊗ₜ m ∈ chainsIn K L X (k + 1) := tmul_mem_chainsIn ω.2 m
+  rw [δ_apply]
+  change cochainPair B (cochainDiff K L N (g ∘ₗ degProj K L k)) ((ω : ExteriorAlgebra K L) ⊗ₜ m)
+    = _
+  rw [cochainPair_cochainDiff hB, hpair _ (diff_mem_chainsIn hω), hψd _ hω, hF,
+    cochainPair_tmul, LinearMap.comp_apply, degProj_subtype]
 
 end LieModule.ChevalleyEilenberg.DerivAction
