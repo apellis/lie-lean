@@ -74,6 +74,7 @@ import LieLean.Algebra.Lie.KacMoody.CategoryOExtCriterion
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtDualVerma
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtFinite
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtLength
+import LieLean.Algebra.Lie.KacMoody.CategoryOExtRelative
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtSimple
 import LieLean.Algebra.Lie.KacMoody.CategoryOExtVerma
 import LieLean.Algebra.Lie.KacMoody.CategoryOEulerChar
