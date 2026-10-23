@@ -320,8 +320,8 @@ Further proved results include:
     `frobGeneral_integralGenerator`, `eq_frobGeneral`). [Lus] 35.1.9 over every `𝒜'`-algebra `S`:
     the `S`-algebra map `Fr : _S U̇ → _S U̇*` with Lusztig's values on `Eᵢ^{(n)} 1_λ`,
     `Fᵢ^{(n)} 1_λ`, `1_λ` (`Modified.frobR`, `frobR_eA`, `frobR_fA`, `frobR_oneA`, `eq_frobR`).
-  - **Not yet formalized:** [Lus] 41.1.9 (compatibility with the quantum Frobenius map, roadmap
-    item D2, in progress).
+    [Lus] 41.1.9: `Fr` intertwines the symmetries `T''_{i,1}` of `_S U̇` and `_S U̇*`, and their
+    inverses (`Modified.frobA_braidA`, `Modified.frobR_braidR`, `Modified.frobR_braidR_symm`).
 - **Braid group action for every Cartan datum:** for `v` not a root of unity, Lusztig's `Tᵢ`
   satisfy all braid relations, with no condition on the Dynkin diagram
   (`isBraidLiftable_braidEquivOfNotRoot`, `braidArtinHomOfNotRoot`; [Lus] 39.4.3), via the
