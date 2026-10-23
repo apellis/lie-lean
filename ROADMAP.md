@@ -2670,7 +2670,7 @@ form restricts to crystal bases of the summands when the `Lⱼ` are free (`IsCry
 `F^{(j)} ηₜ` form a basis of `M` when the `ηₜ` form bases of the primitive spaces) and existence
 of crystal bases of every integrable `U_q(𝔰𝔩₂)`-module (`isCrystalBase_stringLattice`, `A ⊆ k`,
 `c` not a unit; [HK] Thm. 4.3.1 for finite-dimensional modules). The tensor product rule and the
-grand loop are treated below (tracking issue #34). `CrystalBasis/TensorSl2.lean`:
+grand loop are treated below. `CrystalBasis/TensorSl2.lean`:
 the tensor product of integrable `U_q(𝔰𝔩₂)`-modules with Kashiwara's coproduct
 (`IntegrableSl2.tensor`; graded pieces = eigenspaces of `K ⊗ K`), with the divided powers on pure
 tensors (`tensor_dF_tmul`, `tensor_dE_tmul`). `CrystalBasis/{Valuation,TensorStrings}.lean`: orders
@@ -3514,7 +3514,7 @@ completed steps and continuation threads are:
   (`GrandLoop.isNormal_crystal_of_isCategoryOInt`). The decomposition of `L_q(μ) ⊗ L_q(ν)`
   ([Kas] Prop. 4.2) is proved (`GrandLoop.nonempty_tensor_equiv_dfinsupp`, see M15), and so is
   the restriction to `U_q(𝔤_J)` ([Kas] Prop. 4.3: `IsCrystalBase.leviRestrict`,
-  `GrandLoop.nonempty_leviRestrict_equiv_dfinsupp`). Not formalized (issue #34): crystal bases
+  `GrandLoop.nonempty_leviRestrict_equiv_dfinsupp`). Not formalized: crystal bases
   of integrable modules outside `𝒪_int`. [Kas] Prop. 7.1: (i) ⇒ (ii) only
   (`Crystal.IsNormal.isNormalRankTwo`). The converse is stated without proof in [Kas]; by the
   maintainer's decision (2026-10-21) it is recorded as unproved in the source and not formalized.
