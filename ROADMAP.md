@@ -3469,8 +3469,15 @@ completed steps and continuation threads are:
     `M(w·ν)` in `F(M(w·λ))` is that of `M(ν)` in `F(M(λ))`, `w ∈ W_[λ]`, multiplicities as
     `dim Hom(F(M), M(ν)^∨)`, `count_eq_vermaMult`), `vermaMult_tensorBlock`
     (`(pr_χ(M(Λ) ⊗ V) : M(ξ)) = dim V_{ξ-Λ}` if `χ_ξ = χ`, else `0`) and
-    `commutesWithWeyl_tensorBlock`. Remaining: Thm. 3.4 (iii), and (iv) for all projective
-    functors (BG §3.9 (d), (e)).
+    `commutesWithWeyl_tensorBlock`. Thm. 3.4 (iv), case of BG §3.9 (d)
+    (`KacMoody/BlockProjectiveFunctorWeylInduction.lean`,
+    `BlockProjectiveFunctor.commutesWithWeyl_of_equiv_projectiveCover`): if `F(M(λ)) ≅ P(ψ)`
+    and `λ - ξ` is dominant integral for every `ξ` linked to `ψ` with `ξ - ψ` in the root
+    lattice, then `F` commutes with `W_[λ]`; BG's induction, on the number of weights above `ψ`
+    in its linkage class (`linkedAbove`), with Verma multiplicities additive over decompositions
+    (`vermaMult_eq_sum`) and given by BGG reciprocity on covers
+    (`vermaMult_verma_eq_multiplicity`). Remaining: Thm. 3.4 (iii), and (iv) for all projective
+    functors (BG §3.9 (e)).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
