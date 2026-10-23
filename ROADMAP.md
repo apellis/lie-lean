@@ -3416,6 +3416,10 @@ completed steps and continuation threads are:
     On a finitely generated module with locally finite central action, each block projection
     is the action of one central element (`exists_rep_eq_centralBlockProjection`,
     `KacMoody/CentralIdempotent.lean`), so translation functors are such summands there.
+    A composite `pr_{χ₂}(pr_{χ₁}(M ⊗ L) ⊗ L')` of translation functors is the image of the
+    idempotent `translationIdem` of `M ⊗ (L ⊗ L')`, which on any two finitely generated modules
+    of `𝒪` is the value of one natural transformation of `− ⊗ (L ⊗ L')`
+    (`exists_tensorNatTrans_app_eq_translationIdem`, `KacMoody/TranslationTensorNatTrans.lean`).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
