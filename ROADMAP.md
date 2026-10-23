@@ -3394,6 +3394,11 @@ completed steps and continuation threads are:
     vanishing on modules killed by `I` satisfies `θ_M ^ n = 0` when `M` has a filtration of
     length `n` with subquotients killed by `I` (`pow_eq_zero_of_hasKilledFiltration`,
     `UniversalEnveloping/TensorNaturalNilpotent.lean`).
+    In finite type, morphisms `V → (U/I)^{ad} ⊗ W` lift to `V → U^{ad} ⊗ W` (`U^{ad}` is a
+    union of finite-dimensional, hence semisimple, submodules: `adFiltration`,
+    `LieModuleHom.exists_comp_eq_of_surjective`), so natural transformations on modules killed
+    by `I` extend to all modules (`exists_lift_adQuotient`, `exists_tensorNatMap_eq`,
+    `UniversalEnveloping/TensorNaturalLift.lean`, `KacMoody/ProjectiveFunctorLift.lean`).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
