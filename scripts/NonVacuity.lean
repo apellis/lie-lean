@@ -205,6 +205,18 @@ example (n : ℕ) : frobSplitGeneral DA2 (l := 3) (l' := 3) (by norm_num) (Or.in
     (1 : CyclotomicQuotient 3) ⊗ₜ integralGenerator DA2 1 (DA2.frobOrder 3 1 * n) :=
   frobSplitGeneral_integralGenerator DA2 _ _ _ 1 n
 
+open scoped TensorProduct Classical in
+/-- [Lus] 35.1.9 for `A₂`, `l = 2`, `l' = 4`, over `𝒜' = 𝒜/(v² + 1)`:
+`Fr(Eᵢ^{(n)} 1_λ) = Eᵢ^{(n/2)} 1_{λ*}` for `λ ∈ X*` and even `n`, and `0` otherwise. -/
+example (n : ℕ) (μ : (Fin 2 → ℤ) × (Fin 2 → ℤ) →+ ℤ) :
+    Modified.frobR DA2.extendedRootDatum (l := 2) (l' := 4) (by norm_num) (Or.inl rfl) hAA2
+        (CyclotomicQuotient 4) ((1 : CyclotomicQuotient 4) ⊗ₜ Modified.eA _ 0 n μ) =
+      if μ ∈ DA2.extendedRootDatum.frobWeights 2 ∧ DA2.frobOrder 2 0 ∣ n then
+        (1 : CyclotomicQuotient 4) ⊗ₜ Modified.eA (DA2.extendedRootDatum.frobRootDatum
+          (by norm_num)) 0 (n / DA2.frobOrder 2 0)
+          (DA2.extendedRootDatum.frobWt 2 μ) else 0 :=
+  Modified.frobR_eA _ _ _ _ _ 0 n μ
+
 /-! ### Lusztig 25.2.1 (d) and 26.3.1 on the extended root datum of `sl₂` -/
 
 /-- The extended root datum of `sl₂`. -/
