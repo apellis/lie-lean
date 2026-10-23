@@ -6,7 +6,7 @@ Authors: Alex Ellis
 import LieLean.Algebra.Lie.KacMoody.BlockProjectiveFunctorComposition
 import LieLean.Algebra.Lie.KacMoody.CentralTensorFiltration
 import LieLean.Algebra.Lie.KacMoody.TranslationProjective
-import LieLean.Algebra.Lie.KacMoody.DualVerma
+import LieLean.Algebra.Lie.KacMoody.BGGReciprocity
 import LieLean.Algebra.Lie.KacMoody.FiniteDimensional
 
 /-!
@@ -39,8 +39,7 @@ Bernstein–Gelfand's proof (§3.9 (d)).
 
 ## Main results
 
-* `Matrix.Realization.KacMoodyAlgebra.IsStdFiltered.top_range`: a standard filtration of the image
-  of an idempotent is one of the image as a module.
+* `Matrix.Realization.KacMoodyAlgebra.IsStdFiltered.count_range_eq_finrank_hom`.
 * `BlockProjectiveFunctor.count_eq_vermaMult`.
 * `BlockProjectiveFunctor.exists_isStdFiltered_tensorBlock_verma`,
   `BlockProjectiveFunctor.vermaMult_tensorBlock`.
@@ -74,29 +73,13 @@ variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K] [AddCommGroup 
 
 local notation "𝔤" => KacMoodyAlgebra P
 
-/-- A standard filtration of the image of an idempotent is a standard filtration of the image
-as a module. -/
-theorem IsStdFiltered.top_range {e : X →ₗ⁅K,𝔤⁆ X} (he : e.comp e = e)
-    {s : Multiset (Dual K H)} (hs : IsStdFiltered P e.range s) :
-    IsStdFiltered P (⊤ : LieSubmodule K 𝔤 e.range) s := by
-  have hinj : ∀ y ∈ e.range, rangeRetr e y = 0 → y = 0 := fun y hy hy0 ↦ by
-    have h := rangeRetr_incl he ⟨y, hy⟩
-    rw [show e.range.incl ⟨y, hy⟩ = y from rfl, hy0] at h
-    exact congrArg Subtype.val h.symm
-  have h := hs.map_of_injOn P (rangeRetr e) hinj le_rfl
-  have hmap : e.range.map (rangeRetr e) = ⊤ := by
-    rw [eq_top_iff]
-    rintro y -
-    exact ⟨y.1, y.2, rangeRetr_incl he y⟩
-  rwa [hmap] at h
-
 /-- The multiplicity of `M(ν)` in a standard filtration of the image of an idempotent is
 `dim Hom(e(X), M(ν)^∨)` (Humphreys, GSM 94, Theorem 3.7). -/
 theorem IsStdFiltered.count_range_eq_finrank_hom [CharZero K] [DecidableEq (Dual K H)]
     {e : X →ₗ⁅K,𝔤⁆ X} (he : e.comp e = e) (hX : IsCategoryO P e.range)
     {s : Multiset (Dual K H)} (hs : IsStdFiltered P e.range s) (ν : Dual K H) :
     s.count ν = finrank K (e.range →ₗ⁅K,𝔤⁆ restrictedDual P (VermaModule P ν)) :=
-  (hs.top_range P he).count_eq_finrank_hom hX ν
+  (isStdFiltered_top_range P he hs).count_eq_finrank_hom hX ν
 
 end Range
 
