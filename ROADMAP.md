@@ -3380,7 +3380,10 @@ completed steps and continuation threads are:
     transformations `M ⊗ V → M ⊗ W` on modules killed by a two-sided ideal `I ⊆ U(𝔤)`
     correspond to morphisms `V → (U/I)^{ad} ⊗ W` (`UniversalEnvelopingAlgebra.tensorNatMap`,
     `evalNat`, `evalNat_tensorNatMap`, `tensorNatMap_evalNat`,
-    `UniversalEnveloping/TensorNatural.lean`).
+    `UniversalEnveloping/TensorNatural.lean`); evaluation at a module `M` with annihilator `I`
+    is injective, and bijective when the two Hom spaces have equal finite dimension
+    (`tensorNatLinear_injective`, `tensorNatLinear_bijective`,
+    `UniversalEnveloping/TensorNaturalEval.lean`).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
