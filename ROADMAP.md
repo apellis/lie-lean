@@ -3404,7 +3404,15 @@ completed steps and continuation threads are:
     morphisms between summands `e(− ⊗ V)`, `e'(− ⊗ W)` that are mutually inverse there are
     isomorphisms on every module with a filtration whose subquotients are killed by `I`
     (`TensorNatTrans.exists_inverse_of_hasKilledFiltration`, the argument of Thm. 10.7 (b);
-    `UniversalEnveloping/TensorNatTrans.lean`).
+    `UniversalEnveloping/TensorNatTrans.lean`). Every finitely generated module in the block
+    of a dominant `λ` is killed by a power of `I = Ann M(λ)` (`exists_isKilledByPow_of_block`,
+    via the Serre class `isSerreClassO_isKilledByPow` and Prop. 10.1 (c)), which gives
+    **Thm. 10.7** for summands `e(− ⊗ V)` of tensoring functors
+    (`KacMoody/ProjectiveFunctorBlock.lean`):
+    (a) every morphism `M(λ) ⊗ V → M(λ) ⊗ W` is the value at `M(λ)` of a natural transformation
+    on all modules (`exists_tensorNatTrans_app_verma`, with the Kostant hypothesis), and (b)
+    natural morphisms between such summands that are inverse at `M(λ)` are isomorphisms on the
+    block (`exists_inverse_of_block`).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
