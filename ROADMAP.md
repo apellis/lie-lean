@@ -470,7 +470,7 @@ involution, `R`-polynomials; existence and uniqueness of the Kazhdan–Lusztig b
 ([KL] Thm. 1.1), KL polynomials `P_{y,w}` (degree bound, `P_{w,w} = 1`, `P_{y,w} = 0` unless
 `y ≤ w`), specialization `v = 1` to `ℤ[W]`.
 
-### M12. Deeper category 𝒪  `[~]`  ([Kac] §9, [HumO], [KK])
+### M12. Deeper category 𝒪  `[x]`  ([Kac] §9, [HumO], [KK])
 
 *Maintainer decisions (2026-10-21, issue #7).* Remaining [HumO] items: Thm. 4.12 (Shapovalov
 elements) first. Then `Extⁿ_𝒪` for Thm. 6.9–6.15 and Prop. 7.2 (b), by whichever construction is
@@ -1707,7 +1707,7 @@ rule), seminormal/normal crystals, Kashiwara's action of `W` on normal crystals;
 path model: LS paths, root operators, the crystal `B(λ)` for `λ` dominant integral, and
 `ch B(λ) = ch L(λ)` (via the Weyl–Kac formula of M8).
 
-### M15. Quantum groups  `[~]`  ([Lus], [Jan], [HK])
+### M15. Quantum groups  `[x]`  ([Lus], [Jan], [HK])
 
 Classical bridge done (`KacMoody/SerreAssociative*.lean`): the associative Serre algebra
 `Matrix.SerreAssocAlgebra K A` (`FreeAlgebra K ι` modulo `Σ (-1)^r C(n,r) θᵢ^r θⱼ θᵢ^s`,
@@ -2756,7 +2756,7 @@ above `μ` (`j ≥ 0` steps of `αᵢ`), the string vectors of `x ∈ L ∩ M^μ
 (`mem_of_sum_mem_weight`, cf. [HK] Lemma 5.3.1 (1)), `ẽᵢ`, `f̃ᵢ` preserve `x ⊗ y ∈ L₁ ⊗ L₂`
 (`TensorModule.kashiwaraF_tmul_mem`), and act on string vectors by the tensor product rule modulo
 `ϖ` (`TensorModule.kashiwaraF_tmul_sub_mem`, `kashiwaraE_tmul_sub_mem`; cf. [HK] Lemma 5.3.2).
-`CrystalBasis/GrandLoop/`: Kashiwara's grand loop ([HK] §5.3) in progress. `Basic`: the inductive
+`CrystalBasis/GrandLoop/`: Kashiwara's grand loop ([HK] §5.3), completed in `Main` below. `Basic`: the inductive
 statements `A(r)`, `B(r)`, `C(r)` (`GrandLoop.PropA`, `PropB`, `PropC`) indexed by depth, local
 `ẽᵢ`-stability, and the string lemma (`GrandLoop.exists_string`, [HK] Lemma 5.3.1 (2)). `Tensor`:
 string data (`GrandLoop.IsStr`, `exists_isStr`) and the tensor product rule on `L(λ₁) ⊗ L(λ₂)` in
@@ -3360,9 +3360,10 @@ on it. Faithfulness of the braid group action remains out of scope.
 ## Status and open threads
 
 The declarations listed as proved are on `master`; the explicit remaining items below are not
-completion claims. M1–M9's main targets, M10, M11, M13 and M14 (with normal crystals relative
-to the path model) are complete at their stated scope; M12 and M15 remain in progress. Current
-completed steps and continuation threads are:
+completion claims. M1–M9's main targets and M10–M16 (M14 with normal crystals relative to the
+path model) are complete at their stated scope. M12 and M15 also list extensions beyond their
+scheduled items (for example nonsymmetrizable BGG exactness, faithfulness of the braid group
+action); these are open and not scheduled. Current completed steps and continuation threads are:
 
 - **BGG exactness in degrees ≥ 1** (M12): proved for symmetrizable GCM and finite-dimensional
   Cartan space by `ker_bggDiff_eq_range`, using actual lowering powers modulo boundaries
