@@ -75,14 +75,15 @@ theorem finrank_hom_congr_left {M M' D : Type*} [AddCommGroup M] [Module K M]
 Prop. 3.7 (b) and Thm. 3.7): let `Y ∈ 𝒪` have a standard filtration, and let `e₁` and `e - e₁` be
 orthogonal idempotents. Then `dim Hom(e(Y), M(ν)^∨) = dim Hom(e₁(Y), M(ν)^∨) +
 dim Hom((e - e₁)(Y), M(ν)^∨)`. -/
-theorem finrank_hom_range_eq_add [DecidableEq (Dual K H)] {Y : Type*} [AddCommGroup Y]
-    [Module K Y] [LieRingModule 𝔤 Y] [LieModule K 𝔤 Y] (hY : IsCategoryO P Y)
+theorem finrank_hom_range_eq_add {Y : Type*} [AddCommGroup Y] [Module K Y]
+    [LieRingModule 𝔤 Y] [LieModule K 𝔤 Y] (hY : IsCategoryO P Y)
     {s : Multiset (Dual K H)} (hs : IsStdFiltered P (⊤ : LieSubmodule K 𝔤 Y) s)
     {e e₁ : Y →ₗ⁅K,𝔤⁆ Y} (he : e.comp e = e) (he₁ : e₁.comp e₁ = e₁) (hee₁ : e.comp e₁ = e₁)
     (he₁e : e₁.comp e = e₁) (ν : Dual K H) :
     finrank K (e.range →ₗ⁅K,𝔤⁆ restrictedDual P (VermaModule P ν)) =
       finrank K (e₁.range →ₗ⁅K,𝔤⁆ restrictedDual P (VermaModule P ν)) +
         finrank K ((e - e₁).range →ₗ⁅K,𝔤⁆ restrictedDual P (VermaModule P ν)) := by
+  classical
   have hee (y : Y) : e (e y) = e y := LieModuleHom.congr_fun he y
   have hee₁' (y : Y) : e (e₁ y) = e₁ y := LieModuleHom.congr_fun hee₁ y
   have he₁e' (y : Y) : e₁ (e y) = e₁ y := LieModuleHom.congr_fun he₁e y
@@ -177,13 +178,14 @@ theorem list_sum_mul_self {Y : Type*} [AddCommGroup Y] [Module K Y] [LieRingModu
 /-- **Additivity of Verma multiplicities over a decomposition into pairwise orthogonal
 idempotents**: if `Y ∈ 𝒪` has a standard filtration and `e₁, …, eₙ` are pairwise orthogonal
 idempotents of `Y`, then `dim Hom((Σ eᵢ)(Y), M(ν)^∨) = Σ dim Hom(eᵢ(Y), M(ν)^∨)`. -/
-theorem finrank_hom_range_list_sum [DecidableEq (Dual K H)] {Y : Type*} [AddCommGroup Y]
-    [Module K Y] [LieRingModule 𝔤 Y] [LieModule K 𝔤 Y] (hY : IsCategoryO P Y)
+theorem finrank_hom_range_list_sum {Y : Type*} [AddCommGroup Y] [Module K Y]
+    [LieRingModule 𝔤 Y] [LieModule K 𝔤 Y] (hY : IsCategoryO P Y)
     {s : Multiset (Dual K H)} (hs : IsStdFiltered P (⊤ : LieSubmodule K 𝔤 Y) s) (ν : Dual K H)
     (l : List (Y →ₗ⁅K,𝔤⁆ Y)) (hl : ∀ e ∈ l, e * e = e)
     (hp : l.Pairwise fun e e' ↦ e * e' = 0 ∧ e' * e = 0) :
     finrank K (l.sum.range →ₗ⁅K,𝔤⁆ restrictedDual P (VermaModule P ν)) =
       (l.map fun e ↦ finrank K (e.range →ₗ⁅K,𝔤⁆ restrictedDual P (VermaModule P ν))).sum := by
+  classical
   induction l with
   | nil =>
     rw [List.sum_nil, List.map_nil, List.sum_nil]
