@@ -309,6 +309,6 @@ example (Λ β : Module.Dual ℚ (StdSpace AOsp ℚ)) :
 example : IsSimpleModule (SuperEnveloping (std AOsp ℚ) pOsp)
     (SuperEnveloping.GVerma.FPowQuotient (std AOsp ℚ) pOsp 0 0) :=
   SuperEnveloping.GVerma.isSimpleModule_fPowQuotient SOsp hAOsp hpOsp (fun _ ↦ by simp)
-    fun _ _ ↦ even_zero
+    fun _ _ ↦ ⟨0, rfl⟩
 
 end NonVacuity
