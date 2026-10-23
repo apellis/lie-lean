@@ -13,6 +13,7 @@ import LieLean.Algebra.Lie.Homology.LeadingDifferential
 import LieLean.Algebra.Lie.Homology.LongExactSequence
 import LieLean.Algebra.Lie.Homology.RegularAcyclic
 import LieLean.Algebra.Lie.Homology.RegularFiltration
+import LieLean.Algebra.Lie.Homology.TrivialTensor
 import LieLean.Algebra.Lie.Homology.Vanishing
 import LieLean.Algebra.Lie.Homology.Weights
 import LieLean.Algebra.Lie.KacMoody.Auxiliary
@@ -100,6 +101,7 @@ import LieLean.Algebra.Lie.KacMoody.Geck
 import LieLean.Algebra.Lie.KacMoody.Grothendieck
 import LieLean.Algebra.Lie.KacMoody.HighestWeight
 import LieLean.Algebra.Lie.KacMoody.HighestWeightVector
+import LieLean.Algebra.Lie.KacMoody.InjectiveCohomology
 import LieLean.Algebra.Lie.KacMoody.Integrable
 import LieLean.Algebra.Lie.KacMoody.IntegrableRoots
 import LieLean.Algebra.Lie.KacMoody.IntegrableWeyl
