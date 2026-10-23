@@ -1,5 +1,6 @@
 import LieLean.Algebra.Lie.Free
 import LieLean.Algebra.Lie.Homology.ChainComplex
+import LieLean.Algebra.Lie.Homology.Cochain
 import LieLean.Algebra.Lie.Homology.ChevalleyEilenberg
 import LieLean.Algebra.Lie.Homology.Comparison
 import LieLean.Algebra.Lie.Homology.Complex
@@ -280,6 +281,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.Symbol
 import LieLean.Algebra.Lie.UniversalEnveloping.Free
 import LieLean.Algebra.Lie.UniversalEnveloping.Graded
 import LieLean.Algebra.Lie.UniversalEnveloping.Kernel
+import LieLean.Algebra.Lie.UniversalEnveloping.LeftRegular
 import LieLean.Algebra.Lie.UniversalEnveloping.LeadingAction
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
