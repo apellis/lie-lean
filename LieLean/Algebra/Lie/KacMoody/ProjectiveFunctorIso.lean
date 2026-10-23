@@ -191,7 +191,8 @@ theorem exists_bijOn_translationIdem {lam : Dual K H}
   obtain ⟨e', he'M, he'V⟩ := exists_tensorNatTrans_app_eq_translationIdem P hL₂ hL₂' χ₁' χ₂' hM
     hs hV hsV
   have key := bijOn_range_of_block P hA hlam hM₀ hI e e' φ φ' (by rw [heV, he'V]; exact h₁)
-    (by rw [heV, he'V]; exact h₂) hM hs hblock (by rw [heM]; exact fun x ↦ translationIdem_idempotent ..)
+    (by rw [heV, he'V]; exact h₂) hM hs hblock
+    (by rw [heM]; exact fun x ↦ translationIdem_idempotent ..)
     (by rw [he'M]; exact fun y ↦ translationIdem_idempotent ..)
   rwa [heM, he'M] at key
 
