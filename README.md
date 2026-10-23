@@ -86,6 +86,10 @@ Further proved results include:
   `wallCrossing_verma_shortExact`), with the adjunction morphism `M → Θ_s M` and shuffling
   (`translationUnit`, `shuffling_exact`); within a facet, translation is an equivalence of
   blocks, `id ≅ T_λ^μ T_μ^λ` naturally (Thm. 7.8, `bijective_translationUnit_of_sameFacet`).
+  For every antidominant `λ`, the projective cover `P(λ)` is self-dual and every Verma module
+  `M(w·λ)`, `w ∈ W_[λ]`, occurs once in its standard filtrations (Thm. 7.16,
+  `nonempty_equiv_restrictedDual_projectiveCover_of_isAntidominant`,
+  `count_projectiveCover_of_isAntidominant`).
 * **Littelmann paths:** Proposition 5.7, the straight-path concatenation theorem, and the
   isomorphism theorem for rational piecewise-linear dominant paths are proved. The crystal-level
   Littlewood–Richardson decomposition is unconditional over `ℝ` with finite-dimensional Cartan
