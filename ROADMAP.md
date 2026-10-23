@@ -1110,15 +1110,18 @@ integral case `multiplicity_verma_weylDot_of_integral` (Thm. 4.10). Reconstructe
 `P(λ) → M(ξ)` kills the kernel of `P(λ) ↠ L(λ)` because `M(ξ)` is torsion-free over the Ore
 domain `U(𝔫⁻)` (`KacMoody/VermaTorsionFree.lean`, `VermaModule.eq_zero_or_ker_le`) and
 `L(λ) = M(λ)`, so `dim Hom(P(λ), M(ξ)) ≤ dim Hom(M(λ), M(ξ)) ≤ 1`; the socle of `M(w·λ)` gives
-`≥ 1`. Thm. 7.16 (a) for all antidominant `λ` (Irving's wall-crossing argument) remains open.
-*Maybe (future)*: Thm. 7.16 (a) for all antidominant `λ` ((b) is proved above). Outline: (1) the Coxeter system of the integral Weyl
-group `W_[λ]` with its simple integral reflections (Humphreys Thm. 3.4, already formalized as a reflection group,
-needs the simple system and length function); (2) wall-crossing `Θ_s` for simple integral reflections at
-non-integral `λ` (generalize `TranslationWallCrossing` from `W` to `W_[λ]`); (3) injectivity of `P(λ)^∨` in `𝒪`
-(duality of `𝒪` exchanging projectives and injectives); (4) socles of Verma modules for non-integral weights
-(`soc M(w·λ) = L(λ)` for antidominant `λ`); (5) a Krull–Schmidt step for singular `λ` to identify `P(λ)` as a
-summand of an iterated wall-crossing of `M(λ)`; then Irving's argument: `P(λ)` is self-dual because it is a
-summand of `Θ_{s_1} ⋯ Θ_{s_k} M(λ)` and each `Θ_s` commutes with duality. Estimated several thousand lines.
+`≥ 1`.
+**Thm. 7.16 (a) for all antidominant `λ`** (`KacMoody/SelfDualProjectiveWallCrossing.lean`):
+`nonempty_equiv_restrictedDual_projectiveCover_of_isAntidominant` (`P(λ) ≅ P(λ)^∨`, finite type,
+algebraically closed characteristic-zero field). Reconstructed: for regular `λ` deep in its
+antidominant chamber, Irving's argument runs with wall-crossing functors for the simple
+reflections of `W_[λ]` (`exists_adjunction_mono_weylDot`: an iterated wall-crossing `F ⊣ G` with
+`M(w_λ·λ) ↪ G M(λ)`; `nonempty_equiv_restrictedDual_projectiveCover_of_walls`,
+`exists_nonempty_equiv_restrictedDual_projectiveCover_of_deep`), through the criterion
+`ProjectiveCover.nonempty_equiv_restrictedDual_of_selfDual` (`P(λ)` is a self-dual summand of a
+self-dual projective mapping onto `L(λ)`, `KacMoody/SelfDualProjectiveCriterion.lean`); a general
+antidominant `λ` is reached by translating `P(λ - Dρ)` to `λ`
+(`nonempty_equiv_restrictedDual_projectiveCover_of_translation`, with Thm. 7.9 for `w = 1`).
 **`Ext¹` from projective presentations** (`KacMoody/ExtProjective.lean`): `extOne_eq_zero_of_isProjectiveO`
 (`Ext¹(P, N) = 0` for `P` projective in `𝒪`), `extOneEquivQuotient` and
 `nonempty_extOne_equiv_quotient_ker` (`Ext¹(C, N) ≅ Hom(A, N) / {g ∘ i}` for `0 → A → B → C → 0`
