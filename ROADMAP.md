@@ -3455,7 +3455,10 @@ completed steps and continuation threads are:
     has only the idempotents `0`, `1` (`ProjectiveCover.eq_zero_or_eq_one_of_isIdempotentElem`)
     and `F` is indecomposable iff `F(M(λ)) ≅ P(μ)` for some `μ`
     (`BlockProjectiveFunctor.isIndecomposable_iff_exists_equiv_projectiveCover`; the backward
-    direction without the Kostant hypothesis). Remaining: Thm. 3.4.
+    direction without the Kostant hypothesis). Thm. 3.4 (i): projective functors with equal
+    characters `[F(M)] = [G(M)]` on the block are isomorphic on the block
+    (`BlockProjectiveFunctor.exists_bijOn_of_character_eq`, via Cor. 3.10). Remaining:
+    Thm. 3.4 (ii)–(iv).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem

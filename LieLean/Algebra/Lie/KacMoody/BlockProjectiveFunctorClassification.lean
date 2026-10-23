@@ -21,7 +21,10 @@ Let `λ` be dominant, `I` the annihilator of `M(λ)`, and assume Kostant's multi
   `F(M(λ)) = e(M(λ) ⊗ V)` is isomorphic to an indecomposable projective `P(μ)`
   (`BlockProjectiveFunctor.isIndecomposable_iff_exists_equiv_projectiveCover`). With Cor. 3.8,
   indecomposable projective functors on the block are determined up to isomorphism on the block
-  by the weight `μ`.
+  by the weight `μ`;
+* Bernstein–Gelfand's Thm. 3.4 (i) on the block: projective functors with equal characters
+  `[F(M)] = [G(M)]` on the block are isomorphic on the block
+  (`BlockProjectiveFunctor.exists_bijOn_of_character_eq`).
 
 The direction "`F(M(λ)) ≅ P(μ)` implies `F` indecomposable" needs only the vanishing of a
 projective functor that vanishes at `M(λ)`, and holds without the Kostant hypothesis
@@ -36,12 +39,14 @@ projective functor that vanishes at `M(λ)`, and holds without the Kostant hypot
 * `BlockProjectiveFunctor.exists_nonempty_equiv_projectiveCover`,
   `BlockProjectiveFunctor.isIndecomposable_iff_exists_equiv_projectiveCover`:
   **Bernstein–Gelfand Thm. 3.3 (ii)** on a block.
+* `BlockProjectiveFunctor.exists_bijOn_of_character_eq`: **Bernstein–Gelfand Thm. 3.4 (i)** on
+  a block.
 
 ## References
 
 * J. N. Bernstein, S. I. Gelfand, *Tensor products of finite and infinite dimensional
   representations of semisimple Lie algebras*, Compositio Math. **41** (1980), 245–285,
-  Thm. 3.3, Cor. 3.8.
+  Thm. 3.3, Thm. 3.4, Cor. 3.8.
 * J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*,
   GSM 94, AMS 2008, §10.8.
 -/
@@ -198,6 +203,34 @@ theorem eq_zero_or_eq_id_of_isIndecomposable [FiniteDimensional K V]
     rw [rangeRetr_incl he] at h
     exact h.symm
 
+omit [IsAlgClosed K] in
+include hA in
+/-- `F(M(λ))` lies in `𝒪`. -/
+theorem isCategoryO_vermaValue [FiniteDimensional K V] : IsCategoryO P F.vermaValue :=
+  ((VermaModule.isCategoryO P lam).tensorProduct
+    (isCategoryO_of_finiteDimensional (P := P) (V := V) hA)).lieSubmodule _
+
+include hA in
+/-- `F(M(λ))` is projective in `𝒪` for `λ` dominant. -/
+theorem isProjectiveO_vermaValue [FiniteDimensional K V]
+    (hlam : P.IsDominant hA.isGeneralizedCartan lam) :
+    IsProjectiveO.{max u₁ u₂} P F.vermaValue :=
+  ((VermaModule.isProjectiveO P hA hlam).tensorProduct P
+      (isCategoryO_of_finiteDimensional (P := P) (V := Module.Dual K V) hA)).of_retract
+    (F.idem _).range.incl (rangeRetr _) (rangeRetr_comp_incl F.idem_comp_idem_verma)
+
+/-- `F(M(λ))` is finitely generated. -/
+theorem exists_finset_lieSpan_vermaValue [FiniteDimensional K V] :
+    ∃ S : Finset F.vermaValue, LieSubmodule.lieSpan K 𝔤 (S : Set F.vermaValue) = ⊤ := by
+  obtain ⟨T, hT⟩ := exists_finset_lieSpan_tensor_eq_top (W := V)
+    (S := {VermaModule.hwv P lam}) (by
+      rw [Finset.coe_singleton]
+      exact VermaModule.lieSpan_map_hwv_eq_top LieModuleHom.id Function.surjective_id)
+  classical
+  refine ⟨T.image (rangeRetr (F.idem _)), ?_⟩
+  rw [Finset.coe_image]
+  exact lieSpan_image_eq_top_of_surjective _ (surjective_rangeRetr F.idem_comp_idem_verma) hT
+
 include hA in
 /-- **Indecomposable projective functors give projective covers** (Bernstein–Gelfand,
 Thm. 3.3 (ii); Humphreys, §10.8): let `λ` be dominant, `I` the annihilator of `M(λ)`, and assume
@@ -209,24 +242,11 @@ theorem exists_nonempty_equiv_projectiveCover [FiniteDimensional K V]
     (hI : ∀ a, actionHom (R := K) (L := 𝔤) (VermaModule P lam) a = 0 → a ∈ I)
     (hK : KostantMultiplicity P (AdQuotient K 𝔤 I)) (hF : F.IsIndecomposable) :
     ∃ μ : Dual K H, Nonempty (ProjectiveCover P hA μ ≃ₗ⁅K,𝔤⁆ F.vermaValue) := by
-  have he := F.idem_comp_idem_verma
   have := F.nontrivial_vermaValue hlam hM₀ hI hF.1
-  have hO := (VermaModule.isCategoryO P lam).tensorProduct
-    (isCategoryO_of_finiteDimensional (P := P) (V := V) hA)
-  have hproj : IsProjectiveO.{max u₁ u₂} P (VermaModule P lam ⊗[K] V) :=
-    (VermaModule.isProjectiveO P hA hlam).tensorProduct P
-      (isCategoryO_of_finiteDimensional (P := P) (V := Module.Dual K V) hA)
-  obtain ⟨T, hT⟩ := exists_finset_lieSpan_tensor_eq_top (W := V)
-    (S := {VermaModule.hwv P lam}) (by
-      rw [Finset.coe_singleton]
-      exact VermaModule.lieSpan_map_hwv_eq_top LieModuleHom.id Function.surjective_id)
-  classical
-  refine ProjectiveCover.exists_nonempty_equiv_of_indecomposable P hA
-    (hproj.of_retract (F.idem _).range.incl (rangeRetr _) (rangeRetr_comp_incl he))
-    (hO.lieSubmodule _) (S := T.image (rangeRetr (F.idem _))) ?_
+  obtain ⟨S, hS⟩ := F.exists_finset_lieSpan_vermaValue
+  exact ProjectiveCover.exists_nonempty_equiv_of_indecomposable P hA
+    (F.isProjectiveO_vermaValue hlam) F.isCategoryO_vermaValue hS
     (F.eq_zero_or_eq_id_of_isIndecomposable hlam hM₀ hI hK hF)
-  rw [Finset.coe_image]
-  exact lieSpan_image_eq_top_of_surjective _ (surjective_rangeRetr he) hT
 
 include hA in
 /-- **A projective functor with value a projective cover is indecomposable** (Bernstein–Gelfand,
@@ -305,6 +325,36 @@ theorem isIndecomposable_iff_exists_equiv_projectiveCover [FiniteDimensional K V
       ∃ μ : Dual K H, Nonempty (ProjectiveCover P hA μ ≃ₗ⁅K,𝔤⁆ F.vermaValue) :=
   ⟨F.exists_nonempty_equiv_projectiveCover hlam hM₀ hI hK, fun ⟨_, ⟨E⟩⟩ ↦
     F.isIndecomposable_of_equiv_projectiveCover hlam hM₀ hI E⟩
+
+include hA in
+/-- **Projective functors with the same action on the Grothendieck group are isomorphic**
+(Bernstein–Gelfand, Thm. 3.4 (i), on a block): let `λ` be dominant, `I` the annihilator of
+`M(λ)`, and assume Kostant's multiplicity formula for `(U(𝔤) / I)^{ad}`. If projective functors
+`F = e(− ⊗ V)` and `G = e'(− ⊗ W)` on the block of `λ` have `[F(M)] = [G(M)]` (equal
+characters) for every module `M` of the block, there is a natural transformation
+`φ : − ⊗ V → − ⊗ W` such that `x ↦ e'_M φ_M x` maps `F(M)` bijectively onto `G(M)` at every
+module `M` of the block. Only the module `M(λ)` is used. -/
+theorem exists_bijOn_of_character_eq [FiniteDimensional K V] {W : Type (max u₁ u₂)}
+    [AddCommGroup W] [Module K W] [LieRingModule 𝔤 W] [LieModule K 𝔤 W] [FiniteDimensional K W]
+    (G : BlockProjectiveFunctor P hA lam W) (hlam : P.IsDominant hA.isGeneralizedCartan lam)
+    {I : TwoSidedIdeal (UniversalEnvelopingAlgebra K 𝔤)} (hM₀ : IsKilledBy I (VermaModule P lam))
+    (hI : ∀ a, actionHom (R := K) (L := 𝔤) (VermaModule P lam) a = 0 → a ∈ I)
+    (hK : KostantMultiplicity P (AdQuotient K 𝔤 I))
+    (hch : ∀ (M : Type (max u₁ u₂)) [AddCommGroup M] [Module K M] [LieRingModule 𝔤 M]
+      [LieModule K 𝔤 M], IsInBlock P hA lam M → ∀ (hF : IsCategoryO P (F.idem M).range)
+      (hG : IsCategoryO P (G.idem M).range), hF.character = hG.character) :
+    ∃ φ : TensorNatTrans.{0, max u₁ u₂, max u₁ u₂} K 𝔤 V W,
+      ∀ (M : Type (max u₁ u₂)) [AddCommGroup M] [Module K M] [LieRingModule 𝔤 M]
+        [LieModule K 𝔤 M], IsInBlock P hA lam M →
+        Set.BijOn (fun x ↦ G.idem M (φ.app M x)) (Set.range (F.idem M))
+          (Set.range (G.idem M)) := by
+  obtain ⟨S, hS⟩ := F.exists_finset_lieSpan_vermaValue
+  obtain ⟨S', hS'⟩ := G.exists_finset_lieSpan_vermaValue
+  obtain ⟨E⟩ := IsProjectiveO.nonempty_equiv_of_character_eq P hA
+    (F.isProjectiveO_vermaValue hlam) F.isCategoryO_vermaValue hS
+    (G.isProjectiveO_vermaValue hlam) G.isCategoryO_vermaValue hS'
+    (hch _ (isInBlock_verma P hA lam) _ _)
+  exact F.exists_bijOn_of_equiv_verma G hlam hM₀ hI hK E
 
 end BlockProjectiveFunctor
 
