@@ -60,6 +60,7 @@ import LieLean.Algebra.Lie.KacMoody.BGG.VermaAcyclicity
 import LieLean.Algebra.Lie.KacMoody.BGG.VermaDecomposition
 import LieLean.Algebra.Lie.KacMoody.BGG.VermaHomology
 import LieLean.Algebra.Lie.KacMoody.Basic
+import LieLean.Algebra.Lie.KacMoody.BlockProjectiveFunctor
 import LieLean.Algebra.Lie.KacMoody.Blocks
 import LieLean.Algebra.Lie.KacMoody.Blocks.Exact
 import LieLean.Algebra.Lie.KacMoody.Casimir
@@ -893,6 +894,7 @@ import LieLean.RepresentationTheory.Crystal.Folding
 import LieLean.RepresentationTheory.Crystal.Levi
 import LieLean.RepresentationTheory.Crystal.MapDatum
 import LieLean.RepresentationTheory.Crystal.Path.Normal
+import LieLean.RingTheory.Idempotents
 import LieLean.RingTheory.MvPolynomial.EulerIdentity
 import LieLean.RingTheory.MvPolynomial.LowestWeight
 import LieLean.RingTheory.Noetherian.Uniform

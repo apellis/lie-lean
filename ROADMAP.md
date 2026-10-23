@@ -3433,6 +3433,19 @@ completed steps and continuation threads are:
     them on every finitely generated module of the block
     (`exists_bijOn_translationIdem_of_stabilizer`), with Duflo's theorem (the annihilator `I`
     of `M(w·λ)`) and Kostant's multiplicities for `U/I` as hypotheses.
+    **Classification of projective functors on a block** ([BG] Thm. 3.3, 3.4; [HumO] §10.8;
+    J. N. Bernstein, S. I. Gelfand, Compositio Math. 41 (1980)), in progress
+    (maintainer decision 2026-10-23: block form). Done (`KacMoody/BlockProjectiveFunctor.lean`,
+    `RingTheory/Idempotents.lean`): projective functors `e(− ⊗ V)` on the block of `λ`
+    (`BlockProjectiveFunctor`, idempotents given on any two modules of the block by one natural
+    transformation, `IsInBlock`), summands, the canonical lift `idempotentLift` of an element
+    idempotent modulo a nilpotent (independent of the exponent, hence natural); for `λ`
+    dominant, a projective functor vanishing at `M(λ)` vanishes on the block
+    (`idem_eq_zero_of_idem_verma_eq_zero`) and, with the Kostant hypothesis, every idempotent
+    of `e(M(λ) ⊗ V)` is the value at `M(λ)` of a summand
+    (`BlockProjectiveFunctor.exists_isSummand_idem_verma`). Remaining: decomposition into
+    indecomposables and the isomorphism criterion at `M(λ)` (Thm. 3.3 (i)), the classification
+    of indecomposables by `P(μ)` (Thm. 3.3 (ii)) and Thm. 3.4.
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
