@@ -439,6 +439,166 @@ lemma prZero_relDiff_prZero (hr : IsRelData η ρ p) (z : EP) :
     prZero p Ψ hT (relDiff p Ψ (prZero p Ψ hT z)) = relDiff p Ψ (prZero p Ψ hT z) := by
   rw [relDiff_prZero Ψ hT hr, prZero_toCoord Ψ hp hT hr, Pr_diff hT, Pr_Pr]
 
+/-! ### Weights in coordinates -/
+
+variable (wt : J → Dual K H)
+
+/-- The weight `Σ wt(lᵢ)` of a word `l`. -/
+def wordWt (l : List J) : Dual K H := (l.map wt).sum
+
+/-- The weight `Σ mⱼ wt(j)` of a monomial `x^m`. -/
+def monoWt (m : J →₀ ℕ) : Dual K H := m.sum fun j k ↦ k • wt j
+
+@[simp] lemma wordWt_nil : wordWt wt [] = 0 := rfl
+
+@[simp] lemma wordWt_cons (j : J) (l : List J) : wordWt wt (j :: l) = wt j + wordWt wt l := by
+  simp [wordWt]
+
+lemma monoWt_single_add (i : J) (m : J →₀ ℕ) :
+    monoWt wt (Finsupp.single i 1 + m) = wt i + monoWt wt m := by
+  rw [monoWt, Finsupp.sum_add_index' (h := fun j (k : ℕ) ↦ k • wt j) (fun _ ↦ zero_smul ℕ _)
+    (fun _ _ _ ↦ add_smul _ _ _), Finsupp.sum_single_index (h := fun j (k : ℕ) ↦ k • wt j) (zero_smul ℕ _), one_smul,
+    monoWt]
+
+/-- The span of the basis words of weight `μ`. -/
+def wordSpan (μ : Dual K H) : Submodule K (ExteriorAlgebra K V) :=
+  Submodule.span K {e | ∃ l, wordWt wt l = μ ∧ e = basisWord b l}
+
+lemma basisWord_mem_wordSpan (l : List J) : basisWord b l ∈ wordSpan b wt (wordWt wt l) :=
+  Submodule.subset_span ⟨l, rfl, rfl⟩
+
+lemma ι_mul_mem_wordSpan (j : J) {μ : Dual K H} {e : ExteriorAlgebra K V}
+    (he : e ∈ wordSpan b wt μ) : ι K (b j) * e ∈ wordSpan b wt (wt j + μ) := by
+  induction he using Submodule.span_induction with
+  | mem e he =>
+    obtain ⟨l, rfl, rfl⟩ := he
+    have : ι K (b j) * basisWord b l = basisWord b (j :: l) := by simp [basisWord]
+    rw [this, ← wordWt_cons]
+    exact basisWord_mem_wordSpan b wt _
+  | zero => simp
+  | add x y _ _ hx hy => rw [mul_add]; exact add_mem hx hy
+  | smul r x _ hx => rw [mul_smul_comm]; exact Submodule.smul_mem _ r hx
+
+lemma contract_basisWord_mem (i : J) (l : List J) :
+    Koszul.contract b i (basisWord b l) ∈ wordSpan b wt (wordWt wt l - wt i) := by
+  classical
+  induction l with
+  | nil => simp [basisWord, Koszul.contract, CliffordAlgebra.contractLeft_one]
+  | cons j l ih =>
+    have hw : basisWord b (j :: l) = Koszul.wedge b j (basisWord b l) := by simp [basisWord]
+    rw [hw, Koszul.contract_wedge]
+    refine sub_mem ?_ ?_
+    · by_cases hij : i = j
+      · subst hij
+        refine Submodule.smul_mem _ _ ?_
+        simpa using basisWord_mem_wordSpan b wt l
+      · simp [Basis.coord_apply, Basis.repr_self, Ne.symm hij]
+    · have := ι_mul_mem_wordSpan b wt j ih
+      rw [wordWt_cons, add_sub_assoc]
+      simpa using this
+
+lemma contract_basisWord_eq_zero {i : J} {l : List J} (hi : i ∉ l) :
+    Koszul.contract b i (basisWord b l) = 0 := by
+  classical
+  induction l with
+  | nil => simp [basisWord, Koszul.contract, CliffordAlgebra.contractLeft_one]
+  | cons j l ih =>
+    have hw : basisWord b (j :: l) = Koszul.wedge b j (basisWord b l) := by simp [basisWord]
+    have hij : i ≠ j := fun h ↦ hi (h ▸ List.mem_cons_self)
+    rw [hw, Koszul.contract_wedge, ih (fun h ↦ hi (List.mem_cons_of_mem j h))]
+    simp [Basis.coord_apply, Basis.repr_self, Ne.symm hij]
+
+/-- The basis words span the exterior algebra. -/
+lemma span_basisWord : Submodule.span K (Set.range (basisWord b)) = ⊤ := by
+  refine eq_top_iff.mpr fun e _ ↦ ?_
+  clear ‹e ∈ ⊤›
+  induction e using exterior_induction with
+  | algebraMap r =>
+    rw [Algebra.algebraMap_eq_smul_one]
+    exact Submodule.smul_mem _ r (Submodule.subset_span ⟨[], by simp [basisWord]⟩)
+  | add e e' h h' => exact add_mem h h'
+  | ι_mul y e h =>
+    have hy : y ∈ Submodule.span K (Set.range b) := b.span_eq ▸ Submodule.mem_top
+    induction hy using Submodule.span_induction with
+    | mem y hy =>
+      obtain ⟨j, rfl⟩ := hy
+      induction h using Submodule.span_induction with
+      | mem e he =>
+        obtain ⟨l, rfl⟩ := he
+        exact Submodule.subset_span ⟨j :: l, by simp [basisWord]⟩
+      | zero => simp
+      | add x y _ _ hx hy => rw [mul_add]; exact add_mem hx hy
+      | smul r x _ hx => rw [mul_smul_comm]; exact Submodule.smul_mem _ r hx
+    | zero => simp
+    | add x y _ _ hx hy => rw [map_add, add_mul]; exact add_mem hx hy
+    | smul r x _ hx => rw [map_smul, smul_mul_assoc]; exact Submodule.smul_mem _ r hx
+
+/-- Weight coordinates: the basis vectors `b j` are weight vectors of weight `wt j` for `ρ.D`,
+and the monomial `x^m` corresponds to a weight vector of weight `c + Σ mⱼ wt(j)`. -/
+structure IsWeightCoord (ρ : DerivAction K H L X) (Ψ : X ≃ₗ[K] P) (c : Dual K H) : Prop where
+  basis : ∀ a j, ρ.D a (b j : L) = wt j a • (b j : L)
+  monomial : ∀ a m, ρ.φ a (Ψ.symm (MvPolynomial.monomial m 1)) =
+    (c + monoWt wt m) a • Ψ.symm (MvPolynomial.monomial m 1)
+
+variable (ρ) in
+/-- The coordinate tensors of weight `ν`. -/
+def coordWt (ν : Dual K H) : Submodule K EP :=
+  (Module.End.weightSpaceOf ρ.θ ν).comap (ofCoord Ψ)
+
+variable {Ψ b wt} {c : Dual K H}
+
+omit [LieModule K L X] in
+lemma extDeriv_map_basisWord (hw : IsWeightCoord b wt ρ Ψ c) (a : H) (l : List J) :
+    extDeriv (ρ.D a) (ExteriorAlgebra.map V.subtype (basisWord b l)) =
+      wordWt wt l a • ExteriorAlgebra.map V.subtype (basisWord b l) := by
+  induction l with
+  | nil => simp [basisWord]
+  | cons j l ih =>
+    have e : ExteriorAlgebra.map V.subtype (basisWord b (j :: l)) =
+        ι K (b j : L) * ExteriorAlgebra.map V.subtype (basisWord b l) := by
+      simp [basisWord, map_mul, ExteriorAlgebra.map_apply_ι]
+    rw [e, extDeriv_ι_mul, ih, hw.basis, map_smul, smul_mul_assoc, mul_smul_comm, ← add_smul,
+      wordWt_cons, LinearMap.add_apply]
+
+omit [LieModule K L X] in
+lemma extDeriv_map_mem (hw : IsWeightCoord b wt ρ Ψ c) (a : H) {μ : Dual K H}
+    {e : ExteriorAlgebra K V} (he : e ∈ wordSpan b wt μ) :
+    extDeriv (ρ.D a) (ExteriorAlgebra.map V.subtype e) = μ a • ExteriorAlgebra.map V.subtype e := by
+  induction he using Submodule.span_induction with
+  | mem e he =>
+    obtain ⟨l, rfl, rfl⟩ := he
+    exact extDeriv_map_basisWord hw a l
+  | zero => simp
+  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy, smul_add]
+  | smul r x _ hx => rw [map_smul, map_smul, hx, smul_comm]
+
+omit [LieModule K L X] in
+lemma tmul_mem_coordWt (hw : IsWeightCoord b wt ρ Ψ c) {μ : Dual K H}
+    {e : ExteriorAlgebra K V} (he : e ∈ wordSpan b wt μ) (m : J →₀ ℕ) (r : K) :
+    e ⊗ₜ MvPolynomial.monomial m r ∈ coordWt Ψ ρ (μ + c + monoWt wt m) := by
+  intro a
+  have hm : MvPolynomial.monomial m r = r • MvPolynomial.monomial m (1 : K) := by
+    rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
+  rw [ofCoord_tmul, ρ.θ_tmul, extDeriv_map_mem hw a he, hm, map_smul, map_smul, hw.monomial,
+    smul_comm r, tmul_smul, tmul_smul, ← smul_tmul', tmul_smul, smul_smul, smul_smul, ← add_smul,
+    add_assoc, LinearMap.add_apply, LinearMap.add_apply, mul_comm]
+  rw [smul_smul]
+  congr 1
+  simp only [LinearMap.add_apply]
+  ring
+
+omit [LieModule K L X] in
+lemma delta_mem_coordWt (hw : IsWeightCoord b wt ρ Ψ c) (s : Finset J) (l : List J)
+    (m : J →₀ ℕ) (r : K) :
+    Koszul.delta b s (basisWord b l ⊗ₜ MvPolynomial.monomial m r) ∈
+      coordWt Ψ ρ (wordWt wt l + c + monoWt wt m) := by
+  simp only [Koszul.delta, LinearMap.sum_apply, Koszul.deltaTerm_tmul]
+  refine Submodule.sum_mem _ fun i _ ↦ ?_
+  rw [MvPolynomial.X, MvPolynomial.monomial_mul_monomial, one_mul]
+  convert tmul_mem_coordWt hw (contract_basisWord_mem b wt i l) _ r using 2
+  rw [monoWt_single_add]
+  abel
+
 end Relative
 
 end LieModule.ChevalleyEilenberg.RelativeKoszul
