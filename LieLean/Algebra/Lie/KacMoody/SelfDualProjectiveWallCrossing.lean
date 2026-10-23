@@ -14,7 +14,37 @@ import LieLean.LinearAlgebra.Matrix.Cartan.IntegralWall
 /-!
 # Self-dual projective covers by iterated wall-crossing
 
-Placeholder docstring.
+Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*, GSM 94,
+Theorem 7.16 (a): for every antidominant `λ` the projective cover `P(λ)` is self-dual,
+`P(λ) ≅ P(λ)^∨`, for `𝔤` of finite type over an algebraically closed field of characteristic
+zero. Humphreys proves it for integral `λ` by Irving's argument; here it is proved for every
+antidominant `λ` (reconstructed).
+
+## Main definitions
+
+* `CategoryO.IsSelfDual`: `X ≅ X^∨` in `𝒪`.
+* `CategoryO.IsPreserving`: an endofunctor of `𝒪` preserving monomorphisms, projective objects and
+  self-dual objects; translation functors are examples
+  (`CategoryO.isPreserving_translationFunctor`), and the class is closed under composition.
+
+## Main results
+
+* `CategoryO.exists_adjunction_mono_wallCrossing`, `CategoryO.exists_adjunction_mono_weylDot`:
+  for a regular antidominant `λ` whose integral walls can be reached by integral shifts, an
+  iterated wall-crossing functor `F ⊣ G` along a reduced expression of the longest element of
+  `W_[λ]`, with a monomorphism `M(w_λ·λ) → G M(λ)`.
+* `CategoryO.nonempty_equiv_restrictedDual_projectiveCover_of_walls`: Theorem 7.16 (a) for such
+  `λ`, via `ProjectiveCover.nonempty_equiv_restrictedDual_of_selfDual`.
+* `exists_nonempty_equiv_restrictedDual_projectiveCover_of_deep`: Theorem 7.16 (a) for `λ` deep
+  in its antidominant chamber (all integral pairings `⟨λ + ρ, β^∨⟩ ≤ -D`).
+* `nonempty_equiv_restrictedDual_projectiveCover_of_isAntidominant`: **Theorem 7.16 (a)** for
+  every antidominant `λ`, by translating `P(λ - Dρ)` to `λ` (Theorem 7.9 identifies the
+  translation of `L(λ - Dρ)` with `L(λ)`).
+
+## References
+
+* J. E. Humphreys, *Representations of semisimple Lie algebras in the BGG category 𝒪*, Graduate
+  Studies in Mathematics 94, American Mathematical Society, 2008, §7.16.
 -/
 
 noncomputable section
@@ -394,5 +424,176 @@ theorem nonempty_equiv_restrictedDual_projectiveCover_of_walls {lam : Dual K H}
     (F.obj (verma P (P.weylDot hA' wl lam))).property.1 hS (F.obj _).property.1 eZ j hj f hf
 
 end CategoryO
+
+section Antidominant
+
+open CategoryO VermaModule
+
+variable {ι H : Type u} {K : Type} [Fintype ι] [DecidableEq ι] [Field K] [CharZero K]
+  [IsAlgClosed K] [AddCommGroup H] [Module K H] [FiniteDimensional K H] {A : Matrix ι ι ℤ}
+  [Fact A.IsFiniteCartan] {P : Realization A K H} (hA : A.IsFiniteCartan)
+
+local notation "𝔤" => KacMoodyAlgebra P
+
+include hA in
+/-- **Humphreys, GSM 94, Theorem 7.16 (a)** for weights deep in their antidominant chamber: there
+is `D ≥ 1` such that `P(λ) ≅ P(λ)^∨` whenever `⟨λ + ρ, β^∨⟩ ∈ ℤ_{≤ -D}` for every positive root
+`β` integral for `λ`. The wall weights come from `Matrix.Realization.exists_wall_shift`, with `D`
+the maximum of its bounds over the finitely many roots `γ = u αⱼ`. -/
+theorem exists_nonempty_equiv_restrictedDual_projectiveCover_of_deep :
+    ∃ D : ℕ, 1 ≤ D ∧ ∀ lam : Dual K H,
+      (∀ v i, P.IsPosRoot hA.isGeneralizedCartan v i → ∀ n : ℤ,
+        P.corootPairing hA.isGeneralizedCartan (lam + P.rho) v i = n → n ≤ -D) →
+      Nonempty (ProjectiveCover P hA lam ≃ₗ⁅K,𝔤⁆
+        restrictedDual P (ProjectiveCover P hA lam)) := by
+  classical
+  have hA' := hA.isGeneralizedCartan
+  have : Finite (P.weylGroup hA') := P.finite_weylGroup hA
+  have : Fintype (P.weylGroup hA') := Fintype.ofFinite _
+  choose D _ hD using fun p : P.weylGroup hA' × ι ↦
+    exists_wall_shift (P := P) hA (hA := hA') p.1 p.2
+  refine ⟨Finset.univ.sup D + 1, by omega, fun lam hdeep ↦ ?_⟩
+  refine nonempty_equiv_restrictedDual_projectiveCover_of_walls hA
+    (fun v i hv n hn ↦ by have := hdeep v i hv n hn; omega) fun u j hu hux hsimple ↦ ?_
+  refine hD (u, j) (lam + P.rho) (fun v i hv n hn ↦ ?_) hu hux hsimple
+  have h1 := hdeep v i hv n hn
+  have h2 : D (u, j) ≤ Finset.univ.sup D := Finset.le_sup (Finset.mem_univ _)
+  omega
+
+include hA in
+/-- Self-duality of `P(λ)` from a self-dual `P(λ')` and a translation functor
+`T = T_{λ'}^{λ}` (by `L(ν)`, `ν` dominant integral) with `T L(λ') ≅ L(λ)`: then
+`T P(λ')` is finitely generated, projective and self-dual, and maps onto `L(λ)`, so
+`ProjectiveCover.nonempty_equiv_restrictedDual_of_selfDual` applies. -/
+theorem nonempty_equiv_restrictedDual_projectiveCover_of_translation {lam lam' ν : Dual K H}
+    (hν : P.IsDominantIntegral ν)
+    (eP : ProjectiveCover P hA lam' ≃ₗ⁅K,𝔤⁆ restrictedDual P (ProjectiveCover P hA lam'))
+    (eL : IrreducibleModule P lam ≃ₗ⁅K,𝔤⁆ centralTranslation P (IrreducibleModule P ν)
+      (centralCharacter P lam') (centralCharacter P lam) (IrreducibleModule P lam')) :
+    Nonempty (ProjectiveCover P hA lam ≃ₗ⁅K,𝔤⁆ restrictedDual P (ProjectiveCover P hA lam)) := by
+  classical
+  have := IrreducibleModule.finiteDimensional (P := P) hA hν
+  have hPO := ProjectiveCover.isCategoryO P hA lam'
+  have hfg := isFGProjectiveO_centralTranslation_projectiveCover P hA hν (centralCharacter P lam)
+    (ProjectiveCover.centralBlock_eq_top P hA lam')
+  have hS := hfg.fg.choose_spec
+  let eZ := (centralTranslationEquiv P (IrreducibleModule P ν) (centralCharacter P lam')
+      (centralCharacter P lam) eP).trans
+    (restrictedDualCentralTranslationEquiv P hA hν hPO (centralCharacter P lam')
+      (centralCharacter P lam)).symm
+  let f := eL.symm.toLieModuleHom.comp (centralTranslationMap P (IrreducibleModule P ν)
+    (centralCharacter P lam') (centralCharacter P lam) (ProjectiveCover.π P hA lam'))
+  have hfs : Function.Surjective f := eL.symm.surjective.comp
+    (centralTranslationMap_surjective P hPO (IrreducibleModule.isCategoryO P ν) _ _ _
+      (ProjectiveCover.surjective_π P hA lam'))
+  have hf : f.comp LieModuleHom.id ≠ 0 := by
+    intro h0
+    obtain ⟨x, hx⟩ := hfs (IrreducibleModule.hwv P lam)
+    exact IrreducibleModule.hwv_ne_zero P lam (hx.symm.trans (LieModuleHom.congr_fun h0 x))
+  exact ProjectiveCover.nonempty_equiv_restrictedDual_of_selfDual P hA hfg.isProjectiveO
+    hfg.isCategoryO hS hfg.isCategoryO eZ LieModuleHom.id Function.injective_id f hf
+
+omit [IsAlgClosed K] [Fact A.IsFiniteCartan] in
+include hA in
+/-- The weight `λ - Dρ` satisfies the upper-closure condition of Theorem 7.9 for `λ` and `w = 1`:
+if `⟨λ + ρ, β^∨⟩ = 0` for a positive root `β`, then `⟨λ - Dρ + ρ, β^∨⟩ = -D ⟨ρ, β^∨⟩ ∈ -ℕ`. -/
+theorem upperClosureCondition_sub_natCast_smul_rho {lam lam' : Dual K H} {D : ℕ}
+    (hlam' : lam' = lam - (D : K) • P.rho) :
+    P.UpperClosureCondition hA.isGeneralizedCartan
+      ((1 : P.weylGroup hA.isGeneralizedCartan).val (lam' + P.rho))
+      ((1 : P.weylGroup hA.isGeneralizedCartan).val (lam + P.rho)) := by
+  have hA' := hA.isGeneralizedCartan
+  intro v hv i hpos h0
+  have hw : P.IsPosRoot hA' ⟨v, hv⟩ i := isPosRoot_iff_mem_posWeights.2 hpos
+  have hmex := exists_int_corootPairing_of_forall_int (P := P) (hA := hA')
+    (c := P.rho) (fun t ↦ ⟨1, by rw [rho_coroot, Int.cast_one]⟩) ⟨v, hv⟩ i
+  obtain ⟨m, hm⟩ := hmex
+  have hm1 := one_le_of_corootPairing_rho_eq hA hw hm
+  have h0' : P.corootPairing hA' (lam + P.rho) ⟨v, hv⟩ i = 0 := h0
+  have hp : P.corootPairing hA' (lam' + P.rho) ⟨v, hv⟩ i =
+      P.corootPairing hA' (lam + P.rho) ⟨v, hv⟩ i - D * P.corootPairing hA' P.rho ⟨v, hv⟩ i := by
+    simp only [corootPairing, hlam', map_add, map_sub, map_smul, LinearMap.add_apply,
+      LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul]
+    ring
+  rw [h0', hm] at hp
+  have hDm : (0 : ℤ) ≤ D * m := mul_nonneg (by positivity) (by omega)
+  refine ⟨(D * m).toNat, ?_⟩
+  have e : (((D * m).toNat : ℕ) : K) = ((D * m : ℤ) : K) := by
+    rw [← Int.cast_natCast, Int.toNat_of_nonneg hDm]
+  change P.corootPairing hA' (lam' + P.rho) ⟨v, hv⟩ i = _
+  rw [hp, e]
+  push_cast
+  ring
+
+include hA in
+/-- **Humphreys, GSM 94, Theorem 7.16 (a)**: for every antidominant `λ` the projective cover
+`P(λ)` of `L(λ)` is self-dual, `P(λ) ≅ P(λ)^∨`. Proof: for `D` as in
+`exists_nonempty_equiv_restrictedDual_projectiveCover_of_deep`, `λ' = λ - Dρ` is deep in its
+antidominant chamber, so `P(λ')` is self-dual. The translation `X = T_{λ'}^{λ} P(λ')` (by
+`L(Dρ)`) is finitely generated projective and self-dual, and it maps onto
+`T_{λ'}^{λ} L(λ') ≅ L(λ)` (Theorem 7.9, `λ` lies in the upper closure of the facet of `λ'`), so
+`P(λ)` is a self-dual summand of `X` (`ProjectiveCover.nonempty_equiv_restrictedDual_of_selfDual`).
+Humphreys proves (a) for integral `λ` by Irving's argument through iterated wall-crossing
+functors; this proof (reconstructed) runs the wall-crossing argument for the integral Weyl group
+`W_[λ]` at a deep regular `λ'` and then translates to the possibly singular `λ`. -/
+theorem nonempty_equiv_restrictedDual_projectiveCover_of_isAntidominant {lam : Dual K H}
+    (hlam : P.IsAntidominant hA.isGeneralizedCartan lam) :
+    Nonempty (ProjectiveCover P hA lam ≃ₗ⁅K,𝔤⁆ restrictedDual P (ProjectiveCover P hA lam)) := by
+  classical
+  have hA' := hA.isGeneralizedCartan
+  have hex := exists_nonempty_equiv_restrictedDual_projectiveCover_of_deep (P := P) hA
+  obtain ⟨D, hD1, hdeep⟩ := hex
+  obtain ⟨lam', hlam'⟩ : ∃ l : Dual K H, l = lam - (D : K) • P.rho := ⟨_, rfl⟩
+  have hνex : ∃ l : Dual K H, l = (D : K) • P.rho := ⟨_, rfl⟩
+  obtain ⟨ν, hνdef⟩ := hνex
+  have hpair : ∀ v i, P.corootPairing hA' (lam' + P.rho) v i =
+      P.corootPairing hA' (lam + P.rho) v i - D * P.corootPairing hA' P.rho v i := by
+    intro v i
+    simp only [corootPairing, hlam', map_add, map_sub, map_smul, LinearMap.add_apply,
+      LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul]
+    ring
+  have hdeep' : ∀ v i, P.IsPosRoot hA' v i → ∀ n : ℤ,
+      P.corootPairing hA' (lam' + P.rho) v i = n → n ≤ -D := by
+    intro v i hv n hn
+    obtain ⟨m, hm⟩ := exists_int_corootPairing_of_forall_int (P := P) (hA := hA')
+      (c := P.rho) (fun t ↦ ⟨1, by rw [rho_coroot, Int.cast_one]⟩) v i
+    have hm1 := one_le_of_corootPairing_rho_eq hA hv hm
+    have hl : P.corootPairing hA' (lam + P.rho) v i = ((n + D * m : ℤ) : K) := by
+      rw [hpair, hm] at hn
+      push_cast
+      rw [← hn]
+      ring
+    have := hlam v i hv _ hl
+    nlinarith
+  have hlam'a : P.IsAntidominant hA' lam' := fun v i hv n hn ↦ by
+    have := hdeep' v i hv n hn
+    omega
+  have heP := hdeep lam' hdeep'
+  have eP := heP.some
+  have hν : P.IsDominantIntegral ν := fun i ↦ ⟨D, by
+    rw [hνdef, LinearMap.smul_apply, rho_coroot, smul_eq_mul, mul_one]⟩
+  have := IrreducibleModule.finiteDimensional (P := P) hA hν
+  have hzν : (1 : Dual K H ≃ₗ[K] Dual K H) (lam - lam') = ν := by
+    rw [LinearEquiv.coe_one, id, hlam', sub_sub_cancel, hνdef]
+  have hfacet : ∀ v i, P.IsPosRoot hA' v i → P.corootPairing hA' (lam' + P.rho) v i = 0 →
+      P.corootPairing hA' (lam + P.rho) v i = 0 := fun v i hv h0 ↦ by
+    have := hdeep' v i hv 0 (by rw [h0, Int.cast_zero])
+    omega
+  have hC : P.UpperClosureCondition hA' ((1 : P.weylGroup hA').val (lam' + P.rho))
+      ((1 : P.weylGroup hA').val (lam + P.rho)) :=
+    upperClosureCondition_sub_natCast_smul_rho hA hlam'
+  have hT := translation_irreducible_of_upperClosureCondition_of_isAntidominant P hA hlam'a hlam
+    hfacet hν (z := 1) (one_mem _) hzν (w := 1) hC
+  have hT' : ∀ a b : Dual K H, a = lam → b = lam' →
+      Nonempty (IrreducibleModule P a ≃ₗ⁅K,𝔤⁆ centralTranslation P (IrreducibleModule P ν)
+        (centralCharacter P lam') (centralCharacter P lam) (IrreducibleModule P b)) →
+      Nonempty (IrreducibleModule P lam ≃ₗ⁅K,𝔤⁆ centralTranslation P (IrreducibleModule P ν)
+        (centralCharacter P lam') (centralCharacter P lam) (IrreducibleModule P lam')) := by
+    rintro a b rfl rfl h
+    exact h
+  have hT2 := hT' _ _ (by rw [weylDot_one]) (by rw [weylDot_one]) hT
+  exact nonempty_equiv_restrictedDual_projectiveCover_of_translation hA hν heP.some hT2.some
+
+end Antidominant
 
 end Matrix.Realization.KacMoodyAlgebra
