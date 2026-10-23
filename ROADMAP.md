@@ -3372,7 +3372,12 @@ completed steps and continuation threads are:
     `End(P)`-modules, by a direct argument replacing Humphreys' citation of Bass's Morita theorem.
     A bundled category `𝒪_χ` and the equivalence of categories are not formalized.
   - Independence of `Θ_s` from the choice of `μ` on the wall (§7.15): scheduled after Thm. 4.6;
-    depends on the classification of projective functors (§10.8).
+    depends on the classification of projective functors (§10.8). In progress (maintainer
+    decision 2026-10-22: Duflo's and Kostant's theorems as hypotheses). Done: natural
+    transformations `M ⊗ V → M ⊗ W` on modules killed by a two-sided ideal `I ⊆ U(𝔤)`
+    correspond to morphisms `V → (U/I)^{ad} ⊗ W` (`UniversalEnvelopingAlgebra.tensorNatMap`,
+    `evalNat`, `evalNat_tensorNatMap`, `tensorNatMap_evalNat`,
+    `UniversalEnveloping/TensorNatural.lean`).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
