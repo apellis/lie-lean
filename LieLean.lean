@@ -180,6 +180,7 @@ import LieLean.Algebra.Lie.KacMoody.Super.RootPairing
 import LieLean.Algebra.Lie.KacMoody.Super.RootSpace
 import LieLean.Algebra.Lie.KacMoody.Super.Serre
 import LieLean.Algebra.Lie.KacMoody.Super.SerreAssociative
+import LieLean.Algebra.Lie.KacMoody.Super.ShapovalovPairing
 import LieLean.Algebra.Lie.KacMoody.Super.TensorRep
 import LieLean.Algebra.Lie.KacMoody.Super.Adjoint
 import LieLean.Algebra.Lie.KacMoody.Super.Auxiliary
@@ -524,10 +525,12 @@ import LieLean.Algebra.QuantumGroup.Frobenius.SplittingGeneral
 import LieLean.Algebra.QuantumGroup.GabberKac
 import LieLean.Algebra.QuantumGroup.GabberKac.Classical
 import LieLean.Algebra.QuantumGroup.GabberKac.MapCoeffs
+import LieLean.Algebra.QuantumGroup.GabberKac.ProductSpan
 import LieLean.Algebra.QuantumGroup.GabberKac.Quantum
 import LieLean.Algebra.QuantumGroup.GabberKac.SerreSpan
 import LieLean.Algebra.QuantumGroup.GabberKac.SerreSpanSign
 import LieLean.Algebra.QuantumGroup.GabberKac.Specialization
+import LieLean.Algebra.QuantumGroup.GabberKac.TwistedVermaOperator
 import LieLean.Algebra.QuantumGroup.GabberKac.VermaOperator
 import LieLean.Algebra.QuantumGroup.HighestWeightMaps
 import LieLean.Algebra.QuantumGroup.HighestWeightSplitting

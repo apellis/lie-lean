@@ -3142,6 +3142,16 @@ weight multiplicities, `K(ν) + dim (T(V)_ν ∩ (sᵢⱼ)) = #{words of weight 
 (`kostantPartition_add_finrank_superSerreIdeal`), the classical input for counting the Serre
 relations of covering quantum groups at `π = -1`. Proof: the `U`-submodule `(sᵢⱼ) v̄_Λ` of `M(Λ)`
 is killed modulo itself by the Serre ideal of `G̃(A, τ)`, which is `R` by super Gabber–Kac.
+Super Shapovalov pairing (`Super/ShapovalovPairing.lean`, same hypotheses): `eᵢ` acts on
+`f(y) v̄_Λ` through a twisted Verma-type operator on `T(V)` (`GVerma.e_smul_fAlg_smul_hwv`), and
+if `y ∈ T(V)_ν` with `νᵢ ≤ ⟨Λ, αᵢ^∨⟩` pairs to zero with all words of weight `ν`, then
+`y ∈ (sᵢⱼ)` (`GVerma.mem_superSerreIdeal_of_twistVermaForm_eq_zero`, via irreducibility of
+`L̃(Λ)`, Kac78 Thm. 2 (c)); for a Lusztig Cartan datum the twisted pairing is a sign-character
+twist of `LusztigF.vermaForm` (`LusztigF.mem_superSerreIdeal_of_shapovalovMap_eq_zero`). The
+weight components of `(sᵢⱼ)` are spanned by the products `a sᵢⱼ b`
+(`mem_superSerreIdeal_iff_mem_productSpan`, from the generic
+`FreeAlgebra.weightProj_mem_productSpan`, `GabberKac/ProductSpan.lean`). These are the classical
+inputs of the dimension count of the covering quantum group at `π = -1`. Reconstructed.
 
 ## Deferred and scheduled items
 
