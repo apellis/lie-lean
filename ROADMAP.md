@@ -3374,9 +3374,9 @@ completed steps and continuation threads are:
     faithfulness and essential surjectivity of `Hom(P, −)` onto finite-dimensional right
     `End(P)`-modules, by a direct argument replacing Humphreys' citation of Bass's Morita theorem.
     A bundled category `𝒪_χ` and the equivalence of categories are not formalized.
-  - Independence of `Θ_s` from the choice of `μ` on the wall (§7.15): scheduled after Thm. 4.6;
-    depends on the classification of projective functors (§10.8). In progress (maintainer
-    decision 2026-10-22: Duflo's and Kostant's theorems as hypotheses). Done: natural
+  - Independence of `Θ_s` from the choice of `μ` on the wall (§7.15), via the classification of
+    projective functors (§10.8): done, with Duflo's and Kostant's theorems as hypotheses
+    (maintainer decision 2026-10-22). Steps: natural
     transformations `M ⊗ V → M ⊗ W` on modules killed by a two-sided ideal `I ⊆ U(𝔤)`
     correspond to morphisms `V → (U/I)^{ad} ⊗ W` (`UniversalEnvelopingAlgebra.tensorNatMap`,
     `evalNat`, `evalNat_tensorNatMap`, `tensorNatMap_evalNat`,
@@ -3434,8 +3434,8 @@ completed steps and continuation threads are:
     (`exists_bijOn_translationIdem_of_stabilizer`), with Duflo's theorem (the annihilator `I`
     of `M(w·λ)`) and Kostant's multiplicities for `U/I` as hypotheses.
     **Classification of projective functors on a block** ([BG] Thm. 3.3, 3.4; [HumO] §10.8;
-    J. N. Bernstein, S. I. Gelfand, Compositio Math. 41 (1980)), in progress
-    (maintainer decision 2026-10-23: block form). Done (`KacMoody/BlockProjectiveFunctor.lean`,
+    J. N. Bernstein, S. I. Gelfand, Compositio Math. 41 (1980)), done in block form
+    (maintainer decision 2026-10-23). Declarations (`KacMoody/BlockProjectiveFunctor.lean`,
     `RingTheory/Idempotents.lean`): projective functors `e(− ⊗ V)` on the block of `λ`
     (`BlockProjectiveFunctor`, idempotents given on any two modules of the block by one natural
     transformation, `IsInBlock`), summands, the canonical lift `idempotentLift` of an element
