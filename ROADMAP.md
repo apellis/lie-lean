@@ -3443,9 +3443,13 @@ completed steps and continuation threads are:
     dominant, a projective functor vanishing at `M(λ)` vanishes on the block
     (`idem_eq_zero_of_idem_verma_eq_zero`) and, with the Kostant hypothesis, every idempotent
     of `e(M(λ) ⊗ V)` is the value at `M(λ)` of a summand
-    (`BlockProjectiveFunctor.exists_isSummand_idem_verma`). Remaining: decomposition into
-    indecomposables and the isomorphism criterion at `M(λ)` (Thm. 3.3 (i)), the classification
-    of indecomposables by `P(μ)` (Thm. 3.3 (ii)) and Thm. 3.4.
+    (`BlockProjectiveFunctor.exists_isSummand_idem_verma`). Thm. 3.3 (i)
+    (`KacMoody/BlockProjectiveFunctorDecomposition.lean`,
+    `BlockProjectiveFunctor.exists_decomposition`): every projective functor on the block is a
+    sum of pairwise orthogonal indecomposable summands, by induction on the dimension of the
+    corner `e End(M(λ) ⊗ V) e` (only the vanishing statement at `M(λ)` is used, not [BG]
+    Cor. 3.8). Remaining: the isomorphism criterion at `M(λ)` ([BG] Cor. 3.8), the
+    classification of indecomposables by `P(μ)` (Thm. 3.3 (ii)) and Thm. 3.4.
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem

@@ -61,6 +61,7 @@ import LieLean.Algebra.Lie.KacMoody.BGG.VermaDecomposition
 import LieLean.Algebra.Lie.KacMoody.BGG.VermaHomology
 import LieLean.Algebra.Lie.KacMoody.Basic
 import LieLean.Algebra.Lie.KacMoody.BlockProjectiveFunctor
+import LieLean.Algebra.Lie.KacMoody.BlockProjectiveFunctorDecomposition
 import LieLean.Algebra.Lie.KacMoody.Blocks
 import LieLean.Algebra.Lie.KacMoody.Blocks.Exact
 import LieLean.Algebra.Lie.KacMoody.Casimir
