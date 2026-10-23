@@ -3399,6 +3399,12 @@ completed steps and continuation threads are:
     `LieModuleHom.exists_comp_eq_of_surjective`), so natural transformations on modules killed
     by `I` extend to all modules (`exists_lift_adQuotient`, `exists_tensorNatMap_eq`,
     `UniversalEnveloping/TensorNaturalLift.lean`, `KacMoody/ProjectiveFunctorLift.lean`).
+    Natural transformations `− ⊗ V → − ⊗ W` (`TensorNatTrans`) agreeing at a module with
+    annihilator `I` agree on all modules killed by `I` (`TensorNatTrans.app_eq_of_app_eq`), and
+    morphisms between summands `e(− ⊗ V)`, `e'(− ⊗ W)` that are mutually inverse there are
+    isomorphisms on every module with a filtration whose subquotients are killed by `I`
+    (`TensorNatTrans.exists_inverse_of_hasKilledFiltration`, the argument of Thm. 10.7 (b);
+    `UniversalEnveloping/TensorNatTrans.lean`).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem

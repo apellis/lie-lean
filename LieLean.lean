@@ -310,6 +310,7 @@ import LieLean.Algebra.Lie.UniversalEnveloping.LeftRegular
 import LieLean.Algebra.Lie.UniversalEnveloping.LeadingAction
 import LieLean.Algebra.Lie.UniversalEnveloping.PBW
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorDecomposition
+import LieLean.Algebra.Lie.UniversalEnveloping.TensorNatTrans
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorNatural
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorNaturalEval
 import LieLean.Algebra.Lie.UniversalEnveloping.TensorNaturalLift
