@@ -766,6 +766,7 @@ import LieLean.LinearAlgebra.Basis.Unitriangular
 import LieLean.LinearAlgebra.BilinearForm.TensorProduct
 import LieLean.LinearAlgebra.Eigenspace.Weight
 import LieLean.LinearAlgebra.ExteriorAlgebra.Koszul
+import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulDescent
 import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulExact
 import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulSupport
 import LieLean.LinearAlgebra.Filtered.Exactness
