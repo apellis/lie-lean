@@ -3420,6 +3420,11 @@ completed steps and continuation threads are:
     idempotent `translationIdem` of `M ⊗ (L ⊗ L')`, which on any two finitely generated modules
     of `𝒪` is the value of one natural transformation of `− ⊗ (L ⊗ L')`
     (`exists_tensorNatTrans_app_eq_translationIdem`, `KacMoody/TranslationTensorNatTrans.lean`).
+    Hence such composites with isomorphic values at a dominant `M(λ)` are isomorphic on every
+    finitely generated module of the block, through one natural transformation
+    (`exists_bijOn_translationIdem`, from `bijOn_range_of_block` and
+    `exists_tensorNatTrans_of_equiv_verma`, `KacMoody/ProjectiveFunctorIso.lean`; Kostant
+    hypothesis).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
