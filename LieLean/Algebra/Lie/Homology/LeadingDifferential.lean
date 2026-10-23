@@ -5,7 +5,7 @@ Authors: Alex Ellis
 -/
 import LieLean.Algebra.Lie.Homology.RegularFiltration
 import LieLean.Algebra.Lie.UniversalEnveloping.LeadingAction
-import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulSupport
+import LieLean.LinearAlgebra.ExteriorAlgebra.KoszulDescent
 
 /-!
 # The actual regular CE differential has leading term negative Koszul
@@ -26,6 +26,7 @@ basis index type is assumed.
 noncomputable section
 open scoped TensorProduct BigOperators
 open TensorProduct ExteriorAlgebra
+open ExteriorAlgebra.Koszul (rectangle supportedTensors tmul_mem_rectangle)
 open UniversalEnvelopingAlgebra (LeftRegular)
 namespace LieModule.ChevalleyEilenberg.CELeading
 
@@ -39,17 +40,6 @@ local notation "EP" => ExteriorAlgebra R L ⊗[R] P
 def pbwTensor : (ExteriorAlgebra R L ⊗[R] U) ≃ₗ[R] EP :=
   TensorProduct.congr (LinearEquiv.refl R _) ((LeftRegular.equiv R L).trans
     (UniversalEnvelopingAlgebra.pbwEquiv b))
-
-/-- Exterior degree `q` and polynomial degree at most `n`. -/
-def rectangle (q n : ℕ) : Submodule R EP :=
-  Submodule.span R {z | ∃ (e : ExteriorAlgebra R L), e ∈ ⋀[R]^q L ∧
-    ∃ p : P, p ∈ MvPolynomial.restrictTotalDegree I R n ∧ z = e ⊗ₜ[R] p}
-
-omit [LinearOrder I] in
-lemma tmul_mem {q n : ℕ} {e : ExteriorAlgebra R L} (he : e ∈ ⋀[R]^q L)
-    {p : P} (hp : p ∈ MvPolynomial.restrictTotalDegree I R n) :
-    e ⊗ₜ[R] p ∈ rectangle (R := R) (L := L) (I := I) q n :=
-  Submodule.subset_span ⟨e, he, p, hp, rfl⟩
 
 /-- Exterior multiplication on polynomial tensors. -/
 def wedgeP (x : L) : Module.End R EP :=
@@ -66,7 +56,7 @@ lemma wedgeP_mem (x : L) {q n : ℕ} {z : EP}
   | mem z hz =>
     obtain ⟨e, he, p, hp, rfl⟩ := hz
     rw [wedgeP_tmul]
-    apply tmul_mem _ hp
+    apply tmul_mem_rectangle _ hp
     rw [exteriorPower, pow_succ']
     exact Submodule.mul_mem_mul (LinearMap.mem_range_self _ x) he
   | zero => simpa only [map_zero] using (rectangle (q + 1) n).zero_mem
@@ -100,7 +90,7 @@ lemma lieAction_error (x : L) (l : List I) (n : ℕ) (u : U)
     rw [lieAction_wedge, map_add, pbwTensor_wedge, pbwTensor_wedge,
       add_sub_assoc, ← map_sub]
     exact add_mem
-      (wedgeP_mem _ (tmul_mem (Koszul.basisWord_mem_exteriorPower b l)
+      (wedgeP_mem _ (tmul_mem_rectangle (Koszul.basisWord_mem_exteriorPower b l)
         ((UniversalEnvelopingAlgebra.mem_filtration_iff_pbwEquiv b).mp hu)))
       (wedgeP_mem _ ih)
 
@@ -135,7 +125,7 @@ theorem diff_add_delta_basisWord (s : Finset I) (l : List I)
     have haction : pbwTensor b (lieAction R L U (b j)
         (Koszul.basisWord b l ⊗ₜ[R] u)) -
         Koszul.basisWord b l ⊗ₜ[R] (MvPolynomial.X j * p) ∈ rectangle l.length n := by
-      have hc := tmul_mem (Koszul.basisWord_mem_exteriorPower b l)
+      have hc := tmul_mem_rectangle (Koszul.basisWord_mem_exteriorPower b l)
         (UniversalEnvelopingAlgebra.pbwEquiv_ι_basis_mul_sub_mem b j n hu)
       rw [tmul_sub] at hc
       have ha := lieAction_error b (b j) l n u hu
@@ -182,13 +172,6 @@ theorem polynomialDiff_add_delta_basisWord (s : Finset I) (l : List I)
   simpa only [polynomialDiff, LinearMap.comp_apply, LinearEquiv.coe_coe,
     LinearEquiv.symm_apply_apply] using h
 
-/-- Bounded-degree tensors supported in a finite set in the exterior factor.
-Polynomial support is unrestricted, and `I` need not be finite. -/
-def supportedTensors (s : Finset I) (q n : ℕ) : Submodule R EP :=
-  Submodule.span R {z | ∃ (l : List I) (p : P), l.length = q ∧
-    (∀ i ∈ l, i ∈ s) ∧ p ∈ MvPolynomial.restrictTotalDegree I R n ∧
-      z = Koszul.basisWord b l ⊗ₜ[R] p}
-
 /-- Chain-level PBW/Koszul comparison on the entire supported bounded-degree span.
 The actual CE differential transported by PBW differs from **negative** Koszul by exterior
 degree `q-1`, polynomial degree at most `n`, hence total degree at most `q+n-1` for `q>0`.
@@ -207,5 +190,8 @@ theorem polynomialDiff_add_delta_mem (s : Finset I) (q n : ℕ) (z : EP)
   | smul r z _ hz =>
     simpa only [map_smul, smul_add] using Submodule.smul_mem (rectangle (q - 1) n) r hz
 
+/-- The leading term of the PBW-conjugated CE differential is minus the Koszul differential. -/
+theorem isLeadingKoszul_polynomialDiff : Koszul.IsLeadingKoszul b (polynomialDiff b) :=
+  fun s q n z hz ↦ polynomialDiff_add_delta_mem b s q n z hz
 
 end LieModule.ChevalleyEilenberg.CELeading
