@@ -1180,6 +1180,9 @@ Thm. 4.6) and (c) ⇒ (b) with multiplicity one
 `finrank_hom_tensor_verma_irreducibleModule_eq_one` (`dim Hom(M(λ) ⊗ L(ν), L(μ)) = 1`, `ν`
 dominant in `W(μ - λ)`; Kac–Kazhdan steps and the norm estimate instead of Thm. 5.1,
 reconstructed).
+Towards §10.7 (`KacMoody/DominantVermaTensorHom.lean`):
+`finrank_hom_tensor_verma_tensor_of_isDominant` (`dim Hom(M(λ) ⊗ L, M(μ) ⊗ L') =
+dim (L ⊗ L'^*)_{μ-λ}` for `λ` dominant), with `LieModuleEquiv.tensorAssoc`.
 **Proposition 10.1** (`KacMoody/ExactFunctorO.lean`): an exact functor `F` on `𝒪` enters only
 through the class of modules it kills, `IsSerreClassO` (zero modules, isomorphisms, and
 `F M = 0 ⇔ F N = 0 ∧ F (M/N) = 0` for `N ⊆ M ∈ 𝒪`); translation functors
