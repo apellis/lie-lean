@@ -3482,7 +3482,12 @@ completed steps and continuation threads are:
     weight): compose `F` with `pr_{χ_λ}(− ⊗ L(Nρ)^*)` from the block of `λ + Nρ`, which sends
     `M(w·(λ + Nρ))` to `M(w·λ)` (`nonempty_tensorBlock_verma_equiv`,
     `KacMoody/BlockProjectiveFunctorShift.lean`); for `N` large every summand of the composite
-    satisfies the hypothesis of §3.9 (d). Remaining: Thm. 3.4 (iii).
+    satisfies the hypothesis of §3.9 (d). Exactness (BG §3.1,
+    `KacMoody/BlockProjectiveFunctorExact.lean`): `F` preserves injections, surjections and
+    exactness in the middle (`map_injective`, `map_surjective`, `ker_map_eq_range`), so
+    multiplicities of `F(B)` are additive on short exact sequences of the block
+    (`multiplicity_eq_add_of_exact`) and along standard filtrations
+    (`multiplicity_eq_sum_of_isStdFiltered`). Remaining: Thm. 3.4 (iii).
   - Examples and remarks (e.g. §3.12) are not formalized unless a numbered result uses them.
 - **Chevalley restriction, Harish-Chandra and category `𝒪`** (M12): Chevalley's restriction
   theorem (`chevalleyRestriction_bijective`) and Harish-Chandra's theorem
