@@ -5,14 +5,13 @@ Authors: Alex Ellis
 -/
 import LieLean.Algebra.Lie.KacMoody.VermaPBW
 import LieLean.Algebra.Lie.Homology.Vanishing
+import LieLean.Algebra.Lie.UniversalEnveloping.LeftRegular
 
 /-!
 # Reduction of Verma acyclicity to the left-regular CE complex
 
 ## Main definitions / results
 
-* `UniversalEnvelopingAlgebra.LeftRegular`: a separate coefficient type, with action
-  `x • u = ι(x) * u`, not the adjoint action.
 * `LieModule.ChevalleyEilenberg.homologyEquiv`: coefficient equivalences induce equivalences
   of the actual concrete CE homology in every degree.
 * `VermaModule.homologyEquivLeftRegular`: PBW identifies actual Verma homology with
@@ -30,42 +29,6 @@ Reconstructed from the existing PBW module equivalence and CE functoriality.
 -/
 
 noncomputable section
-
-namespace UniversalEnvelopingAlgebra
-
-variable (R L : Type*) [CommRing R] [LieRing L] [LieAlgebra R L]
-
-/-- The enveloping algebra as a separate coefficient type for its left-regular action. -/
-def LeftRegular := UniversalEnvelopingAlgebra R L
-
-namespace LeftRegular
-
-instance : AddCommGroup (LeftRegular R L) :=
-  inferInstanceAs (AddCommGroup (UniversalEnvelopingAlgebra R L))
-
-instance : Module R (LeftRegular R L) :=
-  inferInstanceAs (Module R (UniversalEnvelopingAlgebra R L))
-
-instance : Module (UniversalEnvelopingAlgebra R L) (LeftRegular R L) :=
-  inferInstanceAs (Module (UniversalEnvelopingAlgebra R L) (UniversalEnvelopingAlgebra R L))
-
-instance : IsScalarTower R (UniversalEnvelopingAlgebra R L) (LeftRegular R L) :=
-  inferInstanceAs (IsScalarTower R (UniversalEnvelopingAlgebra R L)
-    (UniversalEnvelopingAlgebra R L))
-
-instance : LieRingModule L (LeftRegular R L) := lieRingModuleOfModule R L _
-
-instance : LieModule R L (LeftRegular R L) := lieModuleOfModule R L _
-
-/-- The underlying linear identification forgets only the coefficient-type tag. -/
-def equiv : LeftRegular R L ≃ₗ[R] UniversalEnvelopingAlgebra R L := LinearEquiv.refl R _
-
-/-- The action is left multiplication, not the commutator action. -/
-@[simp] theorem equiv_lie (x : L) (u : LeftRegular R L) :
-    equiv R L ⁅x, u⁆ = ι R x * equiv R L u := rfl
-
-end LeftRegular
-end UniversalEnvelopingAlgebra
 
 namespace LieModule.ChevalleyEilenberg
 

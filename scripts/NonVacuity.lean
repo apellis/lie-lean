@@ -328,4 +328,19 @@ example (Λ β : Module.Dual ℚ (StdSpace AOsp ℚ)) :
       KacMoodyAlgebra.kostantPartition (std AOsp ℚ) β :=
   SuperEnveloping.GVerma.finrank_modWeightSpace_sub_eq_kostantPartition SOsp hAOsp hpOsp Λ β
 
+/-- Kac 1978 Thm. 2 (c) for `osp(1|4)`: `M̄(0) / ∑ᵢ U fᵢ v̄₀` is irreducible. -/
+example : IsSimpleModule (SuperEnveloping (std AOsp ℚ) pOsp)
+    (SuperEnveloping.GVerma.FPowQuotient (std AOsp ℚ) pOsp 0 0) :=
+  SuperEnveloping.GVerma.isSimpleModule_fPowQuotient SOsp hAOsp hpOsp (fun _ ↦ by simp)
+    fun _ _ ↦ ⟨0, rfl⟩
+
+/-- Kac 1978 Thm. 1 for `osp(1|4)`: `ch L̃(0)` is the character of `L(0)` for `𝔤(A)`. -/
+example : SuperEnveloping.GVerma.character (P := std AOsp ℚ) pOsp SOsp hAOsp 0 0 =
+    (IrreducibleModule.isCategoryO (std AOsp ℚ) 0).character :=
+  SuperEnveloping.GVerma.character_eq_character SOsp hAOsp hpOsp (fun _ ↦ by simp)
+    fun _ _ ↦ ⟨0, rfl⟩
+
+/-- Kac 1978 Thm. 2 (a) for `osp(1|4)`. -/
+example := SuperEnveloping.exp_rho_eq_vermaChar_mul_weylAltSum (P := std AOsp ℚ) SOsp hAOsp hpOsp
+
 end NonVacuity

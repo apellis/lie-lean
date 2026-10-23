@@ -1110,15 +1110,18 @@ integral case `multiplicity_verma_weylDot_of_integral` (Thm. 4.10). Reconstructe
 `P(λ) → M(ξ)` kills the kernel of `P(λ) ↠ L(λ)` because `M(ξ)` is torsion-free over the Ore
 domain `U(𝔫⁻)` (`KacMoody/VermaTorsionFree.lean`, `VermaModule.eq_zero_or_ker_le`) and
 `L(λ) = M(λ)`, so `dim Hom(P(λ), M(ξ)) ≤ dim Hom(M(λ), M(ξ)) ≤ 1`; the socle of `M(w·λ)` gives
-`≥ 1`. Thm. 7.16 (a) for all antidominant `λ` (Irving's wall-crossing argument) remains open.
-*Maybe (future)*: Thm. 7.16 (a) for all antidominant `λ` ((b) is proved above). Outline: (1) the Coxeter system of the integral Weyl
-group `W_[λ]` with its simple integral reflections (Humphreys Thm. 3.4, already formalized as a reflection group,
-needs the simple system and length function); (2) wall-crossing `Θ_s` for simple integral reflections at
-non-integral `λ` (generalize `TranslationWallCrossing` from `W` to `W_[λ]`); (3) injectivity of `P(λ)^∨` in `𝒪`
-(duality of `𝒪` exchanging projectives and injectives); (4) socles of Verma modules for non-integral weights
-(`soc M(w·λ) = L(λ)` for antidominant `λ`); (5) a Krull–Schmidt step for singular `λ` to identify `P(λ)` as a
-summand of an iterated wall-crossing of `M(λ)`; then Irving's argument: `P(λ)` is self-dual because it is a
-summand of `Θ_{s_1} ⋯ Θ_{s_k} M(λ)` and each `Θ_s` commutes with duality. Estimated several thousand lines.
+`≥ 1`.
+**Thm. 7.16 (a) for all antidominant `λ`** (`KacMoody/SelfDualProjectiveWallCrossing.lean`):
+`nonempty_equiv_restrictedDual_projectiveCover_of_isAntidominant` (`P(λ) ≅ P(λ)^∨`, finite type,
+algebraically closed characteristic-zero field). Reconstructed: for regular `λ` deep in its
+antidominant chamber, Irving's argument runs with wall-crossing functors for the simple
+reflections of `W_[λ]` (`exists_adjunction_mono_weylDot`: an iterated wall-crossing `F ⊣ G` with
+`M(w_λ·λ) ↪ G M(λ)`; `nonempty_equiv_restrictedDual_projectiveCover_of_walls`,
+`exists_nonempty_equiv_restrictedDual_projectiveCover_of_deep`), through the criterion
+`ProjectiveCover.nonempty_equiv_restrictedDual_of_selfDual` (`P(λ)` is a self-dual summand of a
+self-dual projective mapping onto `L(λ)`, `KacMoody/SelfDualProjectiveCriterion.lean`); a general
+antidominant `λ` is reached by translating `P(λ - Dρ)` to `λ`
+(`nonempty_equiv_restrictedDual_projectiveCover_of_translation`, with Thm. 7.9 for `w = 1`).
 **`Ext¹` from projective presentations** (`KacMoody/ExtProjective.lean`): `extOne_eq_zero_of_isProjectiveO`
 (`Ext¹(P, N) = 0` for `P` projective in `𝒪`), `extOneEquivQuotient` and
 `nonempty_extOne_equiv_quotient_ker` (`Ext¹(C, N) ≅ Hom(A, N) / {g ∘ i}` for `0 → A → B → C → 0`
@@ -1344,6 +1347,13 @@ This includes degree zero only under the explicit degree-zero vanishing assumpti
 not infer it from positive-degree acyclicity. Positive-degree Verma acyclicity is now proved
 in `BGG/VermaAcyclicity.lean`. BGG exactness is separately proved by the lowering-operator/
 Casimir route (`BGG/Exactness.lean`), without assembling this alternative dimension-shifting route.
+Lie algebra cohomology (`Homology/Cochain.lean`, towards [HumO] Thm. 6.15): the cochain
+complex `C^k(L, N) = Hom_R(⋀ᵏL, N)` with `δ ∘ δ = 0` (`ChevalleyEilenberg.δ_comp_δ`,
+`cochainComplex`, functorial in `N`), obtained as the transpose of the Koszul differential on
+`⋀L ⊗ U(L)` through the anti-homomorphism `envAction : U(L) → End(N)`; the recursion
+`contract_cochainDiff` and the transpose formula `cochainPair_cochainDiff` (`δ` is adjoint to the
+chain differential of `⋀L ⊗ X` for an invariant pairing `N × X → R`), over any commutative ring.
+The left-regular module moved to `UniversalEnveloping/LeftRegular.lean`.
 (The old low-degree complex
 `Algebra/Lie/ChevalleyEilenberg.lean` and the unused `H₂` route to Gabber–Kac
 `SerrePresented/Homology.lean` were removed; the lemmas still needed moved to
@@ -3003,7 +3013,7 @@ highest-weight modules `L_q(λ)` and equality of characters with `L(λ)` for `λ
 integral; Lusztig's canonical basis / Kashiwara's global basis (proved for `f`, `L_q(λ)` and
 `U̇`; see "Global basis of `f`" under "Status and open threads").
 
-### M16. Contragredient Lie superalgebras  `[~]`  ([Kac78])
+### M16. Contragredient Lie superalgebras  `[x]`  ([Kac78])
 
 **[Kac78]** V. G. Kac, *Infinite-dimensional algebras, Dedekind's η-function, classical Möbius
 function and the very strange formula*, Adv. Math. **30** (1978), 85–136. Tracking issue #312.
@@ -3112,7 +3122,27 @@ admissible `τ`. Proof reconstructed after [Kac] §10.4, without a PBW theorem f
 `(1 - e^{-αᵢ}) ch M̄(0)` is `rᵢ`-invariant (integrability of `M̄(0) / U fᵢ v̄₀`), and a maximal
 weight `β` of `ch M̄(0) · R - 1` would satisfy both `⟨β, αᵢ^∨⟩ ≥ 0` and `(β + 2ρ | β) = 0`
 (Casimir expansion of the one-dimensional `M̄(0) / Σᵢ U fᵢ v̄₀`).
-Remaining: Thm. 1, Thm. 2.
+Integrable highest-weight modules (`Super/HighestWeight.lean`, **Kac78 Thm. 2 (c)**): for
+symmetrizable `A`, admissible `τ` and `Λ` dominant integral for `G(A, τ)` (`⟨Λ, αᵢ^∨⟩ = nᵢ ∈ ℕ`,
+`nᵢ` even for odd `eᵢ`), `L̃(Λ) = M̄(Λ) / Σᵢ U fᵢ^{nᵢ+1} v̄_Λ` is integrable
+(`GVerma.isIntegrable_fPowQuotient`), nonzero (`GVerma.fPowSubmodule_ne_top`) and irreducible
+(`GVerma.isSimpleModule_fPowQuotient`, `GVerma.isCoatom_fPowSubmodule`), via the rank-one formula
+`eᵢ fᵢ^{k+1} v = dₖ₊₁ fᵢᵏ v` (`e_smul_f_pow_smul`, `lowerCoeff`), dominance of highest weights in
+modules integrable at a node (`exists_nat_of_e_smul_eq_zero_of_isIntegrableAt`) and the Casimir
+operator with [Kac] Lemma 10.3 (`KacMoodyAlgebra.dualBilinForm_add_two_rho_ne`). Kac78 derives
+Thm. 2 (c) from the character formula; the direct argument is reconstructed.
+Character formula (`Super/CharacterFormula.lean`, **Kac78 Thm. 1**): the character
+`IsCasimirModule.character` of a module with a Casimir scalar, the analogue of [Kac] Prop. 9.8
+(`IsCasimirModule.coeffAt_character_mul_denominator_ne_zero`: the coefficient of `e^ν` in `R ch V`
+vanishes unless `(ν + 2ρ | ν) = c` and `ν` lies in the cones, from the Verma expansion and
+`ch M̄(0) R = 1`), and for `Λ` dominant integral with `⟨Λ, αᵢ^∨⟩` even for odd `τᵢ`
+`e^ρ R ch L̃(Λ) = ∑_{w ∈ W} (-1)^{ℓ(w)} e^{w(Λ + ρ)}`
+(`GVerma.exp_rho_mul_denominator_mul_character`), hence `ch L_{G(A,τ)}(Λ) = ch L_{𝔤(A)}(Λ)`
+(`GVerma.character_eq_character`). **Kac78 Thm. 2 (a)** in the form
+`e^ρ = ch M̄(0) ∑_{w ∈ W} (-1)^{ℓ(w)} e^{wρ}` (`exp_rho_eq_vermaChar_mul_weylAltSum`; the
+denominator of `G(A, τ)` is `ch M̄(0)⁻¹ = R`). Kac78's product form of `ch M̄(0)⁻¹` over even and
+odd positive roots needs the root multiplicities of `G(A, τ)`, which are not formalized.
+Kac78 Thms. 1, 2 are done at this scope.
 
 ## Deferred and scheduled items
 
