@@ -228,6 +228,7 @@ import LieLean.Algebra.Lie.KacMoody.CentralBlocks
 import LieLean.Algebra.Lie.KacMoody.CentralDecomposition
 import LieLean.Algebra.Lie.KacMoody.CentralIdempotent
 import LieLean.Algebra.Lie.KacMoody.TranslationTensorNatTrans
+import LieLean.Algebra.Lie.KacMoody.ProjectiveFunctorIso
 import LieLean.Algebra.Lie.KacMoody.CentralTensorFiltration
 import LieLean.Algebra.Lie.KacMoody.HarishChandra
 import LieLean.Algebra.Lie.KacMoody.HarishChandraInvariance
