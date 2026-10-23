@@ -23,7 +23,8 @@ central element on `M ⊗ L`, which is natural in `M`.
 
 * `AlgHom.exists_rep_eq_id_and_eq_zero`: separation of finitely many generalized characters
   of a commutative algebra acting with uniform nilpotence exponents.
-* `Matrix.Realization.KacMoodyAlgebra.exists_rep_eq_centralBlockProjection`.
+* `Matrix.Realization.KacMoodyAlgebra.exists_rep_eq_centralBlockProjection`, and
+  `exists_rep_eq_centralBlockProjection₂` (one central element for two modules).
 
 ## References
 
@@ -102,8 +103,9 @@ open VermaModule
 
 variable {ι K H : Type*} [Fintype ι] [DecidableEq ι] [Field K]
   [AddCommGroup H] [Module K H] {A : Matrix ι ι ℤ} (P : Realization A K H)
-  {V : Type*} [AddCommGroup V] [Module K V] [LieRingModule P.KacMoodyAlgebra V]
-  [LieModule K P.KacMoodyAlgebra V]
+  {V W : Type*} [AddCommGroup V] [Module K V] [LieRingModule P.KacMoodyAlgebra V]
+  [LieModule K P.KacMoodyAlgebra V] [AddCommGroup W] [Module K W]
+  [LieRingModule P.KacMoodyAlgebra W] [LieModule K P.KacMoodyAlgebra W]
 
 local notation "𝓤" => UniversalEnvelopingAlgebra K P.KacMoodyAlgebra
 local notation "𝓩" => Subalgebra.center K 𝓤
@@ -147,30 +149,30 @@ theorem exists_pow_eq_zero_of_mem_centralBlock (hV : IsCentralLocallyFinite P V)
   rwa [LieModuleHom.mem_ker, LieModuleHom.comp_apply, centralBlockProjection_self P hV χ hv,
     centralShiftPow_apply] at this
 
-/-- **Block projections are central.** On a finitely generated module with locally finite
-central action (e.g. a finitely generated module in `𝒪`), the projection onto the block of a
-central character `χ` is the action of an element of `Z(U(𝔤))`. -/
-theorem exists_rep_eq_centralBlockProjection (hV : IsCentralLocallyFinite P V) {s : Finset V}
-    (hs : LieSubmodule.lieSpan K P.KacMoodyAlgebra (s : Set V) = ⊤) (χ : 𝓩 →ₐ[K] K) :
-    ∃ z : 𝓩, ∀ v, rep P V (z : 𝓤) v = centralBlockProjection P hV χ v := by
+/-- On a finitely generated module with locally finite central action, only finitely many
+block projections are nonzero. -/
+theorem exists_finset_centralBlockProjection_eq_zero (hV : IsCentralLocallyFinite P V)
+    {s : Finset V} (hs : LieSubmodule.lieSpan K P.KacMoodyAlgebra (s : Set V) = ⊤) :
+    ∃ T : Finset (𝓩 →ₐ[K] K), ∀ ψ ∉ T, ∀ v, centralBlockProjection P hV ψ v = 0 := by
   classical
   choose T hT₀ _ using fun t : V ↦ exists_finset_sum_centralBlockProjection P hV t
-  let T' := s.biUnion T
-  -- Outside `T'`, the projections vanish.
-  have hzero : ∀ ψ ∉ T', ∀ v, centralBlockProjection P hV ψ v = 0 := by
-    intro ψ hψ v
-    have hker : LieSubmodule.lieSpan K P.KacMoodyAlgebra (s : Set V) ≤
-        (centralBlockProjection P hV ψ).ker := by
-      rw [LieSubmodule.lieSpan_le]
-      intro t ht
-      exact hT₀ t ψ fun h ↦ hψ (Finset.mem_biUnion.mpr ⟨t, ht, h⟩)
-    rw [hs] at hker
-    exact hker (LieSubmodule.mem_top v)
-  obtain ⟨c, hcχ, hcT⟩ := AlgHom.exists_rep_eq_id_and_eq_zero
-    ((rep P V).comp (Subalgebra.center K 𝓤).val)
-    (fun ψ ↦ (centralBlock P V ψ).toSubmodule)
-    (fun ψ a ↦ exists_pow_eq_zero_of_mem_centralBlock P hV hs ψ a) T' χ
-  refine ⟨c, fun v ↦ ?_⟩
+  refine ⟨s.biUnion T, fun ψ hψ v ↦ ?_⟩
+  have hker : LieSubmodule.lieSpan K P.KacMoodyAlgebra (s : Set V) ≤
+      (centralBlockProjection P hV ψ).ker := by
+    rw [LieSubmodule.lieSpan_le]
+    intro t ht
+    exact hT₀ t ψ fun h ↦ hψ (Finset.mem_biUnion.mpr ⟨t, ht, h⟩)
+  rw [hs] at hker
+  exact hker (LieSubmodule.mem_top v)
+
+/-- A central element acting as the identity on the block of `χ` and as zero on the other
+blocks of a finite set containing all nonzero ones acts as the block projection. -/
+theorem rep_eq_centralBlockProjection_of (hV : IsCentralLocallyFinite P V)
+    {T : Finset (𝓩 →ₐ[K] K)} (hT : ∀ ψ ∉ T, ∀ v, centralBlockProjection P hV ψ v = 0)
+    {χ : 𝓩 →ₐ[K] K} {c : 𝓩} (hcχ : ∀ v ∈ centralBlock P V χ, rep P V (c : 𝓤) v = v)
+    (hcT : ∀ ψ ∈ T, ψ ≠ χ → ∀ v ∈ centralBlock P V ψ, rep P V (c : 𝓤) v = 0) (v : V) :
+    rep P V (c : 𝓤) v = centralBlockProjection P hV χ v := by
+  classical
   obtain ⟨S, hS₀, hS⟩ := exists_finset_sum_centralBlockProjection P hV v
   conv_lhs => rw [← hS]
   rw [map_sum]
@@ -180,12 +182,75 @@ theorem exists_rep_eq_centralBlockProjection (hV : IsCentralLocallyFinite P V) {
     split_ifs with h
     · subst h
       exact hcχ _ (centralBlockProjection_mem P hV ψ v)
-    · by_cases hψ : ψ ∈ T'
+    · by_cases hψ : ψ ∈ T
       · exact hcT ψ hψ h _ (centralBlockProjection_mem P hV ψ v)
-      · rw [hzero ψ hψ v, map_zero]
+      · rw [hT ψ hψ v, map_zero]
   simp only [hc, Finset.sum_ite_eq']
   split_ifs with h
   · rfl
   · exact (hS₀ χ h).symm
+
+/-- **Block projections are central**, simultaneously on two modules: on finitely generated
+modules `V`, `W` with locally finite central action (e.g. finitely generated modules in `𝒪`),
+the projections onto the blocks of a central character `χ` are the action of one element of
+`Z(U(𝔤))`. -/
+theorem exists_rep_eq_centralBlockProjection₂ (hV : IsCentralLocallyFinite P V) {s : Finset V}
+    (hs : LieSubmodule.lieSpan K P.KacMoodyAlgebra (s : Set V) = ⊤)
+    (hW : IsCentralLocallyFinite P W) {t : Finset W}
+    (ht : LieSubmodule.lieSpan K P.KacMoodyAlgebra (t : Set W) = ⊤) (χ : 𝓩 →ₐ[K] K) :
+    ∃ z : 𝓩, (∀ v, rep P V (z : 𝓤) v = centralBlockProjection P hV χ v) ∧
+      ∀ w, rep P W (z : 𝓤) w = centralBlockProjection P hW χ w := by
+  classical
+  obtain ⟨T₁, hT₁⟩ := exists_finset_centralBlockProjection_eq_zero P hV hs
+  obtain ⟨T₂, hT₂⟩ := exists_finset_centralBlockProjection_eq_zero P hW ht
+  let ρV := (rep P V).comp (Subalgebra.center K 𝓤).val
+  let ρW := (rep P W).comp (Subalgebra.center K 𝓤).val
+  let ρ := (LinearMap.prodMapAlgHom K V W).comp (ρV.prod ρW)
+  have hsh : ∀ (a : 𝓩) (c : K) (n : ℕ) (x : V × W), ((ρ a - c • 1) ^ n) x =
+      (((ρV a - c • 1) ^ n) x.1, ((ρW a - c • 1) ^ n) x.2) := by
+    intro a c n x
+    have h₀ : (ρ a - c • 1) ^ n = ρ ((a - algebraMap K 𝓩 c) ^ n) := by
+      rw [map_pow, map_sub, AlgHom.commutes, Algebra.algebraMap_eq_smul_one]
+    have h₁ : (ρV a - c • 1) ^ n = ρV ((a - algebraMap K 𝓩 c) ^ n) := by
+      rw [map_pow, map_sub, AlgHom.commutes, Algebra.algebraMap_eq_smul_one]
+    have h₂ : (ρW a - c • 1) ^ n = ρW ((a - algebraMap K 𝓩 c) ^ n) := by
+      rw [map_pow, map_sub, AlgHom.commutes, Algebra.algebraMap_eq_smul_one]
+    rw [h₀, h₁, h₂]
+    rfl
+  obtain ⟨c, hcχ, hcT⟩ := AlgHom.exists_rep_eq_id_and_eq_zero ρ
+    (fun ψ ↦ (centralBlock P V ψ).toSubmodule.prod (centralBlock P W ψ).toSubmodule)
+    (fun ψ a ↦ by
+      obtain ⟨n₁, hn₁⟩ := exists_pow_eq_zero_of_mem_centralBlock P hV hs ψ a
+      obtain ⟨n₂, hn₂⟩ := exists_pow_eq_zero_of_mem_centralBlock P hW ht ψ a
+      refine ⟨n₁ + n₂, fun x hx ↦ ?_⟩
+      rw [hsh]
+      refine Prod.ext ?_ ?_
+      · change ((rep P V (a : 𝓤) - ψ a • 1) ^ (n₁ + n₂)) x.1 = 0
+        rw [add_comm, pow_add, Module.End.mul_apply, hn₁ x.1 hx.1, map_zero]
+      · change ((rep P W (a : 𝓤) - ψ a • 1) ^ (n₁ + n₂)) x.2 = 0
+        rw [pow_add, Module.End.mul_apply, hn₂ x.2 hx.2, map_zero])
+    (T₁ ∪ T₂) χ
+  have hρ : ∀ x : V × W, ρ c x = (rep P V (c : 𝓤) x.1, rep P W (c : 𝓤) x.2) := fun _ ↦ rfl
+  refine ⟨c, rep_eq_centralBlockProjection_of P hV (T := T₁ ∪ T₂)
+    (fun ψ hψ ↦ hT₁ ψ fun h ↦ hψ (Finset.mem_union_left _ h)) ?_ ?_,
+    rep_eq_centralBlockProjection_of P hW (T := T₁ ∪ T₂)
+    (fun ψ hψ ↦ hT₂ ψ fun h ↦ hψ (Finset.mem_union_right _ h)) ?_ ?_⟩
+  · intro v hv
+    simpa [hρ] using congrArg Prod.fst (hcχ (v, 0) ⟨hv, zero_mem _⟩)
+  · intro ψ hψ hne v hv
+    simpa [hρ] using congrArg Prod.fst (hcT ψ hψ hne (v, 0) ⟨hv, zero_mem _⟩)
+  · intro w hw
+    simpa [hρ] using congrArg Prod.snd (hcχ (0, w) ⟨zero_mem _, hw⟩)
+  · intro ψ hψ hne w hw
+    simpa [hρ] using congrArg Prod.snd (hcT ψ hψ hne (0, w) ⟨zero_mem _, hw⟩)
+
+/-- **Block projections are central.** On a finitely generated module with locally finite
+central action (e.g. a finitely generated module in `𝒪`), the projection onto the block of a
+central character `χ` is the action of an element of `Z(U(𝔤))`. -/
+theorem exists_rep_eq_centralBlockProjection (hV : IsCentralLocallyFinite P V) {s : Finset V}
+    (hs : LieSubmodule.lieSpan K P.KacMoodyAlgebra (s : Set V) = ⊤) (χ : 𝓩 →ₐ[K] K) :
+    ∃ z : 𝓩, ∀ v, rep P V (z : 𝓤) v = centralBlockProjection P hV χ v := by
+  obtain ⟨z, hz, -⟩ := exists_rep_eq_centralBlockProjection₂ P hV hs hV hs χ
+  exact ⟨z, hz⟩
 
 end Matrix.Realization.KacMoodyAlgebra
