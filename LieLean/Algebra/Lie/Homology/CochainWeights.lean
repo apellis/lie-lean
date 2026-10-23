@@ -34,6 +34,8 @@ form a subcomplex, whose cohomology is the weight-`μ` part `H^n(L, N)_μ` of th
   `(θ_y f)(c) = f(ad_y c) - y f(c)`.
 * `LieModule.ChevalleyEilenberg.DerivAction.cochainDiff_coAct`: `δ ∘ θ(a) = θ(a) ∘ δ`.
 * `LieModule.ChevalleyEilenberg.DerivAction.δ_coActDeg`: the same on graded pieces.
+* `LieModule.ChevalleyEilenberg.DerivAction.mem_cochainWeightSpace_zero_iff`,
+  `LieModule.ChevalleyEilenberg.δ_zero_eq_zero_iff`: degree-`0` cochains.
 -/
 
 open TensorProduct ExteriorAlgebra CategoryTheory
@@ -535,5 +537,79 @@ theorem weightComplex_shortExact {g₁ : N₁ →ₗ⁅K,L⁆ N₂} {g₂ : N₂
     rw [LinearEquiv.apply_symm_apply, hgy, cochainWeightEquiv_apply]
 
 end DerivAction
+
+end LieModule.ChevalleyEilenberg
+
+/-! ### Degree-zero cochains -/
+
+namespace LieModule.ChevalleyEilenberg
+
+variable {K H L V : Type*} [Field K] [AddCommGroup H] [Module K H] [LieRing L] [LieAlgebra K L]
+  [AddCommGroup V] [Module K V] [LieRingModule L V]
+
+omit [AddCommGroup H] [Module K H] [LieRingModule L V] in
+lemma exteriorPower_zero_eq (ω : ⋀[K]^0 L) :
+    ω = exteriorPower.zeroEquiv K L ω • (⟨1, by simp⟩ : ⋀[K]^0 L) := by
+  have h1 : (⟨1, by simp⟩ : ⋀[K]^0 L) = exteriorPower.ιMulti K 0 Fin.elim0 :=
+    Subtype.ext (by simp [ExteriorAlgebra.ιMulti_apply])
+  apply (exteriorPower.zeroEquiv K L).injective
+  rw [map_smul, h1, exteriorPower.zeroEquiv_ιMulti, smul_eq_mul, mul_one]
+
+omit [AddCommGroup H] [Module K H] [LieRingModule L V] in
+lemma zeroEquiv_one : exteriorPower.zeroEquiv K L (⟨1, by simp⟩ : ⋀[K]^0 L) = 1 := by
+  have h1 : (⟨1, by simp⟩ : ⋀[K]^0 L) = exteriorPower.ιMulti K 0 Fin.elim0 :=
+    Subtype.ext (by simp [ExteriorAlgebra.ιMulti_apply])
+  rw [h1, exteriorPower.zeroEquiv_ιMulti]
+
+omit [AddCommGroup H] [Module K H] [LieRingModule L V] in
+/-- Derivations act by zero on `⋀^0 L`. -/
+lemma extDerivDeg_zero_apply (D : L →ₗ[K] L) (ω : ⋀[K]^0 L) : extDerivDeg D 0 ω = 0 := by
+  rw [exteriorPower_zero_eq ω, map_smul]
+  refine smul_eq_zero.mpr (Or.inr (Subtype.ext ?_))
+  rw [coe_extDerivDeg]
+  exact extDeriv_one _
+
+variable (K L) in
+/-- The degree-`0` cochain `c ↦ c v`. -/
+def cochainZero (v : V) : Cochains K L V 0 :=
+  (exteriorPower.zeroEquiv K L).toLinearMap.smulRight v
+
+omit [AddCommGroup H] [Module K H] [LieRingModule L V] in
+@[simp] lemma cochainZero_one (v : V) : cochainZero K L v ⟨1, by simp⟩ = v := by
+  simp [cochainZero, zeroEquiv_one]
+
+omit [AddCommGroup H] [Module K H] [LieRingModule L V] in
+lemma cochainZero_apply_one (f : Cochains K L V 0) : cochainZero K L (f ⟨1, by simp⟩) = f := by
+  refine LinearMap.ext fun ω ↦ ?_
+  rw [exteriorPower_zero_eq ω, map_smul, map_smul, cochainZero_one]
+
+/-- A degree-`0` cochain has weight `μ` if and only if its value at `1` has weight `μ`. -/
+lemma DerivAction.mem_cochainWeightSpace_zero_iff (ρ : DerivAction K H L V) {μ : Module.Dual K H}
+    {f : Cochains K L V 0} :
+    f ∈ ρ.cochainWeightSpace 0 μ ↔ f ⟨1, by simp⟩ ∈ Module.End.weightSpaceOf ρ.φ μ := by
+  rw [DerivAction.mem_cochainWeightSpace]
+  refine ⟨fun hf a ↦ ?_, fun hf a ↦ LinearMap.ext fun ω ↦ ?_⟩
+  · have h := LinearMap.congr_fun (hf a) ⟨1, by simp⟩
+    rwa [DerivAction.coActDeg_apply, extDerivDeg_zero_apply, map_zero, sub_zero,
+      LinearMap.smul_apply] at h
+  · rw [DerivAction.coActDeg_apply, extDerivDeg_zero_apply, map_zero, sub_zero,
+      LinearMap.smul_apply, exteriorPower_zero_eq ω, map_smul, map_smul, hf a, smul_comm]
+
+variable [LieModule K L V]
+
+/-- A degree-`0` cochain is a cocycle if and only if its value at `1` is killed by `L`. -/
+lemma δ_zero_eq_zero_iff {f : Cochains K L V 0} :
+    δ K L V 0 f = 0 ↔ ∀ x : L, ⁅x, f ⟨1, by simp⟩⁆ = 0 := by
+  refine ⟨fun hf x ↦ ?_, fun hf ↦ ?_⟩
+  · have h := δ_zero_apply f x
+    rw [hf, LinearMap.zero_apply] at h
+    exact h.symm
+  · refine exteriorPower.linearMap_ext (AlternatingMap.ext fun m ↦ ?_)
+    rw [LinearMap.compAlternatingMap_apply, LinearMap.compAlternatingMap_apply,
+      LinearMap.zero_apply]
+    have hm : exteriorPower.ιMulti K (0 + 1) m = (⟨ExteriorAlgebra.ι K (m 0), by simp⟩ :
+        ⋀[K]^(0 + 1) L) :=
+      Subtype.ext (by simp [exteriorPower.ιMulti_apply_coe, ExteriorAlgebra.ιMulti_apply])
+    rw [hm, δ_zero_apply, hf]
 
 end LieModule.ChevalleyEilenberg
