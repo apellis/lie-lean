@@ -771,15 +771,17 @@ lemma isLeadingKoszul_relKoszulOp (hlead : IsLeading Ψ b) (hw : IsWeightCoord b
   convert relDiff_add_delta_mem hp hlead s q n h1 using 1
   abel
 
+omit [Fintype J] in
 include hp hT in
 /-- **Exactness of relative chains.** Under the weight and leading-term hypotheses, every chain
 `t` of weight `0` and positive degree whose differential lies in `⨆ₐ η(a) ∧ C` is a boundary
 modulo `⨆ₐ η(a) ∧ C`. This is the hypothesis of
 `LieModule.ChevalleyEilenberg.DerivAction.exists_δ_eq_of_relExact`. -/
-theorem relExact [CharZero K] (hlead : IsLeading Ψ b) (hr : IsRelData η ρ p)
+theorem relExact [CharZero K] [Finite J] (hlead : IsLeading Ψ b) (hr : IsRelData η ρ p)
     (hw : IsWeightCoord b wt ρ Ψ c) {k : ℕ} (t : EX) (ht : t ∈ ρ.chainPiece (k + 1) 0)
     (hdt : diff K L X t ∈ wedgeRange K L X η) :
     ∃ s ∈ ρ.chainPiece (k + 2) 0, t - diff K L X s ∈ wedgeRange K L X η := by
+  have := Fintype.ofFinite J
   obtain ⟨n, hz⟩ := toCoord_mem_rectangle (p := p) (Ψ := Ψ) ht.1
   have hPt : Pr hT t = t := Module.End.weightProj_of_mem hT ht.2
   have hprz : prZero p Ψ hT (toCoord p Ψ t) = toCoord p Ψ t := by
