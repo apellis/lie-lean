@@ -510,7 +510,13 @@ are needed). [HumO] Prop. 6.15 (maintainer decision 2026-10-22, issue #7): part 
 in `𝒪`, `KacMoody/CategoryOExtCohomology.lean`), by dimension shifting along embeddings into the
 injectives `Q^∨` of `𝒪`, whose positive-degree `𝔫`-cohomology vanishes
 (`KacMoody/InjectiveCohomology.lean`, via `KacMoody/DualVermaCohomology.lean` and the duality
-of `Homology/CochainDuality.lean`); the isomorphism comes from equal finite dimensions. Part (a) open.
+of `Homology/CochainDuality.lean`); the isomorphism comes from equal finite dimensions. Part (a)
+done: `CategoryO.nonempty_ext_linearEquiv_relCohomology` (`Extⁿ_𝒪(M, N) ≅ Hⁿ(𝔤, 𝔥; Hom_K(M, N))`
+for `M`, `N` in `𝒪`, `KacMoody/CategoryOExtRelative.lean`), by dimension shifting in `N` along
+`N ↪ Q^∨`: `Hⁿ(𝔤, 𝔥; Hom_K(M, Q^∨))` vanishes for `n > 0` by induction on `n` over projective
+presentations of `M` (`relAcyclic_restrictedDual_projectiveCoverAmbient`, from
+`KacMoody/RelativeStdFiltration.lean` and `Homology/RelativeHom.lean`), and degree `0` is
+`Hom_𝔤(M, N)`; equal finite dimensions give the isomorphism (not a natural one; reconstructed).
 Bott's Thm. 6.6 in the `𝔫`-cohomology form (`KacMoody/Kostant/Cohomology.lean`, every
 symmetrizable GCM, `λ` dominant integral): `IrreducibleModule.finrank_nPosCohomology_eq_one`
 (`dim H^{ℓ(w)}(𝔫, L(λ))_{w·λ} = 1`) and `IrreducibleModule.finrank_nPosCohomology_eq_zero` (the
