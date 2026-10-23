@@ -343,4 +343,16 @@ example : SuperEnveloping.GVerma.character (P := std AOsp ℚ) pOsp SOsp hAOsp 0
 /-- Kac 1978 Thm. 2 (a) for `osp(1|4)`. -/
 example := SuperEnveloping.exp_rho_eq_vermaChar_mul_weylAltSum (P := std AOsp ℚ) SOsp hAOsp hpOsp
 
+/-- The associative super Serre presentation for `osp(1|4)`. -/
+example : SuperEnveloping.gIdeal (std AOsp ℚ) pOsp = SuperEnveloping.superSerreIdeal ℚ AOsp pOsp :=
+  SuperEnveloping.gIdeal_eq_superSerreIdeal _ _ SOsp hAOsp hpOsp
+
+/-- The dimension count for the super Serre relations of `osp(1|4)`. -/
+example (ν : Fin 2 →₀ ℕ) :
+    KacMoodyAlgebra.kostantPartition (std AOsp ℚ) ((std AOsp ℚ).rootOf (SuperEnveloping.natVec ν)) +
+      Module.finrank ℚ ↥(FreeAlgebra.wordSpan ℚ ν ⊓
+        (SuperEnveloping.superSerreIdeal ℚ AOsp pOsp).restrictScalars ℚ) =
+        Fintype.card (LusztigF.Words ν) :=
+  SuperEnveloping.kostantPartition_add_finrank_superSerreIdeal SOsp hAOsp hpOsp ν
+
 end NonVacuity
