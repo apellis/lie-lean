@@ -393,7 +393,7 @@ theorem nonempty_equiv_restrictedDual_projectiveCover_of_walls {lam : Dual K H}
     have hinj := injective_of_mono (ιo ≫ φ)
     rw [h1] at hinj
     have h2 := @hinj ((ofLieEquiv (P := P) (VermaModule P lam)) (VermaModule.hwv P lam)) 0
-      (by simp)
+      rfl
     exact VermaModule.hwv_ne_zero P lam
       ((ofLieEquiv (P := P) (VermaModule P lam)).injective (h2.trans (map_zero _).symm))
   have := hFp.mono
@@ -460,6 +460,7 @@ theorem exists_nonempty_equiv_restrictedDual_projectiveCover_of_deep :
   have h2 : D (u, j) ≤ Finset.univ.sup D := Finset.le_sup (Finset.mem_univ _)
   omega
 
+omit [Fact A.IsFiniteCartan] in
 include hA in
 /-- Self-duality of `P(λ)` from a self-dual `P(λ')` and a translation functor
 `T = T_{λ'}^{λ}` (by `L(ν)`, `ν` dominant integral) with `T L(λ') ≅ L(λ)`: then
@@ -471,16 +472,14 @@ theorem nonempty_equiv_restrictedDual_projectiveCover_of_translation {lam lam' �
     (eL : IrreducibleModule P lam ≃ₗ⁅K,𝔤⁆ centralTranslation P (IrreducibleModule P ν)
       (centralCharacter P lam') (centralCharacter P lam) (IrreducibleModule P lam')) :
     Nonempty (ProjectiveCover P hA lam ≃ₗ⁅K,𝔤⁆ restrictedDual P (ProjectiveCover P hA lam)) := by
-  classical
   have := IrreducibleModule.finiteDimensional (P := P) hA hν
   have hPO := ProjectiveCover.isCategoryO P hA lam'
   have hfg := isFGProjectiveO_centralTranslation_projectiveCover P hA hν (centralCharacter P lam)
     (ProjectiveCover.centralBlock_eq_top P hA lam')
   have hS := hfg.fg.choose_spec
-  let eZ := (centralTranslationEquiv P (IrreducibleModule P ν) (centralCharacter P lam')
-      (centralCharacter P lam) eP).trans
-    (restrictedDualCentralTranslationEquiv P hA hν hPO (centralCharacter P lam')
-      (centralCharacter P lam)).symm
+  let eZ := ((restrictedDualCentralTranslationEquiv P hA hν hPO (centralCharacter P lam')
+      (centralCharacter P lam)).trans (centralTranslationEquiv P (IrreducibleModule P ν)
+      (centralCharacter P lam') (centralCharacter P lam) eP.symm)).symm
   let f := eL.symm.toLieModuleHom.comp (centralTranslationMap P (IrreducibleModule P ν)
     (centralCharacter P lam') (centralCharacter P lam) (ProjectiveCover.π P hA lam'))
   have hfs : Function.Surjective f := eL.symm.surjective.comp
