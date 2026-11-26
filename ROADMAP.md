@@ -3727,6 +3727,14 @@ action); these are open and not scheduled. Current completed steps and continuat
   for involutions `ψ₁`, `ψ₂` compatible with the bar involution, `Ψ = Θ ∘ (ψ₁ ⊗ ψ₂)` is an
   involution of `M ⊗ M'`, from `(ψ₁ ⊗ ψ₂)Θ = Θ̄(ψ₁ ⊗ ψ₂)` and `ΘΘ̄ = 1` on `M ⊗ M'`
   (`quasiRAct_finsum_barTensor`).
+  The braiding (`QuasiR/Braiding.lean`): `Θ̄ = Θ⁻¹` on `M ⊗ M'` (`quasiRBarAct`,
+  `quasiRAct_quasiRBarAct`, `quasiRBarAct_quasiRAct`, [Lus] 4.1.3), and for modules with weights
+  in `λ - ℕ[I]`, `λ' - ℕ[I]` the `U`-isomorphism `σ = v^{e} s Θ̄ : M ⊗ M' ≅ M' ⊗ M`
+  (`braidingEquiv`), with `σ(m ⊗ v_{λ'}) = v^{-(ν, λ')} v_{λ'} ⊗ m` on a highest weight vector
+  (`braiding_tmul_of_highest`) and uniqueness of `U`-maps out of `M ⊗ M'` from their values on
+  `M ⊗ S`, `S` generating `M'` (`ext_tmul_of_span`); the exponent `e(ν, ν')` is the
+  normalized pairing `(μ, μ') - (λ, λ')`, so no form on `X` is needed. Input for Webster,
+  arXiv:1309.3796v3, (1.1) and Cor. 6.11 in categorification-lean.
   `CrystalBasis/Global/TensorBar.lean`: [Lus] 19.3.4 (`hwBar_smul_U`: the bar involution of
   `L_q(λ)` satisfies `(u m)‾ = ū m̄`; our own check on generators), the bar involution of
   `ʷL_q(λ)` (`twBar`, 24.3.1) and Lusztig's `Ψ = Θ ∘ (¯ ⊗ ¯)` on `ʷL_q(λ) ⊗ L_q(λ')`

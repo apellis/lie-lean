@@ -729,6 +729,7 @@ import LieLean.Algebra.QuantumGroup.PBW.RootVectorsQuantum
 import LieLean.Algebra.QuantumGroup.PBW.WeightDimension
 import LieLean.Algebra.QuantumGroup.QBinomial
 import LieLean.Algebra.QuantumGroup.QuasiR.Basic
+import LieLean.Algebra.QuantumGroup.QuasiR.Braiding
 import LieLean.Algebra.QuantumGroup.QuasiR.Inverse
 import LieLean.Algebra.QuantumGroup.QuasiR.TensorAction
 import LieLean.Algebra.QuantumGroup.QuasiR.TensorInvolution
