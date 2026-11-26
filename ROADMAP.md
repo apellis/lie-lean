@@ -3733,7 +3733,8 @@ action); these are open and not scheduled. Current completed steps and continuat
   (`braidingEquiv`), with `σ(m ⊗ v_{λ'}) = v^{-(ν, λ')} v_{λ'} ⊗ m` on a highest weight vector
   (`braiding_tmul_of_highest`) and uniqueness of `U`-maps out of `M ⊗ M'` from their values on
   `M ⊗ S`, `S` generating `M'` (`ext_tmul_of_span`); the exponent `e(ν, ν')` is the
-  normalized pairing `(μ, μ') - (λ, λ')`, so no form on `X` is needed. Input for Webster,
+  normalized pairing `(μ, μ') - (λ, λ')`, so no form on `X` is needed. Its hypotheses hold for
+  `L_q(Λ)` (`QuasiR/BraidingHighestWeight.lean`, `IrreducibleModule.braidingEquiv`, any `Λ`). Input for Webster,
   arXiv:1309.3796v3, (1.1) and Cor. 6.11 in categorification-lean.
   `CrystalBasis/Global/TensorBar.lean`: [Lus] 19.3.4 (`hwBar_smul_U`: the bar involution of
   `L_q(λ)` satisfies `(u m)‾ = ū m̄`; our own check on generators), the bar involution of

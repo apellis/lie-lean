@@ -360,4 +360,25 @@ example (ν : Fin 2 →₀ ℕ) :
         Fintype.card (LusztigF.Words ν) :=
   SuperEnveloping.kostantPartition_add_finrank_superSerreIdeal SOsp hAOsp hpOsp ν
 
+/-! ### The braiding of simple modules (Webster, arXiv:1309.3796v3, (1.1)) -/
+
+/-- The braiding `L_q(Λ₁) ⊗ L_q(Λ₂) ≅ L_q(Λ₂) ⊗ L_q(Λ₁)` on the extended root datum of `sl₂`,
+for any `Λ₁`, `Λ₂`. -/
+example (Λ₁ Λ₂ : (Unit → ℤ) × (Unit → ℤ) →+ ℤ) :
+    TensorModule (RatFunc ℚ) (IrreducibleModule R1 (RatFunc.X : RatFunc ℚ) Λ₁)
+        (IrreducibleModule R1 (RatFunc.X : RatFunc ℚ) Λ₂) ≃ₗ[QuantumGroup R1 (RatFunc.X : RatFunc ℚ)]
+      TensorModule (RatFunc ℚ) (IrreducibleModule R1 (RatFunc.X : RatFunc ℚ) Λ₂)
+        (IrreducibleModule R1 (RatFunc.X : RatFunc ℚ) Λ₁) :=
+  IrreducibleModule.braidingEquiv hR1 Λ₁ Λ₂
+
+open scoped TensorProduct in
+/-- On `v_{Λ₁} ⊗ v_{Λ₂}` the braiding is the flip. -/
+example (Λ₁ Λ₂ : (Unit → ℤ) × (Unit → ℤ) →+ ℤ) :
+    IrreducibleModule.braidingEquiv hR1 Λ₁ Λ₂
+        (TensorModule.mk _ _ (IrreducibleModule.hwv R1 _ Λ₁ ⊗ₜ IrreducibleModule.hwv R1 _ Λ₂)) =
+      TensorModule.mk _ _ ((RatFunc.X : RatFunc ℚ) ^ (-pairDepth R1 Λ₂ 0) •
+        (IrreducibleModule.hwv R1 _ Λ₂ ⊗ₜ IrreducibleModule.hwv R1 _ Λ₁)) :=
+  IrreducibleModule.braidingEquiv_tmul_hwv hR1 Λ₁ Λ₂
+    (IrreducibleModule.hwv_mem_depthSpace_zero Λ₁)
+
 end NonVacuity
