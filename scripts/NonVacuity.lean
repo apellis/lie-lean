@@ -366,7 +366,8 @@ example (ν : Fin 2 →₀ ℕ) :
 for any `Λ₁`, `Λ₂`. -/
 example (Λ₁ Λ₂ : (Unit → ℤ) × (Unit → ℤ) →+ ℤ) :
     TensorModule (RatFunc ℚ) (IrreducibleModule R1 (RatFunc.X : RatFunc ℚ) Λ₁)
-        (IrreducibleModule R1 (RatFunc.X : RatFunc ℚ) Λ₂) ≃ₗ[QuantumGroup R1 (RatFunc.X : RatFunc ℚ)]
+        (IrreducibleModule R1 (RatFunc.X : RatFunc ℚ) Λ₂)
+      ≃ₗ[QuantumGroup R1 (RatFunc.X : RatFunc ℚ)]
       TensorModule (RatFunc ℚ) (IrreducibleModule R1 (RatFunc.X : RatFunc ℚ) Λ₂)
         (IrreducibleModule R1 (RatFunc.X : RatFunc ℚ) Λ₁) :=
   IrreducibleModule.braidingEquiv hR1 Λ₁ Λ₂
