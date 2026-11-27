@@ -36,7 +36,6 @@ variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
 
-set_option maxHeartbeats 2000000 in
 -- Exact degree-five certificate, with the two distinct Serre parameters.
 private theorem other_path_positive (a b c : B) (q : k) (hq : q ≠ 0)
     (hS : qSerre (q ^ 2) 2 a b = 0) (hU : qSerre q 2 b c = 0)

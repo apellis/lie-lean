@@ -107,7 +107,6 @@ section CasimirTerm
 variable [FiniteDimensional K H] {S : A.Symmetrization}
   {B : LinearMap.BilinForm K P.KacMoodyAlgebra} (hB : IsStandardForm P S B)
 
-set_option maxHeartbeats 8000000 in
 -- Comparing actual direct-sum coefficient actions with Verma actions is expensive.
 /-- The Casimir has the original Verma scalar on every BGG term, by its actual embeddings. -/
 theorem term_casimir (k : ℕ) (v : BGGTerm P hA Λ k) :
@@ -189,7 +188,6 @@ theorem homology_casimir (k : ℕ) (x : Homology P hA hΛ k) :
   rw [← hB.map_casimir _ (cycles_categoryO P hA hΛ k).isPosFinite
     (homology_categoryO P hA hΛ k).isPosFinite, hy, map_smul]
 
-set_option maxHeartbeats 8000000 in
 -- The actual cycle quotient's Lie-module instances make the primitive-vector step expensive.
 /-- Casimir vanishing with only local negative-generator nilpotence on actual homology.
 The positive-generator nilpotence part of full integrability is unnecessary: only the

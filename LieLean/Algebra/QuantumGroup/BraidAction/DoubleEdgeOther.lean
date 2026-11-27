@@ -23,7 +23,6 @@ variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
 
-set_option maxHeartbeats 4000000 in
 -- Expanding the two-relation polynomial certificate needs additional scalar normalization.
 private lemma other_positive (a b : B) (q : k) (hq : q ≠ 0)
     (hs : qSerre q 3 b a = 0) (ht : qSerre (q ^ 2) 2 a b = 0) :

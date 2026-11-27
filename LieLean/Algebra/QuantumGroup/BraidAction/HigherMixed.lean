@@ -33,7 +33,6 @@ variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
 
-set_option maxHeartbeats 4000000 in
 -- Normal ordering expands the commutator into many scalar coefficients.
 private lemma higher_mixed_2_1 (a b c d u u' : B) (q : k)
     (hq : q ≠ 0)
@@ -70,7 +69,6 @@ private lemma higher_mixed_2_1 (a b c d u u' : B) (q : k)
     hbc_assoc, hua_assoc, hu'a_assoc, hub_assoc, hud_assoc, hu'b_assoc, hu'd_assoc]
   match_scalars <;> field_simp [hq] <;> ring
 
-set_option maxHeartbeats 4000000 in
 -- Normal ordering expands the commutator into many scalar coefficients.
 private lemma higher_mixed_1_2 (a b c d u u' : B) (q : k)
     (hq : q ≠ 0)
@@ -107,7 +105,6 @@ private lemma higher_mixed_1_2 (a b c d u u' : B) (q : k)
     hbc_assoc, huc_assoc, hu'c_assoc, hud_assoc, hu'd_assoc]
   match_scalars <;> field_simp [hq] <;> ring
 
-set_option maxHeartbeats 4000000 in
 -- Normal ordering expands the commutator into many scalar coefficients.
 private lemma higher_mixed_2_2 (a b c d u u' : B) (q : k)
     (hq : q ≠ 0)
