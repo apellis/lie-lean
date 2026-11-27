@@ -26,7 +26,6 @@ variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
 
-set_option maxHeartbeats 4000000 in
 -- The polynomial certificate is an explicit combination of the two original Serre relations.
 private lemma reverse_two_positive (a b : B) (q : k) (hq : q ≠ 0)
     (hs : qSerre q 3 a b = 0) (ht : qSerre (q ^ 2) 2 b a = 0) :
@@ -54,7 +53,6 @@ private lemma reverse_two_positive (a b : B) (q : k) (hq : q ≠ 0)
   rw [he, hs, ht]
   simp
 
-set_option maxHeartbeats 4000000 in
 -- Normal ordering uses the totalized commutator coefficient without cancellation.
 private lemma reverse_two_lowering (a b c u u' : B) (q t : k) (hq : q ≠ 0)
     (hca : c * a = a * c - t • (u - u')) (hcb : c * b = b * c)
@@ -109,7 +107,6 @@ theorem parameter_eq_square_of_double_edge
     omega
   rw [hd, pow_mul]
 
-set_option maxHeartbeats 1000000 in
 -- Applying the normal-ordering certificate in the quotient needs a larger budget.
 /-- Neighbor-first positive Serre relation for the actual degree-two braid candidate.
 Reconstructed from the quotient presentation at mutual entries `(-2,-1)`.

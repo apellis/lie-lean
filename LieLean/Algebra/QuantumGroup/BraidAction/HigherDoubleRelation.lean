@@ -45,7 +45,6 @@ theorem higherDouble_short_polynomial (a b c : B) (q : k) (hq : q ≠ 0)
   linear_combination (norm := (match_scalars <;> field_simp [hq] <;> ring))
     q⁻¹ ^ 2 • h0 - q⁻¹ ^ 2 • h1
 
-set_option maxHeartbeats 2000000 in
 -- The degree-five certificate expands both scalar and noncommutative products.
 /-- The long-side external certificate uses the two original quadratic Serre relations.
 The explicitly cancelled scalar is the long-node quantum sum. -/

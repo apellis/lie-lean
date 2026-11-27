@@ -29,7 +29,6 @@ variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
 
-set_option maxHeartbeats 4000000 in
 -- Normal ordering the cubic identity produces many scalar coefficients.
 private lemma centre_two (a b c u u' : B) (q t : k) (hq : q ≠ 0)
     (hca : c * a = a * c - t • (u - u'))
@@ -69,7 +68,6 @@ end Ring
 variable {I Y : Type*} [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} {i j : I}
 
-set_option maxHeartbeats 1000000 in
 -- Elaborating the normal-ordering lemma in the quotient needs a larger budget.
 /-- The centre-first positive cubic Serre relation for the actual degree-two candidate.
 Reconstructed from the quotient relations. Only `v ≠ 0` is needed: no nonvanishing

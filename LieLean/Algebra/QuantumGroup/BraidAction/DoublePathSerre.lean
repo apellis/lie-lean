@@ -28,7 +28,6 @@ variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
 
-set_option maxHeartbeats 8000000 in
 -- Expansion of the degree-seven certificate requires scalar normalization.
 private theorem double_path_positive (a b c : B) (q : k) (hq : q ≠ 0)
     (hS : qSerre q 3 a b = 0) (hU : qSerre (q ^ 2) 2 b c = 0)

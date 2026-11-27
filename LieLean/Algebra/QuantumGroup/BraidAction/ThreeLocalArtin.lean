@@ -31,7 +31,6 @@ def threeNextP (q : k) (a c : B) : B :=
 def threeNextQ (q : k) (a c : B) : B :=
   q ^ 2 • (a ^ 2 * c) - ((q + q⁻¹) * q) • (a * c * a) + c * a ^ 2
 
-set_option maxHeartbeats 2000000 in
 -- The eight contextual Serre multiples expand degree-five noncommutative products.
 /-- Degree-five external certificate. Only original simple-edge Serre relations
 are used; no relation involving the nonorthogonal external edge is needed. -/

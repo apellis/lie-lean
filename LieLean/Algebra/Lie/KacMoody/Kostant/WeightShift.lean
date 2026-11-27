@@ -52,7 +52,6 @@ def nNegHomologyWeightConnecting (k : ℕ) (μ : Dual K H) :
       _ (fun z ↦ nNegHomologyConnecting_mem_weightSpace P f g hfg hf hg hV k μ
         ⟨z.1, (nNegDerivAction P U).homologyWeightSpace_le_homology (k + 1) μ z.2⟩ z.2)
 
-set_option maxHeartbeats 800000 in
 -- Definitional equality through the restricted nilradical coefficient actions is expensive.
 set_option backward.isDefEq.respectTransparency false in
 include hV in

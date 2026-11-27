@@ -51,7 +51,6 @@ theorem nextEdge_qSerre_reverse (q r : k) (n : ℕ) (a b c : B)
       rw [mul_comm]
     _ = 0 := by rw [hleft, hright, hcb]; simp
 
-set_option maxHeartbeats 4000000 in
 -- The degree-seven certificate expands 44 original-relation multiples.
 /-- Forward cubic next-edge certificate from the original quadratic and cubic
 Serre relations. The displayed scalar factors are sufficient, not claimed necessary. -/

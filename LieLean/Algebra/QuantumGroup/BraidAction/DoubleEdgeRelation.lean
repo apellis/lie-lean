@@ -31,7 +31,6 @@ variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
 
-set_option maxHeartbeats 4000000 in
 -- Normal ordering expands mixed products and rational scalar coefficients.
 private theorem four_lower_short (a b c u u' : B) (q : k) (hq : q ≠ 0)
     (hd : q - q⁻¹ ≠ 0) (hs : q + q⁻¹ ≠ 0)
@@ -65,7 +64,6 @@ private theorem four_lower_short (a b c u u' : B) (q : k) (hq : q ≠ 0)
   match_scalars <;> field_simp [hq, hd, hs, hn] <;> ring_nf <;>
     field_simp [hn] <;> ring
 
-set_option maxHeartbeats 4000000 in
 -- Normal ordering expands mixed products and rational scalar coefficients.
 private theorem four_lower_long (a b c u u' : B) (q : k) (hq : q ≠ 0)
     (hd : q ^ 2 - (q ^ 2)⁻¹ ≠ 0)

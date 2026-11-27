@@ -60,7 +60,6 @@ structure HigherDoubleGraph {I : Type*} (A : Matrix I I ℤ) (i : I) : Prop wher
   unique : ∀ j l, A i j = -2 → A i l = -2 → j = l
   path : ∀ j l, A i j ≠ 0 → A i l = 0 → A j l = 0 ∨ (A j l = -1 ∧ A l j = -1)
 
-set_option maxHeartbeats 2000000 in
 -- Exhaustive conditional expansion of the symbolic-rank matrix uses arithmetic case splits.
 /-- All non-double-incident nodes of literal B are next-edge nodes. -/
 theorem threeNextGraph_B {n : ℕ} (i : Fin n) (hi : i.val + 2 < n) :
@@ -70,7 +69,6 @@ theorem threeNextGraph_B {n : ℕ} (i : Fin n) (hi : i.val + 2 < n) :
     simp only [CartanMatrix.B, Matrix.of_apply, Fin.ext_iff] at *
     split_ifs at * <;> omega
 
-set_option maxHeartbeats 2000000 in
 -- Exhaustive conditional expansion of the symbolic-rank matrix uses arithmetic case splits.
 /-- The final two nodes of literal B satisfy the higher-double graph contract. -/
 theorem higherDoubleGraph_B {n : ℕ} (i : Fin n) (hi : n ≤ i.val + 2) :
@@ -80,7 +78,6 @@ theorem higherDoubleGraph_B {n : ℕ} (i : Fin n) (hi : n ≤ i.val + 2) :
     simp only [CartanMatrix.B, Matrix.of_apply, Fin.ext_iff] at *
     split_ifs at * <;> omega
 
-set_option maxHeartbeats 2000000 in
 -- Exhaustive conditional expansion of the symbolic-rank matrix uses arithmetic case splits.
 /-- All non-double-incident nodes of literal C are next-edge nodes. -/
 theorem threeNextGraph_C {n : ℕ} (i : Fin n) (hi : i.val + 2 < n) :

@@ -83,7 +83,6 @@ theorem mem_nNegHomologyWeightSpace_iff
   · intro hz
     exact ⟨z.2, fun a ↦ congrArg Subtype.val (hz a)⟩
 
-set_option maxHeartbeats 800000 in
 -- Comparing the connecting map through the restricted module instances exceeds default fuel.
 set_option backward.isDefEq.respectTransparency false in
 /-- The actual connecting map preserves the existing homology weight spaces. Only the

@@ -28,7 +28,6 @@ noncomputable section
 namespace LieLean.QuantumGroup
 variable {k : Type*} [Field k]
 
-set_option maxHeartbeats 2000000 in
 -- Expanding the degree-five certificate requires scalar normalization.
 /-- Degree-five certificate for a double and a simple outgoing edge.
 Only the original cubic, quadratic and orthogonality relations are premises.

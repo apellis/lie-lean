@@ -35,7 +35,6 @@ variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
 
-set_option maxHeartbeats 4000000 in
 -- Normal ordering the twice-lowered candidate produces many scalar coefficients.
 private lemma double_recover (a b c u u' : B) (q : k) (hq : q ≠ 0)
     (hd : q - q⁻¹ ≠ 0) (hs : q + q⁻¹ ≠ 0)
