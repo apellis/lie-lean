@@ -77,9 +77,25 @@ theorem nNegHomologyConnecting_mem_weightSpace_iff
     exact he.symm.trans (hz'.trans (map_smul _ _ _).symm)
   · exact nNegHomologyConnecting_mem_weightSpace P f g hfg hf hg hV k μ z
 
-set_option maxHeartbeats 800000 in
--- Quotient and subtype comparison through restricted nilradical modules exceeds default fuel.
-set_option backward.isDefEq.respectTransparency false in
+omit [Fintype ι] [DecidableEq ι] [CharZero K] in
+/-- A bijection between two submodules restricts to a bijection between smaller submodules
+when it detects membership in them. -/
+lemma bijective_codRestrict_of_mem_iff {E₁ E₂ : Type*} [AddCommGroup E₁] [Module K E₁]
+    [AddCommGroup E₂] [Module K E₂] {H₁ S₁ : Submodule K E₁} {H₂ S₂ : Submodule K E₂}
+    (h₁ : S₁ ≤ H₁) (h₂ : S₂ ≤ H₂) (δ : H₁ →ₗ[K] H₂) (hδ : Function.Bijective δ)
+    (hmem : ∀ z : H₁, (δ z).1 ∈ S₂ ↔ z.1 ∈ S₁)
+    (hc : ∀ z, ((H₂.subtype.comp δ).comp (Submodule.inclusion h₁)) z ∈ S₂) :
+    Function.Bijective (((H₂.subtype.comp δ).comp (Submodule.inclusion h₁)).codRestrict S₂ hc) := by
+  constructor
+  · intro x y hxy
+    have h : (δ (Submodule.inclusion h₁ x)).1 = (δ (Submodule.inclusion h₁ y)).1 :=
+      congrArg (fun t : S₂ ↦ (t : E₂)) hxy
+    exact Submodule.inclusion_injective h₁ (hδ.1 (Subtype.ext h))
+  · intro y
+    obtain ⟨z, hz⟩ := hδ.2 ⟨y.1, h₂ y.2⟩
+    have hm : z.1 ∈ S₁ := (hmem z).mp (by rw [hz]; exact y.2)
+    exact ⟨⟨z.1, hm⟩, Subtype.ext (congrArg (fun t : H₂ ↦ (t : E₂)) hz)⟩
+
 /-- Weight-space dimension shifting for the actual nilradical CE connecting map.
 Reconstructed from its bijectivity and weight detection. The middle module's homology must
 vanish in BOTH adjacent degrees; this theorem does not assert that Verma modules are acyclic. -/
@@ -88,30 +104,13 @@ def nNegHomologyWeightConnectingEquiv
     [Subsingleton (homology K (nNeg P) W (k + 1))]
     [Subsingleton (homology K (nNeg P) W k)] :
     (nNegDerivAction P U).homologyWeightSpace (k + 1) μ ≃ₗ[K]
-      (nNegDerivAction P V).homologyWeightSpace k μ := by
-  apply LinearEquiv.ofBijective (nNegHomologyWeightConnecting P f g hfg hf hg hV k μ)
-  constructor
-  · intro x y hxy
-    apply Subtype.ext
-    have hh := congrArg Subtype.val hxy
-    have he : homologyConnecting (BGGMinimality.restrictNNeg P f)
-        (BGGMinimality.restrictNNeg P g) hfg hf hg k
-        ⟨x.1, (nNegDerivAction P U).homologyWeightSpace_le_homology (k + 1) μ x.2⟩ =
-      homologyConnecting (BGGMinimality.restrictNNeg P f)
-        (BGGMinimality.restrictNNeg P g) hfg hf hg k
-        ⟨y.1, (nNegDerivAction P U).homologyWeightSpace_le_homology (k + 1) μ y.2⟩ :=
-      Subtype.ext hh
-    exact congrArg (fun z : homology K (nNeg P) U (k + 1) ↦ z.1)
-      (homologyConnecting_injective (BGGMinimality.restrictNNeg P f)
-      (BGGMinimality.restrictNNeg P g) hfg hf hg k he)
-  · intro y
-    obtain ⟨z, hz⟩ := homologyConnecting_surjective (BGGMinimality.restrictNNeg P f)
-      (BGGMinimality.restrictNNeg P g) hfg hf hg k
-      ⟨y.1, (nNegDerivAction P V).homologyWeightSpace_le_homology k μ y.2⟩
-    have hm : z.1 ∈ (nNegDerivAction P U).homologyWeightSpace (k + 1) μ := by
-      apply (nNegHomologyConnecting_mem_weightSpace_iff P f g hfg hf hg hV hU k μ z).mp
-      exact (congrArg Subtype.val hz).symm ▸ y.2
-    refine ⟨⟨z.1, hm⟩, Subtype.ext ?_⟩
-    exact congrArg (fun t : homology K (nNeg P) V k ↦ t.1) hz
+      (nNegDerivAction P V).homologyWeightSpace k μ :=
+  LinearEquiv.ofBijective (nNegHomologyWeightConnecting P f g hfg hf hg hV k μ)
+    (bijective_codRestrict_of_mem_iff _ ((nNegDerivAction P V).homologyWeightSpace_le_homology k μ)
+      _ ⟨homologyConnecting_injective (BGGMinimality.restrictNNeg P f)
+          (BGGMinimality.restrictNNeg P g) hfg hf hg k,
+        homologyConnecting_surjective (BGGMinimality.restrictNNeg P f)
+          (BGGMinimality.restrictNNeg P g) hfg hf hg k⟩
+      (nNegHomologyConnecting_mem_weightSpace_iff P f g hfg hf hg hV hU k μ) _)
 
 end Matrix.Realization.KacMoodyAlgebra
