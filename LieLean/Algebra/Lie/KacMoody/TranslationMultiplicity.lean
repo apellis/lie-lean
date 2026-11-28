@@ -147,8 +147,23 @@ section Exact
 
 variable [IsAlgClosed K]
 
-set_option maxHeartbeats 400000 in
--- Unifying the instances of the translated subquotients is expensive.
+/-- Translation is additive on multiplicities along a short exact sequence in `𝒪`. -/
+theorem multiplicity_centralTranslation_of_exact {A C : Type*}
+    [AddCommGroup A] [Module K A] [LieRingModule P.KacMoodyAlgebra A]
+    [LieModule K P.KacMoodyAlgebra A]
+    [AddCommGroup C] [Module K C] [LieRingModule P.KacMoodyAlgebra C]
+    [LieModule K P.KacMoodyAlgebra C]
+    (hA : IsCategoryO P A) (hV : IsCategoryO P V) (hC : IsCategoryO P C)
+    (hZ : IsCategoryO P Z) (χ₁ χ₂ : 𝓩 →ₐ[K] K)
+    (f : A →ₗ⁅K,P.KacMoodyAlgebra⁆ V) (g : V →ₗ⁅K,P.KacMoodyAlgebra⁆ C)
+    (hf : Function.Injective f) (hex : g.ker = f.range) (hg : Function.Surjective g)
+    (y : Dual K H) :
+    (hV.centralTranslation P hZ χ₁ χ₂).multiplicity y =
+      (hA.centralTranslation P hZ χ₁ χ₂).multiplicity y +
+        (hC.centralTranslation P hZ χ₁ χ₂).multiplicity y := by
+  obtain ⟨hTf, hTex, hTg⟩ := centralTranslationMap_shortExact P Z hV hZ f g hf hex hg χ₁ χ₂
+  exact IsCategoryO.multiplicity_eq_add_of_exact _ _ _ _ _ hTf hTex hTg y
+
 /-- For submodules `N ≤ N'` of a module in `𝒪`:
 `[T N' : L(y)] = [T N : L(y)] + [T (N'/N) : L(y)]`, by exactness of translation. -/
 theorem multiplicity_centralTranslation_subquotient (hV : IsCategoryO P V)
@@ -158,12 +173,8 @@ theorem multiplicity_centralTranslation_subquotient (hV : IsCategoryO P V)
       ((hV.lieSubmodule N).centralTranslation P hZ χ₁ χ₂).multiplicity y +
         (((hV.lieSubmodule N').quotient (N.comap N'.incl)).centralTranslation P hZ
           χ₁ χ₂).multiplicity y := by
-  let f : N →ₗ⁅K,P.KacMoodyAlgebra⁆ N' := LieSubmodule.inclusion h
-  let g : N' →ₗ⁅K,P.KacMoodyAlgebra⁆ N' ⧸ N.comap N'.incl :=
-    LieSubmodule.Quotient.mk' (N.comap N'.incl)
-  have hf : Function.Injective f := LieSubmodule.inclusion_injective h
-  have hg : Function.Surjective g := LieSubmodule.Quotient.surjective_mk' _
-  have hex : g.ker = f.range := by
+  have hex : (LieSubmodule.Quotient.mk' (N.comap N'.incl)).ker =
+      (LieSubmodule.inclusion h).range := by
     rw [LieSubmodule.Quotient.mk'_ker]
     ext x
     rw [LieSubmodule.mem_comap, LieModuleHom.mem_range]
@@ -172,12 +183,54 @@ theorem multiplicity_centralTranslation_subquotient (hV : IsCategoryO P V)
       exact ⟨⟨x.val, hx⟩, Subtype.ext rfl⟩
     · rintro ⟨m, rfl⟩
       exact m.2
-  obtain ⟨hTf, hTex, hTg⟩ := centralTranslationMap_shortExact P Z (hV.lieSubmodule N') hZ f g
-    hf hex hg χ₁ χ₂
-  exact IsCategoryO.multiplicity_eq_add_of_exact _ _ _ _ _ hTf hTex hTg y
+  exact multiplicity_centralTranslation_of_exact P (hV.lieSubmodule N) (hV.lieSubmodule N')
+    ((hV.lieSubmodule N').quotient (N.comap N'.incl)) hZ χ₁ χ₂ (LieSubmodule.inclusion h)
+    (LieSubmodule.Quotient.mk' (N.comap N'.incl)) (LieSubmodule.inclusion_injective h) hex
+    (LieSubmodule.Quotient.surjective_mk' _) y
 
-set_option maxHeartbeats 1600000 in
--- Unifying the instances of the translated subquotients is expensive.
+omit [IsAlgClosed K] in
+/-- `[T V : L(y)] = 0` when `V` has no weights above `y - ν`, the weights of `Z` being
+`≤ ν`. -/
+theorem multiplicity_centralTranslation_eq_zero (hV : IsCategoryO P V)
+    (hZ : IsCategoryO P Z) (χ₁ χ₂ : 𝓩 →ₐ[K] K) {ν y : Dual K H}
+    (hZν : ∀ ν', weightSpace P Z ν' ≠ ⊥ → ν' ∈ cone P ν)
+    (hQ : ∀ μ, y - ν ∈ cone P μ → weightSpace P V μ = ⊥) :
+    (hV.centralTranslation P hZ χ₁ χ₂).multiplicity y = 0 :=
+  IsCategoryO.multiplicity_eq_zero_of_weightSpace_eq_bot _
+    (weightSpace_centralTranslation_eq_bot P hV hZ χ₁ χ₂ hZν
+      fun μ hμ ↦ weightSpace_lieSubmodule_eq_bot _ (hQ μ hμ))
+
+omit [IsAlgClosed K] in
+/-- The contribution of one factor of a local composition series for `y - ν` to
+`[T − : L(y)]`: that of `L(η)` for a factor `L(η)`, and zero for a factor without weights
+above `y - ν`. -/
+theorem multiplicity_centralTranslation_factor (hV : IsCategoryO P V)
+    (hZ : IsCategoryO P Z) (χ₁ χ₂ : 𝓩 →ₐ[K] K) {ν y : Dual K H}
+    (hZν : ∀ ν', weightSpace P Z ν' ≠ ⊥ → ν' ∈ cone P ν)
+    {N N' : LieSubmodule K P.KacMoodyAlgebra V} {o : Option (Dual K H)}
+    (hfac : IsLocalFactor P (y - ν) N N' o)
+    (l : List (LieSubmodule K P.KacMoodyAlgebra V × Option (Dual K H))) :
+    (((hV.lieSubmodule N').quotient (N.comap N'.incl)).centralTranslation P hZ
+        χ₁ χ₂).multiplicity y +
+      ((factorWeights l).map fun η ↦
+        ((IrreducibleModule.isCategoryO P η).centralTranslation P hZ χ₁ χ₂).multiplicity
+          y).sum =
+      ((factorWeights ((N', o) :: l)).map fun η ↦
+        ((IrreducibleModule.isCategoryO P η).centralTranslation P hZ χ₁ χ₂).multiplicity
+          y).sum := by
+  cases o with
+  | none =>
+    have hz := multiplicity_centralTranslation_eq_zero P
+      ((hV.lieSubmodule N').quotient (N.comap N'.incl)) hZ χ₁ χ₂ hZν hfac
+    exact (congrArg (· + _) hz).trans (zero_add _)
+  | some η =>
+    obtain ⟨-, ⟨e⟩⟩ := hfac
+    have he := IsCategoryO.multiplicity_congr
+      (((hV.lieSubmodule N').quotient (N.comap N'.incl)).centralTranslation P hZ χ₁ χ₂)
+      ((IrreducibleModule.isCategoryO P η).centralTranslation P hZ χ₁ χ₂)
+      (centralTranslationEquiv P Z χ₁ χ₂ e) y
+    exact (congrArg (· + _) he).trans List.sum_cons.symm
+
 /-- Along a local composition series for `y - ν` from `N` to `M` (the weights of `Z` being
 `≤ ν`): `[T M : L(y)] = [T N : L(y)] + ∑_η [T L(η) : L(y)]`, the sum over the irreducible
 factors `L(η)` of the series. -/
@@ -199,20 +252,10 @@ theorem multiplicity_centralTranslation_of_isLocalCompositionSeries (hV : IsCate
   | cons a l ih =>
     obtain ⟨N', o⟩ := a
     obtain ⟨h, hfac, hl'⟩ := IsLocalCompositionSeries.cons_iff.mp hl
-    rw [ih hl', multiplicity_centralTranslation_subquotient P hV hZ χ₁ χ₂ h y, add_assoc]
-    congr 1
-    cases o with
-    | none =>
-      rw [factorWeights_cons_none]
-      have h0 : weightSpace P (centralTranslation P Z χ₁ χ₂ (N.Subquotient N')) y = ⊥ :=
-        weightSpace_centralTranslation_eq_bot P ((hV.lieSubmodule N').quotient _) hZ χ₁ χ₂ hZν
-          fun μ hμ ↦ weightSpace_lieSubmodule_eq_bot _ (hfac μ hμ)
-      rw [IsCategoryO.multiplicity_eq_zero_of_weightSpace_eq_bot _ h0, zero_add]
-    | some η =>
-      obtain ⟨-, ⟨e⟩⟩ := hfac
-      rw [factorWeights_cons_some, List.map_cons, List.sum_cons]
-      congr 1
-      exact IsCategoryO.multiplicity_congr _ _ (centralTranslationEquiv P Z χ₁ χ₂ e) y
+    have h1 := ih hl'
+    have h2 := multiplicity_centralTranslation_subquotient P hV hZ χ₁ χ₂ h y
+    have h3 := multiplicity_centralTranslation_factor P hV hZ χ₁ χ₂ hZν hfac l
+    exact h1.trans ((congrArg (· + _) h2).trans ((add_assoc _ _ _).trans (congrArg (_ + ·) h3)))
 
 /-- **Translation on the Grothendieck group.** For `V` in `𝒪`, a coefficient module `Z` in `𝒪`
 with weights `≤ ν`, and a local composition series `l` of `V` for the weight `y - ν`:
