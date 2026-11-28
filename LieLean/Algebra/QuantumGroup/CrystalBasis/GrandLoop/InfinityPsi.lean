@@ -495,8 +495,17 @@ theorem rmulF_tensor_congr' [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I) (m 
     exact ⟨N, fun μ Λl hμ hΛli hΛl P hP hPw he w₀ hw₀ ↦
       (h μ Λl hμ hΛli hΛl P hP hPw he w₀ hw₀).2⟩
 
-set_option maxHeartbeats 1600000 in
--- one long argument assembling the tensor product rule through `T`
+include hR in
+/-- The tensor embedding maps `ϖ L(μ + λ)` into `ϖ (L(μ) ⊗ L(λ))`. -/
+theorem tensorEmb_mem_smul_LL (μ Λl : Dom R) {x : IrreducibleModule R v (μ + Λl).1}
+    (hx : x ∈ ϖ • lat hvt hR A (μ + Λl)) :
+    tensorEmb hvt hR μ.2 Λl.2 x ∈ ϖ • LL hvt hR A μ Λl := by
+  have hall := allProp (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund
+  obtain ⟨x₀, hx₀, rfl⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1 hx
+  rw [← algebraMap_smul k, LinearMap.map_smul_of_tower, algebraMap_smul]
+  exact Submodule.smul_mem_pointwise_smul _ _ _
+    (tensorEmb_mem_LL hϖ hϖv (fun t ↦ (hall t).1) hx₀)
+
 include hR in
 /-- **`ẽᵢ` on `f̃ᵢ*ᵐ b₀`** ([Kas93a] Thm. 2.2.1, the case `j = i`): let `b ≡ P fᵢ^{(m)}` with
 `e''ᵢ P = 0`, `P ≡ b₀ = f̃_{w₀} 1` of weight `-ν`, and `εᵢ(b₀) = kk`; put
@@ -608,12 +617,8 @@ theorem kE_rmulF [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I) {m : ℕ} {ν 
     omega
   -- `T(ẽ b) ≡ ẽ(zₘ ⊗ y)`
   have hTlat : ∀ x, x ∈ ϖ • lat hvt hR A (μ + Λl) →
-      tensorEmb hvt hR μ.2 Λl.2 x ∈ ϖ • LL hvt hR A μ Λl := by
-    intro x hx
-    obtain ⟨x₀, hx₀, rfl⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1 hx
-    rw [← algebraMap_smul k, LinearMap.map_smul_of_tower, algebraMap_smul]
-    exact Submodule.smul_mem_pointwise_smul _ _ _
-      (tensorEmb_mem_LL hϖ hϖv (fun t ↦ (hall t).1) hx₀)
+      tensorEmb hvt hR μ.2 Λl.2 x ∈ ϖ • LL hvt hR A μ Λl := fun x hx ↦
+    tensorEmb_mem_smul_LL (hR := hR) hinj hϖ hϖv hk hfund μ Λl hx
   have hcmp0 : ∀ c ≤ M, ∀ y' ∈ lat hvt hR A Λl, y' ∉ ϖ • lat hvt hR A Λl →
       TensorModule.mk _ _ (z c ⊗ₜ[k] y') ∉ ϖ • LL hvt hR A μ Λl := by
     intro c hc y' hy' hy'0 h
