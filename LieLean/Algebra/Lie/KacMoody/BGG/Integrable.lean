@@ -146,8 +146,31 @@ lemma ascent_coordinates_pow (k : ℕ) (i : ι) (N : ℕ)
   intro w hw
   rw [pow_apply_coordinate, pow_apply_coordinate, h w hw]
 
-set_option maxHeartbeats 1000000 in
--- Finite-support induction and dependent coefficient actions exceed the default elaboration fuel.
+omit [DecidableEq ι] [CharZero K] in
+/-- If powers of a Lie algebra element carry two vectors into the range of a module map up to
+a relation compatible with sums and with those powers, they do so for the sum. -/
+lemma exists_pow_rel_add {L M M' : Type*} [LieRing L] [LieAlgebra K L]
+    [AddCommGroup M] [Module K M] [LieRingModule L M] [LieModule K L M]
+    [AddCommGroup M'] [Module K M'] [LieRingModule L M'] [LieModule K L M']
+    (φ : M' →ₗ⁅K,L⁆ M) (u : L) (r : M → M → Prop)
+    (hadd : ∀ a b c d, r a b → r c d → r (a + c) (b + d))
+    (hpow : ∀ n a b, r a b → r ((toEnd K L M u ^ n) a) ((toEnd K L M u ^ n) b))
+    {x z : M} (hx : ∃ N y, r ((toEnd K L M u ^ N) x) (φ y))
+    (hz : ∃ N y, r ((toEnd K L M u ^ N) z) (φ y)) :
+    ∃ N y, r ((toEnd K L M u ^ N) (x + z)) (φ y) := by
+  obtain ⟨N, y, hy⟩ := hx
+  obtain ⟨m, t, ht⟩ := hz
+  refine ⟨m + N, (toEnd K L M' u ^ m) y + (toEnd K L M' u ^ N) t, ?_⟩
+  have hy' := hpow m _ _ hy
+  have ht' := hpow N _ _ ht
+  rw [toEnd_pow_apply_map] at hy' ht'
+  have e1 : (toEnd K L M u ^ (m + N)) x = (toEnd K L M u ^ m) ((toEnd K L M u ^ N) x) := by
+    rw [pow_add, Module.End.mul_apply]
+  have e2 : (toEnd K L M u ^ (m + N)) z = (toEnd K L M u ^ N) ((toEnd K L M u ^ m) z) := by
+    rw [Nat.add_comm, pow_add, Module.End.mul_apply]
+  rw [map_add, map_add, e1, e2]
+  exact hadd _ _ _ _ hy' ht'
+
 /-- Finite-support assembly of the rank-one argument. No finite Weyl group is needed. -/
 theorem exists_pow_ascent_boundary (k : ℕ) (i : ι) (x : BGGTerm P hA Λ k) :
     ∃ N, ∃ y : BGGTerm P hA Λ (k + 1),
@@ -159,20 +182,11 @@ theorem exists_pow_ascent_boundary (k : ℕ) (i : ι) (x : BGGTerm P hA Λ k) :
   | zero => exact ⟨0, 0, by simp⟩
   | of w x => exact exists_pow_ascent_boundary_of P hA hΛ k i w x
   | add x z hx hz =>
-    obtain ⟨N, y, hy⟩ := hx
-    obtain ⟨M, t, ht⟩ := hz
-    refine ⟨M + N,
-      (toEnd K P.KacMoodyAlgebra _ (f P i) ^ M) y +
-      (toEnd K P.KacMoodyAlgebra _ (f P i) ^ N) t, fun w hw ↦ ?_⟩
-    have hy' := ascent_coordinates_pow P hA k i M hy w hw
-    have ht' := ascent_coordinates_pow P hA k i N ht w hw
-    rw [toEnd_pow_apply_map] at hy' ht'
-    rw [map_add, DFinsupp.add_apply, map_add, DFinsupp.add_apply]
-    congr 1
-    · rw [pow_add, Module.End.mul_apply]
-      exact hy'
-    · rw [Nat.add_comm M N, pow_add, Module.End.mul_apply]
-      exact ht'
+    refine exists_pow_rel_add (bggDiff P hA hΛ k) (f P i)
+      (fun a b ↦ ∀ w : {w : W // (cs).length w = k}, ¬ (cs).IsLeftDescent w i → a w = b w)
+      (fun a b c d hab hcd w hw ↦ ?_) (fun n a b hab ↦ ascent_coordinates_pow P hA k i n hab)
+      hx hz
+    rw [DFinsupp.add_apply, DFinsupp.add_apply, hab w hw, hcd w hw]
 
 /-- Each simple lowering operator acts locally nilpotently on every actual
 positive-degree BGG cycle modulo actual incoming boundaries. This is the lowering-operator
