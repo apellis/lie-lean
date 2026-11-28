@@ -173,20 +173,37 @@ variable [FiniteDimensional K H] {S : A.Symmetrization}
   {B : LinearMap.BilinForm K P.KacMoodyAlgebra} (hB : IsStandardForm P S B)
 include hB
 
-set_option maxHeartbeats 8000000 in
--- Definitional equality through the cycle subtype and quotient actions needs extra fuel.
+omit hΛ in
+/-- A scalar action of the Casimir operator restricts along an injective module morphism. -/
+theorem casimir_eq_smul_of_injective {V W : Type*} [AddCommGroup V] [Module K V]
+    [LieRingModule P.KacMoodyAlgebra V] [LieModule K P.KacMoodyAlgebra V]
+    [AddCommGroup W] [Module K W] [LieRingModule P.KacMoodyAlgebra W]
+    [LieModule K P.KacMoodyAlgebra W] (g : V →ₗ⁅K,P.KacMoodyAlgebra⁆ W)
+    (hg : Function.Injective g) (hV : IsPosFinite P V) (hW : IsPosFinite P W) (c : K)
+    (h : ∀ w, hB.casimir W hW w = c • w) (v : V) : hB.casimir V hV v = c • v := by
+  apply hg
+  rw [hB.map_casimir g hV hW, h, map_smul]
+
+omit hΛ in
+/-- A scalar action of the Casimir operator descends along a surjective module morphism. -/
+theorem casimir_eq_smul_of_surjective {V W : Type*} [AddCommGroup V] [Module K V]
+    [LieRingModule P.KacMoodyAlgebra V] [LieModule K P.KacMoodyAlgebra V]
+    [AddCommGroup W] [Module K W] [LieRingModule P.KacMoodyAlgebra W]
+    [LieModule K P.KacMoodyAlgebra W] (g : V →ₗ⁅K,P.KacMoodyAlgebra⁆ W)
+    (hg : Function.Surjective g) (hV : IsPosFinite P V) (hW : IsPosFinite P W) (c : K)
+    (h : ∀ v, hB.casimir V hV v = c • v) (w : W) : hB.casimir W hW w = c • w := by
+  obtain ⟨v, rfl⟩ := hg w
+  rw [← hB.map_casimir g hV hW, h, map_smul]
+
 /-- The common Verma Casimir scalar descends to actual BGG homology. -/
 theorem homology_casimir (k : ℕ) (x : Homology P hA hΛ k) :
     hB.casimir _ (homology_categoryO P hA hΛ k).isPosFinite x =
-      P.dualBilinForm S (Λ + 2 • P.rho) Λ • x := by
-  obtain ⟨y, rfl⟩ := LieSubmodule.Quotient.surjective_mk' (boundaries P hA hΛ k) x
-  have hy : hB.casimir _ (cycles_categoryO P hA hΛ k).isPosFinite y =
-      P.dualBilinForm S (Λ + 2 • P.rho) Λ • y := by
-    apply (Cycles P hA hΛ k).injective_incl
-    rw [hB.map_casimir _ (cycles_categoryO P hA hΛ k).isPosFinite
-      (term_categoryO P hA (k+1)).isPosFinite, map_smul, term_casimir P hA hΛ hB]
-  rw [← hB.map_casimir _ (cycles_categoryO P hA hΛ k).isPosFinite
-    (homology_categoryO P hA hΛ k).isPosFinite, hy, map_smul]
+      P.dualBilinForm S (Λ + 2 • P.rho) Λ • x :=
+  casimir_eq_smul_of_surjective P hB (LieSubmodule.Quotient.mk' (boundaries P hA hΛ k))
+    (LieSubmodule.Quotient.surjective_mk' _) (cycles_categoryO P hA hΛ k).isPosFinite _ _
+    (casimir_eq_smul_of_injective P hB (Cycles P hA hΛ k).incl
+      (Cycles P hA hΛ k).injective_incl _ (term_categoryO P hA (k + 1)).isPosFinite _
+      (term_casimir P hA hΛ hB (k + 1))) x
 
 -- The actual cycle quotient's Lie-module instances make the primitive-vector step expensive.
 /-- Casimir vanishing with only local negative-generator nilpotence on actual homology.
@@ -212,8 +229,21 @@ theorem homology_subsingleton (k : ℕ)
   exact smul_left_injective K hx0 ((homology_casimir P hA hΛ hB k x).symm.trans
     (hB.casimir_apply_of_lie_e_eq_zero _ hx he))
 
-set_option maxHeartbeats 8000000 in
--- Transport of operator powers through the nested actual cycle quotient is expensive.
+omit hΛ hB in
+/-- Local nilpotence of an operator on a submodule modulo a second submodule gives local
+nilpotence on the quotient of the first by the pullback of the second. -/
+theorem exists_toEnd_pow_eq_zero_quotient_comap {R L M : Type*} [CommRing R] [LieRing L]
+    [LieAlgebra R L] [AddCommGroup M] [Module R M] [LieRingModule L M] [LieModule R L M]
+    (N N' : LieSubmodule R L M) (x : L)
+    (h : ∀ y ∈ N, ∃ n : ℕ, (toEnd R L M x ^ n) y ∈ N') (q : N ⧸ N'.comap N.incl) :
+    ∃ n : ℕ, (toEnd R L (N ⧸ N'.comap N.incl) x ^ n) q = 0 := by
+  obtain ⟨y, rfl⟩ := LieSubmodule.Quotient.surjective_mk' (N'.comap N.incl) q
+  obtain ⟨n, hn⟩ := h y.1 y.2
+  refine ⟨n, ?_⟩
+  rw [toEnd_pow_apply_map, LieSubmodule.Quotient.mk'_apply, LieSubmodule.Quotient.mk_eq_zero',
+    LieSubmodule.mem_comap, ← toEnd_pow_apply_map]
+  exact hn
+
 /-- Local nilpotence modulo the range of the actual incoming BGG differential
 implies actual positive-degree exactness. -/
 theorem exact_of_nilpotent_mod_boundaries (k : ℕ)
@@ -222,17 +252,9 @@ theorem exact_of_nilpotent_mod_boundaries (k : ℕ)
         (bggDiff P hA hΛ (k + 1)).range) :
     (bggDiff P hA hΛ k).ker = (bggDiff P hA hΛ (k + 1)).range := by
   have hnil : ∀ i (x : Homology P hA hΛ k), ∃ n : ℕ,
-      (toEnd K P.KacMoodyAlgebra _ (f P i) ^ n) x = 0 := by
-    intro i x
-    obtain ⟨y, rfl⟩ := LieSubmodule.Quotient.surjective_mk' (boundaries P hA hΛ k) x
-    have hy : bggDiff P hA hΛ k y = 0 := (LieModuleHom.mem_ker).mp y.property
-    obtain ⟨n, hn⟩ := hf y.val hy i
-    refine ⟨n, ?_⟩
-    rw [toEnd_pow_apply_map, LieSubmodule.Quotient.mk_eq_zero]
-    change (Cycles P hA hΛ k).incl ((toEnd K P.KacMoodyAlgebra _ (f P i) ^ n) y) ∈
-      (bggDiff P hA hΛ (k + 1)).range
-    rw [← toEnd_pow_apply_map]
-    exact hn
+      (toEnd K P.KacMoodyAlgebra _ (f P i) ^ n) x = 0 := fun i ↦
+    exists_toEnd_pow_eq_zero_quotient_comap (Cycles P hA hΛ k) (bggDiff P hA hΛ (k + 1)).range
+      (f P i) fun y hy ↦ hf y (LieModuleHom.mem_ker.mp hy) i
   have := homology_subsingleton P hA hΛ hB k hnil
   apply le_antisymm
   · intro y hy
