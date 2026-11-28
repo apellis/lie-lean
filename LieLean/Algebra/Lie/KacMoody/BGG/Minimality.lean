@@ -94,6 +94,28 @@ section HomologyZero
 
 open LieModule.ChevalleyEilenberg TensorProduct ExteriorAlgebra
 
+/-- A linear map vanishing on the values of a surjection is zero. -/
+lemma eq_zero_of_comp_surjective {R X Y Z : Type*} [Semiring R] [AddCommMonoid X]
+    [AddCommMonoid Y] [AddCommMonoid Z] [Module R X] [Module R Y] [Module R Z]
+    {f : X →ₗ[R] Y} {g : Y →ₗ[R] Z} (hf : Function.Surjective f) (h : ∀ x, g (f x) = 0) :
+    g = 0 :=
+  LinearMap.ext fun y ↦ by
+    obtain ⟨x, rfl⟩ := hf y
+    rw [h, LinearMap.zero_apply]
+
+/-- A linear map into the chains whose range contains the `k`-cycles induces a surjection onto
+the `k`-th Chevalley–Eilenberg homology. -/
+lemma surjective_codRestrict_homology {R L M X : Type*} [CommRing R] [LieRing L]
+    [LieAlgebra R L] [AddCommGroup M] [Module R M] [LieRingModule L M] [LieModule R L M]
+    [AddCommGroup X] [Module R X] (k : ℕ) (g : X →ₗ[R] ExteriorAlgebra R L ⊗[R] M)
+    (hg : ∀ m, (boundaries R L M k).mkQ (g m) ∈ homology R L M k)
+    (hc : cycles R L M k ≤ LinearMap.range g) :
+    Function.Surjective ((((boundaries R L M k).mkQ).comp g).codRestrict _ hg) := by
+  rintro ⟨x, hx⟩
+  obtain ⟨t, ht, rfl⟩ := Submodule.mem_map.mp hx
+  obtain ⟨m, rfl⟩ := LinearMap.mem_range.mp (hc ht)
+  exact ⟨m, rfl⟩
+
 variable (V : Type*) [AddCommGroup V] [Module K V]
   [LieRingModule P.KacMoodyAlgebra V] [LieModule K P.KacMoodyAlgebra V]
 
@@ -149,13 +171,10 @@ def toHomologyZero : V →ₗ[K] homology K (nNeg P) V 0 :=
   (((boundaries K (nNeg P) V 0).mkQ).comp (oneTmul P V)).codRestrict _ fun m ↦
     ⟨oneTmul P V m, ⟨one_tmul_mem_chainsIn m, diff_one_tmul m⟩, rfl⟩
 
-set_option maxHeartbeats 800000 in
--- Unfolding the nested range/submodule representation of degree-zero homology exceeds default fuel.
 omit [CharZero K] in
-lemma toHomologyZero_surjective : Function.Surjective (toHomologyZero P V) := by
-  rintro ⟨c, t, ht, rfl⟩
-  obtain ⟨m, rfl⟩ := chainsIn_zero_le_range_oneTmul P V ht.1
-  exact ⟨m, rfl⟩
+lemma toHomologyZero_surjective : Function.Surjective (toHomologyZero P V) :=
+  surjective_codRestrict_homology 0 (oneTmul P V) _
+    (inf_le_left.trans (chainsIn_zero_le_range_oneTmul P V))
 
 omit [CharZero K] in
 /-- The kernel of the canonical map to CE homology is exactly `𝔫₋ V`. -/
@@ -197,21 +216,16 @@ lemma homologyMap_toHomologyZero (φ : V →ₗ⁅K,P.KacMoodyAlgebra⁆ U) (v :
   rw [LinearMap.lTensor_tmul]
   rfl
 
-set_option maxHeartbeats 2000000 in
--- Definitional equality through the coefficient restriction and CE quotient exceeds default fuel.
 omit [CharZero K] in
 lemma homologyZeroMap_eq_zero_of_range_le (φ : V →ₗ⁅K,P.KacMoodyAlgebra⁆ U)
     (hφ : ∀ v, φ v ∈ nNegActionSpan P U) :
     homologyMap K (nNeg P) 0 (restrictNNeg P φ) = 0 := by
-  apply LinearMap.ext
-  intro x
-  obtain ⟨v, hv⟩ := toHomologyZero_surjective P V x
+  refine eq_zero_of_comp_surjective (toHomologyZero_surjective P V) fun v ↦ ?_
   have hz : toHomologyZero P U (φ v) = 0 := by
     apply LinearMap.mem_ker.mp
     rw [ker_toHomologyZero]
     exact hφ v
-  exact (congrArg (homologyMap K (nNeg P) 0 (restrictNNeg P φ)) hv).symm.trans
-    ((homologyMap_toHomologyZero P φ v).trans hz)
+  exact (homologyMap_toHomologyZero P φ v).trans hz
 
 end HomologyZero
 
