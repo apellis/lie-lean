@@ -284,8 +284,151 @@ theorem exists_sum_fWi [IsFormallyReal (A ⧸ Ideal.span {ϖ})] {ν : I →₀ �
   simp only [map_add, map_mul]
   ring
 
-set_option maxHeartbeats 1600000 in
--- one long argument with many local lattice computations
+omit [NeZero v] [CharZero k] [Finite I] [IsDomain A] [IsDiscreteValuationRing A]
+  hinj hϖ hϖv hk hfund in
+/-- In a ring with formally real quotient by `ϖ`: if `∑ aₛ² ≡ 1` and `a_{s₀} ≡ 1` modulo `ϖ`,
+then every other `aₛ` is divisible by `ϖ`. -/
+theorem mem_span_of_sum_sq_sub_one_mem {ι A : Type*} [DecidableEq ι] [CommRing A] {ϖ : A}
+    [IsFormallyReal (A ⧸ Ideal.span {ϖ})] {S : Finset ι} {a : ι → A} {s₀ : ι} (hs₀S : s₀ ∈ S)
+    (hsumsq : ∑ s ∈ S, a s ^ 2 - 1 ∈ Ideal.span {ϖ}) (ha₀ : a s₀ - 1 ∈ Ideal.span {ϖ}) :
+    ∀ s ∈ S.erase s₀, a s ∈ Ideal.span {ϖ} := by
+  have h1 : ∑ s ∈ S.erase s₀, a s ^ 2 ∈ Ideal.span {ϖ} := by
+    have e1 : ∑ s ∈ S.erase s₀, a s ^ 2 =
+        (∑ s ∈ S, a s ^ 2 - 1) - (a s₀ - 1) * (a s₀ + 1) := by
+      rw [← Finset.add_sum_erase S _ hs₀S]; ring
+    rw [e1]
+    exact sub_mem hsumsq (Ideal.mul_mem_right _ _ ha₀)
+  intro s hs
+  rw [← Ideal.Quotient.eq_zero_iff_mem]
+  refine eq_zero_of_sum_sq_eq_zero (S.erase s₀) (fun s ↦ Ideal.Quotient.mk _ (a s)) ?_ s hs
+  simp only [← map_pow, ← map_sum]
+  exact Ideal.Quotient.eq_zero_iff_mem.2 h1
+
+include hR in
+/-- `(P fᵢ^{(m)}, P fᵢ^{(m)}) ≡ 1` modulo `ϖ` when `e''ᵢ P = 0` and `P ≡ f̃_{w₀} 1`. -/
+theorem exists_formU_rmulF_self (i : I) (m : ℕ) {P : Um D v} (hP : P ∈ latInf hvt A)
+    (he : (bos (D := D) (pow_ne_one_of_transcendental' hvt) i).e (starU D v P) = 0)
+    (w₀ : List I) (hw₀ : P - fWi hvt w₀ ∈ ϖ • latInf hvt A) :
+    ∃ t' : A, formU (pow_ne_one_of_transcendental' hvt) (rmulF hvt i m P) (rmulF hvt i m P) =
+      algebraMap A k (1 + ϖ * t') := by
+  set hv' := pow_ne_one_of_transcendental' hvt
+  have h1 : formU hv' (rmulF hvt i m P) (rmulF hvt i m P) = coefU D v i m * formU hv' P P := by
+    rw [rmulF_apply, formU_starU, formU_df_df hv' i he he m m, ite_eq_left rfl,
+      formU_starU]
+  obtain ⟨c₀, hc₀⟩ := exists_coefU hϖ hϖv (D := D) i m
+  obtain ⟨e₀, he₀⟩ := formU_fWi_fWi (hR := hR) (A := A) (D := D) hinj hϖ hϖv hk hfund w₀ w₀
+  rw [sub_self, ite_eq_left (zero_mem _)] at he₀
+  obtain ⟨t₁, ht₁⟩ := formU_mem_smul (hR := hR) hinj hϖ hϖv hk hfund hP hw₀
+  obtain ⟨t₂, ht₂⟩ := formU_mem_smul (hR := hR) hinj hϖ hϖv hk hfund
+    (NegativePart.fWord_mem_latticeInf _ _ w₀) hw₀
+  have h2 : formU hv' P P = 1 + algebraMap A k (ϖ * (e₀ + t₁ + t₂)) := by
+    have : formU hv' P P = formU hv' P (P - fWi hvt w₀) +
+        formU hv' (fWi hvt w₀) (P - fWi hvt w₀) +
+          formU hv' (fWi (D := D) hvt w₀) (fWi hvt w₀) := by
+      rw [map_sub, map_sub, formU_comm hv' (fWi hvt w₀) P]; ring
+    rw [this, ht₁, ht₂, he₀]
+    simp only [map_add, map_mul]; ring
+  refine ⟨c₀ + (e₀ + t₁ + t₂) + ϖ * c₀ * (e₀ + t₁ + t₂), ?_⟩
+  rw [h1, hc₀, h2]
+  simp only [map_add, map_mul, map_one]; ring
+
+include hR in
+/-- If `f̃_{w₀} v_λ` is congruent modulo `ϖ` to a combination of pairwise incongruent nonzero
+classes `f̃_{s₂ s} v_λ` of the same weight, then it is congruent to one of them, whose
+coefficient is congruent to `1`. -/
+theorem exists_coeff_sub_one_mem (Λl : Dom R) {ν : I →₀ ℕ} (S' : Finset (List I))
+    (s₂ : List I → List I) (a : List I → A) (w₀ : List I) (hw₀w : wordWeight w₀ = ν)
+    (hs₂w : ∀ s ∈ S', wordWeight (s₂ s) = ν)
+    (h0' : ∀ s ∈ S', fW hvt hR Λl (s₂ s) ∉ ϖ • lat hvt hR A Λl)
+    (hd' : ∀ s ∈ S', ∀ s' ∈ S', s ≠ s' →
+      fW hvt hR Λl (s₂ s) - fW hvt hR Λl (s₂ s') ∉ ϖ • lat hvt hR A Λl)
+    (hw₀ne : fW hvt hR Λl w₀ ∉ ϖ • lat hvt hR A Λl)
+    (hmain : fW hvt hR Λl w₀ - ∑ s ∈ S', a s • fW hvt hR Λl (s₂ s) ∈ ϖ • lat hvt hR A Λl) :
+    ∃ s₀ ∈ S', a s₀ - 1 ∈ Ideal.span {ϖ} ∧
+      fW hvt hR Λl w₀ - fW hvt hR Λl (s₂ s₀) ∈ ϖ • lat hvt hR A Λl := by
+  classical
+  have hϖu : ¬IsUnit ϖ := (IsLocalRing.mem_maximalIdeal ϖ).1 hϖ
+  by_cases hex : ∃ s₀ ∈ S', fW hvt hR Λl w₀ - fW hvt hR Λl (s₂ s₀) ∈ ϖ • lat hvt hR A Λl
+  · obtain ⟨s₀, hs₀, hw⟩ := hex
+    refine ⟨s₀, hs₀, ?_, hw⟩
+    have hc := coeff_mem_of_sum_fW_mem (hR := hR) hinj hϖ hϖv hk hfund Λl S' s₂
+      (fun s ↦ -a s + if s = s₀ then 1 else 0) hs₂w h0' hd' (by
+        simp only [add_smul, neg_smul, Finset.sum_add_distrib, Finset.sum_neg_distrib,
+          ite_smul, one_smul, zero_smul, Finset.sum_ite_eq', ite_eq_left hs₀]
+        have := sub_mem hmain hw
+        convert this using 1; abel) s₀ hs₀
+    rw [ite_eq_left rfl] at hc
+    have := neg_mem hc
+    rwa [neg_add, neg_neg, ← sub_eq_add_neg] at this
+  · push Not at hex
+    exfalso
+    have hc := coeff_mem_of_sum_fW_mem (hR := hR) hinj hϖ hϖv hk hfund Λl
+      (Finset.insertNone S') (fun o ↦ o.elim w₀ s₂) (fun o ↦ o.elim 1 fun s ↦ -a s)
+      (by
+        intro o ho
+        cases o with
+        | none => exact hw₀w
+        | some s => exact hs₂w s (Finset.mem_insertNone.1 ho s rfl))
+      (by
+        intro o ho
+        cases o with
+        | none => exact hw₀ne
+        | some s => exact h0' s (Finset.mem_insertNone.1 ho s rfl))
+      (by
+        intro o ho o' ho' hne
+        cases o with
+        | none =>
+          cases o' with
+          | none => exact absurd rfl hne
+          | some s' => exact hex s' (Finset.mem_insertNone.1 ho' s' rfl)
+        | some s =>
+          cases o' with
+          | none =>
+            intro h
+            exact hex s (Finset.mem_insertNone.1 ho s rfl) (by
+              have := neg_mem h; rwa [neg_sub] at this)
+          | some s' =>
+            exact hd' s (Finset.mem_insertNone.1 ho s rfl) s'
+              (Finset.mem_insertNone.1 ho' s' rfl) fun h ↦ hne (h ▸ rfl))
+      (by
+        rw [Finset.sum_insertNone]
+        simp only [Option.elim, one_smul, neg_smul, Finset.sum_neg_distrib]
+        rwa [← sub_eq_add_neg])
+      none (Finset.mem_insertNone.2 fun _ h ↦ by simp at h)
+    obtain ⟨c, hc'⟩ := Ideal.mem_span_singleton'.1 hc
+    have hc'' : c * ϖ = 1 := by simpa using hc'
+    exact hϖu (isUnit_iff_exists_inv.2 ⟨c, by rw [mul_comm]; exact hc''⟩)
+
+include hR in
+/-- Two words whose tensor components are congruent modulo `ϖ` have congruent images in the
+tensor product. -/
+theorem tensorEmb_evq_fWi_sub_mem (μ Λl : Dom R) {s s' a₁ a₁' a₂ a₂' : List I}
+    (hs : tensorEmb hvt hR μ.2 Λl.2 (evq hvt (μ + Λl) (fWi hvt s)) -
+      TensorModule.mk _ _ (fW hvt hR μ a₁ ⊗ₜ[k] fW hvt hR Λl a₂) ∈ ϖ • LL hvt hR A μ Λl)
+    (hs' : tensorEmb hvt hR μ.2 Λl.2 (evq hvt (μ + Λl) (fWi hvt s')) -
+      TensorModule.mk _ _ (fW hvt hR μ a₁' ⊗ₜ[k] fW hvt hR Λl a₂') ∈ ϖ • LL hvt hR A μ Λl)
+    (h1 : fWi (D := D) hvt a₁ - fWi hvt a₁' ∈ ϖ • latInf hvt A)
+    (h : fW hvt hR Λl a₂ - fW hvt hR Λl a₂' ∈ ϖ • lat hvt hR A Λl) :
+    tensorEmb hvt hR μ.2 Λl.2 (evq hvt (μ + Λl) (fWi hvt s - fWi hvt s')) ∈
+      ϖ • LL hvt hR A μ Λl := by
+  have hfW : fW hvt hR Λl a₂ ∈ lat hvt hR A Λl :=
+    IrreducibleModule.fWord_mem_lattice hR _ Λl.2 A a₂
+  have hfWμ : fW hvt hR μ a₁' ∈ lat hvt hR A μ :=
+    IrreducibleModule.fWord_mem_lattice hR _ μ.2 A a₁'
+  have h2 : fW hvt hR μ a₁ - fW hvt hR μ a₁' ∈ ϖ • lat hvt hR A μ := by
+    have e1 := evq_mem_smul_lat (hR := hR) hinj hϖ hϖv hk hfund h1 μ
+    have e2 := evq_fWord_sub_fW_mem (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund a₁ μ
+    have e3 := evq_fWord_sub_fW_mem (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund a₁' μ
+    rw [map_sub] at e1
+    have := sub_mem (sub_mem e1 e2) (neg_mem e3)
+    convert this using 1; abel
+  have k1 := tmul_mem_smul_left h2 hfW
+  have k2 := tmul_mem_smul_right hfWμ h
+  have := add_mem (sub_mem hs hs') (add_mem k1 k2)
+  rw [map_sub, map_sub]
+  convert this using 1
+  rw [sub_tmul, tmul_sub, map_sub, map_sub]; abel
+
 include hR in
 /-- **[Kas93a] Prop. 2.1.2**: if `A/ϖA` is formally real, `P ∈ L(∞) ∩ U⁻_{-ν}`, `e''ᵢ P = 0` and
 `P ≡ f̃_{w₀} 1` modulo `ϖ L(∞)`, then `P fᵢ^{(m)}` is congruent to some `f̃_{w'} 1`, and for
@@ -332,26 +475,8 @@ theorem rmulF_tensor_congr [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I) (m :
   obtain ⟨S, a, hSw, hSd, hQS, t, ht⟩ :=
     exists_sum_fWi (hR := hR) hinj hϖ hϖv hk hfund hQ hQw
   -- 2. `(Q, Q) ≡ 1`
-  have hQQ : ∃ t' : A, formU hv' Q Q = algebraMap A k (1 + ϖ * t') := by
-    have h1 : formU hv' Q Q = coefU D v i m * formU hv' P P := by
-      rw [hQdef, rmulF_apply, formU_starU, formU_df_df hv' i he he m m, ite_eq_left rfl,
-        formU_starU]
-    obtain ⟨c₀, hc₀⟩ := exists_coefU hϖ hϖv (D := D) i m
-    obtain ⟨e₀, he₀⟩ := formU_fWi_fWi (hR := hR) (A := A) (D := D) hinj hϖ hϖv hk hfund w₀ w₀
-    rw [sub_self, ite_eq_left (zero_mem _)] at he₀
-    obtain ⟨t₁, ht₁⟩ := formU_mem_smul (hR := hR) hinj hϖ hϖv hk hfund hP hw₀
-    obtain ⟨t₂, ht₂⟩ := formU_mem_smul (hR := hR) hinj hϖ hϖv hk hfund
-      (NegativePart.fWord_mem_latticeInf _ _ w₀) hw₀
-    have h2 : formU hv' P P = 1 + algebraMap A k (ϖ * (e₀ + t₁ + t₂)) := by
-      have : formU hv' P P = formU hv' P (P - fWi hvt w₀) +
-          formU hv' (fWi hvt w₀) (P - fWi hvt w₀) +
-            formU hv' (fWi (D := D) hvt w₀) (fWi hvt w₀) := by
-        rw [map_sub, map_sub, formU_comm hv' (fWi hvt w₀) P]; ring
-      rw [this, ht₁, ht₂, he₀]
-      simp only [map_add, map_mul]; ring
-    refine ⟨c₀ + (e₀ + t₁ + t₂) + ϖ * c₀ * (e₀ + t₁ + t₂), ?_⟩
-    rw [h1, hc₀, h2]
-    simp only [map_add, map_mul, map_one]; ring
+  have hQQ : ∃ t' : A, formU hv' Q Q = algebraMap A k (1 + ϖ * t') :=
+    exists_formU_rmulF_self (hR := hR) hinj hϖ hϖv hk hfund i m hP he w₀ hw₀
   obtain ⟨t', ht'⟩ := hQQ
   have hsumsq : ∑ s ∈ S, a s ^ 2 - 1 ∈ Ideal.span {ϖ} := by
     rw [Ideal.mem_span_singleton']
@@ -503,20 +628,8 @@ theorem rmulF_tensor_congr [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I) (m :
     have h1 : fWi (D := D) hvt (s₁ s) - fWi hvt (s₁ s') ∈ ϖ • latInf hvt A := by
       have := sub_mem hg' hg
       rwa [sub_sub_sub_cancel_left] at this
-    have h2 : fW hvt hR μ (s₁ s) - fW hvt hR μ (s₁ s') ∈ ϖ • lat hvt hR A μ := by
-      have e1 := evq_mem_smul_lat (hR := hR) hinj hϖ hϖv hk hfund h1 μ
-      have e2 := evq_fWord_sub_fW_mem (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund (s₁ s) μ
-      have e3 := evq_fWord_sub_fW_mem (hvt := hvt) (hR := hR) hinj hϖ hϖv hk hfund (s₁ s') μ
-      rw [map_sub] at e1
-      have := sub_mem (sub_mem e1 e2) (neg_mem e3)
-      convert this using 1; abel
-    have h3 : T (fWi hvt s - fWi hvt s') ∈ ϖ • LL hvt hR A μ Λl := by
-      have k1 := tmul_mem_smul_left h2 (hfW (s₂ s))
-      have k2 := tmul_mem_smul_right (hfWμ (s₁ s')) h
-      have := add_mem (sub_mem (hTfWi s) (hTfWi s')) (add_mem k1 k2)
-      rw [map_sub]
-      convert this using 1
-      rw [sub_tmul, tmul_sub, map_sub, map_sub]; abel
+    have h3 : T (fWi hvt s - fWi hvt s') ∈ ϖ • LL hvt hR A μ Λl :=
+      tensorEmb_evq_fWi_sub_mem (hR := hR) hinj hϖ hϖv hk hfund μ Λl (hTfWi s) (hTfWi s') h1 h
     exact hSd s (hS'S hs) s' (hS'S hs') hne
       (hinjT μ Λl hμN₀ _ (sub_mem (NegativePart.fWord_mem_latticeInf _ _ s)
         (NegativePart.fWord_mem_latticeInf _ _ s'))
@@ -527,72 +640,14 @@ theorem rmulF_tensor_congr [IsFormallyReal (A ⧸ Ideal.span {ϖ})] (i : I) (m :
     exact hm₃ Λl hΛli hΛl _ hP hPw he hP0 (by simpa using add_mem hPw₀ h)
   -- 9. some `s₀ ∈ S'` has `aₛ₀ ≡ 1`
   have hone : ∃ s₀ ∈ S', a s₀ - 1 ∈ Ideal.span {ϖ} ∧
-      fW hvt hR Λl w₀ - fW hvt hR Λl (s₂ s₀) ∈ ϖ • lat hvt hR A Λl := by
-    by_cases hex : ∃ s₀ ∈ S', fW hvt hR Λl w₀ - fW hvt hR Λl (s₂ s₀) ∈ ϖ • lat hvt hR A Λl
-    · obtain ⟨s₀, hs₀, hw⟩ := hex
-      refine ⟨s₀, hs₀, ?_, hw⟩
-      have hc := coeff_mem_of_sum_fW_mem (hR := hR) hinj hϖ hϖv hk hfund Λl S' s₂
-        (fun s ↦ -a s + if s = s₀ then 1 else 0) hs₂w h0' hd' (by
-          simp only [add_smul, neg_smul, Finset.sum_add_distrib, Finset.sum_neg_distrib,
-            ite_smul, one_smul, zero_smul, Finset.sum_ite_eq', ite_eq_left hs₀]
-          have := sub_mem hmain hw
-          convert this using 1; abel) s₀ hs₀
-      rw [ite_eq_left rfl] at hc
-      have := neg_mem hc
-      rwa [neg_add, neg_neg, ← sub_eq_add_neg] at this
-    · push Not at hex
-      exfalso
-      have hc := coeff_mem_of_sum_fW_mem (hR := hR) hinj hϖ hϖv hk hfund Λl
-        (Finset.insertNone S') (fun o ↦ o.elim w₀ s₂) (fun o ↦ o.elim 1 fun s ↦ -a s)
-        (by
-          intro o ho
-          cases o with
-          | none => exact hw₀w
-          | some s => exact hs₂w s (Finset.mem_insertNone.1 ho s rfl))
-        (by
-          intro o ho
-          cases o with
-          | none => exact hw₀ne
-          | some s => exact h0' s (Finset.mem_insertNone.1 ho s rfl))
-        (by
-          intro o ho o' ho' hne
-          cases o with
-          | none =>
-            cases o' with
-            | none => exact absurd rfl hne
-            | some s' => exact hex s' (Finset.mem_insertNone.1 ho' s' rfl)
-          | some s =>
-            cases o' with
-            | none =>
-              intro h
-              exact hex s (Finset.mem_insertNone.1 ho s rfl) (by
-                have := neg_mem h; rwa [neg_sub] at this)
-            | some s' =>
-              exact hd' s (Finset.mem_insertNone.1 ho s rfl) s'
-                (Finset.mem_insertNone.1 ho' s' rfl) fun h ↦ hne (h ▸ rfl))
-        (by
-          rw [Finset.sum_insertNone]
-          simp only [Option.elim, one_smul, neg_smul, Finset.sum_neg_distrib]
-          rwa [← sub_eq_add_neg])
-        none (Finset.mem_insertNone.2 fun _ h ↦ by simp at h)
-      obtain ⟨c, hc'⟩ := Ideal.mem_span_singleton'.1 hc
-      have hc'' : c * ϖ = 1 := by simpa using hc'
-      exact hϖu (isUnit_iff_exists_inv.2 ⟨c, by rw [mul_comm]; exact hc''⟩)
+      fW hvt hR Λl w₀ - fW hvt hR Λl (s₂ s₀) ∈ ϖ • lat hvt hR A Λl :=
+    exists_coeff_sub_one_mem (hR := hR) hinj hϖ hϖv hk hfund Λl S' s₂ a w₀ hw₀w hs₂w h0' hd'
+      hw₀ne hmain
   -- 10. formal reality
   obtain ⟨s₀, hs₀, ha₀, hw₀s₀⟩ := hone
   have hs₀S := hS'S hs₀
-  have hrest : ∀ s ∈ S.erase s₀, a s ∈ Ideal.span {ϖ} := by
-    have h1 : ∑ s ∈ S.erase s₀, a s ^ 2 ∈ Ideal.span {ϖ} := by
-      have e1 : ∑ s ∈ S.erase s₀, a s ^ 2 =
-          (∑ s ∈ S, a s ^ 2 - 1) - (a s₀ - 1) * (a s₀ + 1) := by
-        rw [← Finset.add_sum_erase S _ hs₀S]; ring
-      rw [e1]
-      exact sub_mem hsumsq (Ideal.mul_mem_right _ _ ha₀)
-    intro s hs
-    rw [← Ideal.Quotient.eq_zero_iff_mem]
-    refine eq_zero_of_sum_sq_eq_zero (S.erase s₀) (fun s ↦ Ideal.Quotient.mk _ (a s)) ?_ s hs
-    simp only [← map_pow, ← map_sum]
-    exact Ideal.Quotient.eq_zero_iff_mem.2 h1
+  have hrest : ∀ s ∈ S.erase s₀, a s ∈ Ideal.span {ϖ} :=
+    mem_span_of_sum_sq_sub_one_mem hs₀S hsumsq ha₀
   have hspan : ∀ c : A, c ∈ Ideal.span {ϖ} → ∀ x : Um D v, x ∈ latInf hvt A →
       c • x ∈ ϖ • latInf hvt A := by
     intro c hc x hx
