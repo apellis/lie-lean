@@ -25,43 +25,6 @@ variable {k : Type*} [Field k]
 section Ring
 variable {B : Type*} [Ring B] [Algebra k B]
 
-set_option maxHeartbeats 4000000 in
--- Normal ordering the quartic identity produces many scalar coefficients.
-private lemma centre_three (a b c u u' : B) (q t : k) (hq : q ≠ 0)
-    (hca : c * a = a * c - t • (u - u'))
-    (hcb : c * b = b * c)
-    (hua : u * a = q ^ 2 • (a * u))
-    (hub : u * b = q⁻¹ ^ 3 • (b * u))
-    (huc : u * c = q⁻¹ ^ 2 • (c * u))
-    (hu'a : u' * a = q⁻¹ ^ 2 • (a * u'))
-    (hu'b : u' * b = q ^ 3 • (b * u'))
-    (hu'c : u' * c = q ^ 2 • (c * u'))
-    (hu'u : u' * u = 1) (huu' : u * u' = 1) :
-    qSerre q 4 (-(c * u))
-      (a ^ 3 * b - ((q ^ 2 + 1 + q⁻¹ ^ 2) * q⁻¹) • (a ^ 2 * b * a) +
-        ((q ^ 2 + 1 + q⁻¹ ^ 2) * q⁻¹ ^ 2) • (a * b * a ^ 2) -
-        q⁻¹ ^ 3 • (b * a ^ 3)) = 0 := by
-  have hca_assoc (z : B) := congrArg (fun x : B ↦ x * z) hca
-  have hcb_assoc (z : B) := congrArg (fun x : B ↦ x * z) hcb
-  have hua_assoc (z : B) := congrArg (fun x : B ↦ x * z) hua
-  have hub_assoc (z : B) := congrArg (fun x : B ↦ x * z) hub
-  have huc_assoc (z : B) := congrArg (fun x : B ↦ x * z) huc
-  have hu'a_assoc (z : B) := congrArg (fun x : B ↦ x * z) hu'a
-  have hu'b_assoc (z : B) := congrArg (fun x : B ↦ x * z) hu'b
-  have hu'c_assoc (z : B) := congrArg (fun x : B ↦ x * z) hu'c
-  have hu'u_assoc (z : B) := congrArg (fun x : B ↦ x * z) hu'u
-  have huu'_assoc (z : B) := congrArg (fun x : B ↦ x * z) huu'
-  simp only [mul_assoc, sub_mul, smul_mul_assoc, one_mul] at *
-  simp (config := { maxSteps := 1000000 }) only [qSerre, Finset.sum_range_succ,
-    Finset.sum_range_zero, qBinomial,
-    Nat.reduceSub, pow_succ, pow_zero,
-    mul_one, one_mul, mul_zero, add_zero, zero_add, one_smul,
-    mul_neg, neg_mul, neg_neg, mul_sub, sub_mul, mul_add, add_mul,
-    mul_smul_comm, smul_mul_assoc, smul_add, smul_sub, smul_neg, mul_assoc,
-    hua, hub, hca_assoc, hcb_assoc, hua_assoc, hub_assoc, huc_assoc, hu'a_assoc,
-    hu'b_assoc, hu'c_assoc, hu'u_assoc]
-  match_scalars <;> field_simp [hq] <;> ring
-
 -- Normal ordering uses the totalized commutator coefficient without cancellation.
 private lemma triple_lowering (a b c u u' : B) (q t : k) (hq : q ≠ 0)
     (hca : c * a = a * c - t • (u - u')) (hcb : c * b = b * c)
@@ -88,6 +51,99 @@ private lemma triple_lowering (a b c u u' : B) (q t : k) (hq : q ≠ 0)
     hu'u, mul_one]
   match_scalars <;> field_simp [hq] <;> ring
 
+/-- The quartic Serre element as an iterated twisted commutator. -/
+private lemma qSerre_four_eq_iterate (y Z : B) (q : k) (hq : q ≠ 0) :
+    qSerre q 4 y Z =
+      y * (y * (y * (y * Z - q ^ 3 • (Z * y)) - q • ((y * Z - q ^ 3 • (Z * y)) * y)) -
+          q⁻¹ • ((y * (y * Z - q ^ 3 • (Z * y)) - q • ((y * Z - q ^ 3 • (Z * y)) * y)) * y)) -
+        q⁻¹ ^ 3 • ((y * (y * (y * Z - q ^ 3 • (Z * y)) - q • ((y * Z - q ^ 3 • (Z * y)) * y)) -
+          q⁻¹ • ((y * (y * Z - q ^ 3 • (Z * y)) - q • ((y * Z - q ^ 3 • (Z * y)) * y)) * y)) *
+            y) := by
+  simp only [qSerre, Finset.sum_range_succ, Finset.sum_range_zero, qBinomial,
+    Nat.reduceSub, pow_succ, pow_zero, mul_one, one_mul, mul_zero, add_zero, zero_add, one_smul,
+    mul_sub, sub_mul, mul_smul_comm, smul_mul_assoc, smul_sub, mul_assoc]
+  match_scalars <;> field_simp [hq] <;> ring
+
+/-- A twisted commutator is linear in its second argument. -/
+private lemma qcomm_smul {y W W' : B} {s : k} (h : y * W - s • (W * y) = W') (d : k) :
+    y * (d • W) - s • ((d • W) * y) = d • W' := by
+  rw [mul_smul_comm, smul_mul_assoc, smul_comm, ← smul_sub, h]
+
+-- The lowering chain `X₃ ↦ X₂ ↦ X₁ ↦ b ↦ 0` under twisted commutators with `-(c u)`.
+private lemma triple_lowering_zero (b c u : B) (q : k) (hcb : c * b = b * c)
+    (hub : u * b = q⁻¹ ^ 3 • (b * u)) :
+    -(c * u) * b - q⁻¹ ^ 3 • (b * -(c * u)) = 0 := by
+  rw [neg_mul, mul_assoc, hub, mul_smul_comm, ← mul_assoc, hcb, mul_neg, smul_neg, mul_assoc,
+    sub_self]
+
+private lemma triple_lowering_one (a b c u u' : B) (q t : k) (hq : q ≠ 0)
+    (hca : c * a = a * c - t • (u - u')) (hcb : c * b = b * c)
+    (hua : u * a = q ^ 2 • (a * u))
+    (hub : u * b = q⁻¹ ^ 3 • (b * u))
+    (hu'a : u' * a = q⁻¹ ^ 2 • (a * u'))
+    (hu'b : u' * b = q ^ 3 • (b * u')) (hu'u : u' * u = 1) :
+    -(c * u) * (a * b - q⁻¹ ^ 3 • (b * a)) - q⁻¹ • ((a * b - q⁻¹ ^ 3 • (b * a)) * -(c * u)) =
+      (t * (q⁻¹ ^ 4 - q ^ 2)) • b := by
+  have hca_assoc (z : B) := congrArg (fun x : B ↦ x * z) hca
+  have hcb_assoc (z : B) := congrArg (fun x : B ↦ x * z) hcb
+  have hua_assoc (z : B) := congrArg (fun x : B ↦ x * z) hua
+  have hub_assoc (z : B) := congrArg (fun x : B ↦ x * z) hub
+  have hu'a_assoc (z : B) := congrArg (fun x : B ↦ x * z) hu'a
+  have hu'b_assoc (z : B) := congrArg (fun x : B ↦ x * z) hu'b
+  simp only [mul_assoc, sub_mul, smul_mul_assoc] at *
+  simp only [pow_succ, pow_zero, one_mul, mul_sub, mul_neg, neg_mul,
+    mul_smul_comm, smul_sub, smul_neg, mul_assoc,
+    hua, hub, hca_assoc, hcb_assoc, hua_assoc, hub_assoc, hu'b_assoc,
+    hu'u, mul_one]
+  match_scalars <;> field_simp [hq] <;> ring
+
+private lemma triple_lowering_two (a b c u u' : B) (q t : k) (hq : q ≠ 0)
+    (hca : c * a = a * c - t • (u - u')) (hcb : c * b = b * c)
+    (hua : u * a = q ^ 2 • (a * u))
+    (hub : u * b = q⁻¹ ^ 3 • (b * u))
+    (hu'a : u' * a = q⁻¹ ^ 2 • (a * u'))
+    (hu'b : u' * b = q ^ 3 • (b * u')) (hu'u : u' * u = 1) :
+    -(c * u) * (a ^ 2 * b - ((q + q⁻¹) * q⁻¹ ^ 2) • (a * b * a) + q⁻¹ ^ 4 • (b * a ^ 2)) -
+        q • ((a ^ 2 * b - ((q + q⁻¹) * q⁻¹ ^ 2) • (a * b * a) + q⁻¹ ^ 4 • (b * a ^ 2)) *
+          -(c * u)) =
+      (t * (1 + q⁻¹ ^ 2 - q ^ 2 - q ^ 4)) • (a * b - q⁻¹ ^ 3 • (b * a)) := by
+  have hca_assoc (z : B) := congrArg (fun x : B ↦ x * z) hca
+  have hcb_assoc (z : B) := congrArg (fun x : B ↦ x * z) hcb
+  have hua_assoc (z : B) := congrArg (fun x : B ↦ x * z) hua
+  have hub_assoc (z : B) := congrArg (fun x : B ↦ x * z) hub
+  have hu'a_assoc (z : B) := congrArg (fun x : B ↦ x * z) hu'a
+  have hu'b_assoc (z : B) := congrArg (fun x : B ↦ x * z) hu'b
+  simp only [mul_assoc, sub_mul, smul_mul_assoc] at *
+  simp only [pow_succ, pow_zero, one_mul, mul_sub, sub_mul, mul_add, add_mul, mul_neg, neg_mul,
+    mul_smul_comm, smul_mul_assoc, smul_add, smul_sub, smul_neg, mul_assoc,
+    hua, hub, hca_assoc, hcb_assoc, hua_assoc, hub_assoc, hu'a_assoc, hu'b_assoc,
+    hu'u, mul_one]
+  match_scalars <;> field_simp [hq] <;> ring
+
+/-- The centre-first quartic identity: the four twisted commutators with `-(c u)` lower the
+degree-three candidate to zero. -/
+private lemma centre_three (a b c u u' : B) (q t : k) (hq : q ≠ 0)
+    (hca : c * a = a * c - t • (u - u'))
+    (hcb : c * b = b * c)
+    (hua : u * a = q ^ 2 • (a * u))
+    (hub : u * b = q⁻¹ ^ 3 • (b * u))
+    (hu'a : u' * a = q⁻¹ ^ 2 • (a * u'))
+    (hu'b : u' * b = q ^ 3 • (b * u'))
+    (hu'u : u' * u = 1) :
+    qSerre q 4 (-(c * u))
+      (a ^ 3 * b - ((q ^ 2 + 1 + q⁻¹ ^ 2) * q⁻¹) • (a ^ 2 * b * a) +
+        ((q ^ 2 + 1 + q⁻¹ ^ 2) * q⁻¹ ^ 2) • (a * b * a ^ 2) -
+        q⁻¹ ^ 3 • (b * a ^ 3)) = 0 := by
+  have h3 := triple_lowering a b c u u' q t hq hca hcb hua hub hu'a hu'b hu'u
+  have h2 := qcomm_smul (triple_lowering_two a b c u u' q t hq hca hcb hua hub hu'a hu'b hu'u)
+    (t * (1 - q ^ 6))
+  have h1 := qcomm_smul (qcomm_smul
+    (triple_lowering_one a b c u u' q t hq hca hcb hua hub hu'a hu'b hu'u)
+    (t * (1 + q⁻¹ ^ 2 - q ^ 2 - q ^ 4))) (t * (1 - q ^ 6))
+  have h0 := qcomm_smul (qcomm_smul (qcomm_smul (triple_lowering_zero b c u q hcb hub)
+    (t * (q⁻¹ ^ 4 - q ^ 2))) (t * (1 + q⁻¹ ^ 2 - q ^ 2 - q ^ 4))) (t * (1 - q ^ 6))
+  dsimp only at h3
+  rw [qSerre_four_eq_iterate _ _ q hq, h3, h2, h1, h0, smul_zero, smul_zero, smul_zero]
 -- A certificate in the ideal generated by the two ORIGINAL Serre relations.
 /-- Original-relation certificate for the G₂ neighbor-first relation.
 Reconstructed by exact Laurent coefficient elimination. No transformed relation is assumed;
@@ -226,9 +282,9 @@ theorem qSerre_braidEi_braidEj_of_cartanMatrix_eq_neg_three (hv : v ≠ 0)
   have hs := centre_three (E R v i) (E R v j) (F R v i)
     (Kt R v i) (K R v (-ktilde R i)) (v ^ D.d i)
     (v ^ D.d i - (v ^ D.d i)⁻¹)⁻¹ (pow_ne_zero _ hv) hca
-    (E_mul_F_of_ne hij.symm).symm (Kt_mul_E i) hub (Kt_mul_F i)
+    (E_mul_F_of_ne hij.symm).symm (Kt_mul_E i) hub
     (by simpa only [inv_pow] using K_neg_ktilde_mul_E (R := R) (v := v) i)
-    hu'b (K_neg_ktilde_mul_F i) (K_neg_mul_Kt i) (Kt_mul_K_neg i)
+    hu'b (K_neg_mul_Kt i)
   rw [h, braidEj_eq_of_cartanMatrix_eq_neg_three hv h]
   change qSerre (v ^ D.d i) 4 (braidEi R i) (_ • _) = 0
   have he := qSerre_smul_smul (v := v ^ D.d i) 4
