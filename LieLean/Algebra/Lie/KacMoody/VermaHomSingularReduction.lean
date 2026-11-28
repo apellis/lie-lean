@@ -96,8 +96,24 @@ theorem exists_dotDominantIntegral_weylDot
 
 namespace KacMoodyAlgebra.VermaModule
 
-set_option maxHeartbeats 1000000 in
--- The Coxeter-length induction elaborates dependent Verma-module maps in both pairing cases.
+/-- One step of the embedding along a reduced expression: an embedding of `M(μ)` extends to the
+dot-reflected weight when the pairing of `μ + ρ` with the coroot is a natural number. A zero
+pairing fixes the weight, and a positive one gives a rank-one embedding. -/
+theorem exists_injective_reflection_comp
+    (hA : A.IsGeneralizedCartan) {Λ μ : Dual K H} (s : ι) {n : ℕ}
+    (hn : (μ + P.rho) (P.coroot s) = n)
+    (φ : VermaModule P μ →ₗ⁅K,P.KacMoodyAlgebra⁆ VermaModule P Λ)
+    (hφ : Function.Injective φ) :
+    ∃ φ' : VermaModule P (P.reflection hA s (μ + P.rho) - P.rho) →ₗ⁅K,P.KacMoodyAlgebra⁆
+        VermaModule P Λ, Function.Injective φ' := by
+  by_cases hn0 : n = 0
+  · have heq : P.reflection hA s (μ + P.rho) - P.rho = μ := by
+      rw [P.reflection_add_rho_sub_rho hA hn, hn0, zero_nsmul, sub_zero]
+    rw [heq]
+    exact ⟨φ, hφ⟩
+  · obtain ⟨ψ, hψ, -⟩ := exists_injective_reflection P hA (Nat.pos_of_ne_zero hn0) hn
+    exact ⟨φ.comp ψ, hφ.comp hψ⟩
+
 /-- Weak-dominant Verma embedding ([HumO] Prop. 4.3): if `λ + ρ` is dominant integral, then
 `M(w · λ)` embeds in `M(λ)` for every `w ∈ W`. As in the source, the embedding is a composite of
 rank-one embeddings along a reduced expression; zero pairings give identity maps. Humphreys works
@@ -126,14 +142,7 @@ theorem exists_injective_weylDot_of_dotDominant
     have hn' : (P.weylDot hA w' Λ + P.rho) (P.coroot s) = n := by
       rwa [weylDot_add_rho]
     rw [hww', weylDot_simple_mul]
-    by_cases hn0 : n = 0
-    · have heq : P.reflection hA s (P.weylDot hA w' Λ + P.rho) - P.rho =
-          P.weylDot hA w' Λ := by
-        rw [P.reflection_add_rho_sub_rho hA hn', hn0, zero_nsmul, sub_zero]
-      rw [heq]
-      exact ⟨φ, hφ⟩
-    · obtain ⟨ψ, hψ, -⟩ := exists_injective_reflection P hA (Nat.pos_of_ne_zero hn0) hn'
-      exact ⟨φ.comp ψ, hφ.comp hψ⟩
+    exact exists_injective_reflection_comp P hA s hn' φ hφ
 
 omit [DecidableEq ι] in
 /-- If `λ + ρ` is dominant integral, then `w · λ ≤ λ` for every `w ∈ W` ([HumO] Prop. 4.3). -/
