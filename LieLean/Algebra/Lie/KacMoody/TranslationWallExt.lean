@@ -193,8 +193,50 @@ theorem eq_zero_of_subsingleton_centralTranslation (hM : IsCategoryO P M) (hL : 
   ext x
   simpa using LieModuleHom.congr_fun h1 (eX x)
 
-set_option maxHeartbeats 400000 in
--- Comparing the translated modules of the extension module is expensive.
+omit [FiniteDimensional K L] [CharZero K] [IsAlgClosed K] in
+/-- A translated module lies in the block of the target character. -/
+theorem centralBlock_centralTranslation_eq_top (χ₁ χ₂ : 𝓩 →ₐ[K] K) :
+    centralBlock P (centralTranslation P L χ₁ χ₂ M) χ₂ = ⊤ := by
+  rw [eq_top_iff]
+  rintro v -
+  exact mem_centralBlock_of_injective P (centralTranslation P L χ₁ χ₂ M).incl
+    Subtype.val_injective χ₂ v.property
+
+omit [CharZero K] [IsAlgClosed K] in
+/-- Lying in a block is invariant under isomorphism. -/
+theorem centralBlock_eq_top_of_equiv {χ : 𝓩 →ₐ[K] K} (e : N ≃ₗ⁅K,𝔤⁆ M)
+    (hM : centralBlock P M χ = ⊤) : centralBlock P N χ = ⊤ := by
+  rw [eq_top_iff]
+  rintro x -
+  have hx : e x ∈ centralBlock P M χ := by
+    rw [hM]; exact LieSubmodule.mem_top _
+  exact mem_centralBlock_of_injective P e.toLieModuleHom e.injective χ hx
+
+omit [FiniteDimensional K L] in
+/-- If the exact functor `T'` kills `N`, it maps the projection of an extension of `M` by `N`
+to a bijection. -/
+theorem bijective_centralTranslationMap_extension_snd (hL' : IsCategoryO P (Module.Dual K L))
+    {χ₁ χ₂ : 𝓩 →ₐ[K] K} (hN : IsCategoryO P N) (hM : IsCategoryO P M)
+    (h0 : Subsingleton (centralTranslation P (Module.Dual K L) χ₂ χ₁ N))
+    (c : extCocycles (h P) M N) :
+    Function.Bijective
+      (centralTranslationMap P (Module.Dual K L) χ₂ χ₁ (ExtOne.Extension.snd c)) := by
+  have hE := IsCategoryO.extension P hN hM c
+  have hex : (ExtOne.Extension.snd c).ker = (ExtOne.Extension.inl c).range := by
+    ext v
+    rw [LieModuleHom.mem_ker, LieModuleHom.mem_range]
+    exact ⟨fun hv ↦ ExtOne.Extension.exists_inl_eq_of_snd_eq_zero c hv,
+      fun ⟨n, hn⟩ ↦ hn ▸ rfl⟩
+  obtain ⟨-, hker, hsurj⟩ := centralTranslationMap_shortExact P (Module.Dual K L) hE hL'
+    (ExtOne.Extension.inl c) (ExtOne.Extension.snd c) (ExtOne.Extension.injective_inl c) hex
+    (ExtOne.Extension.surjective_snd c) χ₂ χ₁
+  refine ⟨(injective_iff_map_eq_zero _).mpr fun x hx ↦ ?_, hsurj⟩
+  have hx' : x ∈ (centralTranslationMap P (Module.Dual K L) χ₂ χ₁
+      (ExtOne.Extension.snd c)).ker := hx
+  rw [hker, LieModuleHom.mem_range] at hx'
+  obtain ⟨y, rfl⟩ := hx'
+  rw [Subsingleton.elim y 0, map_zero]
+
 /-- **`Ext¹(T M, N) = 0` if `T' N = 0`**, `T'` the right adjoint of `T` (Humphreys, GSM 94, proof
 of Theorem 7.14 (g), "by adjointness"), stated for `X ≅ T M`. Every extension `0 → N → E → X → 0`
 in `𝒪` splits: `T'` is exact and kills `N`, so `T'(E) ≅ T'(X)`, and `M → T' T M ≅ T' X` lifts to
@@ -210,40 +252,16 @@ theorem extOne_eq_zero_of_subsingleton_centralTranslation (hM : IsCategoryO P M)
   rw [ExtOne.mk_eq_zero_iff]
   have hTX : IsCategoryO P (centralTranslation P L χ₁ χ₂ M) := hM.centralTranslation P hL χ₁ χ₂
   have hX : IsCategoryO P X := IsCategoryO.of_equiv (P := P) hTX eX.symm
-  have hTXχ : centralBlock P (centralTranslation P L χ₁ χ₂ M) χ₂ = ⊤ := by
-    rw [eq_top_iff]
-    rintro v -
-    exact mem_centralBlock_of_injective P (centralTranslation P L χ₁ χ₂ M).incl
-      Subtype.val_injective χ₂ v.property
-  have hXχ : centralBlock P X χ₂ = ⊤ := by
-    rw [eq_top_iff]
-    rintro x -
-    have hx : eX x ∈ centralBlock P (centralTranslation P L χ₁ χ₂ M) χ₂ := by
-      rw [hTXχ]; exact LieSubmodule.mem_top _
-    exact mem_centralBlock_of_injective P eX.toLieModuleHom eX.injective χ₂ hx
-  have hE := IsCategoryO.extension P hN hX c
+  have hTXχ : centralBlock P (centralTranslation P L χ₁ χ₂ M) χ₂ = ⊤ :=
+    centralBlock_centralTranslation_eq_top P χ₁ χ₂
+  have hXχ : centralBlock P X χ₂ = ⊤ := centralBlock_eq_top_of_equiv P eX hTXχ
   have hEχ := centralBlock_extension_eq_top P hNχ hXχ c
   -- `T'` of the projection `E → X` is bijective
-  have hex : (ExtOne.Extension.snd c).ker = (ExtOne.Extension.inl c).range := by
-    ext v
-    rw [LieModuleHom.mem_ker, LieModuleHom.mem_range]
-    exact ⟨fun hv ↦ ExtOne.Extension.exists_inl_eq_of_snd_eq_zero c hv,
-      fun ⟨n, hn⟩ ↦ hn ▸ rfl⟩
-  obtain ⟨-, hker, hsurj⟩ := centralTranslationMap_shortExact P (Module.Dual K L) hE hL'
-    (ExtOne.Extension.inl c) (ExtOne.Extension.snd c) (ExtOne.Extension.injective_inl c) hex
-    (ExtOne.Extension.surjective_snd c) χ₂ χ₁
-  have hinj : Function.Injective
-      (centralTranslationMap P (Module.Dual K L) χ₂ χ₁ (ExtOne.Extension.snd c)) := by
-    refine (injective_iff_map_eq_zero _).mpr fun x hx ↦ ?_
-    have hx' : x ∈ (centralTranslationMap P (Module.Dual K L) χ₂ χ₁
-        (ExtOne.Extension.snd c)).ker := hx
-    rw [hker, LieModuleHom.mem_range] at hx'
-    obtain ⟨y, rfl⟩ := hx'
-    rw [Subsingleton.elim y 0, map_zero]
   obtain ⟨eT, heT⟩ : ∃ e : centralTranslation P (Module.Dual K L) χ₂ χ₁ (ExtOne.Extension c) ≃ₗ⁅K,𝔤⁆
       centralTranslation P (Module.Dual K L) χ₂ χ₁ X,
       ∀ y, e y = centralTranslationMap P (Module.Dual K L) χ₂ χ₁ (ExtOne.Extension.snd c) y :=
-    ⟨LieModuleEquiv.ofBijective _ ⟨hinj, hsurj⟩, fun _ ↦ rfl⟩
+    ⟨LieModuleEquiv.ofBijective _
+      (bijective_centralTranslationMap_extension_snd P hL' hN hX h0 c), fun _ ↦ rfl⟩
   -- the unit `M → T' T M`, transported to `M → T' X`
   obtain ⟨η, hη⟩ : ∃ η : M →ₗ⁅K,𝔤⁆ centralTranslation P (Module.Dual K L) χ₂ χ₁ X,
       η = (centralTranslationMap P (Module.Dual K L) χ₂ χ₁ eX.symm.toLieModuleHom).comp
