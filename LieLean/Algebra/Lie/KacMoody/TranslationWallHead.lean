@@ -484,8 +484,45 @@ theorem exists_hom_translation_irreducible_ne_zero_iff {lam μ ν : Dual K H}
     exact (LieModuleEquiv.comp_eq_zero_iff e _).mp ((LieModuleEquiv.comp_eq_zero_iff E.symm _).mp
       h0)
 
-set_option maxHeartbeats 400000 in
--- Unifying the translated modules produced by the adjunction and by Theorem 7.9 is expensive.
+omit [IsAlgClosed K] [FiniteDimensional K H] in
+/-- A module that is isomorphic to `L(b)` when `p` holds, and otherwise is zero or isomorphic
+to some `L(y)` with `y ≠ b`, has a nonzero morphism to `L(b)` exactly when `p` holds. -/
+lemma exists_hom_irreducible_ne_zero_iff_of_dichotomy {T : Type*} [AddCommGroup T] [Module K T]
+    [LieRingModule 𝔤 T] [LieModule K 𝔤 T] {b : Dual K H} {p : Prop}
+    (h1 : p → Nonempty (IrreducibleModule P b ≃ₗ⁅K,𝔤⁆ T))
+    (h2 : ¬p → Subsingleton T ∨ ∃ y ≠ b, Nonempty (IrreducibleModule P y ≃ₗ⁅K,𝔤⁆ T)) :
+    (∃ g : T →ₗ⁅K,𝔤⁆ IrreducibleModule P b, g ≠ 0) ↔ p := by
+  refine ⟨?_, fun hp ↦ ?_⟩
+  · rintro ⟨g, hg⟩
+    by_contra hp
+    rcases h2 hp with hsub | ⟨y, hy, ⟨e⟩⟩
+    · exact hg (LieModuleHom.ext fun u ↦ by rw [Subsingleton.elim u 0, map_zero]; rfl)
+    · exact hy (IrreducibleModule.eq_of_hom_ne_zero P (g := g.comp e.toLieModuleHom) fun h ↦
+        hg ((LieModuleEquiv.comp_toLieModuleHom_eq_zero_iff e g).mp h))
+  · obtain ⟨e⟩ := h1 hp
+    exact ⟨e.symm.toLieModuleHom, fun h ↦ IrreducibleModule.hwv_ne_zero P b
+      ((LinearEquiv.map_eq_zero_iff e.toLinearEquiv).mp
+        (LieModuleEquiv.eq_zero_of_toLieModuleHom_eq_zero e.symm h _))⟩
+
+/-- Nonzero morphisms correspond under a linear equivalence of morphism spaces followed by an
+isomorphism of the target. -/
+lemma _root_.LieModuleHom.exists_ne_zero_iff_of_equiv {R L A B C D D' : Type*} [CommRing R]
+    [LieRing L] [LieAlgebra R L]
+    [AddCommGroup A] [Module R A] [LieRingModule L A] [LieModule R L A]
+    [AddCommGroup B] [Module R B] [LieRingModule L B] [LieModule R L B]
+    [AddCommGroup C] [Module R C] [LieRingModule L C] [LieModule R L C]
+    [AddCommGroup D] [Module R D] [LieRingModule L D] [LieModule R L D]
+    [AddCommGroup D'] [Module R D'] [LieRingModule L D'] [LieModule R L D']
+    (adj : (A →ₗ⁅R,L⁆ B) ≃ₗ[R] (C →ₗ⁅R,L⁆ D)) (E : D ≃ₗ⁅R,L⁆ D') :
+    (∃ f : C →ₗ⁅R,L⁆ D', f ≠ 0) ↔ ∃ g : A →ₗ⁅R,L⁆ B, g ≠ 0 := by
+  constructor
+  · rintro ⟨f, hf⟩
+    exact ⟨adj.symm (E.symm.toLieModuleHom.comp f), fun h ↦ hf
+      ((LieModuleEquiv.comp_eq_zero_iff E.symm f).mp ((LinearEquiv.map_eq_zero_iff adj.symm).mp h))⟩
+  · rintro ⟨g, hg⟩
+    exact ⟨E.toLieModuleHom.comp (adj g), fun h ↦ hg
+      ((LinearEquiv.map_eq_zero_iff adj).mp ((LieModuleEquiv.comp_eq_zero_iff E _).mp h))⟩
+
 include hA in
 /-- **The socle of `T_μ^λ L(w·μ)`** (Humphreys, GSM 94, Theorem 7.14 (c), socle). Under the
 hypotheses of `exists_hom_translation_verma_ne_zero_iff`, for `x ∈ W` there is a nonzero
@@ -537,27 +574,8 @@ theorem exists_hom_irreducible_translation_ne_zero_iff {lam μ ν : Dual K H}
     (dualEquiv eν).trans evalEquiv.symm
   let E := centralTranslationCoeffEquiv P (IrreducibleModule P (P.weylDot hA' w μ))
     (centralCharacter P μ) (centralCharacter P lam) eD
-  constructor
-  · rintro ⟨f, hf⟩
-    -- `g : T' L(x·λ) → L(w·μ)` nonzero
-    let g := adj.symm (E.symm.toLieModuleHom.comp f)
-    have hg : g ≠ 0 := fun h ↦ hf ((LieModuleEquiv.comp_eq_zero_iff E.symm f).mp
-      ((LinearEquiv.map_eq_zero_iff adj.symm).mp h))
-    by_contra hxw
-    rcases key.2 hxw with hsub | ⟨y, hy, ⟨e⟩⟩
-    · exact hg (LieModuleHom.ext fun u ↦ by rw [Subsingleton.elim u 0, map_zero]; rfl)
-    · exact hy (IrreducibleModule.eq_of_hom_ne_zero P (g := g.comp e.toLieModuleHom) fun h ↦
-        hg ((LieModuleEquiv.comp_toLieModuleHom_eq_zero_iff e g).mp h))
-  · intro hxw
-    obtain ⟨e⟩ := key.1 hxw
-    let g : centralTranslation P (IrreducibleModule P (z' (-ν))) (centralCharacter P lam)
-        (centralCharacter P μ) (IrreducibleModule P (P.weylDot hA' x lam)) →ₗ⁅K,𝔤⁆
-          IrreducibleModule P (P.weylDot hA' w μ) := e.symm.toLieModuleHom
-    have hg : g ≠ 0 := fun h ↦ IrreducibleModule.hwv_ne_zero P (P.weylDot hA' w μ)
-      ((LinearEquiv.map_eq_zero_iff e.toLinearEquiv).mp
-        (LieModuleEquiv.eq_zero_of_toLieModuleHom_eq_zero e.symm h _))
-    refine ⟨E.toLieModuleHom.comp (adj g), fun h ↦ hg ?_⟩
-    exact (LinearEquiv.map_eq_zero_iff adj).mp ((LieModuleEquiv.comp_eq_zero_iff E _).mp h)
+  exact (LieModuleHom.exists_ne_zero_iff_of_equiv adj E).trans
+    (exists_hom_irreducible_ne_zero_iff_of_dichotomy P key.1 key.2)
 
 end Head
 
