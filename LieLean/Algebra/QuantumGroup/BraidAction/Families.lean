@@ -87,15 +87,38 @@ theorem threeNextGraph_C {n : ℕ} (i : Fin n) (hi : i.val + 2 < n) :
     simp only [CartanMatrix.C, Matrix.of_apply, Fin.ext_iff] at *
     split_ifs at * <;> omega
 
-set_option maxHeartbeats 2000000 in
--- Exhaustive conditional expansion of the symbolic-rank matrix uses arithmetic case splits.
+-- The four clauses of the contract are checked separately: each is an exhaustive conditional
+-- expansion of the symbolic-rank matrix with arithmetic case splits.
+private theorem higherDoubleGraph_C_edge {n : ℕ} (i : Fin n) :
+    ∀ j, j ≠ i → CartanMatrix.C n i j = 0 ∨
+      (CartanMatrix.C n i j = -1 ∧ (CartanMatrix.C n j i = -1 ∨ CartanMatrix.C n j i = -2)) ∨ (CartanMatrix.C n i j = -2 ∧ CartanMatrix.C n j i = -1) := by
+  intros
+  simp only [CartanMatrix.C, Matrix.of_apply, Fin.ext_iff] at *
+  split_ifs at * <;> omega
+
+private theorem higherDoubleGraph_C_leaf {n : ℕ} (i : Fin n) (hi : n ≤ i.val + 2) :
+    ∀ j l, j ≠ i → l ≠ i → CartanMatrix.C n i j ≠ 0 → CartanMatrix.C n i l ≠ 0 → j ≠ l → CartanMatrix.C n j l = 0 := by
+  intros
+  simp only [CartanMatrix.C, Matrix.of_apply, Fin.ext_iff] at *
+  split_ifs at * <;> omega
+
+private theorem higherDoubleGraph_C_unique {n : ℕ} (i : Fin n) :
+    ∀ j l, CartanMatrix.C n i j = -2 → CartanMatrix.C n i l = -2 → j = l := by
+  intros
+  simp only [CartanMatrix.C, Matrix.of_apply, Fin.ext_iff] at *
+  split_ifs at * <;> omega
+
+private theorem higherDoubleGraph_C_path {n : ℕ} (i : Fin n) (hi : n ≤ i.val + 2) :
+    ∀ j l, CartanMatrix.C n i j ≠ 0 → CartanMatrix.C n i l = 0 → CartanMatrix.C n j l = 0 ∨ (CartanMatrix.C n j l = -1 ∧ CartanMatrix.C n l j = -1) := by
+  intros
+  simp only [CartanMatrix.C, Matrix.of_apply, Fin.ext_iff] at *
+  split_ifs at * <;> omega
+
 /-- The final two nodes of literal C satisfy the higher-double graph contract. -/
 theorem higherDoubleGraph_C {n : ℕ} (i : Fin n) (hi : n ≤ i.val + 2) :
-    HigherDoubleGraph (CartanMatrix.C n) i := by
-  constructor <;> intros
-  all_goals
-    simp only [CartanMatrix.C, Matrix.of_apply, Fin.ext_iff] at *
-    split_ifs at * <;> omega
+    HigherDoubleGraph (CartanMatrix.C n) i :=
+  ⟨higherDoubleGraph_C_edge i, higherDoubleGraph_C_leaf i hi,
+    higherDoubleGraph_C_unique i, higherDoubleGraph_C_path i hi⟩
 
 /-- Every literal B node belongs to the proved local graph union, even in ranks 0 and 1. -/
 theorem threeLocalGraph_B (n : ℕ) (i : Fin n) :
