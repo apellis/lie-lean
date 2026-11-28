@@ -63,9 +63,25 @@ theorem nNegHomologyConnecting_equivariant (a : H) (k : ℕ) :
 
 variable [CharZero K]
 
-set_option maxHeartbeats 800000 in
--- Unfolding the quotient action and restricted nilradical instances exceeds default fuel.
-set_option backward.isDefEq.respectTransparency false in
+/-- A class belongs to the homology weight space exactly when its eigen-equations hold for
+the induced action on homology, provided the Lie algebra and the coefficient module are sums
+of their weight spaces. -/
+theorem _root_.LieModule.ChevalleyEilenberg.DerivAction.mem_homologyWeightSpace_iff
+    {K H L M : Type*} [Field K] [AddCommGroup H] [Module K H] [LieRing L] [LieAlgebra K L]
+    [AddCommGroup M] [Module K M] [LieRingModule L M] [LieModule K L M]
+    (ρ : DerivAction K H L M) (hL : ⨆ γ, Module.End.weightSpaceOf ρ.D γ = ⊤)
+    (hM : ⨆ ν, Module.End.weightSpaceOf ρ.φ ν = ⊤) (k : ℕ) (μ : Dual K H)
+    (z : homology K L M k) :
+    z.1 ∈ ρ.homologyWeightSpace k μ ↔ ∀ a, ρ.homologyEnd a k z = μ a • z := by
+  rw [ρ.homologyWeightSpace_eq hL hM]
+  constructor
+  · intro hz a
+    apply Subtype.ext
+    change ρ.θQ k a z.1 = μ a • z.1
+    exact hz.2 a
+  · intro hz
+    exact ⟨z.2, fun a ↦ congrArg Subtype.val (hz a)⟩
+
 /-- A class belongs to the existing image-of-weighted-cycles homology weight space exactly
 when its Cartan eigen-equations hold, provided the coefficient module is diagonalizable.
 Reconstructed from `DerivAction.homologyWeightSpace_eq` and the nilradical root decomposition. -/
@@ -73,15 +89,8 @@ theorem mem_nNegHomologyWeightSpace_iff
     (hV : ⨆ ν, weightSpaceOfMap V (h P) ν = ⊤) (k : ℕ) (μ : Dual K H)
     (z : homology K (nNeg P) V k) :
     z.1 ∈ (nNegDerivAction P V).homologyWeightSpace k μ ↔
-      ∀ a, (nNegDerivAction P V).homologyEnd a k z = μ a • z := by
-  rw [(nNegDerivAction P V).homologyWeightSpace_eq (iSup_weightSpaceOf_adNNeg P) hV]
-  constructor
-  · intro hz a
-    apply Subtype.ext
-    change (nNegDerivAction P V).θQ k a z.1 = μ a • z.1
-    exact hz.2 a
-  · intro hz
-    exact ⟨z.2, fun a ↦ congrArg Subtype.val (hz a)⟩
+      ∀ a, (nNegDerivAction P V).homologyEnd a k z = μ a • z :=
+  (nNegDerivAction P V).mem_homologyWeightSpace_iff (iSup_weightSpaceOf_adNNeg P) hV k μ z
 
 -- Comparing the connecting map through the restricted module instances exceeds default fuel.
 set_option backward.isDefEq.respectTransparency false in
