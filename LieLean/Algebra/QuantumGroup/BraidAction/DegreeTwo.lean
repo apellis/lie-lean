@@ -3,7 +3,7 @@ Copyright (c) 2026 Alex Ellis. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Ellis
 -/
-import LieLean.Algebra.QuantumGroup.BraidAction.Mixed
+import LieLean.Algebra.QuantumGroup.BraidAction.Diagonal
 
 /-!
 # Degree-two diagonal mixed braid relation
@@ -34,78 +34,6 @@ noncomputable section
 namespace LieLean.QuantumGroup
 
 variable {k : Type*} [Field k]
-
-section Ring
-variable {B : Type*} [Ring B] [Algebra k B]
-
-set_option maxHeartbeats 4000000 in
--- Normal ordering produces many scalar coefficients, all checked by field normalization.
-private lemma degree_two_diagonal (a b c d u u' w w' : B) (q p : k)
-    (hq : q ≠ 0) (hd : q - q⁻¹ ≠ 0) (hs : q + q⁻¹ ≠ 0)
-    (hac : a * c = c * a + (q - q⁻¹)⁻¹ • (u - u'))
-    (hbd : b * d = d * b + p • (w - w'))
-    (had : a * d = d * a) (hbc : b * c = c * b)
-    (hua : u * a = q ^ 2 • (a * u))
-    (hub : u * b = q⁻¹ ^ 2 • (b * u))
-    (huc : u * c = q⁻¹ ^ 2 • (c * u))
-    (hud : u * d = q ^ 2 • (d * u))
-    (hu'a : u' * a = q⁻¹ ^ 2 • (a * u'))
-    (hu'b : u' * b = q ^ 2 • (b * u'))
-    (hu'c : u' * c = q ^ 2 • (c * u'))
-    (hu'd : u' * d = q⁻¹ ^ 2 • (d * u'))
-    (hwa : w * a = q⁻¹ ^ 2 • (a * w))
-    (hwc : w * c = q ^ 2 • (c * w))
-    (hw'a : w' * a = q ^ 2 • (a * w'))
-    (hw'c : w' * c = q⁻¹ ^ 2 • (c * w'))
-    (hu'u : u' * u = 1) (huu' : u * u' = 1)
-    (hwu : w * u = u * w) (hwu' : w * u' = u' * w)
-    (hw'u : w' * u = u * w') (hw'u' : w' * u' = u' * w') :
-    let X := (q + q⁻¹)⁻¹ • (a ^ 2 * b - ((q + q⁻¹) * q⁻¹) • (a * b * a) +
-      q⁻¹ ^ 2 • (b * a ^ 2))
-    let Z := (q + q⁻¹)⁻¹ • (q ^ 2 • (c ^ 2 * d) -
-      ((q + q⁻¹) * q) • (c * d * c) + d * c ^ 2)
-    X * Z - Z * X = p • (u ^ 2 * w - u' ^ 2 * w') := by
-  have hac_assoc (z : B) := congrArg (fun t : B ↦ t * z) hac
-  have hbd_assoc (z : B) := congrArg (fun t : B ↦ t * z) hbd
-  have had_assoc (z : B) := congrArg (fun t : B ↦ t * z) had
-  have hbc_assoc (z : B) := congrArg (fun t : B ↦ t * z) hbc
-  have hua_assoc (z : B) := congrArg (fun t : B ↦ t * z) hua
-  have hub_assoc (z : B) := congrArg (fun t : B ↦ t * z) hub
-  have huc_assoc (z : B) := congrArg (fun t : B ↦ t * z) huc
-  have hud_assoc (z : B) := congrArg (fun t : B ↦ t * z) hud
-  have hu'a_assoc (z : B) := congrArg (fun t : B ↦ t * z) hu'a
-  have hu'b_assoc (z : B) := congrArg (fun t : B ↦ t * z) hu'b
-  have hu'c_assoc (z : B) := congrArg (fun t : B ↦ t * z) hu'c
-  have hu'd_assoc (z : B) := congrArg (fun t : B ↦ t * z) hu'd
-  have hwa_assoc (z : B) := congrArg (fun t : B ↦ t * z) hwa
-  have hwc_assoc (z : B) := congrArg (fun t : B ↦ t * z) hwc
-  have hw'a_assoc (z : B) := congrArg (fun t : B ↦ t * z) hw'a
-  have hw'c_assoc (z : B) := congrArg (fun t : B ↦ t * z) hw'c
-  have hu'u_assoc (z : B) := congrArg (fun t : B ↦ t * z) hu'u
-  have huu'_assoc (z : B) := congrArg (fun t : B ↦ t * z) huu'
-  have hwu_assoc (z : B) := congrArg (fun t : B ↦ t * z) hwu
-  have hwu'_assoc (z : B) := congrArg (fun t : B ↦ t * z) hwu'
-  have hw'u_assoc (z : B) := congrArg (fun t : B ↦ t * z) hw'u
-  have hw'u'_assoc (z : B) := congrArg (fun t : B ↦ t * z) hw'u'
-  simp only [mul_assoc, add_mul, sub_mul, smul_mul_assoc, one_mul] at *
-  simp only [pow_two, mul_sub, mul_add,
-    mul_smul_comm, smul_add, smul_sub, mul_assoc, mul_one,
-    hac, hbd, had, hbc, hua, hub, huc, hud, hu'a, hu'b, hu'c, hu'd, hwa, hwc, hw'a, hw'c, hu'u,
-    huu', hwu, hwu', hw'u, hw'u', hac_assoc, hbd_assoc, had_assoc, hbc_assoc, hua_assoc,
-    hub_assoc, huc_assoc, hud_assoc, hu'a_assoc, hu'b_assoc, hu'c_assoc, hu'd_assoc, hwa_assoc,
-    hwc_assoc, hw'a_assoc, hw'c_assoc, hu'u_assoc, huu'_assoc, hwu_assoc, hwu'_assoc, hw'u_assoc,
-    hw'u'_assoc]
-  have hd2 : q ^ 2 - 1 ≠ 0 := by
-    have he : q ^ 2 - 1 = q * (q - q⁻¹) := by field_simp
-    rw [he]
-    exact mul_ne_zero hq hd
-  have hs2 : q ^ 2 + 1 ≠ 0 := by
-    have he : q ^ 2 + 1 = q * (q + q⁻¹) := by field_simp
-    rw [he]
-    exact mul_ne_zero hq hs
-  match_scalars <;> field_simp [hq, hd2, hs2] <;> ring
-
-end Ring
 
 variable {I Y : Type*} [AddCommGroup Y] [DecidableEq I]
   {D : LusztigCartanDatum I} {R : D.RootDatum Y} {v : k} {i j : I}
@@ -170,42 +98,9 @@ theorem braidEj_mul_braidFj_sub_of_cartanMatrix_eq_neg_two
     rintro rfl
     rw [D.cartanMatrix_self] at h
     norm_num at h
-  have hr : R.root i (ktilde R j) = -((D.d i : ℤ) * 2) := by
-    rw [root_ktilde, ← D.d_mul_cartanMatrix_comm i j, h]
-    ring
-  have he : v ^ ((D.d i : ℤ) * 2) = (v ^ D.d i) ^ 2 := by
-    rw [zpow_mul, zpow_natCast, zpow_ofNat]
-  have H := degree_two_diagonal
-    (E R v i) (E R v j) (F R v i) (F R v j)
-    (Kt R v i) (K R v (-ktilde R i)) (Kt R v j) (K R v (-ktilde R j))
-    (v ^ D.d i) (v ^ D.d j - (v ^ D.d j)⁻¹)⁻¹ (pow_ne_zero _ hv) hq hs
-    (by simpa only [↓reduceIte] using
-      (sub_eq_iff_eq_add'.mp (E_mul_F_sub R v i i)))
-    (by simpa only [↓reduceIte] using
-      (sub_eq_iff_eq_add'.mp (E_mul_F_sub R v j j)))
-    (E_mul_F_of_ne hij) (E_mul_F_of_ne hij.symm)
-    (by rw [Kt, K_mul_E, root_ktilde, D.cartanMatrix_self, he])
-    (by rw [Kt, K_mul_E, root_ktilde, h, mul_neg, zpow_neg, he, inv_pow])
-    (by rw [Kt, K_mul_F, root_ktilde, D.cartanMatrix_self, zpow_neg, he, inv_pow])
-    (by rw [Kt, K_mul_F, root_ktilde, h, mul_neg, neg_neg, he])
-    (by rw [K_mul_E, map_neg, root_ktilde, D.cartanMatrix_self, zpow_neg, he, inv_pow])
-    (by rw [K_mul_E, map_neg, root_ktilde, h, mul_neg, neg_neg, he])
-    (by rw [K_mul_F, map_neg, neg_neg, root_ktilde, D.cartanMatrix_self, he])
-    (by rw [K_mul_F, map_neg, neg_neg, root_ktilde, h, mul_neg, zpow_neg, he, inv_pow])
-    (by rw [Kt, K_mul_E, hr, zpow_neg, he, inv_pow])
-    (by rw [Kt, K_mul_F, hr, neg_neg, he])
-    (by rw [K_mul_E, map_neg, hr, neg_neg, he])
-    (by rw [K_mul_F, map_neg, neg_neg, hr, zpow_neg, he, inv_pow])
-    (by simp [Kt, K_add]) (by simp [Kt, K_add])
-    (K_comm (R := R) (v := v) _ _) (K_comm (R := R) (v := v) _ _)
-    (K_comm (R := R) (v := v) _ _) (K_comm (R := R) (v := v) _ _)
-  rw [braidEj_eq_of_cartanMatrix_eq_neg_two h,
-    braidFj_eq_of_cartanMatrix_eq_neg_two hv h]
-  rw [H]
-  rw [braidK_apply, braidK_apply, map_neg, reflY_ktilde_of_cartanMatrix_eq_neg_two h]
-  simp only [Kt, pow_two, K_add, two_smul, neg_add_rev]
-  congr 2
-  congr 1
-  abel
+  refine braidEj_mul_braidFj_sub hv hij hq ?_
+  have hn : negA D i j = 2 := by simp [negA, h]
+  rw [hn]
+  simpa [qFactorial, qInt, Finset.sum_range_succ] using hs
 
 end LieLean.QuantumGroup
